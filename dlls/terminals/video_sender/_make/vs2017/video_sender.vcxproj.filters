@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{4ee0c489-85eb-4376-9fe4-121be45c789b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="consts">
+      <UniqueIdentifier>{f679e2d3-7c12-4953-bbbd-a53c3f4b635c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl2http">
+      <UniqueIdentifier>{67da0b22-f655-433a-8f7e-abc4299bb7ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl2storage">
+      <UniqueIdentifier>{7d6a620d-926c-4ef8-8983-2a2187867689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl2gui">
+      <UniqueIdentifier>{6320bc77-2765-4998-a361-96acefca2912}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\syn_types.hpp" />
+    <ClInclude Include="..\..\filter-dll.hpp" />
+    <ClInclude Include="..\..\info-filter.hpp" />
+    <ClInclude Include="..\..\consts\vals.hpp">
+      <Filter>consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl2http\impl2http.hpp">
+      <Filter>impl2http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\iimpl-sender.hpp" />
+    <ClInclude Include="..\..\impl2storage\impl2storage.hpp">
+      <Filter>impl2storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl2gui\impl2gui.hpp">
+      <Filter>impl2gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl2gui\fill-frame-helper.hpp">
+      <Filter>impl2gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl2gui\is-empty-frame-helper.hpp">
+      <Filter>impl2gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl2storage\syn.hpp">
+      <Filter>impl2storage</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\main.cpp" />
+    <ClCompile Include="..\..\filter-dll.cpp" />
+    <ClCompile Include="..\..\info-filter.cpp" />
+    <ClCompile Include="..\..\filter-dll-transform-funct.cpp" />
+    <ClCompile Include="..\..\impl2gui\impl2gui.cpp">
+      <Filter>impl2gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl2storage\impl2storage.cpp">
+      <Filter>impl2storage</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

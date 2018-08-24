@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="..\..\video\helpers\buff_get_data_functs.hpp">
+      <Filter>video\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\consts\offs\consts_offs.hpp">
+      <Filter>video\consts\offs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\consts\vals.hpp">
+      <Filter>video\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\helpers\invert_rows.hpp">
+      <Filter>video\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ibuff.hpp" />
+    <ClInclude Include="..\..\type-flags-buff.hpp" />
+    <ClInclude Include="..\..\video\alloc-buff-info.hpp">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\ivideo-buff.hpp">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\type-dim-var.hpp">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\type-check-dim.hpp">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\helpers\override_data.hpp">
+      <Filter>video\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\helpers\is_equal_dim.hpp">
+      <Filter>video\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\helpers\fill_convolution_edges.hpp">
+      <Filter>video\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\helpers\reset_edges.hpp">
+      <Filter>video\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\consts\offs\str2eoffbuff.hpp">
+      <Filter>video\consts\offs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\consts\offs\is_valid.hpp">
+      <Filter>video\consts\offs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\consts\offs\type-off-buff.hpp">
+      <Filter>video\consts\offs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\allocator\ibuff-allocator.hpp">
+      <Filter>allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\allocator\buff-allocator-proxy.hpp">
+      <Filter>allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\allocator\buff-allocator.hpp">
+      <Filter>allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\impl\video-buff.hpp">
+      <Filter>video\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\helpers\dump-buff-funct.hpp">
+      <Filter>video\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\syns.hpp">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\type-sub-sample.hpp">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\imem-buff.hpp" />
+    <ClInclude Include="..\..\type-mem-var.hpp" />
+    <ClInclude Include="..\..\video\helpers\buff-filling-functs.hpp">
+      <Filter>video\helpers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="allocator">
+      <UniqueIdentifier>{822324ac-4a26-433e-9934-6be4e6c24cab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="video">
+      <UniqueIdentifier>{2d86015b-f916-490d-825c-7c0785d28cfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="video\impl">
+      <UniqueIdentifier>{77610de6-0930-4478-9d20-b8f6fdb9c5c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="video\helpers">
+      <UniqueIdentifier>{15cbb5d6-3e29-4f5f-88aa-86b291772ffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="video\consts">
+      <UniqueIdentifier>{6211b117-4071-4b17-b7f1-33abf096faf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="video\consts\offs">
+      <UniqueIdentifier>{f9d5b5a1-812b-4ec9-a2c4-6ae1b3fab30e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{08f32f3c-8037-4edf-b3a9-d9b4f19a5d52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="audio">
+      <UniqueIdentifier>{382915b5-bbd4-4d7b-aa3f-40fa3e25d1b5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\allocator\buff-allocator.cpp">
+      <Filter>allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\video\impl\video-buff.cpp">
+      <Filter>video\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\video\impl\video-buff-alloc-functs.cpp">
+      <Filter>video\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\imem-buff.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

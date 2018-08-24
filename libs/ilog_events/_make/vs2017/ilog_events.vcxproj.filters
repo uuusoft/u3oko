@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{1d4f3450-7c3d-43d2-8ddf-33a75f297dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events">
+      <UniqueIdentifier>{5df8eed0-1a45-4622-b84b-64019d055814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\_infos">
+      <UniqueIdentifier>{9ae2b095-f2a6-4fbf-aba8-7cf8883ef828}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\_register">
+      <UniqueIdentifier>{f43a9ba2-9f72-457e-9494-f760493552d1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\register_events_in_archives.hpp">
+      <Filter>events\_register</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\type-log-text.hpp" />
+    <ClInclude Include="..\..\type-log-status.hpp" />
+    <ClInclude Include="..\..\appll-part-log-info.hpp" />
+    <ClInclude Include="..\..\events\process-list-logs-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\base-log-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\info-log-event.hpp">
+      <Filter>events\_infos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\except-log-event.hpp">
+      <Filter>events\_infos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\change-state-sub-sys-log-event.hpp">
+      <Filter>events\_infos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\wrapper-log-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\process-log-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\events\register_events_in_archives.cpp">
+      <Filter>events\_register</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appll-part-log-info.cpp" />
+    <ClCompile Include="..\..\events\process-list-logs-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\base-log-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\info-log-event.cpp">
+      <Filter>events\_infos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\except-log-event.cpp">
+      <Filter>events\_infos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\change-state-sub-sys-log-event.cpp">
+      <Filter>events\_infos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\wrapper-log-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\process-log-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

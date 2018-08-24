@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="consts">
+      <UniqueIdentifier>{06c8a264-fc3f-47c9-8449-dbeff4e78468}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{472ac1f5-6753-43de-b39e-f6cd92ece746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_make">
+      <UniqueIdentifier>{120f1ca7-4636-451c-997f-62ec4dbadc6c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\main.cpp" />
+    <ClCompile Include="..\..\filter-dll.cpp" />
+    <ClCompile Include="..\..\info-filter-dll.cpp" />
+    <ClCompile Include="..\..\filter-dll-transform-functs.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\consts\vals.hpp">
+      <Filter>consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\syn_types.hpp" />
+    <ClInclude Include="..\..\filter-dll.hpp" />
+    <ClInclude Include="..\..\info-filter-dll.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt">
+      <Filter>_make</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

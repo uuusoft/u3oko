@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{21585ef2-0e6e-46fc-a876-84d3cd65690c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl">
+      <UniqueIdentifier>{2fe632d3-a254-4804-b7ce-a301e00f7a59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\_includes">
+      <UniqueIdentifier>{3270604b-3faa-4ebf-b680-7a1722c420fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\rang">
+      <UniqueIdentifier>{131f5eab-e3f6-4733-8c06-1539944c4632}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\rang\_includes">
+      <UniqueIdentifier>{1923f5f0-effe-47f7-9f58-7ec6f25c9cfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\rang\vars">
+      <UniqueIdentifier>{9716053d-2df1-4198-8204-6e24685bc93f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\rang\vars\_count">
+      <UniqueIdentifier>{3bb092ec-712b-4b9a-bbaa-cca04340b018}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\rang\vars\_insert">
+      <UniqueIdentifier>{b39fb4f2-ce15-432b-856b-67ab37a07da3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\rang\vars\_rand">
+      <UniqueIdentifier>{2bcd6ae6-1fbf-4b65-b3fa-cbee60ba6f08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\rang\vars\_skip">
+      <UniqueIdentifier>{110548fa-89bc-4421-8cbe-b4f10ebd3a26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\rang\vars\_standart">
+      <UniqueIdentifier>{bd82c7fa-a9e4-4416-b904-aa4e3e837b96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_make">
+      <UniqueIdentifier>{ec1aad15-551d-46c6-b8f8-6654beed8ca6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\includes.hpp">
+      <Filter>impl\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\rang\includes.hpp">
+      <Filter>impl\rang\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\rang\includes_int.hpp">
+      <Filter>impl\rang\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\syn_types.hpp" />
+    <ClInclude Include="..\..\filter-dll.hpp" />
+    <ClInclude Include="..\..\ifilter-impl.hpp" />
+    <ClInclude Include="..\..\impl\rang\rang-filter.hpp">
+      <Filter>impl\rang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\rang\ialg-impl.hpp">
+      <Filter>impl\rang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\rang\process-alg-info.hpp">
+      <Filter>impl\rang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\info-filter-dll.hpp" />
+    <ClInclude Include="..\..\impl\rang\vars\generic-impl.hpp">
+      <Filter>impl\rang\vars</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\rang\vars\standart-sort-impl.hpp">
+      <Filter>impl\rang\vars\_standart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\rang\vars\skip-sort-impl.hpp">
+      <Filter>impl\rang\vars\_skip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\rang\vars\rand-sort-impl.hpp">
+      <Filter>impl\rang\vars\_rand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\rang\vars\insert-sort-impl.hpp">
+      <Filter>impl\rang\vars\_insert</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\rang\vars\count-sort-impl.hpp">
+      <Filter>impl\rang\vars\_count</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\rang\vars\finder-nth-element-by-count.hpp">
+      <Filter>impl\rang\vars\_count</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\main.cpp" />
+    <ClCompile Include="..\..\filter-dll.cpp" />
+    <ClCompile Include="..\..\filter-dll-transform-functs.cpp" />
+    <ClCompile Include="..\..\impl\rang\rang-filter.cpp">
+      <Filter>impl\rang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\info-filter-dll.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt">
+      <Filter>_make</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

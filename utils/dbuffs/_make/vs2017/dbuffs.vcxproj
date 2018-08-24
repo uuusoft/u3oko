@@ -1,0 +1,793 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|ARM">
+      <Configuration>debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|Win32">
+      <Configuration>debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|ARM">
+      <Configuration>release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|Win32">
+      <Configuration>release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Win32ReleaseWithSymbol|ARM">
+      <Configuration>Win32ReleaseWithSymbol</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Win32ReleaseWithSymbol|Win32">
+      <Configuration>Win32ReleaseWithSymbol</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Win32ReleaseWithSymbol|x64">
+      <Configuration>Win32ReleaseWithSymbol</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{56855133-5FA4-4C0B-9F2E-8B6ACE25B3D0}</ProjectGuid>
+    <RootNamespace>SharedClassBModule</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>dbuffs</ProjectName>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|ARM'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|ARM'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|ARM'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|ARM'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|ARM'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|ARM'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='debug|ARM'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='debug|x64'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|Win32'">..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|Win32'">..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|Win32'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|ARM'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|x64'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='release|Win32'">..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='release|Win32'">..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='release|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='release|ARM'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='debug|ARM'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='debug|ARM'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='debug|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='debug|ARM'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='debug|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='release|ARM'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='release|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='release|ARM'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='release|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='release|ARM'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='release|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|ARM'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|ARM'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|ARM'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|x64'" />
+    <RunCodeAnalysis Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|Win32'">false</RunCodeAnalysis>
+    <RunCodeAnalysis Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|ARM'">false</RunCodeAnalysis>
+    <RunCodeAnalysis Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|x64'">false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|Win32'">true</CodeAnalysisIgnoreGeneratedCode>
+    <CodeAnalysisIgnoreGeneratedCode Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|ARM'">true</CodeAnalysisIgnoreGeneratedCode>
+    <CodeAnalysisIgnoreGeneratedCode Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|x64'">true</CodeAnalysisIgnoreGeneratedCode>
+    <RunCodeAnalysis Condition="'$(Configuration)|$(Platform)'=='release|Win32'">false</RunCodeAnalysis>
+    <RunCodeAnalysis Condition="'$(Configuration)|$(Platform)'=='release|ARM'">false</RunCodeAnalysis>
+    <RunCodeAnalysis Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</RunCodeAnalysis>
+    <RunCodeAnalysis Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">false</RunCodeAnalysis>
+    <RunCodeAnalysis Condition="'$(Configuration)|$(Platform)'=='debug|ARM'">false</RunCodeAnalysis>
+    <RunCodeAnalysis Condition="'$(Configuration)|$(Platform)'=='debug|x64'">false</RunCodeAnalysis>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(WindowsSDK_IncludePath);$(VC_IncludePath);../../../../../boost</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='debug|ARM'">$(WindowsSDK_IncludePath);$(VC_IncludePath);../../../../../boost</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(WindowsSDK_IncludePath);$(VC_IncludePath);../../../../../boost</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">../../../../../boost/stage/windows/desktop/vs14/x32/lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='debug|ARM'">../../../../boost/stage/arm/lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='debug|x64'">../../../../../boost/stage/windows/desktop/x64/lib;$(LibraryPath)</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(WindowsSDK_IncludePath);$(VC_IncludePath);../../../../../boost</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='release|ARM'">$(WindowsSDK_IncludePath);$(VC_IncludePath);../../../../../boost</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(WindowsSDK_IncludePath);$(VC_IncludePath);../../../../../boost</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='release|Win32'">../../../../../boost/stage/windows/desktop/vs14/x32/lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='release|ARM'">../../../../boost/stage/arm/lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='release|x64'">../../../../../boost/stage/windows/desktop/x64/lib;$(LibraryPath)</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|Win32'">$(WindowsSDK_IncludePath);$(VC_IncludePath);../../../../../boost</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|ARM'">$(WindowsSDK_IncludePath);$(VC_IncludePath);../../../../../boost</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|x64'">$(WindowsSDK_IncludePath);$(VC_IncludePath);../../../../../boost</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|Win32'">../../../../../boost/stage/windows/desktop/vs14/x32/lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|ARM'">../../../boost/stage/arm/lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|x64'">../../../boost/stage/windows/desktop/x64/lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|ARM'">
+    <OutDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|ARM'">
+    <OutDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|ARM'">
+    <OutDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|x64'">
+    <OutDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <OutDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <OutDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../../../../;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UMODE_APPL;DLL_DATA_BUFFERS;DEBUG;_WIN32_WINNT=0x500;WIN32;_DEBUG;_USRDLL;SHAREDCLASSBMODULE_EXPORTS;DLL_MESSAGE_OBJECTS_DATAP_PATH1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <OpenMPSupport>false</OpenMPSupport>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <EnablePREfast>false</EnablePREfast>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mem_functs.lib;core.lib;helpers.lib;properties.lib;iproperties.lib;events.lib;icore.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LIB);..\..\..\..\..\out\$(Configuration)\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <BaseAddress>
+      </BaseAddress>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+      <Profile>true</Profile>
+      <ShowProgress>NotSet</ShowProgress>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <LinkStatus>false</LinkStatus>
+      <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy  /Y /V $(OutDir)$(TargetName).lib ..\..\..\..\..\out\$(Configuration)\$(Platform)\
+copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Platform)\</Command>
+    </PostBuildEvent>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|ARM'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../../../../;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UMODE_APPL;DLL_DATA_BUFFERS;DEBUG;_WIN32_WINNT=0x500;WIN32;_DEBUG;_USRDLL;SHAREDCLASSBMODULE_EXPORTS;DLL_MESSAGE_OBJECTS_DATAP_PATH1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <OpenMPSupport>false</OpenMPSupport>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <EnablePREfast>false</EnablePREfast>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mem_functs.lib;core.lib;helpers.lib;properties.lib;iproperties.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LIB);..\..\..\..\..\out\$(Configuration)\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <BaseAddress>0x62600000</BaseAddress>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <Profile>true</Profile>
+      <ShowProgress>NotSet</ShowProgress>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <LinkStatus>false</LinkStatus>
+      <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy  /Y /V $(OutDir)$(TargetName).lib ..\..\..\..\..\out\$(Configuration)\$(Platform)\
+copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Platform)\</Command>
+    </PostBuildEvent>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../../../../;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UMODE_APPL;DLL_DATA_BUFFERS;DEBUG;_WIN32_WINNT=0x500;WIN32;_DEBUG;_USRDLL;SHAREDCLASSBMODULE_EXPORTS;DLL_MESSAGE_OBJECTS_DATAP_PATH1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <OpenMPSupport>false</OpenMPSupport>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <EnablePREfast>false</EnablePREfast>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mem_functs.lib;core.lib;helpers.lib;properties.lib;iproperties.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LIB);..\..\..\..\..\out\$(Configuration)\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <BaseAddress>0x62600000</BaseAddress>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <Profile>true</Profile>
+      <ShowProgress>NotSet</ShowProgress>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <LinkStatus>false</LinkStatus>
+      <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy  /Y /V $(OutDir)$(TargetName).lib ..\..\..\..\..\out\$(Configuration)\$(Platform)\
+copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Platform)\</Command>
+    </PostBuildEvent>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>../../../../../;../../../</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UMODE_APPL;DLL_DATA_BUFFERS;WIN32;NDEBUG;_USRDLL;SHAREDCLASSBMODULE_EXPORTS;DLL_MESSAGE_OBJECTS_DATAP_PATH1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <OpenMPSupport>false</OpenMPSupport>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <EnablePREfast>false</EnablePREfast>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <MinimalRebuild>false</MinimalRebuild>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mem_functs.lib;core.lib;helpers.lib;properties.lib;iproperties.lib;events.lib;icore.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LIB);..\..\..\..\..\out\$(Configuration)\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <BaseAddress>0x62600000</BaseAddress>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+      <Profile>true</Profile>
+      <ShowProgress>NotSet</ShowProgress>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+      <LinkStatus>true</LinkStatus>
+      <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy  /Y /V $(OutDir)$(TargetName).lib ..\..\..\..\..\out\$(Configuration)\$(Platform)\
+copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Platform)\</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|ARM'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>../../../../../;../../../</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UMODE_APPL;DLL_DATA_BUFFERS;WIN32;NDEBUG;_USRDLL;SHAREDCLASSBMODULE_EXPORTS;DLL_MESSAGE_OBJECTS_DATAP_PATH1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <OpenMPSupport>false</OpenMPSupport>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <EnablePREfast>false</EnablePREfast>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <MinimalRebuild>false</MinimalRebuild>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mem_functs.lib;core.lib;helpers.lib;properties.lib;iproperties.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LIB);..\..\..\..\..\out\$(Configuration)\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <BaseAddress>0x62600000</BaseAddress>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <Profile>true</Profile>
+      <ShowProgress>NotSet</ShowProgress>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+      <LinkStatus>true</LinkStatus>
+      <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy  /Y /V $(OutDir)$(TargetName).lib ..\..\..\..\..\out\$(Configuration)\$(Platform)\
+copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Platform)\</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Win32ReleaseWithSymbol|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>../../../../../;../../../</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UMODE_APPL;DLL_DATA_BUFFERS;WIN32;NDEBUG;_USRDLL;SHAREDCLASSBMODULE_EXPORTS;DLL_MESSAGE_OBJECTS_DATAP_PATH1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <OpenMPSupport>false</OpenMPSupport>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <EnablePREfast>false</EnablePREfast>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <MinimalRebuild>false</MinimalRebuild>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mem_functs.lib;core.lib;helpers.lib;properties.lib;iproperties.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LIB);..\..\..\..\..\out\$(Configuration)\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <BaseAddress>0x62600000</BaseAddress>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <Profile>true</Profile>
+      <ShowProgress>NotSet</ShowProgress>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+      <LinkStatus>true</LinkStatus>
+      <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy  /Y /V $(OutDir)$(TargetName).lib ..\..\..\..\..\out\$(Configuration)\$(Platform)\
+copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Platform)\</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>../../../../../;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UMODE_APPL;DLL_DATA_BUFFERS;WIN32;NDEBUG;_USRDLL;SHAREDCLASSBMODULE_EXPORTS;DLL_MESSAGE_OBJECTS_DATAP_PATH1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <EnablePREfast>false</EnablePREfast>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <MinimalRebuild>false</MinimalRebuild>
+      <OpenMPSupport>false</OpenMPSupport>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mem_functs.lib;core.lib;helpers.lib;properties.lib;iproperties.lib;events.lib;icore.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LIB);..\..\..\..\..\out\$(Configuration)\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>
+      </AssemblyDebug>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapExports>true</MapExports>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <BaseAddress>
+      </BaseAddress>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ShowProgress>NotSet</ShowProgress>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <LinkStatus>
+      </LinkStatus>
+      <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy  /Y /V $(OutDir)$(TargetName).lib ..\..\..\..\..\out\$(Configuration)\$(Platform)\
+copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Platform)\</Command>
+    </PostBuildEvent>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|ARM'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>../../../../../;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UMODE_APPL;DLL_DATA_BUFFERS;WIN32;NDEBUG;_USRDLL;SHAREDCLASSBMODULE_EXPORTS;DLL_MESSAGE_OBJECTS_DATAP_PATH1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <EnablePREfast>false</EnablePREfast>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <MinimalRebuild>false</MinimalRebuild>
+      <OpenMPSupport>false</OpenMPSupport>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mem_functs.lib;core.lib;helpers.lib;properties.lib;iproperties.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LIB);..\..\..\..\..\out\$(Configuration)\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>
+      </AssemblyDebug>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapExports>true</MapExports>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <BaseAddress>
+      </BaseAddress>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ShowProgress>NotSet</ShowProgress>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <LinkStatus>
+      </LinkStatus>
+      <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy  /Y /V $(OutDir)$(TargetName).lib ..\..\..\..\..\out\$(Configuration)\$(Platform)\
+copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Platform)\</Command>
+    </PostBuildEvent>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>../../../../../;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UMODE_APPL;DLL_DATA_BUFFERS;WIN32;NDEBUG;_USRDLL;SHAREDCLASSBMODULE_EXPORTS;DLL_MESSAGE_OBJECTS_DATAP_PATH1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <EnablePREfast>false</EnablePREfast>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <MinimalRebuild>false</MinimalRebuild>
+      <OpenMPSupport>false</OpenMPSupport>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mem_functs.lib;core.lib;helpers.lib;properties.lib;iproperties.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LIB);..\..\..\..\..\out\$(Configuration)\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>
+      </AssemblyDebug>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapExports>true</MapExports>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <BaseAddress>0x62600000</BaseAddress>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ShowProgress>NotSet</ShowProgress>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <LinkStatus>
+      </LinkStatus>
+      <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy  /Y /V $(OutDir)$(TargetName).lib ..\..\..\..\..\out\$(Configuration)\$(Platform)\
+copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Platform)\</Command>
+    </PostBuildEvent>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\allocator\buff-allocator.hpp" />
+    <ClInclude Include="..\..\allocator\buff-allocator-proxy.hpp" />
+    <ClInclude Include="..\..\allocator\ibuff-allocator.hpp" />
+    <ClInclude Include="..\..\imem-buff.hpp" />
+    <ClInclude Include="..\..\includes_int.hpp" />
+    <ClInclude Include="..\..\type-flags-buff.hpp" />
+    <ClInclude Include="..\..\ibuff.hpp" />
+    <ClInclude Include="..\..\includes.hpp" />
+    <ClInclude Include="..\..\syns.hpp" />
+    <ClInclude Include="..\..\type-mem-var.hpp" />
+    <ClInclude Include="..\..\video\consts\vals.hpp" />
+    <ClInclude Include="..\..\video\consts\offs\consts_offs.hpp" />
+    <ClInclude Include="..\..\video\consts\offs\type-off-buff.hpp" />
+    <ClInclude Include="..\..\video\consts\offs\is_valid.hpp" />
+    <ClInclude Include="..\..\video\consts\offs\str2eoffbuff.hpp" />
+    <ClInclude Include="..\..\video\helpers\dump-buff-funct.hpp" />
+    <ClInclude Include="..\..\video\type-check-dim.hpp" />
+    <ClInclude Include="..\..\video\type-dim-var.hpp" />
+    <ClInclude Include="..\..\video\helpers\override_data.hpp" />
+    <ClInclude Include="..\..\video\helpers\is_equal_dim.hpp" />
+    <ClInclude Include="..\..\video\helpers\buff-filling-functs.hpp" />
+    <ClInclude Include="..\..\video\helpers\buff_get_data_functs.hpp" />
+    <ClInclude Include="..\..\video\helpers\fill_convolution_edges.hpp" />
+    <ClInclude Include="..\..\video\helpers\invert_rows.hpp" />
+    <ClInclude Include="..\..\video\helpers\reset_edges.hpp" />
+    <ClInclude Include="..\..\video\impl\video-buff.hpp" />
+    <ClInclude Include="..\..\video\ivideo-buff.hpp" />
+    <ClInclude Include="..\..\video\alloc-buff-info.hpp" />
+    <ClInclude Include="..\..\video\type-sub-sample.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\allocator\buff-allocator.cpp" />
+    <ClCompile Include="..\..\imem-buff.cpp" />
+    <ClCompile Include="..\..\video\impl\video-buff.cpp" />
+    <ClCompile Include="..\..\video\impl\video-buff-alloc-functs.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

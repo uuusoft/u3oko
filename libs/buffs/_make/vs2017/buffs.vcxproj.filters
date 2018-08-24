@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{eb5ddc38-4670-49c6-b2c8-2657a9f7ec08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="consts">
+      <UniqueIdentifier>{2ecacd4a-b031-42ae-8ad1-78fd89bc6cfc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\consts\vals.hpp">
+      <Filter>consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\type-buffs-flags.hpp" />
+    <ClInclude Include="..\..\buffs.hpp" />
+    <ClInclude Include="..\..\dump-buffs-funct.hpp" />
+    <ClInclude Include="..\..\alloc-buffs-functs.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\buffs.cpp" />
+    <ClCompile Include="..\..\clone-buffs-functs.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

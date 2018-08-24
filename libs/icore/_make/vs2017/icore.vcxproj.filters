@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="impl">
+      <UniqueIdentifier>{e30f796f-d31d-406d-a86c-1ea4988eb824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{1d4f3450-7c3d-43d2-8ddf-33a75f297dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xml">
+      <UniqueIdentifier>{7b582bb5-436a-4d90-a373-e242edf510f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xml\_includes">
+      <UniqueIdentifier>{bcc155ac-a70e-45d7-8ede-ff310ed44efa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xml\android">
+      <UniqueIdentifier>{0f850c9c-13b4-452c-a6f5-842323990c88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xml\general">
+      <UniqueIdentifier>{44c392d4-bff0-4788-99ba-965ab58596ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xml\helpers">
+      <UniqueIdentifier>{a5733e77-27f1-4f69-bdac-781a89407355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\var1">
+      <UniqueIdentifier>{a7d6fbea-e751-48fb-a0db-282bde4a7c9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\var1\_includes">
+      <UniqueIdentifier>{7da6923e-de47-414b-bb92-a3c658014cb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\var1\path">
+      <UniqueIdentifier>{0bfc8974-5799-48f7-a09b-da2471e07bc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\var1\path\consts">
+      <UniqueIdentifier>{0869dc81-a147-4583-9a7b-398e409519e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\var1\path\_includes">
+      <UniqueIdentifier>{c30f83e9-4506-4ea3-8abe-a7e867f2b9e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\var1\obj">
+      <UniqueIdentifier>{06cc54a0-e7e7-4857-82a3-af6614e0c18a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\var1\obj\consts">
+      <UniqueIdentifier>{5f2e303a-f876-44f9-872a-a90b98a121e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\var1\obj\dll">
+      <UniqueIdentifier>{9621296e-8256-4827-9f4d-1307ff86d092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\var1\obj\dll\_includes">
+      <UniqueIdentifier>{6892b0ad-aa8c-4c60-84aa-74f350326580}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\var1\obj\helpers">
+      <UniqueIdentifier>{fa988c6a-725e-4c84-a30e-a18a23eee471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\var1\obj\_includes">
+      <UniqueIdentifier>{43a94477-ea9d-4f83-9548-c2e72e53179e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\var1\path\old_shit">
+      <UniqueIdentifier>{e3d1e3e2-2951-498b-b8f0-60c62601b6be}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\xml\proxy_pugixml.cpp">
+      <Filter>xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xml\loader.cpp">
+      <Filter>xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xml\general\loader-file-impl.cpp">
+      <Filter>xml\general</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xml\android\loader-asset-android-impl.cpp">
+      <Filter>xml\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\var1\core-int-functs.cpp">
+      <Filter>impl\var1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\var1\path\path-local.cpp">
+      <Filter>impl\var1\path</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\var1\path\path-local-int-functs.cpp">
+      <Filter>impl\var1\path</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\var1\path\path-local-ipath-functs.cpp">
+      <Filter>impl\var1\path</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\var1\path\path-local-thread-functs.cpp">
+      <Filter>impl\var1\path</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\var1\obj\obj-path-local.cpp">
+      <Filter>impl\var1\obj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\var1\obj\obj-path-local-iobj.cpp">
+      <Filter>impl\var1\obj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\var1\obj\obj-path-local-iobj-ext.cpp">
+      <Filter>impl\var1\obj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\var1\obj\dll\base-info-filter-dll.cpp">
+      <Filter>impl\var1\obj\dll</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\var1\core.cpp">
+      <Filter>impl\var1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\var1\path\PathObjIDExt.cpp">
+      <Filter>impl\var1\path\old_shit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core_factory.hpp" />
+    <ClInclude Include="..\..\xml\helpers\load_functs_atomic_value.hpp">
+      <Filter>xml\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xml\includes_int.hpp">
+      <Filter>xml\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xml\includes.hpp">
+      <Filter>xml\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xml\helpers\load_compound_types.hpp">
+      <Filter>xml\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\includes.hpp">
+      <Filter>impl\var1\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\consts\vals.hpp">
+      <Filter>impl\var1\obj\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\dll\syn_types.hpp">
+      <Filter>impl\var1\obj\dll</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\dll\includes.hpp">
+      <Filter>impl\var1\obj\dll\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\includes.hpp">
+      <Filter>impl\var1\obj\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\path\syn_types.hpp">
+      <Filter>impl\var1\path</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\path\includes.hpp">
+      <Filter>impl\var1\path\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\path\vals.hpp">
+      <Filter>impl\var1\path\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xml\iloader-impl.hpp">
+      <Filter>xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xml\loader.hpp">
+      <Filter>xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xml\general\loader-file-impl.hpp">
+      <Filter>xml\general</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xml\android\loader-asset-android-impl.hpp">
+      <Filter>xml\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\core.hpp">
+      <Filter>impl\var1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\path\path.hpp">
+      <Filter>impl\var1\path</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\point-info.hpp">
+      <Filter>impl\var1\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\interfs-for-filter.hpp">
+      <Filter>impl\var1\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\filter-info.hpp">
+      <Filter>impl\var1\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\connect-info.hpp">
+      <Filter>impl\var1\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\ipath-obj-ext.hpp">
+      <Filter>impl\var1\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\run-state-filter.hpp">
+      <Filter>impl\var1\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\point-filter.hpp">
+      <Filter>impl\var1\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\obj-path-local.hpp">
+      <Filter>impl\var1\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\helpers\iempty-interf-obj-path.hpp">
+      <Filter>impl\var1\obj\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\dll\transform-info.hpp">
+      <Filter>impl\var1\obj\dll</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\dll\call-interf-info.hpp">
+      <Filter>impl\var1\obj\dll</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\dll\create_impl_funct_type.hpp">
+      <Filter>impl\var1\obj\dll</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\dll\filter-dll-impl.hpp">
+      <Filter>impl\var1\obj\dll</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\dll\ifilter-dll.hpp">
+      <Filter>impl\var1\obj\dll</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\obj\dll\base-info-filter-dll.hpp">
+      <Filter>impl\var1\obj\dll</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\var1\path\PathObjIDExt.hpp">
+      <Filter>impl\var1\path\old_shit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

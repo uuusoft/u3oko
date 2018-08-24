@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{1d4f3450-7c3d-43d2-8ddf-33a75f297dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl">
+      <UniqueIdentifier>{ffc0481e-dc34-41d2-bac4-c770541a7453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\_includes">
+      <UniqueIdentifier>{cbab74f1-deca-477c-b7f1-6665bf9a4619}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl">
+      <UniqueIdentifier>{3bbef105-2041-416b-92dc-e23b90087976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\oneproc">
+      <UniqueIdentifier>{387fadff-e135-487a-bc8c-11e67997f43e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\anyproc">
+      <UniqueIdentifier>{3a61d501-a130-4d71-b30e-b0c717501695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\_includes">
+      <UniqueIdentifier>{cfdb85a4-677c-4578-b5db-eb7055cb464c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\base">
+      <UniqueIdentifier>{3e02bbae-ed53-4fe4-862c-5feb034d5e6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\root">
+      <UniqueIdentifier>{94408339-dfcb-4292-a04c-1d270783c07d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\leaf">
+      <UniqueIdentifier>{ddecff97-bf87-4e81-a8a0-3a39bcf9ea41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\helpers">
+      <UniqueIdentifier>{aa938dc5-3617-41f7-831a-a54c5af01d85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="loader">
+      <UniqueIdentifier>{bad9ddd7-6b63-44ed-8b22-5faffbb8e426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="loader\_details">
+      <UniqueIdentifier>{6a864892-a3f3-4d34-805a-2250b516bf60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="loader\_includes">
+      <UniqueIdentifier>{51ddfae0-38e9-44cf-8dd0-f5886952191b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\oneproc\_creator">
+      <UniqueIdentifier>{d003266b-c873-4fb9-a5b5-a95aa6215d32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\oneproc\_link">
+      <UniqueIdentifier>{0f5d294d-a21d-4b4e-909f-cf576a4ef275}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="consts">
+      <UniqueIdentifier>{7619ccf9-8159-4faf-9b7b-6e4d2260a2bb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\includes.hpp">
+      <Filter>impl\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\includes.hpp">
+      <Filter>appl\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\anyproc\TSyncMem.hpp">
+      <Filter>impl\anyproc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\anyproc\syn_types.hpp">
+      <Filter>impl\anyproc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\oneproc\syn_types.hpp">
+      <Filter>impl\oneproc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\syn_types.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\includes_int.hpp">
+      <Filter>appl\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\syn_types.hpp" />
+    <ClInclude Include="..\..\loader\includes_int.hpp">
+      <Filter>loader\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loader\includes.hpp">
+      <Filter>loader\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\anyproc\block-mem.hpp">
+      <Filter>impl\anyproc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\state-process-event-ext.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\event-props-for-application.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\oneproc\create-info-ext.hpp">
+      <Filter>impl\oneproc\_link</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\link-creator-proxy.hpp" />
+    <ClInclude Include="..\..\loader\iloader-code-impl.hpp">
+      <Filter>loader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loader\loader-code.hpp">
+      <Filter>loader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loader\out-proc-loader-code.hpp">
+      <Filter>loader\_details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loader\in-proc-loader-code.hpp">
+      <Filter>loader\_details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\oneproc\link-impl-one-proc.hpp">
+      <Filter>impl\oneproc\_link</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\oneproc\link-impl-one-proc-int.hpp">
+      <Filter>impl\oneproc\_link</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\helpers\to_str.hpp">
+      <Filter>appl\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\oneproc\info-one-link.hpp">
+      <Filter>impl\oneproc\_creator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\oneproc\link-creator-impl-one-proc.hpp">
+      <Filter>impl\oneproc\_creator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\anyproc\mem-impl-any-proc.hpp">
+      <Filter>impl\anyproc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\anyproc\link-impl-any-proc.hpp">
+      <Filter>impl\anyproc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\anyproc\link-creator-impl-any-proc.hpp">
+      <Filter>impl\anyproc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\base\base-module.hpp">
+      <Filter>appl\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\leaf\leaf-module.hpp">
+      <Filter>appl\leaf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\root\root-module.hpp">
+      <Filter>appl\root</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\consts\vals.hpp">
+      <Filter>consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\root\type-stage-de-init.hpp">
+      <Filter>appl\root</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\link-creator-proxy.cpp" />
+    <ClCompile Include="..\..\loader\loader-code.cpp">
+      <Filter>loader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loader\out-proc-loader-code.cpp">
+      <Filter>loader\_details</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loader\in-proc-loader-code.cpp">
+      <Filter>loader\_details</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\oneproc\link-impl-one-proc.cpp">
+      <Filter>impl\oneproc\_link</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\oneproc\link-impl-one-proc-int.cpp">
+      <Filter>impl\oneproc\_link</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\oneproc\link-creator-impl-one-proc.cpp">
+      <Filter>impl\oneproc\_creator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\anyproc\mem-impl-any-proc.cpp">
+      <Filter>impl\anyproc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\anyproc\link-impl-any-proc.cpp">
+      <Filter>impl\anyproc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\anyproc\link-impl-any-proc-int-functs.cpp">
+      <Filter>impl\anyproc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\anyproc\link-creator-impl-any-proc.cpp">
+      <Filter>impl\anyproc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\base\base-module.cpp">
+      <Filter>appl\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\base\base-module-catch-functs.cpp">
+      <Filter>appl\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\base\base-module-event-props-functs.cpp">
+      <Filter>appl\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\base\base-module-work-funct.cpp">
+      <Filter>appl\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\base\base-module-wrapers-catch-functs.cpp">
+      <Filter>appl\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\leaf\leaf-module.cpp">
+      <Filter>appl\leaf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\leaf\leaf-module-catch-functs.cpp">
+      <Filter>appl\leaf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\leaf\leaf-module-event-props-functs.cpp">
+      <Filter>appl\leaf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\leaf\leaf-module-work-funct.cpp">
+      <Filter>appl\leaf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\leaf\leaf-module-wrapers-catch-functs.cpp">
+      <Filter>appl\leaf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\root\root-module.cpp">
+      <Filter>appl\root</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\root\root-module-catch-functs.cpp">
+      <Filter>appl\root</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\root\root-module-work-funct.cpp">
+      <Filter>appl\root</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\root\root-module-wrapers-catch-functs.cpp">
+      <Filter>appl\root</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

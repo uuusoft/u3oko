@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{fb78e5b8-6481-4644-a23a-ba251288893e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="consts">
+      <UniqueIdentifier>{a3ad7827-8456-49b1-b3aa-8363d3312991}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interf">
+      <UniqueIdentifier>{52ceca3d-49b1-45d5-b6c6-fa9e9c9fbf52}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\main.cpp" />
+    <ClCompile Include="..\..\filter-dll-interface-camera.cpp">
+      <Filter>interf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\filter-dll-interface-coder.cpp">
+      <Filter>interf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\filter-dll-interface-control-rate.cpp">
+      <Filter>interf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\filter-dll-interface-grabber-frame.cpp">
+      <Filter>interf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\filter-dll.cpp" />
+    <ClCompile Include="..\..\filter-dll-transform-functs.cpp" />
+    <ClCompile Include="..\..\info-filter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\consts\vals.hpp">
+      <Filter>consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base-id-interf.hpp" />
+    <ClInclude Include="..\..\filter-dll.hpp" />
+    <ClInclude Include="..\..\info-filter.hpp" />
+    <ClInclude Include="..\..\syn.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

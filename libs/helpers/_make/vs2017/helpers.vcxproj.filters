@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="bmp">
+      <UniqueIdentifier>{65f38354-d9db-49aa-8762-6ab5f476f503}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fps">
+      <UniqueIdentifier>{c7189364-3b1a-45f4-bf32-c76bcd13ca83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hboost">
+      <UniqueIdentifier>{a2ab81b4-5086-45e3-92b0-5799e84e73b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mem">
+      <UniqueIdentifier>{e7c5f319-1ca2-4473-9e21-13186215d573}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sys">
+      <UniqueIdentifier>{8e0c15c3-1004-4625-bcda-e92fd2b4a0a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sys\os">
+      <UniqueIdentifier>{52a6cc8e-3830-4fa2-8adb-58173c7df805}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sys\os\win32">
+      <UniqueIdentifier>{f0a80f03-aca3-4c0c-b996-d05e028ba43d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sys\os\android">
+      <UniqueIdentifier>{c35283d6-2284-4600-85a7-0e0ce51640e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sys\os\mac">
+      <UniqueIdentifier>{7d96d84c-1b6a-465b-bcc5-91e64ede5df2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sys\cpu">
+      <UniqueIdentifier>{3d575c34-8fdf-48c3-9109-8d7b00596efb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sys\cpu\x86">
+      <UniqueIdentifier>{368a68e7-febc-4c2e-8164-b05ff279dcbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sys\cpu\mips">
+      <UniqueIdentifier>{0bf32ed2-b023-434d-b247-b6beb1b8aa7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sys\cpu\arm">
+      <UniqueIdentifier>{d1334019-c7fa-4424-a255-dae7565a1ce3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="windows">
+      <UniqueIdentifier>{167869c9-37f0-4aa0-852f-e448bebd7afe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="process">
+      <UniqueIdentifier>{40b66336-9583-45c8-a97a-4590e8c1a0b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="statistic">
+      <UniqueIdentifier>{d68848ac-fc99-484b-990e-950e722c3a7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="statistic\helpers">
+      <UniqueIdentifier>{dfddcef7-6925-4906-8749-a143a17a7698}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="proxy">
+      <UniqueIdentifier>{d3975610-3817-4138-810b-49de10c9fd8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thread">
+      <UniqueIdentifier>{7b856b54-4387-400a-982d-990a1f377178}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dlls">
+      <UniqueIdentifier>{0e38fe69-b614-450b-add2-453d52aee4ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{3325bd09-c91a-4fca-85d8-2ae59d56760d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{3ad853b6-5ff3-451b-89c1-31c2a2d50c3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win32">
+      <UniqueIdentifier>{61d9797e-475b-43c4-b693-f95922894b55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="consts">
+      <UniqueIdentifier>{5c662a88-18cd-4411-baad-a6a7f47cbdaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{eb5ddc38-4670-49c6-b2c8-2657a9f7ec08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="uids">
+      <UniqueIdentifier>{65a9411c-4953-4ee8-bfb6-601c1db74433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="uids\helpers">
+      <UniqueIdentifier>{b24fdcf6-85d2-4ac9-a90b-5c6ec146a1f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="files">
+      <UniqueIdentifier>{77c1a9c9-ff0d-43f0-ad4d-6379ea950a85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="files\_includes">
+      <UniqueIdentifier>{3a7a1678-41ea-4228-a307-6515f1959d04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\_cuuid">
+      <UniqueIdentifier>{8eb52c7b-1c22-4736-9a78-b61ac30d8c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sorting">
+      <UniqueIdentifier>{97e3e1dc-91de-4ec4-b4d3-9f8c0bba7495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sorting\_includes">
+      <UniqueIdentifier>{624e7b45-f591-4dff-a59a-97bd5062e741}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="strings">
+      <UniqueIdentifier>{1f41670c-c1cc-4670-88f8-117227d073c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sys\os\lnux">
+      <UniqueIdentifier>{9a5991c1-74aa-44fc-b153-457c7abf62ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dshow">
+      <UniqueIdentifier>{5f580c2f-c634-4aff-8a86-a0502b2f52d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dshow\consts">
+      <UniqueIdentifier>{3610c74a-9367-4e88-aef0-8b45f0a2f834}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\bmp\funct_create_bmp_file.hpp">
+      <Filter>bmp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\bmp\funct_load_bmp_to_rgb16.hpp">
+      <Filter>bmp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\math\freq_calculator.hpp">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mem\acopy.hpp">
+      <Filter>mem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mem\buff_copy.hpp">
+      <Filter>mem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mem\check_buff.hpp">
+      <Filter>mem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mem\set_buff.hpp">
+      <Filter>mem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\process\process_functs.hpp">
+      <Filter>process</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\statistic\helpers\functors_with_statistic.hpp">
+      <Filter>statistic\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sys\cpu\arm\arm_cpu.hpp">
+      <Filter>sys\cpu\arm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sys\cpu\arm\armcpu_id.hpp">
+      <Filter>sys\cpu\arm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sys\cpu\mips\mipscpu_id.hpp">
+      <Filter>sys\cpu\mips</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sys\cpu\x86\x86_cpu.hpp">
+      <Filter>sys\cpu\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sys\cpu\x86\x86cpu_id.hpp">
+      <Filter>sys\cpu\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\windows\process_gen_functs.hpp">
+      <Filter>windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\windows\window_gen_functs.hpp">
+      <Filter>windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\check_functs.hpp">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mem\defines_check_buff.hpp">
+      <Filter>mem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mem\aligned_mem_functs.hpp">
+      <Filter>mem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mem\move_mem_ptr_functs.hpp">
+      <Filter>mem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\win32\safe_clear_functs.hpp">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\consts\vals.hpp">
+      <Filter>consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sys\factory_about_sys.hpp">
+      <Filter>sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\uids\helpers\uids2bytes_functs.hpp">
+      <Filter>uids\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\uids\cat.hpp">
+      <Filter>uids</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\uids\interf.hpp">
+      <Filter>uids</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\uids\major.hpp">
+      <Filter>uids</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\uids\minor.hpp">
+      <Filter>uids</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\files\path_functs.hpp">
+      <Filter>files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\statistic\time_types_statistics.hpp">
+      <Filter>statistic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\files\get_files_funct.hpp">
+      <Filter>files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\files\includes.hpp">
+      <Filter>files\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\cuuid.hpp">
+      <Filter>utils\_cuuid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sorting\insert_sorting.hpp">
+      <Filter>sorting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sorting\includes.hpp">
+      <Filter>sorting\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sorting\helpers_sorting_functs.hpp">
+      <Filter>sorting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\files\load_file2mem_funct.hpp">
+      <Filter>files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\proxy\mem-proxy-base.hpp">
+      <Filter>proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\forever-load-dlls.hpp">
+      <Filter>dlls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\values-storage.hpp">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\int2type.hpp">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\statistic\element-stat-info.hpp">
+      <Filter>statistic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\statistic\expanded-time-statistic.hpp">
+      <Filter>statistic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hboost\name-remover.hpp">
+      <Filter>hboost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\fps\fps-controller.hpp">
+      <Filter>fps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\win32\guarde-gdi.hpp">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\thread\generic_thread_funct.hpp">
+      <Filter>thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sys\cpu\type-ext-cpu.hpp">
+      <Filter>sys\cpu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sys\cpu\text-ext-cpu.hpp">
+      <Filter>sys\cpu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sys\cpu\support-extension-cpu.hpp">
+      <Filter>sys\cpu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sys\cpu\type-ext-gpu.hpp">
+      <Filter>sys\cpu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sys\cpu\cpu-info.hpp">
+      <Filter>sys\cpu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\strings\w16_to_u8.hpp">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sys\isys-info.hpp">
+      <Filter>sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sys\os\win32\sys-info-impl.hpp">
+      <Filter>sys\os\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sys\os\android\sys-info-impl.hpp">
+      <Filter>sys\os\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sys\os\lnux\sys-info-impl.hpp">
+      <Filter>sys\os\lnux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dshow\convert-format-functs.hpp">
+      <Filter>dshow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dshow\dump-functs.hpp">
+      <Filter>dshow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dshow\consts\vals.hpp">
+      <Filter>dshow\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dshow\interf_ptrs.hpp">
+      <Filter>dshow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dshow\dshow_interfaces.hpp">
+      <Filter>dshow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dshow\com-ptr.hpp">
+      <Filter>dshow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dshow\includes_int.hpp">
+      <Filter>dshow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dshow\includes.hpp">
+      <Filter>dshow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\uids\codecs.hpp">
+      <Filter>uids</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\files\update_register_lib_funct.hpp">
+      <Filter>files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\bmp\funct_create_bmp_file.cpp">
+      <Filter>bmp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\bmp\funct_load_bmp_to_rgb16.cpp">
+      <Filter>bmp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\mem\acopy.cpp">
+      <Filter>mem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\mem\check_buff.cpp">
+      <Filter>mem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\process\process_functs.cpp">
+      <Filter>process</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sys\cpu\arm\arm_cpu.cpp">
+      <Filter>sys\cpu\arm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sys\cpu\x86\x86_cpu.cpp">
+      <Filter>sys\cpu\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\windows\window_gen_functs.cpp">
+      <Filter>windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sys\factory_about_sys.cpp">
+      <Filter>sys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\uids\helpers\uids2bytes_functs.cpp">
+      <Filter>uids\helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\files\path_functs.cpp">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\files\get_files_funct.cpp">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\cuuid.cpp">
+      <Filter>utils\_cuuid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\cuuid_win32.cpp">
+      <Filter>utils\_cuuid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\proxy\mem-proxy-base.cpp">
+      <Filter>proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\statistic\expanded-time-statistic.cpp">
+      <Filter>statistic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\fps\fps-controller.cpp">
+      <Filter>fps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sys\cpu\text-ext-cpu.cpp">
+      <Filter>sys\cpu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sys\cpu\cpu-info.cpp">
+      <Filter>sys\cpu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sys\os\android\sys-info-impl-android.cpp">
+      <Filter>sys\os\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sys\os\win32\sys-info-impl-win32.cpp">
+      <Filter>sys\os\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sys\os\lnux\sys-info-impl-linux.cpp">
+      <Filter>sys\os\lnux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\uids\minor.cpp">
+      <Filter>uids</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\uids\major.cpp">
+      <Filter>uids</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\uids\interf.cpp">
+      <Filter>uids</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\uids\cat.cpp">
+      <Filter>uids</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dshow\convert-format-functs.cpp">
+      <Filter>dshow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dshow\dump-functs.cpp">
+      <Filter>dshow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\uids\codecs.cpp">
+      <Filter>uids</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\files\update_register_lib_funct.cpp">
+      <Filter>files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{1d4f3450-7c3d-43d2-8ddf-33a75f297dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="buff">
+      <UniqueIdentifier>{e0fc8e9a-f45c-4205-99d1-92c281ea25be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props">
+      <UniqueIdentifier>{8ee2b630-b999-45e6-8e8a-4594561e0067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\details">
+      <UniqueIdentifier>{b915b704-b764-4df6-8495-81d72eab6cc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="helpers">
+      <UniqueIdentifier>{73d2d931-70a4-4ee9-960e-a5c80af66aff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="wrapers">
+      <UniqueIdentifier>{0680a1e1-13ce-456e-bac8-318d3577e225}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="io">
+      <UniqueIdentifier>{0fefa30a-469c-4eb7-aa46-d4d90177cb30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_defines">
+      <UniqueIdentifier>{f552075b-34bb-4420-a618-e8c1520912f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_register">
+      <UniqueIdentifier>{1065e2fb-d036-4c99-ab1f-b4de9f81134c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\helpers\get_base_msg_funct.hpp">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\helpers\wrap_events_functs.hpp">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\serialize_type_to_archive_define.hpp">
+      <Filter>_defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\register_events_in_archives.hpp">
+      <Filter>_register</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\wrapers\ianswer-event.hpp">
+      <Filter>wrapers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\wrapers\irequest-event.hpp">
+      <Filter>wrapers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\wrapers\iseq-event.hpp">
+      <Filter>wrapers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\wrapers\isync-event.hpp">
+      <Filter>wrapers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\wrapers\iwrap-base-event.hpp">
+      <Filter>wrapers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\using-state-event.hpp" />
+    <ClInclude Include="..\..\ievent.hpp" />
+    <ClInclude Include="..\..\buff-event-info.hpp">
+      <Filter>buff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\io\ievents-proxy.hpp">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\io\ievents.hpp">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\details\rect.hpp">
+      <Filter>props\details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\type-clone-event.hpp" />
+    <ClInclude Include="..\..\helpers\convert_event2string_funct.hpp">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\make_fake_objs_this_type_defines.hpp">
+      <Filter>_defines</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\register_events_in_archives.cpp">
+      <Filter>_register</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\wrapers\ianswer-event.cpp">
+      <Filter>wrapers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\wrapers\irequest-event.cpp">
+      <Filter>wrapers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\wrapers\iseq-event.cpp">
+      <Filter>wrapers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\wrapers\isync-event.cpp">
+      <Filter>wrapers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\wrapers\iwrap-base-event.cpp">
+      <Filter>wrapers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ievent.cpp" />
+    <ClCompile Include="..\..\buff-event-info.cpp">
+      <Filter>buff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\details\rect.cpp">
+      <Filter>props\details</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

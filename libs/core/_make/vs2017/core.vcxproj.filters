@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="path">
+      <UniqueIdentifier>{7f8d1cb2-9b17-4cff-9e41-e1c7084d2419}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{1d4f3450-7c3d-43d2-8ddf-33a75f297dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="path\_includes">
+      <UniqueIdentifier>{6d6257f7-8580-406c-9c92-4a9875150daf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\path\impl_as_frends.hpp">
+      <Filter>path</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\path\includes.hpp">
+      <Filter>path\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\icore.hpp" />
+    <ClInclude Include="..\..\path\path-obj-id.hpp">
+      <Filter>path</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\path\ipath.hpp">
+      <Filter>path</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\path\ipath-obj.hpp">
+      <Filter>path</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\path\iinterf-path-obj.hpp">
+      <Filter>path</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\path\path-obj-id.cpp">
+      <Filter>path</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{2ff5c58a-22a3-4782-bed6-42ab2022b073}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl">
+      <UniqueIdentifier>{957d844e-f6d3-4d6f-bf69-5a624f82a3b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\consts">
+      <UniqueIdentifier>{9ab6c486-48ed-4a21-a679-6ad36bb867cc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\main.cpp" />
+    <ClCompile Include="..\..\appl\data-module.cpp">
+      <Filter>appl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\data-module-paths-functs.cpp">
+      <Filter>appl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\data-module-catch-msg-functs.cpp">
+      <Filter>appl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\syn_types.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\consts\vals.hpp">
+      <Filter>appl\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\data-module.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mdata-defines.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

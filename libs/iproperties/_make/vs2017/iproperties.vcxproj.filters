@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{1d4f3450-7c3d-43d2-8ddf-33a75f297dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="helpers">
+      <UniqueIdentifier>{f9ffaab0-de43-43e3-a2e3-92c6dd548c10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vers">
+      <UniqueIdentifier>{a208034c-0f21-4035-892f-3254a72511f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vers\system">
+      <UniqueIdentifier>{04b01a6e-1029-457b-8548-07f022677192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vers\system\_includes">
+      <UniqueIdentifier>{62813829-f6da-4630-a0e1-8be602909f25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vers\demon">
+      <UniqueIdentifier>{687f0f4b-dbf5-4394-96a4-f513e260efc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl_paths">
+      <UniqueIdentifier>{cbf749c2-b5c0-4563-86aa-720323672bba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl_paths\_includes">
+      <UniqueIdentifier>{c17593c4-4528-4074-9fe6-87d5f3ccea13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl_paths\helpers">
+      <UniqueIdentifier>{3d26da90-ec9a-4d81-ad87-77fed86e511e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vers\links">
+      <UniqueIdentifier>{12afc7cd-d6ec-434f-99a8-f19351d25da1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\helpers\get_properties_functs.hpp">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vers\system\includes.hpp">
+      <Filter>vers\system\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl_paths\includes.hpp">
+      <Filter>appl_paths\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared-property-storage-proxy.hpp" />
+    <ClInclude Include="..\..\shared-property-storage.hpp" />
+    <ClInclude Include="..\..\vers\system\isystem-property.hpp">
+      <Filter>vers\system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vers\system\system-win32-property.hpp">
+      <Filter>vers\system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vers\system\system-android-property.hpp">
+      <Filter>vers\system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vers\demon\idemons-property.hpp">
+      <Filter>vers\demon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl_paths\iapp-paths.hpp">
+      <Filter>appl_paths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl_paths\type-path.hpp">
+      <Filter>appl_paths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl_paths\app-paths.hpp">
+      <Filter>appl_paths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl_paths\helpers\get_appl_folder.hpp">
+      <Filter>appl_paths\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\helpers\cast_events_functs.hpp">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl_paths\get-current-folders-functs.hpp">
+      <Filter>appl_paths\helpers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\shared-property-storage-proxy.cpp" />
+    <ClCompile Include="..\..\shared-property-storage.cpp" />
+    <ClCompile Include="..\..\appl_paths\app-paths.cpp">
+      <Filter>appl_paths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\helpers\cast_events_functs.cpp">
+      <Filter>helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl_paths\get-current-folders-functs.cpp">
+      <Filter>appl_paths\helpers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

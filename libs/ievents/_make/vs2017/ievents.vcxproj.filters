@@ -1,0 +1,541 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{1d4f3450-7c3d-43d2-8ddf-33a75f297dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props">
+      <UniqueIdentifier>{068d04e5-fe67-46b8-81a2-c9cc1e9b15b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\application">
+      <UniqueIdentifier>{3c9eb07e-960d-4a41-9693-484dfa4b0829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\mix_mul">
+      <UniqueIdentifier>{a7d57e8a-389f-4d1e-bb7a-36081124bad5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos">
+      <UniqueIdentifier>{6ac3b45b-cb35-4821-801e-b80fb24db308}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\gens">
+      <UniqueIdentifier>{7b084b6c-db99-4303-bd57-fce6910ce527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\gens\diff">
+      <UniqueIdentifier>{0dd395e0-d7c1-411e-8889-d1afc2da164a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\noises">
+      <UniqueIdentifier>{afe64b93-5b59-42a0-ab54-0c68fe910836}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\noises\freq">
+      <UniqueIdentifier>{0c31eee4-0754-43a2-b4a2-bc94a32f3070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\noises\space">
+      <UniqueIdentifier>{c4446710-72b5-4bbd-aeb3-136d517da19f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\noises\time">
+      <UniqueIdentifier>{5f79d45c-90af-4f90-9de0-f949fd1057f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic">
+      <UniqueIdentifier>{eb5b1a2d-9a3f-4f94-b5ac-dd84c812cf89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\vec2image">
+      <UniqueIdentifier>{3307def6-c725-4a98-8135-989538371114}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\codec">
+      <UniqueIdentifier>{faeb959e-f969-4abd-a8e6-ac9a83ee1d4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\convert">
+      <UniqueIdentifier>{e60485b5-57c8-4ceb-bcb3-fca765ef275a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\convolution">
+      <UniqueIdentifier>{5519578e-7ffe-47ff-b762-53dd8d37044f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\correct">
+      <UniqueIdentifier>{77087caf-bc7e-4c3e-89c9-f598afda820b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\detect">
+      <UniqueIdentifier>{7c18f3b8-02f2-4def-a804-ac04cff68c5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\driver">
+      <UniqueIdentifier>{96b08ea8-68d0-4965-b68a-c51f099b0934}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\histogram">
+      <UniqueIdentifier>{1137c796-9211-41b1-9fdf-b4ba4a4999b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\motion_est">
+      <UniqueIdentifier>{e1fefdd6-ebd0-41b5-a8a2-b87bbf806073}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\scaler">
+      <UniqueIdentifier>{aef6c1d0-4591-4ddb-bf56-727712a14919}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\gradient">
+      <UniqueIdentifier>{c0ee35aa-e502-4ce3-87a5-34a49a10b99f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\morph">
+      <UniqueIdentifier>{c57df545-2ad8-4fad-a679-5d6d5b92740e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\hardware">
+      <UniqueIdentifier>{1dfb20f1-722d-4f4b-bcab-48f4ce18208c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\terminals">
+      <UniqueIdentifier>{32d7843f-36b8-4236-a898-1e5ffc2f6fce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime">
+      <UniqueIdentifier>{484676d9-a618-49ff-87cd-de7cb2441e29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\mem">
+      <UniqueIdentifier>{6d64c7cd-c314-4322-b61f-20be11bb1c2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\video">
+      <UniqueIdentifier>{4d2ab197-27d2-4375-afc6-fe48370083de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\links">
+      <UniqueIdentifier>{2817c507-e127-41c6-95dc-352d498290fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\state">
+      <UniqueIdentifier>{9da9b65c-e6c9-4206-a1d6-3726c024e181}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\modules">
+      <UniqueIdentifier>{3334bade-34de-4bd5-992d-939d639bfdfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\_old_shit">
+      <UniqueIdentifier>{af807998-abe2-4073-a958-d3b9163132cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\_old_shit\text">
+      <UniqueIdentifier>{5faded75-318b-40af-966a-ea40592b098d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\_old_shit\sharper">
+      <UniqueIdentifier>{3f451789-fb60-420c-9866-9eb328b0dd44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\_old_shit\matrix">
+      <UniqueIdentifier>{65374994-9a73-453a-a75a-3e3b31236543}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\noises\time\ext">
+      <UniqueIdentifier>{3355d283-3594-4eec-bb16-3026cb81c15e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\noises\space\ext">
+      <UniqueIdentifier>{75e2435c-662c-4ee9-83ac-dbaa6817b842}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\error">
+      <UniqueIdentifier>{c61e21a4-ce79-41ad-9db1-ea596efe6ab0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_register">
+      <UniqueIdentifier>{332ea79a-30cc-4235-bc35-57f6de41b34a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\videos\generic\codec\consts">
+      <UniqueIdentifier>{9431ae11-7c0e-44d8-9f82-9d137bdde055}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\interf">
+      <UniqueIdentifier>{83477ba1-2612-4aa0-af54-67d81c442643}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\base_id">
+      <UniqueIdentifier>{270febcb-6987-4fe2-b6b0-057214f8dfbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\modules\storage">
+      <UniqueIdentifier>{c6c13cde-fb1a-4eee-ad1c-96aef3212a5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\modules\log">
+      <UniqueIdentifier>{4b2dab44-bf5b-4fce-8a35-23a2635502c8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\matrix\CVideoMatrixProp.hpp">
+      <Filter>props\videos\generic\_old_shit\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\sharper\CVideoSharperProp.hpp">
+      <Filter>props\videos\generic\_old_shit\sharper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\text\CVideoTextProp.hpp">
+      <Filter>props\videos\generic\_old_shit\text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\links\CLinksProp.hpp">
+      <Filter>runtime\links</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\noises\time\ext\COldTimeNoiseRemoverProp.hpp">
+      <Filter>props\videos\noises\time\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\noises\space\ext\COldSpaceNoiseRemoverProp.hpp">
+      <Filter>props\videos\noises\space\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\register_events_in_archives.hpp">
+      <Filter>_register</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\codec\consts\vals.hpp">
+      <Filter>props\videos\generic\codec\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\vec2image\buff-event-info-vec2image1.hpp">
+      <Filter>props\videos\generic\vec2image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\timed-event.hpp" />
+    <ClInclude Include="..\..\runtime\error\base-error-event.hpp">
+      <Filter>runtime\error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\mem\zip-data-event.hpp">
+      <Filter>runtime\mem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\mem\buffs-event.hpp">
+      <Filter>runtime\mem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\mem\buff-event.hpp">
+      <Filter>runtime\mem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\state\expand-time-statistic-event.hpp">
+      <Filter>runtime\state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\state\change-state-event.hpp">
+      <Filter>runtime\state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\video\frame-done.hpp">
+      <Filter>runtime\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\video\face-detect.hpp">
+      <Filter>runtime\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\video\detect-violation.hpp">
+      <Filter>runtime\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\event.hpp" />
+    <ClInclude Include="..\..\props\application\application-prop.hpp">
+      <Filter>props\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\hardware\info-cpu-event.hpp">
+      <Filter>props\hardware</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\mix_mul\mix-mul-prop.hpp">
+      <Filter>props\mix_mul</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\terminals\end-point-prop.hpp">
+      <Filter>props\terminals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\vec2image\vec2image-prop.hpp">
+      <Filter>props\videos\generic\vec2image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\codec\type-codec-mode.hpp">
+      <Filter>props\videos\generic\codec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\codec\video-codec-flat-prop.hpp">
+      <Filter>props\videos\generic\codec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\codec\video-codec-prop.hpp">
+      <Filter>props\videos\generic\codec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\convert\video-convert-prop.hpp">
+      <Filter>props\videos\generic\convert</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\convolution\video-convolution-prop.hpp">
+      <Filter>props\videos\generic\convolution</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\convolution\buff-video-convolution-prop.hpp">
+      <Filter>props\videos\generic\convolution</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\correct\video-correct-prop.hpp">
+      <Filter>props\videos\generic\correct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\detect\video-detect-prop.hpp">
+      <Filter>props\videos\generic\detect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\driver\type-catch-rgn.hpp">
+      <Filter>props\videos\generic\driver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\driver\video-driver-prop.hpp">
+      <Filter>props\videos\generic\driver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\driver\links-video-driver-prop.hpp">
+      <Filter>props\videos\generic\driver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\driver\video-driver-capture-prop.hpp">
+      <Filter>props\videos\generic\driver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\gradient\gradient-prop.hpp">
+      <Filter>props\videos\generic\gradient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\histogram\video-histogram-prop.hpp">
+      <Filter>props\videos\generic\histogram</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\morph\video-morphology-prop.hpp">
+      <Filter>props\videos\generic\morph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\motion_est\video-est-motion-prop.hpp">
+      <Filter>props\videos\generic\motion_est</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\motion_est\buff-event-info.hpp">
+      <Filter>props\videos\generic\motion_est</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\scaler\video-scaler-prop.hpp">
+      <Filter>props\videos\generic\scaler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\scaler\buff-event-info-video-scaler.hpp">
+      <Filter>props\videos\generic\scaler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\gens\diff\video-diff-prop.hpp">
+      <Filter>props\videos\gens\diff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\gens\diff\info-buff-video-diff-prop.hpp">
+      <Filter>props\videos\gens\diff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\gens\diff\params-video-diff-prop.hpp">
+      <Filter>props\videos\gens\diff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\noises\freq\freq-video-noise-remover-prop.hpp">
+      <Filter>props\videos\noises\freq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\noises\freq\info-buff-freq-noise-remover.hpp">
+      <Filter>props\videos\noises\freq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\noises\space\ext\median-space-filter-prop.hpp">
+      <Filter>props\videos\noises\space\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\noises\space\video-space-noise-remover-prop.hpp">
+      <Filter>props\videos\noises\space</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\noises\time\video-time-noise-remover-prop.hpp">
+      <Filter>props\videos\noises\time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\noises\time\ext\median-time-filter-prop.hpp">
+      <Filter>props\videos\noises\time\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\interf\interf-correct-image-event.hpp">
+      <Filter>runtime\interf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\runtime-event.hpp">
+      <Filter>runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\interf\icorrect-image.hpp">
+      <Filter>runtime\interf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\interf\base-interf-event.hpp">
+      <Filter>runtime\interf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\interf\interf-codec-image-event.hpp">
+      <Filter>runtime\interf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\interf\icodec-image.hpp">
+      <Filter>runtime\interf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\base_id\base-id-prop.hpp">
+      <Filter>props\base_id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\interf\ibase-id.hpp">
+      <Filter>runtime\interf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\interf\interf-base-id-event.hpp">
+      <Filter>runtime\interf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\modules\storage\property-storage-module-event.hpp">
+      <Filter>props\modules\storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\modules\log\property-log-module-event.hpp">
+      <Filter>props\modules\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\modules\log\vals-log-module.hpp">
+      <Filter>props\modules\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\modules\storage\using-path-type.hpp">
+      <Filter>props\modules\storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\modules\storage\path-info.hpp">
+      <Filter>props\modules\storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\codec\override-codec-data-type.hpp">
+      <Filter>props\videos\generic\codec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\convert\type-src2dst.hpp">
+      <Filter>props\videos\generic\convert</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\convert\type-convert-accuracy.hpp">
+      <Filter>props\videos\generic\convert</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\modules\storage\checker-storage-type.hpp">
+      <Filter>props\modules\storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\interf\icapture-image.hpp">
+      <Filter>runtime\interf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\runtime\interf\interf-capture-image-event.hpp">
+      <Filter>runtime\interf</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\props\videos\generic\matrix\CVideoMatrixProp.cpp">
+      <Filter>props\videos\generic\_old_shit\matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\sharper\CVideoSharperProp.cpp">
+      <Filter>props\videos\generic\_old_shit\sharper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\text\CVideoTextProp.cpp">
+      <Filter>props\videos\generic\_old_shit\text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\runtime\links\CLinksProp.cpp">
+      <Filter>runtime\links</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\noises\time\ext\COldTimeNoiseRemoverProp.cpp">
+      <Filter>props\videos\noises\time\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\noises\space\ext\COldSpaceNoiseRemoverProp.cpp">
+      <Filter>props\videos\noises\space\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\register_events_in_archives.cpp">
+      <Filter>_register</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\vec2image\buff-event-info-vec2image1.cpp">
+      <Filter>props\videos\generic\vec2image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\timed-event.cpp" />
+    <ClCompile Include="..\..\runtime\error\base-error-event.cpp">
+      <Filter>runtime\error</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\runtime\mem\zip-data-event.cpp">
+      <Filter>runtime\mem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\runtime\mem\buffs-event.cpp">
+      <Filter>runtime\mem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\runtime\mem\buff-event.cpp">
+      <Filter>runtime\mem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\runtime\state\expand-time-statistic-event.cpp">
+      <Filter>runtime\state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\runtime\state\change-state-event.cpp">
+      <Filter>runtime\state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\runtime\video\frame-done.cpp">
+      <Filter>runtime\video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\runtime\video\face-detect.cpp">
+      <Filter>runtime\video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\runtime\video\detect-violation.cpp">
+      <Filter>runtime\video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\event.cpp" />
+    <ClCompile Include="..\..\props\application\application-prop.cpp">
+      <Filter>props\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\hardware\info-cpu-event.cpp">
+      <Filter>props\hardware</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\mix_mul\mix-mul-prop.cpp">
+      <Filter>props\mix_mul</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\terminals\end-point-prop.cpp">
+      <Filter>props\terminals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\vec2image\vec2image-prop.cpp">
+      <Filter>props\videos\generic\vec2image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\codec\video-codec-flat-prop.cpp">
+      <Filter>props\videos\generic\codec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\codec\video-codec-prop.cpp">
+      <Filter>props\videos\generic\codec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\convert\video-convert-prop.cpp">
+      <Filter>props\videos\generic\convert</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\convolution\video-convolution-prop.cpp">
+      <Filter>props\videos\generic\convolution</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\convolution\buff-video-convolution-prop.cpp">
+      <Filter>props\videos\generic\convolution</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\correct\video-correct-prop.cpp">
+      <Filter>props\videos\generic\correct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\detect\video-detect-prop.cpp">
+      <Filter>props\videos\generic\detect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\driver\video-driver-prop.cpp">
+      <Filter>props\videos\generic\driver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\driver\links-video-driver-prop.cpp">
+      <Filter>props\videos\generic\driver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\driver\video-driver-capture-prop.cpp">
+      <Filter>props\videos\generic\driver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\gradient\gradient-prop.cpp">
+      <Filter>props\videos\generic\gradient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\histogram\video-histogram-prop.cpp">
+      <Filter>props\videos\generic\histogram</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\morph\video-morphology-prop.cpp">
+      <Filter>props\videos\generic\morph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\motion_est\video-est-motion-prop.cpp">
+      <Filter>props\videos\generic\motion_est</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\motion_est\buff-event-info.cpp">
+      <Filter>props\videos\generic\motion_est</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\scaler\video-scaler-prop.cpp">
+      <Filter>props\videos\generic\scaler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\scaler\buff-event-info-video-scaler.cpp">
+      <Filter>props\videos\generic\scaler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\gens\diff\video-diff-prop.cpp">
+      <Filter>props\videos\gens\diff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\gens\diff\info-buff-video-diff-prop.cpp">
+      <Filter>props\videos\gens\diff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\gens\diff\params-video-diff-prop.cpp">
+      <Filter>props\videos\gens\diff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\noises\freq\freq-video-noise-remover-prop.cpp">
+      <Filter>props\videos\noises\freq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\noises\freq\info-buff-freq-noise-remover.cpp">
+      <Filter>props\videos\noises\freq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\noises\space\ext\median-space-filter-prop.cpp">
+      <Filter>props\videos\noises\space\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\noises\space\video-space-noise-remover-prop.cpp">
+      <Filter>props\videos\noises\space</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\noises\time\video-time-noise-remover-prop.cpp">
+      <Filter>props\videos\noises\time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\noises\time\ext\median-time-filter-prop.cpp">
+      <Filter>props\videos\noises\time\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\runtime\interf\interf-correct-image-event.cpp">
+      <Filter>runtime\interf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\runtime\runtime-event.cpp">
+      <Filter>runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\runtime\interf\base-interf-event.cpp">
+      <Filter>runtime\interf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\runtime\interf\interf-codec-image-event.cpp">
+      <Filter>runtime\interf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\base_id\base-id-prop.cpp">
+      <Filter>props\base_id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\runtime\interf\interf-base-id-event.cpp">
+      <Filter>runtime\interf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\modules\storage\property-storage-module-event.cpp">
+      <Filter>props\modules\storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\modules\log\property-log-module-event.cpp">
+      <Filter>props\modules\log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\runtime\interf\interf-capture-image-event.cpp">
+      <Filter>runtime\interf</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

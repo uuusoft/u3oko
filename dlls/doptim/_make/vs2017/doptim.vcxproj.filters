@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{464542e9-b3bc-4761-a3d7-736e2a6bafca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl">
+      <UniqueIdentifier>{5f2b4321-6484-4c37-beb7-eca823445951}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\algs">
+      <UniqueIdentifier>{6939328c-8239-4b42-b479-7c3897fcf289}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\algs\_impls">
+      <UniqueIdentifier>{a781d79b-4801-4113-a706-31db6a0da223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\consts">
+      <UniqueIdentifier>{68995e9a-1664-4afe-85cf-f6cb97416508}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\main.cpp" />
+    <ClCompile Include="..\..\ioptim-impl.cpp">
+      <Filter>impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ioptim-impl-construct-funct.cpp">
+      <Filter>impl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\algs\all_algs.hpp">
+      <Filter>impl\algs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\all_algs_impl.hpp">
+      <Filter>impl\algs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\abs_diff.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\add_const.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\average2x2.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\cmp_gt_const.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\conv_mod_3x3.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\conv_mod_5x5.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\conv_mod_7x7.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\conv_mod_9x9.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\conv_mod_cond_3x3.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\flip_y.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\freq_dct_b8x8_backward.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\freq_dct_b8x8_forward.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\graduent1.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\histogram.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\l2rgb.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\hsl2rgb.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\mul_rshift.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\motion_est1.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\nv212rgb.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\nv212y16.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\remove_add_noise2.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\remove_add_noise3.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\rgb2hsl.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\sat2byte.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\rgb2l.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\set_const.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\vec2image1.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\yuy22rgb.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\yuy22y16.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\count_if_ge_alg.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\scale_flow_wany_nearest.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\scale_fixed_wdown_b2x2.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\consts\vals.hpp">
+      <Filter>impl\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\x16_x8_alg.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\x8_x16_alg.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\rgb2l2.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\\algs\conv_mod_11x11.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ioptim-alg.hpp">
+      <Filter>impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ioptim-impl.hpp">
+      <Filter>impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\algs\ycb2rgb24.hpp">
+      <Filter>impl\algs\_impls</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

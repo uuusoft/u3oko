@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="impl">
+      <UniqueIdentifier>{bcd6e5fb-f5da-41b6-9b0f-906c2087cd96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{30bfc541-250a-4591-8b80-e08d926995e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\consts">
+      <UniqueIdentifier>{05c902bc-85a6-46b4-8aa6-32d1337dd2af}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\source\vals.hpp">
+      <Filter>impl\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\isource-impl.hpp">
+      <Filter>impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\syn.hpp">
+      <Filter>impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\source-info.hpp">
+      <Filter>impl</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\source\isource-impl.cpp">
+      <Filter>impl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

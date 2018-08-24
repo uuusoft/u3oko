@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="appl">
+      <UniqueIdentifier>{6b0af442-385f-4b3d-8f23-4885cd6db9c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\consts">
+      <UniqueIdentifier>{e9aac01c-525f-4a1b-a4c9-e11ec547afc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{3fca42b5-958d-4c07-9473-2f89f3240790}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\helpers">
+      <UniqueIdentifier>{54791d55-cc90-4d33-bd59-72413ee96a5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\impl">
+      <UniqueIdentifier>{5ecd8ea7-5f92-4945-9465-84ad834f639d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\impl\indexer">
+      <UniqueIdentifier>{d45902d1-9f8e-460c-82e5-5df0e94cfd92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\impl\indexer\sqlite">
+      <UniqueIdentifier>{290b671c-1e1a-4bd4-bad2-0106e75933ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\impl\indexer\test">
+      <UniqueIdentifier>{bdfb878a-07b6-4220-b213-e3848df94715}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\impl\storage">
+      <UniqueIdentifier>{4d7ce1c9-50e9-40ff-b064-8f56f9f7af84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\impl\storage\test">
+      <UniqueIdentifier>{322d092b-5faa-4add-800e-4ad79b46c077}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\main.cpp" />
+    <ClCompile Include="..\..\appl\storage-module-catch-msg-functs.cpp">
+      <Filter>appl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\storage-module.cpp">
+      <Filter>appl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\impl\storage\test\test-storage-impl.cpp">
+      <Filter>appl\impl\storage\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\impl\indexer\test\test-indexer-impl.cpp">
+      <Filter>appl\impl\indexer\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\impl\indexer\test\state-test-indexer.cpp">
+      <Filter>appl\impl\indexer\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\impl\indexer\test\test-indexer-impl-int-functs.cpp">
+      <Filter>appl\impl\indexer\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\storage-module-int-functs.cpp">
+      <Filter>appl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\consts\vals.hpp">
+      <Filter>appl\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\syn_types.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\helpers\get_sort_files_functs.hpp">
+      <Filter>appl\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\storage-module.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\istorage-impl.hpp">
+      <Filter>appl\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\iindexer-impl.hpp">
+      <Filter>appl\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\storage\test\test-storage-impl.hpp">
+      <Filter>appl\impl\storage\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\factory-impl-functs.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\indexer\test\test-indexer-impl.hpp">
+      <Filter>appl\impl\indexer\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\indexer\test\state-test-indexer.hpp">
+      <Filter>appl\impl\indexer\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\indexer\test\state-record.hpp">
+      <Filter>appl\impl\indexer\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\indexer\test\state-stream.hpp">
+      <Filter>appl\impl\indexer\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\indexer\test\state-object.hpp">
+      <Filter>appl\impl\indexer\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\indexer\test\vals.hpp">
+      <Filter>appl\impl\indexer\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\state-impls-type.hpp">
+      <Filter>appl\impl</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

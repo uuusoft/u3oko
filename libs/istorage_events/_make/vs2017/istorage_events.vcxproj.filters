@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{1d4f3450-7c3d-43d2-8ddf-33a75f297dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events">
+      <UniqueIdentifier>{5df8eed0-1a45-4622-b84b-64019d055814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\_register">
+      <UniqueIdentifier>{ba142152-697c-425e-9245-1ec71c2b0d8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="consts">
+      <UniqueIdentifier>{a6300e57-2963-4963-8fa8-498d8138e77b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\register_events_in_archives.hpp">
+      <Filter>events\_register</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\base-storage-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\mem-resource-storage-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\wrapper-storage-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\get-runtime-info.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\get-objects.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\update-stream.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\read-data.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\write-data.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\get-statistic-info.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\type-direction-stream.hpp" />
+    <ClInclude Include="..\..\type-update-stream.hpp" />
+    <ClInclude Include="..\..\time-stream.hpp" />
+    <ClInclude Include="..\..\base_types.hpp" />
+    <ClInclude Include="..\..\consts\vals.hpp">
+      <Filter>consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\type-time-stream.hpp" />
+    <ClInclude Include="..\..\type-object-id.hpp" />
+    <ClInclude Include="..\..\type-action-stream.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\events\register_events_in_archives.cpp">
+      <Filter>events\_register</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\base-storage-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\mem-resource-storage-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\wrapper-storage-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\get-runtime-info.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\get-objects.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\update-stream.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\read-data.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\write-data.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\get-statistic-info.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

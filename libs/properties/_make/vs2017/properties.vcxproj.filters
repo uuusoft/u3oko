@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{1d4f3450-7c3d-43d2-8ddf-33a75f297dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="consts">
+      <UniqueIdentifier>{ad4c5879-cd6e-4993-8374-93a502874486}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="consts\keys">
+      <UniqueIdentifier>{fcf6e6d9-ea2c-4626-bdd6-0c053f93bda1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vers">
+      <UniqueIdentifier>{e41d6048-d0e2-4c71-a76e-72cc9998c866}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vers\links">
+      <UniqueIdentifier>{9d1bfeab-c865-45e2-91a4-341223453936}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\consts\keys\properties_keys.hpp">
+      <Filter>consts\keys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\consts\vals.hpp">
+      <Filter>consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ishared-property-storage.hpp" />
+    <ClInclude Include="..\..\ishared-property.hpp" />
+    <ClInclude Include="..\..\vers\links\links-application.hpp">
+      <Filter>vers\links</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vers\links\ilinks-property.hpp">
+      <Filter>vers\links</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\ishared-property.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

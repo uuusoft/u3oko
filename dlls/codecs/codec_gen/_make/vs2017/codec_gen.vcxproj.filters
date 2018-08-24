@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{368c68a8-153e-48d8-bea9-ef426459ac49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="consts">
+      <UniqueIdentifier>{0b355a26-14a6-43bb-8e96-f25860fa2025}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="helpers">
+      <UniqueIdentifier>{87ccdd21-c201-4bd3-bcbb-aabd679730c0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\consts\vals.hpp">
+      <Filter>consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\statistic-stage.hpp" />
+    <ClInclude Include="..\..\statistic-info.hpp" />
+    <ClInclude Include="..\..\info-gen-codec.hpp" />
+    <ClInclude Include="..\..\header-iframe-hsl.hpp" />
+    <ClInclude Include="..\..\header-iframe.hpp" />
+    <ClInclude Include="..\..\frame-dims.hpp" />
+    <ClInclude Include="..\..\base-header-frame.hpp" />
+    <ClInclude Include="..\..\style-frame.hpp" />
+    <ClInclude Include="..\..\style-codec.hpp" />
+    <ClInclude Include="..\..\codec-generic.hpp" />
+    <ClInclude Include="..\..\syn.hpp" />
+    <ClInclude Include="..\..\helpers\dump-buffer2jpeg-file.hpp">
+      <Filter>helpers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\main.cpp" />
+    <ClCompile Include="..\..\codec-generic.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

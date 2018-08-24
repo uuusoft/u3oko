@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\main.cpp" />
+    <ClCompile Include="..\..\mjpeg-impl.cpp" />
+    <ClCompile Include="..\..\mjpeg-impl-decoder-iframe.cpp">
+      <Filter>_decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\mjpeg-impl-decoder-generic.cpp">
+      <Filter>_decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\mjpeg-impl-coder-iframe.cpp">
+      <Filter>_coder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\mjpeg-impl-coder-generic.cpp">
+      <Filter>_coder</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{d193b2db-a77d-47ab-a57d-70c1d5c2e306}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="consts">
+      <UniqueIdentifier>{5aecf4f2-4e3b-40f2-92cd-e435c0bf8c05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_coder">
+      <UniqueIdentifier>{0c2173f6-5298-45fe-90af-9d2844a5e6da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_decoder">
+      <UniqueIdentifier>{8935eca9-ddc3-422e-9ae9-114054265fe6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\consts\vals.hpp">
+      <Filter>consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\syn_types.hpp" />
+    <ClInclude Include="..\..\mjpeg-impl.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

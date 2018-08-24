@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{1d4f3450-7c3d-43d2-8ddf-33a75f297dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl">
+      <UniqueIdentifier>{ffc0481e-dc34-41d2-bac4-c770541a7453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="consts">
+      <UniqueIdentifier>{21688743-c48e-41f2-be72-b2509dacddc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="details">
+      <UniqueIdentifier>{4e120be7-c9db-418b-8a07-76c45bb53a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mem">
+      <UniqueIdentifier>{e57cde01-2f7d-4533-b95c-296a83a65dd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="details\old_shit">
+      <UniqueIdentifier>{42913867-c701-46ff-8f50-fdffdd103e8f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vals.hpp">
+      <Filter>consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vals_size.hpp">
+      <Filter>consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vals_text.hpp">
+      <Filter>consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\syn_types.hpp" />
+    <ClInclude Include="..\..\mem\iblock-mem.hpp">
+      <Filter>mem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mem\ihandler-mem.hpp">
+      <Filter>mem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mem\imem.hpp">
+      <Filter>mem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\create-info.hpp" />
+    <ClInclude Include="..\..\ilink-creator.hpp" />
+    <ClInclude Include="..\..\ilink.hpp" />
+    <ClInclude Include="..\..\type-destroy-link.hpp" />
+    <ClInclude Include="..\..\state-process-event.hpp" />
+    <ClInclude Include="..\..\details\type-run-code.hpp">
+      <Filter>details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\details\type-sync-call.hpp">
+      <Filter>details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\details\type-request-call.hpp">
+      <Filter>details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\details\type-link-modules.hpp">
+      <Filter>details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\init-application.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\iapplication-proxy.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\iapplication.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\details\ESeqCall.hpp">
+      <Filter>details\old_shit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\details\ETypeActivity.hpp">
+      <Filter>details\old_shit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\details\ETypeSide.hpp">
+      <Filter>details\old_shit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\create-info.cpp" />
+    <ClCompile Include="..\..\ilink.cpp" />
+    <ClCompile Include="..\..\appl\iapplication-proxy.cpp">
+      <Filter>appl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\iapplication.cpp">
+      <Filter>appl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

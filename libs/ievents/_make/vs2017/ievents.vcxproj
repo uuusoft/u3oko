@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|ARM">
+      <Configuration>debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|Win32">
+      <Configuration>debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|ARM">
+      <Configuration>release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|Win32">
+      <Configuration>release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\event.hpp" />
+    <ClInclude Include="..\..\props\base_id\base-id-prop.hpp" />
+    <ClInclude Include="..\..\props\modules\log\property-log-module-event.hpp" />
+    <ClInclude Include="..\..\props\modules\log\vals-log-module.hpp" />
+    <ClInclude Include="..\..\props\modules\storage\checker-storage-type.hpp" />
+    <ClInclude Include="..\..\props\modules\storage\path-info.hpp" />
+    <ClInclude Include="..\..\props\modules\storage\property-storage-module-event.hpp" />
+    <ClInclude Include="..\..\props\modules\storage\using-path-type.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\codec\override-codec-data-type.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\convert\type-convert-accuracy.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\convert\type-src2dst.hpp" />
+    <ClInclude Include="..\..\runtime\interf\base-interf-event.hpp" />
+    <ClInclude Include="..\..\runtime\interf\ibase-id.hpp" />
+    <ClInclude Include="..\..\runtime\interf\icapture-image.hpp" />
+    <ClInclude Include="..\..\runtime\interf\icodec-image.hpp" />
+    <ClInclude Include="..\..\runtime\interf\icorrect-image.hpp" />
+    <ClInclude Include="..\..\runtime\interf\interf-base-id-event.hpp" />
+    <ClInclude Include="..\..\runtime\interf\interf-capture-image-event.hpp" />
+    <ClInclude Include="..\..\runtime\interf\interf-codec-image-event.hpp" />
+    <ClInclude Include="..\..\runtime\interf\interf-correct-image-event.hpp" />
+    <ClInclude Include="..\..\timed-event.hpp" />
+    <ClInclude Include="..\..\includes.hpp" />
+    <ClInclude Include="..\..\includes_int.hpp" />
+    <ClInclude Include="..\..\props\application\application-prop.hpp" />
+    <ClInclude Include="..\..\props\hardware\info-cpu-event.hpp" />
+    <ClInclude Include="..\..\props\mix_mul\mix-mul-prop.hpp" />
+    <ClInclude Include="..\..\props\terminals\end-point-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\codec\consts\vals.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\codec\video-codec-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\codec\video-codec-flat-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\codec\type-codec-mode.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\convert\video-convert-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\convolution\video-convolution-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\convolution\buff-video-convolution-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\correct\video-correct-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\detect\video-detect-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\driver\video-driver-capture-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\driver\links-video-driver-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\driver\video-driver-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\driver\type-catch-rgn.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\gradient\gradient-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\histogram\video-histogram-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\matrix\CVideoMatrixProp.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\morph\video-morphology-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\motion_est\video-est-motion-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\motion_est\buff-event-info.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\scaler\video-scaler-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\scaler\buff-event-info-video-scaler.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\sharper\CVideoSharperProp.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\text\CVideoTextProp.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\vec2image\vec2image-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\vec2image\buff-event-info-vec2image1.hpp" />
+    <ClInclude Include="..\..\props\videos\gens\diff\video-diff-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\gens\diff\info-buff-video-diff-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\gens\diff\params-video-diff-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\noises\freq\freq-video-noise-remover-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\noises\freq\info-buff-freq-noise-remover.hpp" />
+    <ClInclude Include="..\..\props\videos\noises\space\video-space-noise-remover-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\noises\space\ext\median-space-filter-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\noises\space\ext\COldSpaceNoiseRemoverProp.hpp" />
+    <ClInclude Include="..\..\props\videos\noises\time\video-time-noise-remover-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\noises\time\ext\median-time-filter-prop.hpp" />
+    <ClInclude Include="..\..\props\videos\noises\time\ext\COldTimeNoiseRemoverProp.hpp" />
+    <ClInclude Include="..\..\register_events_in_archives.hpp" />
+    <ClInclude Include="..\..\runtime\runtime-event.hpp" />
+    <ClInclude Include="..\..\runtime\error\base-error-event.hpp" />
+    <ClInclude Include="..\..\runtime\links\CLinksProp.hpp" />
+    <ClInclude Include="..\..\runtime\mem\buff-event.hpp" />
+    <ClInclude Include="..\..\runtime\mem\buffs-event.hpp" />
+    <ClInclude Include="..\..\runtime\mem\zip-data-event.hpp" />
+    <ClInclude Include="..\..\runtime\state\change-state-event.hpp" />
+    <ClInclude Include="..\..\runtime\state\expand-time-statistic-event.hpp" />
+    <ClInclude Include="..\..\runtime\video\detect-violation.hpp" />
+    <ClInclude Include="..\..\runtime\video\face-detect.hpp" />
+    <ClInclude Include="..\..\runtime\video\frame-done.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\event.cpp" />
+    <ClCompile Include="..\..\props\base_id\base-id-prop.cpp" />
+    <ClCompile Include="..\..\props\modules\log\property-log-module-event.cpp" />
+    <ClCompile Include="..\..\props\modules\storage\property-storage-module-event.cpp" />
+    <ClCompile Include="..\..\runtime\interf\base-interf-event.cpp" />
+    <ClCompile Include="..\..\runtime\interf\interf-base-id-event.cpp" />
+    <ClCompile Include="..\..\runtime\interf\interf-capture-image-event.cpp" />
+    <ClCompile Include="..\..\runtime\interf\interf-codec-image-event.cpp" />
+    <ClCompile Include="..\..\runtime\interf\interf-correct-image-event.cpp" />
+    <ClCompile Include="..\..\timed-event.cpp" />
+    <ClCompile Include="..\..\props\application\application-prop.cpp" />
+    <ClCompile Include="..\..\props\hardware\info-cpu-event.cpp" />
+    <ClCompile Include="..\..\props\mix_mul\mix-mul-prop.cpp" />
+    <ClCompile Include="..\..\props\terminals\end-point-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\codec\video-codec-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\codec\video-codec-flat-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\convert\video-convert-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\convolution\video-convolution-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\convolution\buff-video-convolution-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\correct\video-correct-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\detect\video-detect-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\driver\video-driver-capture-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\driver\links-video-driver-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\driver\video-driver-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\gradient\gradient-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\histogram\video-histogram-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\matrix\CVideoMatrixProp.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\morph\video-morphology-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\motion_est\video-est-motion-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\motion_est\buff-event-info.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\scaler\video-scaler-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\scaler\buff-event-info-video-scaler.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\sharper\CVideoSharperProp.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\text\CVideoTextProp.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\vec2image\vec2image-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\vec2image\buff-event-info-vec2image1.cpp" />
+    <ClCompile Include="..\..\props\videos\gens\diff\video-diff-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\gens\diff\info-buff-video-diff-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\gens\diff\params-video-diff-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\noises\freq\freq-video-noise-remover-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\noises\freq\info-buff-freq-noise-remover.cpp" />
+    <ClCompile Include="..\..\props\videos\noises\space\video-space-noise-remover-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\noises\space\ext\median-space-filter-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\noises\space\ext\COldSpaceNoiseRemoverProp.cpp" />
+    <ClCompile Include="..\..\props\videos\noises\time\video-time-noise-remover-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\noises\time\ext\median-time-filter-prop.cpp" />
+    <ClCompile Include="..\..\props\videos\noises\time\ext\COldTimeNoiseRemoverProp.cpp" />
+    <ClCompile Include="..\..\register_events_in_archives.cpp" />
+    <ClCompile Include="..\..\runtime\runtime-event.cpp" />
+    <ClCompile Include="..\..\runtime\error\base-error-event.cpp" />
+    <ClCompile Include="..\..\runtime\links\CLinksProp.cpp" />
+    <ClCompile Include="..\..\runtime\mem\buff-event.cpp" />
+    <ClCompile Include="..\..\runtime\mem\buffs-event.cpp" />
+    <ClCompile Include="..\..\runtime\mem\zip-data-event.cpp" />
+    <ClCompile Include="..\..\runtime\state\change-state-event.cpp" />
+    <ClCompile Include="..\..\runtime\state\expand-time-statistic-event.cpp" />
+    <ClCompile Include="..\..\runtime\video\detect-violation.cpp" />
+    <ClCompile Include="..\..\runtime\video\face-detect.cpp" />
+    <ClCompile Include="..\..\runtime\video\frame-done.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E1BDDADF-0FF9-4C09-A935-77DA930845D3}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ievents</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|ARM'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|ARM'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">
+    <OutDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath);../../../../../boost</IncludePath>
+    <LibraryWPath>$(WindowsSDK_MetadataPath);</LibraryWPath>
+    <LibraryPath>../../../../stage/windows/desktop/vs14/x32/lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|ARM'">
+    <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath);../../../../../boost</IncludePath>
+    <LibraryWPath>$(WindowsSDK_MetadataPath);</LibraryWPath>
+    <LibraryPath>$(BOOST_DIR)\stage\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath);../../../../../boost</IncludePath>
+    <LibraryWPath>$(WindowsSDK_MetadataPath);</LibraryWPath>
+    <LibraryPath>../../../../stage/windows/desktop/x64/lib;$(LibraryPath)</LibraryPath>
+    <OutDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+    <OutDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath);../../../../../boost</IncludePath>
+    <LibraryWPath>$(WindowsSDK_MetadataPath);</LibraryWPath>
+    <LibraryPath>../../../../stage/windows/desktop/vs14/x32/lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|ARM'">
+    <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath);../../../../../boost</IncludePath>
+    <LibraryWPath>$(WindowsSDK_MetadataPath);</LibraryWPath>
+    <LibraryPath>$(BOOST_DIR)\stage\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath);../../../../../boost</IncludePath>
+    <LibraryWPath>$(WindowsSDK_MetadataPath);</LibraryWPath>
+    <LibraryPath>../../../../stage/windows/desktop/x64/lib;$(LibraryPath)</LibraryPath>
+    <OutDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>..\..\..\..\..\temp\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>UMODE_APPL;WIN32;DEBUG;_WIN32_WINNT=0x501;DEBFUNCTDLL1_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../../</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm400 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <BrowseInformation>true</BrowseInformation>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <ShowIncludes>false</ShowIncludes>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Platform)\</Command>
+    </PostBuildEvent>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|ARM'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>UMODE_APPL;WIN32;DEBUG;_WIN32_WINNT=0x501;DEBFUNCTDLL1_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../../</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm400 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <BrowseInformation>true</BrowseInformation>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Platform)\</Command>
+    </PostBuildEvent>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>UMODE_APPL;WIN32;DEBUG;_WIN32_WINNT=0x501;DEBFUNCTDLL1_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../../</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm400 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <BrowseInformation>true</BrowseInformation>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Platform)\</Command>
+    </PostBuildEvent>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>UMODE_APPL;WIN32;NDEBUG;_LIB;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../../</AdditionalIncludeDirectories>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <AdditionalOptions>-Zm400 %(AdditionalOptions)</AdditionalOptions>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <ShowIncludes>false</ShowIncludes>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Platform)\</Command>
+    </PostBuildEvent>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|ARM'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>UMODE_APPL;WIN32;NDEBUG;_LIB;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../../</AdditionalIncludeDirectories>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <AdditionalOptions>-Zm400 %(AdditionalOptions)</AdditionalOptions>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Platform)\</Command>
+    </PostBuildEvent>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>UMODE_APPL;WIN32;NDEBUG;_LIB;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../../</AdditionalIncludeDirectories>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <AdditionalOptions>-Zm400 %(AdditionalOptions)</AdditionalOptions>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <ShowIncludes>false</ShowIncludes>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Platform)\</Command>
+    </PostBuildEvent>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

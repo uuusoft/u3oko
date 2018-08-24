@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="details">
+      <UniqueIdentifier>{edfa9545-a6a0-44c5-8aa8-523e688e65e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="files">
+      <UniqueIdentifier>{32b2ab0b-f930-4119-a2b8-4e66becf21ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{3eb65d04-32bb-4843-a79e-7a26782fb92d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl">
+      <UniqueIdentifier>{f1dcde6c-b49a-4a25-b50e-74ab0bb53430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="helpers">
+      <UniqueIdentifier>{c1494b1c-6b17-4747-9886-6a56c0b85651}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\details\mem_alloc_functs.hpp">
+      <Filter>details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\helpers\get_buff_functs.hpp">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\files\decorate_dll_name.hpp">
+      <Filter>files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\iblock-mem-allocator.hpp" />
+    <ClInclude Include="..\..\iblock-mem.hpp" />
+    <ClInclude Include="..\..\impl\block-mem-allocator-proxy.hpp">
+      <Filter>impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\block-mem-allocator.hpp">
+      <Filter>impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\impl\block-mem.hpp">
+      <Filter>impl</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\details\mem_alloc_functs.cpp">
+      <Filter>details</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\block-mem-allocator-int-functs.cpp">
+      <Filter>impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\block-mem.cpp">
+      <Filter>impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\impl\block-mem-allocator-ext-functs.cpp">
+      <Filter>impl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="io">
+      <UniqueIdentifier>{c483c7ae-5884-4fe5-aa50-a23794728a39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="io\_includes">
+      <UniqueIdentifier>{15fd0aa2-20a8-4a48-89da-006539a58899}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{965025d9-0bba-4288-b68c-015ca2b62895}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mcalls">
+      <UniqueIdentifier>{140a0502-6b78-49f6-b8a5-6c4902f34218}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mcalls\helpers">
+      <UniqueIdentifier>{47f9241d-6530-47dc-b6c6-c13c86a2ca47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mcalls\consts">
+      <UniqueIdentifier>{bc00c4c0-600b-4f3d-99b7-76fdce6311a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mcalls\_includes">
+      <UniqueIdentifier>{0ecfab16-e47b-49bb-a79c-f26a3e156ec6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\io\ioptim.hpp">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\io\includes.hpp">
+      <Filter>io\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\int_optim_typedefs.hpp" />
+    <ClInclude Include="..\..\io\hioptim.hpp">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\io\qoptim.hpp">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mcalls\includes.hpp">
+      <Filter>mcalls\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mcalls\includes_int.hpp">
+      <Filter>mcalls\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mcalls\check_align_funct.hpp">
+      <Filter>mcalls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mcalls\consts\vals.hpp">
+      <Filter>mcalls\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mcalls\helpers\buff_divide_functs.hpp">
+      <Filter>mcalls\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mcalls\helpers\buff_helpers_functs.hpp">
+      <Filter>mcalls\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\io\proxy-buff.hpp">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\io\ioptim-proxy.hpp">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\io\mcall-info.hpp">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\io\mfunct-params.hpp">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mcalls\caller-impl.hpp">
+      <Filter>mcalls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mcalls\info-mfunct.hpp">
+      <Filter>mcalls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mcalls\align-property.hpp">
+      <Filter>mcalls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mcalls\shared-info-mfunct.hpp">
+      <Filter>mcalls</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\mcalls\caller-impl.cpp">
+      <Filter>mcalls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\mcalls\caller-impl-int-functs.cpp">
+      <Filter>mcalls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\mcalls\caller-impl-thread-functs.cpp">
+      <Filter>mcalls</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

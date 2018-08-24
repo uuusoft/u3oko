@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{1d4f3450-7c3d-43d2-8ddf-33a75f297dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events">
+      <UniqueIdentifier>{5df8eed0-1a45-4622-b84b-64019d055814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{d4201249-9f39-4731-b69e-dc20b781579e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\helpers">
+      <UniqueIdentifier>{2bd05fc9-2119-4f39-baf6-48a31c1b0658}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\impl">
+      <UniqueIdentifier>{104691e7-5f22-40f3-a007-521f4b4a7e4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\_mouse">
+      <UniqueIdentifier>{b04e695f-290c-44cf-9223-ae4c4b040f0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\_cmd">
+      <UniqueIdentifier>{63d118a7-d835-4a52-a373-e0a50757d7e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\_register">
+      <UniqueIdentifier>{f6538cc0-df1c-480f-b7e4-481443188464}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\helpers\color_functs.hpp">
+      <Filter>utils\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\helpers\pos_functs.hpp">
+      <Filter>utils\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\helpers\rect_functs.hpp">
+      <Filter>utils\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\helpers\size_functs.hpp">
+      <Filter>utils\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\register_events_in_archives.hpp">
+      <Filter>events\_register</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\type-events.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\base-gui-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\mem-block-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\size-changed-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\update-draw-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\video-buff-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\type-mouse-button.hpp">
+      <Filter>events\_mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\command-code-event.hpp">
+      <Filter>events\_cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\exit-appl-event.hpp">
+      <Filter>events\_cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\mouse-button-down-event.hpp">
+      <Filter>events\_mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\mouse-button-up-event.hpp">
+      <Filter>events\_mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\irect.hpp">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\isize.hpp">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\ipos.hpp">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\color.hpp">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\impl\size.hpp">
+      <Filter>utils\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\impl\rect.hpp">
+      <Filter>utils\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\impl\pos.hpp">
+      <Filter>utils\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\impl\info.hpp">
+      <Filter>utils\impl</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\events\register_events_in_archives.cpp">
+      <Filter>events\_register</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\base-gui-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\mem-block-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\size-changed-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\update-draw-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\video-buff-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\command-code-event.cpp">
+      <Filter>events\_cmd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\exit-appl-event.cpp">
+      <Filter>events\_cmd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\mouse-button-down-event.cpp">
+      <Filter>events\_mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\mouse-button-up-event.cpp">
+      <Filter>events\_mouse</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

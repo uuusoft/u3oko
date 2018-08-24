@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="impl">
+      <UniqueIdentifier>{1765b72d-ca5a-47d1-8d84-544712e53be6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="impl\consts">
+      <UniqueIdentifier>{13739399-00da-4b70-a318-714f77cf6d66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{821d4c68-6415-4615-89b1-5d9fe61d9647}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\source\main.cpp" />
+    <ClCompile Include="..\source\filter-dll.cpp">
+      <Filter>impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\info-filter-dll.cpp">
+      <Filter>impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\filter-dll-thread-funct.cpp">
+      <Filter>impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\filter-dll-fill-buffer-functs.cpp">
+      <Filter>impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\obj-source-impl-proxy.cpp">
+      <Filter>impl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\source\consts\vals.hpp">
+      <Filter>impl\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\syn_types.hpp">
+      <Filter>impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\filter-dll.hpp">
+      <Filter>impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\info-filter-dll.hpp">
+      <Filter>impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\obj-source-impl-proxy.hpp">
+      <Filter>impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\icapture-image-null-impl.hpp">
+      <Filter>impl</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,13 @@
+#pragma once
+/**
+\file		    project_config.hpp
+\author		  Anton Erashov /eai/ skype: ytkoduff; emails: erashov@uuusoft.com, erashov2004@yandex.ru
+\date		    01.11.2016
+\copyright	www.uuusoft.com
+\project	  uuu_core
+\brief		
+*/
+
+#define PROJECT_NAME			@project_name@
+#define PROJECT_VERSION_MAJOR	@project_version_major@
+#define PROJECT_VERSION_MINOR	@project_version_minor@
