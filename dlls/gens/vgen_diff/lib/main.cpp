@@ -12,4 +12,4 @@
 #include "mmedia/defines/includes.hpp"
 #include "includes_int.hpp"
 #include "diff-impl.hpp"
-#include "mmedia/android_log_functs.hpp"
+#include "mmedia/libs/helpers/log/android-log-functs.hpp"

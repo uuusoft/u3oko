@@ -5,7 +5,7 @@
 \date       01.11.2016
 \copyright  www.uuusoft.com
 \project    uuu_helpers
-\brief    
+\brief      empty brief
 */
 
 namespace libs { namespace helpers { namespace process {

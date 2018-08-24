@@ -13,7 +13,7 @@
 #include <regex>
 #include "includes_int.hpp"
 #include "uuu_appl.hpp"
-#include "mmedia/android_log_functs.hpp"
+#include "mmedia/libs/helpers/log/android-log-functs.hpp"
 
 namespace bip = boost::interprocess;
 namespace bpo = boost::program_options;
@@ -173,8 +173,8 @@ extern "C" BOOST_SYMBOL_EXPORT int
 main_impl (int _argc, char* _argv[])
 {
 #ifdef UUU_OS_ANDROID
-  log::android::init ();
-  log::android::Logger logger;
+  ::libs::helpers::log::android::init ();
+  ::libs::helpers::log::android::Logger logger;
   SET_MODULE (logger, UUU_LOG_TAG);
 #endif
   XULOG_INFO ("main_impl: beg");

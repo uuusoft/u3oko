@@ -385,6 +385,7 @@ copy /Y /V $(OutDir)$(TargetFileName) ..\..\..\..\..\out\$(Configuration)\$(Plat
     <ClInclude Include="..\..\hboost\name-remover.hpp" />
     <ClInclude Include="..\..\includes.hpp" />
     <ClInclude Include="..\..\includes_int.hpp" />
+    <ClInclude Include="..\..\log\android-log-functs.hpp" />
     <ClInclude Include="..\..\math\freq_calculator.hpp" />
     <ClInclude Include="..\..\mem\acopy.hpp" />
     <ClInclude Include="..\..\mem\aligned_mem_functs.hpp" />

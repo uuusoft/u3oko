@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="motion">
+      <UniqueIdentifier>{392f8f26-a528-4b2a-8c54-347f27d9e547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="motion\est1">
+      <UniqueIdentifier>{6d4e7f29-3507-414c-a64e-465b991860d2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\est1\motion_est1.hpp">
+      <Filter>motion\est1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\est1\move_alg.hpp">
+      <Filter>motion\est1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\est1\vals.hpp">
+      <Filter>motion\est1</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\est1\motion_est1_alu.cpp">
+      <Filter>motion\est1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\est1\motion_est1_avx1.cpp">
+      <Filter>motion\est1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\est1\motion_est1_avx2.cpp">
+      <Filter>motion\est1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\est1\motion_est1_base.cpp">
+      <Filter>motion\est1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\est1\motion_est1_sse2.cpp">
+      <Filter>motion\est1</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

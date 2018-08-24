@@ -11,7 +11,7 @@
 #include "mmedia/defines/defines.hpp"
 #include "mmedia/defines/includes.hpp"
 #include "includes_int.hpp"
-#include "mmedia/android_log_functs.hpp"
+#include "mmedia/libs/helpers/log/android-log-functs.hpp"
 
 static std::mutex                                g_sinc;
 static int                                       counter_refs_ = 0;
@@ -25,8 +25,8 @@ create_impl ()
   if (!g_appl)
     {
 #ifdef UUU_OS_ANDROID
-      log::android::init ();
-      log::android::Logger logger;
+      ::libs::helpers::log::android::init ();
+      ::libs::helpers::log::android::Logger logger;
       SET_MODULE (logger, UUU_LOG_TAG);
 #endif
       g_appl = new ::modules::uuu_storage::appl::StorageModule;
@@ -51,7 +51,7 @@ delete_impl (::libs::link::appl::IApplication::raw_ptr _appl)
       delete g_appl;
       g_appl = nullptr;
 #ifdef UUU_OS_ANDROID
-      log::android::deinit ();
+      ::libs::helpers::log::android::deinit ();
 #endif
     }
 

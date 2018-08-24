@@ -40,10 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\filter-dll.cpp" />
-    <ClCompile Include="..\..\filter-dll-interface-camera.cpp" />
-    <ClCompile Include="..\..\filter-dll-interface-coder.cpp" />
-    <ClCompile Include="..\..\filter-dll-interface-control-rate.cpp" />
-    <ClCompile Include="..\..\filter-dll-interface-grabber-frame.cpp" />
     <ClCompile Include="..\..\main.cpp" />
     <ClCompile Include="..\..\info-filter.cpp" />
     <ClCompile Include="..\..\filter-dll-transform-functs.cpp" />

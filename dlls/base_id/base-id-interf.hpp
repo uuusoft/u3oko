@@ -1,7 +1,7 @@
 ﻿#pragma once
 /**
 \file       base-id-interf.hpp
-\author     Erashov A. (EAI) erashov2004@yandex.ru
+\author     Erashov A. /eai/ skype: ytkoduff; emails: erashov@uuusoft.com, erashov2004@yandex.ru
 \date       19.07.2018
 \copyright  www.uuusoft.com
 \project    uuu_base_id_dll
@@ -9,7 +9,7 @@
 
 namespace dlls { namespace base_id {
 /**
-\brief  
+\brief  Реализация интерфейса фильтра "базовый идентификатор" для взаимодействия с другими фильтрами в графе.
 */
 class BaseIdInterf : public ::libs::ievents::runtime::interf::IBaseId
 {

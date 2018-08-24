@@ -31,9 +31,9 @@ class Filter final : public ::libs::icore::impl::var1::obj::dll::IFilter,
 
   void init_pts (ConnectInfo* info);
 
-  BaseIdInterf::ptr base_interf_;           //< ???
+  BaseIdInterf::ptr base_interf_;           //< Интерфейс для взаимодействия с другими фильтрами в графе.
   signed long long  counter_frames_;        //< Счетчик переданных клиентам кадров.
-  bool              send_base_interf_;      //< ???
+  bool              send_base_interf_;      //< Флаг посылки сообщения с интерфейсам в данной сессии работы графа.
 };
 
 }}      // namespace dlls::base_id

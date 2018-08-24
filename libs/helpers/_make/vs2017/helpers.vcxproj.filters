@@ -109,6 +109,9 @@
     <Filter Include="dshow\consts">
       <UniqueIdentifier>{3610c74a-9367-4e88-aef0-8b45f0a2f834}</UniqueIdentifier>
     </Filter>
+    <Filter Include="log">
+      <UniqueIdentifier>{a4047e24-1d20-463b-8276-b87fd19cbb97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\bmp\funct_create_bmp_file.hpp">
@@ -317,6 +320,9 @@
     </ClInclude>
     <ClInclude Include="..\..\files\update_register_lib_funct.hpp">
       <Filter>files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\log\android-log-functs.hpp">
+      <Filter>log</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

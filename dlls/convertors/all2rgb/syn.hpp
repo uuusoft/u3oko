@@ -4,7 +4,7 @@
 /**
 \file       syn.hpp
 \date       01.05.2017
-\author     Erashov A. (EAI) skype{ytkoduff} email{erashov@uuusoft.com erashov2004@yandex.ru}
+\author     Erashov A. /eai/ skype: ytkoduff; emails: erashov@uuusoft.com, erashov2004@yandex.ru
 \copyright  www.uuusoft.com
 \project    uuu_all2rgb
 \brief      Внутренний интерфейс включения данного модуля.

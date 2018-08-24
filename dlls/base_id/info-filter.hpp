@@ -9,15 +9,13 @@
 */
 
 namespace dlls { namespace base_id {
-//  forward
-class Filter;
 /**
   \brief  empty brief
   */
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter
 {
   // ext types
-  typedef ::libs::ievents::props::base_id::BaseIdProp props_type;
+  using props_type = ::libs::ievents::props::base_id::BaseIdProp;
 
   InfoFilter ();
 

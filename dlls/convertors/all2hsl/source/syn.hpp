@@ -3,7 +3,7 @@
 #pragma once
 /**
 \file       syn.hpp
-\author     Erashov A. (EAI) skype{ytkoduff} email{erashov@uuusoft.com erashov2004@yandex.ru}
+\author     Erashov A. /eai/ skype: ytkoduff; emails: erashov@uuusoft.com, erashov2004@yandex.ru
 \date       26.07.2016
 \copyright  www.uuusoft.com
 \project    uuu_all2hsl

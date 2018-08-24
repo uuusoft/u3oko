@@ -9,11 +9,4 @@
 */
 
 namespace dlls { namespace base_id { namespace consts {
-
-const int off_real_compressed  = 0;      //< ???
-const int off_event_compressed = 1;      //< ???
-const int off_net_compressed1  = 2;      //< ???
-const int off_net_compressed2  = 3;      //< ???
-const int off_view             = 4;      //< ???
-
 }}}      // namespace dlls::base_id::consts

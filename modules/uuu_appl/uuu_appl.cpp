@@ -54,12 +54,18 @@ process_cmd_line (int _argc, char* _argv[])
 
   bpo::variables_map _var_map;
 
+  {
 #if defined(UUU_OS_WIN32_DESKTOP)
-  std::vector<std::string>        _args = bpo::split_winmain (std::string (GetCommandLineA ()));
-  bpo::basic_parsed_options<char> _pars = bpo::basic_command_line_parser<char> (_args).options (_desc).allow_unregistered ().run ();
-  bpo::store (_pars, _var_map);
-  bpo::notify (_var_map);
+    std::vector<std::string>        _args = bpo::split_winmain (std::string (GetCommandLineA ()));
+    bpo::basic_parsed_options<char> _pars = bpo::basic_command_line_parser<char> (_args).options (_desc).allow_unregistered ().run ();
+    bpo::store (_pars, _var_map);
+    bpo::notify (_var_map);
+#else
+    //bpo::basic_parsed_options<char> _pars = bpo::basic_command_line_parser<char> (_argc, _argv).options (_desc).allow_unregistered ().run ();
+    //bpo::store (_pars, _var_map);
+    //bpo::notify (_var_map);
 #endif
+  }
 
   XULOG_INFO ("process_cmd_line::check 1");
   if (_var_map.count (::libs::link::consts::text::id_lib_name) >= 1)
