@@ -18,7 +18,7 @@ namespace libs { namespace igui_events { namespace events {
 
 BaseGUIEvent::BaseGUIEvent (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -50,7 +50,7 @@ BaseGUIEvent::get_type () const
 
 
 ::libs::events::IEvent::ptr
-BaseGUIEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+BaseGUIEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<BaseGUIEvent> (this, _deep);
 }

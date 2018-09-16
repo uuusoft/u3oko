@@ -23,8 +23,8 @@ class MjpegImpl : public ::dlls::codecs::codec_gen::CodecGeneric
   protected:
   //  CodecGeneric overrides
   virtual void                 init_int (const codec_gen::InfoGenCodec &_info) override;
-  virtual void                 code_int (const Buffs *_src, Buffs *_dst, events_type *_events) override;
-  virtual void                 decode_int (const Buffs *_src, Buffs *_dst, events_type *_events) override;
+  virtual bool                 code_int (const Buffs *_src, Buffs *_dst, events_type *_events) override;
+  virtual bool                 decode_int (const Buffs *_src, Buffs *_dst, events_type *_events) override;
   virtual void                 set_codec_info_int (const VideoCodecProp *_info) override;
   virtual void                 get_codec_info_int (VideoCodecProp *_info) override;
   virtual void                 set_cpu_int (::libs::helpers::sys::cpu::TypeExtCpu _optim) override;
@@ -33,9 +33,13 @@ class MjpegImpl : public ::dlls::codecs::codec_gen::CodecGeneric
 
 
   private:
-  void comp_iframe (bool _colored, ProxyBuff &_dst, int &_out_size);
+  bool comp_iframe (bool _colored, ProxyBuff &_dst, int &_out_size);
 
-  void decomp_iframe (const HeaderIFrame *_head, const ProxyBuff &_src, const int _src_size);
+  bool decomp_iframe (const HeaderIFrame *_head, const ProxyBuff &_src, const int _src_size);
+
+  void update_coder (const unsigned long _max_size);
+
+  void update_decoder ();
 
   VideoCodecProp             cinfo_;               //< Свойства сжатия для кодека.
   ::libs::optim::io::hioptim fx16_x8_;             //< Указатель на реализацию по преобразованию формата кадра из X16 в X8

@@ -27,7 +27,7 @@ EventsImpl::~EventsImpl ()
 
 
 IEvent::ptr
-EventsImpl::get (const text_id_type& _id)
+EventsImpl::get (const hid_type& _id)
 {
   guard_type _grd (mtx_);
   auto       _itf = gen_funct_events_.find (_id);
@@ -45,14 +45,14 @@ EventsImpl::get (const text_id_type& _id)
 
 
 IEvent::ptr
-EventsImpl::clone (const IEvent::craw_ptr _src, const ::libs::events::TypeCloneEvent& _type)
+EventsImpl::clone (const IEvent::craw_ptr _src, const ::libs::events::DeepEventCloneType& _type)
 {
   return _src->clone (_type);
 }
 
 
 void*
-EventsImpl::dcast (IEvent::craw_ptr _src, const text_id_type& _id)
+EventsImpl::dcast (IEvent::craw_ptr _src, const hid_type& _id)
 {
   guard_type _grd (mtx_);
   auto       _itf = cast_funct_events_.find (_id);
@@ -77,7 +77,8 @@ EventsImpl::event2xml (IEvent::ptr& _src, std::string& _xml)
     {
       std::stringstream            _istr;
       boost::archive::xml_oarchive _xmla (_istr, boost::archive::no_header);
-      _xmla&                       BOOST_SERIALIZATION_NVP (_src);
+
+      _xmla& BOOST_SERIALIZATION_NVP (_src);
       _xml = _istr.str ();
     }
   catch (std::exception& _e)

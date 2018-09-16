@@ -58,7 +58,7 @@ VideoCodecProp::VideoCodecProp (const Acessor& _ph) :
   decode_mirror_y_ (false),
   code_mirror_y_ (false)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -84,7 +84,7 @@ VideoCodecProp::reset ()
 
 
 ::libs::events::IEvent::ptr
-VideoCodecProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+VideoCodecProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<VideoCodecProp> (this, _deep);
 }

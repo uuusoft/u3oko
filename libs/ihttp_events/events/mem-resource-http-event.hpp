@@ -10,8 +10,8 @@
 
 namespace libs { namespace ihttp_events { namespace events {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 class MemResourceHttpEvent : public BaseHttpEvent
 {
   friend class boost::serialization::access;
@@ -26,8 +26,8 @@ class MemResourceHttpEvent : public BaseHttpEvent
 
   public:
   // ext types
-  typedef std::string id_mem_type;
-  typedef long long   number_mem_buff_type;
+  using id_mem_type          = std::string;
+  using number_mem_buff_type = long long;
   UUU_THIS_TYPE_HAS_POINTERS_TO_SELF (MemResourceHttpEvent);
   UUU_ADD_MAKE_SHARED_FUNCT2THIS_TYPE (MemResourceHttpEvent);
   UUU_DISABLE_ACOPY_TYPE (MemResourceHttpEvent);
@@ -36,8 +36,8 @@ class MemResourceHttpEvent : public BaseHttpEvent
 
   virtual ~MemResourceHttpEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ihttp_events/events/mem-resource-http-event";
     return _ret;
@@ -69,9 +69,9 @@ class MemResourceHttpEvent : public BaseHttpEvent
 
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
-
+  //  BaseHttpEvent overrides
   //virtual void load_int( const base_functs::xml::itn& _prop ) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 };
 

@@ -11,8 +11,9 @@
 
 namespace dlls { namespace gens { namespace vgen_diff { namespace lib {
 /**
-  \brief  empty brief
-  */
+\brief  Реализация алгоритма вычисления разности между двумя кадрами.
+        Используется, как минимум, в двух фильтрах: фильтре вычисления разности и фильтре вычисления детекции движения в кадре.
+*/
 class DiffImpl final
 {
   public:

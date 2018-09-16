@@ -9,7 +9,9 @@
 */
 
 namespace libs { namespace igui_events { namespace utils { namespace helpers {
-
+/**
+\brief  ???
+*/
 inline bool
 is_equal (ISize::craw_ptr _left, ISize::craw_ptr _right)
 {

@@ -12,10 +12,10 @@
 
 namespace libs { namespace events { namespace helpers {
 /**
-  \brief      Вспомогательная функция для "отчистки" базового сообщения от сообщений-флагов.
-  \param[in]  _msg  сообщение до отчистки.
-  \return     базовое сообщение.
-  */
+\brief      Вспомогательная функция для "отчистки" базового сообщения от сообщений-флагов.
+\param[in]  _msg  сообщение до отчистки.
+\return     базовое сообщение.
+*/
 inline IEvent::ptr
 get_base_msg (IEvent::ptr _msg)
 {

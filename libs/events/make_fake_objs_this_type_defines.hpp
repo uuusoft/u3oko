@@ -10,6 +10,7 @@
 \brief      Макрос для принудительной генерации всех функции данного типа.
             Применяется, чтобы исключить отсутствие регистрации в архивах boost в многомодульной системе.
 */
+
 #ifndef UUU_MAKE_FAKE_OBJ_THIS_TYPE
 #define UUU_MAKE_FAKE_OBJ_THIS_TYPE(obj_type)                     \
   {                                                               \

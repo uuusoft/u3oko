@@ -14,19 +14,19 @@
 #include "events-impl.hpp"
 
 #ifndef ADD_EVENT_GENERATOR
-#define ADD_EVENT_GENERATOR(event_type)                                                        \
-  XULOG_TRACE ("EventsImpl::construct: add gen event" << event_type::gen_get_type_text_id ()); \
-  gen_funct_events_[event_type::gen_get_type_text_id ()] = []() {                              \
-    return std::make_shared<event_type> ();                                                    \
+#define ADD_EVENT_GENERATOR(event_type)                                               \
+  XULOG_TRACE ("EventsImpl::construct: add gen event" << event_type::gen_get_mid ()); \
+  gen_funct_events_[event_type::gen_get_mid ()] = []() {                              \
+    return std::make_shared<event_type> ();                                           \
   };
 #endif
 
 #ifndef ADD_EVENT_CAST
-#define ADD_EVENT_CAST(event_type)                                                                          \
-  XULOG_TRACE ("EventsImpl::construct: add cast event" << event_type::gen_get_type_text_id ());             \
-  cast_funct_events_[event_type::gen_get_type_text_id ()] = [](IEvent::craw_ptr _src) -> IEvent::craw_ptr { \
-    event_type::craw_ptr _res = dynamic_cast<event_type::craw_ptr> (_src);                                  \
-    return _res;                                                                                            \
+#define ADD_EVENT_CAST(event_type)                                                                 \
+  XULOG_TRACE ("EventsImpl::construct: add cast event" << event_type::gen_get_mid ());             \
+  cast_funct_events_[event_type::gen_get_mid ()] = [](IEvent::craw_ptr _src) -> IEvent::craw_ptr { \
+    event_type::craw_ptr _res = dynamic_cast<event_type::craw_ptr> (_src);                         \
+    return _res;                                                                                   \
   };
 #endif
 
@@ -59,6 +59,7 @@ EventsImpl::construct ()
   ADD_EVENT2ALL (::libs::ievents::props::hardware::InfoCPUEvent);
   ADD_EVENT2ALL (::libs::ievents::props::mix_mul::MixMulProp);
   ADD_EVENT2ALL (::libs::ievents::props::modules::log::PropertyLogModuleEvent);
+  ADD_EVENT2ALL (::libs::ievents::props::modules::events::PropertyEventsModuleEvent);
   ADD_EVENT2ALL (::libs::ievents::props::modules::storage::PropertyStorageModuleEvent);
   ADD_EVENT2ALL (::libs::ievents::props::terminals::EndPointProp);
   ADD_EVENT2ALL (::libs::ievents::props::videos::generic::morph::VideoMorphologyProp);
@@ -100,6 +101,8 @@ EventsImpl::construct ()
 
   ADD_EVENT2ALL (::libs::ievents_events::events::BaseEventsEvent);
   ADD_EVENT2ALL (::libs::ievents_events::events::WrapperEventsEvent);
+  ADD_EVENT2ALL (::libs::ievents_events::events::AddEvent2Base);
+  ADD_EVENT2ALL (::libs::ievents_events::events::GetEventsFromBase);
 
   ADD_EVENT2ALL (::libs::ilog_events::events::ProcessListLogsEvent);
   ADD_EVENT2ALL (::libs::ilog_events::events::ProcessLogEvent);

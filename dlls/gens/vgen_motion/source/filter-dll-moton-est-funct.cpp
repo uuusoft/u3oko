@@ -18,10 +18,10 @@ namespace dlls { namespace gens { namespace vgen_motion {
 
 void
 Filter::make_motion_est_buff (
-  const BuffEventInfo& _b2b,
-  const IVideoBuff&    _cur_src,
-  const IVideoBuff&    _prev_src,
-  IVideoBuff&          _dst_vecs)
+  const EventBuffsInfo& _b2b,
+  const IVideoBuff&     _cur_src,
+  const IVideoBuff&     _prev_src,
+  IVideoBuff&           _dst_vecs)
 {
   ::libs::optim::io::MCallInfo _cinfo;
 

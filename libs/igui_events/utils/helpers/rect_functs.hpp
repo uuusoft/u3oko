@@ -9,11 +9,11 @@
 */
 
 namespace libs { namespace igui_events { namespace utils { namespace helpers {
-
+/**
+\brief  ???
+*/
 inline bool
-is_equal (
-  IRect::raw_ptr _left,
-  IRect::raw_ptr _right)
+is_equal (IRect::raw_ptr _left, IRect::raw_ptr _right)
 {
   UASSERT (_left);
   UASSERT (_right);
@@ -35,12 +35,11 @@ is_equal (
 
   return true;
 }
-
-
+/**
+\brief  ???
+*/
 inline bool
-include (
-  const IRect::raw_ptr _rect,
-  const IPos::raw_ptr  _pos)
+include (const IRect::raw_ptr _rect, const IPos::raw_ptr _pos)
 {
   UASSERT (_rect);
   UASSERT (_pos);

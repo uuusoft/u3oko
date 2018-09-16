@@ -6,7 +6,7 @@
 \date       01.01.2017
 \copyright  www.uuusoft.com
 \project    uuu_ievents
-\brief    
+\brief      empty brief
 */
 #include "mmedia/defines/defines.hpp"
 #include "mmedia/defines/includes.hpp"
@@ -19,7 +19,7 @@ InfoCPUEvent::InfoCPUEvent (const Acessor& _ph, const TypeExtCpu& _simd, const u
   count_cpu_ (_count_cpu),
   simd_ (_simd)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
   sync_val2txt ();
 }
 
@@ -60,7 +60,7 @@ InfoCPUEvent::set_count (const unsigned short _count_cpu)
 
 
 ::libs::events::IEvent::ptr
-InfoCPUEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+InfoCPUEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<InfoCPUEvent> (this, _deep);
 }

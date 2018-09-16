@@ -18,16 +18,16 @@
 
 namespace dlls { namespace filter_noise { namespace space { namespace impl { namespace rang { namespace vars {
 /**
-  \brief      Класс для быстрого поиска n-го элемента в распределенном не отсортированном массиве.
-  \tparam[in] TTVal   тип элемента в входном распределенном массиве.
-  */
+\brief      Класс для быстрого поиска n-го элемента в распределенном не отсортированном массиве.
+\tparam[in] value_type   тип элемента в входном распределенном массиве.
+*/
 template <
-  typename TTVal>
+  typename tvalue_type>
 class FinderNthElementByCount
 {
   public:
   //  ext types
-  using value_type       = TTVal;              //< ???
+  using value_type       = tvalue_type;        //< ???
   using bound_value_type = unsigned char;      //< Тип для дипазона значений, который может обрабатываться данной реализацией. Он меньше, чем диапазон значений входного типа.
 
   explicit FinderNthElementByCount () :
@@ -47,15 +47,15 @@ class FinderNthElementByCount
   FinderNthElementByCount (const FinderNthElementByCount& _src) = delete;
   FinderNthElementByCount& operator= (const FinderNthElementByCount& _src) = delete;
   /**
-    \brief      Функция для получения n-элемента по распределенному массиву.
-    \param[in]  _beg_core   начало области фильтрации.
-    \param[in]  _indxx      индекс столбца в строке, которому принадлежит центральный элемент области фильтрации.
-    \param[in]  _indxy      индекс строки в буфере, которой принадлежит центральный элемент области фильтрации.
-    \param[in]  _size_core  размер области фильтрации.
-    \param[in]  _sstride    шаг строки буфера.
-    \param[in]  _rang       ранг элемента.
-    \return     значение n-го элемента.
-    */
+  \brief      Функция для получения n-элемента по распределенному массиву.
+  \param[in]  _beg_core   начало области фильтрации.
+  \param[in]  _indxx      индекс столбца в строке, которому принадлежит центральный элемент области фильтрации.
+  \param[in]  _indxy      индекс строки в буфере, которой принадлежит центральный элемент области фильтрации.
+  \param[in]  _size_core  размер области фильтрации.
+  \param[in]  _sstride    шаг строки буфера.
+  \param[in]  _rang       ранг элемента.
+  \return     значение n-го элемента.
+  */
   value_type
   get (
     const value_type* _beg_core,
@@ -91,8 +91,8 @@ class FinderNthElementByCount
     return get_val_rang (_rang);
   }
   /**
-    \brief  Функция сброса объекта в начальное состояния, для использования его с новой строки данных (например).
-    */
+  \brief  Функция сброса объекта в начальное состояния, для использования его с новой строки данных (например).
+  */
   void
   reset ()
   {
@@ -107,11 +107,11 @@ class FinderNthElementByCount
 
   protected:
   /**
-    \brief      Вспомогательная функция полного поиска min/max в области фильтрации.
-    \param[in]  _beg_core   начало области фильтрации.
-    \param[in]  _size_core  размер области фильтрации.
-    \param[in]  _sstride    шаг строки буфера.
-    */
+  \brief      Вспомогательная функция полного поиска min/max в области фильтрации.
+  \param[in]  _beg_core   начало области фильтрации.
+  \param[in]  _size_core  размер области фильтрации.
+  \param[in]  _sstride    шаг строки буфера.
+  */
   void
   update_min_max (
     const value_type* _beg_core,
@@ -142,13 +142,13 @@ class FinderNthElementByCount
     return;
   }
   /**
-    \brief      Вспомогательная функция обновления min/max в области фильтрации. 
-                Обновление производится по удаляемому слева и добавляемому справа столбцам.
-                Также производится обновление массива частот.
-    \param[in]  _beg_core   начало области фильтрации.
-    \param[in]  _size_core  размер области фильтрации.
-    \param[in]  _sstride    шаг строки буфера.
-    */
+  \brief      Вспомогательная функция обновления min/max в области фильтрации. 
+              Обновление производится по удаляемому слева и добавляемому справа столбцам.
+              Также производится обновление массива частот.
+  \param[in]  _beg_core   начало области фильтрации.
+  \param[in]  _size_core  размер области фильтрации.
+  \param[in]  _sstride    шаг строки буфера.
+  */
   void
   refresh_min_max (
     const value_type* _beg_core,
@@ -224,11 +224,11 @@ class FinderNthElementByCount
     return;
   }
   /**
-    \brief      Вспомогательная функция обновления массива частот. 
-    \param[in]  _beg_core   начало области фильтрации.
-    \param[in]  _size_core  размер области фильтрации.
-    \param[in]  _sstride    шаг строки буфера.
-    */
+  \brief      Вспомогательная функция обновления массива частот. 
+  \param[in]  _beg_core   начало области фильтрации.
+  \param[in]  _size_core  размер области фильтрации.
+  \param[in]  _sstride    шаг строки буфера.
+  */
   void
   update_freqs (
     const value_type* _beg_core,
@@ -258,10 +258,10 @@ class FinderNthElementByCount
     return;
   }
   /**
-    \brief      Вспомогательная функция поиска n-го элемента по массиву частот.
-    \param[in]  _rang ранг элемента (фактически его индекс в отсортированном массиве.
-    \return     n-ный элемент.
-    */
+  \brief      Вспомогательная функция поиска n-го элемента по массиву частот.
+  \param[in]  _rang ранг элемента (фактически его индекс в отсортированном массиве.
+  \return     n-ный элемент.
+  */
   value_type
   get_val_rang (const int _rang)
   {

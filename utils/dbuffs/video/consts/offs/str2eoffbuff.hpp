@@ -12,14 +12,14 @@
 
 namespace utils { namespace dbuffs { namespace video { namespace consts { namespace offs {
 /**
-  \brief      Вспомогательная свободная функция для конвертации строки в тип-индекс буфера.
-  \param[in]  _str  строка.
-  \return     тип буфера.
-  */
+\brief      Вспомогательная свободная функция для конвертации строки в тип-индекс буфера.
+\param[in]  _str  строка.
+\return     тип буфера.
+*/
 inline off_buff_type
 str2eoffbuff (const std::string& _str)
 {
-  const static std::pair<std::string, off_buff_type> _vals[] = {
+  const std::pair<std::string, off_buff_type> _vals[] = {
     std::pair<std::string, off_buff_type> ("", invalid),
     std::pair<std::string, off_buff_type> ("-", invalid),
     std::pair<std::string, off_buff_type> ("?", invalid),

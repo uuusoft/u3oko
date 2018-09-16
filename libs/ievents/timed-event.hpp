@@ -10,8 +10,8 @@
 
 namespace libs { namespace ievents {
 /**
-  \brief  Базовый класс всех событий системы с временной меткой.
-  */
+\brief  Базовый класс всех событий системы с временной меткой.
+*/
 class TimedEvent : public ievents::Event
 {
   friend class boost::serialization::access;
@@ -34,8 +34,8 @@ class TimedEvent : public ievents::Event
 
   virtual ~TimedEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/timed-event";
     return _ret;
@@ -60,7 +60,7 @@ class TimedEvent : public ievents::Event
   void serialize (Archive& ar, const unsigned int /* file_version */);
 
   //virtual void load_int( const base_functs::xml::itn& _prop ) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
 };
 
 }}      // namespace libs::ievents

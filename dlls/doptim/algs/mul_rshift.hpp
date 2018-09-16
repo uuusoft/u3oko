@@ -10,8 +10,8 @@
 
 namespace dlls { namespace doptim { namespace impl { namespace algs {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 class CMulRShiftAlg : public IOptimAlg
 {
   public:

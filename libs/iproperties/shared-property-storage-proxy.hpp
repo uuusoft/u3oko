@@ -15,8 +15,8 @@ namespace bip = boost::interprocess;
 using ::libs::properties::ISharedProperty;
 using ::libs::properties::ISharedPropertyStorage;
 /**
-  \brief  Класс для доступа к общим свойствам системы в пределах одного процесса.
-  */
+\brief  Класс для доступа к общим свойствам системы в пределах одного процесса.
+*/
 class SharedPropertyStorageProxy : protected ::libs::helpers::proxy::MemProxyBase
 {
   public:

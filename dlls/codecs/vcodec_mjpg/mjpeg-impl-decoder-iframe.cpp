@@ -15,8 +15,38 @@
 #include "mmedia/libs/optims/optim/mcalls/helpers/buff_helpers_functs.hpp"
 
 namespace dlls { namespace codecs { namespace vcodec_mjpg {
+/**
+  \brief  
+  */
+::libs::helpers::utils::cuuid
+convert_jpeg2guid_px_format (const int _jpeg_px)
+{
+  ::libs::helpers::utils::cuuid _ret = ::libs::helpers::uids::minor::rgb24;
 
-void
+  switch (_jpeg_px)
+    {
+    case TJCS_RGB:
+      _ret = ::libs::helpers::uids::minor::rgb24;
+      break;
+    case TJCS_YCbCr:
+      _ret = ::libs::helpers::uids::minor::ycb;
+      break;
+    case TJCS_GRAY:
+      _ret = ::libs::helpers::uids::minor::y8;
+      break;
+    case TJCS_CMYK:
+    case TJCS_YCCK:
+      XULOG_WARNING ("unsupported color space jpeg, " << _jpeg_px);
+      break;
+    default:
+      XULOG_WARNING ("unkown color space jpeg, " << _jpeg_px);
+      break;
+    }
+  return _ret;
+}
+
+
+bool
 MjpegImpl::decomp_iframe (
   const HeaderIFrame* _head,
   const ProxyBuff&    _src,
@@ -32,44 +62,17 @@ MjpegImpl::decomp_iframe (
   try
     {
       //::dlls::codecs::codec_gen::dump (_head);      //  debug
-      if (!hjpeg_)
-        {
-          hjpeg_ = tjInitDecompress ();
-          CHECK_STATE (hjpeg_, "failed init decompress");
-        }
+      update_decoder ();
 
       {
-        int _jwidth      = 0;
-        int _jheight     = 0;
-        int _jsubsamp    = 0;
-        int _jcolorspace = 0;
+        int _jpeg_width   = 0;
+        int _jpeg_height  = 0;
+        int _jpeg_subsamp = 0;
+        int _jpeg_px      = 0;
 
-        _codec_error = tjDecompressHeader3 (hjpeg_, _cdata, _src_size_res, &_jwidth, &_jheight, &_jsubsamp, &_jcolorspace);
-        XULOG_TRACE ("tjDecompressHeader3 say _jwidth=" << _jwidth << ", _jheight=" << _jheight << ", _jsubsamp=" << _jsubsamp << ", _jcolorspace=" << _jcolorspace);
-
-        if (TJCS_RGB != _jcolorspace)
-          {
-            auto _px_format = temp_buff_->get_format ();
-
-            switch (_jcolorspace)
-              {
-              case TJCS_YCbCr:
-                _px_format = ::libs::helpers::uids::minor::ycb;
-                break;
-              case TJCS_GRAY:
-                _px_format = ::libs::helpers::uids::minor::y8;
-                break;
-              case TJCS_CMYK:
-              case TJCS_YCCK:
-                XULOG_WARNING ("unsupported color space jpeg, " << _jcolorspace);
-                return;
-              default:
-                XULOG_WARNING ("unkown color space jpeg, " << _jcolorspace);
-                break;
-              }
-
-            temp_buff_->set_format (_px_format);
-          }
+        _codec_error = tjDecompressHeader3 (hjpeg_, _cdata, _src_size_res, &_jpeg_width, &_jpeg_height, &_jpeg_subsamp, &_jpeg_px);
+        XULOG_TRACE ("tjDecompressHeader3 say width=" << _jpeg_width << ", height=" << _jpeg_height << ", subsamp=" << _jpeg_subsamp << ", jpeg_px=" << _jpeg_px);
+        temp_buff_->set_format (convert_jpeg2guid_px_format (_jpeg_px));
       }
 
       if (_codec_error)
@@ -104,8 +107,9 @@ MjpegImpl::decomp_iframe (
   catch (std::exception& _e)
     {
       XULOG_FATAL ("exception: " << _e.what () << ", " << tjGetErrorStr () << ", " << _codec_error);
+      return false;
     }
-  return;
+  return true;
 }
 
 }}}      // namespace dlls::codecs::vcodec_mjpg

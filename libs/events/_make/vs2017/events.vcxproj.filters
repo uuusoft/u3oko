@@ -28,6 +28,9 @@
     <Filter Include="_register">
       <UniqueIdentifier>{1065e2fb-d036-4c99-ab1f-b4de9f81134c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="buff\consts">
+      <UniqueIdentifier>{58783d1d-96ca-44c2-b3bc-b5ec26a0882f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\includes.hpp">
@@ -65,9 +68,6 @@
     </ClInclude>
     <ClInclude Include="..\..\using-state-event.hpp" />
     <ClInclude Include="..\..\ievent.hpp" />
-    <ClInclude Include="..\..\buff-event-info.hpp">
-      <Filter>buff</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\io\ievents-proxy.hpp">
       <Filter>io</Filter>
     </ClInclude>
@@ -77,13 +77,19 @@
     <ClInclude Include="..\..\props\details\rect.hpp">
       <Filter>props\details</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\type-clone-event.hpp" />
     <ClInclude Include="..\..\helpers\convert_event2string_funct.hpp">
       <Filter>helpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\make_fake_objs_this_type_defines.hpp">
       <Filter>_defines</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\buff\consts\vals.hpp">
+      <Filter>buff\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\buff\event-buffs-info.hpp">
+      <Filter>buff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\deep-event-clone-type.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\register_events_in_archives.cpp">
@@ -105,11 +111,11 @@
       <Filter>wrapers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\ievent.cpp" />
-    <ClCompile Include="..\..\buff-event-info.cpp">
-      <Filter>buff</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\props\details\rect.cpp">
       <Filter>props\details</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\buff\event-buffs-info.cpp">
+      <Filter>buff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

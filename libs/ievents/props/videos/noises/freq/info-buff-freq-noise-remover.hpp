@@ -14,7 +14,7 @@ namespace libs { namespace ievents { namespace props { namespace videos { namesp
 /**
   \brief  empty brief
   */
-struct InfoBuffFreqNoiseRemover : public ::libs::events::buff::BuffEventInfo
+struct InfoBuffFreqNoiseRemover : public ::libs::events::buff::EventBuffsInfo
 {
   // ext types
   UUU_THIS_TYPE_HAS_POINTERS_TO_SELF (InfoBuffFreqNoiseRemover);

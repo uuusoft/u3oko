@@ -12,34 +12,36 @@
 
 namespace libs { namespace events { namespace io {
 /**
-  \brief  Интерфейс для генерации, сериализации, конверсии всех доступных событий в системе.
-  */
+\brief  Интерфейс для генерации, сериализации, конверсии всех доступных событий в системе.
+        Введен в первую очередь для нивилирования различий в реализациях ABI.
+        Также используется для кеширования, сбора статистики и прочего.
+*/
 class IEvents
 {
   public:
   // ext types
-  using text_id_type = IEvent::text_id_type;
+  using hid_type = IEvent::hid_type;
   UUU_THIS_TYPE_HAS_POINTERS_TO_SELF (IEvents);
   /**
-    \brief      Функция возвращает событие по идентификатору.
-    \param[in]  _id идентификатор события.
-    \return     событие.
-    */
-  virtual IEvent::ptr get (const text_id_type& _id) = 0;
+  \brief      Функция возвращает событие по идентификатору.
+  \param[in]  _id идентификатор события.
+  \return     событие.
+  */
+  virtual IEvent::ptr get (const hid_type& _id) = 0;
   /**
   \brief      Функция клонирует событие, гарантируя ему базовый модуль.
   \param[in]  _src  входное событие.
   \param[in]  _type тип клонирования.
   \return     копия события.
   */
-  virtual IEvent::ptr clone (const IEvent::craw_ptr _src, const TypeCloneEvent& _type) = 0;
+  virtual IEvent::ptr clone (const IEvent::craw_ptr _src, const DeepEventCloneType& _type) = 0;
   /**
   \brief      Функция преобразования типа события, внтури базового модуля.
   \param[in]  _src  входное событие.
   \param[in]  _id   идентификатор типа выходного события.
   \return     выходное событие или null, если преобразование невозможно.
   */
-  virtual void* dcast (IEvent::craw_ptr _src, const text_id_type& _id) = 0;
+  virtual void* dcast (IEvent::craw_ptr _src, const hid_type& _id) = 0;
   /**
   \brief      Функция преобразования события в xml, внтури базового модуля.
   \param[in]  _src  входное событие.

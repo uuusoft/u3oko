@@ -10,14 +10,15 @@
 
 namespace dlls { namespace codecs { namespace codec_gen {
 /**
-  \brief  Стиль сжатого кадра.
-  */
+\brief  Стиль сжатого кадра.
+*/
 enum struct StyleFrame
 {
-  unknown = 0,      //< Неизвестно/не установлено, для общности.
-  iframe  = 1,      //< I кадр.
-  pframe  = 2,      //< P кадр.
-  bframe  = 3       //< B кадр.
+  unknown  = 0,      //< Неизвестно/не установлено, для общности.
+  iframe   = 1,      //< I кадр.
+  idrframe = 2,      //< IDR кадр.
+  pframe   = 3,      //< P кадр.
+  bframe   = 4       //< B кадр.
 };
 /**
 \brief      Функция сброса поля в текстовый вид.
@@ -33,6 +34,8 @@ to_str (const StyleFrame& _val)
       return "unknown";
     case StyleFrame::iframe:
       return "iframe";
+    case StyleFrame::idrframe:
+      return "idrframe";
     case StyleFrame::pframe:
       return "pframe";
     case StyleFrame::bframe:
@@ -40,7 +43,7 @@ to_str (const StyleFrame& _val)
     }
 
   XULOG_WARNING ("unknown style frame, " << UUU_ICAST_INT (_val));
-  return "invalid";
+  return "invalid style frame";
 }
 
 }}}      // namespace dlls::codecs::codec_gen

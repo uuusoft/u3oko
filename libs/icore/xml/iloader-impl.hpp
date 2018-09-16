@@ -14,8 +14,8 @@ using ::libs::iproperties::appl_paths::TypePath;
 using ::utils::mem_functs::IBlockMem;
 using ::libs::helpers::files::NodeEnumFiles;
 /**
-  \brief  Интерфейс, который должна предоставлять реализация от ОС для загрузки содержимого файлов настройки read-only в память.
-  */
+\brief  Интерфейс, который должна предоставлять реализация от ОС для загрузки содержимого файлов настройки read-only в память.
+*/
 class ILoaderImpl
 {
   public:
@@ -25,12 +25,12 @@ class ILoaderImpl
   virtual ~ILoaderImpl ()
   {}
   /**
-    \brief      Функция загрузки содержимого файла в память.
-    \param[in]  _file_name    имя файла.
-    \param[in]  _storage_type тип хранилища, в котором находится файл.
-    \param[out] _ret          блок памяти, с содержимом файла.
-    \return     true, при успехе.
-    */
+  \brief      Функция загрузки содержимого файла в память.
+  \param[in]  _file_name    имя файла.
+  \param[in]  _storage_type тип хранилища, в котором находится файл.
+  \param[out] _ret          блок памяти, с содержимом файла.
+  \return     true, при успехе.
+  */
   bool
   get (const std::string& _file_name, const TypePath& _storage_type, IBlockMem::ptr& _ret)
   {
@@ -50,6 +50,7 @@ class ILoaderImpl
 
 
   private:
+  //  ILoaderImpl interface
   virtual bool get_int (const std::string& _file_name, const TypePath& _storage_type, IBlockMem::ptr& _ret) = 0;
   virtual void get_enum_int (const TypePath& _storage_type, NodeEnumFiles& _enum)                           = 0;
 };

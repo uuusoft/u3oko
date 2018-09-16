@@ -13,8 +13,8 @@ namespace libs { namespace iproperties { namespace vers { namespace system {
 using ::libs::ievents::props::application::ApplicationProp;
 using ::libs::optim::mcalls::CallerImpl;
 /**
-  \brief  Тип для разделения свойств, общих для всего приложения, между всеми модулями системы.
-  */
+\brief  Тип для разделения свойств, общих для всего приложения, между всеми модулями системы.
+*/
 class ISystemProperty final : public ::libs::properties::ISharedProperty
 {
   public:

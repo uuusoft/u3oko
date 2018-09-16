@@ -10,8 +10,8 @@
 
 namespace dlls { namespace sources { namespace gen_vgen {
 /**
-  \brief  Структура для группировки свойств фильтра захвата данных из источника (ipcam/webcam/ect).
-  */
+\brief  Структура для группировки свойств фильтра захвата данных из источника (ipcam/webcam/ect).
+*/
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter
 {
   // ext types

@@ -21,7 +21,7 @@ InfoLogEvent::InfoLogEvent (const Acessor&, const AppllPartLogInfo& _appl, const
   appl_ (_appl)
 {
   time_          = boost::posix_time::microsec_clock::universal_time ();
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -59,7 +59,7 @@ InfoLogEvent::text (const TypeLogText& _type) const
 
 
 ::libs::events::IEvent::ptr
-InfoLogEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+InfoLogEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<InfoLogEvent> (this, _deep);
 }

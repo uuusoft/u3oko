@@ -10,8 +10,8 @@
 
 namespace libs { namespace optim { namespace mcalls {
 /**
-  \brief  Структура, которая разделяется между всеми рабочими потоками при вызове.
-  */
+\brief  Структура, которая разделяется между всеми рабочими потоками при вызове.
+*/
 class SharedInfoMFunct
 {
   public:

@@ -15,7 +15,7 @@
 
 namespace dlls { namespace codecs { namespace vcodec_mjpg {
 
-void
+bool
 MjpegImpl::code_int (const Buffs* _src, Buffs* _dst, events_type* _events)
 {
   XULOG_TRACE ("MjpegImpl::code_int: beg");
@@ -89,12 +89,12 @@ MjpegImpl::code_int (const Buffs* _src, Buffs* _dst, events_type* _events)
       pthreads_->mcall (_tfunct, _cinfo);
     }
 
-  comp_iframe (_use_color, _tout_buff, _out_size);
+  const bool _ret = comp_iframe (_use_color, _tout_buff, _out_size);
 
   UASSERT (_out_size > 0);
   _obuff->set_mem_var (::utils::dbuffs::TypeMemVar::size_data, _out_size);
   XULOG_TRACE ("MjpegImpl::code_int: end");
-  return;
+  return _ret;
 }
 
 }}}      // namespace dlls::codecs::vcodec_mjpg

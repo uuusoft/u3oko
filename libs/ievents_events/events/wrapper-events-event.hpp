@@ -12,8 +12,8 @@
 
 namespace libs { namespace ievents_events { namespace events {
 /**
-  \brief  Класс событие для обертки другого события с целью указания модуля-назначения в виде http сервера.
-  */
+\brief  Класс событие для обертки другого события с целью указания модуля-назначения в виде сервера событий.
+*/
 class WrapperEventsEvent : public BaseEventsEvent
 {
   friend class boost::serialization::access;
@@ -36,8 +36,8 @@ class WrapperEventsEvent : public BaseEventsEvent
 
   virtual ~WrapperEventsEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents_events/events/wrapper-events-event";
     return _ret;
@@ -49,7 +49,7 @@ class WrapperEventsEvent : public BaseEventsEvent
 
 
   protected:
-  ::libs::events::IEvent::ptr int_;      //< Событие, для которого производится синхронизация.
+  ::libs::events::IEvent::ptr int_;      //< Событие, которое требуется передать в подсистему.
 
 
   private:
@@ -59,9 +59,9 @@ class WrapperEventsEvent : public BaseEventsEvent
 
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
-
+  //  ievents::Event overrides
   //virtual void load_int( const base_functs::xml::itn& _prop ) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 };
 

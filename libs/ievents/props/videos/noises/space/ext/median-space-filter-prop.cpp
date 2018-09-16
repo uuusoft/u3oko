@@ -56,7 +56,7 @@ MedianSpaceFilterProp::MedianSpaceFilterProp (const Acessor& _ph) :
   size_cond_core_ (0),
   cond_rang_ (0)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -77,7 +77,7 @@ MedianSpaceFilterProp::correct ()
 
 
 ::libs::events::IEvent::ptr
-MedianSpaceFilterProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+MedianSpaceFilterProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<MedianSpaceFilterProp> (this, _deep);
 }

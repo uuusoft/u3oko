@@ -12,8 +12,8 @@ namespace dlls { namespace codecs { namespace codec_gen {
 //  syn
 using ::libs::ievents::props::videos::generics::codec::VideoCodecFlatProp;
 /**
-  \brief  Cтруктура, которая предворяет каждый сжатый I кадр для HSL кодеков.
-  */
+\brief  Cтруктура, которая предворяет каждый сжатый I кадр для HSL кодеков.
+*/
 struct HeaderIFrameHSL
 {
   HeaderIFrameHSL ()

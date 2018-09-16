@@ -39,6 +39,9 @@
     <ClInclude Include="..\source\info-filter-dll.hpp">
       <Filter>impl</Filter>
     </ClInclude>
+    <ClInclude Include="..\source\syn.hpp">
+      <Filter>impl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\CMakeLists.txt" />

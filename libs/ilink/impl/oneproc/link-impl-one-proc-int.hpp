@@ -10,8 +10,8 @@
 
 namespace libs { namespace ilink { namespace impl { namespace oneproc {
 /**
-  \brief  
-  */
+\brief  ???
+*/
 struct TSyncStack
 {
   //  ext types
@@ -28,8 +28,8 @@ struct TSyncStack
   sync_type   mtx_;       //< ???
 };
 /**
-  \brief  Реализация "связь", разделяемая между двумя точками ее окончаний.
-  */
+\brief  Реализация "связь", разделяемая между двумя точками ее окончаний.
+*/
 class LinkImplOneProcInt
 {
   public:
@@ -46,15 +46,15 @@ class LinkImplOneProcInt
 
   bool is_connected () const;
 
-  bool destroy (const CreateInfoExt& _info, const TypeDestroyLink& _type);
+  bool destroy (const CreateInfoExt& _info, const DestroyLinkType& _type);
 
   IEvent::ptr received_msg (const CreateInfoExt& _info);
 
   IEvent::ptr send_msg (
     const CreateInfoExt&      _info,
     IEvent::ptr               _msg,
-    const TypeSyncCall&       _sync,
-    const TypeRequestCall&    _req,
+    const SyncCallType&       _sync,
+    const RequestCallType&    _req,
     const ISeqEvent::id_type& _id);
 
   void complite_msg (const CreateInfoExt& _info, IEvent::ptr _msg, const StateProcessEvent& _state);

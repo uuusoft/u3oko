@@ -12,8 +12,8 @@
 
 namespace dlls { namespace filter_noise { namespace space { namespace impl { namespace rang { namespace vars {
 /**
-  \brief  Реализация фильтрации с пропуском сортировки. Для оценки холостого хода и теста.
-  */
+\brief  Реализация фильтрации с пропуском сортировки. Для оценки холостого хода и теста.
+*/
 class SkipSortAlg final
 {
   public:

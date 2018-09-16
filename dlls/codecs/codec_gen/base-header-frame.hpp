@@ -10,9 +10,9 @@
 
 namespace dlls { namespace codecs { namespace codec_gen {
 /**
-  \brief  Cтруктура, которая предворяет каждый сжатый кадр. 
-          Ее можно детектировать без создания кодека.
-  */
+\brief  Cтруктура, которая предворяет каждый сжатый кадр. 
+        Ее можно детектировать без создания кодека.
+*/
 struct BaseHeaderFrame
 {
   BaseHeaderFrame ()
@@ -40,9 +40,14 @@ struct BaseHeaderFrame
   bool
   check () const
   {
-    if ((consts::id_frame != id_) || (size_ < sizeof (BaseHeaderFrame)))
+    if (consts::id_frame != id_)
       {
-        XULOG_WARNING ("invalid size or id compress frame");
+        XULOG_WARNING ("invalid id compress frame, " << id_ << "!=" << consts::id_frame);
+        return false;
+      }
+    if (size_ < sizeof (BaseHeaderFrame))
+      {
+        XULOG_WARNING ("invalid size (too small) compress frame, " << size_ << "!=" << sizeof (BaseHeaderFrame));
         return false;
       }
     if (!sinfo_.check ())

@@ -17,12 +17,12 @@ namespace libs { namespace ievents { namespace props { namespace videos { namesp
 
 Vec2ImageProp::Vec2ImageProp (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
 ::libs::events::IEvent::ptr
-Vec2ImageProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+Vec2ImageProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<Vec2ImageProp> (this, _deep);
 }
@@ -41,7 +41,7 @@ Vec2ImageProp::load_int (const base_functs::xml::itn& _prop)
 
   while (_param != _params.end ())
     {
-      BuffEventInfoVec2Image1 _add;
+      EventBuffsInfoVec2Image1 _add;
       _add.load (_param);
       buffs_.push_back (_add);
       ++_param;

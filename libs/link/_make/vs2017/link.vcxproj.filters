@@ -16,9 +16,6 @@
     <Filter Include="mem">
       <UniqueIdentifier>{e57cde01-2f7d-4533-b95c-296a83a65dd1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="details\old_shit">
-      <UniqueIdentifier>{42913867-c701-46ff-8f50-fdffdd103e8f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\includes_int.hpp">
@@ -36,7 +33,6 @@
     <ClInclude Include="..\..\vals_text.hpp">
       <Filter>consts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\syn_types.hpp" />
     <ClInclude Include="..\..\mem\iblock-mem.hpp">
       <Filter>mem</Filter>
     </ClInclude>
@@ -49,20 +45,7 @@
     <ClInclude Include="..\..\create-info.hpp" />
     <ClInclude Include="..\..\ilink-creator.hpp" />
     <ClInclude Include="..\..\ilink.hpp" />
-    <ClInclude Include="..\..\type-destroy-link.hpp" />
     <ClInclude Include="..\..\state-process-event.hpp" />
-    <ClInclude Include="..\..\details\type-run-code.hpp">
-      <Filter>details</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\details\type-sync-call.hpp">
-      <Filter>details</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\details\type-request-call.hpp">
-      <Filter>details</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\details\type-link-modules.hpp">
-      <Filter>details</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\appl\init-application.hpp">
       <Filter>appl</Filter>
     </ClInclude>
@@ -72,14 +55,19 @@
     <ClInclude Include="..\..\appl\iapplication.hpp">
       <Filter>appl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\details\ESeqCall.hpp">
-      <Filter>details\old_shit</Filter>
+    <ClInclude Include="..\..\syns.hpp" />
+    <ClInclude Include="..\..\destroy-link-type.hpp" />
+    <ClInclude Include="..\..\details\sync-call-type.hpp">
+      <Filter>details</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\details\ETypeActivity.hpp">
-      <Filter>details\old_shit</Filter>
+    <ClInclude Include="..\..\details\run-code-type.hpp">
+      <Filter>details</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\details\ETypeSide.hpp">
-      <Filter>details\old_shit</Filter>
+    <ClInclude Include="..\..\details\request-call-type.hpp">
+      <Filter>details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\details\link-modules-type.hpp">
+      <Filter>details</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

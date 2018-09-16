@@ -34,12 +34,12 @@ class LinkImplAnyProc : public ::libs::link::ILink
   //  ILink overrides
   virtual bool                             connect_int (const CreateInfo& _info) override;
   virtual bool                             listen_int (const CreateInfo& _info) override;
-  virtual bool                             destroy_int (const TypeDestroyLink& _type) override;
+  virtual bool                             destroy_int (const DestroyLinkType& _type) override;
   virtual bool                             is_connected_int () const override;
   virtual IEvent::ptr                      received_msg_int () override;
   virtual void                             complite_msg_int (IEvent::ptr _msg, const StateProcessEvent& _state) override;
   virtual ::libs::link::mem::IMem::raw_ptr get_imem_int () override;
-  virtual IEvent::ptr                      send_msg_int (IEvent::ptr _msg, const TypeSyncCall& _sync = TypeSyncCall::async, const TypeRequestCall& _req = TypeRequestCall::set, const ISeqEvent::id_type& _id = ISeqEvent::id_type ()) override;
+  virtual IEvent::ptr                      send_msg_int (IEvent::ptr _msg, const SyncCallType& _sync = SyncCallType::async, const RequestCallType& _req = RequestCallType::set, const ISeqEvent::id_type& _id = ISeqEvent::id_type ()) override;
 
   void remove_names ();
 

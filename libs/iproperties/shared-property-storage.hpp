@@ -14,12 +14,12 @@ using ::libs::properties::ISharedProperty;
 using ::libs::properties::ISharedPropertyStorage;
 using ::libs::properties::consts::keys::key_property_type;
 /**
-  \brief  Функция возвращает указатель на реализацию хранилища.
-  */
+\brief  Функция возвращает указатель на реализацию хранилища.
+*/
 ISharedPropertyStorage::raw_ptr instance ();
 /**
-  \brief  Реализация хранилища свойств, общих для всей системы.
-  */
+\brief  Реализация хранилища свойств, общих для всей системы.
+*/
 class SharedPropertyStorage : public ISharedPropertyStorage
 {
   private:
@@ -33,7 +33,7 @@ class SharedPropertyStorage : public ISharedPropertyStorage
   SharedPropertyStorage ();
 
   virtual ~SharedPropertyStorage ();
-
+  //  ISharedPropertyStorage overrides
   virtual ISharedProperty::raw_ptr get (const key_property_type& _key) override;
   virtual void                     set_prop (const key_property_type& _key, const ISharedProperty::ptr& _ptr) override;
   virtual void                     reset_prop (const key_property_type& _key) override;

@@ -12,16 +12,16 @@
 
 namespace libs { namespace ievents { namespace props { namespace videos { namespace gens { namespace diff {
 /**
-  \brief  empty brief
-  */
+\brief  Структура для группировки параметров алгоритма вычисления разности между кадрами.
+*/
 struct InfoBuffVideoDiffProp
 {
   InfoBuffVideoDiffProp ();
 
   virtual ~InfoBuffVideoDiffProp ();
 
-  off_buff_type       bindx_diff_;      //<буфера источника и назначения для разности.
-  ParamsVideoDiffProp op_;              //<Операция постобработки разности.
+  off_buff_type       bindx_diff_;      //< Буфера источника и назначения для разности.
+  ParamsVideoDiffProp op_;              //< Операция постобработки разности.
 
 
   private:

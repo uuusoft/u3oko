@@ -10,8 +10,8 @@
 
 namespace libs { namespace igui_events { namespace events {
 /**
-  \brief  Базовый класс всех событий подсистемы GUI.
-  */
+\brief  Базовый класс всех событий подсистемы GUI.
+*/
 class BaseGUIEvent : public ::libs::ievents::Event
 {
   friend class boost::serialization::access;
@@ -36,8 +36,8 @@ class BaseGUIEvent : public ::libs::ievents::Event
 
   virtual TypeEvents get_type () const;
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/igui_events/events/props/base-gui-event";
     return _ret;
@@ -59,7 +59,7 @@ class BaseGUIEvent : public ::libs::ievents::Event
   void serialize (Archive& ar, const unsigned int /* file_version */);
 
   //virtual void load_int( const base_functs::xml::itn& _prop ) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
 };
 
 }}}      // namespace libs::igui_events::events

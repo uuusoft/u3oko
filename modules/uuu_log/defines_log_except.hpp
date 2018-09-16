@@ -48,7 +48,7 @@
       if (_events)                                                                                                                                  \
         {                                                                                                                                           \
           auto       _impl   = _events->impl ();                                                                                                    \
-          const auto _id     = ::libs::ilog_events::events::ExceptLogEvent::gen_get_type_text_id ();                                                \
+          const auto _id     = ::libs::ilog_events::events::ExceptLogEvent::gen_get_mid ();                                                \
           auto       _revent = _impl->get (_id);                                                                                                    \
           auto       _levent = UUU_FORCE_DCAST_EVENT_INT (_impl->dcast (_revent.get (), _id), ::libs::ilog_events::events::ExceptLogEvent*);        \
           _levent->update_info (::libs::ilog_events::AppllPartLogInfo (_application_id, __FILE__, __LINE__), "exception: " + std::string (_info));  \

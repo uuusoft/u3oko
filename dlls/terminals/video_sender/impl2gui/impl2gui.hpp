@@ -10,8 +10,8 @@
 
 namespace dlls { namespace terminals { namespace video_sender { namespace impl2gui {
 /**
-  \brief  ???
-  */
+\brief  Реализация передачи данных в gui модуль.
+*/
 class Impl2Gui final : public IImplSender
 {
   public:

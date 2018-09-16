@@ -12,7 +12,7 @@
 
 namespace libs { namespace ilink {
 //  syn
-using ::libs::link::details::TypeRunCode;
+using ::libs::link::details::RunCodeType;
 using ::libs::link::CreateInfo;
 using ::libs::link::appl::InitApplication;
 using ::libs::iproperties::vers::system::ISystemProperty;

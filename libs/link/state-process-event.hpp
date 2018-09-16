@@ -12,8 +12,8 @@
 
 namespace libs { namespace link {
 /**
-  \brief  Структура для хранения всей необходимой информации, связанной с текущим обрабатываемым событием.
-  */
+\brief  Структура для хранения всей необходимой информации, связанной с текущим обрабатываемым событием.
+*/
 struct StateProcessEvent
 {
   //  ext types
@@ -84,8 +84,9 @@ struct StateProcessEvent
   bool               failed_;          //< Флаг ошибки при обработки запроса.
   std::string        error_text_;      //< Опциональная строка с сообщение об ошибке.
 };
-
-
+/**
+\brief  ???
+*/
 inline std::string
 to_str (const StateProcessEvent& _val)
 {

@@ -39,11 +39,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\bin_buff_funct.cpp" />
-    <ClCompile Include="..\..\make_diff_funct.cpp" />
     <ClCompile Include="..\..\main.cpp" />
     <ClCompile Include="..\..\info-filter-dll.cpp" />
-    <ClCompile Include="..\..\transform_functs.cpp" />
     <ClCompile Include="..\..\filter-dll.cpp" />
   </ItemGroup>
   <ItemGroup>

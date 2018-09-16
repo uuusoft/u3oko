@@ -69,7 +69,7 @@ VideoConvertProp::VideoConvertProp (const Acessor& _ph) :
   atype_ (TypeConvertAccuracy::usual),
   buff_ (::utils::dbuffs::video::consts::offs::raw, ::utils::dbuffs::video::consts::offs::invalid)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -78,7 +78,7 @@ VideoConvertProp::~VideoConvertProp ()
 
 
 ::libs::events::IEvent::ptr
-VideoConvertProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+VideoConvertProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<VideoConvertProp> (this, _deep);
 }

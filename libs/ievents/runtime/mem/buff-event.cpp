@@ -17,7 +17,7 @@ namespace libs { namespace ievents { namespace runtime { namespace mem {
 
 BuffEvent::BuffEvent (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -29,7 +29,7 @@ BuffEvent::BuffEvent (IVideoBuff::cptr& _buff)
       buff_->clone (&*_buff, 100.0f);
     }
 
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
   return;
 }
 
@@ -42,7 +42,7 @@ BuffEvent::get_buff ()
 
 
 ::libs::events::IEvent::ptr
-BuffEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+BuffEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<BuffEvent> (this, _deep);
 }

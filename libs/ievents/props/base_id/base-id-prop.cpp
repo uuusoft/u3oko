@@ -17,7 +17,7 @@ namespace libs { namespace ievents { namespace props { namespace base_id {
 
 BaseIdProp::BaseIdProp (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -26,7 +26,7 @@ BaseIdProp::~BaseIdProp ()
 
 
 ::libs::events::IEvent::ptr
-BaseIdProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+BaseIdProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<BaseIdProp> (this, _deep);
 }

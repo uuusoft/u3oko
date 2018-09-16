@@ -12,15 +12,15 @@ namespace utils { namespace dbuffs { namespace allocator {
 //  syn
 using ::utils::mem_functs::impl::BlockMemAllocatorProxy;
 /**
-  \brief  Реализация по управлению буферами для данных. Полное описание функций в суперклассе.
-  */
+\brief  Реализация по управлению буферами для данных. Полное описание функций в суперклассе.
+*/
 class BuffAllocator : public IBuffAllocator
 {
   public:
   /**
-    \brief  Функция возврата одиночки в слабом смысле (только для статически линкуемых модулей).
-            Т.к. она определена только в модулей dbuffs.
-    */
+  \brief  Функция возврата одиночки в слабом смысле (только для статически линкуемых модулей).
+          Т.к. она определена только в модулей dbuffs.
+  */
   static BuffAllocator* instance ();
   //  IBuffAllocator
   virtual utils::dbuffs::video::IVideoBuff::ptr get () override;

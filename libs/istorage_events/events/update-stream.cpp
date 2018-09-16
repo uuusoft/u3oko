@@ -19,7 +19,7 @@ UpdateStream::UpdateStream (const Acessor& _ph) :
   operation_ (TypeActionStream::read),
   direction_ (TypeDirectionStream::unknown)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -28,7 +28,7 @@ UpdateStream::~UpdateStream ()
 
 
 ::libs::events::IEvent::ptr
-UpdateStream::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+UpdateStream::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<UpdateStream> (this, _deep);
 }

@@ -21,6 +21,7 @@
   type& operator= (const type& _src) = delete;
 #endif
 
+
 namespace dlls { namespace devents { namespace impl {
 //  forward
 class EventsImpl;
@@ -31,9 +32,9 @@ namespace libs { namespace events {
 //  syn
 using ::utils::dbuffs::video::consts::offs::off_buff_type;
 /**
-  \brief  Базовый класс (интерфейс) всех событий системы.
-          Под "событиями" подразумевается сохраняемые свойства фильтров, собственно события графа обработки данных, объекты обмена между модулями и прочее.
-  */
+\brief  Базовый класс (интерфейс) всех событий системы.
+        Под "событиями" подразумевается сохраняемые свойства фильтров, собственно события графа обработки данных, объекты обмена между модулями и прочее.
+*/
 class IEvent
 {
   friend class boost::serialization::access;
@@ -46,51 +47,51 @@ class IEvent
 
   public:
   //  ext types
-  using text_id_type = std::string;
+  using hid_type = std::string;
   UUU_THIS_TYPE_HAS_POINTERS_TO_SELF (IEvent);
   UUU_DISABLE_ACOPY_TYPE (IEvent);
 
   virtual ~IEvent ();
   /**
-    \brief  Виртуальное копирование объекта через указатель на базовый класс.
-    \param[in]  _src  указатель на объект-источник, должен быть того же типа, что и назначение.
-    */
+  \brief  Виртуальное копирование объекта через указатель на базовый класс.
+  \param[in]  _src  указатель на объект-источник, должен быть того же типа, что и назначение.
+  */
   void copy (const IEvent::craw_ptr _src);
   /**
-    \brief      Функция проверки на возможность загрузки объекта из xml узла.
-    \param[in]  _prop узел.
-    \return     true, если узел содержит свойства типа, к которому принадлежит объект, иначе false.
-    */
+  \brief      Функция проверки на возможность загрузки объекта из xml узла.
+  \param[in]  _prop узел.
+  \return     true, если узел содержит свойства типа, к которому принадлежит объект, иначе false.
+  */
   bool check_node (const base_functs::xml::itn& _node);
   /**
-    \brief      Функция загрузки объекта из xml узла.
-    \param[in]  _prop узел.
-    */
+  \brief      Функция загрузки объекта из xml узла.
+  \param[in]  _prop узел.
+  */
   void load (const base_functs::xml::itn& _prop);
   /**
-    \brief    Функция возращает состояние объекта класса, с точки зрения возможности использования его свойств на данный момент.
-    \return   состояние события.
-    */
+  \brief    Функция возращает состояние объекта класса, с точки зрения возможности использования его свойств на данный момент.
+  \return   состояние события.
+  */
   const UsingStateEvent& get_using_state () const;
   /**
-    \brief    Функция возращает текстовый идентификатор типа для использоваения в файлах, которые могут формироваться в том числе и пользователем системы.
-              Обычно это просто путь к файлу с реализацией, что гарантирует его уникальность по определению.
-    \return   идентификатор типа события.
-    */
-  const text_id_type& get_mid () const;
+  \brief    Функция возращает текстовый идентификатор типа для использоваения в файлах, которые могут формироваться в том числе и пользователем системы.
+            Обычно это просто путь к файлу с реализацией, что гарантирует его уникальность по определению.
+  \return   идентификатор типа события.
+  */
+  const hid_type& get_mid () const;
   /**
-    \brief  Вспомогательная функция для синронизации текстового поля и значения используемого расширения CPU.
-            Нужна для работы с HTTP сервером, который работает только с текстовым полем.
-    */
+  \brief  Вспомогательная функция для синронизации текстового поля и значения используемого расширения CPU.
+          Нужна для работы с HTTP сервером, который работает только с текстовым полем.
+  */
   void sync_txt2val ();
   /**
-    \brief  Вспомогательная функция для синронизации текстового поля и значения используемого расширения CPU.
-            Нужна для работы с HTTP сервером, который работает только с текстовым полем.
-    */
+  \brief  Вспомогательная функция для синронизации текстового поля и значения используемого расширения CPU.
+          Нужна для работы с HTTP сервером, который работает только с текстовым полем.
+  */
   void sync_val2txt ();
   /**
-    \brief  Корректировка внутренних переменных структуры.
-    */
+  \brief  Корректировка внутренних переменных структуры.
+  */
   void self_correct ();
   /**
   \brief  
@@ -107,30 +108,35 @@ class IEvent
   {
     explicit Acessor (int){};
   };
+
+  IEvent ();
   /**
-  \brief  
+  \brief      Вспомогательная функция для облегчения реализации клонирования в производных типах.
+  \tparam     EventType тип события для которого будет реализовано клонирование.
+  \param[in]  _src  источник данных для клонирования.
+  \param[in]  _deep глубина клонирования (только тип или еще и данные в нем).
+  \return     копия события.
   */
-  template <typename T>
+  template <typename EventType>
   IEvent::ptr
-  helper_impl_clone_funct (typename T::craw_ptr _src, const TypeCloneEvent& _deep) const
+  helper_impl_clone_funct (typename EventType::craw_ptr _src, const DeepEventCloneType& _deep) const
   {
-    auto _res = T::make_shared_this ();
-    if (TypeCloneEvent::full == _deep)
+    auto _res = EventType::make_shared_this ();      //  статическое создание типа.
+    if (DeepEventCloneType::full == _deep)
       {
-        _res->copy (_src);
+        _res->copy (_src);      //  виртуальное копирование.
       }
     return _res;
   }
-  IEvent ();
   /**
-    \brief      Функция клонирования объекта.
-    \param[in]  _deep параметр задает глубину копирования (полное/только создание объекта по умолчанию).
-    \return     копия объекта.
-    */
-  IEvent::ptr clone (const ::libs::events::TypeCloneEvent& _deep = TypeCloneEvent::full) const;
+  \brief      Функция клонирования объекта.
+  \param[in]  _deep параметр задает глубину копирования (полное/только создание объекта по умолчанию).
+  \return     копия объекта.
+  */
+  IEvent::ptr clone (const ::libs::events::DeepEventCloneType& _deep = DeepEventCloneType::full) const;
 
   //  IEvent interface
-  virtual IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const = 0;
+  virtual IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const = 0;
   virtual bool        check_node_int (const base_functs::xml::itn& _node)           = 0;
   virtual void        load_int (const base_functs::xml::itn& _prop)                 = 0;
   virtual void        copy_int (const IEvent::craw_ptr _src);
@@ -139,7 +145,7 @@ class IEvent
   virtual void        sync_val2txt_int ();
   virtual bool        is_failed_int () const;
 
-  text_id_type    property_name_;      //< Имя свойства (события), переопределяется классом-потомком. Используется при загрузке из xml.
+  hid_type        property_name_;      //< Имя свойства (события), переопределяется классом-потомком. Используется при загрузке из xml.
   UsingStateEvent state_;              //< Общее состояние свойства (события). Отключено, включено и прочее.
 
 

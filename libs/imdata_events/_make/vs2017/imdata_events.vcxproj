@@ -30,12 +30,13 @@
     <ClInclude Include="..\..\events\base-data-event.hpp" />
     <ClInclude Include="..\..\events\base-nodes-data-event.hpp" />
     <ClInclude Include="..\..\events\change-node-data-event.hpp" />
+    <ClInclude Include="..\..\events\change-node-path-action.hpp" />
+    <ClInclude Include="..\..\events\change-path-action.hpp" />
     <ClInclude Include="..\..\events\get-nodes-data-event.hpp" />
     <ClInclude Include="..\..\events\list-xml-files-data-event.hpp" />
     <ClInclude Include="..\..\events\list-devices-data-event.hpp" />
     <ClInclude Include="..\..\events\change-paths-data-event.hpp" />
     <ClInclude Include="..\..\events\register_events_in_archives.hpp" />
-    <ClInclude Include="..\..\events\IStopCmd.hpp" />
     <ClInclude Include="..\..\events\node-path-info.hpp" />
     <ClInclude Include="..\..\includes.hpp" />
     <ClInclude Include="..\..\includes_int.hpp" />
@@ -48,7 +49,6 @@
     <ClCompile Include="..\..\events\list-xml-files-data-event.cpp" />
     <ClCompile Include="..\..\events\list-devices-data-event.cpp" />
     <ClCompile Include="..\..\events\change-paths-data-event.cpp" />
-    <ClCompile Include="..\..\events\IStopCmd.cpp" />
     <ClCompile Include="..\..\events\register_events_in_archives.cpp" />
     <ClCompile Include="..\..\events\node-path-info.cpp" />
   </ItemGroup>

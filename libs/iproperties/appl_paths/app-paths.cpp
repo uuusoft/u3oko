@@ -69,7 +69,7 @@ AppPaths::load (
 
   for (const path2string_type::value_type& _path : paths_)
     {
-      XULOG_INFO ("AppPaths::prepare make " << to_str (_path.first) << ", value=" << _path.second);
+      XULOG_TRACE ("AppPaths::prepare make " << to_str (_path.first) << ", value=" << _path.second);
       ::libs::helpers::files::create_folder (_path.second);
     }
   return;

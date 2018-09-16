@@ -10,8 +10,8 @@
 
 namespace libs { namespace properties {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 class ISharedProperty
 {
   public:
@@ -35,6 +35,7 @@ class ISharedProperty
 
 
   protected:
+  //  ISharedProperty interface
   virtual bool  self_test_int () const = 0;
   virtual void* cast2top_int ()        = 0;
 

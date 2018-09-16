@@ -10,8 +10,8 @@
 
 namespace dlls { namespace codecs { namespace codec_gen { namespace helpers {
 /**
-  \brief  
-  */
+\brief  ???
+*/
 inline void
 dump_buffer2file (const IVideoBuff::raw_ptr _out_buff, const std::string& _name_file)
 {

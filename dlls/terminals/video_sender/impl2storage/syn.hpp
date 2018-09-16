@@ -18,8 +18,8 @@ using ::libs::istorage_events::TypeObjectId;
 using ::libs::istorage_events::TypeUpdateStream;
 using ::libs::istorage_events::TypeDirectionStream;
 using ::libs::istorage_events::TypeActionStream;
-using ::libs::link::details::TypeSyncCall;
-using ::libs::link::details::TypeRequestCall;
+using ::libs::link::details::SyncCallType;
+using ::libs::link::details::RequestCallType;
 using ::libs::events::IEvent;
 
 }}}      // namespace dlls::terminals::video_sender

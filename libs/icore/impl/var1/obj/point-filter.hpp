@@ -10,8 +10,8 @@
 
 namespace libs { namespace icore { namespace impl { namespace var1 { namespace obj {
 /**
-  \brief  Тип точки соединения объекта.
-  */
+\brief  Тип точки соединения объекта.
+*/
 enum struct PointFilter
 {
   input  = 0,      //< Входная точка объекта.

@@ -19,7 +19,7 @@ CommandCodeEvent::CommandCodeEvent (const Acessor& _ph, const std::string& _code
   code_ (_code)
 {
   UASSERT (!code_.empty ());
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -52,7 +52,7 @@ CommandCodeEvent::set_code (const std::string& _id)
 
 
 ::libs::events::IEvent::ptr
-CommandCodeEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+CommandCodeEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<CommandCodeEvent> (this, _deep);
 }

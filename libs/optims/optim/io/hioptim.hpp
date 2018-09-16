@@ -10,13 +10,13 @@
 
 namespace libs { namespace optim { namespace io {
 /**
-  \brief Структура для хранения функции алгоритма для работы в рабочем потоке.
-  */
+\brief Структура для хранения функции алгоритма для работы в рабочем потоке.
+*/
 class hioptim
 {
   public:
   //  ext types
-  typedef std::atomic<funct_mcall_type> store_funct_type;
+  using store_funct_type = std::atomic<funct_mcall_type>;
 
   explicit hioptim (store_funct_type* _pfunct = nullptr) :
     pfunct_ (_pfunct)

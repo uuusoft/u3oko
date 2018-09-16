@@ -62,13 +62,16 @@ StorageModule::load_binary_statistic ()
 {
   if (!storage_impl_)
     {
-      return; // Допустимо.
+      return;      // Допустимо.
     }
   impl::IStorageImpl::ids_chunk_type _ids;
+  UASSERT_SIGNAL ("umimplemented");
+#if 0
   storage_impl_->get_all_ids (_ids);
   auto _locker = storage_impl_->lock_ids (_ids);
   storage_impl_->get_info_ids (_locker);
   storage_impl_->unlock_ids (_locker);
+#endif
   return;
 }
 

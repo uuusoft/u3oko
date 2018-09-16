@@ -10,8 +10,8 @@
 
 namespace libs { namespace ievents { namespace props { namespace videos { namespace generics { namespace convert {
 /**
-  \brief Перечисление для режимов соответствия размеров назначания и источника.
-  */
+\brief Перечисление для режимов соответствия размеров назначания и источника.
+*/
 enum struct TypeSrc2Dst
 {
   src_int_dst  = 0,      //< ???

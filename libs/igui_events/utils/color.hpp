@@ -10,8 +10,8 @@
 
 namespace libs { namespace igui_events { namespace utils {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 class Color
 {
   public:

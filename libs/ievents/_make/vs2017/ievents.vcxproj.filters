@@ -88,9 +88,6 @@
     <Filter Include="runtime\video">
       <UniqueIdentifier>{4d2ab197-27d2-4375-afc6-fe48370083de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="runtime\links">
-      <UniqueIdentifier>{2817c507-e127-41c6-95dc-352d498290fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="runtime\state">
       <UniqueIdentifier>{9da9b65c-e6c9-4206-a1d6-3726c024e181}</UniqueIdentifier>
     </Filter>
@@ -136,6 +133,15 @@
     <Filter Include="props\modules\log">
       <UniqueIdentifier>{4b2dab44-bf5b-4fce-8a35-23a2635502c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="props\modules\events">
+      <UniqueIdentifier>{3a739ef8-415b-4d2c-907d-a2e0fc0310d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\modules\log\consts">
+      <UniqueIdentifier>{9d2ef1ea-6b64-45e9-b545-5472eda0149b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props\modules\events\consts">
+      <UniqueIdentifier>{ff2bf397-5c59-4764-a227-9f634bad0d7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\includes.hpp">
@@ -152,9 +158,6 @@
     </ClInclude>
     <ClInclude Include="..\..\props\videos\generic\text\CVideoTextProp.hpp">
       <Filter>props\videos\generic\_old_shit\text</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\runtime\links\CLinksProp.hpp">
-      <Filter>runtime\links</Filter>
     </ClInclude>
     <ClInclude Include="..\..\props\videos\noises\time\ext\COldTimeNoiseRemoverProp.hpp">
       <Filter>props\videos\noises\time\ext</Filter>
@@ -263,9 +266,6 @@
     <ClInclude Include="..\..\props\videos\generic\motion_est\video-est-motion-prop.hpp">
       <Filter>props\videos\generic\motion_est</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\props\videos\generic\motion_est\buff-event-info.hpp">
-      <Filter>props\videos\generic\motion_est</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\props\videos\generic\scaler\video-scaler-prop.hpp">
       <Filter>props\videos\generic\scaler</Filter>
     </ClInclude>
@@ -359,6 +359,36 @@
     <ClInclude Include="..\..\runtime\interf\interf-capture-image-event.hpp">
       <Filter>runtime\interf</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\props\modules\events\property-events-module-event.hpp">
+      <Filter>props\modules\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\morph\morph-operation-type.hpp">
+      <Filter>props\videos\generic\morph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\morph\morph-operation-params.hpp">
+      <Filter>props\videos\generic\morph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\morph\morph-buff-info.hpp">
+      <Filter>props\videos\generic\morph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\videos\generic\motion_est\events-buff-info.hpp">
+      <Filter>props\videos\generic\motion_est</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\modules\log\consts\vals.hpp">
+      <Filter>props\modules\log\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\base_id\buff2module-info.hpp">
+      <Filter>props\base_id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\mix_mul\out-channel-info.hpp">
+      <Filter>props\mix_mul</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\modules\events\vals-events-module.hpp">
+      <Filter>props\modules\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\props\modules\events\consts\vals.hpp">
+      <Filter>props\modules\events\consts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\props\videos\generic\matrix\CVideoMatrixProp.cpp">
@@ -369,9 +399,6 @@
     </ClCompile>
     <ClCompile Include="..\..\props\videos\generic\text\CVideoTextProp.cpp">
       <Filter>props\videos\generic\_old_shit\text</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\runtime\links\CLinksProp.cpp">
-      <Filter>runtime\links</Filter>
     </ClCompile>
     <ClCompile Include="..\..\props\videos\noises\time\ext\COldTimeNoiseRemoverProp.cpp">
       <Filter>props\videos\noises\time\ext</Filter>
@@ -471,9 +498,6 @@
     <ClCompile Include="..\..\props\videos\generic\motion_est\video-est-motion-prop.cpp">
       <Filter>props\videos\generic\motion_est</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\props\videos\generic\motion_est\buff-event-info.cpp">
-      <Filter>props\videos\generic\motion_est</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\props\videos\generic\scaler\video-scaler-prop.cpp">
       <Filter>props\videos\generic\scaler</Filter>
     </ClCompile>
@@ -533,6 +557,12 @@
     </ClCompile>
     <ClCompile Include="..\..\runtime\interf\interf-capture-image-event.cpp">
       <Filter>runtime\interf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\modules\events\property-events-module-event.cpp">
+      <Filter>props\modules\events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\props\videos\generic\motion_est\events-buff-info.cpp">
+      <Filter>props\videos\generic\motion_est</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

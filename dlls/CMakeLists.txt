@@ -58,7 +58,7 @@ include( "${RELATIVE_PATH_TO_UUU_LIBS}/dlls/filter_noise/freq_domain/CMakeLists.
 include( "${RELATIVE_PATH_TO_UUU_LIBS}/dlls/filter_noise/space/_make/CMakeLists.txt" )
 include( "${RELATIVE_PATH_TO_UUU_LIBS}/dlls/filter_noise/time/_make/CMakeLists.txt" )
 
-include( "${RELATIVE_PATH_TO_UUU_LIBS}/dlls/uplifters/vcorrect/CMakeLists.txt" )
+include( "${RELATIVE_PATH_TO_UUU_LIBS}/dlls/uplifters/vcorrect/_make/CMakeLists.txt" )
 include( "${RELATIVE_PATH_TO_UUU_LIBS}/dlls/uplifters/vgradient/CMakeLists.txt" )
 
 include( "${RELATIVE_PATH_TO_UUU_LIBS}/dlls/scales/flow/CMakeLists.txt" )

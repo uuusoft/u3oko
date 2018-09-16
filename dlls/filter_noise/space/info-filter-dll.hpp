@@ -10,8 +10,8 @@
 
 namespace dlls { namespace filter_noise { namespace space {
 /**
-  \brief  Структура для расширения постоянных свойств узла графа обработки данных для фильтрации изображения в пространственной области.
-  */
+\brief  Структура для расширения постоянных свойств узла графа обработки данных для фильтрации изображения в пространственной области.
+*/
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter
 {
   // ext types

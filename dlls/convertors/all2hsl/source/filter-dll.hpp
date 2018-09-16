@@ -12,8 +12,8 @@
 
 namespace dlls { namespace convertors { namespace all2hsl {
 /**
-  \brief  empty brief
-  */
+\brief  Фильтр для преобразования всех поддерживаемых форматов в HSL.
+*/
 class Filter final : public ::libs::icore::impl::var1::obj::dll::IFilter,
                      protected ::libs::icore::impl::var1::obj::dll::FilterImpl<InfoFilter>
 {
@@ -52,12 +52,12 @@ class Filter final : public ::libs::icore::impl::var1::obj::dll::IFilter,
   void convert_buffs_from_y8 ();
 
   ::libs::optim::io::hioptim fx8_to_x16_;               //< Указатель на реализацию по преобразованию формата кадра из X8 в X16
-  ::libs::optim::io::hioptim rgb24_to_hsl_;             //< ???
-  ::libs::optim::io::hioptim rgb24_to_l_fast_;          //< ???
-  ::libs::optim::io::hioptim rgb24_to_l_accurate_;      //< ???
-  ::libs::optim::io::hioptim set_const_funct_;          //< ???
-  ::libs::optim::io::hioptim scale_funct_;              //< ???
-  ::libs::optim::io::hioptim flip_y_;                   //< ???
+  ::libs::optim::io::hioptim rgb24_to_hsl_;             //< Указатель на реализиацию по преобразованию RGB24 в HSL.
+  ::libs::optim::io::hioptim rgb24_to_l_fast_;          //< Указатель на реализиацию по преобразованию RGB24 в Y8.
+  ::libs::optim::io::hioptim rgb24_to_l_accurate_;      //< Указатель на реализиацию по преобразованию RGB24 в Y8.
+  ::libs::optim::io::hioptim set_const_funct_;          //< Указатель на реализиацию по установки буфера в константу.
+  ::libs::optim::io::hioptim scale_funct_;              //< Указатель на реализиацию масштабирования изображения.
+  ::libs::optim::io::hioptim flip_y_;                   //< Указатель на реализиацию по вертикальной инверсии изображения.
 };
 
 }}}      // namespace dlls::convertors::all2hsl

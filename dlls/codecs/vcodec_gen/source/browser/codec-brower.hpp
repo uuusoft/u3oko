@@ -12,8 +12,8 @@
 
 namespace dlls { namespace codecs { namespace vcodec_gen { namespace browser {
 /**
-  \brief  Класс для хранения информации о доступных видеокодеках в системе.
-  */
+\brief  Класс для хранения информации о доступных видеокодеках в системе.
+*/
 class CodecBrower final
 {
   public:
@@ -24,10 +24,10 @@ class CodecBrower final
   CodecBrower (const CodecBrower& _src) = delete;
   CodecBrower& operator= (const CodecBrower& _src) = delete;
   /**
-    \brief      Функция возвращает по идентификатору имя файла с кодеком или пусто.
-    \param[in]  _id идентификатор кодека.
-    \return     имя файла.
-    */
+  \brief      Функция возвращает по идентификатору имя файла с кодеком или пусто.
+  \param[in]  _id идентификатор кодека.
+  \return     имя файла.
+  */
   std::string get_codec (const ::libs::helpers::utils::cuuid& _id);
 
 
@@ -37,8 +37,8 @@ class CodecBrower final
   using guard_type     = std::lock_guard<sync_type>;
   using guid2file_type = std::map<::libs::helpers::utils::cuuid, std::string>;
   /**
-    \brief  Функция обновляет список кодеков
-    */
+  \brief  Функция обновляет список кодеков
+  */
   void refresh_list_codecs ();
 
   sync_type      mtx_;            //< Т.к. у объкту возможен доступ из разных потоков, кладем объект для синхронизации доступа.

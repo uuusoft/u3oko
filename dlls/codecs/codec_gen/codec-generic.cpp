@@ -15,10 +15,10 @@
 
 namespace dlls { namespace codecs { namespace codec_gen {
 
-CodecGeneric::CodecGeneric ()
-{
-  simd_ = TypeExtCpu::usual;
-}
+CodecGeneric::CodecGeneric () :
+  counter_frames_ (0),
+  simd_ (TypeExtCpu::usual)
+{}
 
 
 CodecGeneric::~CodecGeneric ()
@@ -36,7 +36,10 @@ CodecGeneric::init (const InfoGenCodec& _info)
 void
 CodecGeneric::code (const Buffs* _src, Buffs* _dst, events_type* _events)
 {
-  code_int (_src, _dst, _events);
+  if (code_int (_src, _dst, _events))
+    {
+      ++counter_frames_;
+    }
   return;
 }
 
@@ -44,7 +47,10 @@ CodecGeneric::code (const Buffs* _src, Buffs* _dst, events_type* _events)
 void
 CodecGeneric::decode (const Buffs* _src, Buffs* _dst, events_type* _events)
 {
-  decode_int (_src, _dst, _events);
+  if (decode_int (_src, _dst, _events))
+    {
+      ++counter_frames_;
+    }
   return;
 }
 

@@ -10,8 +10,8 @@
 
 namespace libs { namespace igui_events { namespace utils { namespace impl {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 struct Info
 {
   public:

@@ -10,59 +10,8 @@
 
 namespace libs { namespace ilog_events { namespace events {
 /**
-  \brief  Перечисление различных действий, который можно произвести над списком сессий логирования
-  */
-enum struct ActionForProcessLog
-{
-  get_raw_log = 0      //< Получить указанный список сессий логирования. Гарантируется упорядоченность по времени списка логирования, т.е. последний элемент это текущая сессия логирования.
-  //get_zip_sessions      = 1 //< Получить сжатый в архив указанный список сессий логирования. Гарантируется упорядоченность по времени списка логирования, т.е. последний элемент это текущая сессия логирования.
-};
-/**
-  \brief
-  */
-inline std::string
-to_str (const ActionForProcessLog& _act)
-{
-  switch (_act)
-    {
-    case ActionForProcessLog::get_raw_log:
-      return "get raw log";
-    default:
-      UASSERT_SIGNAL ("unknown ActionForProcessLog");
-      break;
-    }
-
-  return "???";
-}
-/**
-  \brief  
-  */
-struct InfoLogSession
-{
-  typedef std::string data_session_type;      //< Данные сессии.
-
-  InfoLogSession () :
-    off_ (0), size_ (0)
-  {}
-
-
-  template <class Archive>
-  void
-  serialize (Archive& ar, const unsigned int /* file_version */)
-  {
-    ar& BOOST_SERIALIZATION_NVP (data_);
-    ar& BOOST_SERIALIZATION_NVP (off_);
-    ar& BOOST_SERIALIZATION_NVP (size_);
-    return;
-  }
-
-  data_session_type data_;      //< Фрагмент данных сессии.
-  int               off_;       //< Смещение фрагмента в байтах.
-  int               size_;      //< Маскимальный размер фрагмента в байтах. 0 - не ограниченно.
-};
-/**
-  \brief  Событие с списком сессий логирования и действием над ним.
-  */
+\brief  Событие с списком сессий логирования и действием над ним.
+*/
 class ProcessLogEvent : public BaseLogEvent
 {
   friend class boost::serialization::access;
@@ -74,8 +23,8 @@ class ProcessLogEvent : public BaseLogEvent
 
   public:
   //  ext types
-  typedef std::string    id_session_type;
-  typedef InfoLogSession info_session_type;      //< Информация о сессии. Данные фрагмента, смещение фрагмента, размер данных.
+  using id_session_type   = std::string;
+  using info_session_type = InfoLogSession;      //< Информация о сессии. Данные фрагмента, смещение фрагмента, размер данных.
   UUU_THIS_TYPE_HAS_POINTERS_TO_SELF (ProcessLogEvent);
   UUU_ADD_MAKE_SHARED_FUNCT2THIS_TYPE (ProcessLogEvent);
   UUU_DISABLE_ACOPY_TYPE (ProcessLogEvent);
@@ -84,8 +33,8 @@ class ProcessLogEvent : public BaseLogEvent
 
   virtual ~ProcessLogEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ilog_events/events/process-log-event";
     return _ret;
@@ -122,9 +71,9 @@ class ProcessLogEvent : public BaseLogEvent
 
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
-
+  //  ievents::Event overrides
   //virtual void load_int( const base_functs::xml::itn& _prop ) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 };
 

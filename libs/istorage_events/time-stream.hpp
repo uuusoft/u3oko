@@ -7,6 +7,7 @@
 \project    uuu_istorage_events
 \brief      empty brief
 */
+
 namespace boost { namespace archive {
 
 namespace chrn = std::chrono;
@@ -22,6 +23,7 @@ load (Archive& ar, chrn::time_point<clock>& tp, unsigned)
   return;
 }
 
+
 template <class Archive, typename clock>
 void
 save (Archive& ar, chrn::time_point<clock> const& tp, unsigned)
@@ -31,6 +33,7 @@ save (Archive& ar, chrn::time_point<clock> const& tp, unsigned)
   ar& BOOST_SERIALIZATION_NVP (_millis);
   return;
 }
+
 
 template <class Archive, typename clock>
 inline void
@@ -122,8 +125,9 @@ operator< (const TimeStream& _left, const TimeStream& _right)
   XULOG_ERROR ("failed compare time, " << UUU_ICAST_INT (_ltime) << ", " << UUU_ICAST_INT (_rtime));
   return false;
 }
-
-
+/**
+\brief  ???
+*/
 inline std::string
 to_str (const TimeStream& _val)
 {

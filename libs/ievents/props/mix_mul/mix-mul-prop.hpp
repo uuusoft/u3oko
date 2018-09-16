@@ -7,39 +7,11 @@
 \project    uuu_ievents
 \brief      empty brief
 */
-namespace libs { namespace ievents { namespace props { namespace mix_mul { namespace consts {
-
-const int max_input_points  = 16;      //< описание параметров точек соединения
-const int max_output_points = 16;      //< ???
-
-}}}}}      // namespace libs::ievents::props::mix_mul::consts
 
 namespace libs { namespace ievents { namespace props { namespace mix_mul {
 /**
-  \brief  Структура связанная с каждой выходной точкой фильтра-множителя данных.
-  */
-struct OutChannelInfo
-{
-  OutChannelInfo ()
-  {}
-
-  std::vector<::libs::events::buff::BuffEventInfo> srcs2dsts_;      //< Список буферов назначения для буферов источников данной выходной точки.
-
-
-  private:
-  friend class boost::serialization::access;
-
-  template <class Archive>
-  void
-  serialize (Archive& ar, const unsigned int /* file_version */)
-  {
-    ar& BOOST_SERIALIZATION_NVP (srcs2dsts_);
-    return;
-  }
-};
-/**
-  \brief  empty brief
-  */
+\brief  empty brief
+ */
 class MixMulProp : public ievents::Event
 {
   friend class boost::serialization::access;
@@ -63,8 +35,8 @@ class MixMulProp : public ievents::Event
 
   virtual ~MixMulProp ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/props/mix_mul/mix-mul-prop";
     return _ret;
@@ -74,7 +46,8 @@ class MixMulProp : public ievents::Event
 
 
   protected:
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  //  ievents::Event overrides
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        load_int (const base_functs::xml::itn& _node) override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 

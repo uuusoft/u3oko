@@ -10,8 +10,8 @@
 
 namespace libs { namespace icore { namespace impl { namespace var1 { namespace obj {
 /**
-  \brief  Структура для группировки информации о соединении двух объектов графа обработки данных.
-  */
+\brief  Структура для группировки информации о соединении двух объектов графа обработки данных.
+*/
 struct ConnectInfo
 {
   //  ext types

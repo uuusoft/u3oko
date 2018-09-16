@@ -10,8 +10,8 @@
 
 namespace libs { namespace icore { namespace impl { namespace var1 { namespace obj {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 struct InterfsForFilter
 {
   InterfsForFilter ()

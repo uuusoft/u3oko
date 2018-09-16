@@ -11,8 +11,8 @@
 
 namespace dlls { namespace gens { namespace vgen_motion {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 class Filter final : public ::libs::icore::impl::var1::obj::dll::IFilter,
                      protected ::libs::icore::impl::var1::obj::dll::FilterImpl<InfoFilter>
 {
@@ -35,7 +35,7 @@ class Filter final : public ::libs::icore::impl::var1::obj::dll::IFilter,
 
   void itransform ();
 
-  void make_motion_est_buff (const BuffEventInfo& _b2b, const IVideoBuff& _cur_src, const IVideoBuff& _prev_src, IVideoBuff& _dst_vecs);
+  void make_motion_est_buff (const EventBuffsInfo& _b2b, const IVideoBuff& _cur_src, const IVideoBuff& _prev_src, IVideoBuff& _dst_vecs);
 
   off_buff2buff_type         indx2prev_buff_;      //< ???
   ::libs::optim::io::hioptim cmp_get_const_;       //< ???

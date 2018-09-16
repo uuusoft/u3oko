@@ -18,7 +18,7 @@ namespace libs { namespace ihttp_events { namespace events {
 WrapperHttpEvent::WrapperHttpEvent (const Acessor& _ph, ::libs::events::IEvent::ptr _msg) :
   int_ (_msg)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -42,7 +42,7 @@ WrapperHttpEvent::set_msg (::libs::events::IEvent::ptr& _msg)
 
 
 ::libs::events::IEvent::ptr
-WrapperHttpEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+WrapperHttpEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<WrapperHttpEvent> (this, _deep);
 }

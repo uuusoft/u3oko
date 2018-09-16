@@ -15,8 +15,8 @@ using ::libs::ievents::props::videos::generics::correct::VideoCorrectProp;
 using ::utils::dbuffs::IBuff;
 using ::utils::dbuffs::video::IVideoBuff;
 /**
-  \brief  ��������� ���������� (������ ����� ����������) ������������� �����������.
-  */
+\brief  ��������� ���������� (������ ����� ����������) ������������� �����������.
+*/
 class ICorrectImage
 {
   public:
@@ -51,6 +51,7 @@ class ICorrectImage
 
 
   private:
+  //  ICorrectImage interface
   virtual void change_state_int (bool _enable)                                                                           = 0;
   virtual void update_property_int (const VideoCorrectProp::raw_ptr _info)                                               = 0;
   virtual bool process_int (IVideoBuff::raw_ptr _h16_buff, IVideoBuff::raw_ptr _s16_buff, IVideoBuff::raw_ptr _l16_buff) = 0;

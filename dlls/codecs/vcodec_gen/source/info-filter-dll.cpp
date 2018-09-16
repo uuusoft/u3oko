@@ -43,7 +43,7 @@ InfoFilter::init ()
 void
 InfoFilter::sync_int (bool _force)
 {
-  XULOG_TEST ("InfoFilter::sync_int: beg");
+  XULOG_TRACE ("InfoFilter::sync_int: beg");
   fps_.set_fps (rprops_->fps_coder_);
 
   if (rcodec_)
@@ -54,7 +54,7 @@ InfoFilter::sync_int (bool _force)
   auto _impl = active_impl_.lock ();
   if (_impl)
     {
-      XULOG_TEST ("InfoFilter::sync_int: update codec property");
+      XULOG_TRACE ("InfoFilter::sync_int: update codec property");
       _impl->update_codec_property (rprops_);
     }
   return;

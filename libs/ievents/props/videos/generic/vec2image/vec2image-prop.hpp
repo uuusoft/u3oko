@@ -10,8 +10,8 @@
 
 namespace libs { namespace ievents { namespace props { namespace videos { namespace generics { namespace vec2image {
 /**
-  \brief  empty brief
-  */
+\brief  Свойства алгоритма визуализации векторов (например движения).
+*/
 class Vec2ImageProp : public ievents::Event
 {
   friend class boost::serialization::access;
@@ -35,14 +35,14 @@ class Vec2ImageProp : public ievents::Event
   virtual ~Vec2ImageProp ()
   {}
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/props/videos/generic/vec2image/vec2image-prop";
     return _ret;
   }
 
-  std::vector<BuffEventInfoVec2Image1> buffs_;
+  std::vector<EventBuffsInfoVec2Image1> buffs_;
 
 
   private:
@@ -53,7 +53,7 @@ class Vec2ImageProp : public ievents::Event
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
 
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        load_int (const base_functs::xml::itn& _node) override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 };

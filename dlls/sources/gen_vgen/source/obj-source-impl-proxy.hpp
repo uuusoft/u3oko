@@ -10,8 +10,8 @@
 
 namespace dlls { namespace sources { namespace gen_vgen {
 /**
-  \brief  Обеспечивает загрузку выбранной реализации захвата данных в память процесса.
-  */
+\brief  Обеспечивает загрузку выбранной реализации захвата данных в память процесса.
+*/
 class ObjSourceImplProxy
 {
   public:

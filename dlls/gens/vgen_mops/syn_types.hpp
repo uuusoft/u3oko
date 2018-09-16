@@ -13,20 +13,20 @@
 namespace dlls { namespace gens { namespace vgen_mops {
 //  синонимы к типам.
 using ::utils::dbuffs::video::consts::offs::off_buff_type;
+using ::utils::dbuffs::video::IVideoBuff;
 using ::libs::icore::impl::var1::obj::PointFilter;
 using ::libs::icore::impl::var1::obj::FilterInfo;
 using ::libs::icore::impl::var1::obj::dll::TransformInfo;
 using ::libs::icore::impl::var1::obj::dll::CallInterfInfo;
 using ::libs::icore::impl::var1::obj::ConnectInfo;
-using ::utils::dbuffs::video::IVideoBuff;
 using ::libs::ievents::props::videos::generic::morph::VideoMorphologyProp;
+using ::libs::ievents::props::videos::generic::morph::MorphBuffInfo;
+using ::libs::ievents::props::videos::generic::morph::MorphOperationParams;
+using ::libs::ievents::props::videos::generic::morph::MorphOperationType;
 using ::libs::optim::mcalls::CallerImpl;
-using ::libs::ievents::props::videos::generic::morph::BuffInfo;
-using ::libs::ievents::props::videos::generic::morph::ParamsOperation;
-using ::libs::icore::impl::var1::obj::FilterInfo;
-using ::libs::ievents::props::videos::generic::morph::TypeOperation;
 using ::libs::optim::mcalls::InfoMFunct;
 using ::libs::optim::io::MCallInfo;
-using OffBuff2Info = std::pair<off_buff_type, ::libs::ievents::props::videos::generic::morph::BuffInfo>;
+
+using off_buff2info_type = std::pair<off_buff_type, MorphBuffInfo>;
 
 }}}      // namespace dlls::gens::vgen_mops

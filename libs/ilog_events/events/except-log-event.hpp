@@ -10,8 +10,8 @@
 
 namespace libs { namespace ilog_events { namespace events {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 class ExceptLogEvent : public InfoLogEvent
 {
   friend class boost::serialization::access;
@@ -34,8 +34,8 @@ class ExceptLogEvent : public InfoLogEvent
 
   virtual ~ExceptLogEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ilog_events/events/except-log-event";
     return _ret;
@@ -54,9 +54,9 @@ class ExceptLogEvent : public InfoLogEvent
 
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
-
+  //  ievents::Event overrides
   //virtual void load_int( const base_functs::xml::itn& _prop ) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 };
 

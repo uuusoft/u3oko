@@ -12,8 +12,8 @@
 
 namespace libs { namespace ievents { namespace runtime { namespace mem {
 /**
-  \brief  Событие-уведомление с буферами под/c данными.
-  */
+\brief  Событие-уведомление с буферами под/c данными.
+*/
 class BuffsEvent : public RuntimeEvent
 {
   friend class boost::serialization::access;
@@ -40,8 +40,8 @@ class BuffsEvent : public RuntimeEvent
   virtual ~BuffsEvent ()
   {}
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/runtime/mem/buffs-event";
     return _ret;
@@ -61,14 +61,7 @@ class BuffsEvent : public RuntimeEvent
   ::libs::buffs::Buffs::ptr buff_;        //< Буфер с данными, связанный с событием.
   events_type*              events_;      //< Список событий, связанный с буфером.
 
-#if 0
-    friend class boost::serialization::access;
-
-    template<class Archive>
-    void serialize(Archive & ar, const unsigned int /* file_version */);
-#endif
-
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   //virtual void load_int( const base_functs::xml::itn& _node ) override;
   virtual void copy_int (const IEvent::craw_ptr _src) override;
 };

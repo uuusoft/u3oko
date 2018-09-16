@@ -10,8 +10,8 @@
 
 namespace dlls { namespace terminals { namespace video_sender { namespace impl2storage {
 /**
-  \brief  –елизаци€ передачи данных в модуль-хранилище.
-  */
+\brief  –елизаци€ передачи данных в модуль-хранилище.
+*/
 class Impl2Storage final : public IImplSender
 {
   public:
@@ -28,7 +28,7 @@ class Impl2Storage final : public IImplSender
 
   void close_stream ();
 
-  void send_message (IEvent::ptr& _rmsg, const TypeSyncCall& _sync, const TypeRequestCall& _req);
+  void send_message (IEvent::ptr& _rmsg, const SyncCallType& _sync, const RequestCallType& _req);
 
   stream_id_type active_stream_;      //< “екущий открытый поток на запись в хранилище.
 };

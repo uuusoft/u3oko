@@ -15,8 +15,8 @@ using ::libs::iproperties::appl_paths::IAppPaths;
 using ::utils::mem_functs::IBlockMem;
 using ::libs::helpers::files::NodeEnumFiles;
 /**
-  \brief  Тип для группировки данных для инициализации Loader.
-  */
+\brief  Тип для группировки данных для инициализации Loader.
+*/
 struct TInitInfo
 {
   explicit TInitInfo (IAppPaths::cptr _paths) :
@@ -26,9 +26,9 @@ struct TInitInfo
   IAppPaths::cptr paths_;      //< Указатель на хранилище путей к различным ресурсам.
 };
 /**
-  \brief  Тип для загрузки унифицированной загрузки константных ресурсов (скриптов, файлов и прочего).
-          Обеспечивает унифицированную работу с ними, вне зависимости от ОС.
-  */
+\brief  Тип для загрузки унифицированной загрузки константных ресурсов (скриптов, файлов и прочего).
+        Обеспечивает унифицированную работу с ними, вне зависимости от ОС.
+*/
 class Loader
 {
   public:

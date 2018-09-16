@@ -19,7 +19,7 @@ MouseButtonDownEvent::MouseButtonDownEvent (const Acessor& _ph, const TypeMouseB
   type_ (_type),
   pos_ (_pos)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -65,7 +65,7 @@ MouseButtonDownEvent::set_pos (const utils::IPos::ptr& _pos)
 
 
 ::libs::events::IEvent::ptr
-MouseButtonDownEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+MouseButtonDownEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<MouseButtonDownEvent> (this, _deep);
 }

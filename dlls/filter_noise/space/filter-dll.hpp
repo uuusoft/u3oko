@@ -10,8 +10,8 @@
 
 namespace dlls { namespace filter_noise { namespace space {
 /**
-  \brief  Узел графа обработки данных для фильтрации изображения в простраственной области.
-  */
+\brief  Узел графа обработки данных для фильтрации изображения в простраственной области.
+*/
 class Filter final : public ::libs::icore::impl::var1::obj::dll::IFilter,
                      protected ::libs::icore::impl::var1::obj::dll::FilterImpl<InfoFilter>
 {

@@ -10,8 +10,8 @@
 
 namespace dlls { namespace terminals { namespace video_sender {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 struct InfoFilter : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter
 {
   // ext types
@@ -25,7 +25,7 @@ struct InfoFilter : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter
   InfoFilter& operator= (const InfoFilter& _src) = delete;
 
   ::libs::events::IEvent::ptr props_;             //< Загружаемые из xml файла свойства фильтра.
-  props_type::raw_ptr         rprops_;            //< ???
+  props_type::raw_ptr         rprops_;            //< Настроенный указатель на свойства (для удобства).
   long long                   count_frames_;      //< Счетчик обработанных кадров.
   IBaseId::weak_ptr           active_impl_;       //< Интерфейс для маршрутизации данных.
 };

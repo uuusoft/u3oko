@@ -12,8 +12,8 @@
 
 namespace dlls { namespace filter_noise { namespace space { namespace impl { namespace rang { namespace vars {
 /**
-  \brief  Реализация фильтрации используя сортировку вставкой. Для оценки производительности относительно стандартной фильтрации.
-  */
+\brief  Реализация фильтрации используя сортировку вставкой. Для оценки производительности относительно стандартной фильтрации.
+*/
 class InsertSortAlg
 {
   public:

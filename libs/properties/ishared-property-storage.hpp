@@ -10,8 +10,8 @@
 
 namespace libs { namespace properties {
 /**
-  \brief  Интерфейс хранилища свойств, общих для всей системы.
-  */
+\brief  Интерфейс хранилища свойств, общих для всей системы.
+*/
 class ISharedPropertyStorage
 {
   public:
@@ -20,7 +20,7 @@ class ISharedPropertyStorage
 
   ISharedPropertyStorage (const ISharedPropertyStorage& _src) = delete;
   ISharedPropertyStorage& operator= (const ISharedPropertyStorage& _src) = delete;
-
+  //  ISharedPropertyStorage interface
   virtual ISharedProperty::raw_ptr get (const consts::keys::key_property_type& _key)                                        = 0;
   virtual void                     set_prop (const consts::keys::key_property_type& _key, const ISharedProperty::ptr& _ptr) = 0;
   virtual void                     reset_prop (const consts::keys::key_property_type& _key)                                 = 0;

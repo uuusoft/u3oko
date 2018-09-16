@@ -37,12 +37,29 @@ TestStorageImpl::set_info_int (const PathInfo::craw_ptr _info)
 bool
 TestStorageImpl::change_state_int (const StateImplsType& _state)
 {
+  XULOG_TRACE ("TestStorageImpl::change_state_int, beg, " << to_str (_state));
+  switch (_state)
+    {
+    case StateImplsType::run:
+      {
+        break;
+      }
+    case StateImplsType::stop:
+      {
+        flush_seances ();
+        break;
+      }
+    default:
+      XULOG_ERROR ("unknown type StateImplsType, " << to_str (_state));
+      return false;
+    }
+  XULOG_TRACE ("TestStorageImpl::change_state_int, end");
   return true;
 }
 
 
 void
-TestStorageImpl::load_int (const id_chunk_type& _id, IBlockMem::raw_ptr _mem)
+TestStorageImpl::load_int (const seance_type& _info, const id_chunk_type& _id, IBlockMem::raw_ptr _mem)
 {
   XULOG_ERROR ("unimplementated");
   UASSERT_SIGNAL (false);
@@ -51,7 +68,7 @@ TestStorageImpl::load_int (const id_chunk_type& _id, IBlockMem::raw_ptr _mem)
 
 
 TestStorageImpl::id_chunk_type
-TestStorageImpl::save_int (const info_about_mem_type& _info, IBlockMem::craw_ptr _mem)
+TestStorageImpl::save_int (const seance_type& _info, IBlockMem::craw_ptr _mem)
 {
   CHECK_STATE (_mem->get_data_size (), "try save empty data");
   return save_impl (_info, _mem->get (), _mem->get_data_size ());
@@ -59,14 +76,14 @@ TestStorageImpl::save_int (const info_about_mem_type& _info, IBlockMem::craw_ptr
 
 
 TestStorageImpl::id_chunk_type
-TestStorageImpl::save_int (const info_about_mem_type& _info, const unsigned char* _mem, const std::size_t _size_mem)
+TestStorageImpl::save_int (const seance_type& _info, const unsigned char* _mem, const std::size_t _size_mem)
 {
   CHECK_STATE (_mem, "try save empty data");
   CHECK_STATE (_size_mem, "try save null data");
   return save_impl (_info, _mem, _size_mem);
 }
 
-
+#if 0
 void
 TestStorageImpl::get_all_ids_int (ids_chunk_type& _ids)
 {
@@ -99,8 +116,8 @@ TestStorageImpl::get_all_ids_int (ids_chunk_type& _ids)
     }
   return;
 }
-
-
+#endif
+#if 0
 void
 TestStorageImpl::remove_ids_int (const id_locker_type& _lid)
 {
@@ -117,8 +134,8 @@ TestStorageImpl::get_info_ids_int (const id_locker_type& _lid)
   UASSERT_SIGNAL (false);
   return;
 }
-
-
+#endif
+#if 0
 TestStorageImpl::id_locker_type
 TestStorageImpl::lock_ids_int (const ids_chunk_type& _ids)
 {
@@ -135,87 +152,6 @@ TestStorageImpl::unlock_ids_int (const id_locker_type& _lid)
   UASSERT_SIGNAL (false);
   return;
 }
-
-
-TestStorageImpl::info_seance_type&
-TestStorageImpl::get_seance_info (const info_about_mem_type& _info)
-{
-  auto _find = seances2infos_.find (_info);
-  if (seances2infos_.end () == _find)
-    {
-      seances2infos_[_info] = 0;
-      _find                 = seances2infos_.find (_info);
-      prepare_write_seanse (_info);
-    }
-  return _find->second;
-}
-
-
-void
-TestStorageImpl::prepare_write_seanse (const info_about_mem_type& _info)
-{
-  auto _full_path = ::libs::helpers::files::make_path (root_path_, _info);
-  ::libs::helpers::files::create_folder (_full_path);
-  return;
-}
-
-
-TestStorageImpl::id_chunk_type
-TestStorageImpl::save_impl (const info_about_mem_type& _info, const unsigned char* _mem, const std::size_t _size_mem)
-{
-  auto& _sinfo = get_seance_info (_info);
-  ++_sinfo;
-  auto _ret = get_id_by_seance (_info, _sinfo);
-  CHECK_CALL (save_data (_ret, _mem, _size_mem), "failed save data to file");
-  return _ret;
-}
-
-
-TestStorageImpl::id_chunk_type
-TestStorageImpl::get_id_by_seance (const info_about_mem_type& _info, const info_seance_type& _sinfo)
-{
-  id_chunk_type _ret = _info + "/" + ::to_str (_sinfo);
-  XULOG_TEST ("TestStorageImpl::get_id_by_seance ret=" << _ret);
-  return _ret;
-}
-
-
-bool
-TestStorageImpl::save_data (const id_chunk_type& _id, const unsigned char* _mem, const std::size_t _size_mem)
-{
-  const auto    _full_path = ::libs::helpers::files::make_path (root_path_, _id);
-  std::ofstream _file (_full_path, std::ios::trunc | std::ios::binary);
-  _file.write (UUU_MEM_CAST<const char*> (_mem), _size_mem);
-  if (_file.bad ())
-    {
-      XULOG_ERROR ("failed write to file, " << _full_path << ", " << strerror (errno))
-    }
-  return true;
-}
-
-
-void
-TestStorageImpl::update_path ()
-{
-  XULOG_TRACE ("TestStorageImpl::update_path, beg, root_path_=" << root_path_);
-  if (!root_path_.empty ())
-    {
-      XULOG_TRACE ("TestStorageImpl::update_path, ready, skip");
-      return;
-    }
-
-  auto _iappl = UUU_PROP_CAST (::libs::iproperties::vers::system::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ())->get_appl_paths_lockfree ();
-  root_path_  = info_.path2data_;
-
-  if (root_path_.empty ())
-    {
-      // »наче генерируем значение по умолчанию, использу€ идентификатор и путь по умолчанию.
-      auto _path = _iappl->get_path (::libs::iproperties::appl_paths::TypePath::default_storage);
-      root_path_ = ::libs::helpers::files::make_path (_path, std::string ("test-storage"));
-    }
-  ::libs::helpers::files::create_folder (root_path_);
-  XULOG_TRACE ("TestStorageImpl::update_path, end, root_path_=" << root_path_);
-  return;
-}
+#endif
 
 }}}}}}      // namespace modules::uuu_storage::appl::impl::storage::test

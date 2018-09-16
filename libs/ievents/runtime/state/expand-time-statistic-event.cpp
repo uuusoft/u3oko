@@ -21,7 +21,7 @@ ExpandTimeStatisticEvent::ExpandTimeStatisticEvent (const Acessor& _ph, const Ex
   source_ (_source),
   infos_ (_infos)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -75,7 +75,7 @@ ExpandTimeStatisticEvent::set_action (const TypeStatisticAction& _action)
 
 
 ::libs::events::IEvent::ptr
-ExpandTimeStatisticEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+ExpandTimeStatisticEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<ExpandTimeStatisticEvent> (this, _deep);
 }

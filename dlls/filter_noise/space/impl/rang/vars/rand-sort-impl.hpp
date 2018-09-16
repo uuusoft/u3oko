@@ -12,8 +12,8 @@
 
 namespace dlls { namespace filter_noise { namespace space { namespace impl { namespace rang { namespace vars {
 /**
-  \brief  Реализация "зашумления" изображения путем случайного выбора элемента из окрестности пикселя (рзамером в ядро фильтрации).
-  */
+\brief  Реализация "зашумления" изображения путем случайного выбора элемента из окрестности пикселя (рзамером в ядро фильтрации).
+*/
 class RandSortAlg
 {
   public:

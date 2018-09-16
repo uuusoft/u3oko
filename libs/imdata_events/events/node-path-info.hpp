@@ -12,8 +12,8 @@
 
 namespace libs { namespace imdata_events { namespace events {
 /**
-  \brief  Структура для группировки информации о узле графа обработки данных.
-  */
+\brief  Структура для группировки информации о узле графа обработки данных.
+*/
 struct NodePathInfo
 {
   explicit NodePathInfo (const std::string& _id = "", const std::string& _name_dll = "");

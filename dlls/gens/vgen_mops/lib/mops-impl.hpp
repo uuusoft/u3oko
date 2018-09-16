@@ -10,8 +10,8 @@
 
 namespace dlls { namespace gens { namespace vgen_mops { namespace lib {
 /**
-  \brief  Фильтр морфологических операций над изображением.
-  */
+\brief  Релизация алогритма морфологических операций над изображением.
+*/
 class MopsImpl final
 {
   public:
@@ -27,22 +27,22 @@ class MopsImpl final
 
   void alloc_buffs ();
   /**
-    \brief            Функция бинаризации буфера.
-    \param[in]        _b2b  буфер. 
-    \param[in]        _bound  граница для пикселя
-    \param[in]        _val  значение, которое приобретает пиксель, если его начальное значение меньше _bound
-    \param[in, out ]  _pdst буфер.
-    \noreturn
-    */
+  \brief            Функция бинаризации буфера.
+  \param[in]        _b2b  буфер. 
+  \param[in]        _bound  граница для пикселя
+  \param[in]        _val  значение, которое приобретает пиксель, если его начальное значение меньше _bound
+  \param[in, out ]  _pdst буфер.
+  \noreturn
+  */
   void bin_buff (
-    const OffBuff2Info& _b2b,
-    const short         _bound,
-    const short         _val,
-    IVideoBuff*         _pdst);
+    const off_buff2info_type& _b2b,
+    const short               _bound,
+    const short               _val,
+    IVideoBuff*               _pdst);
 
 
   private:
-  VideoMorphologyProp::craw_ptr props_;              //< ???
+  VideoMorphologyProp::craw_ptr props_;              //< Свойства морфологических операций, загруженных из xml.
   helpers::MorphOperator        morph_helper_;       //< Вспомогательный объект, для реализации функционала МО, т.к возможно он будет использован в ряде лругих фильтров.
   ::libs::optim::io::hioptim    cmp_get_const_;      //< Функция сравнения для бинаризации изображения (подготовка буфера к МО через свертку).
   CallerImpl::ptr               pthreads_;           //< Пул потоков для обработки данных.

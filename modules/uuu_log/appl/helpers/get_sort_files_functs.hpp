@@ -12,8 +12,8 @@
 
 namespace modules { namespace uuu_log { namespace appl { namespace helpers {
 /**
-  \brief
-  */
+\brief
+*/
 inline list_folders_type
 get_sort_by_time_folders (const std::string& _path2sessions)
 {
@@ -52,8 +52,8 @@ get_sort_by_time_folders (const std::string& _path2sessions)
   return _folders;
 }
 /**
-  \brief
-  */
+\brief
+*/
 inline std::vector<std::string>
 get_sort_by_time_files (const std::string& _path2session)
 {

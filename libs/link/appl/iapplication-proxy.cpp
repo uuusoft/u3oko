@@ -65,7 +65,6 @@ IApplicationProxy::~IApplicationProxy ()
   UASSERT (deletor_);
   deletor_ (impl_);
   impl_ = nullptr;
-  return;
 }
 
 }}}      // namespace libs::link::appl

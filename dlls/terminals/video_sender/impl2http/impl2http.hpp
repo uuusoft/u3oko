@@ -10,8 +10,8 @@
 
 namespace dlls { namespace terminals { namespace video_sender { namespace impl2http {
 /**
-  \brief  ???
-  */
+\brief  Реализация передачи данных в http модуль.
+*/
 class Impl2Http final : public IImplSender
 {
   public:

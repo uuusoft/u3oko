@@ -11,8 +11,8 @@
 
 namespace libs { namespace ievents { namespace runtime { namespace interf {
 /**
-  \brief  Сообщение с интерфейсом для идентификации источника данных.
-  */
+\brief  Сообщение с интерфейсом для идентификации источника данных.
+*/
 class InterfBaseIdEvent : public BaseInterfEvent
 {
   friend class boost::serialization::access;
@@ -36,8 +36,8 @@ class InterfBaseIdEvent : public BaseInterfEvent
 
   virtual ~InterfBaseIdEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/runtime/interf/interf-base-id-event";
     return _ret;
@@ -52,13 +52,8 @@ class InterfBaseIdEvent : public BaseInterfEvent
   UUU_THIS_TYPE_HAS_SUPER_CLASS (BaseInterfEvent);
 
   impl_ptr_type impl_;      //< ���������� ���������� ���������� �� ��������� ����������.
-#if 0
-    friend class boost::serialization::access;
 
-    template<class Archive>
-    void serialize(Archive & ar, const unsigned int /* file_version */);
-#endif
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   //virtual void load_int( const base_functs::xml::itn& _node ) override;
   virtual void copy_int (const IEvent::craw_ptr _src) override;
 };

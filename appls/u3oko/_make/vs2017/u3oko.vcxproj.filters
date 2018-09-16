@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="appl">
+      <UniqueIdentifier>{fef37901-7921-4f94-bc19-4d178c18ed47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\consts">
+      <UniqueIdentifier>{f15f2760-ad64-4c10-baae-d3523e697885}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{dfe1890a-4c57-450a-8a0d-503c81e6da73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_android">
+      <UniqueIdentifier>{0fc48fd4-24a6-46ca-ae1a-673c2be69561}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\main.cpp" />
+    <ClCompile Include="..\..\android\app\src\main\cpp\native-lib.cpp">
+      <Filter>_android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\u3oko-appl.cpp">
+      <Filter>appl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\syn_types.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\consts\vals.hpp">
+      <Filter>appl\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\u3oko-appl.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+    <Text Include="..\..\android\app\CMakeLists.txt">
+      <Filter>_android</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

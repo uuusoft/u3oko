@@ -10,8 +10,8 @@
 
 namespace dlls { namespace gens { namespace vgen_diff {
 /**
-  \brief  Empty description
-  */
+\brief  Empty description
+*/
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter
 {
   // ext types

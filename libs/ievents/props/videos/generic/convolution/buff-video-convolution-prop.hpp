@@ -12,9 +12,9 @@
 
 namespace libs { namespace ievents { namespace props { namespace videos { namespace generics { namespace convolution {
 /**
-  \brief  empty brief
-  */
-struct BuffVideoConvolutionProp : public ::libs::events::buff::BuffEventInfo
+\brief  empty brief
+*/
+struct BuffVideoConvolutionProp : public ::libs::events::buff::EventBuffsInfo
 {
   public:
   BuffVideoConvolutionProp ();
@@ -33,7 +33,7 @@ struct BuffVideoConvolutionProp : public ::libs::events::buff::BuffEventInfo
 
 
   private:
-  UUU_THIS_TYPE_HAS_SUPER_CLASS (::libs::events::buff::BuffEventInfo);
+  UUU_THIS_TYPE_HAS_SUPER_CLASS (::libs::events::buff::EventBuffsInfo);
 
   friend class boost::serialization::access;
 

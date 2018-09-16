@@ -15,7 +15,7 @@ namespace modules { namespace uuu_log { namespace appl {
 using ::libs::ilog_events::events::BaseLogEvent;
 using ::libs::ilog_events::events::InfoLogEvent;
 using ::libs::ilink::LinkCreatorProxy;
-using ::libs::link::details::TypeRunCode;
+using ::libs::link::details::RunCodeType;
 using ::libs::link::ILink;
 using ::libs::events::IEvent;
 using ::libs::ievents::props::modules::log::PropertyLogModuleEvent;
@@ -25,9 +25,9 @@ using ::libs::ievents::runtime::state::ChangStateProcessTypeEvent;
 using ::libs::ilog_events::events::ProcessListLogsEvent;
 using ::libs::ilog_events::events::InfoLogEvent;
 using ::libs::ilog_events::events::ProcessLogEvent;
-
 using ::libs::helpers::files::NodeEnumFiles;
 using ::libs::ilog_events::events::ProcessLogEvent;
+
 using list_folders_type = ProcessListLogsEvent::list_folders_type;
 using info_session_type = ProcessLogEvent::info_session_type;
 using events_list_type  = std::list<::libs::events::IEvent::ptr>;

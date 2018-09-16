@@ -18,7 +18,7 @@ namespace libs { namespace igui_events { namespace events {
 SizeChangedEvent::SizeChangedEvent (const Acessor& _ph, const ::libs::igui_events::utils::ISize::ptr& _size) :
   size_ (_size)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -49,7 +49,7 @@ SizeChangedEvent::set_size (const ::libs::igui_events::utils::ISize::ptr& _size)
 
 
 ::libs::events::IEvent::ptr
-SizeChangedEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+SizeChangedEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<SizeChangedEvent> (this, _deep);
 }

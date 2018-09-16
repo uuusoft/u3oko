@@ -18,7 +18,7 @@ namespace libs { namespace ievents { namespace runtime { namespace error {
 BaseErrorEvent::BaseErrorEvent (const Acessor& _ph, const std::string& _info) :
   info_ (_info)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -34,7 +34,7 @@ BaseErrorEvent::what () const
 
 
 ::libs::events::IEvent::ptr
-BaseErrorEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+BaseErrorEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<BaseErrorEvent> (this, _deep);
 }

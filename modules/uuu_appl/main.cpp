@@ -6,7 +6,7 @@
 \date       01.01.2017
 \copyright  www.uuusoft.com
 \project    uuu_appl
-\brief      Основной файл модуля for load main application module.
+\brief      Базовый файл системы, для загрузки всех связанных с ней модулей.
 */
 #include "mmedia/defines/defines.hpp"
 #include "mmedia/defines/includes.hpp"
@@ -19,10 +19,25 @@ namespace bip = boost::interprocess;
 namespace bpo = boost::program_options;
 
 void
-sig_abort (int)
+signal_stop_process (int)
 {
-  volatile bool _dbg = false;
-  _dbg;
+  XULOG_INFO ("signal_stop_process, beg");
+  if (::modules::uuu_appl::g_module_appl && ::modules::uuu_appl::g_module_appl->impl ())
+    {
+      auto _impl = ::modules::uuu_appl::g_module_appl->impl ();
+      _impl->force_stop ();      // Без затей и блокировок, просто выставляем флаг.
+    }
+  XULOG_INFO ("signal_stop_process, end");
+  return;
+}
+
+
+void
+signal_abort_process (int _val)
+{
+  XULOG_INFO ("signal_abort_process, beg, " << _val);
+  exit (_val);
+  XULOG_INFO ("signal_abort_process, end");
   return;
 }
 
@@ -32,8 +47,11 @@ prepare_process ()
 {
   XULOG_INFO ("prepare_process: beg");
   ::libs::ilink::appl::base::register_events_for_module ();
-  XULOG_TEST ("prepare_process: prepare set prop demons_property");
-  ::libs::iproperties::helpers::get_storage ()->set_prop (::libs::properties::consts::keys::demons_property, std::make_shared<::libs::iproperties::vers::demon::IDemonsProperty> ());
+
+  XULOG_TRACE ("prepare_process: prepare set prop demons_property");
+  auto _istorage = ::libs::iproperties::helpers::get_storage ();
+
+  _istorage->set_prop (::libs::properties::consts::keys::demons_property, std::make_shared<::libs::iproperties::vers::demon::IDemonsProperty> ());
 
 #if defined(UUU_OS_WIN32_DESKTOP)
 
@@ -47,13 +65,13 @@ prepare_process ()
   SetErrorMode (SEM_NOGPFAULTERRORBOX | SEM_FAILCRITICALERRORS);
 #endif
 
-  ::libs::iproperties::helpers::get_storage ()->set_prop (::libs::properties::consts::keys::shared_os_property, std::make_shared<::libs::iproperties::vers::system::ISystemProperty> ());
-  ::libs::iproperties::helpers::get_storage ()->set_prop (::libs::properties::consts::keys::specific_os_property, std::make_shared<::libs::iproperties::vers::system::SystemWin32Property> ());
+  _istorage->set_prop (::libs::properties::consts::keys::shared_os_property, std::make_shared<::libs::iproperties::vers::system::ISystemProperty> ());
+  _istorage->set_prop (::libs::properties::consts::keys::specific_os_property, std::make_shared<::libs::iproperties::vers::system::SystemWin32Property> ());
 
 #elif defined(UUU_OS_GNU_LINUX) || defined(UUU_OS_RASPBERRY)
 
-  ::libs::iproperties::helpers::get_storage ()->set_prop (::libs::properties::consts::keys::shared_os_property, std::make_shared<::libs::iproperties::vers::system::ISystemProperty> ());
-  ::libs::iproperties::helpers::get_storage ()->set_prop (::libs::properties::consts::keys::specific_os_property, std::make_shared<::libs::iproperties::vers::system::SystemWin32Property> ());
+  _istorage->set_prop (::libs::properties::consts::keys::shared_os_property, std::make_shared<::libs::iproperties::vers::system::ISystemProperty> ());
+  _istorage->set_prop (::libs::properties::consts::keys::specific_os_property, std::make_shared<::libs::iproperties::vers::system::SystemWin32Property> ());
 
 #elif defined(UUU_OS_ANDROID)
 #else
@@ -75,9 +93,9 @@ init_process (int _argc, char* _argv[])
 
   ::modules::uuu_appl::up_links (_cur_folder, _argc, _argv);
 
-  XULOG_TEST ("prepare check process");
+  XULOG_TRACE ("prepare check process");
   CHECK_CALL (::modules::uuu_appl::check_process (), "failed, call check_process");
-  XULOG_TEST (::modules::uuu_appl::g_init_appl.name_lib_.c_str ());
+  XULOG_TRACE (::modules::uuu_appl::g_init_appl.name_lib_.c_str ());
 
   ::modules::uuu_appl::g_module_appl = std::make_shared<::libs::link::appl::IApplicationProxy> (_cur_folder.c_str (), ::modules::uuu_appl::g_init_appl.name_lib_.c_str ());
 
@@ -143,28 +161,17 @@ deinit_process ()
   return;
 }
 
+
 void
-debug_check ()
+setup_signal_catch ()
 {
-  //XULOG_INFO ("begin debug wait");
-  //std::this_thread::sleep_for (std::chrono::milliseconds (5 * 1000));      //  debug
-  return;
+  std::signal (SIGINT, signal_stop_process);
+  std::signal (SIGTERM, signal_stop_process);
 
-  const std::string _src1 ("string");
-  const std::string _src2 ("/string\n");
-  const std::string _src3 ("/string\r\n");
-  const std::regex  _checker1 (std::string ("^string*"), std::regex_constants::ECMAScript);
-  const std::regex  _checker2 (std::string ("^/string*"), std::regex_constants::basic);
-  const std::regex  _checker3 (std::string ("^/string*"), std::regex_constants::extended);
-
-  std::cerr << "check src1 vs checker1, " + std::to_string (std::regex_match (_src1, _checker1, std::regex_constants::match_any)) << std::endl;
-  //XULOG_TRACE( ("check src1 vs checker2, " + to_str( std::regex_match(_src1, _checker2 ) )).c_str(), "uuu_http_module" );
-
-  //XULOG_TRACE( ("check src2 vs checker1, " + to_str( std::regex_match(_src2, _checker1 ) )).c_str(), "uuu_http_module" );
-  //XULOG_TRACE( ("check src2 vs checker2, " + to_str( std::regex_match(_src2, _checker2 ) )).c_str(), "uuu_http_module" );
-
-  //XULOG_TRACE( ("check src3 vs checker1, " + to_str( std::regex_match(_src3, _checker1 ) )).c_str(), "uuu_http_module" );
-  //XULOG_TRACE( ("check src3 vs checker2, " + to_str( std::regex_match(_src3, _checker2 ) )).c_str(), "uuu_http_module" );
+  std::signal (SIGILL, signal_abort_process);
+  std::signal (SIGFPE, signal_abort_process);
+  std::signal (SIGSEGV, signal_abort_process);
+  std::signal (SIGABRT, signal_abort_process);
   return;
 }
 
@@ -177,11 +184,11 @@ main_impl (int _argc, char* _argv[])
   ::libs::helpers::log::android::Logger logger;
   SET_MODULE (logger, UUU_LOG_TAG);
 #endif
+
   XULOG_INFO ("main_impl: beg");
   try
     {
-      signal (SIGABRT, sig_abort);
-      debug_check ();
+      setup_signal_catch ();
       prepare_process ();
       init_process (_argc, _argv);
       work_process ();
@@ -200,7 +207,7 @@ main_impl (int _argc, char* _argv[])
     }
   catch (...)
     {
-      XULOG_ERROR ("exception unknow");
+      XULOG_ERROR ("unknown exception");
     }
 
   deinit_process ();

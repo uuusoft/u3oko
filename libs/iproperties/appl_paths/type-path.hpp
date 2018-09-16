@@ -10,8 +10,8 @@
 
 namespace libs { namespace iproperties { namespace appl_paths {
 /**
-  \brief  Тип для путей к различным категориям данных.
-  */
+\brief  Тип для путей к различным категориям данных.
+*/
 enum struct TypePath
 {
   generic_appl    = 0,       //< Общий путь к системе. xx
@@ -29,7 +29,9 @@ enum struct TypePath
   default_storage = 12,      //< Путь к каталогу по умолчанию для данных хранилища. RW
   debug_test      = 13       //< Для отладки.
 };
-
+/**
+\brief  ???
+*/
 inline std::string
 to_str (const TypePath& _val)
 {

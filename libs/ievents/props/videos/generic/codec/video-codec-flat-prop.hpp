@@ -12,9 +12,9 @@
 
 namespace libs { namespace ievents { namespace props { namespace videos { namespace generics { namespace codec {
 /**
-  \brief  Структура для группировки свойств кодеков в системе. 
-          Может использоваться как POD тип, для бинарного сохранения/восстановления/передачи между различными платформами.
-  */
+\brief  Структура для группировки свойств кодеков в системе. 
+        Может использоваться как POD тип, для бинарного сохранения/восстановления/передачи между различными платформами.
+*/
 struct VideoCodecFlatProp
 {
   VideoCodecFlatProp ();

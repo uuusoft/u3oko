@@ -10,11 +10,11 @@
 
 namespace libs { namespace ievents { namespace props { namespace terminals {
 //  syn
-using ::libs::events::buff::BuffEventInfo;
+using ::libs::events::buff::EventBuffsInfo;
 /**
-  \brief  Свойство конечной точки графа обработки данных.
-          Определяет дальнейший путь данных (http server, gui etc).
-  */
+\brief  Свойство конечной точки графа обработки данных.
+        Определяет дальнейший путь данных (http server, gui etc).
+*/
 class EndPointProp : public Event
 {
   friend class boost::serialization::access;
@@ -37,26 +37,21 @@ class EndPointProp : public Event
 
   virtual ~EndPointProp ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/props/terminals/end-point-prop";
     return _ret;
   }
 
-  //int get_id () const;
-
   bool is_send () const;
 
   bool is_notify () const;
 
-  //const BuffEventInfo& get_gui_buffs () const;
-
-  //const BuffEventInfo& get_http_buffs () const;
-
 
   protected:
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  //  Event overrides
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        load_int (const base_functs::xml::itn& _node) override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 
@@ -71,9 +66,6 @@ class EndPointProp : public Event
 
   bool enable_send_;        //< Флаг, глобальный для данной камеры, управляет включением передачи данных в другие модули.
   bool enable_notify_;      //< Флаг включения посылки сообщения о передаче данных.
-  //BuffEventInfo gui_buffs_;          //< Буфер источника/- для передачи в подсистему gui.
-  //BuffEventInfo http_buffs_;         //< Буфер источника/- для передачи в подсистему htpp.
-  //int           id_;                 //< Идентификатор камеры.
 };
 
 }}}}      // namespace libs::ievents::props::terminals

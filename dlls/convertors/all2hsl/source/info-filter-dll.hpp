@@ -12,8 +12,8 @@
 
 namespace dlls { namespace convertors { namespace all2hsl {
 /**
-  \brief
-  */
+\brief  Свойства данного фильтра по преобразованию форматов в HSL.
+*/
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter
 {
   public:

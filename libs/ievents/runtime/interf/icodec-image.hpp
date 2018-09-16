@@ -15,8 +15,8 @@ namespace libs { namespace ievents { namespace runtime { namespace interf {
 using ::libs::ievents::props::videos::generics::codec::VideoCodecProp;
 using ::utils::dbuffs::IBuff;
 /**
-  \brief  ��������� ���������� (������ ����� ����������) ������������� �����������.
-  */
+\brief  ��������� ���������� (������ ����� ����������) ������������� �����������.
+*/
 class ICodecImage
 {
   public:

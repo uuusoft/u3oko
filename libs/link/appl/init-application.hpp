@@ -10,8 +10,8 @@
 
 namespace libs { namespace link { namespace appl {
 /**
-  \brief  Структура для группировки данных по инициализации модуля приложения связи.
-  */
+\brief  Структура для группировки данных по инициализации модуля приложения связи.
+*/
 struct InitApplication
 {
   public:

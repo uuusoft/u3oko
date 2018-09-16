@@ -10,8 +10,8 @@
 
 namespace libs { namespace icore { namespace impl { namespace var1 { namespace obj {
 /**
-  \brief  Тип для группировки свойств
-  */
+\brief  Тип для группировки свойств
+*/
 struct FilterInfo
 {
   // ext types

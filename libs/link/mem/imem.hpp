@@ -12,9 +12,9 @@
 
 namespace libs { namespace link { namespace mem {
 /**
-  \brief  Опиональный интерфейс памяти. 
-          Если он предоставляется объектом-связью, то для передачи блоков данных нужно использовать его.
-  */
+\brief  Опиональный интерфейс памяти. 
+        Если он предоставляется объектом-связью, то для передачи блоков данных нужно использовать его.
+*/
 class IMem
 {
   public:
@@ -23,7 +23,7 @@ class IMem
 
   IMem (const IMem& _src) = delete;
   IMem& operator= (const IMem& _src) = delete;
-
+  //  IMem interface
   virtual void* mem_alloc (int _size, IBlockMem::ptr _hmem)                      = 0;
   virtual bool  mem_free (IBlockMem::ptr _hmem)                                  = 0;
   virtual bool  mem_atomic_call (IBlockMem::cptr _hmem, const IHandlerMem& _obj) = 0;

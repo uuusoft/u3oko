@@ -19,7 +19,7 @@ LinksVideoDriverProp::LinksVideoDriverProp (const Acessor& _ph) :
   pdriver2buff_ (nullptr),
   pdriver2mem_ (nullptr)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -28,7 +28,7 @@ LinksVideoDriverProp::~LinksVideoDriverProp ()
 
 
 ::libs::events::IEvent::ptr
-LinksVideoDriverProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+LinksVideoDriverProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<LinksVideoDriverProp> (this, _deep);
 }

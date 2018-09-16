@@ -12,9 +12,9 @@
 
 namespace libs { namespace events {
 /**
-  \brief  Событие запроса. 
-          Используется как флаг запроса (требуется ответ в виде вложенного события).
-  */
+\brief  Событие запроса. 
+        Используется как флаг запроса (требуется ответ в виде вложенного события).
+*/
 class IAnswerEvent : public IWrapBaseEvent
 {
   friend class boost::serialization::access;
@@ -37,8 +37,8 @@ class IAnswerEvent : public IWrapBaseEvent
 
   virtual ~IAnswerEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/events/ianswer-event";
     return _ret;
@@ -46,7 +46,7 @@ class IAnswerEvent : public IWrapBaseEvent
 
 
   protected:
-  virtual IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void        copy_int (const IEvent::craw_ptr _src) override;
 
 

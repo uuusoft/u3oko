@@ -10,8 +10,8 @@
 
 namespace dlls { namespace gens { namespace vgen_diff {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 class Filter final : public ::libs::icore::impl::var1::obj::dll::IFilter,
                      protected ::libs::icore::impl::var1::obj::dll::FilterImpl<InfoFilter>
 {

@@ -44,7 +44,7 @@ str2event_state (const std::string& _str)
 
 Event::Event (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -53,7 +53,7 @@ Event::~Event ()
 
 
 ::libs::events::IEvent::ptr
-Event::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+Event::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<Event> (this, _deep);
 }

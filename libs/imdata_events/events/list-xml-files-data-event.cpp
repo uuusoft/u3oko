@@ -18,7 +18,7 @@ namespace libs { namespace imdata_events { namespace events {
 ListXmlFilesDataEvent::ListXmlFilesDataEvent (const Acessor& _ph, const xml_files_type& _xml_files) :
   xml_files_ (_xml_files)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -43,7 +43,7 @@ ListXmlFilesDataEvent::set_xml_files (ListXmlFilesDataEvent::xml_files_type&& _s
 
 
 ::libs::events::IEvent::ptr
-ListXmlFilesDataEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+ListXmlFilesDataEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<ListXmlFilesDataEvent> (this, _deep);
 }
@@ -53,21 +53,6 @@ void
 ListXmlFilesDataEvent::load_int (const base_functs::xml::itn& _node)
 {
   super::load_int (_node);
-#if 0
-    base_functs::xml::ritn  _params = _node->children ("param");
-    base_functs::xml::itn _param  = _params.begin ();
-
-    while ( _param != _params.end () )
-    {
-      pugi::xml_attribute _name_param = _param->attribute ("name");
-      pugi::xml_attribute _val_param  = _param->attribute ("val");
-
-      if ( _name_param && _val_param)
-      {}
-
-      ++_param;
-    }
-#endif
   self_correct ();
   return;
 }

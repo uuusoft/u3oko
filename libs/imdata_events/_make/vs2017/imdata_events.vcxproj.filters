@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{1d4f3450-7c3d-43d2-8ddf-33a75f297dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events">
+      <UniqueIdentifier>{5df8eed0-1a45-4622-b84b-64019d055814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\_nodes">
+      <UniqueIdentifier>{8b99b204-cc6a-49b9-bb89-995b027acd3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\_register">
+      <UniqueIdentifier>{778684b6-37eb-4b7c-8547-eea8ee008db0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\register_events_in_archives.hpp">
+      <Filter>events\_register</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\list-xml-files-data-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\list-devices-data-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\change-paths-data-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\base-data-event.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\node-path-info.hpp">
+      <Filter>events\_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\base-nodes-data-event.hpp">
+      <Filter>events\_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\change-node-data-event.hpp">
+      <Filter>events\_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\get-nodes-data-event.hpp">
+      <Filter>events\_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\change-path-action.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\change-node-path-action.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\events\register_events_in_archives.cpp">
+      <Filter>events\_register</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\list-xml-files-data-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\list-devices-data-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\change-paths-data-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\base-data-event.cpp">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\node-path-info.cpp">
+      <Filter>events\_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\base-nodes-data-event.cpp">
+      <Filter>events\_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\change-node-data-event.cpp">
+      <Filter>events\_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\events\get-nodes-data-event.cpp">
+      <Filter>events\_nodes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

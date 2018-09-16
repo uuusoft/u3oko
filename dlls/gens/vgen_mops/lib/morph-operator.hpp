@@ -25,36 +25,38 @@ class MorphOperator
 
   void init ();
 
-  void applay_operation2buff (const ParamsOperation& _op, ::libs::buffs::Buffs* _pbuff, IVideoBuff* _pdst);
+  void applay_operation2buff (const MorphOperationParams& _op, ::libs::buffs::Buffs* _pbuff, IVideoBuff* _pdst);
 
 
   private:
-  void erosion_buff (const ParamsOperation& _op, ::libs::buffs::Buffs* _pbuff, IVideoBuff* _pdst);
   /**
-    \brief        Функция подготовки параметров для МО erosion.
-    \param[in]    _size_spot  размер пятна операции.
-    \param[out ]  _cinfo      параметры функции.
-    \param[out ]  _tfunct     возвращаемая функция.
-    */
-  void fill_koeffs_for_erosion_operation (
-    const short                        _size_spot,
-    ::libs::optim::io::MCallInfo&      _cinfo,
-    ::libs::optim::mcalls::InfoMFunct& _tfunct);
-
-  void dilation_buff (
-    const ParamsOperation& _op,
-    ::libs::buffs::Buffs*  _pbuff,
-    IVideoBuff*            _pdst);
+  \brief      Функция реализации операции эрозии над буфером.
+  \param[in]  _op параметры операции.
+  \param[in]  _pbuff  буфер источник.
+  \param[out] _pdst   буфер назначения.
+  */
+  void erosion_buff (const MorphOperationParams& _op, ::libs::buffs::Buffs* _pbuff, IVideoBuff* _pdst);
   /**
-    \brief        Функция подготовки параметров для МО dilation.
-    \param[in]    _size_spot  размер пятна операции.
-    \param[out ]  _cinfo    параметры функции.
-    \param[out ]  _tfunct   возвращаемая функция.
-    */
-  void fill_koeffs_for_dilation_operation (
-    const short _size_spot,
-    MCallInfo&  _cinfo,
-    InfoMFunct& _tfunct);
+  \brief        Функция подготовки параметров для МО erosion.
+  \param[in]    _size_spot  размер пятна операции.
+  \param[out ]  _cinfo      параметры функции.
+  \param[out ]  _tfunct     возвращаемая функция.
+  */
+  void fill_koeffs_for_erosion_operation (const short _size_spot, ::libs::optim::io::MCallInfo& _cinfo, ::libs::optim::mcalls::InfoMFunct& _tfunct);
+  /**
+  \brief      Функция реализации операции дилатации над буфером.
+  \param[in]  _op параметры операции.
+  \param[in]  _pbuff  буфер источник.
+  \param[out] _pdst   буфер назначения.
+  */
+  void dilation_buff (const MorphOperationParams& _op, ::libs::buffs::Buffs* _pbuff, IVideoBuff* _pdst);
+  /**
+  \brief        Функция подготовки параметров для МО dilation.
+  \param[in]    _size_spot  размер пятна операции.
+  \param[out ]  _cinfo    параметры функции.
+  \param[out ]  _tfunct   возвращаемая функция.
+  */
+  void fill_koeffs_for_dilation_operation (const short _size_spot,MCallInfo&  _cinfo,InfoMFunct& _tfunct);
 
   CallerImpl::ptr            pthreads_;            //< Указатель на пул потоков для вычисления МО.
   ::libs::optim::io::hioptim conv_mod_3x3_;        //< Функция свертки 3х3.

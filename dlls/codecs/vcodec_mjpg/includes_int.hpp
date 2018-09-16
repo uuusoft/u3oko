@@ -15,7 +15,7 @@
 #include "mmedia/dlls/codecs/codec_functs/bitgen/includes.hpp"
 #include "mmedia/dlls/codecs/codec_gen/includes.hpp"
 
-#include "mmedia/libso/libjpeg-turbo-master/turbojpeg.h"
+#include "mmedia/libso/libjpeg-turbo/turbojpeg.h"
 
 #include "consts/vals.hpp"
 #include "syn_types.hpp"

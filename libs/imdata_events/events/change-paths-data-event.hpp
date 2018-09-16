@@ -10,17 +10,8 @@
 
 namespace libs { namespace imdata_events { namespace events {
 /**
-  \brief  Перечисление различных действий, которые можно произвести над списком графов обработки данных.
-  */
-enum struct TypeChangePathAction
-{
-  get    = 0,      //< Получить список активных графов по обработке данных.
-  add    = 1,      //< Добавить указанный список к активным.
-  remove = 2       //< Удалить указанный список из активных.
-};
-/**
-  \brief  Событие производит указанное действие над указаним списком xml файлов для графов обработки данных.
-  */
+\brief  Событие производит указанное действие над указаним списком xml файлов для графов обработки данных.
+*/
 class ChangePathsDataEvent : public BaseDataEvent
 {
   friend class boost::serialization::access;
@@ -35,21 +26,21 @@ class ChangePathsDataEvent : public BaseDataEvent
 
   public:
   //  ext types
-  typedef std::string             id_path_type;
-  typedef std::list<id_path_type> id_paths_list_type;
+  using id_path_type       = std::string;
+  using id_paths_list_type = std::list<id_path_type>;
   UUU_THIS_TYPE_HAS_POINTERS_TO_SELF (ChangePathsDataEvent);
   UUU_ADD_MAKE_SHARED_FUNCT2THIS_TYPE (ChangePathsDataEvent);
   UUU_DISABLE_ACOPY_TYPE (ChangePathsDataEvent);
 
   explicit ChangePathsDataEvent (
-    const Acessor&                      = Acessor (0),
-    const TypeChangePathAction& _action = TypeChangePathAction::get,
-    const id_paths_list_type&   _paths  = id_paths_list_type ());
+    const Acessor&                    = Acessor (0),
+    const ChangePathAction&   _action = ChangePathAction::get,
+    const id_paths_list_type& _paths  = id_paths_list_type ());
 
   virtual ~ChangePathsDataEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/imdata_events/events/change-paths-data-event";
     return _ret;
@@ -59,18 +50,19 @@ class ChangePathsDataEvent : public BaseDataEvent
 
   void set_paths (id_paths_list_type& _paths);
 
-  TypeChangePathAction get_action () const;
+  ChangePathAction get_action () const;
 
-  void set_action (const TypeChangePathAction& _action);
+  void set_action (const ChangePathAction& _action);
 
   bool check () const;
 
 
   private:
+  // int types
   UUU_THIS_TYPE_HAS_SUPER_CLASS (BaseDataEvent);
 
-  id_paths_list_type   paths_;       //< Имя XML файла с описанием графа обработки данных.
-  TypeChangePathAction action_;      //< Действие, которое требуется произвести со списком.
+  id_paths_list_type paths_;       //< Имя XML файла с описанием графа обработки данных.
+  ChangePathAction   action_;      //< Действие, которое требуется произвести со списком.
 
   friend class boost::serialization::access;
 
@@ -78,7 +70,7 @@ class ChangePathsDataEvent : public BaseDataEvent
   void serialize (Archive& ar, const unsigned int /* file_version */);
 
   virtual void                        load_int (const base_functs::xml::itn& _prop) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 };
 

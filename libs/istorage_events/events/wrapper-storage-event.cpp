@@ -18,7 +18,7 @@ namespace libs { namespace istorage_events { namespace events {
 WrapperStorageEvent::WrapperStorageEvent (const Acessor& _ph, ::libs::events::IEvent::ptr _msg) :
   int_ (_msg)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -42,7 +42,7 @@ WrapperStorageEvent::set_msg (::libs::events::IEvent::ptr& _msg)
 
 
 ::libs::events::IEvent::ptr
-WrapperStorageEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+WrapperStorageEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<WrapperStorageEvent> (this, _deep);
 }

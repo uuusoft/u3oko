@@ -12,8 +12,8 @@
 
 namespace libs { namespace ilink { namespace impl { namespace oneproc {
 /**
-  \brief  Структура для расширения полей оригинальной.
-  */
+\brief  Структура для расширения полей оригинальной.
+*/
 struct CreateInfoExt : public CreateInfo
 {
   explicit CreateInfoExt () :
@@ -29,8 +29,9 @@ struct CreateInfoExt : public CreateInfo
 
   bool server_side_;      //< Флаг стороны канала.
 };
-
-
+/**
+\brief  ????
+*/
 inline std::string
 to_str (const CreateInfoExt& _val)
 {

@@ -12,8 +12,8 @@
 
 namespace libs { namespace istorage_events { namespace events {
 /**
-  \brief  Класс событие для обертки другого события с целью указания модуля-назначения в виде storage сервера.
-  */
+\brief  Класс событие для обертки другого события с целью указания модуля-назначения в виде storage сервера.
+*/
 class WrapperStorageEvent : public BaseStorageEvent
 {
   friend class boost::serialization::access;
@@ -36,8 +36,8 @@ class WrapperStorageEvent : public BaseStorageEvent
 
   virtual ~WrapperStorageEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/istorage_events/events/wrapper-storage-event";
     return _ret;
@@ -62,7 +62,7 @@ class WrapperStorageEvent : public BaseStorageEvent
   void serialize (Archive& ar, const unsigned int /* file_version */);
 
   //virtual void load_int( const base_functs::xml::itn& _prop ) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 };
 

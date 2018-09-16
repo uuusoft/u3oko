@@ -42,6 +42,7 @@ void
 IMemBuff::flush ()
 {
   mem_vars_.set (TypeMemVar::size_data, 0);
+  fragments_.clear ();
   return;
 }
 
@@ -128,6 +129,7 @@ IMemBuff::clone_int (IBuff::craw_ptr _isrc, float _percent)
     }
 
   ::libs::helpers::mem::acopy (_src->get_cbuff (), get_buff (), (*_src)[TypeMemVar::size_buffer]);
+  fragments_ = _src->fragments_;
   return;
 }
 
@@ -144,6 +146,7 @@ IMemBuff::swap_int (IBuff& _isrc)
 
   std::swap (raw_, _src.raw_);
   std::swap (mem_vars_, _src.mem_vars_);
+  std::swap (fragments_, _src.fragments_);
   return;
 }
 

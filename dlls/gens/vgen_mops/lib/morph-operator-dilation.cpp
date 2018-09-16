@@ -54,10 +54,7 @@ get_mkoeff_for_dilation_operation (const short _size_spot)
 
 
 void
-MorphOperator::fill_koeffs_for_dilation_operation (
-  const short _size_spot,
-  MCallInfo&  _cinfo,
-  InfoMFunct& _tfunct)
+MorphOperator::fill_koeffs_for_dilation_operation (const short _size_spot, MCallInfo& _cinfo, InfoMFunct& _tfunct)
 {
   short _mull_koeff = get_mkoeff_for_dilation_operation (_size_spot);
 
@@ -93,10 +90,7 @@ MorphOperator::fill_koeffs_for_dilation_operation (
 
 
 void
-MorphOperator::dilation_buff (
-  const ParamsOperation& _op,
-  ::libs::buffs::Buffs*  _pbuff,
-  IVideoBuff*            _pdst)
+MorphOperator::dilation_buff (const MorphOperationParams& _op, ::libs::buffs::Buffs* _pbuff, IVideoBuff* _pdst)
 {
   auto _tbuff = (*_pbuff)[utils::dbuffs::video::consts::offs::temp1];
 

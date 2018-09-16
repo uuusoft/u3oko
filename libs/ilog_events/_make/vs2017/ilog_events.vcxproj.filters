@@ -48,6 +48,15 @@
     <ClInclude Include="..\..\events\process-log-event.hpp">
       <Filter>events</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\events\action-for-process-log.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\info-log-session.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\events\action-for-list-logs.hpp">
+      <Filter>events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\events\register_events_in_archives.cpp">

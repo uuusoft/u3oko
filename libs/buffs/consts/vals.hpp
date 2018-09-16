@@ -10,6 +10,11 @@
 \brief      empty brief
 */
 
-namespace libs { namespace buffs { namespace consts {
-//const int invalid_indx_buff = -1;     //< ???
-}}}      // namespace libs::buffs::consts
+namespace libs {
+/// Пространство имен для функционала по работе с видеобуферами в ОЗУ.
+namespace buffs {
+/// Пространство констант для функционала по работе с видеобуферами в ОЗУ.
+namespace consts {
+}
+}      // namespace buffs
+}      // namespace libs

@@ -11,6 +11,7 @@
 */
 #include "../../../includes_int.hpp"
 #include "mmedia/dlls/sources/vgen_lib/source/includes.hpp"
+#include "syn.hpp"
 
 #undef UUU_LOG_TAG
 #define UUU_LOG_TAG "uuu_fake_vgen"

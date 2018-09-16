@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="appl">
+      <UniqueIdentifier>{a5bf818a-a457-46c4-a32f-81b5f1e37376}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\consts">
+      <UniqueIdentifier>{b2f146a6-fb1a-4ccf-9ae2-36010cb944c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\_includes">
+      <UniqueIdentifier>{53895063-3717-4cf8-a852-5a3e3676b135}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\appl\consts\vals.hpp">
+      <Filter>appl\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\syn_types.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>appl\_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\events-module.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\sqlite-call-helper-functs.hpp">
+      <Filter>appl</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\main.cpp" />
+    <ClCompile Include="..\..\appl\events-module.cpp">
+      <Filter>appl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\appl\events-module-catch-msg-functs.cpp">
+      <Filter>appl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

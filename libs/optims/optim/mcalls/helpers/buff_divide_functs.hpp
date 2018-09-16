@@ -10,9 +10,8 @@
 
 namespace libs { namespace optim { namespace mcalls { namespace helpers {
 /**
-  \brief  empty brief
-  \date 01.09.2016.EAI
-  */
+\brief  empty brief
+*/
 inline bool
 split_height (
   const std::size_t _max_block,
@@ -44,6 +43,7 @@ split_height (
         }
     }
   while (--_cur > 1);
+
   return true;
 }
 

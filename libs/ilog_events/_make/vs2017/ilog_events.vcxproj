@@ -28,6 +28,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\appll-part-log-info.hpp" />
+    <ClInclude Include="..\..\events\action-for-list-logs.hpp" />
+    <ClInclude Include="..\..\events\action-for-process-log.hpp" />
+    <ClInclude Include="..\..\events\info-log-session.hpp" />
     <ClInclude Include="..\..\events\process-log-event.hpp" />
     <ClInclude Include="..\..\events\wrapper-log-event.hpp" />
     <ClInclude Include="..\..\type-log-status.hpp" />

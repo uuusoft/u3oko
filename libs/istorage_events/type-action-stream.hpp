@@ -10,15 +10,17 @@
 
 namespace libs { namespace istorage_events {
 /**
-  \brief  Перечисление различных действий в потоке данных.
-  */
+\brief  Перечисление различных действий в потоке данных.
+*/
 enum struct TypeActionStream
 {
   read         = 0,      //< Через поток возможно только чтение.
   write        = 1,      //< Через поток возможно только запись.
   modification = 2       //< Через поток возможно удаление/чтение/запись.
 };
-
+/**
+\brief  ???
+*/
 inline std::string
 to_str (const TypeActionStream& _val)
 {

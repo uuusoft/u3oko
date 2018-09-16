@@ -18,7 +18,7 @@ namespace libs { namespace events {
 IRequestEvent::IRequestEvent (const Acessor& _ph, IEvent::ptr _int) :
   IWrapBaseEvent (IWrapBaseEvent::Acessor (0), _int)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -27,7 +27,7 @@ IRequestEvent::~IRequestEvent ()
 
 
 IEvent::ptr
-IRequestEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+IRequestEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<IRequestEvent> (this, _deep);
 }

@@ -50,7 +50,7 @@ VideoDriverCaptureProp::VideoDriverCaptureProp (const Acessor& _ph) :
   rotation_ (0),
   focus_ (FocusType::auto_generic)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 
   return;
 }
@@ -61,7 +61,7 @@ VideoDriverCaptureProp::~VideoDriverCaptureProp ()
 
 
 ::libs::events::IEvent::ptr
-VideoDriverCaptureProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+VideoDriverCaptureProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<VideoDriverCaptureProp> (this, _deep);
 }

@@ -10,34 +10,8 @@
 
 namespace libs { namespace ilog_events { namespace events {
 /**
-  \brief  Перечисление различных действий, который можно произвести над списком сессий логирования
-  */
-enum struct ActionForListLogs
-{
-  get_sessions    = 0,      //< Получить список сессий логирования.
-  delete_sessions = 1       //< Удалить указанный список сессий логирования.
-};
-/**
-  \brief
-  */
-inline std::string
-to_str (const ActionForListLogs& _act)
-{
-  switch (_act)
-    {
-    case ActionForListLogs::get_sessions:
-      return "get sessions";
-    case ActionForListLogs::delete_sessions:
-      return "delete sessions";
-    default:
-      UASSERT_SIGNAL ("unknown ActionForListLogs");
-      break;
-    }
-  return "???";
-}
-/**
-  \brief  Событие с списком сессий логирования и действием над ним.
-  */
+\brief  Событие с списком сессий логирования и действием над ним.
+*/
 class ProcessListLogsEvent : public BaseLogEvent
 {
   friend class boost::serialization::access;
@@ -49,8 +23,8 @@ class ProcessListLogsEvent : public BaseLogEvent
 
   public:
   //  ext types
-  typedef std::string                  id_session_type;
-  typedef std::vector<id_session_type> list_folders_type;      //< Список сессий логирования.
+  using id_session_type   = std::string;
+  using list_folders_type = std::vector<id_session_type>;      //< Список сессий логирования.
   UUU_THIS_TYPE_HAS_POINTERS_TO_SELF (ProcessListLogsEvent);
   UUU_ADD_MAKE_SHARED_FUNCT2THIS_TYPE (ProcessListLogsEvent);
   UUU_DISABLE_ACOPY_TYPE (ProcessListLogsEvent);
@@ -59,8 +33,8 @@ class ProcessListLogsEvent : public BaseLogEvent
 
   virtual ~ProcessListLogsEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ilog_events/events/process-list-logs-event";
     return _ret;
@@ -92,9 +66,9 @@ class ProcessListLogsEvent : public BaseLogEvent
 
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
-
+  //  ievents::Event overrides
   //virtual void load_int( const base_functs::xml::itn& _prop ) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 };
 

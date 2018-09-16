@@ -17,7 +17,7 @@ namespace libs { namespace ievents { namespace runtime { namespace interf {
 InterfCodecImageEvent::InterfCodecImageEvent (const Acessor& _ph, const impl_ptr_type& _impl) :
   impl_ (_impl)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -42,7 +42,7 @@ InterfCodecImageEvent::set_interface (const impl_ptr_type& _impl)
 
 
 ::libs::events::IEvent::ptr
-InterfCodecImageEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+InterfCodecImageEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<InterfCodecImageEvent> (this, _deep);
 }

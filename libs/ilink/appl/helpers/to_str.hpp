@@ -12,10 +12,10 @@
 
 namespace libs { namespace ilink { namespace appl { namespace helpers {
 /**
-  \brief      Вспомогательная функция для преобразования структуры в строку. Для трассировки.
-  \param[in]  _obj  объект преобразования.
-  \return     строка результата преобразования.
-  */
+\brief      Вспомогательная функция для преобразования структуры в строку. Для трассировки.
+\param[in]  _obj  объект преобразования.
+\return     строка результата преобразования.
+*/
 inline std::string
 to_str (const StateProcessEventExt& _obj)
 {

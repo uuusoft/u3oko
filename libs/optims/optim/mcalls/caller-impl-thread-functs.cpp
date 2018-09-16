@@ -16,7 +16,7 @@
 namespace libs { namespace optim { namespace mcalls {
 
 #if 0
-typedef ::modules::uuu_log::appl::thread::ExceptionLogger<::libs::link::ILink::ptr> ExceptionLogger;
+using ::modules::uuu_log::appl::thread::ExceptionLogger<::libs::link::ILink::ptr> ExceptionLogger;
 #else
 //  debug
 struct ExceptionLogger

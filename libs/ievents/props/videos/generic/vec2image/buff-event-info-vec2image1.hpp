@@ -12,14 +12,14 @@
 
 namespace libs { namespace ievents { namespace props { namespace videos { namespace generics { namespace vec2image {
 /**
-  \brief  empty brief
-  */
-struct BuffEventInfoVec2Image1 : public ::libs::events::buff::BuffEventInfo
+\brief  empty brief
+*/
+struct EventBuffsInfoVec2Image1 : public ::libs::events::buff::EventBuffsInfo
 {
   friend class boost::serialization::access;
 
   public:
-  explicit BuffEventInfoVec2Image1 () :
+  explicit EventBuffsInfoVec2Image1 () :
     size_block_ (16),
     mul_koeff_vec_ (1)
   {}
@@ -36,7 +36,7 @@ struct BuffEventInfoVec2Image1 : public ::libs::events::buff::BuffEventInfo
 
 
   private:
-  UUU_THIS_TYPE_HAS_SUPER_CLASS (::libs::events::buff::BuffEventInfo);
+  UUU_THIS_TYPE_HAS_SUPER_CLASS (::libs::events::buff::EventBuffsInfo);
 
   friend class boost::serialization::access;
 
@@ -46,4 +46,4 @@ struct BuffEventInfoVec2Image1 : public ::libs::events::buff::BuffEventInfo
 
 }}}}}}      // namespace libs::ievents::props::videos::generics::vec2image
 
-BOOST_CLASS_EXPORT_KEY (::libs::ievents::props::videos::generics::vec2image::BuffEventInfoVec2Image1);
+BOOST_CLASS_EXPORT_KEY (::libs::ievents::props::videos::generics::vec2image::EventBuffsInfoVec2Image1);

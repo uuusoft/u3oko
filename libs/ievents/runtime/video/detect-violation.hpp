@@ -11,8 +11,17 @@
 
 namespace libs { namespace ievents { namespace runtime { namespace video {
 /**
-  \brief  Событие-уведомление о сработки детектора автивности (движение/звук/etc).
-  */
+\brief  Перечисление различных состояний в которых может находится процесс фиксации движения в кадре.
+*/
+enum struct StateDetectViolation
+{
+  start = 0,      //< Первая фиксация движения в серии.
+  stop  = 1,      //< Последняя фиксация движения в серии.
+  next  = 2       //< Промежуточная фиксация движения в серии.
+};
+/**
+\brief  Событие-уведомление о сработки детектора автивности (движение/звук/etc).
+*/
 class DetectViolation : public RuntimeEvent
 {
   friend class boost::serialization::access;
@@ -31,22 +40,24 @@ class DetectViolation : public RuntimeEvent
   UUU_ADD_MAKE_SHARED_FUNCT2THIS_TYPE (DetectViolation);
   UUU_DISABLE_ACOPY_TYPE (DetectViolation);
 
-  explicit DetectViolation (const Acessor& = Acessor (0), bool _start = true);
+  explicit DetectViolation (const Acessor& = Acessor (0), const StateDetectViolation& _state = StateDetectViolation::start);
 
   virtual ~DetectViolation ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/runtime/video/detect-violation";
     return _ret;
   }
 
-  bool is_start () const;
+  void set_state(const StateDetectViolation& _state);
+
+  StateDetectViolation get_state () const;
 
 
   protected:
-  bool start_;      //< Признак того, что акивность стартовала (в противном случае это признак окончания активности).
+  StateDetectViolation state_;      //< Признак того, что акивность стартовала (в противном случае это признак окончания активности).
 
 
   private:
@@ -57,7 +68,7 @@ class DetectViolation : public RuntimeEvent
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
 
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   //virtual void load_int( const base_functs::xml::itn& _node ) override;
   virtual void copy_int (const IEvent::craw_ptr _src) override;
 };

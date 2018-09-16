@@ -91,7 +91,7 @@ LinkCreatorImplOneProc::get_listen (const CreateInfo* _info)
 
 
 ILink::ptr
-LinkCreatorImplOneProc::get_connect (const TypeLinkModules& _type)
+LinkCreatorImplOneProc::get_connect (const LinkModulesType& _type)
 {
   guard_type      _grd (mtx_);
   InfoOneLink&    _sublink = links_[_type];
@@ -103,7 +103,7 @@ LinkCreatorImplOneProc::get_connect (const TypeLinkModules& _type)
 
 
 ILink::ptr
-LinkCreatorImplOneProc::get_listen (const TypeLinkModules& _type)
+LinkCreatorImplOneProc::get_listen (const LinkModulesType& _type)
 {
   guard_type      _grd (mtx_);
   InfoOneLink&    _sublink = links_[_type];

@@ -12,17 +12,17 @@
 
 namespace libs { namespace ievents { namespace props { namespace videos { namespace gens { namespace diff {
 /**
-  \brief  Структура хранит информацию о операции постобработки разности.
-  */
+\brief  Структура хранит информацию о операции постобработки разности.
+*/
 struct ParamsVideoDiffProp
 {
-  ParamsVideoDiffProp ();
+  ParamsVideoDiffProp (bool _enable = false, short _bound_filling = 0, short _val_filling = 1);
 
   virtual ~ParamsVideoDiffProp ();
 
   bool self_test () const;
 
-  bool  enable_;            //< Флаг, включить постобработку вычисленной разности.
+  bool  enable_;             //< Флаг, включить постобработку вычисленной разности.
   short bound_filling_;      //< Значение границы, ниже или равно которой значения пикселей сбрасываются в 0.
   short val_filling_;        //< Значение пикселей, начальное значение которых больше границы.
 

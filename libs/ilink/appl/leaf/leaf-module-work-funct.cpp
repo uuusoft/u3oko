@@ -43,10 +43,10 @@ LeafModule::work_int ()
               //  Формируем описание запроса (все флаги, транзакцию и прочее).
               while (_msg)
                 {
-                  std::pair<IEvent::raw_ptr, IEvent::text_id_type> _cmsgs[] = {
+                  std::pair<IEvent::raw_ptr, IEvent::hid_type> _cmsgs[] = {
                     { _msg.get (), _msg->get_mid () },
-                    { ::libs::iproperties::helpers::cast_event<ievents::runtime::RuntimeEvent> (_msg), ievents::runtime::RuntimeEvent::gen_get_type_text_id () },
-                    { ::libs::iproperties::helpers::cast_event<::libs::ilog_events::events::InfoLogEvent> (_msg), ::libs::ilog_events::events::InfoLogEvent::gen_get_type_text_id () }
+                    { ::libs::iproperties::helpers::cast_event<ievents::runtime::RuntimeEvent> (_msg), ievents::runtime::RuntimeEvent::gen_get_mid () },
+                    { ::libs::iproperties::helpers::cast_event<::libs::ilog_events::events::InfoLogEvent> (_msg), ::libs::ilog_events::events::InfoLogEvent::gen_get_mid () }
                   };
 
                   auto _find = catch_functs_.end ();

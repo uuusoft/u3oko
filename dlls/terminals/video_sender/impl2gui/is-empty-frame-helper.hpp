@@ -9,11 +9,13 @@
 \project    uuu_video_sender
 \brief    
 */
-#if 0
+
 namespace dlls { namespace terminals { namespace video_sender { namespace impl2gui {
+
+#if 0
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 class IsEmptyFrameHelper : public ::libs::link::mem::IHandlerMem
 {
   public:
@@ -34,6 +36,6 @@ class IsEmptyFrameHelper : public ::libs::link::mem::IHandlerMem
   private:
   mutable Filter* obj_;      //< ???
 };
+#endif
 
 }}}}      // namespace dlls::terminals::video_sender::impl2gui
-#endif

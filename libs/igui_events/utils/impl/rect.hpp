@@ -10,8 +10,8 @@
 
 namespace libs { namespace igui_events { namespace utils { namespace impl {
 /**
-  \brief  Интерфейс для работы с размерами любых объектов в GUI.
-  */
+\brief  Интерфейс для работы с размерами любых объектов в GUI.
+*/
 class Rect : public IRect
 {
   public:
@@ -39,10 +39,9 @@ class Rect : public IRect
   {
     UASSERT (_pos);
     UASSERT (_size);
-
     pos_.set (_pos->get_x (), _pos->get_y ());
-
     size_.set (_size->get_width (), _size->get_height ());
+    return;
   }
 
   void
@@ -50,6 +49,7 @@ class Rect : public IRect
   {
     pos_.reset ();
     size_.reset ();
+    return;
   }
 
   virtual IPos::raw_ptr

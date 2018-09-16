@@ -17,7 +17,7 @@ namespace libs { namespace ievents { namespace props { namespace videos { namesp
 
 VideoConvolutionProp::VideoConvolutionProp (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -26,7 +26,7 @@ VideoConvolutionProp::~VideoConvolutionProp ()
 
 
 ::libs::events::IEvent::ptr
-VideoConvolutionProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+VideoConvolutionProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<VideoConvolutionProp> (this, _deep);
 }
@@ -96,7 +96,6 @@ VideoConvolutionProp::load_int (const base_functs::xml::itn& _prop)
             }
 
           _add.check ();
-
           buffs_.push_back (_add);
         }
 

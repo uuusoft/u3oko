@@ -24,13 +24,13 @@ ForeverLoadDlls Filter::freez_impls_;
 
 Filter::Filter ()
 {
-  node_event2funct_[::libs::ievents::runtime::mem::BuffsEvent::gen_get_type_text_id ()] = [this](CallInterfInfo& _info) -> void {
+  node_event2funct_[::libs::ievents::runtime::mem::BuffsEvent::gen_get_mid ()] = [this](CallInterfInfo& _info) -> void {
     auto _devent = ::libs::iproperties::helpers::cast_event<::libs::ievents::runtime::mem::BuffsEvent> (_info.event_);
     fill_buffer (&finfo_, _devent);
     return;
   };
 
-  node_event2funct_[::libs::ievents::runtime::state::ChangStateProcessTypeEvent::gen_get_type_text_id ()] = [this](CallInterfInfo& _info) -> void {
+  node_event2funct_[::libs::ievents::runtime::state::ChangStateProcessTypeEvent::gen_get_mid ()] = [this](CallInterfInfo& _info) -> void {
     auto _event = ::libs::iproperties::helpers::cast_event<::libs::ievents::runtime::state::ChangStateProcessTypeEvent> (_info.event_);
     if (_event->is_start ())
       {

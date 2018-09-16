@@ -18,7 +18,7 @@ namespace libs { namespace ilog_events { namespace events {
 ProcessLogEvent::ProcessLogEvent (const Acessor&, const AppllPartLogInfo& _appl) :
   action_ (ActionForProcessLog::get_raw_log)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -80,7 +80,7 @@ ProcessLogEvent::set_action (const ActionForProcessLog& _action)
 
 
 ::libs::events::IEvent::ptr
-ProcessLogEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+ProcessLogEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<ProcessLogEvent> (this, _deep);
 }

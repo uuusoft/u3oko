@@ -16,20 +16,20 @@
 namespace libs { namespace link {
 
 CreateInfo::CreateInfo () :
-  run_as_ (details::TypeRunCode::usual),
-  pt2pt_ (details::TypeLinkModules::gui),
+  run_as_ (details::RunCodeType::usual),
+  pt2pt_ (details::LinkModulesType::gui),
   size_shared_mem_bytes_ (consts::size_shared_mem_bytes)
 {}
 
 
 CreateInfo::CreateInfo (
-  const details::TypeRunCode&     _run_as,
+  const details::RunCodeType&     _run_as,
   const std::string&              _name_proc,
   const std::string&              _name_lib,
   const std::string&              _company_name,
   const std::string&              _appl_name,
   const std::string&              _subsys_name,
-  const details::TypeLinkModules& _type,
+  const details::LinkModulesType& _type,
   int                             _size_shared_mem_bytes) :
 
   run_as_ (_run_as),

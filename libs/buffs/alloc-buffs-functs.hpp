@@ -9,7 +9,12 @@
 */
 
 namespace libs { namespace buffs {
-
+/**
+\brief          Функция создает буфер в списке по его индексу.
+\param[in, out] _buffs  список буферов.
+\param[in]      _off_buff_type  индекс-позиция-тип буфера, который будет создан.
+\param[in]      _src  буфер-источник параметров для создаваемого буфера.
+*/
 inline void
 alloc_buff_by_indx (Buffs::raw_ptr _buffs, const off_buff_type& _indx, IVideoBuff::raw_ptr _src)
 {

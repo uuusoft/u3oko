@@ -51,7 +51,6 @@ generic_thread_funct (
       _etext = "unknown exception from main thread";
     }
 
-  XULOG_TEST ("exception?:" << _etext);
   _logger (_etext);
 
   try
@@ -79,7 +78,6 @@ generic_thread_funct (
       _etext = "unknown exception from post thread";
     }
 
-  XULOG_TEST ("exception?:" << _etext);
   _logger (_etext);
   XULOG_TRACE ("generic_thread_funct::end");
   return;

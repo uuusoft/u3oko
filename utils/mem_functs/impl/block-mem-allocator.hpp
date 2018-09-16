@@ -16,14 +16,15 @@ const std::size_t default_reserved_count_blocks = 1024;           //< ???
 
 }}}}      // namespace utils::mem_functs::impl::consts
 
+
 namespace utils { namespace mem_functs { namespace impl {
 /**
   \brief  Функция-фабрика реализации.
   */
 IBlockMemAllocator::raw_ptr instance ();
 /**
-  \brief  Реализация интерфейса по управлению памятью в виде выровненных блоков.
-  */
+\brief  Реализация интерфейса по управлению памятью в виде выровненных блоков.
+*/
 class BlockMemAllocator : public IBlockMemAllocator
 {
   public:

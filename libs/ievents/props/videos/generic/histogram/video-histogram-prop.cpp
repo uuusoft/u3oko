@@ -6,7 +6,7 @@
 \date       01.01.2017
 \copyright  www.uuusoft.com
 \project    uuu_ievents
-\brief    
+\brief      empty brief
 */
 #include "mmedia/defines/defines.hpp"
 #include "mmedia/defines/includes.hpp"
@@ -17,7 +17,7 @@ namespace libs { namespace ievents { namespace props { namespace videos { namesp
 
 VideoHistogramProp::VideoHistogramProp (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -26,7 +26,7 @@ VideoHistogramProp::~VideoHistogramProp ()
 
 
 ::libs::events::IEvent::ptr
-VideoHistogramProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+VideoHistogramProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<VideoHistogramProp> (this, _deep);
 }
@@ -54,7 +54,7 @@ VideoHistogramProp::load_int (const base_functs::xml::itn& _prop)
           if (_aindx)
             {
               const off_buff_type _bindx = utils::dbuffs::video::consts::offs::str2eoffbuff (_aindx.as_string ());      //, 0, utils::dbuffs::video::consts::offs::count_buffs - 1 );
-              BuffEventInfo       _add;
+              EventBuffsInfo       _add;
 
               if (pugi::xml_attribute _aval_norm = _layer->attribute ("norm"))
                 {
@@ -66,7 +66,7 @@ VideoHistogramProp::load_int (const base_functs::xml::itn& _prop)
                   _add.dindx_ = _aval_dest.as_int ();
                 }
 
-              buffs2norm_.push_back (std::pair<off_buff_type, BuffEventInfo> (_bindx, _add));
+              buffs2norm_.push_back (std::pair<off_buff_type, EventBuffsInfo> (_bindx, _add));
             }
 
           ++_layer;

@@ -17,7 +17,7 @@ namespace modules { namespace uuu_storage { namespace appl { namespace impl { na
 
 StateTestIndexer::StateTestIndexer (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -26,7 +26,7 @@ StateTestIndexer::~StateTestIndexer ()
 
 
 ::libs::events::IEvent::ptr
-StateTestIndexer::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+StateTestIndexer::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<StateTestIndexer> (this, _deep);
 }

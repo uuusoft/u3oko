@@ -12,11 +12,11 @@
 
 namespace dlls { namespace filter_noise { namespace space { namespace impl { namespace rang { namespace vars {
 /**
-  \brief  Шаблон для реализация ранговой фильтрации изображения в пространственной области.
-  \tparam TAlg  тип алгоритма.
-  */
+\brief  Шаблон для реализация ранговой фильтрации изображения в пространственной области.
+\tparam alg_type  тип алгоритма.
+*/
 template <
-  typename TAlg>
+  typename alg_type>
 class GenericImpl : public IAlgImpl
 {
   public:
@@ -32,7 +32,7 @@ class GenericImpl : public IAlgImpl
   virtual void
   process (const ProcessAlgInfo& _info) override
   {
-    TAlg              _alg;
+    alg_type          _alg;
     const bool        _dbuff_exist          = _info.dbuff_->self_test ();
     const std::size_t _width                = _info.buff_->width_;
     const std::size_t _height               = _info.buff_->height_;

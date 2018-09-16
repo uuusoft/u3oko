@@ -10,8 +10,8 @@
 
 namespace libs { namespace iproperties { namespace vers { namespace system {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 class SystemWin32Property final : public ::libs::properties::ISharedProperty
 {
   public:

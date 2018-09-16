@@ -67,7 +67,6 @@ process_cmd_line (int _argc, char* _argv[])
 #endif
   }
 
-  XULOG_INFO ("process_cmd_line::check 1");
   if (_var_map.count (::libs::link::consts::text::id_lib_name) >= 1)
     {
       auto        _i_lib = _var_map.find (::libs::link::consts::text::id_lib_name);
@@ -77,7 +76,6 @@ process_cmd_line (int _argc, char* _argv[])
       XULOG_INFO ("process_cmd_line:: name_lib=" << g_init_appl.name_lib_);
     }
 
-  XULOG_INFO ("process_cmd_line::check 2");
   if (_var_map.count (::libs::link::consts::text::id_company_name) >= 1)
     {
       auto        _i_company = _var_map.find (::libs::link::consts::text::id_company_name);
@@ -87,7 +85,6 @@ process_cmd_line (int _argc, char* _argv[])
       XULOG_INFO ("process_cmd_line:: name_company=" << g_init_appl.name_company_);
     }
 
-  XULOG_INFO ("process_cmd_line::check 3");
   if (_var_map.count (::libs::link::consts::text::id_appl_name) >= 1)
     {
       auto        _i_appl = _var_map.find (::libs::link::consts::text::id_appl_name);
@@ -97,7 +94,6 @@ process_cmd_line (int _argc, char* _argv[])
       XULOG_INFO ("process_cmd_line:: name_appl=" << g_init_appl.name_appl_);
     }
 
-  XULOG_INFO ("process_cmd_line::check 4");
   if (_var_map.count (::libs::link::consts::text::id_subsys_name) >= 1)
     {
       auto        _i_subsys = _var_map.find (::libs::link::consts::text::id_subsys_name);
@@ -107,7 +103,6 @@ process_cmd_line (int _argc, char* _argv[])
       XULOG_INFO ("process_cmd_line:: name_subsys=" << g_init_appl.name_subsys_);
     }
 
-  //g_init_appl.name_lib_ = "apl_uuu_yduff";  // debug
   XULOG_INFO ("process_cmd_line::end");
   return;
 }
@@ -116,18 +111,18 @@ process_cmd_line (int _argc, char* _argv[])
 std::string
 find_default_appl_lib (const std::string& _sfullpath)
 {
-  std::string             _ret = "apl_uuu_xxx";
+  std::string             _ret = "appl_u3unknown";
   boost::filesystem::path _path (_sfullpath);
 
 #if defined(UUU_OS_ANDROID)
-  _path /= "lib";      //debug
+  _path /= "lib";      // debug
 #endif
 
   for (auto _it = boost::filesystem::directory_iterator (_path); _it != boost::filesystem::directory_iterator (); ++_it)
     {
       const std::string _filename = _it->path ().stem ().string ();
       XULOG_INFO ("check file for load main module, " << _filename);
-      if (std::string::npos != _filename.find ("apl_"))
+      if (std::string::npos != _filename.find ("appl_"))
         {
           XULOG_INFO ("find main module, " << _filename);
           _ret = _filename;

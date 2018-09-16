@@ -11,6 +11,7 @@
 */
 #include "../../../includes_int.hpp"
 #include "vals.hpp"
+#include "syn.hpp"
 
 #undef UUU_LOG_TAG
 #define UUU_LOG_TAG "uuu_vgd_motion"

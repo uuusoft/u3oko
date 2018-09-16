@@ -25,7 +25,7 @@ get_events_impl ()
 
 
 ::libs::events::IEvent::ptr
-get_event_int (const ::libs::events::IEvent::text_id_type& _id)
+get_event_int (const ::libs::events::IEvent::hid_type& _id)
 {
   auto _impl = get_events_impl ();
   auto _res  = _impl->get (_id);
@@ -35,7 +35,7 @@ get_event_int (const ::libs::events::IEvent::text_id_type& _id)
 
 
 void*
-cast_event_int (const ::libs::events::IEvent::ptr& _event, const ::libs::events::IEvent::text_id_type& _id)
+cast_event_int (const ::libs::events::IEvent::ptr& _event, const ::libs::events::IEvent::hid_type& _id)
 {
   auto _impl = get_events_impl ();
   auto _res  = _impl->dcast (_event.get (), _id);
@@ -44,7 +44,7 @@ cast_event_int (const ::libs::events::IEvent::ptr& _event, const ::libs::events:
 
 
 void*
-cast_event_int (const ::libs::events::IEvent::cptr& _event, const ::libs::events::IEvent::text_id_type& _id)
+cast_event_int (const ::libs::events::IEvent::cptr& _event, const ::libs::events::IEvent::hid_type& _id)
 {
   auto _impl = get_events_impl ();
   auto _res  = _impl->dcast (_event.get (), _id);
@@ -53,7 +53,7 @@ cast_event_int (const ::libs::events::IEvent::cptr& _event, const ::libs::events
 
 
 void*
-cast_event_int (::libs::events::IEvent::raw_ptr _event, const ::libs::events::IEvent::text_id_type& _id)
+cast_event_int (::libs::events::IEvent::raw_ptr _event, const ::libs::events::IEvent::hid_type& _id)
 {
   auto _impl = get_events_impl ();
   auto _res  = _impl->dcast (_event, _id);
@@ -62,7 +62,7 @@ cast_event_int (::libs::events::IEvent::raw_ptr _event, const ::libs::events::IE
 
 
 void*
-cast_event_int (::libs::events::IEvent::craw_ptr _event, const ::libs::events::IEvent::text_id_type& _id)
+cast_event_int (::libs::events::IEvent::craw_ptr _event, const ::libs::events::IEvent::hid_type& _id)
 {
   auto _impl = get_events_impl ();
   auto _res  = _impl->dcast (_event, _id);
@@ -86,7 +86,7 @@ xml2event (const std::string& _xml, ::libs::events::IEvent::ptr& _dst)
 
 
 ::libs::events::IEvent::ptr
-clone_event (const ::libs::events::IEvent::craw_ptr _event, const ::libs::events::TypeCloneEvent& _type)
+clone_event (const ::libs::events::IEvent::craw_ptr _event, const ::libs::events::DeepEventCloneType& _type)
 {
   UASSERT (_event);
   auto _impl = get_events_impl ();

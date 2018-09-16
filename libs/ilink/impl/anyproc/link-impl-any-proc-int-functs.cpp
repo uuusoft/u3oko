@@ -18,7 +18,7 @@ namespace libs { namespace ilink { namespace impl { namespace anyproc {
 #if 0
   bool LinkImplAnyProc::close_int ()
   {
-    return destroy_int( TypeDestroyLink::soft );
+    return destroy_int( DestroyLinkType::soft );
   }
 #endif
 #if 0
@@ -90,7 +90,7 @@ LinkImplAnyProc::connect_int (const ::libs::link::CreateInfo& _info)
 
 
 bool
-LinkImplAnyProc::destroy_int (const TypeDestroyLink& _type)
+LinkImplAnyProc::destroy_int (const DestroyLinkType& _type)
 {
   UASSERT_SIGNAL ("failed");
   return false;
@@ -178,8 +178,8 @@ LinkImplAnyProc::received_msg_int ()
 IEvent::ptr
 LinkImplAnyProc::send_msg_int (
   IEvent::ptr               _msg,
-  const TypeSyncCall&       _sync,
-  const TypeRequestCall&    _req,
+  const SyncCallType&       _sync,
+  const RequestCallType&    _req,
   const ISeqEvent::id_type& _id)
 {
   UASSERT_SIGNAL ("failed");

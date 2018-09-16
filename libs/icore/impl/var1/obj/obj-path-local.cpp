@@ -30,7 +30,6 @@ ObjPath::~ObjPath ()
 {
   state_ = obj::RunStateFilter::stop;
   ObjPath::free_lib ();
-  return;
 }
 
 
@@ -38,19 +37,28 @@ void
 ObjPath::load_lib (const std::string& _name_lib, const base_functs::xml::itn& _node)
 {
   XULOG_TRACE ("uuu_core::Filter::load_lib::beg, " << _name_lib);
-  lib_.load (_name_lib, boost::dll::load_mode::rtld_now);
-  name_lib_ = lib_.location ().filename ().string ();
-
-  XULOG_TRACE ("uuu_core::Filter::load_lib::try get create funct from, " << _name_lib << ", " << obj::consts::name_funct_create);
-  pf_create_ = boost::dll::import<obj::dll::create_impl_funct_type> (lib_, obj::consts::name_funct_create);
-  //  регистриуем свои данные в DLL
-  dfilter_.reset (pf_create_ ());
-  dfilter_->load (&info_, _node);
-  info_.correct ();
-  //  Пока отключено удаление.
-  //  Удерживаем в памяти все загруженные единожды модули обработки данных. Их не много, а удалять их пока нельзя из-за нерешенной проблемы с событиями
-  //  которые могут быть привязаны к ним.
-  freez_libs_.add (_name_lib, lib_);
+  try
+    {
+      lib_.load (_name_lib, boost::dll::load_mode::rtld_now);
+      name_lib_ = lib_.location ().filename ().string ();
+      XULOG_TRACE ("uuu_core::Filter::load_lib::try get create funct from, " << _name_lib << ", " << obj::consts::name_funct_create);
+      pf_create_ = boost::dll::import<obj::dll::create_impl_funct_type> (lib_, obj::consts::name_funct_create);
+      CHECK_STATE( pf_create_, "empty create function" );
+      //  регистриуем свои данные в DLL
+      dfilter_.reset (pf_create_ ());
+      XULOG_TRACE ("uuu_core::Filter::load_lib::try load from, " << _name_lib);
+      dfilter_->load (&info_, _node);
+      XULOG_TRACE ("uuu_core::Filter::load_lib::try correct from, " << _name_lib);
+      info_.correct ();
+      //  Пока отключено удаление.
+      //  Удерживаем в памяти все загруженные единожды модули обработки данных. Их не много, а удалять их пока нельзя из-за нерешенной проблемы с событиями
+      //  которые могут быть привязаны к ним.
+      freez_libs_.add (_name_lib, lib_);
+    }
+  catch (const std::exception& _e)
+    {
+      XULOG_ERROR ("load " << name_lib_ << ", exception, " << _e.what ());
+    }
   XULOG_TRACE ("uuu_core::Filter::load_lib::end, " << _name_lib);
   return;
 }

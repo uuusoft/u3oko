@@ -25,12 +25,12 @@ enum struct TypeScaler
 /**
   \brief  empty brief
   */
-struct BuffEventInfoVideoScaler : public ::libs::events::buff::BuffEventInfo
+struct EventBuffsInfoVideoScaler : public ::libs::events::buff::EventBuffsInfo
 {
   friend class boost::serialization::access;
 
   public:
-  explicit BuffEventInfoVideoScaler () :
+  explicit EventBuffsInfoVideoScaler () :
     type_ (TypeScaler::nearest),
     koeff_pow2_ (0)
   {}
@@ -53,7 +53,7 @@ struct BuffEventInfoVideoScaler : public ::libs::events::buff::BuffEventInfo
 
 
   private:
-  UUU_THIS_TYPE_HAS_SUPER_CLASS (::libs::events::buff::BuffEventInfo);
+  UUU_THIS_TYPE_HAS_SUPER_CLASS (::libs::events::buff::EventBuffsInfo);
 
   friend class boost::serialization::access;
 
@@ -63,4 +63,4 @@ struct BuffEventInfoVideoScaler : public ::libs::events::buff::BuffEventInfo
 
 }}}}}}      // namespace libs::ievents::props::videos::generics::scaler
 
-BOOST_CLASS_EXPORT_KEY (::libs::ievents::props::videos::generics::scaler::BuffEventInfoVideoScaler);
+BOOST_CLASS_EXPORT_KEY (::libs::ievents::props::videos::generics::scaler::EventBuffsInfoVideoScaler);

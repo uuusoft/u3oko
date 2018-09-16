@@ -10,8 +10,8 @@
 
 namespace libs { namespace istorage_events { namespace events {
 /**
-  \brief  
-  */
+\brief  
+*/
 struct RuntimeStreamInfo
 {
   RuntimeStreamInfo () :
@@ -52,8 +52,8 @@ struct RuntimeStreamInfo
   }
 };
 /**
-  \brief  Событие для получения статистики использования по идентификатору пути (открытые хендлы передачи данных, количество байт и по ним и прочее). Быстро.
-  */
+\brief  Событие для получения статистики использования по идентификатору пути (открытые хендлы передачи данных, количество байт и по ним и прочее). Быстро.
+*/
 class GetRuntimeInfo : public BaseStorageEvent
 {
   friend class boost::serialization::access;
@@ -77,8 +77,8 @@ class GetRuntimeInfo : public BaseStorageEvent
 
   virtual ~GetRuntimeInfo ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/istorage_events/events/get-runtime-info";
     return _ret;
@@ -89,6 +89,7 @@ class GetRuntimeInfo : public BaseStorageEvent
 
 
   protected:
+  //  ievents::Event overrides
   virtual void copy_int (const IEvent::craw_ptr _src) override;
 
 
@@ -100,9 +101,9 @@ class GetRuntimeInfo : public BaseStorageEvent
 
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
-
+  //  ievents::Event overrides
   //virtual void load_int( const base_functs::xml::itn& _prop ) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
 };
 
 }}}      // namespace libs::istorage_events::events

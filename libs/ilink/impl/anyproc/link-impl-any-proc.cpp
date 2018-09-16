@@ -25,7 +25,7 @@ LinkImplAnyProc::LinkImplAnyProc ()
 
 LinkImplAnyProc::~LinkImplAnyProc ()
 {
-  CHECK_CALL_NO_THROW (destroy_int (TypeDestroyLink::force));
+  CHECK_CALL_NO_THROW (destroy_int (DestroyLinkType::force));
 
   return;
 }

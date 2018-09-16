@@ -17,7 +17,7 @@ namespace libs { namespace ievents { namespace runtime { namespace mem {
 
 BuffsEvent::BuffsEvent (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
   events_        = nullptr;
 }
 
@@ -25,7 +25,7 @@ BuffsEvent::BuffsEvent (const Acessor& _ph)
 BuffsEvent::BuffsEvent (const Acessor&, ::libs::buffs::Buffs::ptr& _buff, std::list<IEvent::ptr>* _events) :
   buff_ (_buff), events_ (_events)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -60,7 +60,7 @@ BuffsEvent::get_events ()
 
 
 ::libs::events::IEvent::ptr
-BuffsEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+BuffsEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<BuffsEvent> (this, _deep);
 }

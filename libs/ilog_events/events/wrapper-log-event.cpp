@@ -18,7 +18,7 @@ namespace libs { namespace ilog_events { namespace events {
 WrapperLogEvent::WrapperLogEvent (const Acessor&, ::libs::events::IEvent::ptr _msg) :
   int_ (_msg)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -42,7 +42,7 @@ WrapperLogEvent::set_msg (::libs::events::IEvent::ptr& _msg)
 
 
 ::libs::events::IEvent::ptr
-WrapperLogEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+WrapperLogEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<WrapperLogEvent> (this, _deep);
 }

@@ -18,7 +18,7 @@ namespace libs { namespace ilog_events { namespace events {
 ProcessListLogsEvent::ProcessListLogsEvent (const Acessor&, const AppllPartLogInfo& _appl) :
   action_ (ActionForListLogs::get_sessions)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -65,7 +65,7 @@ ProcessListLogsEvent::set_action (const ActionForListLogs& _action)
 
 
 ::libs::events::IEvent::ptr
-ProcessListLogsEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+ProcessListLogsEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<ProcessListLogsEvent> (this, _deep);
 }

@@ -12,10 +12,10 @@
 
 namespace utils { namespace dbuffs { namespace video { namespace consts { namespace offs {
 /**
-  \brief      Функция проверки корректности типа-индекса буфера.
-  \param[in]  _indx индекс буфера.
-  \return     true, если индекс корректен, иначе false.
-  */
+\brief      Функция проверки корректности типа-индекса буфера.
+\param[in]  _indx индекс буфера.
+\return     true, если индекс корректен, иначе false.
+*/
 inline bool
 is_valid (const off_buff_type& _indx)
 {

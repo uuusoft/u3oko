@@ -12,9 +12,9 @@
 
 namespace dlls { namespace filter_noise { namespace space { namespace impl { namespace rang { namespace vars {
 /**
-  \brief  Реализация фильтрации используя сортировку подсчетом с кешем результата в строке.
-          На данный момент это самая быстрая реализация на CPU.
-  */
+\brief  Реализация фильтрации используя сортировку подсчетом с кешем результата в строке.
+        На данный момент это самая быстрая реализация на CPU.
+*/
 class CountSortAlg
 {
   public:

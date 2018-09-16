@@ -12,87 +12,8 @@
 
 namespace libs { namespace ievents { namespace props { namespace videos { namespace generic { namespace morph {
 /**
-  \brief  Перечисление морфологических операций над изображением.
-  */
-enum struct TypeOperation
-{
-  empty    = 0,      //< Пустая операция, точнее ее отсутствие. Используется для тестов (скорости/стабильности).
-  erosion  = 1,      //< Операция эрозии.
-  dilation = 2,      //< Операция дилатации.
-  binary   = 4       //< Операция бинаризации.
-};
-/**
-  \brief  empty brief
-  */
-struct ParamsOperation
-{
-  ParamsOperation () :
-    size_spot_ (1),
-    bound_filling_ (0),
-    type_ (TypeOperation::empty),
-    val_filling_ (1)
-  {}
-
-  bool
-  self_test () const
-  {
-    CHECK_STATE (size_spot_ <= 11, "invalid size spot, " << size_spot_);
-    return true;
-  }
-
-  TypeOperation type_;              //< Тип операции.
-  short         size_spot_;         //< Размер ядра операции.
-  short         bound_filling_;      //< Значение границы бинаризации.
-  short         val_filling_;        //< ???
-
-
-  private:
-  friend class boost::serialization::access;
-
-  template <class Archive>
-  void
-  serialize (Archive& ar, const unsigned int /* file_version */)
-  {
-    ar& BOOST_SERIALIZATION_NVP (type_);
-    ar& BOOST_SERIALIZATION_NVP (size_spot_);
-    ar& BOOST_SERIALIZATION_NVP (bound_filling_);
-    ar& BOOST_SERIALIZATION_NVP (val_filling_);
-    return;
-  }
-};
-/**
-  \brief  empty brief
-  */
-struct BuffInfo
-{
-  //  ext types
-  using ops_type = std::vector<ParamsOperation>;
-
-  BuffInfo () :
-    bindx_diff_ (utils::dbuffs::video::consts::offs::invalid)
-  {
-    ops_.reserve (8);
-  }
-
-  off_buff_type bindx_diff_;      //< ???
-  ops_type      ops_;             //< ???
-
-
-  private:
-  friend class boost::serialization::access;
-
-  template <class Archive>
-  void
-  serialize (Archive& ar, const unsigned int /* file_version */)
-  {
-    ar& BOOST_SERIALIZATION_NVP (bindx_diff_);
-    ar& BOOST_SERIALIZATION_NVP (ops_);
-    return;
-  }
-};
-/**
-  \brief  Свойства фильтра для реализации морфологических операций над изображением.
-  */
+\brief  Свойства фильтра для реализации морфологических операций над изображением.
+*/
 class VideoMorphologyProp : public ievents::Event
 {
   friend class boost::serialization::access;
@@ -107,7 +28,7 @@ class VideoMorphologyProp : public ievents::Event
 
   public:
   //  ext types
-  using type2buff_type = std::list<std::pair<off_buff_type, BuffInfo>>;
+  using type2buff_type = std::list<std::pair<off_buff_type, MorphBuffInfo>>;
   UUU_THIS_TYPE_HAS_POINTERS_TO_SELF (VideoMorphologyProp);
   UUU_ADD_MAKE_SHARED_FUNCT2THIS_TYPE (VideoMorphologyProp);
   UUU_DISABLE_ACOPY_TYPE (VideoMorphologyProp);
@@ -116,17 +37,18 @@ class VideoMorphologyProp : public ievents::Event
 
   virtual ~VideoMorphologyProp ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/props/videos/generic/morph/video-morphology-prop";
     return _ret;
   }
 
-  type2buff_type diffs_;      //< ???
+  type2buff_type diffs_;      //< Список буферов над которыми требуется провести морфологические операции.
 
 
   private:
+  //  int types
   UUU_THIS_TYPE_HAS_SUPER_CLASS (ievents::Event);
 
   friend class boost::serialization::access;
@@ -134,7 +56,7 @@ class VideoMorphologyProp : public ievents::Event
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
 
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        load_int (const base_functs::xml::itn& _node) override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 };

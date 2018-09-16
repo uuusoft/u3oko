@@ -10,16 +10,17 @@
 
 namespace libs { namespace istorage_events {
 /**
-  \brief  
-  */
+\brief  
+*/
 enum struct TypeTimeStream
 {
   exactly  = 0,      //< Точное время.
   oldest   = 1,      //< Самое старое время. Т.е. оно всегда старше любого другого.
   youngest = 2       //< Время всегда в будущем. Т.е. оно всегда младше любого другого.
 };
-
-
+/**
+\brief  ???
+*/
 inline std::string
 to_str (const TypeTimeStream& _val)
 {

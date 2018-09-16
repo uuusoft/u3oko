@@ -43,7 +43,7 @@ Impl2Storage::send_int (const InfoFilter& _finfo, const TransformInfo& _info, co
   _idmsg->set_id (id_zip_buff2storage);
   _idmsg->set_number (_finfo.count_frames_);
   _idmsg->update_zip (_send_buff);
-  send_message (_rmsg, TypeSyncCall::async, TypeRequestCall::set);
+  send_message (_rmsg, SyncCallType::async, RequestCallType::set);
   return;
 }
 
@@ -51,10 +51,10 @@ Impl2Storage::send_int (const InfoFilter& _finfo, const TransformInfo& _info, co
 void
 Impl2Storage::open_stream ()
 {
-  XULOG_TEST ("Impl2Storage::open_stream: beg");
+  XULOG_TRACE ("Impl2Storage::open_stream: beg");
   if (!active_stream_.empty ())
     {
-      XULOG_TEST ("Impl2Storage::open_stream: skip");
+      XULOG_TRACE ("Impl2Storage::open_stream: skip");
       return;
     }
 
@@ -66,11 +66,11 @@ Impl2Storage::open_stream ()
   _dmsg->direction_   = TypeDirectionStream::unknown;
   _dmsg->operation_   = TypeActionStream::write;
 
-  send_message (_rmsg, TypeSyncCall::sync, TypeRequestCall::request);
+  send_message (_rmsg, SyncCallType::sync, RequestCallType::request);
   _dmsg          = ::libs::iproperties::helpers::cast_event<::libs::istorage_events::events::UpdateStream> (_rmsg);
   active_stream_ = _dmsg->stream_id_;
   CHECK_STATE (!active_stream_.empty (), "received null stread_id for write data");
-  XULOG_TEST ("Impl2Storage::open_stream: end, id=" << active_stream_.name ());
+  XULOG_TRACE ("Impl2Storage::open_stream: end, id=" << active_stream_.name ());
   return;
 }
 
@@ -78,10 +78,10 @@ Impl2Storage::open_stream ()
 void
 Impl2Storage::close_stream ()
 {
-  XULOG_TEST ("Impl2Storage::close_stream: beg");
+  XULOG_TRACE ("Impl2Storage::close_stream: beg");
   if (active_stream_.empty ())
     {
-      XULOG_TEST ("Impl2Storage::close_stream: skip");
+      XULOG_TRACE ("Impl2Storage::close_stream: skip");
       return;
     }
 
@@ -92,18 +92,18 @@ Impl2Storage::close_stream ()
   _dmsg->direction_ = TypeDirectionStream::unknown;
   //_dmsg->time_ = ;
 
-  send_message (_rmsg, TypeSyncCall::async, TypeRequestCall::set);
+  send_message (_rmsg, SyncCallType::async, RequestCallType::set);
   //_dmsg          = ::libs::iproperties::helpers::cast_event<::libs::istorage_events::events::UpdateStream> (_rmsg);
   //active_stream_ = _dmsg->stream_id_;
   //CHECK_STATE (!active_stream_.empty (), "receivedd null stread id for " <<);
   active_stream_.reset ();
-  XULOG_TEST ("Impl2Storage::close_stream: end");
+  XULOG_TRACE ("Impl2Storage::close_stream: end");
   return;
 }
 
 
 void
-Impl2Storage::send_message (IEvent::ptr& _rmsg, const TypeSyncCall& _sync, const TypeRequestCall& _req)
+Impl2Storage::send_message (IEvent::ptr& _rmsg, const SyncCallType& _sync, const RequestCallType& _req)
 {
   ILink::ptr _helper = UUU_PROP_CAST (::libs::properties::vers::links::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ())->get_links_lockfree ().data2appl_.lock ();
   UASSERT (_helper);

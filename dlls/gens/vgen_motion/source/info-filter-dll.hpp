@@ -9,23 +9,13 @@
 */
 
 namespace dlls { namespace gens { namespace vgen_motion {
-//  syn
-typedef ::libs::ievents::props::videos::generics::motion_est::VideoEstMotionProp VideoEstMotionProp;
-typedef ::libs::ievents::props::videos::generics::motion_est::BuffEventInfo      BuffEventInfo;
-typedef ::utils::dbuffs::video::consts::offs::off_buff_type                      off_buff_type;
-typedef ::utils::dbuffs::video::IVideoBuff                                       IVideoBuff;
-typedef ::libs::icore::impl::var1::obj::PointFilter                              PointFilter;
-typedef ::libs::icore::impl::var1::obj::FilterInfo                               FilterInfo;
-typedef ::libs::icore::impl::var1::obj::dll::TransformInfo                       TransformInfo;
-typedef ::libs::icore::impl::var1::obj::dll::CallInterfInfo                      CallInterfInfo;
-typedef ::libs::icore::impl::var1::obj::ConnectInfo                              ConnectInfo;
 /**
-  \brief  Empty description
-  */
+\brief  Empty description
+*/
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter
 {
   // ext types
-  typedef VideoEstMotionProp props_type;
+  using props_type = VideoEstMotionProp;
 
   InfoFilter ();
 

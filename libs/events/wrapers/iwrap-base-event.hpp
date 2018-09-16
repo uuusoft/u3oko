@@ -12,9 +12,9 @@
 
 namespace libs { namespace events {
 /**
-  \brief  Событие синхронизации. 
-          Используется как флаг синхронности (требуется ответ на вложенное событие).
-  */
+\brief  Событие синхронизации. 
+        Используется как флаг синхронности (требуется ответ на вложенное событие).
+*/
 class IWrapBaseEvent : public IEvent
 {
   friend class boost::serialization::access;
@@ -37,8 +37,8 @@ class IWrapBaseEvent : public IEvent
 
   virtual ~IWrapBaseEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/events/iwrap-base-event";
     return _ret;
@@ -52,7 +52,7 @@ class IWrapBaseEvent : public IEvent
   protected:
   IEvent::ptr int_;      //< Событие, для которого производится синхронизация.
 
-  virtual IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual bool        check_node_int (const base_functs::xml::itn& _node) override;
   virtual void        load_int (const base_functs::xml::itn& _prop) override;
   virtual void        copy_int (const IEvent::craw_ptr _src) override;

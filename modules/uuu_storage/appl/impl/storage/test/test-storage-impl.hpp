@@ -9,17 +9,25 @@
 */
 
 namespace modules { namespace uuu_storage { namespace appl { namespace impl { namespace storage { namespace test {
-/**
+/*
   \brief  Простая реализация управления бинарными данными подсистемы.
+          Краткое описание логики:
+          - каждая сессия записи сохраняется в уникальный каталог id_seance
+          - запись фрагментов данных в каждой сессии ведется в файлы данных сессии
+          - каждый файл данных сессии ограничен как по количеству фрагментов в нем (max_count_fragments_session_data_file), так и по максимальному общему размеру (max_size_session_data_file),
+            при превышении любого из них создается новый файл данных. Это связано с гранулярностью удаления файлов с точностью до одного файла данных.
+          - каждая сессия хранит индексы для каждого файла данных в связанном с ним файле индексов
+          - индентификатор фрагмента состоит из имени каталога сессии (guid фиксированной длины), номера файла данных (int) и индекса в нем (int).
   */
 class TestStorageImpl : public IStorageImpl
 {
   public:
   //  ext types
   using IStorageImpl::id_chunk_type;
-  using IStorageImpl::info_about_mem_type;
+  using IStorageImpl::seance_type;
   using IStorageImpl::ids_chunk_type;
   using IStorageImpl::id_locker_type;
+  using info_seance_type = RuntimeInfoSeance;
 
   explicit TestStorageImpl (const std::string& _path);
 
@@ -28,30 +36,33 @@ class TestStorageImpl : public IStorageImpl
 
   private:
   // int types
-  using info_seance_type = signed long long;
-  using id_chunk2info    = std::unordered_map<info_about_mem_type, info_seance_type>;
+  using id_chunk2info    = std::unordered_map<seance_type, info_seance_type>;
   using id_lockers_type  = std::unordered_set<id_locker_type>;
   //  IStorageImpl overrides
-  virtual void           set_info_int (const PathInfo::craw_ptr _info) override;
-  virtual bool           change_state_int (const StateImplsType& _state) override;
-  virtual void           load_int (const id_chunk_type& _id, IBlockMem::raw_ptr _mem) override;
-  virtual id_chunk_type  save_int (const info_about_mem_type& _info, IBlockMem::craw_ptr _mem) override;
-  virtual id_chunk_type  save_int (const info_about_mem_type& _info, const unsigned char* _mem, const std::size_t _size_mem) override;
-  virtual void           get_all_ids_int (ids_chunk_type& _ids) override;
-  virtual void           remove_ids_int (const id_locker_type& _lid) override;
-  virtual void           get_info_ids_int (const id_locker_type& _lid) override;
-  virtual id_locker_type lock_ids_int (const ids_chunk_type& _ids) override;
-  virtual void           unlock_ids_int (const id_locker_type& _lid) override;
+  virtual void          set_info_int (const PathInfo::craw_ptr _info) override;
+  virtual bool          change_state_int (const StateImplsType& _state) override;
+  virtual void          load_int (const seance_type& _info, const id_chunk_type& _id, IBlockMem::raw_ptr _mem) override;
+  virtual id_chunk_type save_int (const seance_type& _info, IBlockMem::craw_ptr _mem) override;
+  virtual id_chunk_type save_int (const seance_type& _info, const unsigned char* _mem, const std::size_t _size_mem) override;
+  //virtual void           get_all_ids_int (ids_chunk_type& _ids) override;
+  //virtual void           remove_ids_int (const id_locker_type& _lid) override;
+  //virtual void           get_info_ids_int (const id_locker_type& _lid) override;
+  //virtual id_locker_type lock_ids_int (const ids_chunk_type& _ids) override;
+  //virtual void           unlock_ids_int (const id_locker_type& _lid) override;
 
-  info_seance_type& get_seance_info (const info_about_mem_type& _info);
+  info_seance_type& get_seance_info (const seance_type& _info);
 
-  id_chunk_type get_id_by_seance (const info_about_mem_type& _info, const info_seance_type& _sinfo);
+  //id_chunk_type get_next_write_id_by_seance (const seance_type& _info, info_seance_type& _sinfo);
+  void get_next_write_id_by_seance (const seance_type& _info, info_seance_type& _sinfo);
 
-  void prepare_write_seanse (const info_about_mem_type& _info);
+  void prepare_write_seance (const seance_type& _info);
 
-  id_chunk_type save_impl (const info_about_mem_type& _info, const unsigned char* _mem, const std::size_t _size_mem);
+  id_chunk_type save_impl (const seance_type& _info, const unsigned char* _mem, const std::size_t _size_mem);
 
-  bool save_data (const id_chunk_type& _id, const unsigned char* _mem, const std::size_t _size_mem);
+  //bool save_data (const id_chunk_type& _id, const unsigned char* _mem, const std::size_t _size_mem);
+  bool save_data (const seance_type& _info, info_seance_type& _sinfo, const unsigned char* _mem, const std::size_t _size_mem);
+
+  void flush_seances();
 
   void update_path ();
 

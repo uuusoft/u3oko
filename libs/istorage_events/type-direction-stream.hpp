@@ -18,8 +18,9 @@ enum struct TypeDirectionStream
   forward  = 1,      //< Движение вперед.
   backward = 2       //< Движение назад.
 };
-
-
+/**
+\brief  ???
+*/
 inline std::string
 to_str (const TypeDirectionStream& _val)
 {

@@ -12,9 +12,9 @@ namespace libs { namespace ilog_events { namespace events {
 //  forward;
 struct RegisterHelper;
 /**
-  \brief  Базовое сообщение для подсистемы логирования. 
-          Расширяет интерфейс сообщения для нужд подсистемы логирования.
-  */
+\brief  Базовое сообщение для подсистемы логирования. 
+        Расширяет интерфейс сообщения для нужд подсистемы логирования.
+*/
 class BaseLogEvent : public ::libs::ievents::TimedEvent
 {
   friend class boost::serialization::access;
@@ -38,6 +38,7 @@ class BaseLogEvent : public ::libs::ievents::TimedEvent
 
 
   protected:
+  //  ievents::Event overrides
   virtual void copy_int (const IEvent::craw_ptr _src) override;
 
   struct Acessor
@@ -51,9 +52,9 @@ class BaseLogEvent : public ::libs::ievents::TimedEvent
 
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
-
+  //  ievents::Event overrides
   //virtual void load_int( const base_functs::xml::itn& _prop ) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
 };
 
 }}}      // namespace libs::ilog_events::events

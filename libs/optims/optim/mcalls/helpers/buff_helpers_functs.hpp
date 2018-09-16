@@ -10,8 +10,10 @@
 
 namespace libs { namespace optim { namespace mcalls { namespace helpers {
 /**
-  \brief  empty brief
-  */
+\brief      empty brief
+\param[in]  _buff ???
+\param[in]  _val  ???
+*/
 inline void
 fill (io::ProxyBuff* _buff, const short _val)
 {

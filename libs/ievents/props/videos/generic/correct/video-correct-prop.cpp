@@ -25,7 +25,7 @@ VideoCorrectProp::VideoCorrectProp (const Acessor& _ph) :
   adaptive_ (false),
   short2byte_ (true)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -34,7 +34,7 @@ VideoCorrectProp::~VideoCorrectProp ()
 
 
 ::libs::events::IEvent::ptr
-VideoCorrectProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+VideoCorrectProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<VideoCorrectProp> (this, _deep);
 }

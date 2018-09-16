@@ -15,15 +15,16 @@
 
 namespace libs { namespace ievents { namespace props { namespace videos { namespace gens { namespace diff {
 
-ParamsVideoDiffProp::ParamsVideoDiffProp () :
-  enable_ (false),
-  bound_filling_ (0),
-  val_filling_ (1)
+ParamsVideoDiffProp::ParamsVideoDiffProp (bool _enable, short _bound_filling, short _val_filling) :
+  enable_ (_enable),
+  bound_filling_ (_bound_filling),
+  val_filling_ (_val_filling)
 {}
 
 
 ParamsVideoDiffProp::~ParamsVideoDiffProp ()
 {}
+
 
 bool
 ParamsVideoDiffProp::self_test () const
@@ -32,7 +33,6 @@ ParamsVideoDiffProp::self_test () const
     {
       return false;
     }
-
   return true;
 }
 

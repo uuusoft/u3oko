@@ -17,7 +17,7 @@ namespace libs { namespace ievents { namespace runtime { namespace interf {
 BaseInterfEvent::BaseInterfEvent (const Acessor& _ph) :
   active_ (false)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -55,7 +55,7 @@ bool BaseInterfEvent::is_available () const
 
 
 ::libs::events::IEvent::ptr
-BaseInterfEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+BaseInterfEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<BaseInterfEvent> (this, _deep);
 }

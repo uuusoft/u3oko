@@ -34,8 +34,8 @@ class IImplSender
 
 
   private:
-  virtual void
-  send_int (const InfoFilter& _finfo, const TransformInfo& _info, const Buff2ModuleInfo::craw_ptr _minfo, IVideoBuff::raw_ptr _send_buff) = 0;
+  //  IImplSender interface
+  virtual void send_int (const InfoFilter&, const TransformInfo&, const Buff2ModuleInfo::craw_ptr, IVideoBuff::raw_ptr) = 0;
 };
 
 }}}      // namespace dlls::terminals::video_sender

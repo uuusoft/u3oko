@@ -45,10 +45,7 @@ LoaderFileImpl::get_enum_int (const TypePath& _storage_type, NodeEnumFiles& _enu
 
 
 bool
-LoaderFileImpl::get_int (
-  const std::string& _file_name,
-  const TypePath&    _storage_type,
-  IBlockMem::ptr&    _ret)
+LoaderFileImpl::get_int (const std::string& _file_name, const TypePath& _storage_type, IBlockMem::ptr& _ret)
 {
   const std::string _dir_path  = iinfo_.paths_->get_path (_storage_type);
   const std::string _file_path = ::libs::helpers::files::make_path (_dir_path, _file_name);

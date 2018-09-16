@@ -17,7 +17,7 @@ namespace libs { namespace ilog_events { namespace events {
 
 BaseLogEvent::BaseLogEvent (const BaseLogEvent::Acessor&)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -34,7 +34,7 @@ BaseLogEvent::text (const TypeLogText& _type) const
 
 
 ::libs::events::IEvent::ptr
-BaseLogEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+BaseLogEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<BaseLogEvent> (this, _deep);
 }

@@ -17,7 +17,7 @@ namespace libs { namespace istorage_events { namespace events {
 
 GetObjects::GetObjects (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -26,7 +26,7 @@ GetObjects::~GetObjects ()
 
 
 ::libs::events::IEvent::ptr
-GetObjects::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+GetObjects::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<GetObjects> (this, _deep);
 }

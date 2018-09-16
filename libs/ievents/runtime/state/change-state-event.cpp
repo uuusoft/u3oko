@@ -19,7 +19,7 @@ namespace libs { namespace ievents { namespace runtime { namespace state {
 ChangStateProcessTypeEvent::ChangStateProcessTypeEvent (const Acessor& _ph, bool _start) :
   start_ (_start)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -43,7 +43,7 @@ ChangStateProcessTypeEvent::set_start (bool _val)
 
 
 ::libs::events::IEvent::ptr
-ChangStateProcessTypeEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+ChangStateProcessTypeEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<ChangStateProcessTypeEvent> (this, _deep);
 }

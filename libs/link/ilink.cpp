@@ -38,7 +38,7 @@ ILink::listen (const CreateInfo& _info)
 
 
 bool
-ILink::destroy (const TypeDestroyLink& _type)
+ILink::destroy (const DestroyLinkType& _type)
 {
   return destroy_int (_type);
 }
@@ -60,11 +60,14 @@ ILink::received_msg ()
 IEvent::ptr
 ILink::send_msg (
   IEvent::ptr                     _msg,
-  const details::TypeSyncCall&    _sync,
-  const details::TypeRequestCall& _req,
+  const details::SyncCallType&    _sync,
+  const details::RequestCallType& _req,
   const ISeqEvent::id_type&       _id)
 {
-  return send_msg_int (_msg, _sync, _req, _id);
+  XULOG_TRACE("ILink::send_msg, beg");
+  auto _ret = send_msg_int (_msg, _sync, _req, _id);
+  XULOG_TRACE("ILink::send_msg, end");
+  return _ret;
 }
 
 

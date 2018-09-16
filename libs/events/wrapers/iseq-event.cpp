@@ -19,7 +19,7 @@ ISeqEvent::ISeqEvent (const Acessor& _ph, IEvent::ptr _int, const id_type& _id) 
   IWrapBaseEvent (IWrapBaseEvent::Acessor (0), _int),
   id_ (_id)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -28,7 +28,7 @@ ISeqEvent::~ISeqEvent ()
 
 
 IEvent::ptr
-ISeqEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+ISeqEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<ISeqEvent> (this, _deep);
 }

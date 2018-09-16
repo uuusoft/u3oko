@@ -22,7 +22,7 @@ RootModule::default_catch_funct (IEvent::ptr _msg, bool _forward)
   if (_forward)
     {
       XULOG_TRACE ("RootModule::default_catch_funct, " << text_id_module_ << ", " << _msg->get_mid ())
-      //  если сообщение уже пришло с транзакцией, значит это ответ на нашу транзакцию.
+      //  Если сообщение уже пришло с транзакцией, значит это ответ на нашу транзакцию.
       if (current_seq_.recv_seq_)
         {
           UASSERT (current_seq_.answer_);

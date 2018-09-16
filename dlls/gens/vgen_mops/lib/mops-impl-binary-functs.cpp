@@ -7,7 +7,7 @@
 \copyright  www.uuusoft.com
 \project    uuu_vgen_mops_lib
 \brief      Реализация впомогательной функции бинаризации изображения. Не является МО, но требуется для
-реализации МО через свертку.
+            реализации МО через свертку.
 */
 #include "mmedia/defines/defines.hpp"
 #include "mmedia/defines/includes.hpp"
@@ -19,10 +19,10 @@ namespace dlls { namespace gens { namespace vgen_mops { namespace lib {
 
 void
 MopsImpl::bin_buff (
-  const OffBuff2Info& _b2b,
-  const short         _bound,
-  const short         _val,
-  IVideoBuff*         _pdst)
+  const off_buff2info_type& _b2b,
+  const short               _bound,
+  const short               _val,
+  IVideoBuff*               _pdst)
 {
   ::libs::optim::io::MCallInfo _cinfo;
 

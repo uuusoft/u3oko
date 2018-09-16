@@ -10,14 +10,14 @@
 
 namespace libs { namespace link { namespace mem {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 class IHandlerMem
 {
   public:
   virtual ~IHandlerMem ()
   {}
-
+  //  IHandlerMem interface
   virtual bool update (void* _pmem) const = 0;
 
 

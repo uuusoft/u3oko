@@ -117,8 +117,8 @@ Impl2Gui::send_frame (const InfoFilter& _finfo, const TransformInfo& _info, ILin
   if (auto _imem = _helper->get_imem ())
     {
       REF_UASSERT_SIGNAL ("failed");
-#if 0
 
+#if 0
       if ( finfo_.last_hmem_.check () )
       {
         if ( !_helper->mem_atomic_call (finfo_.last_hmem_, IsEmptyFrameHelper ( this ) ) )
@@ -183,6 +183,7 @@ Impl2Gui::send_frame (const InfoFilter& _finfo, const TransformInfo& _info, ILin
         new ::libs::igui_events::events::MemBlockEvent ( finfo_.last_hmem_, finfo_.rprops_->get_id () )
         ) );
 #endif
+
     }
   else
     {
@@ -193,9 +194,7 @@ Impl2Gui::send_frame (const InfoFilter& _finfo, const TransformInfo& _info, ILin
 
       if (fast_buff2gui_.use_count () <= 1)
         {
-          //fast_buff2gui_->clone ( **_info.ibuff_ );
           fast_buff2gui_->swap (**_info.ibuff_);
-          //(**_info.ibuff_).reset(false);
 
           IEvent::ptr _rmsg;
           auto        _dmsg = ::libs::iproperties::helpers::get_and_cast_event<::libs::igui_events::events::VideoBuffEvent> (_rmsg);

@@ -19,7 +19,7 @@ VideoDriverProp::VideoDriverProp (const Acessor& _ph) :
   indx_device_ (0),
   cat_dshow_ (::libs::helpers::uids::cat::cat_video_device)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
   sync_data ();
 }
 
@@ -29,7 +29,7 @@ VideoDriverProp::~VideoDriverProp ()
 
 
 ::libs::events::IEvent::ptr
-VideoDriverProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+VideoDriverProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<VideoDriverProp> (this, _deep);
 }

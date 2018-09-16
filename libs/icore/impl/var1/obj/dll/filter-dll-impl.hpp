@@ -10,14 +10,15 @@
 
 namespace libs { namespace icore { namespace impl { namespace var1 { namespace obj { namespace dll {
 /**
-  \brief    Вспомогательный тип для реальзации фильтров в графе обработке данных.
-  \tparam   InfoFilterImpl   тип для хранимых свойств, данного фильтра.
-  */
+\brief    Вспомогательный тип для реальзации фильтров в графе обработке данных.
+\tparam   InfoFilterImpl   тип для хранимых свойств, данного фильтра.
+*/
 template <
   typename InfoFilterImpl>
 class FilterImpl
 {
   public:
+
   FilterImpl () :
     pbuff_ (nullptr),
     fbinfo_ (nullptr)
@@ -32,7 +33,7 @@ class FilterImpl
   protected:
   //  int types
   using call_catch_funct_type = std::function<void(CallInterfInfo& _info)>;
-  using id_event2funct_type   = std::map<IEvent::text_id_type, call_catch_funct_type>;
+  using id_event2funct_type   = std::map<IEvent::hid_type, call_catch_funct_type>;
 
   void
   reset_ptrs ()
@@ -91,12 +92,12 @@ class FilterImpl
   void
   init_node_event2funct ()
   {
-    node_event2funct_[::libs::imdata_events::events::ChangeNodeDataEvent::gen_get_type_text_id ()] = [this](CallInterfInfo& _info) -> void {
+    node_event2funct_[::libs::imdata_events::events::ChangeNodeDataEvent::gen_get_mid ()] = [this](CallInterfInfo& _info) -> void {
       auto _msg = ::libs::iproperties::helpers::cast_event<::libs::imdata_events::events::ChangeNodeDataEvent> (_info.event_);
 
       switch (_msg->get_action ())
         {
-        case ::libs::imdata_events::events::TypeChangeNodePathAction::get:
+        case ::libs::imdata_events::events::ChangeNodePathAction::get:
           {
             ::libs::imdata_events::events::ChangeNodeDataEvent::events_list_type _events;
 
@@ -104,7 +105,7 @@ class FilterImpl
             _msg->set_events (_events);
             break;
           }
-        case ::libs::imdata_events::events::TypeChangeNodePathAction::set:
+        case ::libs::imdata_events::events::ChangeNodePathAction::set:
           {
             auto _events = _msg->get_events ();
             bool _update = false;

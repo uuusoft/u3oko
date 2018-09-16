@@ -116,7 +116,7 @@ Filter::process_events (TransformInfo& _info)
       const auto _devent = ::libs::iproperties::helpers::cast_event<::libs::ievents::runtime::interf::InterfCodecImageEvent> (_event);
       if (_devent)
         {
-          XULOG_TEST ("Filter::process_events: update active codec");
+          XULOG_TRACE ("Filter::process_events: update active codec");
           finfo_.active_impl_ = _devent->is_active () ? _devent->get_interface () : _devent->get_interface ();      //debug
           UASSERT (!finfo_.active_impl_.expired ());
           auto _impl = finfo_.active_impl_.lock ();
@@ -156,14 +156,15 @@ bool
 Filter::prepare_process_frame (TransformInfo& _info)
 {
   XULOG_TRACE ("Filter::prepare_process_frame: beg");
-  if (!finfo_.fps_.is_action ())
+  const bool                 _decode_mode = ::libs::ievents::props::videos::generics::codec::TypeCodecMode::decoder == finfo_.rprops_->plane_.type_;
+  const IVideoBuff::craw_ptr _sbuff       = (*pbuff_)[finfo_.rprops_->buffs_.indx_sbuff_];
+  const IVideoBuff::craw_ptr _dbuff       = (*pbuff_)[finfo_.rprops_->buffs_.indx_dbuff_];
+
+  if (!_decode_mode && !finfo_.fps_.is_action ())
     {
       XULOG_TRACE ("Filter::prepare_process_frame: skip due to frequency");
       return false;
     }
-
-  const IVideoBuff::craw_ptr _sbuff = (*pbuff_)[finfo_.rprops_->buffs_.indx_sbuff_];
-  const IVideoBuff::craw_ptr _dbuff = (*pbuff_)[finfo_.rprops_->buffs_.indx_dbuff_];
 
   //  Проверяем на необходимость производить действие над входным буфером.
   if (!_sbuff || _sbuff->get_flag (::utils::dbuffs::TypeFlagsBuff::empty))
@@ -205,7 +206,6 @@ Filter::prepare_process_frame (TransformInfo& _info)
       break;
     }
 
-  const bool _decode_mode = ::libs::ievents::props::videos::generics::codec::TypeCodecMode::decoder == finfo_.rprops_->plane_.type_;
   if (_decode_mode)
     {
       XULOG_TRACE ("Filter::prepare_process_frame: decode");

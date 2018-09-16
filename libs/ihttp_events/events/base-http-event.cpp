@@ -17,7 +17,7 @@ namespace libs { namespace ihttp_events { namespace events {
 
 BaseHttpEvent::BaseHttpEvent (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -26,7 +26,7 @@ BaseHttpEvent::~BaseHttpEvent ()
 
 
 ::libs::events::IEvent::ptr
-BaseHttpEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+BaseHttpEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<BaseHttpEvent> (this, _deep);
 }

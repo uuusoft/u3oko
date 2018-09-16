@@ -12,8 +12,8 @@
 
 namespace libs { namespace ievents { namespace props { namespace modules { namespace storage {
 /**
-  \brief  empty brief
-  */
+\brief  Хранимые свойства модуля хранения данных.
+*/
 class PropertyStorageModuleEvent : public ievents::Event
 {
   friend class boost::serialization::access;
@@ -26,6 +26,7 @@ class PropertyStorageModuleEvent : public ievents::Event
     explicit Acessor (int){};
   };
 
+
   public:
   //  ext types
   using paths_type = std::list<PathInfo>;
@@ -37,8 +38,8 @@ class PropertyStorageModuleEvent : public ievents::Event
 
   virtual ~PropertyStorageModuleEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/props/modules/storage/property-storage-module-event";
     return _ret;
@@ -50,8 +51,8 @@ class PropertyStorageModuleEvent : public ievents::Event
 
 
   protected:
-  //  int types
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  //  ievents::Event overrides
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        load_int (const base_functs::xml::itn& _node) override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 

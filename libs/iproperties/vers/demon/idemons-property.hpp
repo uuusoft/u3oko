@@ -18,8 +18,8 @@ using ::utils::dbuffs::allocator::BuffAllocatorProxy;
 using ::libs::optim::io::IOptimProxy;
 using ::libs::events::io::IEventsProxy;
 /**
-  \brief  Тип для разделения свойств, общих для всего приложения, между всеми модулями системы.
-  */
+\brief  Тип для разделения свойств, общих для всего приложения, между всеми модулями системы.
+*/
 class IDemonsProperty final : public ::libs::properties::ISharedProperty
 {
   public:

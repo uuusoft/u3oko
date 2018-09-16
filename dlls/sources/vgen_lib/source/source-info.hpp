@@ -10,8 +10,8 @@
 
 namespace dlls { namespace sources { namespace gen_lib {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 struct SourceInfo
 {
   SourceInfo (

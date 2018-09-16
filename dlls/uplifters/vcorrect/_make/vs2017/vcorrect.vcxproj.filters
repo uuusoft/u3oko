@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_includes">
+      <UniqueIdentifier>{f614abf6-ae47-4472-b864-cf5ec5523554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="consts">
+      <UniqueIdentifier>{abbfb2f1-f5d3-48f4-a517-1997d8a683f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="soft">
+      <UniqueIdentifier>{6b29f43c-92b2-409e-b2cf-cad8d7ec25e8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\soft\impl-bright-funct.cpp">
+      <Filter>soft</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\soft\impl-graduent-funct.cpp">
+      <Filter>soft</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\soft\impl-sat2byte-funct.cpp">
+      <Filter>soft</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\soft\impl.cpp">
+      <Filter>soft</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\filter-dll.cpp" />
+    <ClCompile Include="..\..\info-filter-dll.cpp" />
+    <ClCompile Include="..\..\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\vals.hpp">
+      <Filter>consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\includes_int.hpp">
+      <Filter>_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\soft\impl.hpp">
+      <Filter>soft</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\filter-dll.hpp" />
+    <ClInclude Include="..\..\info-filter-dll.hpp" />
+    <ClInclude Include="..\..\syn.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

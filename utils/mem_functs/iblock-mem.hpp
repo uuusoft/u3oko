@@ -45,54 +45,54 @@ class IBlockMem
   IBlockMem (const IBlockMem& _src) = delete;
   IBlockMem& operator= (const IBlockMem& _src) = delete;
   /**
-    \brief    Функция получения буфера памяти.
-    \return   сырой указатель на начало буфера.
-    */
+  \brief    Функция получения буфера памяти.
+  \return   сырой указатель на начало буфера.
+  */
   unsigned char*
   get ()
   {
     return get_int ();
   }
   /**
-    \brief    Функция получения констатного буфера памяти.
-    \return   сырой константный указатель на начало буфера.
-    */
+  \brief    Функция получения констатного буфера памяти.
+  \return   сырой константный указатель на начало буфера.
+  */
   const unsigned char*
   get () const
   {
     return get_int ();
   }
   /**
-    \brief    Функция возврата размера буфера памяти
-    \return   размер буфера.
-    */
+  \brief    Функция возврата размера буфера памяти
+  \return   размер буфера.
+  */
   IBlockMem::size_type
   get_buff_size () const
   {
     return get_buff_size_int ();
   }
   /**
-    \brief    Функция возврата размера данных в буфере памяти
-    \return   размер данных.
-    */
+  \brief    Функция возврата размера данных в буфере памяти
+  \return   размер данных.
+  */
   IBlockMem::size_type
   get_data_size () const
   {
     return get_data_size_int ();
   }
   /**
-    \brief      Функция установки размера данных в буфере памяти.
-    \param[in]  _size новый размер данных.
-    */
+  \brief      Функция установки размера данных в буфере памяти.
+  \param[in]  _size новый размер данных.
+  */
   void
   set_data_size (const size_type& _size)
   {
     return set_data_size_int (_size);
   }
   /**
-    \brief      Функция перераспределения буфера памяти.
-    \param[in]  _size новый требуемый размер памяти.
-    */
+  \brief      Функция перераспределения буфера памяти.
+  \param[in]  _size новый требуемый размер памяти.
+  */
   void
   resize (const size_type& _size)
   {

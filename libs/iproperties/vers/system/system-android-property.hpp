@@ -20,8 +20,8 @@ namespace libs { namespace iproperties { namespace vers { namespace system {
 // syn
 using gui_funct_type = bool(android_app*, android_poll_source*);
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 class SystemAndroidProperty final : public ::libs::properties::ISharedProperty
 {
   public:
@@ -99,7 +99,7 @@ class SystemAndroidProperty final : public ::libs::properties::ISharedProperty
   }
 
   android_app*     pappl_;              //< пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ++ пїЅ android/
-  gui_functor_type pfunct_gui_;         //<
+  gui_functor_type pfunct_gui_;         //< ???
   IVideoBuff::ptr  buff_java2cpp_;      //< пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ java пїЅ пїЅ++.
 };
 

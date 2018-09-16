@@ -9,5 +9,7 @@
 */
 #include "events/base-events-event.hpp"
 #include "events/wrapper-events-event.hpp"
+#include "events/add-event2base.hpp"
+#include "events/get-events-from-base.hpp"
 
 #include "events/register_events_in_archives.hpp"

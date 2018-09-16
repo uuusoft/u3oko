@@ -12,9 +12,9 @@
 
 namespace libs { namespace ilink { namespace loader {
 /**
-  \brief  Загрузчик кода в пространство процесса.
-          В зависимости от параметров или в отдельный процесс, или в текущий.
-  */
+\brief  Загрузчик кода в пространство процесса.
+        В зависимости от параметров или в отдельный процесс, или в текущий.
+*/
 class ILoaderCodeImpl
 {
   public:
@@ -25,13 +25,13 @@ class ILoaderCodeImpl
   virtual ~ILoaderCodeImpl ()
   {}
   /**
-    \brief      Функция загрузки кода.
-    \param[in]  _info       общая информация о параметрах.
-    \param[in]  _name_proc  имя процесса.
-    \param[in]  _name_lib   имя библиотеки.
-    \param[in]  _args       аргументы
-    \param[in]  _cntx   
-    */
+  \brief      Функция загрузки кода (dll) в процесс.
+  \param[in]  _info       общая информация о параметрах.
+  \param[in]  _name_proc  имя процесса.
+  \param[in]  _name_lib   имя библиотеки.
+  \param[in]  _args       аргументы
+  \param[in]  _cntx   
+  */
   void
   load (
     const CreateInfo*  _info,
@@ -39,9 +39,9 @@ class ILoaderCodeImpl
     const std::string& _name_lib,
     const args_type&   _args)
   {
-    XULOG_INFO ("ILoaderCodeImpl: beg, " << _name_proc << ", " << _name_lib);
+    XULOG_TRACE ("ILoaderCodeImpl: beg, " << _name_proc << ", " << _name_lib);
     load_int (_info, _name_proc, _name_lib, _args);
-    XULOG_INFO ("ILoaderCodeImpl: end");
+    XULOG_TRACE ("ILoaderCodeImpl: end");
     return;
   }
 
@@ -64,6 +64,7 @@ class ILoaderCodeImpl
 
 
   private:
+  //  ILoaderCodeImpl interface
   virtual void load_int (const CreateInfo* _info, const std::string& _name_proc, const std::string& _name_lib, const args_type& _args) = 0;
   virtual bool is_load_int () const                                                                                                    = 0;
   virtual bool unload_int (bool _force)                                                                                                = 0;

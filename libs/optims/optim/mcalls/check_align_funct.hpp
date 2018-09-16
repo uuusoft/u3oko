@@ -12,16 +12,16 @@
 
 namespace libs { namespace optim { namespace mcalls {
 /**
-  \brief      Вспомогательная функция проверки значения выравнивания данных на корректность.
-  \param[in]  _align  проверямое значение выравнивания данных
-  \return     true, если значение корректно.
-  */
+\brief      Вспомогательная функция проверки значения выравнивания данных на корректность.
+\param[in]  _align  проверямое значение выравнивания данных
+\return     true, если значение корректно.
+*/
 inline bool
-check_align (std::size_t _align)
+check_align (const std::size_t _align)
 {
   if (1 != _align && 8 != _align && 16 != _align && 32 != _align && 64 != _align)
     {
-      UASSERT_SIGNAL ("failed");
+      XULOG_ERROR ("failed aling, " << _align);
       return false;
     }
   return true;

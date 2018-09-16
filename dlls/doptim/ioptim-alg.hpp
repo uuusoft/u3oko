@@ -12,10 +12,10 @@
 
 namespace dlls { namespace doptim { namespace impl {
 //  syn
-typedef ::libs::optim::io::hioptim hioptim;
+using ::libs::optim::io::hioptim;
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 class IOptimAlg
 {
   public:
@@ -44,10 +44,11 @@ class IOptimAlg
 
 
   protected:
+  //  IOptimAlg interface
   virtual void update_int (const ::libs::optim::io::TInit& _iinfo) = 0;
 
-  hioptim::store_funct_type funct_;      /// ???
-  hioptim                   sel_;        /// ???
+  hioptim::store_funct_type funct_;      //< Функция алгоритма.
+  hioptim                   sel_;        //< ???
 };
 
 }}}      // namespace dlls::doptim::impl

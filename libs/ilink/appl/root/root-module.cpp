@@ -41,12 +41,10 @@ RootModule::init_links_int (const InitApplication& _info)
 {
   XULOG_INFO ("uuu_soft::RootModule::init_links_int::beg, " << text_id_module_ << ":" << to_str (this));
   auto                      _main_appl = ::libs::iproperties::helpers::cast_event<::libs::ievents::props::application::ApplicationProp> (event_props_.main_appl_.get ());
-  const TypeRunCode         _type_run  = _main_appl->is_single_process () ? TypeRunCode::dll : TypeRunCode::appl;
+  const RunCodeType         _type_run  = _main_appl->is_single_process () ? RunCodeType::dll : RunCodeType::appl;
   LinkCreatorProxy::raw_ptr _lproxy    = LinkCreatorProxy::instance ();
   auto                      _iproxy    = _lproxy->impl ();
   auto                      _ipstorage = ::libs::iproperties::helpers::get_storage ();
-  //volatile auto             _imstorage = ::libs::iproperties::helpers::cast_prop_demons()->get_mem_lockfree();
-  //_imstorage;
 
   //  Разделяем созданные интерфейсы между всей системой через объект "свойства".
   {
@@ -64,7 +62,7 @@ RootModule::init_links_int (const InitApplication& _info)
       name_company_,
       name_appl_,
       "subsys_appl2log",
-      ::libs::link::details::TypeLinkModules::log,
+      ::libs::link::details::LinkModulesType::log,
       ::libs::link::consts::size::buff_all2log);
 
     links_.appl2log_ = _iproxy->get_connect (&_create_info);
@@ -93,7 +91,7 @@ RootModule::init_links_int (const InitApplication& _info)
       name_company_,
       name_appl_,
       "subsys_events",
-      ::libs::link::details::TypeLinkModules::events,
+      ::libs::link::details::LinkModulesType::events,
       ::libs::link::consts::size::buff_all2events);
 
     links_.appl2events_ = _iproxy->get_connect (&_create_info);
@@ -113,7 +111,7 @@ RootModule::init_links_int (const InitApplication& _info)
       name_company_,
       name_appl_,
       "subsys_storage",
-      ::libs::link::details::TypeLinkModules::storage,
+      ::libs::link::details::LinkModulesType::storage,
       ::libs::link::consts::size::buff_appl2storage);
 
     links_.appl2storage_ = _iproxy->get_connect (&_create_info);
@@ -133,7 +131,7 @@ RootModule::init_links_int (const InitApplication& _info)
       name_company_,
       name_appl_,
       "subsys_gui",
-      ::libs::link::details::TypeLinkModules::gui,
+      ::libs::link::details::LinkModulesType::gui,
       ::libs::link::consts::size::buff_appl2gul);
 
     links_.appl2gui_ = _iproxy->get_connect (&_create_info);
@@ -148,15 +146,16 @@ RootModule::init_links_int (const InitApplication& _info)
       name_company_,
       name_appl_,
       "subsys_data",
-      ::libs::link::details::TypeLinkModules::mdata,
+      ::libs::link::details::LinkModulesType::mdata,
       ::libs::link::consts::size::buff_appl2data);
 
     links_.appl2data_ = _iproxy->get_connect (&_create_info);
   }
 
   {
-    ::libs::helpers::sys::cpu::TextExtCpu _helper;
-    auto                                  _info_cpu = ::libs::iproperties::helpers::cast_event<InfoCPUEvent> (event_props_.info_cpu_);
+    TextExtCpu _helper;
+    auto       _info_cpu = ::libs::iproperties::helpers::cast_event<InfoCPUEvent> (event_props_.info_cpu_);
+
     MSG2LOGGER (links_.appl2log_, "Selected SIMD CPU : " + _helper.get_text (_info_cpu->get_type ()), name_appl_);
     MSG2LOGGER (links_.appl2log_, "Count CPU: " + to_str (_info_cpu->get_count ()), name_appl_);
 
@@ -286,7 +285,6 @@ RootModule::deinit_int ()
       }
     case TypeStageDeInit::send_stop_msg2log_module:
       {
-        //std::this_thread::sleep_for (std::chrono::milliseconds (5 * 1000));
         if (links_.appl2log_)
           {
             XULOG_INFO ("begin send stop msg 2 log");
@@ -328,23 +326,23 @@ RootModule::update_catch_functs_int ()
 {
   super::update_catch_functs_int ();
 
-  catch_functs_[::libs::events::ISeqEvent::gen_get_type_text_id ()] = std::bind (
+  catch_functs_[::libs::events::ISeqEvent::gen_get_mid ()] = std::bind (
     &RootModule::seq_msg_catch_funct, this, std::placeholders::_1, std::placeholders::_2);
 
-  catch_functs_[::libs::events::ISyncEvent::gen_get_type_text_id ()] = std::bind (
+  catch_functs_[::libs::events::ISyncEvent::gen_get_mid ()] = std::bind (
     &RootModule::sync_msg_catch_funct, this, std::placeholders::_1, std::placeholders::_2);
 
-  catch_functs_[::libs::events::IRequestEvent::gen_get_type_text_id ()] = std::bind (
+  catch_functs_[::libs::events::IRequestEvent::gen_get_mid ()] = std::bind (
     &RootModule::request_msg_catch_funct, this, std::placeholders::_1, std::placeholders::_2);
 
-  catch_functs_[::libs::events::IAnswerEvent::gen_get_type_text_id ()] = std::bind (
+  catch_functs_[::libs::events::IAnswerEvent::gen_get_mid ()] = std::bind (
     &RootModule::answer_msg_catch_funct, this, std::placeholders::_1, std::placeholders::_2);
 
-  catch_functs_[::libs::ievents::runtime::state::ExpandTimeStatisticEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[::libs::ievents::runtime::state::ExpandTimeStatisticEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         //auto _rmsg = ::libs::iproperties::helpers::cast_event<::libs::ievents::runtime::state::ExpandTimeStatisticEvent> (_msg);
-        auto _res = links_.appl2data_->send_msg (_msg, ::libs::link::details::TypeSyncCall::sync);
+        auto _res = links_.appl2data_->send_msg (_msg, ::libs::link::details::SyncCallType::sync);
         return IEvent::ptr ();
       }
     return _msg;
@@ -364,7 +362,7 @@ RootModule::get_dest_link (IEvent::ptr _msg)
       XULOG_TRACE ("RootModule::get_dest_link, select uuu_mdata destination");
       return links_.appl2data_;
     }
-  //  Самые частые сообщения к логированию.
+  //  Далее идут сообщения логирования.
   if (::libs::iproperties::helpers::cast_event<::libs::ilog_events::events::BaseLogEvent> (_msg))
     {
       XULOG_TRACE ("RootModule::get_dest_link, select uuu_log destination");
@@ -377,12 +375,6 @@ RootModule::get_dest_link (IEvent::ptr _msg)
       return links_.appl2storage_;
     }
   //  ???
-  if (::libs::iproperties::helpers::cast_event<::libs::igui_events::events::BaseGUIEvent> (_msg))
-    {
-      XULOG_TRACE ("RootModule::get_dest_link, select uuu_gui destination");
-      return links_.appl2gui_;
-    }
-  //  ???
   if (::libs::iproperties::helpers::cast_event<::libs::ievents_events::events::BaseEventsEvent> (_msg))
     {
       XULOG_TRACE ("RootModule::get_dest_link, select uuu_events destination");
@@ -393,6 +385,12 @@ RootModule::get_dest_link (IEvent::ptr _msg)
     {
       XULOG_TRACE ("RootModule::get_dest_link, select uuu_http destination");
       return links_.appl2http_;
+    }
+  //  ???
+  if (::libs::iproperties::helpers::cast_event<::libs::igui_events::events::BaseGUIEvent> (_msg))
+    {
+      XULOG_TRACE ("RootModule::get_dest_link, select uuu_gui destination");
+      return links_.appl2gui_;
     }
   XULOG_TRACE ("unknown destination, " << _msg->get_mid ());
   return ILink::ptr ();

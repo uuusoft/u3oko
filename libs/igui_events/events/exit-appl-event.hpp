@@ -10,8 +10,8 @@
 
 namespace libs { namespace igui_events { namespace events {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 class ExitApplEvent : public BaseGUIEvent
 {
   friend class boost::serialization::access;
@@ -36,8 +36,8 @@ class ExitApplEvent : public BaseGUIEvent
 
   virtual TypeEvents get_type () const override;
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/igui_events/events/props/ExitApplEvent";
     return _ret;
@@ -53,7 +53,7 @@ class ExitApplEvent : public BaseGUIEvent
   void serialize (Archive& ar, const unsigned int /* file_version */);
 
   //virtual void load_int( const base_functs::xml::itn& _prop ) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 };
 

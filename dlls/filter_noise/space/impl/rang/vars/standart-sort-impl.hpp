@@ -12,8 +12,8 @@
 
 namespace dlls { namespace filter_noise { namespace space { namespace impl { namespace rang { namespace vars {
 /**
-  \brief  Реализация фильтрации используя сортировку из стандартной библиотеки.
-  */
+\brief  Реализация фильтрации используя сортировку из стандартной библиотеки.
+*/
 class StandartSortAlg final
 {
   public:
@@ -78,9 +78,7 @@ class StandartSortAlg final
   private:
   short sort_vals_[::libs::ievents::props::videos::noises::space::ext::consts::max_size_core * ::libs::ievents::props::videos::noises::space::ext::consts::max_size_core];      //< Временный массив для сортированной последовательности.
 };
-/**
-  \brief  Реализация фильтрации используя сортировку из стандартной библиотеки.
-  */
+/// Реализация фильтрации используя сортировку из стандартной библиотеки.
 using StandartSortImpl = GenericImpl<StandartSortAlg>;
 
 }}}}}}      // namespace dlls::filter_noise::space::impl::rang::vars

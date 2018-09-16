@@ -27,8 +27,7 @@ IApplication::~IApplication ()
 void
 IApplication::ainit (const InitApplication& _info)
 {
-  XULOG_TEST ("IApplication::ainit::beg, " << _info.name_subsys_);
-  //grd_sync_type _grd(mtx_);
+  XULOG_TRACE ("IApplication::ainit::beg, " << _info.name_subsys_);
   UASSERT (!init_);
 
   init_int (_info);
@@ -40,7 +39,7 @@ IApplication::ainit (const InitApplication& _info)
   init_done_int ();
 
   init_ = true;
-  XULOG_TEST ("IApplication::ainit::end, " << _info.name_subsys_);
+  XULOG_TRACE ("IApplication::ainit::end, " << _info.name_subsys_);
   return;
 }
 
@@ -48,7 +47,6 @@ IApplication::ainit (const InitApplication& _info)
 void
 IApplication::work ()
 {
-  //grd_sync_type _grd(mtx_);
   return work_int ();
 }
 
@@ -56,8 +54,14 @@ IApplication::work ()
 bool
 IApplication::deinit ()
 {
-  //grd_sync_type _grd(mtx_);
   return deinit_int ();
+}
+
+
+void
+IApplication::force_stop ()
+{
+  return force_stop_int ();
 }
 
 }}}      // namespace libs::link::appl

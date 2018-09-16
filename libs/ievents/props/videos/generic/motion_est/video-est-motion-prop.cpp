@@ -17,7 +17,7 @@ namespace libs { namespace ievents { namespace props { namespace videos { namesp
 
 VideoEstMotionProp::VideoEstMotionProp (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -26,7 +26,7 @@ VideoEstMotionProp::~VideoEstMotionProp ()
 
 
 ::libs::events::IEvent::ptr
-VideoEstMotionProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+VideoEstMotionProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<VideoEstMotionProp> (this, _deep);
 }
@@ -45,7 +45,7 @@ VideoEstMotionProp::load_int (const base_functs::xml::itn& _prop)
 
   while (_param != _params.end ())
     {
-      BuffEventInfo _add;
+      EventBuffsInfo _add;
 
       _add.load (_param);
       buffs_.push_back (_add);

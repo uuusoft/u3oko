@@ -20,7 +20,7 @@ ApplicationProp::ApplicationProp (const Acessor& _ph) :
   messenger_impl_ ("fast"),
   min_log_filter_ ("trace")
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -42,8 +42,15 @@ ApplicationProp::get_messenger_impl () const
 }
 
 
+const ApplicationProp::xml_paths_type&
+ApplicationProp::get_xml_paths () const
+{
+  return xml_data_paths_;
+}
+
+
 ::libs::events::IEvent::ptr
-ApplicationProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+ApplicationProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<ApplicationProp> (this, _deep);
 }
@@ -63,6 +70,12 @@ ApplicationProp::load_int (const base_functs::xml::itn& _prop)
       ::libs::icore::xml::helpers::load<std::string> (_param, "intersubsys", messenger_impl_);
       ::libs::icore::xml::helpers::load<std::string> (_param, "min_log_filter", min_log_filter_);
 
+      if ("xml-data-path" == ::libs::icore::xml::helpers::get_node_name (_param))
+        {
+          xml_data_paths_.push_back ("");
+          ::libs::icore::xml::helpers::load<std::string> (_param, "xml-data-path", xml_data_paths_.back ());
+        }
+
       ++_param;
     }
 
@@ -79,6 +92,7 @@ ApplicationProp::copy_int (const IEvent::craw_ptr _src)
   single_process_ = _dsrc->single_process_;
   messenger_impl_ = _dsrc->messenger_impl_;
   min_log_filter_ = _dsrc->min_log_filter_;
+  xml_data_paths_ = _dsrc->xml_data_paths_;
   return;
 }
 
@@ -91,6 +105,7 @@ ApplicationProp::serialize (Archive& ar, const unsigned int /* file_version */)
   ar& BOOST_SERIALIZATION_NVP (single_process_);
   ar& BOOST_SERIALIZATION_NVP (messenger_impl_);
   ar& BOOST_SERIALIZATION_NVP (min_log_filter_);
+  ar& BOOST_SERIALIZATION_NVP (xml_data_paths_);
   return;
 }
 

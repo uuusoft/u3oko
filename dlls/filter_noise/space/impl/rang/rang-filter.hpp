@@ -14,9 +14,9 @@ namespace dlls { namespace filter_noise { namespace space { namespace impl { nam
 //  syn
 using ::libs::optim::io::hioptim;
 /**
-  \brief  Ранговая фильтрация в пространственной области.
-          Стандартное решение.
-  */
+\brief  Ранговая фильтрация в пространственной области.
+        Стандартное решение.
+*/
 class RangFilter : public IFilterImpl
 {
   public:
@@ -33,10 +33,10 @@ class RangFilter : public IFilterImpl
   virtual void transform_int (InfoFilter& _finfo, ::libs::buffs::Buffs* _pbuff) override;
   virtual void load_int () override;
   /**
-    \brief  Функция выбора наиболее подходящего алгоритма сортировки.
-            Учитывается длина сортируемой последовательности и ранг числа.
-    \return реализация
-    */
+  \brief  Функция выбора наиболее подходящего алгоритма сортировки.
+          Учитывается длина сортируемой последовательности и ранг числа.
+  \return реализация
+  */
   IAlgImpl::ptr make_impl (InfoFilter& _finfo);
 
   CallerImpl::ptr            pthreads_;           //< Пул рабочих потоков

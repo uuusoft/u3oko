@@ -3,9 +3,8 @@
 #copyright  www.uuusoft.com
 cmake_minimum_required(VERSION 3.4.1)
 
-project( uuu_bench )
-
-set( project_name "uuu_bench" )
+project( u3oko )
+set( project_name "u3oko" )
 set( CMAKE_VERBOSE_MAKEFILE off )
 set ( project_version_major 1)
 set ( project_version_minor 0)
@@ -42,18 +41,6 @@ if ( ${CMAKE_SYSTEM_NAME} STREQUAL "Android" )
   set( shared_compile_def "BOOST_INTERPROCESS_SHARED_DIR_PATH=\"/sdcard\"" )
   set( shared_compile_options )
   set( shared_link_flags )
-
-  #set( enable_hard_fpu 1 )
-
-  if ( ${ANDROID_ABI} STREQUAL "armeabi-v7a" )
-
-    ##set( shared_compile_options ${shared_compile_options} -mfpu=neon-fp16 -mfloat-abi=hard -mhard-float )
-    #set( shared_compile_options ${shared_compile_options} -mfpu=neon-fp16 )
-    ##set( shared_compile_def ${shared_compile_def} HAVE_NEON=1 _NDK_MATH_NO_SOFTFP=1 )
-    #set( shared_link_flags ${shared_link_flags} -lm_hard )
-    ##set( shared_link_flags ${shared_link_flags} -Wl,-lm_hard -Wl,--no-undefined )
-
-  endif ()
 
 elseif( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows"  )
 

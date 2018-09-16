@@ -18,7 +18,7 @@ namespace libs { namespace istorage_events { namespace events {
 GetStatisticInfo::GetStatisticInfo (const Acessor& _ph) :
   use_size_ (0)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -27,7 +27,7 @@ GetStatisticInfo::~GetStatisticInfo ()
 
 
 ::libs::events::IEvent::ptr
-GetStatisticInfo::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+GetStatisticInfo::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<GetStatisticInfo> (this, _deep);
 }

@@ -13,34 +13,10 @@
 #include "../../../../includes_int.hpp"
 #include "video-morphology-prop.hpp"
 
-
 namespace libs { namespace ievents { namespace props { namespace videos { namespace generic { namespace morph {
 
-TypeOperation
-str2type_op (const std::string& _txt)
-{
-  static const std::pair<std::string, TypeOperation> _ops[] = {
-    std::pair<std::string, TypeOperation> ("erosion", TypeOperation::erosion),
-    std::pair<std::string, TypeOperation> ("dilation", TypeOperation::dilation),
-    std::pair<std::string, TypeOperation> ("binary", TypeOperation::binary),
-    std::pair<std::string, TypeOperation> ("skip", TypeOperation::empty)
-  };
-
-  for (const auto& _op : _ops)
-    {
-      if (_op.first == _txt)
-        {
-          return _op.second;
-        }
-    }
-
-  //UASSERT_SIGNAL( "failed" );
-  return TypeOperation::empty;
-}
-
-
 void
-load_op (const base_functs::xml::itn& _prop, ParamsOperation& _info)
+load_op (const base_functs::xml::itn& _prop, MorphOperationParams& _info)
 {
   pugi::xml_attribute _name_op = _prop->attribute ("name");
 
@@ -73,7 +49,7 @@ load_op (const base_functs::xml::itn& _prop, ParamsOperation& _info)
 
 VideoMorphologyProp::VideoMorphologyProp (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -82,7 +58,7 @@ VideoMorphologyProp::~VideoMorphologyProp ()
 
 
 ::libs::events::IEvent::ptr
-VideoMorphologyProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+VideoMorphologyProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<VideoMorphologyProp> (this, _deep);
 }
@@ -107,7 +83,7 @@ VideoMorphologyProp::load_int (const base_functs::xml::itn& _prop)
         {
           const off_buff_type _sindx = utils::dbuffs::video::consts::offs::str2eoffbuff (_name_param.as_string ());
           const off_buff_type _dindx = utils::dbuffs::video::consts::offs::str2eoffbuff (_val_param.as_string ());
-          BuffInfo            _add;
+          MorphBuffInfo       _add;
 
           _add.bindx_diff_ = _dindx;
 
@@ -117,13 +93,11 @@ VideoMorphologyProp::load_int (const base_functs::xml::itn& _prop)
           while (_op != _ops.end ())
             {
               _add.ops_.resize (_add.ops_.size () + 1);
-
               load_op (_op, _add.ops_.back ());
-
               ++_op;
             }
 
-          diffs_.push_back (std::pair<off_buff_type, BuffInfo> (_sindx, _add));
+          diffs_.push_back (std::pair<off_buff_type, MorphBuffInfo> (_sindx, _add));
         }
 
       ++_param;

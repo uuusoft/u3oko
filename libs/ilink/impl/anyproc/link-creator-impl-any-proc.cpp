@@ -160,7 +160,7 @@ LinkCreatorImplAnyProc::get_listen (const ::libs::link::CreateInfo* _info)
 }
 
 #if 0
-  ::libs::link::ILink::ptr LinkCreatorImplAnyProc::get( const ETypeActivity&  _active, const TypeLinkModules& _type )
+  ::libs::link::ILink::ptr LinkCreatorImplAnyProc::get( const ETypeActivity&  _active, const LinkModulesType& _type )
   {
     guard_type  _grd ( mtx_ );
 
@@ -177,7 +177,7 @@ LinkCreatorImplAnyProc::get_listen (const ::libs::link::CreateInfo* _info)
 #endif
 
 ::libs::link::ILink::ptr
-LinkCreatorImplAnyProc::get_connect (const TypeLinkModules& _type)
+LinkCreatorImplAnyProc::get_connect (const LinkModulesType& _type)
 {
   UASSERT_SIGNAL ("failed");
   return ::libs::link::ILink::ptr ();
@@ -198,7 +198,7 @@ LinkCreatorImplAnyProc::get_connect (const TypeLinkModules& _type)
 
 
 ::libs::link::ILink::ptr
-LinkCreatorImplAnyProc::get_listen (const TypeLinkModules& _type)
+LinkCreatorImplAnyProc::get_listen (const LinkModulesType& _type)
 {
   UASSERT_SIGNAL ("failed");
   return ::libs::link::ILink::ptr ();

@@ -17,12 +17,12 @@ using ::libs::events::ISeqEvent;
 using ::libs::link::CreateInfo;
 using ::libs::link::StateProcessEvent;
 using ::libs::helpers::hboost::NameRemover;
-using ::libs::link::details::TypeSyncCall;
-using ::libs::link::details::TypeRequestCall;
+using ::libs::link::details::SyncCallType;
+using ::libs::link::details::RequestCallType;
 using ::libs::link::mem::IBlockMem;
 using ::libs::link::mem::IHandlerMem;
-using ::libs::link::details::TypeLinkModules;
-using ::libs::link::TypeDestroyLink;
+using ::libs::link::details::LinkModulesType;
+using ::libs::link::DestroyLinkType;
 using ::boost::interprocess::managed_shared_memory;
 
 #if 1

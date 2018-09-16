@@ -10,8 +10,8 @@
 
 namespace libs { namespace ievents { namespace runtime {
 /**
-  \brief  Базовый класс всех событий системы с временной меткой.
-  */
+\brief  Базовый класс всех событий системы с временной меткой.
+*/
 class RuntimeEvent : public ievents::TimedEvent
 {
   friend class boost::serialization::access;
@@ -34,8 +34,8 @@ class RuntimeEvent : public ievents::TimedEvent
 
   virtual ~RuntimeEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/runtime/runtime-event";
     return _ret;
@@ -55,7 +55,7 @@ class RuntimeEvent : public ievents::TimedEvent
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
   //  ievents::TimedEvent overrides
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   //virtual void load_int( const base_functs::xml::itn& _node ) override;
 };
 

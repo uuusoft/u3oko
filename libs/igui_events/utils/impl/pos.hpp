@@ -10,8 +10,8 @@
 
 namespace libs { namespace igui_events { namespace utils { namespace impl {
 /**
-  \brief  Тривиальная реализация интерфейса IPos.
-  */
+\brief  Тривиальная реализация интерфейса IPos.
+*/
 class Pos : public IPos
 {
   public:
@@ -64,12 +64,9 @@ class Pos : public IPos
   {
     UASSERT (_x >= 0);
     UASSERT (_y >= 0);
-
     x_ = _x;
     y_ = _y;
-
     check ();
-
     return;
   }
 

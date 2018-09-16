@@ -10,8 +10,8 @@
 
 namespace libs { namespace igui_events { namespace utils {
 /**
-  \brief  Интерфейс для работы с размерами любых объектов в GUI.
-  */
+\brief  Интерфейс для работы с размерами любых объектов в GUI.
+*/
 class IRect
 {
   public:
@@ -20,13 +20,10 @@ class IRect
 
   virtual ~IRect ()
   {}
-
+  //  IRect interface
   virtual IPos::raw_ptr get_pos () = 0;
-
   virtual IPos::craw_ptr get_pos () const = 0;
-
   virtual ISize::raw_ptr get_size () = 0;
-
   virtual ISize::craw_ptr get_size () const = 0;
 };
 

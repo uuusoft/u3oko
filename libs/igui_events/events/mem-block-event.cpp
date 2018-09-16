@@ -21,7 +21,7 @@ MemBlockEvent::MemBlockEvent (const Acessor& _ph, const IBlockMem& _hmem, int _i
   hmem_ (_hmem),
   id_ (_id)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -70,7 +70,7 @@ MemBlockEvent::get_id () const
 
 
 ::libs::events::IEvent::ptr
-MemBlockEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+MemBlockEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<MemBlockEvent> (this, _deep);
 }

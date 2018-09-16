@@ -20,7 +20,6 @@ IOptimImpl::IOptimImpl ()
 {
   guard_type _grd (mtx_);
   construct ();
-  return;
 }
 
 

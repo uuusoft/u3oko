@@ -28,16 +28,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\events\base-events-event.hpp" />
+    <ClInclude Include="..\..\events\add-event2base.hpp" />
+    <ClInclude Include="..\..\events\get-events-from-base.hpp" />
     <ClInclude Include="..\..\events\wrapper-events-event.hpp" />
-    <ClInclude Include="..\..\events\IStopCmd.hpp" />
     <ClInclude Include="..\..\events\register_events_in_archives.hpp" />
     <ClInclude Include="..\..\includes.hpp" />
     <ClInclude Include="..\..\includes_int.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\events\add-event2base.cpp" />
     <ClCompile Include="..\..\events\base-events-event.cpp" />
+    <ClCompile Include="..\..\events\get-events-from-base.cpp" />
     <ClCompile Include="..\..\events\wrapper-events-event.cpp" />
-    <ClCompile Include="..\..\events\IStopCmd.cpp" />
     <ClCompile Include="..\..\events\register_events_in_archives.cpp" />
   </ItemGroup>
   <ItemGroup>

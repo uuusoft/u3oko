@@ -10,8 +10,8 @@
 
 namespace libs { namespace optim { namespace io {
 /**
-  \brief  Структура для запроса алгоритма из библиотеки по идентификатору.
-  */
+\brief  Структура для запроса алгоритма из библиотеки по идентификатору.
+*/
 struct qoptim
 {
   qoptim (const std::string& _id = "") :

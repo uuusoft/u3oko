@@ -10,8 +10,8 @@
 
 namespace libs { namespace optim { namespace mcalls {
 /**
-  \brief  Структура для группировки параметров распределенного вызова.
-  */
+\brief  Структура для группировки параметров распределенного вызова.
+*/
 struct InfoMFunct
 {
   explicit InfoMFunct (io::hioptim* _pfunct = nullptr)

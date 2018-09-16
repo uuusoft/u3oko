@@ -17,7 +17,7 @@
 #include "imem-buff.hpp"
 
 #include "video/consts/vals.hpp"
-#include "video/consts/offs/type-off-buff.hpp"
+#include "video/consts/offs/off-buff-type.hpp"
 #include "video/consts/offs/consts_offs.hpp"
 #include "video/consts/offs/is_valid.hpp"
 #include "video/consts/offs/str2eoffbuff.hpp"

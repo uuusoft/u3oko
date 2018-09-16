@@ -17,7 +17,7 @@ namespace libs { namespace igui_events { namespace events {
 
 UpdateDrawEvent::UpdateDrawEvent (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -33,7 +33,7 @@ UpdateDrawEvent::get_type () const
 
 
 ::libs::events::IEvent::ptr
-UpdateDrawEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+UpdateDrawEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<UpdateDrawEvent> (this, _deep);
 }

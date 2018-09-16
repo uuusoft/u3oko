@@ -17,7 +17,7 @@ namespace libs { namespace istorage_events { namespace events {
 
 WriteData::WriteData (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -56,7 +56,7 @@ WriteData::get_msg () const
 
 
 ::libs::events::IEvent::ptr
-WriteData::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+WriteData::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<WriteData> (this, _deep);
 }

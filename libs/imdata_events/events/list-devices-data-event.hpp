@@ -12,8 +12,8 @@
 
 namespace libs { namespace imdata_events { namespace events {
 /**
-  \brief  Событие содержит в себе список устройств захвата данных в системе.
-  */
+\brief  Событие содержит в себе список устройств захвата данных в системе.
+*/
 class ListDevicesDataEvent : public BaseDataEvent
 {
   friend class boost::serialization::access;
@@ -29,9 +29,9 @@ class ListDevicesDataEvent : public BaseDataEvent
 
   public:
   //  ext types
-  typedef std::string            device_type;
-  typedef std::list<device_type> devices_type;
-  typedef std::string            devices_group_type;
+  using device_type        = std::string;
+  using devices_type       = std::list<device_type>;
+  using devices_group_type = std::string;
   UUU_THIS_TYPE_HAS_POINTERS_TO_SELF (ListDevicesDataEvent);
   UUU_ADD_MAKE_SHARED_FUNCT2THIS_TYPE (ListDevicesDataEvent);
   UUU_DISABLE_ACOPY_TYPE (ListDevicesDataEvent);
@@ -40,8 +40,8 @@ class ListDevicesDataEvent : public BaseDataEvent
 
   virtual ~ListDevicesDataEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/imdata_events/events/list-devices-data-event";
     return _ret;
@@ -57,6 +57,7 @@ class ListDevicesDataEvent : public BaseDataEvent
 
 
   private:
+  // int types
   UUU_THIS_TYPE_HAS_SUPER_CLASS (BaseDataEvent);
 
   devices_group_type group_;        //< Идентификатор группы устройств. Системно зависимое значение. Для примера значений: directshow, direct etc.
@@ -68,7 +69,7 @@ class ListDevicesDataEvent : public BaseDataEvent
   void serialize (Archive& ar, const unsigned int /* file_version */);
 
   virtual void                        load_int (const base_functs::xml::itn& _prop) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 };
 

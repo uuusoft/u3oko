@@ -12,9 +12,9 @@
 
 namespace libs { namespace ilink { namespace appl {
 /**
-  \brief  Структура для группировки стандартных свойств приложения. 
-          Хранит именно указатели, чтобы использовать непосредственно их во время работы с другими модулями, через стандартный интерфейс.
-  */
+\brief  Структура для группировки стандартных свойств любого приложения. 
+        Хранит именно указатели, чтобы использовать непосредственно их во время работы с другими модулями, через стандартный интерфейс.
+*/
 struct EventPropsForApplication
 {
   EventPropsForApplication ()
@@ -38,11 +38,6 @@ struct EventPropsForApplication
   IEvent::ptr info_cpu_;            //< Свойства аппартаного обеспечения.
   IEvent::ptr module_log_;          //< Свойства модуля логирования.
   IEvent::ptr storage_module_;      //< Свойства подсистемы хранения данных.
-
-  //ApplicationProp::ptr            main_appl_;           //< Обшие свойства системы.
-  //InfoCPUEvent::ptr               info_cpu_;            //< Свойства аппартаного обеспечения.
-  //PropertyLogModuleEvent::ptr     module_log_;          //< Свойства модуля логирования.
-  //PropertyStorageModuleEvent::ptr storage_module_;      //< Свойства подсистемы хранения данных.
 };
 
 }}}      // namespace libs::ilink::appl

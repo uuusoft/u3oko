@@ -10,8 +10,8 @@
 
 namespace libs { namespace istorage_events {
 /**
-  \brief  ѕеречисление различных действий над потоком данных.
-  */
+\brief  ѕеречисление различных действий над потоком данных.
+*/
 enum struct TypeUpdateStream
 {
   open               = 0,      //< ќткрыть новый.
@@ -19,7 +19,9 @@ enum struct TypeUpdateStream
   check_and_get_info = 2,      //< ѕроверить на существование и вернуть параметры потока, если он существует.
   change             = 3       //< »зменить параметры существующего.
 };
-
+/**
+\brief  
+*/
 inline std::string
 to_str (const TypeUpdateStream& _val)
 {

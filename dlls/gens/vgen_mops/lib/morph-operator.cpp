@@ -42,24 +42,24 @@ MorphOperator::init ()
 
 void
 MorphOperator::applay_operation2buff (
-  const ParamsOperation& _op,
-  ::libs::buffs::Buffs*  _pbuff,
-  IVideoBuff*            _pdst)
+  const MorphOperationParams& _op,
+  ::libs::buffs::Buffs*       _pbuff,
+  IVideoBuff*                 _pdst)
 {
   pthreads_ = UUU_PROP_CAST (::libs::iproperties::vers::system::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ())->get_count_threads_lockfree ();
 
   switch (_op.type_)
     {
-    case ::libs::ievents::props::videos::generic::morph::TypeOperation::empty:
+    case MorphOperationType::empty:
       break;
-    case ::libs::ievents::props::videos::generic::morph::TypeOperation::dilation:
+    case MorphOperationType::dilation:
       dilation_buff (_op, _pbuff, _pdst);
       break;
-    case ::libs::ievents::props::videos::generic::morph::TypeOperation::erosion:
+    case MorphOperationType::erosion:
       erosion_buff (_op, _pbuff, _pdst);
       break;
     default:
-      UASSERT_SIGNAL ("failed");
+      XULOG_ERROR("unknown type MorphOperationType, " << UUU_ICAST_INT(_op.type_));
       break;
     }
   return;

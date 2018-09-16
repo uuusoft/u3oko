@@ -38,13 +38,14 @@ using ::libs::istorage_events::events::ReadData;
 using ::libs::istorage_events::events::WriteData;
 using ::libs::istorage_events::events::UpdateStream;
 using ::libs::ilink::LinkCreatorProxy;
-using ::libs::link::details::TypeRunCode;
+using ::libs::link::details::RunCodeType;
 using ::libs::link::ILink;
 using ::libs::helpers::files::NodeEnumFiles;
 using ::utils::dbuffs::video::IVideoBuff;
 using ::utils::dbuffs::IMemBuff;
-using events_list_type = std::list<::libs::events::IEvent::ptr>;
 using ::libs::ievents::props::modules::storage::PropertyStorageModuleEvent;
 using ::libs::ievents::props::modules::storage::PathInfo;
+
+using events_list_type = std::list<::libs::events::IEvent::ptr>;
 
 }}}      // namespace modules::uuu_storage::appl

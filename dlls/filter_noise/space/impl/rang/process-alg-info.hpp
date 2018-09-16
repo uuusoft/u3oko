@@ -12,8 +12,8 @@
 
 namespace dlls { namespace filter_noise { namespace space { namespace impl { namespace rang {
 /**
-  \brief  Тип для группировки параметров вызова функции фильтрации.
-  */
+\brief  Тип для группировки параметров вызова функции фильтрации.
+*/
 struct ProcessAlgInfo
 {
   ProcessAlgInfo () :

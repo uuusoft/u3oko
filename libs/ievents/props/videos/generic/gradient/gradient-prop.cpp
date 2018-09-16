@@ -17,7 +17,7 @@ namespace libs { namespace ievents { namespace props { namespace videos { namesp
 
 GradientProp::GradientProp (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -26,7 +26,7 @@ GradientProp::~GradientProp ()
 
 
 ::libs::events::IEvent::ptr
-GradientProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+GradientProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<GradientProp> (this, _deep);
 }

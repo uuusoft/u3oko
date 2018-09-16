@@ -36,8 +36,8 @@ class VideoTimeNoiseRemoverProp : public ievents::Event
   virtual ~VideoTimeNoiseRemoverProp ();
 
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/props/videos/noises/time/video-time-noise-remover-prop";
     return _ret;
@@ -58,7 +58,7 @@ class VideoTimeNoiseRemoverProp : public ievents::Event
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
 
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        load_int (const base_functs::xml::itn& _node) override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 };

@@ -10,8 +10,8 @@
 
 namespace dlls { namespace sources { namespace gen_lib {
 /**
-  \brief  Интерфейс, который должна поддерживать любая реализация захвата данных из устройства.
-  */
+\brief  Интерфейс, который должна поддерживать любая реализация захвата данных из устройства.
+*/
 class ISourceImpl
 {
   public:
@@ -47,7 +47,7 @@ class ISourceImpl
 
 
   private:
-  // ISourceImpl
+  // ISourceImpl interface
   virtual void init_int ()                                                                    = 0;
   virtual void start_int ()                                                                   = 0;
   virtual void stop_int ()                                                                    = 0;

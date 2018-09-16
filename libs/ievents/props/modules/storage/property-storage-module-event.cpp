@@ -18,27 +18,13 @@ namespace libs { namespace ievents { namespace props { namespace modules { names
 PropertyStorageModuleEvent::PropertyStorageModuleEvent (const Acessor& _ph) :
   check_ (CheckerStorageType::start_stop)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
 PropertyStorageModuleEvent::~PropertyStorageModuleEvent ()
 {}
 
-#if 0
-const std::string&
-PropertyStorageModuleEvent::get_impl_storage_name () const
-{
-  return impl_storage_name_;
-}
-
-
-const std::string&
-PropertyStorageModuleEvent::get_impl_indexer_name () const
-{
-  return impl_indexer_name_;
-}
-#endif
 
 const PropertyStorageModuleEvent::paths_type&
 PropertyStorageModuleEvent::get_paths () const
@@ -55,7 +41,7 @@ PropertyStorageModuleEvent::get_check () const
 
 
 ::libs::events::IEvent::ptr
-PropertyStorageModuleEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+PropertyStorageModuleEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<PropertyStorageModuleEvent> (this, _deep);
 }

@@ -10,8 +10,8 @@
 
 namespace libs { namespace iproperties { namespace appl_paths {
 /**
-  \brief  Реализация функционала "пути приложения". Полное описание функций в суперклассе.
-  */
+\brief  Реализация функционала "пути приложения". Полное описание функций в суперклассе.
+*/
 class AppPaths : public IAppPaths
 {
   public:

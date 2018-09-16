@@ -12,8 +12,8 @@
 
 namespace dlls { namespace doptim { namespace impl { namespace algs {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 class CScaleFixedDown2x2Alg : public IOptimAlg
 {
   public:

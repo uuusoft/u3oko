@@ -10,8 +10,6 @@
 
 namespace utils { namespace dbuffs { namespace video { namespace consts { namespace offs {
 
-using off_buff_type = std::string;      //< тип для идентификатора типа буфера.
-
 const off_buff_type empty   = "";          //< Идентификатор недействительного буфера.
 const off_buff_type invalid = "???";       //< Идентификатор недействительного буфера.
 const off_buff_type any     = "***";       //< Идентификатор произвольного буфера.

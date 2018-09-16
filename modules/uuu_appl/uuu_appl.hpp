@@ -5,7 +5,7 @@
 \date       20.05.2017
 \copyright  www.uuusoft.com
 \project    uuu_appl
-\brief      
+\brief      empty brief
 */
 
 namespace modules { namespace uuu_appl {

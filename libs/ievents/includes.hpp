@@ -12,9 +12,14 @@ file        includes.hpp
 #include "timed-event.hpp"
 
 #include "props/terminals/end-point-prop.hpp"
+
+#include "props/mix_mul/out-channel-info.hpp"
 #include "props/mix_mul/mix-mul-prop.hpp"
+
 #include "props/application/application-prop.hpp"
 #include "props/hardware/info-cpu-event.hpp"
+
+#include "props/base_id/buff2module-info.hpp"
 #include "props/base_id/base-id-prop.hpp"
 
 #include "props/videos/gens/diff/params-video-diff-prop.hpp"
@@ -29,13 +34,13 @@ file        includes.hpp
 #include "props/videos/noises/freq/freq-video-noise-remover-prop.hpp"
 
 #include "props/videos/noises/space/video-space-noise-remover-prop.hpp"
-#include "props/videos/noises/space/ext/COldSpaceNoiseRemoverProp.hpp"
+//#include "props/videos/noises/space/ext/COldSpaceNoiseRemoverProp.hpp"
 #include "props/videos/noises/space/ext/median-space-filter-prop.hpp"
 
 #include "props/videos/generic/convolution/buff-video-convolution-prop.hpp"
 #include "props/videos/generic/convolution/video-convolution-prop.hpp"
 
-#include "props/videos/generic/motion_est/buff-event-info.hpp"
+#include "props/videos/generic/motion_est/events-buff-info.hpp"
 #include "props/videos/generic/motion_est/video-est-motion-prop.hpp"
 
 #include "props/videos/generic/vec2image/buff-event-info-vec2image1.hpp"
@@ -68,14 +73,23 @@ file        includes.hpp
 #include "props/videos/generic/codec/video-codec-flat-prop.hpp"
 #include "props/videos/generic/codec/video-codec-prop.hpp"
 
+#include "props/videos/generic/morph/morph-operation-type.hpp"
+#include "props/videos/generic/morph/morph-operation-params.hpp"
+#include "props/videos/generic/morph/morph-buff-info.hpp"
 #include "props/videos/generic/morph/video-morphology-prop.hpp"
 
+#include "props/modules/log/consts/vals.hpp"
 #include "props/modules/log/vals-log-module.hpp"
 #include "props/modules/log/property-log-module-event.hpp"
+
 #include "props/modules/storage/using-path-type.hpp"
 #include "props/modules/storage/checker-storage-type.hpp"
 #include "props/modules/storage/path-info.hpp"
 #include "props/modules/storage/property-storage-module-event.hpp"
+
+#include "props/modules/events/consts/vals.hpp"
+#include "props/modules/events/vals-events-module.hpp"
+#include "props/modules/events/property-events-module-event.hpp"
 
 #include "runtime/runtime-event.hpp"
 #include "runtime/error/base-error-event.hpp"

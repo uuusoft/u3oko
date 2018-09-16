@@ -10,8 +10,8 @@
 
 namespace libs { namespace link {
 /**
-  \brief  Структура для группировки информации для создания реализации "связь" между модулями.
-  */
+\brief  Структура для группировки информации для создания реализации "связь" между модулями.
+*/
 struct CreateInfo
 {
   //  ext types
@@ -19,24 +19,24 @@ struct CreateInfo
   /// Конструктор по умолчанию для контейнеров и композиции в другом типе.
   CreateInfo ();
   /**
-    \brief      Рабочий конструктор.
-    \param[in]  _run_as                 тип компоновки кода (в отдельном процессе, в текущем процесса etc).
-    \param[in]  _name_proc              ???
-    \param[in]  _name_lib               имя модуля с кодом.
-    \param[in]  _company_name           наименование компании???
-    \param[in]  _appl_name              наименование приложения.
-    \param[in]  _subsys_name            наименования модуля.
-    \param[in]  _type                   тип связи по конечным модулям.
-    \param[in]  _size_shared_mem_bytes  размер буфера данных связи.
-    */
+  \brief      Рабочий конструктор.
+  \param[in]  _run_as                 тип компоновки кода (в отдельном процессе, в текущем процесса etc).
+  \param[in]  _name_proc              ???
+  \param[in]  _name_lib               имя модуля с кодом.
+  \param[in]  _company_name           наименование компании???
+  \param[in]  _appl_name              наименование приложения.
+  \param[in]  _subsys_name            наименования модуля.
+  \param[in]  _type                   тип связи по конечным модулям.
+  \param[in]  _size_shared_mem_bytes  размер буфера данных связи.
+  */
   CreateInfo (
-    const details::TypeRunCode&     _run_as,
+    const details::RunCodeType&     _run_as,
     const std::string&              _name_proc,
     const std::string&              _name_lib,
     const std::string&              _company_name,
     const std::string&              _appl_name,
     const std::string&              _subsys_name,
-    const details::TypeLinkModules& _type,
+    const details::LinkModulesType& _type,
     int                             _size_shared_mem_bytes);
 
   ~CreateInfo ();
@@ -51,14 +51,15 @@ struct CreateInfo
 
   bool operator== (const CreateInfo& _op) const;
 
-  details::TypeRunCode     run_as_;                     //< Тип требуемого запуска (dll/exe/etc).
+  details::RunCodeType     run_as_;                     //< Тип требуемого запуска (dll/exe/etc).
   std::vector<std::string> args_;                       //< Аргументы запуска.
-  details::TypeLinkModules pt2pt_;                      //< Тип канала. Определяет конечные точки канала (основной модуль/http/data/onvif/storage/gui/etc).
+  details::LinkModulesType pt2pt_;                      //< Тип канала. Определяет конечные точки канала (основной модуль/http/data/onvif/storage/gui/etc).
   int                      size_shared_mem_bytes_;      //< Макисмальный размер разделяемой памяти для канала.
   mutable ids2vals_type    id2val_;                     //< ???
 };
-
-
+/**
+\brief  ???
+*/
 inline std::string
 to_str (const CreateInfo& _val)
 {

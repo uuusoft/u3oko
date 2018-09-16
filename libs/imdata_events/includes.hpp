@@ -7,17 +7,16 @@
 \project    uuu_imdata_events
 \brief      Внешний интерфейс включения модуля.
 */
-
 #include "events/base-data-event.hpp"
+#include "events/change-path-action.hpp"
 #include "events/change-paths-data-event.hpp"
-//#include "events/IStopCmd.hpp"
 #include "events/list-devices-data-event.hpp"
 #include "events/list-xml-files-data-event.hpp"
-#include "events/change-paths-data-event.hpp"
 
 #include "events/node-path-info.hpp"
 #include "events/base-nodes-data-event.hpp"
 #include "events/get-nodes-data-event.hpp"
+#include "events/change-node-path-action.hpp"
 #include "events/change-node-data-event.hpp"
 
 #include "events/register_events_in_archives.hpp"

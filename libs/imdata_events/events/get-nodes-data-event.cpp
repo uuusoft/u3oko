@@ -19,7 +19,7 @@ GetNodesDataEvent::GetNodesDataEvent (const Acessor& _ph, const id_path_type& _i
   BaseNodesDataEvent (BaseNodesDataEvent::Acessor (0), _id_path),
   nodes_ (_nodes)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -63,7 +63,7 @@ GetNodesDataEvent::check () const
 
 
 ::libs::events::IEvent::ptr
-GetNodesDataEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+GetNodesDataEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<GetNodesDataEvent> (this, _deep);
 }
@@ -73,21 +73,8 @@ void
 GetNodesDataEvent::load_int (const base_functs::xml::itn& _node)
 {
   super::load_int (_node);
-
   base_functs::xml::ritn _params = _node->children ("param");
   base_functs::xml::itn  _param  = _params.begin ();
-#if 0
-    while ( _param != _params.end () )
-    {
-      pugi::xml_attribute _name_param = _param->attribute ("name");
-      pugi::xml_attribute _val_param  = _param->attribute ("val");
-
-      if ( _name_param && _val_param)
-      {}
-
-      ++_param;
-    }
-#endif
   self_correct ();
   return;
 }

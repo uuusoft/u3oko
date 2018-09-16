@@ -74,9 +74,7 @@ InProcLoaderCode::unload_int (bool _force)
       if (thread_done_.load ())
         {
           std::this_thread::yield ();
-
           child_thread_.detach ();
-
           return true;
         }
     }
@@ -84,7 +82,6 @@ InProcLoaderCode::unload_int (bool _force)
     {
       thread_done_.store (true);
     }
-
   return thread_done_.load () ? true : false;
 }
 
@@ -92,7 +89,7 @@ InProcLoaderCode::unload_int (bool _force)
 void
 InProcLoaderCode::thread_funct_impl (std::size_t _indx_thread)
 {
-  XULOG_INFO ("InProcLoaderCode::thread_funct::beg, " << name_lib_);
+  XULOG_TRACE ("InProcLoaderCode::thread_funct::beg, " << name_lib_);
   boost::filesystem::path _fullpath (::libs::iproperties::appl_paths::get_current_folder ());
   const std::string       _sfullpath = _fullpath.string ();
   InitApplication         _info;
@@ -107,7 +104,7 @@ InProcLoaderCode::thread_funct_impl (std::size_t _indx_thread)
 
   auto _impl = thread_appl_->impl ();
 
-  XULOG_INFO ("InProcLoaderCode::thread_funct, " << _sfullpath << ", " << name_lib_ << ", " << to_str (_impl));
+  XULOG_TRACE("InProcLoaderCode::thread_funct, " << _sfullpath << ", " << name_lib_ << ", " << to_str (_impl));
   if (_impl)
     {
       _impl->ainit (_info);

@@ -17,7 +17,9 @@
 
 namespace dlls { namespace detectors { namespace detect_move {
 
-Filter::Filter ()
+Filter::Filter () :
+  count_detects_ (0),
+  time_first_detect_ (boost::posix_time::microsec_clock::universal_time ())
 {}
 
 
@@ -31,14 +33,30 @@ Filter::load_int (FilterInfo* _info, const base_functs::xml::itn& _node)
   init_pts (&_info->pts_);
   finfo_.load (_node);
 
-  diff_impl_.init ();
-  diff_impl_.set_props (&diff_props_);
+  {
+    InfoBuffVideoDiffProp _detect_prop;
 
-  mops_impl_.init ();
-  mops_impl_.set_props (&mops_props_);
+    _detect_prop.op_.enable_        = true;
+    _detect_prop.op_.bound_filling_ = finfo_.rprops_->bound_;
+    _detect_prop.op_.val_filling_   = 1;
+    _detect_prop.bindx_diff_        = finfo_.rprops_->buffs_.indx_dbuff_;
+
+    diff_props_.diffs_.push_back ({ finfo_.rprops_->buffs_.indx_sbuff_, _detect_prop });
+    diff_impl_.init ();
+    diff_impl_.set_props (&diff_props_);
+  }
+
+  {
+    auto                 _morph_op = libs::ievents::props::videos::generic::morph::str2type_op (finfo_.rprops_->id_morph_op_);
+    MorphOperationParams _morph_param (_morph_op, finfo_.rprops_->size_core_morph_op_, 0, 1);
+    MorphBuffInfo        _morph_info (finfo_.rprops_->buffs_.indx_dbuff_, _morph_param);
+
+    mops_props_.diffs_.push_back ({ finfo_.rprops_->buffs_.indx_dbuff_, _morph_info });
+    mops_impl_.init ();
+    mops_impl_.set_props (&mops_props_);
+  }
 
   auto _ioptim = ::libs::iproperties::helpers::cast_prop_demons ()->get_optim_lockfree ()->impl ();
-
   count_if_ge_ = _ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CCountIfGEAlg::val_key));
   return;
 }
@@ -68,15 +86,21 @@ Filter::init_pts (ConnectInfo* info)
 void
 Filter::transform_int (TransformInfo& _info)
 {
+  XULOG_TRACE ("Filter::transform_int, beg");
   prepare_transform (_info);
   if (::libs::events::UsingStateEvent::disabled == finfo_.props_->get_using_state ())
     {
       return;
     }
 
-  diff_impl_.itransform (*pbuff_);
-  mops_impl_.itransform (*pbuff_);
+  IVideoBuff::raw_ptr _psrc = (*pbuff_)[finfo_.rprops_->buffs_.indx_sbuff_];
+  if (!_psrc || _psrc->get_flag (::utils::dbuffs::TypeFlagsBuff::empty))
+    {
+      return;
+    }
+
   itransform (_info);
+  XULOG_TRACE ("Filter::transform_int, end");
   return;
 }
 

@@ -19,18 +19,29 @@ namespace dlls { namespace detectors { namespace detect_move {
 void
 Filter::itransform (TransformInfo& _info)
 {
-  IVideoBuff::raw_ptr _psrc = (*pbuff_)[finfo_.rprops_->buff_.indx_sbuff_];
+  IVideoBuff::raw_ptr _psrc = (*pbuff_)[finfo_.rprops_->buffs_.indx_sbuff_];
+  IVideoBuff::raw_ptr _pdst = (*pbuff_)[finfo_.rprops_->buffs_.indx_dbuff_];
+  UASSERT (_psrc);
+  UASSERT (_pdst);
 
-  if (!_psrc)
+  diff_impl_.itransform (*pbuff_);
+
+  for (int _indx_mop = 0; _indx_mop < finfo_.rprops_->counter_morph_op_; ++_indx_mop)
     {
+      mops_impl_.itransform (*pbuff_);
+    }
+
+  if (!_pdst || _pdst->get_flag (::utils::dbuffs::TypeFlagsBuff::empty))
+    {
+      XULOG_WARNING ("empty diff dst buffer");
       return;
     }
 
   MCallInfo        _cinfo;
   std::vector<int> _counters (pthreads_->get_count_threads (), 0);
-  const short      _bound = finfo_.rprops_->bound_;
+  const short      _bound = 1;      //finfo_.rprops_->bound_;
 
-  _cinfo.srcs_.push_back (::libs::optim::io::ProxyBuff (_psrc));
+  _cinfo.srcs_.push_back (::libs::optim::io::ProxyBuff (_pdst));
   _cinfo.params_.evals_.push_back (boost::any_cast<std::vector<int>*> (&_counters));
   _cinfo.params_.evals_.push_back (boost::any_cast<short> (_bound));
 
@@ -45,18 +56,44 @@ Filter::itransform (TransformInfo& _info)
       _sum_vals += _val;
     }
 
-  if (0 == _sum_vals)
+  IEvent::ptr _rmsg;
+
+  if (_sum_vals)
     {
-      return;
+      if (0 == count_detects_)
+        {
+          time_first_detect_ = boost::posix_time::microsec_clock::universal_time ();
+          XULOG_TRACE ("send detect event, sum_vals=" << _sum_vals);
+          auto        _dmsg = ::libs::iproperties::helpers::get_and_cast_event<::libs::ievents_events::events::AddEvent2Base> (_rmsg);
+          IEvent::ptr _irmsg;
+          auto        _idmsg = ::libs::iproperties::helpers::get_and_cast_event<::libs::ievents::runtime::video::DetectViolation> (_irmsg);
+          _dmsg->set_event (_irmsg);
+          _idmsg->set_state (::libs::ievents::runtime::video::StateDetectViolation::start);
+        }
+      ++count_detects_;
+    }
+  else
+    {
+      if (count_detects_)
+        {
+          const auto _now_time = boost::posix_time::microsec_clock::universal_time ();
+          if (_now_time - time_first_detect_ >= boost::posix_time::seconds (finfo_.rprops_->time_after_last_move_))
+            {
+              count_detects_ = 0;
+
+              auto        _dmsg = ::libs::iproperties::helpers::get_and_cast_event<::libs::ievents_events::events::AddEvent2Base> (_rmsg);
+              IEvent::ptr _irmsg;
+              auto        _idmsg = ::libs::iproperties::helpers::get_and_cast_event<::libs::ievents::runtime::video::DetectViolation> (_irmsg);
+              _dmsg->set_event (_irmsg);
+              _idmsg->set_state (::libs::ievents::runtime::video::StateDetectViolation::stop);
+            }
+        }
     }
 
-  //DATA_LOG( "send detect event" );
-  IEvent::ptr _rmsg;
-  auto        _dmsg = ::libs::iproperties::helpers::get_and_cast_event<::libs::ievents_events::events::WrapperEventsEvent> (_rmsg);
-  IEvent::ptr _irmsg;
-  auto        _idmsg = ::libs::iproperties::helpers::get_and_cast_event<::libs::ievents::runtime::video::DetectViolation> (_irmsg);
-  _dmsg->set_msg (_irmsg);
-  _info.pframe_events_->push_back (_rmsg);
+  if (_rmsg)
+    {
+      _info.pframe_events_->push_back (_rmsg);
+    }
   return;
 }
 

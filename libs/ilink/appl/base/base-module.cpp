@@ -106,4 +106,11 @@ BaseModule::update_catch_functs_int ()
   return;
 }
 
+
+void BaseModule::force_stop_int ()
+{
+  stop_module_ = true;
+  return;
+}
+
 }}}}      // namespace libs::ilink::appl::base

@@ -20,7 +20,7 @@ MemResourceHttpEvent::MemResourceHttpEvent (const Acessor& _ph, const id_mem_typ
   number_ (_number),
   request_for_transmit_ (false)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -74,7 +74,7 @@ MemResourceHttpEvent::set_request (bool _request)
 
 
 ::libs::events::IEvent::ptr
-MemResourceHttpEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+MemResourceHttpEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<MemResourceHttpEvent> (this, _deep);
 }

@@ -10,8 +10,8 @@
 
 namespace utils { namespace mem_functs { namespace impl {
 /**
-  \brief  Реализация работы с блоком памяти.
-  */
+\brief  Реализация работы с блоком памяти.
+*/
 class BlockMem : public IBlockMem
 {
   public:

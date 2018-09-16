@@ -21,7 +21,7 @@ namespace generics {
 namespace sharper {
 #if 0
   template<class Archive>
-  void BuffEventInfo::serialize (Archive & ar, const unsigned int /* file_version */)
+  void EventBuffsInfo::serialize (Archive & ar, const unsigned int /* file_version */)
   {
     ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP( super );
     ar & BOOST_SERIALIZATION_NVP( koeff_ );
@@ -36,9 +36,9 @@ namespace sharper {
   }
 
 
-  ::libs::events::IEvent::ptr CVideoSharperProp::clone_int( const ::libs::events::TypeCloneEvent& _deep ) const
+  ::libs::events::IEvent::ptr CVideoSharperProp::clone_int( const ::libs::events::DeepEventCloneType& _deep ) const
   {
-    if( ::libs::events::TypeCloneEvent::empty == _deep )
+    if( ::libs::events::DeepEventCloneType::empty == _deep )
     {
       return std::m1ake_shared<CVideoSharperProp>();
     }
@@ -65,7 +65,7 @@ namespace sharper {
 
       if( _sindx && _dindx && _koeff )
       {
-        BuffEventInfo _add;
+        EventBuffsInfo _add;
 
         //_add.indx_sbuff_  = ::libs::helpers::utils::ret_check_bound<int>( _sindx.as_int(), 0, utils::dbuffs::video::consts::offs::count_buffs-1 );
         _add.indx_sbuff_  = utils::dbuffs::video::consts::offs::str2eoffbuff( _sindx.as_string() );
@@ -98,5 +98,5 @@ namespace sharper {
 }
 }}}}}      // namespace libs::ievents::props::videos::generics::sharper
 
-//BOOST_CLASS_EXPORT_IMPLEMENT( ::libs::ievents::props::videos::generics::sharper::BuffEventInfo );
+//BOOST_CLASS_EXPORT_IMPLEMENT( ::libs::ievents::props::videos::generics::sharper::EventBuffsInfo );
 //SERIALIZE_TYPE_TO_ARCHIVES( ::libs::ievents::props::videos::generics::sharper::CVideoSharperProp );

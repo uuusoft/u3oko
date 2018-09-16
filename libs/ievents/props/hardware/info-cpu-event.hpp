@@ -13,8 +13,8 @@ namespace libs { namespace ievents { namespace props { namespace hardware {
 using ::libs::helpers::sys::cpu::TypeExtCpu;
 using ::libs::helpers::sys::cpu::TextExtCpu;
 /**
-  \brief  События для хранения и передачи свойств, связанных с CPU. Тип используемого расширения, количество процессоров и т.п.
-  */
+\brief  События для хранения и передачи свойств, связанных с CPU. Тип используемого расширения, количество процессоров и т.п.
+*/
 class InfoCPUEvent : public ievents::Event
 {
   friend class boost::serialization::access;
@@ -37,8 +37,8 @@ class InfoCPUEvent : public ievents::Event
 
   virtual ~InfoCPUEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/props/hardware/info-cpu-event";
     return _ret;
@@ -55,7 +55,7 @@ class InfoCPUEvent : public ievents::Event
 
   protected:
   //  ievents::Event overrides
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        load_int (const base_functs::xml::itn& _node) override;
   virtual void                        sync_txt2val_int () override;
   virtual void                        sync_val2txt_int () override;

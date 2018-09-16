@@ -10,10 +10,10 @@
 
 namespace libs { namespace ievents { namespace props { namespace videos { namespace generics { namespace codec {
 //  syn
-using ::libs::events::buff::BuffEventInfo;
+using ::libs::events::buff::EventBuffsInfo;
 /**
-  \brief  Событие со свойствами кодеков в системе.
-  */
+\brief  Событие со свойствами кодеков в системе.
+*/
 class VideoCodecProp : public ievents::Event
 {
   friend class boost::serialization::access;
@@ -36,8 +36,8 @@ class VideoCodecProp : public ievents::Event
 
   virtual ~VideoCodecProp ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/props/videos/generic/codec/video-codec-prop";
     return _ret;
@@ -48,7 +48,7 @@ class VideoCodecProp : public ievents::Event
   void reset ();
 
   std::string           name_idll_;                    //< Имя файла с реализацией кодека.
-  BuffEventInfo         buffs_;                        //< Буфер источника/назначения. Опционален.
+  EventBuffsInfo        buffs_;                        //< Буфер источника/назначения. Опционален.
   int                   fps_coder_;                    //< Количество кадров (декодирумых/кодируемых) в секунду. Если значение <= 0 контроль частоты не производится.
   unsigned long long    dump_counter_frame_;           //< Количество кадров, через которое будет произведен сброс времени работы в лог. 0 - логирование отключено (по умолчанию).
   VideoCodecFlatProp    plane_;                        //< Свойства компрессии, которые будут вложены в каждый сжатый кадр системы.
@@ -67,7 +67,7 @@ class VideoCodecProp : public ievents::Event
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
   //  ievents::Event overrides
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        load_int (const base_functs::xml::itn& _node) override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 };

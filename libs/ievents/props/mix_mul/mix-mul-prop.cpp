@@ -17,7 +17,7 @@ namespace libs { namespace ievents { namespace props { namespace mix_mul {
 
 MixMulProp::MixMulProp (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -26,7 +26,7 @@ MixMulProp::~MixMulProp ()
 
 
 ::libs::events::IEvent::ptr
-MixMulProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+MixMulProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<MixMulProp> (this, _deep);
 }
@@ -72,7 +72,7 @@ MixMulProp::load_out (const base_functs::xml::itn& _node, OutChannelInfo* _prop)
 
   while (_param != _params.end ())
     {
-      ::libs::events::buff::BuffEventInfo _add;
+      ::libs::events::buff::EventBuffsInfo _add;
 
       _add.load (_param);
       _prop->srcs2dsts_.push_back (_add);

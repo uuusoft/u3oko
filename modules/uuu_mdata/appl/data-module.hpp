@@ -10,8 +10,8 @@
 
 namespace modules { namespace uuu_mdata { namespace appl {
 /**
-  \brief  Реализация "приложения" для модуля захвата и обработки данных.
-  */
+\brief  Реализация "приложения" для модуля захвата и обработки данных.
+*/
 class DataModule : public ::libs::ilink::appl::leaf::LeafModule
 {
   public:
@@ -28,14 +28,14 @@ class DataModule : public ::libs::ilink::appl::leaf::LeafModule
   using id_path_type  = std::string;
   using paths_type    = std::map<id_path_type, ptr_path_type>;
 
-  //  ::libs::link::appl::IApplication override
+  //  ::libs::link::appl::IApplication overrides
   virtual void init_int (const ::libs::link::appl::InitApplication& _info) override;
   virtual void init_links_int (const ::libs::link::appl::InitApplication& _info) override;
   virtual void init_proxys_int () override;
   virtual bool deinit_int () override;
   virtual void update_catch_functs_int () override;
 
-  //  LeafModule override
+  //  LeafModule overrides
   virtual recv_links_type get_recv_link () override;
   virtual bool            catch_event (IEvent::ptr _evnt) override;
   virtual bool            is_now_sleep_thread (bool _now_recv_evnt) override;

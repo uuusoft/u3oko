@@ -40,7 +40,7 @@ str2type (const std::string& _str)
 
 
 void
-BuffEventInfoVideoScaler::load_int (const base_functs::xml::itn& _node)
+EventBuffsInfoVideoScaler::load_int (const base_functs::xml::itn& _node)
 {
   if (pugi::xml_attribute _attr = _node->attribute ("type"))
     {
@@ -76,7 +76,7 @@ BuffEventInfoVideoScaler::load_int (const base_functs::xml::itn& _node)
 
 template <class Archive>
 void
-BuffEventInfoVideoScaler::serialize (Archive& ar, const unsigned int /* file_version */)
+EventBuffsInfoVideoScaler::serialize (Archive& ar, const unsigned int /* file_version */)
 {
   ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP (super);
   ar& BOOST_SERIALIZATION_NVP (type_);
@@ -88,5 +88,5 @@ BuffEventInfoVideoScaler::serialize (Archive& ar, const unsigned int /* file_ver
 
 }}}}}}      // namespace libs::ievents::props::videos::generics::scaler
 
-BOOST_CLASS_EXPORT_IMPLEMENT (::libs::ievents::props::videos::generics::scaler::BuffEventInfoVideoScaler);
-SERIALIZE_TYPE_TO_ARCHIVES (::libs::ievents::props::videos::generics::scaler::BuffEventInfoVideoScaler);
+BOOST_CLASS_EXPORT_IMPLEMENT (::libs::ievents::props::videos::generics::scaler::EventBuffsInfoVideoScaler);
+SERIALIZE_TYPE_TO_ARCHIVES (::libs::ievents::props::videos::generics::scaler::EventBuffsInfoVideoScaler);

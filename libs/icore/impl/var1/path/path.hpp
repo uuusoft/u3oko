@@ -10,8 +10,8 @@
 
 namespace libs { namespace icore { namespace impl { namespace var1 { namespace path {
 /**
-  \brief  Реализация граф обработки данных в локальном режиме.
-  */
+\brief  Реализация граф обработки данных в локальном режиме.
+*/
 class Path : public core::path::IPath
 {
   public:
@@ -36,7 +36,7 @@ class Path : public core::path::IPath
   using id2obj_type        = std::map<PathObjID, path_obj_type::ptr>;
   using events_type        = obj::dll::TransformInfo::events_type;
 
-  //  IPath impl
+  //  IPath overrides
   virtual void                      load_int (const std::string& xml_file) override;
   virtual const array_id_objs_type& get_objs_int () const override;
   virtual void                      send_event2obj_int (const PathObjID& _id_obj, events::IEvent::ptr& _evnt) override;
@@ -50,9 +50,9 @@ class Path : public core::path::IPath
 
   void deb_load_objs_impl ();
   /**
-    \brief  Функция обработки буферов /захват, передача по цепочки фильтров, возврат/.
-    \return true, если при ее вызове был обработан хотя бы один буфер, иначе false.
-    */
+  \brief  Функция обработки буферов /захват, передача по цепочки фильтров, возврат/.
+  \return true, если при ее вызове был обработан хотя бы один буфер, иначе false.
+  */
   bool process_impl ();
 
   void change_objs_state_impl (const obj::RunStateFilter& _state);
@@ -63,21 +63,21 @@ class Path : public core::path::IPath
     const unsigned int         _iindx,
     events_type*               _frame_events);
   /**
-    \brief      Функция обработки особо важных событий для графа.
-    \param[in]  _evnt событие
-    \param[in]  _funct  функция-решения, предоставленная клиентом.
-    \return     true, если обработка сообщения завершена.
-    */
+  \brief      Функция обработки особо важных событий для графа.
+  \param[in]  _evnt событие
+  \param[in]  _funct  функция-решения, предоставленная клиентом.
+  \return     true, если обработка сообщения завершена.
+  */
   bool recv_special_event_impl (const events::IEvent::ptr& _evnt);
   /**
-    \brief      Функция возращает по идентификатору объект графа.
-    \param[in]  _obj_id событие
-    \return     объект или empty.
-    */
+  \brief      Функция возращает по идентификатору объект графа.
+  \param[in]  _obj_id событие
+  \return     объект или empty.
+  */
   path_obj_type::weak_ptr get_obj_impl (const PathObjID& _obj_id);
   /**
-    \brief    Функция синхронизации идентификаторов объектов после загрузки из xml.
-    */
+  \brief    Функция синхронизации идентификаторов объектов после загрузки из xml.
+  */
   void refresh_id_objs_impl () const;
 
   obj::RunStateFilter           state_;                     //< Состояние графа с точки зрения запуска.

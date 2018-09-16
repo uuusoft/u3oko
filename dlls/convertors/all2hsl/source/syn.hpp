@@ -13,7 +13,7 @@
 namespace dlls { namespace convertors { namespace all2hsl {
 
 namespace svideo = ::utils::dbuffs::video;
-//  syn
+
 using ::libs::ievents::props::videos::generics::convert::VideoConvertProp;
 using ::libs::ievents::props::videos::generics::convert::TypeConvertAccuracy;
 using ::utils::dbuffs::video::consts::offs::off_buff_type;

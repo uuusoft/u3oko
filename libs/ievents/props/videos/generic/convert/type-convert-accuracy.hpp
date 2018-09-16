@@ -10,8 +10,8 @@
 
 namespace libs { namespace ievents { namespace props { namespace videos { namespace generics { namespace convert {
 /**
-  \brief  Перечисление различных режимов конвертирования с точки зрения точности.
-  */
+\brief  Перечисление различных режимов конвертирования с точки зрения точности.
+*/
 enum struct TypeConvertAccuracy
 {
   usual = 0,      //< По умолчанию.

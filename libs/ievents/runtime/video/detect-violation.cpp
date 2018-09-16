@@ -14,10 +14,10 @@
 
 namespace libs { namespace ievents { namespace runtime { namespace video {
 
-DetectViolation::DetectViolation (const Acessor& _ph, bool _start) :
-  start_ (_start)
+DetectViolation::DetectViolation (const Acessor& _ph, const StateDetectViolation& _state) :
+  state_ (_state)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -25,15 +25,23 @@ DetectViolation::~DetectViolation ()
 {}
 
 
-bool
-DetectViolation::is_start () const
+void
+DetectViolation::set_state (const StateDetectViolation& _state)
 {
-  return start_;
+  state_ = _state;
+  return;
+}
+
+
+StateDetectViolation
+DetectViolation::get_state () const
+{
+  return state_;
 }
 
 
 ::libs::events::IEvent::ptr
-DetectViolation::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+DetectViolation::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<DetectViolation> (this, _deep);
 }
@@ -44,7 +52,7 @@ DetectViolation::copy_int (const IEvent::craw_ptr _src)
 {
   CHECK_STATE_COPY_EVENT (DetectViolation);
   super::copy_int (_src);
-  start_ = _dsrc->start_;
+  state_ = _dsrc->state_;
   return;
 }
 
@@ -54,7 +62,7 @@ void
 DetectViolation::serialize (Archive& ar, const unsigned int /* file_version */)
 {
   ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP (super);
-  ar& BOOST_SERIALIZATION_NVP (start_);
+  ar& BOOST_SERIALIZATION_NVP (state_);
   return;
 }
 

@@ -12,8 +12,8 @@
 
 namespace dlls { namespace filter_noise { namespace space {
 /**
-  \brief  Интерфейс, который должны поддерживать все реализаций данного типа фильтрации (т.е., в пространственной области).
-  */
+\brief  Интерфейс, который должны поддерживать все реализаций данного типа фильтрации (т.е., в пространственной области).
+*/
 class IFilterImpl
 {
   public:
@@ -28,7 +28,6 @@ class IFilterImpl
 
   IFilterImpl& operator= (const IFilterImpl& _obj) = delete;
   IFilterImpl (const IFilterImpl& _obj)            = delete;
-
   //  IFilterImpl interface
   virtual void transform_int (InfoFilter& _props, ::libs::buffs::Buffs* _pbuff) = 0;
   virtual void load_int ()                                                      = 0;

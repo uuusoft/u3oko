@@ -51,9 +51,6 @@
     <ClInclude Include="..\..\video\consts\offs\is_valid.hpp">
       <Filter>video\consts\offs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\video\consts\offs\type-off-buff.hpp">
-      <Filter>video\consts\offs</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\allocator\ibuff-allocator.hpp">
       <Filter>allocator</Filter>
     </ClInclude>
@@ -79,6 +76,9 @@
     <ClInclude Include="..\..\type-mem-var.hpp" />
     <ClInclude Include="..\..\video\helpers\buff-filling-functs.hpp">
       <Filter>video\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\video\consts\offs\off-buff-type.hpp">
+      <Filter>video\consts\offs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

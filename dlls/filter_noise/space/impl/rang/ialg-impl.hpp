@@ -12,8 +12,8 @@
 
 namespace dlls { namespace filter_noise { namespace space { namespace impl { namespace rang {
 /**
-  \brief  Общий интерфейс для различных реализаций варианта ранговой фильтрации изображения в пространственной области.
-  */
+\brief  Общий интерфейс для различных реализаций варианта ранговой фильтрации изображения в пространственной области.
+*/
 class IAlgImpl
 {
   public:

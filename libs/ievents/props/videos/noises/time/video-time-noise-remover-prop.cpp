@@ -20,7 +20,7 @@ VideoTimeNoiseRemoverProp::VideoTimeNoiseRemoverProp (const Acessor& _ph) :
   dump_counter_frame_ (0),
   indx_diff_buff_ (utils::dbuffs::video::consts::offs::invalid)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -29,7 +29,7 @@ VideoTimeNoiseRemoverProp::~VideoTimeNoiseRemoverProp ()
 
 
 ::libs::events::IEvent::ptr
-VideoTimeNoiseRemoverProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+VideoTimeNoiseRemoverProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<VideoTimeNoiseRemoverProp> (this, _deep);
 }

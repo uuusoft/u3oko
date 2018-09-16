@@ -12,16 +12,16 @@
 
 namespace modules { namespace uuu_log { namespace appl { namespace thread {
 /**
-  \brief      Общий каркас для функции фиксации исключений в произвольном потоке системы.
-  \tparam     TExceptionLogger  тип для логирования в функции потока.
-  \param[in]  _logger           реализация логирования.
-  \param[in]  _text             текст сообщения об исключении.
-  */
+\brief      Общий каркас для функции фиксации исключений в произвольном потоке системы.
+\tparam     eimpl_type  тип для логирования в функции потока.
+\param[in]  _logger     реализация логирования.
+\param[in]  _text       текст сообщения об исключении.
+*/
 template <
-  typename TExceptionLogger>
+  typename eimpl_type>
 struct ExceptionLogger
 {
-  ExceptionLogger (TExceptionLogger _logger) :
+  ExceptionLogger (const eimpl_type _logger) :
     logger_ (_logger)
   {}
 
@@ -32,13 +32,13 @@ struct ExceptionLogger
       {
         return;
       }
-    EXCEPT_LOG (logger_, _text.c_str (), "uuu_exception_xxx");
+    EXCEPT_LOG (logger_, _text.c_str (), "u3exception_xxx");
     return;
   }
 
 
   private:
-  TExceptionLogger logger_;      //< Реализация логгирования.
+  eimpl_type logger_;      //< Реализация логгирования.
 };
 
 }}}}      // namespace modules::uuu_log::appl::thread

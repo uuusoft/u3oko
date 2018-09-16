@@ -12,21 +12,19 @@
 
 namespace utils { namespace mem_functs { namespace helpers {
 
-template <
-  typename TTOut>
-TTOut*
+template <typename out_type>
+out_type*
 get_as (IBlockMem::raw_ptr _obj)
 {
-  return UUU_ALIGNED_MEM_CAST<TTOut*> (_obj->get ());
+  return UUU_ALIGNED_MEM_CAST<out_type*> (_obj->get ());
 }
 
 
-template <
-  typename TTOut>
-const TTOut*
+template <typename out_type>
+const out_type*
 get_as (IBlockMem::craw_ptr _obj)
 {
-  return UUU_ALIGNED_MEM_CAST<const TTOut*> (_obj->get ());
+  return UUU_ALIGNED_MEM_CAST<const out_type*> (_obj->get ());
 }
 
 }}}      // namespace utils::mem_functs::helpers

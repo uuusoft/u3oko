@@ -49,7 +49,7 @@ MedianTimeFilterProp::MedianTimeFilterProp (const Acessor& _ph) :
   motion_detect_ (false),
   sort_type_ (TypeSortAlg::usual)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -58,7 +58,7 @@ MedianTimeFilterProp::~MedianTimeFilterProp ()
 
 
 ::libs::events::IEvent::ptr
-MedianTimeFilterProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+MedianTimeFilterProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<MedianTimeFilterProp> (this, _deep);
 }

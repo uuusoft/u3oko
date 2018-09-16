@@ -12,14 +12,14 @@
 
 namespace libs { namespace iproperties { namespace appl_paths {
 /**
-  \brief  Функция возвращает текущую директорию системы.
-  \return путь текущей директории.
-  */
+\brief  Функция возвращает текущую директорию системы.
+\return путь текущей директории.
+*/
 std::string get_current_folder ();
 /**
-  \brief  Функция возвращает текущую директорию системы с библиотеками расширения.
-  \return путь текущей директории c dll.
-  */
+\brief  Функция возвращает текущую директорию системы с библиотеками расширения.
+\return путь текущей директории c dll.
+*/
 std::string get_current_lib_folder ();
 
 }}}      // namespace libs::iproperties::appl_paths

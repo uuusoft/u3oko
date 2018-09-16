@@ -12,8 +12,8 @@
 
 namespace libs { namespace ihttp_events { namespace events {
 /**
-  \brief  Класс событие для обертки другого события с целью указания модуля-назначения в виде http сервера.
-  */
+\brief  Класс событие для обертки другого события с целью указания модуля-назначения в виде http сервера.
+*/
 class WrapperHttpEvent : public BaseHttpEvent
 {
   friend class boost::serialization::access;
@@ -36,8 +36,8 @@ class WrapperHttpEvent : public BaseHttpEvent
 
   virtual ~WrapperHttpEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ihttp_events/events/wrapper-http-event";
     return _ret;
@@ -59,9 +59,9 @@ class WrapperHttpEvent : public BaseHttpEvent
 
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
-
+  //  BaseHttpEvent overrides
   //virtual void load_int( const base_functs::xml::itn& _prop ) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   virtual void                        copy_int (const IEvent::craw_ptr _src) override;
 };
 

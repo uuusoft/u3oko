@@ -24,7 +24,7 @@ class Filter final : public ::libs::icore::impl::var1::obj::dll::IFilter,
   private:
   // int types
   UUU_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl<InfoFilter>);
-  // IFilter override
+  // IFilter overrides
   virtual void load_int (FilterInfo* info, const base_functs::xml::itn& _node) override;
   virtual void transform_int (TransformInfo& _info) override;
   virtual void call_int (CallInterfInfo& _info) override;
@@ -33,11 +33,13 @@ class Filter final : public ::libs::icore::impl::var1::obj::dll::IFilter,
 
   void itransform (TransformInfo& _info);
 
-  DiffImpl                   diff_impl_;        //< Реализация вычисления разности между двумя кадрами.
-  VideoDiffProp              diff_props_;       //< Свойства вычисления разности.
-  MopsImpl                   mops_impl_;        //< Реализация фильтрации (морфологической) разности.
-  VideoMorphologyProp        mops_props_;       //< Свойства фильтрации (морфологической) разности.
-  ::libs::optim::io::hioptim count_if_ge_;      //< Быстрая функция вычисления "если больше".
+  DiffImpl                   diff_impl_;              //< Реализация вычисления разности между двумя кадрами.
+  VideoDiffProp              diff_props_;             //< Свойства вычисления разности.
+  MopsImpl                   mops_impl_;              //< Реализация фильтрации (морфологической) разности.
+  VideoMorphologyProp        mops_props_;             //< Свойства фильтрации (морфологической) разности.
+  ::libs::optim::io::hioptim count_if_ge_;            //< Быстрая функция вычисления "если больше".
+  signed long long           count_detects_;          //< Счетчик событий фиксации движения в последовательности.
+  boost::posix_time::ptime   time_first_detect_;      //< Время первого события в последовательности.
 };
 
 }}}      // namespace dlls::detectors::detect_move

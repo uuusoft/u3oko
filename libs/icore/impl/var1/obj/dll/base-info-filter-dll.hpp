@@ -10,8 +10,8 @@
 
 namespace libs { namespace icore { namespace impl { namespace var1 { namespace obj { namespace dll {
 /**
-  \brief  Интерфейс для загружаемых из xml файла свойств фильтра графа обработки данных.
-  */
+\brief  Интерфейс для загружаемых из xml файла свойств фильтра графа обработки данных.
+*/
 struct BaseInfoFilter
 {
   public:

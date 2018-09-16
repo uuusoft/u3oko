@@ -12,7 +12,7 @@
 #include "consts/vals.hpp"
 
 #include "../io/includes.hpp"
-#include "../int_optim_typedefs.hpp"
+#include "../syn.hpp"
 
 #include "check_align_funct.hpp"
 #include "align-property.hpp"

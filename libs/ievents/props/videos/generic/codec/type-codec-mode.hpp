@@ -12,8 +12,8 @@
 
 namespace libs { namespace ievents { namespace props { namespace videos { namespace generics { namespace codec {
 /**
-  \brief  Тип для режимов кодека.
-  */
+\brief  Тип для режимов кодека.
+*/
 enum struct TypeCodecMode
 {
   coder   = 0,      //< Режим кодера.

@@ -19,8 +19,8 @@ using ::utils::dbuffs::video::consts::offs::off_buff_type;
 using ::utils::dbuffs::IBuff;
 using ::utils::dbuffs::video::IVideoBuff;
 /**
-  \brief  ��������� ���������� (������ ����� ����������) ������������� �����������.
-  */
+\brief  ��������� ���������� (������ ����� ����������) ������������� �����������.
+*/
 class IBaseId
 {
   public:

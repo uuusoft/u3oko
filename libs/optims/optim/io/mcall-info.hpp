@@ -10,40 +10,24 @@
 
 namespace libs { namespace optim { namespace io {
 /**
-  \brief  Структрура для группировки параметров, которые передаются функции при вызове в рабочем потоке.
-  */
+\brief  Структрура для группировки параметров, которые передаются функции при вызове в рабочем потоке.
+*/
 struct MCallInfo
 {
   //  ext types
-  typedef std::vector<ProxyBuff> sources_type;
-  typedef std::vector<ProxyBuff> dests_type;
+  using sources_type = std::vector<ProxyBuff>;
+  using dests_type   = std::vector<ProxyBuff>;
 
   MCallInfo () :
     indx_thread_ (0),
     count_threads_ (0),
-    //psrc_heights_(0),
     full_height_src_ (0),
     full_height_dst_ (0)
   {
     srcs_.reserve (4);
     dsts_.reserve (4);
   }
-#if 0
-  explicit MCallInfo (const ProxyBuff& _pdst) :
-    indx_thread_ (0),
-    count_threads_ (0),
-    full_height_src_ (0),
-    full_height_dst_ (0)
-  {
-    srcs_.reserve (4);
-    dsts_.reserve (4);
 
-    if (_pdst.self_test ())
-      {
-        dsts_.push_back (_pdst);
-      }
-  }
-#endif
   ~MCallInfo ()
   {}
 
@@ -56,8 +40,8 @@ struct MCallInfo
   MFunctParams params_;               //< Дополнительные параметры к потоку.
 };
 /**
-  \brief  Тип функции для вызова алгоритма в рабочем потоке.
-  */
+\brief  Тип функции для вызова алгоритма в рабочем потоке.
+*/
 typedef void (*funct_mcall_type) (MCallInfo& _info);
 
 }}}      // namespace libs::optim::io

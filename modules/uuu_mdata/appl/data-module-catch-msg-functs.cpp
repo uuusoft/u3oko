@@ -35,7 +35,7 @@ DataModule::process_change_paths_data (ChangePathsDataEvent::raw_ptr _props)
 
   switch (_action)
     {
-    case ::libs::imdata_events::events::TypeChangePathAction::get:
+    case ::libs::imdata_events::events::ChangePathAction::get:
       {
         ChangePathsDataEvent::id_paths_list_type _paths;
         for (const auto& _val : idatas_)
@@ -45,7 +45,7 @@ DataModule::process_change_paths_data (ChangePathsDataEvent::raw_ptr _props)
         _props->set_paths (_paths);
         break;
       }
-    case ::libs::imdata_events::events::TypeChangePathAction::add:
+    case ::libs::imdata_events::events::ChangePathAction::add:
       {
         for (const auto& _path : _props->get_paths ())
           {
@@ -55,7 +55,7 @@ DataModule::process_change_paths_data (ChangePathsDataEvent::raw_ptr _props)
           }
         break;
       }
-    case ::libs::imdata_events::events::TypeChangePathAction::remove:
+    case ::libs::imdata_events::events::ChangePathAction::remove:
       {
         for (const auto& _path : _props->get_paths ())
           {
@@ -64,7 +64,7 @@ DataModule::process_change_paths_data (ChangePathsDataEvent::raw_ptr _props)
         break;
       }
     default:
-      XULOG_ERROR ("unknown type TypeChangePathAction " << to_str (UUU_ICAST_INT (_action)));
+      XULOG_ERROR ("unknown type ChangePathAction " << to_str (UUU_ICAST_INT (_action)));
       break;
     }
   return;

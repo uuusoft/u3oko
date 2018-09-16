@@ -10,8 +10,8 @@
 
 namespace libs { namespace icore { namespace impl { namespace var1 { namespace obj { namespace dll {
 /**
-  \brief  Структура, которая содержит параметры вызова для фильтра обработки данных.
-  */
+\brief  Структура, которая содержит параметры вызова для фильтра обработки данных.
+*/
 struct TransformInfo
 {
   //  ext types

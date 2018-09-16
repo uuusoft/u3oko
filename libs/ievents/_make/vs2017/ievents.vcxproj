@@ -29,6 +29,12 @@
   <ItemGroup>
     <ClInclude Include="..\..\event.hpp" />
     <ClInclude Include="..\..\props\base_id\base-id-prop.hpp" />
+    <ClInclude Include="..\..\props\base_id\buff2module-info.hpp" />
+    <ClInclude Include="..\..\props\mix_mul\out-channel-info.hpp" />
+    <ClInclude Include="..\..\props\modules\events\consts\vals.hpp" />
+    <ClInclude Include="..\..\props\modules\events\property-events-module-event.hpp" />
+    <ClInclude Include="..\..\props\modules\events\vals-events-module.hpp" />
+    <ClInclude Include="..\..\props\modules\log\consts\vals.hpp" />
     <ClInclude Include="..\..\props\modules\log\property-log-module-event.hpp" />
     <ClInclude Include="..\..\props\modules\log\vals-log-module.hpp" />
     <ClInclude Include="..\..\props\modules\storage\checker-storage-type.hpp" />
@@ -38,6 +44,9 @@
     <ClInclude Include="..\..\props\videos\generic\codec\override-codec-data-type.hpp" />
     <ClInclude Include="..\..\props\videos\generic\convert\type-convert-accuracy.hpp" />
     <ClInclude Include="..\..\props\videos\generic\convert\type-src2dst.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\morph\morph-buff-info.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\morph\morph-operation-params.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\morph\morph-operation-type.hpp" />
     <ClInclude Include="..\..\runtime\interf\base-interf-event.hpp" />
     <ClInclude Include="..\..\runtime\interf\ibase-id.hpp" />
     <ClInclude Include="..\..\runtime\interf\icapture-image.hpp" />
@@ -72,7 +81,7 @@
     <ClInclude Include="..\..\props\videos\generic\matrix\CVideoMatrixProp.hpp" />
     <ClInclude Include="..\..\props\videos\generic\morph\video-morphology-prop.hpp" />
     <ClInclude Include="..\..\props\videos\generic\motion_est\video-est-motion-prop.hpp" />
-    <ClInclude Include="..\..\props\videos\generic\motion_est\buff-event-info.hpp" />
+    <ClInclude Include="..\..\props\videos\generic\motion_est\events-buff-info.hpp" />
     <ClInclude Include="..\..\props\videos\generic\scaler\video-scaler-prop.hpp" />
     <ClInclude Include="..\..\props\videos\generic\scaler\buff-event-info-video-scaler.hpp" />
     <ClInclude Include="..\..\props\videos\generic\sharper\CVideoSharperProp.hpp" />
@@ -93,7 +102,6 @@
     <ClInclude Include="..\..\register_events_in_archives.hpp" />
     <ClInclude Include="..\..\runtime\runtime-event.hpp" />
     <ClInclude Include="..\..\runtime\error\base-error-event.hpp" />
-    <ClInclude Include="..\..\runtime\links\CLinksProp.hpp" />
     <ClInclude Include="..\..\runtime\mem\buff-event.hpp" />
     <ClInclude Include="..\..\runtime\mem\buffs-event.hpp" />
     <ClInclude Include="..\..\runtime\mem\zip-data-event.hpp" />
@@ -106,6 +114,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\event.cpp" />
     <ClCompile Include="..\..\props\base_id\base-id-prop.cpp" />
+    <ClCompile Include="..\..\props\modules\events\property-events-module-event.cpp" />
     <ClCompile Include="..\..\props\modules\log\property-log-module-event.cpp" />
     <ClCompile Include="..\..\props\modules\storage\property-storage-module-event.cpp" />
     <ClCompile Include="..\..\runtime\interf\base-interf-event.cpp" />
@@ -133,7 +142,7 @@
     <ClCompile Include="..\..\props\videos\generic\matrix\CVideoMatrixProp.cpp" />
     <ClCompile Include="..\..\props\videos\generic\morph\video-morphology-prop.cpp" />
     <ClCompile Include="..\..\props\videos\generic\motion_est\video-est-motion-prop.cpp" />
-    <ClCompile Include="..\..\props\videos\generic\motion_est\buff-event-info.cpp" />
+    <ClCompile Include="..\..\props\videos\generic\motion_est\events-buff-info.cpp" />
     <ClCompile Include="..\..\props\videos\generic\scaler\video-scaler-prop.cpp" />
     <ClCompile Include="..\..\props\videos\generic\scaler\buff-event-info-video-scaler.cpp" />
     <ClCompile Include="..\..\props\videos\generic\sharper\CVideoSharperProp.cpp" />
@@ -154,7 +163,6 @@
     <ClCompile Include="..\..\register_events_in_archives.cpp" />
     <ClCompile Include="..\..\runtime\runtime-event.cpp" />
     <ClCompile Include="..\..\runtime\error\base-error-event.cpp" />
-    <ClCompile Include="..\..\runtime\links\CLinksProp.cpp" />
     <ClCompile Include="..\..\runtime\mem\buff-event.cpp" />
     <ClCompile Include="..\..\runtime\mem\buffs-event.cpp" />
     <ClCompile Include="..\..\runtime\mem\zip-data-event.cpp" />

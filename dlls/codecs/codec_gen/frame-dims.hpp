@@ -10,8 +10,8 @@
 
 namespace dlls { namespace codecs { namespace codec_gen {
 /**
-  \brief
-  */
+\brief  ???
+*/
 struct FrameDims
 {
   FrameDims ()

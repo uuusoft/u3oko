@@ -12,9 +12,9 @@
 
 namespace libs { namespace events { namespace io {
 /**
-  \brief  Тип для доступа к реализации интерфейса для хранения событий системы.
-          Реализован через шаблон проектирования "одиночка в строго смысле слова в пределах процесса".
-  */
+\brief  Тип для доступа к реализации интерфейса для хранения событий системы.
+        Реализован через шаблон проектирования "одиночка в строго смысле слова в пределах процесса".
+*/
 class IEventsProxy
 {
   public:
@@ -57,7 +57,7 @@ class IEventsProxy
   ~IEventsProxy ()
   {}
 
-  boost_create_funct_type creator_;      //< ???
+  boost_create_funct_type creator_;      //< Функция создания релизации через dll.
 };
 
 }}}      // namespace libs::events::io

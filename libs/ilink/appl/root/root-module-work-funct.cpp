@@ -53,9 +53,9 @@ RootModule::work_int ()
               //  Сборка стека функций для обработки данного сообщения.
               while (_msg)
                 {
-                  std::pair<IEvent::raw_ptr, IEvent::text_id_type> _cmsgs[] = {
+                  std::pair<IEvent::raw_ptr, IEvent::hid_type> _cmsgs[] = {
                     { _msg.get (), _msg->get_mid () },
-                    { ::libs::iproperties::helpers::cast_event<ievents::runtime::RuntimeEvent> (_msg), ievents::runtime::RuntimeEvent::gen_get_type_text_id () }
+                    { ::libs::iproperties::helpers::cast_event<ievents::runtime::RuntimeEvent> (_msg), ievents::runtime::RuntimeEvent::gen_get_mid () }
                   };
 
                   auto _find = catch_functs_.end ();

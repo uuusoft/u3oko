@@ -17,12 +17,12 @@ namespace libs { namespace imdata_events { namespace events {
 
 ChangePathsDataEvent::ChangePathsDataEvent (
   const Acessor&              _ph,
-  const TypeChangePathAction& _action,
+  const ChangePathAction& _action,
   const id_paths_list_type&   _paths) :
   action_ (_action),
   paths_ (_paths)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -47,7 +47,7 @@ ChangePathsDataEvent::set_paths (ChangePathsDataEvent::id_paths_list_type& _path
 }
 
 
-TypeChangePathAction
+ChangePathAction
 ChangePathsDataEvent::get_action () const
 {
   return action_;
@@ -55,7 +55,7 @@ ChangePathsDataEvent::get_action () const
 
 
 void
-ChangePathsDataEvent::set_action (const TypeChangePathAction& _action)
+ChangePathsDataEvent::set_action (const ChangePathAction& _action)
 {
   action_ = _action;
   return;
@@ -71,7 +71,7 @@ ChangePathsDataEvent::check () const
 
 
 ::libs::events::IEvent::ptr
-ChangePathsDataEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+ChangePathsDataEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<ChangePathsDataEvent> (this, _deep);
 }
@@ -81,21 +81,6 @@ void
 ChangePathsDataEvent::load_int (const base_functs::xml::itn& _node)
 {
   super::load_int (_node);
-#if 0
-    base_functs::xml::ritn  _params = _node->children ("param");
-    base_functs::xml::itn _param  = _params.begin ();
-
-    while ( _param != _params.end () )
-    {
-      pugi::xml_attribute _name_param = _param->attribute ("name");
-      pugi::xml_attribute _val_param  = _param->attribute ("val");
-
-      if ( _name_param && _val_param)
-      {}
-
-      ++_param;
-    }
-#endif
   self_correct ();
   return;
 }

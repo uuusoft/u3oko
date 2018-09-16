@@ -12,10 +12,10 @@
 
 namespace libs { namespace events { namespace helpers {
 /**
-  \brief      ��������������� ������� ��� "��������" �������� ��������� �� ���������-������.
-  \param[in]  _msg  ��������� �� ��������.
-  \return     ������� ���������.
-  */
+\brief      ��������������� ������� ��� "��������" �������� ��������� �� ���������-������.
+\param[in]  _msg  ��������� �� ��������.
+\return     ������� ���������.
+*/
 inline std::string
 to_str (IEvent::craw_ptr _event)
 {

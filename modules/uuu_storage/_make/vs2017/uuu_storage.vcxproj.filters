@@ -31,6 +31,12 @@
     <Filter Include="appl\impl\storage\test">
       <UniqueIdentifier>{322d092b-5faa-4add-800e-4ad79b46c077}</UniqueIdentifier>
     </Filter>
+    <Filter Include="appl\impl\storage\test\consts">
+      <UniqueIdentifier>{fc6fcbc0-bcec-4fc8-80e8-5e393f8d1385}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="appl\impl\storage\test\helpers">
+      <UniqueIdentifier>{42107803-7182-4ef8-80cf-bbeaa5bca10d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\main.cpp" />
@@ -55,6 +61,9 @@
     <ClCompile Include="..\..\appl\storage-module-int-functs.cpp">
       <Filter>appl</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\appl\impl\storage\test\test-storage-impl-int-functs.cpp">
+      <Filter>appl\impl\storage\test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\includes_int.hpp">
@@ -68,9 +77,6 @@
     </ClInclude>
     <ClInclude Include="..\..\appl\syn_types.hpp">
       <Filter>appl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\appl\helpers\get_sort_files_functs.hpp">
-      <Filter>appl\helpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\appl\storage-module.hpp">
       <Filter>appl</Filter>
@@ -107,6 +113,24 @@
     </ClInclude>
     <ClInclude Include="..\..\appl\impl\state-impls-type.hpp">
       <Filter>appl\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\id-storage-chunk.hpp">
+      <Filter>appl\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\storage\test\consts\vals.hpp">
+      <Filter>appl\impl\storage\test\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\storage\test\index-data-file-state.hpp">
+      <Filter>appl\impl\storage\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\storage\test\runtime-info-seance.hpp">
+      <Filter>appl\impl\storage\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\storage\test\stored-info-seance.hpp">
+      <Filter>appl\impl\storage\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\appl\impl\storage\test\helpers\save2file-functs.hpp">
+      <Filter>appl\impl\storage\test\helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

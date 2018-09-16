@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\includes_int.hpp" />
+    <ClInclude Include="..\source\syn.hpp" />
     <ClInclude Include="..\source\vals.hpp" />
     <ClInclude Include="..\source\info-filter-dll.hpp" />
     <ClInclude Include="..\source\filter-dll.hpp" />

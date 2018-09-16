@@ -9,6 +9,7 @@
 */
 
 namespace libs { namespace properties { namespace consts { namespace keys {
+
 using key_property_type = std::string;
 
 const key_property_type shared_os_property   = "shared_os_property";        //< Идентификатор свойств ОС

@@ -11,7 +11,9 @@
 */
 
 namespace dlls { namespace codecs { namespace vcodec_gen { namespace helpers {
-
+/**
+\brief  ???
+*/
 inline void
 load_codec_from_file (
   bool               _decorate_name,

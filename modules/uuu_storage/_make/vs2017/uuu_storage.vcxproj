@@ -29,6 +29,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\appl\impl\indexer\test\state-test-indexer.cpp" />
     <ClCompile Include="..\..\appl\impl\indexer\test\test-indexer-impl.cpp" />
+    <ClCompile Include="..\..\appl\impl\storage\test\test-storage-impl-int-functs.cpp" />
     <ClCompile Include="..\..\appl\impl\storage\test\test-storage-impl.cpp" />
     <ClCompile Include="..\..\appl\storage-module.cpp" />
     <ClCompile Include="..\..\appl\storage-module-catch-msg-functs.cpp" />
@@ -37,7 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\appl\factory-impl-functs.hpp" />
-    <ClInclude Include="..\..\appl\helpers\get_sort_files_functs.hpp" />
+    <ClInclude Include="..\..\appl\impl\id-storage-chunk.hpp" />
     <ClInclude Include="..\..\appl\impl\iindexer-impl.hpp" />
     <ClInclude Include="..\..\appl\impl\indexer\test\state-object.hpp" />
     <ClInclude Include="..\..\appl\impl\indexer\test\state-record.hpp" />
@@ -48,6 +49,11 @@
     <ClInclude Include="..\..\appl\impl\indexer\test\vals.hpp" />
     <ClInclude Include="..\..\appl\impl\istorage-impl.hpp" />
     <ClInclude Include="..\..\appl\impl\state-impls-type.hpp" />
+    <ClInclude Include="..\..\appl\impl\storage\test\consts\vals.hpp" />
+    <ClInclude Include="..\..\appl\impl\storage\test\helpers\save2file-functs.hpp" />
+    <ClInclude Include="..\..\appl\impl\storage\test\index-data-file-state.hpp" />
+    <ClInclude Include="..\..\appl\impl\storage\test\runtime-info-seance.hpp" />
+    <ClInclude Include="..\..\appl\impl\storage\test\stored-info-seance.hpp" />
     <ClInclude Include="..\..\appl\impl\storage\test\test-storage-impl.hpp" />
     <ClInclude Include="..\..\appl\storage-module.hpp" />
     <ClInclude Include="..\..\appl\consts\vals.hpp" />

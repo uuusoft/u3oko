@@ -11,8 +11,8 @@
 
 namespace dlls { namespace gens { namespace vgen_mops {
 /**
-  \brief  Загружаемые данные для фильтра морфологических операций над изображением.
-  */
+\brief  Загружаемые данные для фильтра морфологических операций над изображением.
+*/
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter
 {
   // ext types

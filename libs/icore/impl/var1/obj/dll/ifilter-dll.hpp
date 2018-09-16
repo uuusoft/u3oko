@@ -10,8 +10,8 @@
 
 namespace libs { namespace icore { namespace impl { namespace var1 { namespace obj { namespace dll {
 /**
-  \brief  Интерфейс, который должен поддерживать каждый объект в графе обработки данных.
-  */
+\brief  Интерфейс, который должен поддерживать каждый объект в графе обработки данных.
+*/
 class IFilter
 {
   public:
@@ -27,38 +27,38 @@ class IFilter
   IFilter (const IFilter& _src) = delete;
   IFilter& operator= (const IFilter& _src) = delete;
   /**
-    \brief          Функция инициализации объекта через xml конфигурацию.
-    \param[in, out] _info информация связанная с объектом.
-    \param[in]      _node узел, с которого будет загружены свойства фильтра.
-    */
+  \brief          Функция инициализации объекта через xml конфигурацию.
+  \param[in, out] _info информация связанная с объектом.
+  \param[in]      _node узел, с которого будет загружены свойства фильтра.
+  */
   void
   load (FilterInfo* _info, const base_functs::xml::itn& _node)
   {
     return load_int (_info, _node);
   }
   /**
-    \brief          Функция преобразования данных данным объектом графа обработки данных.
-    \param[in, out] _info параметры и данные для преобразования
-    */
+  \brief          Функция преобразования данных данным объектом графа обработки данных.
+  \param[in, out] _info параметры и данные для преобразования
+  */
   void
   transform (TransformInfo& _info)
   {
     return transform_int (_info);
   }
   /**
-    \brief          Функция вызова операции у данного фильтра.
-    \param[in, out] _info свойства операции.
-    */
+  \brief          Функция вызова операции у данного фильтра.
+  \param[in, out] _info свойства операции.
+  */
   void
   call (CallInterfInfo& _info)
   {
     return call_int (_info);
   }
   /**
-    \brief      Функция запроса интерфейса. Например для получения дополнительных свойствам от данного фильтра.
-    \param[in]  _interf идентификатор интерфейса.
-    \return     интерфейс или nullptr.
-    */
+  \brief      Функция запроса интерфейса. Например для получения дополнительных свойствам от данного фильтра.
+  \param[in]  _interf идентификатор интерфейса.
+  \return     интерфейс или nullptr.
+  */
   core::path::IInterfPathObj::raw_ptr
   query (const ::libs::helpers::utils::cuuid& _interf)
   {

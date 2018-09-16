@@ -15,47 +15,29 @@
 
 namespace dlls { namespace codecs { namespace vcodec_mjpg {
 
-void
+bool
 MjpegImpl::comp_iframe (
   bool       _colored,
   ProxyBuff& _dst,
   int&       _out_size)
 {
   XULOG_TRACE ("MjpegImpl::comp_iframe: beg");
-
-  _out_size = 0;
   _dst.check ();
 
-  unsigned char*  _dbuff       = _dst.ubuff ();
-  HeaderIFrame*   _head        = UUU_CODECS_CAST<HeaderIFrame*> (_dbuff);
-  int             _from_header = 0;
-  const ProxyBuff _lsrc (temp_buff_.get ());
-
-  _out_size = sizeof (HeaderIFrame);
-  _head->reset ();
-
+  unsigned char*       _dbuff       = _dst.ubuff ();
+  HeaderIFrame*        _head        = UUU_CODECS_CAST<HeaderIFrame*> (_dbuff);
+  int                  _from_header = 0;
+  const ProxyBuff      _lsrc (temp_buff_.get ());
   const unsigned char* _cur_buff   = temp_buff_->get_cbuff ();
   const int            _in_format  = _colored ? TJPF_BGR : TJPF_GRAY;
   const int            _out_format = _colored ? TJSAMP_444 : TJSAMP_GRAY;
   unsigned long        _jpeg_size  = 0;
   unsigned long        _max_size   = tjBufSize (_lsrc.width_, _lsrc.height_, _out_format);
 
-  if (!hjpeg_)
-    {
-      hjpeg_ = tjInitCompress ();
-    }
+  _out_size = sizeof (HeaderIFrame);
+  _head->reset ();
 
-  if (!jpeg_buff_ || _max_size > size_jpeg_buff_)
-    {
-      if (jpeg_buff_)
-        {
-          tjFree (jpeg_buff_);
-          jpeg_buff_ = nullptr;
-        }
-
-      jpeg_buff_      = tjAlloc (_max_size);
-      size_jpeg_buff_ = _max_size;
-    }
+  update_coder( _max_size );
 
   const int _res_jpeg = tjCompress2 (
     hjpeg_,
@@ -73,8 +55,8 @@ MjpegImpl::comp_iframe (
   if (-1 == _res_jpeg)
     {
       char* _jerr = tjGetErrorStr ();
-      XULOG_ERROR ("failed, jpeg coder, " << std::string (_jerr ? _jerr : "unknown"));
-      return;
+      XULOG_ERROR ("failed, jpeg coder, " << std::string (_jerr ? _jerr : "unknown null error"));
+      return false;
     }
 
   XULOG_TRACE ("MjpegImpl::comp_iframe: size compress " << to_str (_jpeg_size));
@@ -87,23 +69,23 @@ MjpegImpl::comp_iframe (
 
   UASSERT (_out_size > 0);
 
-  _head->base_part_.size_compress_ = _out_size;
-  _head->base_part_.sinfo_.width_  = _lsrc.width_;
-  _head->base_part_.sinfo_.height_ = _lsrc.height_;
-  _head->base_part_.sinfo_.stride_ = _lsrc.width_ * (_colored ? 3 : 1);
+  auto& _base_header = _head->base_part_;
+  auto& _base_size   = _base_header.sinfo_;
+
+  _base_header.size_compress_ = _out_size;
+  _base_size.width_           = _lsrc.width_;
+  _base_size.height_          = _lsrc.height_;
+  _base_size.stride_          = _lsrc.width_ * (_colored ? 3 : 1);
 
   _head->cinfo_             = cinfo_.plane_;
   _head->cinfo_.monochrome_ = _colored ? false : true;      //переопределяем по факту, т.к. у пользователя может быть установлено сжатие с цветом при его фактическом отсутствии и наоборот.
 
-  std::copy (
-    ::libs::helpers::uids::codecs::mjpeg.get_vals ().begin (),
-    ::libs::helpers::uids::codecs::mjpeg.get_vals ().end (),
-    _head->base_part_.guid_);
+  std::copy (::libs::helpers::uids::codecs::mjpeg.get_vals ().begin (), ::libs::helpers::uids::codecs::mjpeg.get_vals ().end (), _head->base_part_.guid_);
 
   UASSERT (_head->check ());
   statistic_.update ("iframe", _jpeg_size);
   XULOG_TRACE ("MjpegImpl::comp_iframe: end");
-  return;
+  return true;
 }
 
 }}}      // namespace dlls::codecs::vcodec_mjpg

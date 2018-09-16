@@ -33,7 +33,6 @@
     <ClInclude Include="..\..\includes.hpp">
       <Filter>_includes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\int_optim_typedefs.hpp" />
     <ClInclude Include="..\..\io\hioptim.hpp">
       <Filter>io</Filter>
     </ClInclude>
@@ -82,6 +81,7 @@
     <ClInclude Include="..\..\mcalls\shared-info-mfunct.hpp">
       <Filter>mcalls</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\syn.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\mcalls\caller-impl.cpp">

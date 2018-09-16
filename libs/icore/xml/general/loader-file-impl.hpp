@@ -12,9 +12,9 @@ namespace libs { namespace icore { namespace xml { namespace general {
 //  syn
 using ::libs::helpers::files::NodeEnumFiles;
 /**
-  \brief  Общая реализация загрузчика неизменяемых файлов из комлпекта поставки системы.
-          Используется по умолчанию (win32/linux).
-  */
+\brief  Общая реализация загрузчика неизменяемых файлов из комлпекта поставки системы.
+        Используется по умолчанию (win32/linux).
+*/
 class LoaderFileImpl : public ILoaderImpl
 {
   public:
@@ -24,7 +24,7 @@ class LoaderFileImpl : public ILoaderImpl
 
 
   private:
-  //  ILoaderImpl impl
+  //  ILoaderImpl overrides
   virtual void get_enum_int (const TypePath& _storage_type, NodeEnumFiles& _enum) override;
   virtual bool get_int (const std::string& _file_name, const TypePath& _storage_type, IBlockMem::ptr& _ret) override;
 

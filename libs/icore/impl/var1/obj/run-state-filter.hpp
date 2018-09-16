@@ -10,8 +10,8 @@
 
 namespace libs { namespace icore { namespace impl { namespace var1 { namespace obj {
 /**
-  \brief  Тип-состояния объекта графа.
-  */
+\brief  Тип-состояния объекта графа.
+*/
 enum struct RunStateFilter
 {
   stop = 0,      //< Объект остановлен.

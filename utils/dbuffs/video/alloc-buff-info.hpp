@@ -14,8 +14,8 @@ namespace utils { namespace dbuffs { namespace video {
 //  syn
 using ::libs::helpers::utils::cuuid;
 /**
-  \brief  Структура для группировки параметров вызова по перераспределению памяти буфера.
-  */
+\brief  Структура для группировки параметров вызова по перераспределению памяти буфера.
+*/
 struct AllocBuffInfo
 {
   //  ext types
@@ -31,15 +31,15 @@ struct AllocBuffInfo
     subsample_ (TypeSubSample::full_444)
   {}
   /**
-    \brief      Основной рабочий конструктор.
-    \param[in]  _width  
-    \param[in]  _height 
-    \param[in]  _stride 
-    \param[in]  _minor  
-    \param[in]  _check_dims 
-    \param[in]  _flag 
-    \param[in]  _subsample
-    */
+  \brief      Основной рабочий конструктор.
+  \param[in]  _width  
+  \param[in]  _height 
+  \param[in]  _stride 
+  \param[in]  _minor  
+  \param[in]  _check_dims 
+  \param[in]  _flag 
+  \param[in]  _subsample
+  */
   AllocBuffInfo (
     const dim_type&      _width,
     const dim_type&      _height,
@@ -58,14 +58,14 @@ struct AllocBuffInfo
     subsample_ (_subsample)
   {}
   /**
-    \brief      Рабочий конструктор.
-    \param[in]  _width  
-    \param[in]  _height 
-    \param[in]  _stride 
-    \param[in]  _minor  
-    \param[in]  _check_dims 
-    \param[in]  _flag 
-    */
+  \brief      Рабочий конструктор.
+  \param[in]  _width  
+  \param[in]  _height 
+  \param[in]  _stride 
+  \param[in]  _minor  
+  \param[in]  _check_dims 
+  \param[in]  _flag 
+  */
   AllocBuffInfo (
     const dim_type& _width,
     const dim_type& _height,
@@ -83,9 +83,9 @@ struct AllocBuffInfo
     UASSERT (_size > 0);
   }
   /**
-    \brief      Конструктор.
-    \param[in]  _size ???
-    */
+  \brief      Конструктор.
+  \param[in]  _size ???
+  */
   explicit AllocBuffInfo (const dim_type& _size) :
     width_ (0),
     height_ (0),
@@ -99,9 +99,9 @@ struct AllocBuffInfo
     UASSERT (_size > 0);
   }
   /**
-    \brief    Функция проверки корректности параметров вызова.
-    \return   true, если параметры консистентны.
-    */
+  \brief    Функция проверки корректности параметров вызова.
+  \return   true, если параметры консистентны.
+  */
   bool
   check_alloc_info () const
   {
@@ -115,9 +115,9 @@ struct AllocBuffInfo
     return width_ > 0 && height_ > 0 && stride_ >= _stride;
   }
   /**
-    \brief  Функция сброса параметров в начальное состояние,
-            например для повторного использования или для синхронизации состояния с владельцем при использовании в композиции.
-    */
+  \brief  Функция сброса параметров в начальное состояние,
+          например для повторного использования или для синхронизации состояния с владельцем при использовании в композиции.
+  */
   void
   reset ()
   {
@@ -132,9 +132,9 @@ struct AllocBuffInfo
     return;
   }
   /**
-    \brief          Функция быстрого обмена полями между двумя объектами типа.
-    \param[in, out] _src  второй объект обмена.
-    */
+  \brief          Функция быстрого обмена полями между двумя объектами типа.
+  \param[in, out] _src  второй объект обмена.
+  */
   void
   swap (AllocBuffInfo& _src)
   {

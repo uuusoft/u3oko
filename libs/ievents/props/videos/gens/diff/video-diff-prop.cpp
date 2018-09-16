@@ -39,12 +39,12 @@ load_op (const base_functs::xml::itn& _prop, ParamsVideoDiffProp& _info)
 
 VideoDiffProp::VideoDiffProp (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
 ::libs::events::IEvent::ptr
-VideoDiffProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+VideoDiffProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<VideoDiffProp> (this, _deep);
 }

@@ -19,7 +19,7 @@ VideoBuffEvent::VideoBuffEvent (const Acessor& _ph, const Buffs::ptr& _buff, int
   buff_ (_buff),
   id_ (_id)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -65,7 +65,7 @@ VideoBuffEvent::get_id () const
 
 
 ::libs::events::IEvent::ptr
-VideoBuffEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+VideoBuffEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<VideoBuffEvent> (this, _deep);
 }

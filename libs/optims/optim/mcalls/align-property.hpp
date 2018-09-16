@@ -12,8 +12,8 @@
 
 namespace libs { namespace optim { namespace mcalls {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 struct AlignProperty
 {
   AlignProperty () :

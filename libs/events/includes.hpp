@@ -8,7 +8,7 @@ file        includes.hpp
 \project    uuu_events
 \brief      Внешний интерфейс включения модуля.
 */
-#include "type-clone-event.hpp"
+#include "deep-event-clone-type.hpp"
 #include "using-state-event.hpp"
 #include "ievent.hpp"
 
@@ -20,7 +20,8 @@ file        includes.hpp
 
 #include "props/details/rect.hpp"
 
-#include "buff-event-info.hpp"
+#include "buff/consts/vals.hpp"
+#include "buff/event-buffs-info.hpp"
 
 #include "serialize_type_to_archive_define.hpp"
 #include "make_fake_objs_this_type_defines.hpp"

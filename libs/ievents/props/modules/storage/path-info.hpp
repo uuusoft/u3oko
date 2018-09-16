@@ -13,8 +13,8 @@
 
 namespace libs { namespace ievents { namespace props { namespace modules { namespace storage {
 /**
-  \brief СТруктура для группировки информации, связанной с одним из путей для сохранения данных подсистемы
-  */
+\brief СТруктура для группировки информации, связанной с одним из путей для сохранения данных подсистемы
+*/
 struct PathInfo
 {
   public:

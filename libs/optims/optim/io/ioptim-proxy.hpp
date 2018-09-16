@@ -10,15 +10,15 @@
 
 namespace libs { namespace optim { namespace io {
 /**
-  \brief  Тип для доступа к реализации интерфейса по управлению оптимизированными алгоритмами.
-          Реализован через шаблон проектирования "одиночка в строго смысле слова в пределах процесса".
-  */
+\brief  Тип для доступа к реализации интерфейса по управлению оптимизированными алгоритмами.
+        Реализован через шаблон проектирования "одиночка в строго смысле слова в пределах процесса".
+*/
 class IOptimProxy
 {
   public:
   //  ext types
   UUU_THIS_TYPE_HAS_POINTERS_TO_SELF (IOptimProxy);
-  typedef IOptim::raw_ptr (create_ioptim_funct_type) ();
+  using create_ioptim_funct_type=IOptim::raw_ptr();
 
   IOptimProxy (const IOptimProxy& _src) = delete;
   IOptimProxy& operator= (const IOptimProxy& _src) = delete;
@@ -43,8 +43,6 @@ class IOptimProxy
   private:
   explicit IOptimProxy (const std::string& _dll_path)
   {
-    //UASSERT( !_dll_path.empty() );
-
     boost::filesystem::path _cpath (_dll_path);
     _cpath /= ::utils::mem_functs::files::decorate_dll_name ("vdd_doptim");
 

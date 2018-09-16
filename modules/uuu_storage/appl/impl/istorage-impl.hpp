@@ -9,19 +9,19 @@
 */
 
 namespace modules { namespace uuu_storage { namespace appl { namespace impl {
-//  syn
-using ::utils::mem_functs::IBlockMem;
 /**
   \brief  Интерфейс для реализаций хранения бинарных данных подсистемы хранения данных.
+          Реализует (желательно лучше чем sqlite) удаление/сохранение/чтение больших блоков blob и больше ничего.
+          Ничего не знает, что из себя представлют конкретные данные и прочее.
   */
 class IStorageImpl
 {
   public:
   //  ext types
-  using id_chunk_type       = std::string;
-  using info_about_mem_type = std::string;
-  using ids_chunk_type      = std::vector<id_chunk_type>;
-  using id_locker_type      = std::string;
+  using id_chunk_type  = IdStorageChunk;                  //<  Тип идентификатора фрагмента в хранилище бинарных данных
+  using seance_type    = std::string;                     //<  Тип идентификатора сессии фрагмента в хранилище бинарных данных.
+  using ids_chunk_type = std::vector<id_chunk_type>;      //<  Тип массива идентификаторов фрагментов в хранилище бинарных данных.
+  using id_locker_type = std::string;                     //<  Тип блокировщика фрагментов для гарантирования атомарности операций над ними
   UUU_THIS_TYPE_HAS_POINTERS_TO_SELF (IStorageImpl);
 
   virtual ~IStorageImpl ()
@@ -49,45 +49,49 @@ class IStorageImpl
   }
 
   void
-  load (const id_chunk_type& _id, IBlockMem::raw_ptr _mem)
+  load (const seance_type& _seance, const id_chunk_type& _id, IBlockMem::raw_ptr _mem)
   {
     XULOG_TRACE ("IStorageImpl::load, beg");
     check_state_for_ops ("load");
-    load_int (_id, _mem);
+    UASSERT (_id.is_valid ());
+    load_int (_seance, _id, _mem);
     XULOG_TRACE ("IStorageImpl::load, end");
     return;
   }
 
   id_chunk_type
-  save (const info_about_mem_type& _info, IBlockMem::craw_ptr _mem)
+  save (const seance_type& _seance, IBlockMem::craw_ptr _mem)
   {
     XULOG_TRACE ("IStorageImpl::save, beg");
     check_state_for_ops ("save");
-    const auto _res = save_int (_info, _mem);
+    const auto _res = save_int (_seance, _mem);
+    UASSERT (_res.is_valid ());
     XULOG_TRACE ("IStorageImpl::save, end, " << _res);
     return _res;
   }
 
   id_chunk_type
-  save (const info_about_mem_type& _info, const unsigned char* _mem, const std::size_t _size_mem)
+  save (const seance_type& _seance, const unsigned char* _mem, const std::size_t _size_mem)
   {
     XULOG_TRACE ("IStorageImpl::save, beg");
     check_state_for_ops ("save");
-    const auto _res = save_int (_info, _mem, _size_mem);
+    const auto _res = save_int (_seance, _mem, _size_mem);
+    UASSERT (_res.is_valid ());
     XULOG_TRACE ("IStorageImpl::save, end, " << _res);
     return _res;
   }
 
   id_chunk_type
-  save (const info_about_mem_type& _info, IMemBuff::craw_ptr _mem)
+  save (const seance_type& _seance, IMemBuff::craw_ptr _mem)
   {
     XULOG_TRACE ("IStorageImpl::save, beg");
     check_state_for_ops ("save");
-    const auto _res = save_int (_info, _mem->get_raw_buff ().get ());
+    const auto _res = save_int (_seance, _mem->get_raw_buff ().get ());
+    UASSERT (_res.is_valid ());
     XULOG_TRACE ("IStorageImpl::save, end, " << _res);
     return _res;
   }
-
+#if 0
   void
   get_all_ids (ids_chunk_type& _ids)
   {
@@ -96,7 +100,8 @@ class IStorageImpl
     XULOG_TRACE ("IStorageImpl::get_all_ids, end");
     return;
   }
-
+#endif
+#if 0
   id_locker_type
   lock_ids (const ids_chunk_type& _ids)
   {
@@ -132,7 +137,7 @@ class IStorageImpl
     XULOG_TRACE ("IStorageImpl::get_info_ids, end");
     return;
   }
-
+#endif
 
   protected:
   IStorageImpl () :
@@ -148,17 +153,17 @@ class IStorageImpl
 
 
   private:
-  //  IStorageImpl
-  virtual void           set_info_int (const PathInfo::craw_ptr _info)                                                       = 0;
-  virtual bool           change_state_int (const StateImplsType& _state)                                                     = 0;
-  virtual void           load_int (const id_chunk_type& _id, IBlockMem::raw_ptr _mem)                                        = 0;
-  virtual id_chunk_type  save_int (const info_about_mem_type& _info, IBlockMem::craw_ptr _mem)                               = 0;
-  virtual id_chunk_type  save_int (const info_about_mem_type& _info, const unsigned char* _mem, const std::size_t _size_mem) = 0;
-  virtual void           get_all_ids_int (ids_chunk_type& _ids)                                                              = 0;
-  virtual id_locker_type lock_ids_int (const ids_chunk_type& _ids)                                                           = 0;
-  virtual void           unlock_ids_int (const id_locker_type& _lid)                                                         = 0;
-  virtual void           remove_ids_int (const id_locker_type& _lid)                                                         = 0;
-  virtual void           get_info_ids_int (const id_locker_type& _lid)                                                       = 0;
+  //  IStorageImpl interface
+  virtual void          set_info_int (const PathInfo::craw_ptr _info)                                                 = 0;
+  virtual bool          change_state_int (const StateImplsType& _state)                                               = 0;
+  virtual void          load_int (const seance_type& _seance, const id_chunk_type& _id, IBlockMem::raw_ptr _mem)      = 0;
+  virtual id_chunk_type save_int (const seance_type& _seance, IBlockMem::craw_ptr _mem)                               = 0;
+  virtual id_chunk_type save_int (const seance_type& _seance, const unsigned char* _mem, const std::size_t _size_mem) = 0;
+  //virtual void           get_all_ids_int (ids_chunk_type& _ids)                                                        = 0;
+  //virtual id_locker_type lock_ids_int (const ids_chunk_type& _ids)     = 0;
+  //virtual void           unlock_ids_int (const id_locker_type& _lid)   = 0;
+  //virtual void           remove_ids_int (const id_locker_type& _lid)   = 0;
+  //virtual void           get_info_ids_int (const id_locker_type& _lid) = 0;
 
   StateImplsType status_;      //< Текущие состояние реализации.
 };

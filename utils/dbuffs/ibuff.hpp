@@ -10,8 +10,8 @@
 
 namespace utils { namespace dbuffs {
 /**
-  \brief  Базовый интерфейс хранения буфера в ОЗУ под кадр (звук/видео).
-  */
+\brief  Базовый интерфейс хранения буфера в ОЗУ под кадр (звук/видео).
+*/
 class IBuff
 {
   public:
@@ -25,69 +25,69 @@ class IBuff
   IBuff (const IBuff& _rsc) = delete;
   IBuff& operator= (const IBuff& _src) = delete;
   /**
-    \brief      Функция установки значения переменной, для описания данные с точки зрения используемой памяти.
-    \param[in]  _type тип переменной.
-    \param[in]  _val  значение переменной.
-    */
+  \brief      Функция установки значения переменной, для описания данные с точки зрения используемой памяти.
+  \param[in]  _type тип переменной.
+  \param[in]  _val  значение переменной.
+  */
   void
   set_mem_var (const TypeMemVar& _type, mem_type _val)
   {
     return set_mem_var_int (_type, _val);
   }
   /**
-    \brief      Функция получения значения переменной для описания данные с точки зрения используемой памяти.
-    \param[in]  _type тип переменной.
-    \return     значение переменной.
-    */
+  \brief      Функция получения значения переменной для описания данные с точки зрения используемой памяти.
+  \param[in]  _type тип переменной.
+  \return     значение переменной.
+  */
   mem_type
   operator[] (const TypeMemVar& _type) const
   {
     return get_mem_var_int (_type);
   }
   /**
-    \brief      Функция клонирования буфера.
-    \param[in]  _source   источник данных.
-    \param[in]  _perc_copy  проценты копирования по вертикали [0.0f..100.0f].
-    \return   .
-    */
+  \brief      Функция клонирования буфера.
+  \param[in]  _source   источник данных.
+  \param[in]  _perc_copy  проценты копирования по вертикали [0.0f..100.0f].
+  \return   .
+  */
   void
   clone (IBuff::ptr& _source, float _perc_copy)
   {
     return clone_int (_source.get (), _perc_copy);
   }
   /**
-    \brief      Функция клонирования буфера.
-    \param[in]  _source   источник данных.
-    \param[in]  _perc_copy  проценты копирования по вертикали [0.0f..100.0f].
-    \return   .
-    */
+  \brief      Функция клонирования буфера.
+  \param[in]  _source   источник данных.
+  \param[in]  _perc_copy  проценты копирования по вертикали [0.0f..100.0f].
+  \return   .
+  */
   void
   clone (IBuff::craw_ptr _source, float _perc_copy)
   {
     return clone_int (_source, _perc_copy);
   }
   /**
-    \brief      Функция обмена содержимого буферов.
-    \param[in]  _buff буфер обмена.
-    */
+  \brief      Функция обмена содержимого буферов.
+  \param[in]  _buff буфер обмена.
+  */
   void
   swap (IBuff& _buff)
   {
     return swap_int (_buff);
   }
   /**
-    \brief    Функция получения буфера.
-    \return   буфер.
-    */
+  \brief    Функция получения буфера.
+  \return   буфер.
+  */
   unsigned char*
   get_buff ()
   {
     return get_buff_int ();
   }
   /**
-    \brief    Функция получения константного буфера.
-    \return   буфер.
-    */
+  \brief    Функция получения константного буфера.
+  \return   буфер.
+  */
   const unsigned char*
   get_cbuff () const
   {

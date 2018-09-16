@@ -10,8 +10,8 @@
 
 namespace dlls { namespace codecs { namespace codec_gen {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 struct InfoGenCodec
 {
   // ext types

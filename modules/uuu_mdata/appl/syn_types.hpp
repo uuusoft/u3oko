@@ -13,7 +13,7 @@
 namespace modules { namespace uuu_mdata { namespace appl {
 //  syn
 using ::libs::events::IEvent;
-using ::libs::link::details::TypeRunCode;
+using ::libs::link::details::RunCodeType;
 using ::libs::ilink::LinkCreatorProxy;
 using ::libs::properties::ISharedProperty;
 using ::libs::link::ILink;
@@ -30,6 +30,5 @@ using ::libs::ievents::runtime::state::ExpandTimeStatisticEvent;
 
 namespace bip     = boost::interprocess;
 namespace revents = ::libs::ievents::runtime;
-//namespace mevents = ::libs::imdata_events::events;
 
 }}}      // namespace modules::uuu_mdata::appl

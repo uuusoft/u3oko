@@ -21,7 +21,7 @@ DiffImpl::itransform (Buffs& _pbuffs)
   UASSERT (props_);
   auto _ibuff = ::libs::iproperties::helpers::cast_prop_demons ()->get_buffs_lockfree ()->impl ();
 
-  for (const TBuff2Info& _b2b : props_->diffs_)
+  for (const buff2info_type& _b2b : props_->diffs_)
     {
       const off_buff_type _sindx = _b2b.first;
       const off_buff_type _dindx = _b2b.second.bindx_diff_;

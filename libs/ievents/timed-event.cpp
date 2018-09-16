@@ -18,7 +18,7 @@ namespace libs { namespace ievents {
 TimedEvent::TimedEvent (const Acessor& _ph) :
   time_ (boost::posix_time::microsec_clock::universal_time ())
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -27,7 +27,7 @@ TimedEvent::~TimedEvent ()
 
 
 ::libs::events::IEvent::ptr
-TimedEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+TimedEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<TimedEvent> (this, _deep);
 }

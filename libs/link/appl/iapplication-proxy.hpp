@@ -10,8 +10,8 @@
 
 namespace libs { namespace link { namespace appl {
 /**
-  \brief  Прокси для создания объекта "подсистема" из разделяемого кода (dll/so)
-  */
+\brief  Прокси для создания объекта "подсистема" из разделяемого кода (dll/so)
+*/
 class IApplicationProxy
 {
   public:

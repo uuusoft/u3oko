@@ -22,9 +22,9 @@ namespace libs { namespace ievents { namespace props { namespace videos { namesp
   }
 
 
-  ::libs::events::IEvent::ptr CVideoTextProp::clone_int( const ::libs::events::TypeCloneEvent& _deep ) const
+  ::libs::events::IEvent::ptr CVideoTextProp::clone_int( const ::libs::events::DeepEventCloneType& _deep ) const
   {
-    if( ::libs::events::TypeCloneEvent::empty == _deep )
+    if( ::libs::events::DeepEventCloneType::empty == _deep )
     {
       return std::m1ake_shared<CVideoTextProp>();
     }

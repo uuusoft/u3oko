@@ -20,7 +20,7 @@ namespace dlls { namespace gens { namespace vgen_mops { namespace lib {
 void
 MopsImpl::itransform (Buffs& _buffs)
 {
-  for (const OffBuff2Info& _b2b : props_->diffs_)
+  for (const off_buff2info_type& _b2b : props_->diffs_)
     {
       const off_buff_type _sindx = _b2b.first;
       const off_buff_type _dindx = _b2b.second.bindx_diff_;

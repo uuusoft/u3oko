@@ -13,9 +13,9 @@ namespace dlls { namespace terminals { namespace video_sender {
 class IsEmptyFrameHelper;
 class FillFrameHelper;
 /**
-  \brief  Основной фильтр графа обработки данных для передачи обработанных зображений в другие модули.
-          Для примера, http server, gui etc.
-  */
+\brief  Основной фильтр графа обработки данных для передачи обработанных зображений в другие модули.
+        Для примера, http server, gui etc.
+*/
 class Filter final : public ::libs::icore::impl::var1::obj::dll::IFilter,
                      protected ::libs::icore::impl::var1::obj::dll::FilterImpl<InfoFilter>
 {

@@ -10,15 +10,15 @@
 
 namespace dlls { namespace doptim { namespace impl {
 /**
-  \brief  Реализация библиотеки по хранению различных оптимизированных версий различных алгоритмов обработки данных.
-  */
+\brief  Реализация модуля по работе с различными оптимизированнами версиями алгоритмов обработки данных.
+*/
 class IOptimImpl : public ::libs::optim::io::IOptim
 {
   public:
   //  ext types
-  typedef std::unordered_map<std::string, IOptimAlg::ptr> str2functs_type;
-  typedef std::mutex                                      sync_type;
-  typedef std::lock_guard<sync_type>                      guard_type;
+  using str2functs_type = std::unordered_map<std::string, IOptimAlg::ptr>;
+  using sync_type       = std::mutex;
+  using guard_type      = std::lock_guard<sync_type>;
 
   IOptimImpl ();
 
@@ -32,8 +32,8 @@ class IOptimImpl : public ::libs::optim::io::IOptim
   private:
   void construct ();
 
-  str2functs_type algs_;      /// ???
-  sync_type       mtx_;       /// ???
+  str2functs_type algs_;      /// Массив для быстрого поиска алгоритма по строке.
+  sync_type       mtx_;       /// Синхронизирующий примитив.
 };
 
 }}}      // namespace dlls::doptim::impl

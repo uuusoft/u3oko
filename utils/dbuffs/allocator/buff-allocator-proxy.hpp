@@ -10,9 +10,9 @@
 
 namespace utils { namespace dbuffs { namespace allocator {
 /**
-  \brief  Заместитель для доступа к реализации по управлению буферами для данных.
-          Является одиночкой только для статически линкуемых модулей (но сильнее этого и не требуется).
-  */
+\brief  Заместитель для доступа к реализации по управлению буферами для данных.
+        Является одиночкой только для статически линкуемых модулей (но сильнее этого и не требуется).
+*/
 class BuffAllocatorProxy
 {
   public:
@@ -23,9 +23,9 @@ class BuffAllocatorProxy
   BuffAllocatorProxy (const BuffAllocatorProxy& _src) = delete;
   BuffAllocatorProxy& operator= (const BuffAllocatorProxy& _src) = delete;
   /**
-    \brief      Функция получения экземпляра заместителя.
-    \param[in]  _dll_path путь к загружаемому коду системы.
-    */
+  \brief      Функция получения экземпляра заместителя.
+  \param[in]  _dll_path путь к загружаемому коду системы.
+  */
   static BuffAllocatorProxy::raw_ptr
   instance (const std::string& _dll_path)
   {
@@ -33,9 +33,9 @@ class BuffAllocatorProxy
     return &g_inst;
   }
   /**
-    \brief    Функция получения реализации по управлению буферам (реализации является гарантированно одиночкой для всего процесса системы).
-    \return   реализацию.
-    */
+  \brief    Функция получения реализации по управлению буферам (реализации является гарантированно одиночкой для всего процесса системы).
+  \return   реализацию.
+  */
   IBuffAllocator::raw_ptr
   impl ()
   {

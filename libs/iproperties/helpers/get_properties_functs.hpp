@@ -37,13 +37,11 @@ get_prop (const std::string& _id)
 }
 
 
-//inline vers::system::ISystemProperty::raw_ptr
 inline void*
 get_shared_prop_os ()
 {
   ::libs::properties::ISharedProperty::raw_ptr _rprop = get_prop (::libs::properties::consts::keys::shared_os_property);
-  //vers::system::ISystemProperty::raw_ptr       _ret   = d1ynamic_cast<vers::system::ISystemProperty::raw_ptr> (_rprop);
-  void* _ret = _rprop->cast2top ();
+  void*                                        _ret   = _rprop->cast2top ();
   UASSERT (_rprop);
   UASSERT (_ret);
   return _ret;
@@ -54,21 +52,18 @@ inline void*
 get_spec_prop_os ()
 {
   ::libs::properties::ISharedProperty::raw_ptr _rprop = get_prop (::libs::properties::consts::keys::specific_os_property);
-  //vers::system::ISystemProperty::raw_ptr       _ret   = d1ynamic_cast<vers::system::ISystemProperty::raw_ptr> (_rprop);
-  void* _ret = _rprop->cast2top ();
+  void*                                        _ret   = _rprop->cast2top ();
   UASSERT (_rprop);
   UASSERT (_ret);
   return _ret;
 }
 
 
-//inline ::libs::properties::vers::links::ILinksProperty::raw_ptr
 inline void*
 get_prop_links ()
 {
   ::libs::properties::ISharedProperty::raw_ptr _rprop = get_prop (::libs::properties::consts::keys::links_property);
-  //::libs::properties::vers::links::ILinksProperty::raw_ptr _ret   = d1ynamic_cast<::libs::properties::vers::links::ILinksProperty::raw_ptr> (_rprop);
-  void* _ret = _rprop->cast2top ();
+  void*                                        _ret   = _rprop->cast2top ();
   UASSERT (_rprop);
   UASSERT (_ret);
   return _ret;
@@ -79,8 +74,7 @@ inline void*
 get_prop_demons ()
 {
   ::libs::properties::ISharedProperty::raw_ptr _rprop = get_prop (::libs::properties::consts::keys::demons_property);
-  //vers::demon::IDemonsProperty::raw_ptr        _ret   = d1ynamic_cast<vers::demon::IDemonsProperty::raw_ptr> (_rprop);
-  void* _ret = _rprop->cast2top ();
+  void*                                        _ret   = _rprop->cast2top ();
   UASSERT (_rprop);
   UASSERT (_ret);
   return _ret;

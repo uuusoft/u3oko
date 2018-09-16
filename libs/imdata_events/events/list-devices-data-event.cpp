@@ -19,7 +19,7 @@ ListDevicesDataEvent::ListDevicesDataEvent (const Acessor& _ph, const devices_gr
   group_ (_group),
   devices_ (_devices)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -59,7 +59,7 @@ ListDevicesDataEvent::set_devices (ListDevicesDataEvent::devices_type&& _src)
 
 
 ::libs::events::IEvent::ptr
-ListDevicesDataEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+ListDevicesDataEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<ListDevicesDataEvent> (this, _deep);
 }
@@ -69,21 +69,6 @@ void
 ListDevicesDataEvent::load_int (const base_functs::xml::itn& _node)
 {
   super::load_int (_node);
-#if 0
-    base_functs::xml::ritn  _params = _node->children ("param");
-    base_functs::xml::itn _param  = _params.begin ();
-
-    while ( _param != _params.end () )
-    {
-      pugi::xml_attribute _name_param = _param->attribute ("name");
-      pugi::xml_attribute _val_param  = _param->attribute ("val");
-
-      if ( _name_param && _val_param)
-      {}
-
-      ++_param;
-    }
-#endif
   self_correct ();
   return;
 }

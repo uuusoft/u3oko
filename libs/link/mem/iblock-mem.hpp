@@ -12,8 +12,8 @@
 
 namespace libs { namespace link { namespace mem {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 class IBlockMem
 {
   public:

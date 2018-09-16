@@ -9,7 +9,11 @@
 */
 
 namespace libs { namespace buffs {
-
+/**
+\brief      ???
+\param[in]  _buffs
+\param[in]  _only_filled
+*/
 inline void
 dump (Buffs::craw_ptr _buffs, bool _only_filled)
 {
@@ -20,7 +24,6 @@ dump (Buffs::craw_ptr _buffs, bool _only_filled)
 
   XULOG_INFO ("dump ::libs::buffs::Buffs");
   UASSERT (_buffs);
-
   XULOG_INFO ("   indx_base_buff=" << _buffs->get_indx_base_buff () << ", empty=" << _buffs->get_flag (TypeBuffsFlags::empty) << ", request_convert2hsl=" << _buffs->get_flag (TypeBuffsFlags::request_convert2hsl));
 
   _buffs->enum_buffs (

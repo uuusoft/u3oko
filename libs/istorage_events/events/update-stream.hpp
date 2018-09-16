@@ -10,8 +10,8 @@
 
 namespace libs { namespace istorage_events { namespace events {
 /**
-  \brief  Событие для получения или закрытия хендла на передачу данных по идентификатору пути и по идентифкатору камеры. UpdateStream /open/close/
-  */
+\brief  Событие для получения или закрытия хендла на передачу данных по идентификатору пути и по идентифкатору камеры. UpdateStream /open/close/
+*/
 class UpdateStream : public BaseStorageEvent
 {
   friend class boost::serialization::access;
@@ -34,8 +34,8 @@ class UpdateStream : public BaseStorageEvent
 
   virtual ~UpdateStream ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/istorage_events/events/update-stream";
     return _ret;
@@ -62,7 +62,7 @@ class UpdateStream : public BaseStorageEvent
   void serialize (Archive& ar, const unsigned int /* file_version */);
 
   //virtual void load_int( const base_functs::xml::itn& _prop ) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
 };
 
 }}}      // namespace libs::istorage_events::events

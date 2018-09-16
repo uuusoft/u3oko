@@ -12,8 +12,8 @@
 
 namespace libs { namespace ievents { namespace props { namespace modules { namespace storage {
 /**
-  \brief  Перечисление состояний в которых могут находится данные по данном пути.
-  */
+\brief  Перечисление состояний в которых могут находится данные по данном пути.
+*/
 enum struct CheckerStorageType
 {
   disabled,                        //< Отключены все проверки.

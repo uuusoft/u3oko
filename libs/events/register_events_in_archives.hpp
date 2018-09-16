@@ -11,5 +11,7 @@
 */
 
 namespace libs { namespace events {
+
 void register_events_in_archives ();
+
 }}      // namespace libs::events

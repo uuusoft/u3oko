@@ -12,8 +12,8 @@ namespace libs { namespace ievents {
 using ::utils::dbuffs::video::consts::offs::off_buff_type;
 using ::libs::events::UsingStateEvent;
 /**
-  \brief  Реализация базового интерфейса всех событий системы.
-  */
+\brief  Реализация базового интерфейса всех событий системы.
+*/
 class Event : public ::libs::events::IEvent
 {
   friend class boost::serialization::access;
@@ -36,8 +36,8 @@ class Event : public ::libs::events::IEvent
 
   virtual ~Event ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/event";
     return _ret;
@@ -59,7 +59,7 @@ class Event : public ::libs::events::IEvent
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
 
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
 };
 
 }}      // namespace libs::ievents

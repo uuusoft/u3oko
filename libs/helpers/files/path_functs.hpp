@@ -99,25 +99,26 @@ make_path<std::wstring> (const std::wstring& _beg, const std::wstring& _end)
   return _res;
 }
 /**
-  \brief      ???
-  \param[in]  _path путь к создаваемой директории.
-  \return     ???
+  \brief      Вспомогательная функция для создания короткого пути к объекту файловой системы, требуется в ряде платформ (win32).
+  \param[in]  _path путь к создаваемой директории
+  \return     короткий путь к объекту или исходный если преобразование не требуется.
   */
 std::string make_short_path (const std::string& _path);
 /**
   \brief      Функция создания директории.
   \param[in]  _path путь к создаваемой директории.
+  \return     true, при успехе.
   */
-void create_folder (const std::string& _path);
+bool create_folder (const std::string& _path);
 /**
   \brief      Функция удаления директории.
   \param[in]  _path путь к удаляемой директории.
   */
 void delete_folder (const std::string& _path);
 /**
-  \brief      ???
+  \brief      Функция проверки существования директории.
   \param[in]  _path путь потенциальной директории.
-  \return     ???
+  \return     true, если директория существует.
   */
 bool is_folder (const std::string& _path);
 

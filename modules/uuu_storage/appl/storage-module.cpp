@@ -56,7 +56,7 @@ void
 StorageModule::init_links_int (const ::libs::link::appl::InitApplication& _info)
 {
   const std::string         _name_data = "";
-  const TypeRunCode         _type_run  = ::libs::link::details::TypeRunCode::appl;
+  const RunCodeType         _type_run  = ::libs::link::details::RunCodeType::appl;
   LinkCreatorProxy::raw_ptr _lproxy    = ::libs::ilink::LinkCreatorProxy::instance ();
   volatile auto             _ipstorage = ::libs::iproperties::helpers::get_storage ();
   _ipstorage;
@@ -69,7 +69,7 @@ StorageModule::init_links_int (const ::libs::link::appl::InitApplication& _info)
       _info.name_company_,
       _info.name_appl_,
       "subsys_storage",
-      ::libs::link::details::TypeLinkModules::storage,
+      ::libs::link::details::LinkModulesType::storage,
       ::libs::link::consts::size::buff_appl2storage);
 
     links_.storage2appl_ = _lproxy->impl ()->get_listen (&_create_info);

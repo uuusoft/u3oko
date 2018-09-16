@@ -23,10 +23,7 @@ get_node_name (const base_functs::xml::itn& _param)
 
 
 inline bool
-load_generic (
-  const base_functs::xml::itn& _param,
-  const std::string&           _id,
-  pugi::xml_attribute&         _val_param)
+load_generic (const base_functs::xml::itn& _param, const std::string& _id, pugi::xml_attribute& _val_param)
 {
   const std::string _name_node = get_node_name (_param);
   if ("" == _name_node)
@@ -50,10 +47,7 @@ load_generic (
 
 template <typename TTVal>
 bool
-load (
-  const base_functs::xml::itn& _param,
-  const std::string&           _id,
-  TTVal&                       _val)
+load (const base_functs::xml::itn& _param, const std::string& _id, TTVal& _val)
 {
   UUU_THROW_EXCEPTION ("try load bad type from xml");
 }
@@ -61,10 +55,7 @@ load (
 
 template <>
 inline bool
-load<bool> (
-  const base_functs::xml::itn& _param,
-  const std::string&           _id,
-  bool&                        _val)
+load<bool> (const base_functs::xml::itn& _param, const std::string& _id, bool& _val)
 {
   pugi::xml_attribute _val_param;
   if (!load_generic (_param, _id, _val_param))
@@ -79,10 +70,7 @@ load<bool> (
 
 template <>
 inline bool
-load<std::string> (
-  const base_functs::xml::itn& _param,
-  const std::string&           _id,
-  std::string&                 _val)
+load<std::string> (const base_functs::xml::itn& _param, const std::string& _id, std::string& _val)
 {
   pugi::xml_attribute _val_param;
   if (!load_generic (_param, _id, _val_param))
@@ -97,10 +85,7 @@ load<std::string> (
 
 template <>
 inline bool
-load<float> (
-  const base_functs::xml::itn& _param,
-  const std::string&           _id,
-  float&                       _val)
+load<float> (const base_functs::xml::itn& _param, const std::string& _id, float& _val)
 {
   pugi::xml_attribute _val_param;
   if (!load_generic (_param, _id, _val_param))
@@ -115,10 +100,7 @@ load<float> (
 
 template <>
 inline bool
-load<int> (
-  const base_functs::xml::itn& _param,
-  const std::string&           _id,
-  int&                         _val)
+load<int> (const base_functs::xml::itn& _param, const std::string& _id, int& _val)
 {
   pugi::xml_attribute _val_param;
   if (!load_generic (_param, _id, _val_param))
@@ -133,10 +115,7 @@ load<int> (
 
 template <>
 inline bool
-load<unsigned int> (
-  const base_functs::xml::itn& _param,
-  const std::string&           _id,
-  unsigned int&                _val)
+load<unsigned int> (const base_functs::xml::itn& _param, const std::string& _id, unsigned int& _val)
 {
   pugi::xml_attribute _val_param;
   if (!load_generic (_param, _id, _val_param))
@@ -151,10 +130,7 @@ load<unsigned int> (
 
 template <>
 inline bool
-load<unsigned long long> (
-  const base_functs::xml::itn& _param,
-  const std::string&           _id,
-  unsigned long long&          _val)
+load<unsigned long long> (const base_functs::xml::itn& _param, const std::string& _id, unsigned long long& _val)
 {
   pugi::xml_attribute _val_param;
   if (!load_generic (_param, _id, _val_param))
@@ -169,10 +145,7 @@ load<unsigned long long> (
 
 template <>
 inline bool
-load<long long> (
-  const base_functs::xml::itn& _param,
-  const std::string&           _id,
-  long long&                   _val)
+load<long long> (const base_functs::xml::itn& _param, const std::string& _id, long long& _val)
 {
   pugi::xml_attribute _val_param;
   if (!load_generic (_param, _id, _val_param))
@@ -187,10 +160,7 @@ load<long long> (
 
 template <>
 inline bool
-load<unsigned short> (
-  const base_functs::xml::itn& _param,
-  const std::string&           _id,
-  unsigned short&              _val)
+load<unsigned short> (const base_functs::xml::itn& _param, const std::string& _id, unsigned short& _val)
 {
   pugi::xml_attribute _val_param;
   if (!load_generic (_param, _id, _val_param))
@@ -205,10 +175,7 @@ load<unsigned short> (
 using loader_funct_type = std::function<void(const std::string&)>;
 
 inline bool
-load (
-  const base_functs::xml::itn& _param,
-  const std::string&           _id,
-  const loader_funct_type&     _loader)
+load (const base_functs::xml::itn& _param, const std::string& _id, const loader_funct_type& _loader)
 {
   pugi::xml_attribute _val_param;
   if (!load_generic (_param, _id, _val_param))

@@ -12,13 +12,37 @@
 
 namespace libs { namespace events {
 /**
-  \brief  Перечисление различных состояний, в которых может находится свойство.
-  */
+\brief  Перечисление различных состояний, в которых может находится свойство.
+*/
 enum struct UsingStateEvent
 {
   disabled  = 0,      //< Свойство отключено.
   enabled   = 1,      //< Свойство включено.
   automatic = 2       //< Свойство используется автоматически.
 };
+/**
+\brief      ???
+\param[in]  _val
+\return     ???
+*/
+inline std::string
+to_str (const UsingStateEvent& _val)
+{
+  const std::unordered_map<UsingStateEvent, std::string> _mapper =
+    {
+      { UsingStateEvent::disabled, "disabled" },
+      { UsingStateEvent::enabled, "enabled" },
+      { UsingStateEvent::automatic, "automatic" }
+    };
+
+  auto _find = _mapper.find (_val);
+  if (_mapper.end () == _find)
+    {
+      XULOG_WARNING ("unknown type UsingStateEvent, " << UUU_ICAST_INT (_val));
+      return "unknown";
+    }
+
+  return _find->second;
+}
 
 }}      // namespace libs::events

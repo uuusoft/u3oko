@@ -15,8 +15,8 @@ namespace libs { namespace iproperties { namespace appl_paths { namespace helper
 using ::libs::iproperties::vers::system::ISystemProperty;
 using ::libs::properties::ISharedProperty;
 /**
-  \brief  
-  */
+\brief  ???
+*/
 inline void
 get_appl_folder (const std::string& _name_appl, std::string& _folder)
 {
@@ -49,8 +49,8 @@ get_appl_folder (const std::string& _name_appl, std::string& _folder)
   return;
 }
 /**
-  \brief
-  */
+\brief  ???
+*/
 inline void
 get_data_folder (const std::string& _name_appl, std::string& _folder)
 {

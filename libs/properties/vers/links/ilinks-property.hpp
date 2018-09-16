@@ -10,8 +10,8 @@
 
 namespace libs { namespace properties { namespace vers { namespace links {
 /**
-  \brief  Свойство для хранения общепроцессных свойств по связям между компонентами внутри одного процесса.
-  */
+\brief  Свойство для хранения общепроцессных свойств по связям между компонентами внутри одного процесса.
+*/
 class ILinksProperty : public ISharedProperty
 {
   public:

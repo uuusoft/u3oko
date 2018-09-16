@@ -31,27 +31,27 @@ LeafModule::update_catch_functs_int ()
 
   catch_functs_.insert (
     std::make_pair (
-      ::libs::events::ISeqEvent::gen_get_type_text_id (),
+      ::libs::events::ISeqEvent::gen_get_mid (),
       std::bind (&LeafModule::seq_msg_catch_funct, this, std::placeholders::_1, std::placeholders::_2)));
 
   catch_functs_.insert (
     std::make_pair (
-      ::libs::events::ISyncEvent::gen_get_type_text_id (),
+      ::libs::events::ISyncEvent::gen_get_mid (),
       std::bind (&LeafModule::sync_msg_catch_funct, this, std::placeholders::_1, std::placeholders::_2)));
 
   catch_functs_.insert (
     std::make_pair (
-      ::libs::events::IRequestEvent::gen_get_type_text_id (),
+      ::libs::events::IRequestEvent::gen_get_mid (),
       std::bind (&LeafModule::request_msg_catch_funct, this, std::placeholders::_1, std::placeholders::_2)));
 
   catch_functs_.insert (
     std::make_pair (
-      ::libs::events::IAnswerEvent::gen_get_type_text_id (),
+      ::libs::events::IAnswerEvent::gen_get_mid (),
       std::bind (&LeafModule::answer_msg_catch_funct, this, std::placeholders::_1, std::placeholders::_2)));
 
   catch_functs_.insert (
     std::make_pair (
-      revents::state::ChangStateProcessTypeEvent::gen_get_type_text_id (),
+      revents::state::ChangStateProcessTypeEvent::gen_get_mid (),
       [this](IEvent::ptr _msg, bool _forward) {
         if (_forward)
           {

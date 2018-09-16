@@ -10,8 +10,8 @@
 
 namespace libs { namespace igui_events { namespace utils { namespace impl {
 /**
-  \brief  Тривиальная реализация интерфейса ISize.
-  */
+\brief  Тривиальная реализация интерфейса ISize.
+*/
 class Size : public ISize
 {
   public:
@@ -37,9 +37,7 @@ class Size : public ISize
   clone () const override
   {
     Size* _temp = new Size;
-
     _temp->set (info_);
-
     return ISize::ptr (_temp);
   }
 
@@ -94,9 +92,9 @@ class Size : public ISize
   }
 };
 /**
-  \brief    ???
-  \param[in]  ??? 
-  */
+\brief    ???
+\param[in]  ??? 
+*/
 inline void
 load (const pugi::xml_node& _node, Size& _res)
 {

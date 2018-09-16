@@ -65,7 +65,6 @@ Path::deb_load_objs_impl ()
           source_interf_objs_[path::consts::indx_source_interf_helper]++;
         }
     }
-
   return;
 }
 
@@ -275,8 +274,7 @@ Path::get_obj_impl (const PathObjID& obj_id)
     {
       return path_obj_type::weak_ptr (_it->second);
     }
-
-  UASSERT_SIGNAL ("failed");
+  XULOG_ERROR("failed find path by id, " << obj_id.get_name() );
   return path_obj_type::weak_ptr ();
 }
 

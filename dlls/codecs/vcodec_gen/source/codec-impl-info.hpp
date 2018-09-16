@@ -10,8 +10,8 @@
 
 namespace dlls { namespace codecs { namespace vcodec_gen {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 struct CodecImplInfo
 {
   //  ext types

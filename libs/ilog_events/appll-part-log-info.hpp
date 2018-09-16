@@ -10,8 +10,8 @@
 
 namespace libs { namespace ilog_events {
 /**
-  \brief  Empty description
-  */
+\brief  Empty description
+*/
 struct AppllPartLogInfo
 {
   explicit AppllPartLogInfo (

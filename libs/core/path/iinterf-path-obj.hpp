@@ -12,9 +12,9 @@
 
 namespace libs { namespace core { namespace path {
 /**
-  \brief  Базовый интерфейс для расширения свойств объекта в графе по обработке данных.
-          Запрашивается через вызов функции query из ObjPath.
-  */
+\brief  Базовый интерфейс для расширения свойств объекта в графе по обработке данных.
+        Запрашивается через вызов функции query из ObjPath.
+*/
 class IInterfPathObj
 {
   friend class ::libs::icore::impl::var1::obj::ObjPath;

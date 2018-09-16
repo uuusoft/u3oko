@@ -10,8 +10,8 @@
 
 namespace modules { namespace uuu_log { namespace appl {
 /**
-  \brief  Реализация модуля логирования системы.
-  */
+\brief  Реализация модуля логирования системы.
+*/
 class LogModule final : public ::libs::ilink::appl::leaf::LeafModule
 {
   public:
@@ -55,22 +55,22 @@ class LogModule final : public ::libs::ilink::appl::leaf::LeafModule
 
   void add_msg_from_self (const std::string& _info);
 
-  void process_info_log( InfoLogEvent::raw_ptr,IEvent::ptr _msg);
+  void process_info_log (InfoLogEvent::raw_ptr, IEvent::ptr _msg);
 
-  void process_property_log_module( PropertyLogModuleEvent::raw_ptr);
+  void process_property_log_module (PropertyLogModuleEvent::raw_ptr);
 
-  void proces_change_state_process( ChangStateProcessTypeEvent::raw_ptr);
+  void proces_change_state_process (ChangStateProcessTypeEvent::raw_ptr);
 
-  void process_list_logs( ProcessListLogsEvent::raw_ptr);
+  void process_list_logs (ProcessListLogsEvent::raw_ptr);
 
-  void process_log( ProcessLogEvent::raw_ptr);
+  void process_log (ProcessLogEvent::raw_ptr);
 
-  events_list_type events_;                           //< Временно кешированные события для сброса в лог (по таймауту или по достижению предельного размера списка).
-  std::string      path2sessions_;                    //< Директория с сеансами логирования.
-  std::string      name_folder_current_session_;      //< Имя директрии с логами текущего сеанса работы системы.
-  std::string      path2logs_;                        //< Директория с логами текущего сеанса работы системы.
-  std::fstream     file_;                             //< Текущий файл с логом.
-  std::size_t      indx_file_;                        //< Индекс текущего файла с логом.
+  events_list_type events_;                     //< Временно кешированные события для сброса в лог (по таймауту или по достижению предельного размера списка).
+  std::string      path2sessions_;              //< Директория с всеми существующими сеансами.
+  std::string      active_session_folder_;      //< Имя директории с логами текущего сеанса работы системы.
+  std::string      path2logs_;                  //< Директория с логами текущего сеанса работы системы.
+  std::fstream     file_;                       //< Текущий файл с логом.
+  std::size_t      indx_file_;                  //< Индекс текущего файла с логом.
 };
 
 }}}      // namespace modules::uuu_log::appl

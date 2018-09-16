@@ -10,8 +10,8 @@
 
 namespace libs { namespace core { namespace path {
 /**
-  \brief  Интерфейс объекта в графе по обработке данных.
-  */
+\brief  Интерфейс объекта в графе по обработке данных.
+*/
 class IPathObj
 {
   friend class ::libs::icore::impl::var1::path::Path;
@@ -27,20 +27,20 @@ class IPathObj
 
   protected:
   /**
-    \brief      Функция запроса поддержки интерфейса объектом.
-    \param[in]  _id   идентификатор интерфейса.
-    \return     не 0, при успехе.
-    */
+  \brief      Функция запроса поддержки интерфейса объектом.
+  \param[in]  _id   идентификатор интерфейса.
+  \return     не 0, при успехе.
+  */
   IInterfPathObj::raw_ptr
   query (const ::libs::helpers::utils::cuuid& _id)
   {
     return query_int (_id);
   }
   /**
-    \brief          Функция посылки события в граф.
-    \param[in, out] _evnt   указатель на сообщение.
-    \param[in]      _funct  функция, определяет применимость события к данному объекту графа.
-    */
+  \brief          Функция посылки события в граф.
+  \param[in, out] _evnt   указатель на сообщение.
+  \param[in]      _funct  функция, определяет применимость события к данному объекту графа.
+  */
   void
   send_event2me (events::IEvent::ptr& _evnt)
   {
@@ -68,6 +68,7 @@ class IPathObj
   virtual ~IPathObj ()
   {}
 
+  //  IPathObj interface
   virtual IInterfPathObj::raw_ptr query_int (const ::libs::helpers::utils::cuuid& _id) = 0;
   virtual void                    send_event2me_int (events::IEvent::ptr& _evnt)       = 0;
   virtual void                    run_int ()                                           = 0;

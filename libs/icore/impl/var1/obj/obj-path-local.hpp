@@ -48,38 +48,38 @@ class ObjPath : public IPathObjExt
   virtual void stop_int () override;
   virtual void run_int () override;
   /**
-    \brief      Функция загружает и иниицализирует объект из загружаемого кода (dll/so).
-    \param[in]  _name_lib имя файла кода.
-    \param[in]  _node   узел xml для инициализации свойств объекта.
-    */
+  \brief      Функция загружает и иниицализирует объект из загружаемого кода (dll/so).
+  \param[in]  _name_lib имя файла кода.
+  \param[in]  _node   узел xml для инициализации свойств объекта.
+  */
   void load_lib (const std::string& _name_lib, const base_functs::xml::itn& _node);
   /**
-    \brief    Функция освобождает объект из загружаемого кода (dll/so).
-    */
+  \brief    Функция освобождает объект из загружаемого кода (dll/so).
+  */
   void free_lib ();
   /**
-    \brief      Функция устанавливает соединение между двумя объектами.
-    \param[in]  _indx_src   ???
-    \param[in]  _filter     ???
-    \param[in]  _indx_dst   ???
-    */
+  \brief      Функция устанавливает соединение между двумя объектами.
+  \param[in]  _indx_src   ???
+  \param[in]  _filter     ???
+  \param[in]  _indx_dst   ???
+  */
   void set_src_connect (int _indx_src, ObjPath* _filter, int _indx_dst);
   /**
-    \brief      Функция устанавливает соединение между двумя объектами.
-    \param[in]  _indx_src   ???
-    \param[in]  _filter     ???
-    \param[in]  _indx_dst   ???
-    */
+  \brief      Функция устанавливает соединение между двумя объектами.
+  \param[in]  _indx_src   ???
+  \param[in]  _filter     ???
+  \param[in]  _indx_dst   ???
+  */
   void set_dst_connect (int _indx_src, ObjPath* _filter, int _indx_dst);
   /**
-    \brief    Функция возвращает общую информацию о объекте графа обработки данных.
-    \return   ???
-    */
+  \brief    Функция возвращает общую информацию о объекте графа обработки данных.
+  \return   ???
+  */
   const obj::FilterInfo& get_info () const;
   /**
-    \brief          Основная рабочая функция по обработке данных объектом графа.
-    \param[in, out] _info параметры вызова.
-    */
+  \brief          Основная рабочая функция по обработке данных объектом графа.
+  \param[in, out] _info параметры вызова.
+  */
   void transform (obj::dll::TransformInfo& _info);
 
   const core::path::IPath*      pparent_;         //< Указатель на граф, которому принадлежит данный объект.

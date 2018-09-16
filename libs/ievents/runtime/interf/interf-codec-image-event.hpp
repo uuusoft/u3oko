@@ -11,8 +11,8 @@
 
 namespace libs { namespace ievents { namespace runtime { namespace interf {
 /**
-  \brief  Сообщение с интерфейсом для сжатия изображения.
-  */
+\brief  Сообщение с интерфейсом для сжатия изображения.
+*/
 class InterfCodecImageEvent : public BaseInterfEvent
 {
   friend class boost::serialization::access;
@@ -36,8 +36,8 @@ class InterfCodecImageEvent : public BaseInterfEvent
 
   virtual ~InterfCodecImageEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/runtime/interf/interf-codec-image-event";
     return _ret;
@@ -54,7 +54,7 @@ class InterfCodecImageEvent : public BaseInterfEvent
 
   impl_ptr_type impl_;      //< ���������� ���������� ���������� �� ��������� ����������.
   //  BaseInterfEvent overrides
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   //virtual void load_int( const base_functs::xml::itn& _node ) override;
   virtual void copy_int (const IEvent::craw_ptr _src) override;
 };

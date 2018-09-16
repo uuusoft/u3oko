@@ -12,9 +12,9 @@ namespace libs {
 /// Пространство имен для ядра для обработки данных.
 namespace core {
 /**
-  \brief  Интерфейс ядра по обработки данных.
-          Все функции открытого интерфейса должны быть потокобезопасны.
-  */
+\brief  Интерфейс ядра по обработки данных.
+        Все функции открытого интерфейса должны быть потокобезопасны.
+*/
 class ICore
 {
   public:
@@ -24,28 +24,28 @@ class ICore
   virtual ~ICore ()
   {}
   /**
-    \brief    Функция создания графа обработки данных. Созданный граф требует явного удаления через функцию delete_path.
-    \return   указатель на граф.
-    */
+  \brief    Функция создания графа обработки данных. Созданный граф требует явного удаления через функцию delete_path.
+  \return   указатель на граф.
+  */
   path::IPath::weak_ptr
   create_path ()
   {
     return create_path_int ();
   }
   /**
-    \brief      Функция получения существующих графов обработки данных ядра.
-    \param[in]  _paths  список указателей на активные графы.
-    */
+  \brief      Функция получения существующих графов обработки данных ядра.
+  \param[in]  _paths  список указателей на активные графы.
+  */
   void
   get_paths (std::list<path::IPath::weak_ptr>& _paths)
   {
     return get_paths_int (_paths);
   }
   /**
-    \brief      Функция удаления графа.
-    \param[in]  _pobj указатель на граф.
-    \return     true, при успехе.
-    */
+  \brief      Функция удаления графа.
+  \param[in]  _pobj указатель на граф.
+  \return     true, при успехе.
+  */
   bool
   delete_path (path::IPath::weak_ptr _obj)
   {
@@ -60,6 +60,7 @@ class ICore
 
 
   private:
+  //  ICore interface
   virtual path::IPath::weak_ptr create_path_int ()                                       = 0;
   virtual void                  get_paths_int (std::list<path::IPath::weak_ptr>& _paths) = 0;
   virtual bool                  delete_path_int (path::IPath::weak_ptr _obj)             = 0;

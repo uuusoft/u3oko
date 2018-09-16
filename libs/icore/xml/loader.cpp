@@ -34,10 +34,7 @@ Loader::Loader (const TInitInfo& _info) :
 
 
 void
-Loader::load (
-  const std::string& _file_name,
-  const TypePath&    _storage_type,
-  IBlockMem::ptr&    _bmem)
+Loader::load (const std::string& _file_name, const TypePath& _storage_type, IBlockMem::ptr& _bmem)
 {
   XULOG_TRACE ("Loader::load::_file_name=" << _file_name.c_str ());
   UASSERT (!_file_name.empty ());

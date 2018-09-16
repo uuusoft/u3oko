@@ -27,8 +27,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\buff\event-buffs-info.hpp" />
+    <ClInclude Include="..\..\buff\consts\vals.hpp" />
     <ClInclude Include="..\..\helpers\convert_event2string_funct.hpp" />
-    <ClInclude Include="..\..\type-clone-event.hpp" />
+    <ClInclude Include="..\..\deep-event-clone-type.hpp" />
     <ClInclude Include="..\..\using-state-event.hpp" />
     <ClInclude Include="..\..\register_events_in_archives.hpp" />
     <ClInclude Include="..\..\serialize_type_to_archive_define.hpp" />
@@ -40,7 +42,6 @@
     <ClInclude Include="..\..\io\ievents.hpp" />
     <ClInclude Include="..\..\io\ievents-proxy.hpp" />
     <ClInclude Include="..\..\props\details\rect.hpp" />
-    <ClInclude Include="..\..\buff-event-info.hpp" />
     <ClInclude Include="..\..\make_fake_objs_this_type_defines.hpp" />
     <ClInclude Include="..\..\wrapers\ianswer-event.hpp" />
     <ClInclude Include="..\..\wrapers\irequest-event.hpp" />
@@ -49,10 +50,10 @@
     <ClInclude Include="..\..\wrapers\iwrap-base-event.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\buff\event-buffs-info.cpp" />
     <ClCompile Include="..\..\ievent.cpp" />
     <ClCompile Include="..\..\props\details\rect.cpp" />
     <ClCompile Include="..\..\register_events_in_archives.cpp" />
-    <ClCompile Include="..\..\buff-event-info.cpp" />
     <ClCompile Include="..\..\wrapers\ianswer-event.cpp" />
     <ClCompile Include="..\..\wrapers\irequest-event.cpp" />
     <ClCompile Include="..\..\wrapers\iseq-event.cpp" />

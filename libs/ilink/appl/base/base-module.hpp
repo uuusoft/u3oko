@@ -10,8 +10,8 @@
 
 namespace libs { namespace ilink { namespace appl { namespace base {
 /**
-  \brief  Базовая реализация для всех типов модулей (корневых оконечных и т.п.) системы.
-  */
+\brief  Базовая реализация для всех типов модулей (корневых оконечных и т.п.) системы.
+*/
 class BaseModule : public ::libs::link::appl::IApplication
 {
   public:
@@ -28,19 +28,19 @@ class BaseModule : public ::libs::link::appl::IApplication
   //  int types
   using catch_msg_funct_type      = std::function<IEvent::ptr (IEvent::ptr _msg, bool _forward)>;
   using list_catch_msg_funct_type = std::list<std::pair<catch_msg_funct_type, IEvent::ptr>>;
-  using id_msg2funct_type         = std::unordered_map<IEvent::text_id_type, catch_msg_funct_type>;
-
-  //  ::libs::link::appl::IApplication impl
+  using id_msg2funct_type         = std::unordered_map<IEvent::hid_type, catch_msg_funct_type>;
+  //  ::libs::link::appl::IApplication overrides
   virtual void init_int (const ::libs::link::appl::InitApplication& _info) override;
   virtual void init_appl_folders_int () override;
   virtual void init_proxys_int () override;
   virtual void init_appl_data_int () override;
   virtual void init_done_int () override;
   virtual void update_catch_functs_int () override;
+  virtual void force_stop_int () override;
   /**
-    \brief  Функция получения списка связей для входящих событий.
-    \return список связей, по которым будут получаться сообщения в рабочем цикле.
-    */
+  \brief  Функция получения списка связей для входящих событий.
+  \return список связей, по которым будут получаться сообщения в рабочем цикле.
+  */
   virtual recv_links_type get_recv_link () = 0;
 
   void load_events_props ();
@@ -65,11 +65,10 @@ class BaseModule : public ::libs::link::appl::IApplication
   consts::id_link_module_type     text_id_module_;      //< текстовый идентификатор модуля, например для использования в логировании.
   bool                            stop_module_;         //< Флаг завершения работы
   ::libs::link::ILink::ptr        logger_;              //< Логер текущего модуля, может быть null. Настраивается наследниками.
-  //seq2process_type              seqs_;  //< Запросы в процессе обработки.
 };
 /**
-  \brief  
-  */
+\brief  ???
+*/
 inline void
 register_events_for_module ()
 {

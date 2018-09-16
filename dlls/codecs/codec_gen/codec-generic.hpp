@@ -10,8 +10,8 @@
 
 namespace dlls { namespace codecs { namespace codec_gen {
 /**
-  \brief  Базовый класс для реализации видео кодека.
-  */
+\brief  Базовый класс для реализации видео кодеков.
+*/
 class CodecGeneric
 {
   public:
@@ -45,16 +45,17 @@ class CodecGeneric
   protected:
   //  CodecGeneric interface
   virtual void                 init_int (const InfoGenCodec& _info)                              = 0;
-  virtual void                 code_int (const Buffs* _src, Buffs* _dst, events_type* _events)   = 0;
-  virtual void                 decode_int (const Buffs* _src, Buffs* _dst, events_type* _events) = 0;
+  virtual bool                 code_int (const Buffs* _src, Buffs* _dst, events_type* _events)   = 0;
+  virtual bool                 decode_int (const Buffs* _src, Buffs* _dst, events_type* _events) = 0;
   virtual void                 set_codec_info_int (const VideoCodecProp* _info)                  = 0;
   virtual void                 get_codec_info_int (VideoCodecProp* _info)                        = 0;
   virtual void                 set_cpu_int (::libs::helpers::sys::cpu::TypeExtCpu optim)         = 0;
   virtual const StatisticInfo& get_statistic_info_int () const                                   = 0;
   virtual void                 reset_statistic_info_int ()                                       = 0;
 
-  TypeExtCpu   simd_;       //< ???
-  InfoGenCodec iinfo_;      //< ???
+  TypeExtCpu       simd_;                //< Выбранный тип расширения процессора.
+  InfoGenCodec     iinfo_;               //< Общие параметры, разделяемые между всеми реализациями кодеков.
+  signed long long counter_frames_;      //< Счетчик кадров в текущем сеансе кодирования/декодирования.
 };
 
 }}}      // namespace dlls::codecs::codec_gen

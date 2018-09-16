@@ -12,9 +12,9 @@
 
 namespace libs { namespace icore { namespace impl { namespace var1 { namespace obj {
 /**
-  \brief  Расширенный интерфейс объекта в графе по обработке данных для данной реализации.
-          Введен, чтобы избежать ненужных dynamic_cast преобразований типов в реализации.
-  */
+\brief  Расширенный интерфейс объекта в графе по обработке данных для данной реализации.
+        Введен, чтобы избежать ненужных dynamic_cast преобразований типов в реализации.
+*/
 class IPathObjExt : public ::libs::core::path::IPathObj
 {
   public:
@@ -30,20 +30,20 @@ class IPathObjExt : public ::libs::core::path::IPathObj
   IPathObjExt (const IPathObjExt& _src) = delete;
   IPathObjExt& operator= (const IPathObjExt& _src) = delete;
   /**
-    \brief    Функция загрузки свойств из xml.
-    \param[in]  _root узел xml.
-    */
+  \brief    Функция загрузки свойств из xml.
+  \param[in]  _root узел xml.
+  */
   void
   load (const base_functs::xml::itn& _root)
   {
     return load_int (_root);
   }
   /**
-    \brief      Функция соединения двух объектов.
-    \param[in]  _idpt1  индекс выходной точки соединения данного объекта.
-    \param[in]  _next   следующий объект, к которому будет подсоединен данный.
-    \param[in]  _idpt2  индекс входной точки следующего объектаю
-    */
+  \brief      Функция соединения двух объектов.
+  \param[in]  _idpt1  индекс выходной точки соединения данного объекта.
+  \param[in]  _next   следующий объект, к которому будет подсоединен данный.
+  \param[in]  _idpt2  индекс входной точки следующего объектаю
+  */
   void
   connect (int _idpt1, IPathObjExt::ptr& _next, int _idpt2)
   {
@@ -52,7 +52,7 @@ class IPathObjExt : public ::libs::core::path::IPathObj
 
 
   private:
-  //  ext interface
+  //  IPathObjExt interface
   virtual void load_int (const base_functs::xml::itn& _root)                 = 0;
   virtual void connect_int (int _idpt1, IPathObjExt::ptr& _next, int _idpt2) = 0;
 };

@@ -17,7 +17,7 @@ namespace libs { namespace igui_events { namespace events {
 
 ExitApplEvent::ExitApplEvent (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -33,7 +33,7 @@ ExitApplEvent::get_type () const
 
 
 ::libs::events::IEvent::ptr
-ExitApplEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+ExitApplEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<ExitApplEvent> (this, _deep);
 }

@@ -17,7 +17,7 @@ namespace libs { namespace ievents { namespace runtime {
 
 RuntimeEvent::RuntimeEvent (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -26,7 +26,7 @@ RuntimeEvent::~RuntimeEvent ()
 
 
 ::libs::events::IEvent::ptr
-RuntimeEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+RuntimeEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<RuntimeEvent> (this, _deep);
 }

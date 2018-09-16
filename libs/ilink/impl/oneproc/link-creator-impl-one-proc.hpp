@@ -10,8 +10,8 @@
 
 namespace libs { namespace ilink { namespace impl { namespace oneproc {
 /**
-  \brief  Реализация интерфейса для генерации объектов "связь" в сценарии работы системы в одном процессе.
-  */
+\brief  Реализация интерфейса для генерации объектов "связь" в сценарии работы системы в одном процессе.
+*/
 class LinkCreatorImplOneProc : public ::libs::link::ILinkCreator
 {
   public:
@@ -22,8 +22,8 @@ class LinkCreatorImplOneProc : public ::libs::link::ILinkCreator
   //  ILinkCreator impl
   virtual ILink::ptr get_connect (const CreateInfo* _info) override;
   virtual ILink::ptr get_listen (const CreateInfo* _info) override;
-  virtual ILink::ptr get_connect (const TypeLinkModules& _type) override;
-  virtual ILink::ptr get_listen (const TypeLinkModules& _type) override;
+  virtual ILink::ptr get_connect (const LinkModulesType& _type) override;
+  virtual ILink::ptr get_listen (const LinkModulesType& _type) override;
   virtual bool       close_all () override;
 
 
@@ -31,7 +31,7 @@ class LinkCreatorImplOneProc : public ::libs::link::ILinkCreator
   //  int types
   using sync_type       = std::mutex;
   using guard_type      = std::lock_guard<sync_type>;
-  using helper2ptr_type = std::map<TypeLinkModules, InfoOneLink>;
+  using helper2ptr_type = std::map<LinkModulesType, InfoOneLink>;
 
   helper2ptr_type links_;      //< Хранилище открытых каналов передачи данных.
   sync_type       mtx_;        //< Мьютекс для синхронизации доступа к объекту.

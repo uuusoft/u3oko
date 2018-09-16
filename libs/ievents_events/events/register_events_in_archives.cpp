@@ -20,6 +20,8 @@ register_events_in_archives ()
 {
   UUU_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents_events::events::BaseEventsEvent);
   UUU_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents_events::events::WrapperEventsEvent);
+  UUU_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents_events::events::AddEvent2Base);
+  UUU_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents_events::events::GetEventsFromBase);
   return;
 }
 

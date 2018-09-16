@@ -21,7 +21,7 @@ VideoSpaceNoiseRemoverProp::VideoSpaceNoiseRemoverProp (const Acessor& _ph) :
   indx_cond_buff_ (utils::dbuffs::video::consts::offs::invalid),
   use_cond_buff_ (false)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -30,7 +30,7 @@ VideoSpaceNoiseRemoverProp::~VideoSpaceNoiseRemoverProp ()
 
 
 ::libs::events::IEvent::ptr
-VideoSpaceNoiseRemoverProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+VideoSpaceNoiseRemoverProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<VideoSpaceNoiseRemoverProp> (this, _deep);
 }

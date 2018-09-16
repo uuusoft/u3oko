@@ -55,9 +55,6 @@
     <Filter Include="impl\var1\obj\_includes">
       <UniqueIdentifier>{43a94477-ea9d-4f83-9548-c2e72e53179e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="impl\var1\path\old_shit">
-      <UniqueIdentifier>{e3d1e3e2-2951-498b-b8f0-60c62601b6be}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\xml\proxy_pugixml.cpp">
@@ -101,9 +98,6 @@
     </ClCompile>
     <ClCompile Include="..\..\impl\var1\core.cpp">
       <Filter>impl\var1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\impl\var1\path\PathObjIDExt.cpp">
-      <Filter>impl\var1\path\old_shit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,9 +206,6 @@
     </ClInclude>
     <ClInclude Include="..\..\impl\var1\obj\dll\base-info-filter-dll.hpp">
       <Filter>impl\var1\obj\dll</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\impl\var1\path\PathObjIDExt.hpp">
-      <Filter>impl\var1\path\old_shit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

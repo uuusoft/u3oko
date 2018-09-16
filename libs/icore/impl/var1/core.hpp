@@ -13,8 +13,8 @@ namespace libs { namespace icore { namespace impl { namespace var1 {
 using ::libs::core::path::IPath;
 using ::libs::core::ICore;
 /**
-  \brief  Локальная (внутрипроцессная) реализация внешнего интерфейса ядра.
-  */
+\brief  Локальная (внутрипроцессная) реализация внешнего интерфейса ядра.
+*/
 class Core : public ICore
 {
   public:
@@ -37,9 +37,9 @@ class Core : public ICore
   virtual void            get_paths_int (out_wpaths_type& _paths) override;
   virtual bool            delete_path_int (IPath::weak_ptr _obj) override;
   /**
-    \brief  Функция удаления всех графов обработки данных.
-            Ожидается, что при ее вызове никаких клиентов ядра уже не существует.
-    */
+  \brief  Функция удаления всех графов обработки данных.
+          Ожидается, что при ее вызове никаких клиентов ядра уже не существует.
+  */
   void delete_paths ();
 
   paths_type paths_;      //< Все существующие пути ядра.

@@ -97,4 +97,41 @@ MjpegImpl::reset_statistic_info_int ()
   return;
 }
 
+
+void
+MjpegImpl::update_coder (const unsigned long _max_size)
+{
+  if (!hjpeg_)
+    {
+      hjpeg_ = tjInitCompress ();
+    }
+
+  if (!jpeg_buff_ || _max_size > size_jpeg_buff_)
+    {
+      if (jpeg_buff_)
+        {
+          tjFree (jpeg_buff_);
+          jpeg_buff_ = nullptr;
+        }
+
+      jpeg_buff_      = tjAlloc (_max_size);
+      size_jpeg_buff_ = _max_size;
+    }
+  return;
+}
+
+
+void
+MjpegImpl::update_decoder ()
+{
+  if (hjpeg_)
+    {
+      return;
+    }
+
+  hjpeg_ = tjInitDecompress ();
+  CHECK_STATE (hjpeg_, "failed init mjpeg decompressor");
+  return;
+}
+
 }}}      // namespace dlls::codecs::vcodec_mjpg

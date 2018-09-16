@@ -53,7 +53,7 @@ void
 DataModule::init_links_int (const ::libs::link::appl::InitApplication& _info)
 {
   XULOG_TRACE ("DataModule::init_links_int: beg");
-  const TypeRunCode         _type_run  = TypeRunCode::appl;
+  const RunCodeType         _type_run  = RunCodeType::appl;
   LinkCreatorProxy::raw_ptr _lproxy    = ::libs::ilink::LinkCreatorProxy::instance ();
   volatile auto             _ipstorage = ::libs::iproperties::helpers::get_storage ();
 
@@ -68,7 +68,7 @@ DataModule::init_links_int (const ::libs::link::appl::InitApplication& _info)
       _info.name_company_,
       _info.name_appl_,
       "subsys_data",
-      ::libs::link::details::TypeLinkModules::mdata,
+      ::libs::link::details::LinkModulesType::mdata,
       ::libs::link::consts::size::buff_appl2data);
 
     links_.data2appl_ = _lproxy->impl ()->get_listen (&_create_info);
@@ -120,7 +120,7 @@ DataModule::update_catch_functs_int ()
 {
   super::update_catch_functs_int ();
 
-  catch_functs_[FrameDone::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[FrameDone::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         return IEvent::ptr ();
@@ -128,7 +128,7 @@ DataModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[InfoCPUEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[InfoCPUEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         auto _props = ::libs::iproperties::helpers::cast_event<InfoCPUEvent> (_msg);
@@ -139,7 +139,7 @@ DataModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[ChangePathsDataEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[ChangePathsDataEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         auto _props = ::libs::iproperties::helpers::cast_event<ChangePathsDataEvent> (_msg);
@@ -151,7 +151,7 @@ DataModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[ListDevicesDataEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[ListDevicesDataEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         UASSERT_SIGNAL ("unimplemented");
@@ -160,7 +160,7 @@ DataModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[ListXmlFilesDataEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[ListXmlFilesDataEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         auto _props = ::libs::iproperties::helpers::cast_event<ListXmlFilesDataEvent> (_msg);
@@ -171,7 +171,7 @@ DataModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[GetNodesDataEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[GetNodesDataEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         auto _props = ::libs::iproperties::helpers::cast_event<GetNodesDataEvent> (_msg);
@@ -182,7 +182,7 @@ DataModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[ChangeNodeDataEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[ChangeNodeDataEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         auto _props = ::libs::iproperties::helpers::cast_event<ChangeNodeDataEvent> (_msg);
@@ -193,7 +193,7 @@ DataModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[ExpandTimeStatisticEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[ExpandTimeStatisticEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         DATA_LOG ("catch ::libs::ievents::runtime::state::ExpandTimeStatisticEvent");

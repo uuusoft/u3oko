@@ -20,7 +20,6 @@ Buffs::Buffs () :
 {
   flags_.fill (false);
   flags_.set (TypeBuffsFlags::request_convert2hsl, true);
-  //flags_.set (TypeBuffsFlags::empty, true);
   set_flag (TypeBuffsFlags::empty, true);
 }
 
@@ -28,7 +27,7 @@ Buffs::Buffs () :
 Buffs::~Buffs ()
 {}
 
-#if 1
+
 void
 Buffs::set_indx_base_buff (const off_buff_type& _indx)
 {
@@ -42,7 +41,7 @@ Buffs::get_indx_base_buff () const
 {
   return indx_base_buff_;
 }
-#endif
+
 
 void
 Buffs::reset (bool _only_indxs)
@@ -72,7 +71,6 @@ IVideoBuff::raw_ptr
     }
 
   auto& _ret = childs_[_indx];
-
   if (!_ret)
     {
       auto _ibuff = ::libs::iproperties::helpers::cast_prop_demons ()->get_buffs_lockfree ();
@@ -91,7 +89,6 @@ IVideoBuff::craw_ptr
     }
 
   auto& _ret = childs_[_indx];
-
   if (!_ret)
     {
       auto _ibuff = ::libs::iproperties::helpers::cast_prop_demons ()->get_buffs_lockfree ();
@@ -117,26 +114,6 @@ Buffs::set_flag (const TypeBuffsFlags& _key, bool _val)
       flags_.set (_key, _val);
       return;
     }
-#if 0
-  if (!_val)
-    {
-      flags_.set (_key, _val);
-      return;
-    }
-
-  for (auto& _child : childs_)
-    {
-      auto& _cbuff = _child.second;
-      if (!_cbuff)
-        {
-          continue;
-        }
-
-      _cbuff->set_flag (::utils::dbuffs::TypeFlagsBuff::empty, true);
-    }
-
-  flags_.set (_key, _val);
-#endif
 
   auto _base_buff = (*this)[get_indx_base_buff ()];
   if (!_base_buff)

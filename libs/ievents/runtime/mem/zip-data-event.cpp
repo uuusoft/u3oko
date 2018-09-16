@@ -40,7 +40,7 @@ copy_buff2vector (IVideoBuff::raw_ptr _buff, std::vector<unsigned char>& _out)
 ZipDataEvent::ZipDataEvent (const Acessor& _ph) :
   size_ (0)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -50,7 +50,7 @@ ZipDataEvent::ZipDataEvent (zip_buff_type&& _buff, std::size_t _size, const numb
   id_buff_ (_id),
   number_buff_ (_number_buff)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -58,7 +58,7 @@ ZipDataEvent::ZipDataEvent (IVideoBuff::raw_ptr _buff, const number_buff_type& _
   id_buff_ (_id),
   number_buff_ (_number_buff)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
   copy_buff2vector (_buff, buff_);
   size_ = buff_.size ();
 }
@@ -67,7 +67,7 @@ ZipDataEvent::ZipDataEvent (IVideoBuff::raw_ptr _buff, const number_buff_type& _
 ZipDataEvent::ZipDataEvent (const ZipDataEvent& _src) :
   size_ (0)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
   super::operator= (_src);
 
   if (_src.get_size ())
@@ -152,7 +152,7 @@ ZipDataEvent::set_number (const number_buff_type& _number_buff)
 
 
 ::libs::events::IEvent::ptr
-ZipDataEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+ZipDataEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<ZipDataEvent> (this, _deep);
 }

@@ -18,7 +18,7 @@ namespace libs { namespace events {
 IWrapBaseEvent::IWrapBaseEvent (const Acessor& _ph, IEvent::ptr _int) :
   int_ (_int)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -27,7 +27,7 @@ IWrapBaseEvent::~IWrapBaseEvent ()
 
 
 IEvent::ptr
-IWrapBaseEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+IWrapBaseEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<IWrapBaseEvent> (this, _deep);
 }

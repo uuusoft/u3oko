@@ -10,8 +10,8 @@
 
 namespace utils { namespace dbuffs { namespace video { namespace helpers {
 /**
-  \brief  
-  */
+\brief  ???
+*/
 inline void
 fill (IVideoBuff::raw_ptr _buff, unsigned char _val)
 {
@@ -25,8 +25,8 @@ fill (IVideoBuff::raw_ptr _buff, unsigned char _val)
   return;
 }
 /**
-  \brief
-  */
+\brief  ???
+*/
 template <typename TPx>
 void
 fill (IVideoBuff::raw_ptr _buff, const std::function<void(int indxx, int indxy, TPx& val)>& funct)
@@ -51,8 +51,8 @@ fill (IVideoBuff::raw_ptr _buff, const std::function<void(int indxx, int indxy, 
   return;
 }
 /**
-  \brief
-  */
+\brief  ???
+*/
 template <typename TPx>
 void
 fill_buffer (IVideoBuff::raw_ptr _buff, const std::function<void(long long indx, TPx& val)>& funct)
@@ -73,8 +73,8 @@ fill_buffer (IVideoBuff::raw_ptr _buff, const std::function<void(long long indx,
   return;
 }
 /**
-  \brief  
-  */
+\brief  ???
+*/
 inline void
 raw_copy (
   const unsigned char* _rbuff,

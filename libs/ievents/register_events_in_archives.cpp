@@ -40,6 +40,8 @@ struct RegisterHelper
     UUU_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::hardware::InfoCPUEvent);
     UUU_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::mix_mul::MixMulProp);
     UUU_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::modules::log::PropertyLogModuleEvent);
+    UUU_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::modules::events::PropertyEventsModuleEvent);
+    UUU_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::modules::storage::PropertyStorageModuleEvent);
     UUU_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::terminals::EndPointProp);
     UUU_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::base_id::BaseIdProp);
 

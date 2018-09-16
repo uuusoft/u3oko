@@ -23,9 +23,9 @@ LogModule::make_dir_for_logs ()
 
   const boost::posix_time::ptime _sys_time = boost::posix_time::microsec_clock::universal_time ();
 
-  name_folder_current_session_ = boost::posix_time::to_iso_string (_sys_time);
-  path2sessions_               = paths_->get_path (::libs::iproperties::appl_paths::TypePath::logs);
-  path2logs_                   = ::libs::helpers::files::make_path (path2sessions_, name_folder_current_session_);
+  active_session_folder_ = boost::posix_time::to_iso_string (_sys_time);
+  path2sessions_         = paths_->get_path (::libs::iproperties::appl_paths::TypePath::logs);
+  path2logs_             = ::libs::helpers::files::make_path (path2sessions_, active_session_folder_);
 
   XULOG_TRACE ("uuu_log::LogModule::init:: prefix=" + path2sessions_);
   XULOG_TRACE ("uuu_log::LogModule::init:: log=" + path2logs_);
@@ -54,7 +54,7 @@ LogModule::delete_folders (const list_folders_type& _folders)
 {
   for (const auto& _folder : _folders)
     {
-      if (_folder == name_folder_current_session_)
+      if (_folder == active_session_folder_)
         {
           // нельзя удалять директорию текущего сеанса логирования.
           continue;

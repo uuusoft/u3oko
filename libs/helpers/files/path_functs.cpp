@@ -19,12 +19,22 @@ namespace libs { namespace helpers { namespace files {
 std::string
 make_short_path (const std::string& _path)
 {
-  CHECK_STATE (!_path.empty (), "failed, path empty");
+  CHECK_STATE (!_path.empty (), "failed, empty path");
 
 #if defined UUU_OS_WIN32_DESKTOP
-  const auto        _req_size = GetShortPathNameA (_path.c_str (), nullptr, 0);
+  const auto _req_size = GetShortPathNameA (_path.c_str (), nullptr, 0);
+  if (!_req_size)
+    {
+      XULOG_ERROR ("failed get buffer size from GetShortPathNameA, " << _path);
+      return _path;
+    }
+
   std::vector<char> _temp (_req_size);
-  CHECK_CALL (GetShortPathNameA (_path.c_str (), &_temp[0], _temp.size ()), "failed short path, " + _path);
+  if (!GetShortPathNameA (_path.c_str (), &_temp[0], _temp.size ()))
+    {
+      XULOG_ERROR ("failed call GetShortPathNameA, for path " << _path);
+      return _path;
+    }
   return std::string (&_temp[0]);
 #else
   return _path;
@@ -32,13 +42,13 @@ make_short_path (const std::string& _path)
 }
 
 
-void
+bool
 create_folder (const std::string& _path)
 {
   if (_path.empty ())
     {
       XULOG_WARNING ("try create empty path");
-      return;
+      return false;
     }
 
   std::string            _temp_path = _path;
@@ -67,6 +77,7 @@ create_folder (const std::string& _path)
           if (_error)
             {
               XULOG_WARNING ("uuu_helpers::create_folder::failed make path " << _error.message ());
+              return false;
             }
         }
       if (std::string::npos == _find_div)
@@ -74,7 +85,7 @@ create_folder (const std::string& _path)
           break;
         }
     }
-  return;
+  return true;
 }
 
 

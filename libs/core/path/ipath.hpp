@@ -12,9 +12,9 @@ namespace libs { namespace core { namespace path {
 /// Тип для функции-параметра, передающимся при посылки события в граф.
 typedef std::function<bool(const PathObjID& _obj_info, IPathObj::craw_ptr)> send_funct_type;
 /**
-  \brief  Интерфейс графа обработки данных. 
-          Все функции интерфейса потокобезопасны.
-  */
+\brief  Интерфейс графа обработки данных. 
+        Все функции интерфейса потокобезопасны.
+*/
 class IPath
 {
   friend class ::libs::icore::impl::var1::path::Path;
@@ -27,37 +27,37 @@ class IPath
   IPath (const IPath& _src) = delete;
   IPath& operator= (const IPath& _src) = delete;
   /**
-    \brief      Функция конструирования графа из xml файла.
-    \param[in]  _file путь к xml файлу с описанием графа.
-    */
+  \brief      Функция конструирования графа из xml файла.
+  \param[in]  _file путь к xml файлу с описанием графа.
+  */
   void
   load (const std::string& _file)
   {
     return load_int (_file);
   }
   /**
-    \brief    Функция получения идентификаторов всех объектов в графе.
-    \return   список идентификаторов объектов в графе.
-    */
+  \brief    Функция получения идентификаторов всех объектов в графе.
+  \return   список идентификаторов объектов в графе.
+  */
   const array_id_objs_type&
   get_objs () const
   {
     return get_objs_int ();
   }
   /**
-    \brief          Функция посылки события в граф его объектам.
-    \param[in]      _id_obj   идентфикатор объекта.
-    \param[in, out] _evnt     указатель на сообщение.
-    */
+  \brief          Функция посылки события в граф его объектам.
+  \param[in]      _id_obj   идентфикатор объекта.
+  \param[in, out] _evnt     указатель на сообщение.
+  */
   void
   send_event2obj (const PathObjID& _id_obj, events::IEvent::ptr& _evnt)
   {
     return send_event2obj_int (_id_obj, _evnt);
   }
   /**
-    \brief      Функция установки интерфейса для отправки сообщений в лог системы.
-    \param[in]  _ptr
-    */
+  \brief      Функция установки интерфейса для отправки сообщений в лог системы.
+  \param[in]  _ptr
+  */
   void
   set_logger (::libs::link::ILink::weak_ptr _ptr)
   {
@@ -75,6 +75,7 @@ class IPath
   virtual ~IPath ()
   {}
 
+  //  IPath interface
   virtual void                      load_int (const std::string& _file)                                       = 0;
   virtual const array_id_objs_type& get_objs_int () const                                                     = 0;
   virtual void                      send_event2obj_int (const PathObjID& _id_obj, events::IEvent::ptr& _evnt) = 0;

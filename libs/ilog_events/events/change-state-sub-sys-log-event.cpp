@@ -19,7 +19,7 @@ ChangStateProcessTypeSubSysLogEvent::ChangStateProcessTypeSubSysLogEvent (const 
   InfoLogEvent (InfoLogEvent::Acessor (0), AppllPartLogInfo ("x1x", __FILE__, __LINE__), "x2x"),
   start_ (true)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -27,7 +27,7 @@ ChangStateProcessTypeSubSysLogEvent::ChangStateProcessTypeSubSysLogEvent (const 
   InfoLogEvent (InfoLogEvent::Acessor (0), _appl, "x5x"),
   start_ (_start)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -67,7 +67,7 @@ ChangStateProcessTypeSubSysLogEvent::set_start (bool _val)
 
 
 ::libs::events::IEvent::ptr
-ChangStateProcessTypeSubSysLogEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+ChangStateProcessTypeSubSysLogEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<ChangStateProcessTypeSubSysLogEvent> (this, _deep);
 }

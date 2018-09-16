@@ -10,8 +10,8 @@
 
 namespace libs { namespace igui_events { namespace events {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 enum struct TypeMouseButton
 {
   left   = 0,      //< ???

@@ -8,10 +8,8 @@
 \brief      empty brief
 */
 
-namespace dlls {
-namespace doptim {
-namespace impl {
-namespace algs {
+namespace dlls { namespace doptim { namespace impl { namespace algs {
+
 #if 0
   /**
   \brief  empty brief
@@ -82,5 +80,5 @@ namespace algs {
 
   };
 #endif
-}
-}}}      // namespace dlls::doptim::impl::algs
+
+}}}}      // namespace dlls::doptim::impl::algs

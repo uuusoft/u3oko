@@ -16,7 +16,7 @@
 namespace libs { namespace ievents { namespace props { namespace videos { namespace generics { namespace vec2image {
 
 void
-BuffEventInfoVec2Image1::check () const
+EventBuffsInfoVec2Image1::check () const
 {
   super::check ();
 
@@ -27,7 +27,7 @@ BuffEventInfoVec2Image1::check () const
 
 
 void
-BuffEventInfoVec2Image1::load_int (const base_functs::xml::itn& _node)
+EventBuffsInfoVec2Image1::load_int (const base_functs::xml::itn& _node)
 {
   if (pugi::xml_attribute _attr = _node->attribute ("size_block"))
     {
@@ -46,7 +46,7 @@ BuffEventInfoVec2Image1::load_int (const base_functs::xml::itn& _node)
 
 template <class Archive>
 void
-BuffEventInfoVec2Image1::serialize (Archive& ar, const unsigned int /* file_version */)
+EventBuffsInfoVec2Image1::serialize (Archive& ar, const unsigned int /* file_version */)
 {
   ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP (super);
   ar& BOOST_SERIALIZATION_NVP (size_block_);
@@ -56,5 +56,5 @@ BuffEventInfoVec2Image1::serialize (Archive& ar, const unsigned int /* file_vers
 
 }}}}}}      // namespace libs::ievents::props::videos::generics::vec2image
 
-BOOST_CLASS_EXPORT_IMPLEMENT (::libs::ievents::props::videos::generics::vec2image::BuffEventInfoVec2Image1);
-SERIALIZE_TYPE_TO_ARCHIVES (::libs::ievents::props::videos::generics::vec2image::BuffEventInfoVec2Image1);
+BOOST_CLASS_EXPORT_IMPLEMENT (::libs::ievents::props::videos::generics::vec2image::EventBuffsInfoVec2Image1);
+SERIALIZE_TYPE_TO_ARCHIVES (::libs::ievents::props::videos::generics::vec2image::EventBuffsInfoVec2Image1);

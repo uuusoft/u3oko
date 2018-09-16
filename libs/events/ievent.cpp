@@ -25,7 +25,7 @@ IEvent::~IEvent ()
 
 
 IEvent::ptr
-IEvent::clone (const ::libs::events::TypeCloneEvent& _deep) const
+IEvent::clone (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return clone_int (_deep);
 }
@@ -38,7 +38,7 @@ IEvent::copy (const IEvent::craw_ptr _src)
 }
 
 
-const IEvent::text_id_type&
+const IEvent::hid_type&
 IEvent::get_mid () const
 {
   UASSERT (!property_name_.empty ());
@@ -69,7 +69,6 @@ IEvent::check_node (const base_functs::xml::itn& _node)
       UASSERT_SIGNAL ("failed");
       return false;
     }
-
   return true;
 }
 

@@ -22,15 +22,15 @@ class LinkCreatorImplAnyProc : public ::libs::link::ILinkCreator
   //  ::libs::link::ILinkCreator impl
   virtual ::libs::link::ILink::ptr get_connect (const ::libs::link::CreateInfo* _info) override;
   virtual ::libs::link::ILink::ptr get_listen (const ::libs::link::CreateInfo* _info) override;
-  virtual ::libs::link::ILink::ptr get_connect (const TypeLinkModules& _type) override;
-  virtual ::libs::link::ILink::ptr get_listen (const TypeLinkModules& _type) override;
+  virtual ::libs::link::ILink::ptr get_connect (const LinkModulesType& _type) override;
+  virtual ::libs::link::ILink::ptr get_listen (const LinkModulesType& _type) override;
   virtual bool                     close_all () override;
 
 
   private:
   //  int types
-  using helper2ptr_type  = std::map<TypeLinkModules, ::libs::link::ILink::ptr>;
-  using type_helper2info = std::map<TypeLinkModules, ::libs::link::CreateInfo>;
+  using helper2ptr_type  = std::map<LinkModulesType, ::libs::link::ILink::ptr>;
+  using type_helper2info = std::map<LinkModulesType, ::libs::link::CreateInfo>;
   using sync_type        = std::mutex;
   using guard_type       = std::lock_guard<sync_type>;
 

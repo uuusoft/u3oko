@@ -10,8 +10,8 @@
 
 namespace dlls { namespace codecs { namespace codec_gen {
 /**
-  \brief  Тип, задает стили кодирования в виде флагов.
-  */
+\brief  Тип, задает стили кодирования в виде флагов.
+*/
 enum struct StyleCodec
 {
   base        = 1,      //< Базовый стиль по умолчанию, для общности.

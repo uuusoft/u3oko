@@ -34,6 +34,7 @@
     <ClInclude Include="..\source\color_helpers_functs.hpp" />
     <ClInclude Include="..\source\source-impl.hpp" />
     <ClInclude Include="..\source\includes_int.hpp" />
+    <ClInclude Include="..\source\syn.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\CMakeLists.txt" />

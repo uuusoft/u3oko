@@ -17,7 +17,7 @@ namespace libs { namespace ievents { namespace props { namespace videos { namesp
 
 FreqVideoNoiseRemoverProp::FreqVideoNoiseRemoverProp (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -26,7 +26,7 @@ FreqVideoNoiseRemoverProp::~FreqVideoNoiseRemoverProp ()
 
 
 ::libs::events::IEvent::ptr
-FreqVideoNoiseRemoverProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+FreqVideoNoiseRemoverProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<FreqVideoNoiseRemoverProp> (this, _deep);
 }

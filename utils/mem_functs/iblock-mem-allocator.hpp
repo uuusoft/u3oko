@@ -10,8 +10,8 @@
 
 namespace utils { namespace mem_functs {
 /**
-  \brief  Интерфейс кэширования и выделения выровненных блоков памяти внутри одного процесса.
-  */
+\brief  Интерфейс кэширования и выделения выровненных блоков памяти внутри одного процесса.
+*/
 class IBlockMemAllocator
 {
   public:
@@ -22,10 +22,10 @@ class IBlockMemAllocator
   IBlockMemAllocator (const IBlockMemAllocator& _src) = delete;
   IBlockMemAllocator& operator= (const IBlockMemAllocator& _src) = delete;
   /**
-    \brief      Функция выделения блока памяти с выравниваем.
-    \param[in]  _size размер памяти под данные.
-    \return     указатель на блок памяти.
-    */
+  \brief      Функция выделения блока памяти с выравниваем.
+  \param[in]  _size размер памяти под данные.
+  \return     указатель на блок памяти.
+  */
   virtual IBlockMem::ptr alloc (const size_type& _size) = 0;
   /// Функция трассировки статуса памяти системы в данном процессе.
   virtual void dump_status () = 0;

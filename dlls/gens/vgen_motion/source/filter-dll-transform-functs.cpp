@@ -17,7 +17,7 @@
 namespace dlls { namespace gens { namespace vgen_motion {
 
 void
-fill_search_vecs (BuffEventInfo& _b2b)
+fill_search_vecs (EventBuffsInfo& _b2b)
 {
   _b2b.search_vecs_.reserve (_b2b.size_search_ * _b2b.size_search_);
   _b2b.search_vecs_.clear ();
@@ -59,7 +59,7 @@ fill_search_vecs (BuffEventInfo& _b2b)
 void
 Filter::itransform ()
 {
-  for (BuffEventInfo& _b2b : finfo_.rprops_->buffs_)
+  for (EventBuffsInfo& _b2b : finfo_.rprops_->buffs_)
     {
       _b2b.check ();
 

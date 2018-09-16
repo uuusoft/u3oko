@@ -17,7 +17,7 @@ namespace libs { namespace imdata_events { namespace events {
 
 BaseDataEvent::BaseDataEvent (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -35,7 +35,7 @@ BaseDataEvent::load_int (const base_functs::xml::itn& _node)
 
 
 ::libs::events::IEvent::ptr
-BaseDataEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+BaseDataEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<BaseDataEvent> (this, _deep);
 }

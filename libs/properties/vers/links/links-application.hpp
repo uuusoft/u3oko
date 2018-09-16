@@ -10,16 +10,16 @@
 
 namespace libs { namespace properties { namespace vers { namespace links {
 /**
-  \brief  Структура для группировки связей модуля.
-  \tparam TTLinkPtr тип хранимого указателя. У владельцев он shared, у агрегатов weak.
-  */
+\brief  Структура для группировки связей модуля.
+\tparam link_ptr_type тип хранимого указателя. У владельцев он shared, у агрегатов weak.
+*/
 template <
-  typename TTLinkPtr>
+  typename tlink_ptr_type>
 struct LinksApplication
 {
   public:
   //  ext types
-  using link_ptr_type = TTLinkPtr;
+  using link_ptr_type = tlink_ptr_type;
 
   LinksApplication ()
   {}
@@ -55,11 +55,11 @@ struct LinksApplication
     return true;
   }
   /**
-    \brief  Функция присваивания двух объектов с разными (но конвертируемыми) указателями.
-    \tparam APtr  указатель типа А
-    \tparam BPtr  указатель типа B
-    \return       левый объект.
-    */
+  \brief  Функция присваивания двух объектов с разными (но конвертируемыми) указателями.
+  \tparam APtr  указатель типа А
+  \tparam BPtr  указатель типа B
+  \return       левый объект.
+  */
   template <
     typename BPtr>
   LinksApplication&

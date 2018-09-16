@@ -28,20 +28,19 @@ LoaderCode::~LoaderCode ()
 
 void
 LoaderCode::load (
-  const TypeRunCode&              _type,
+  const RunCodeType&              _type,
   const CreateInfo*               _info,
   const std::string&              _name_proc,
   const std::string&              _name_lib,
   const std::vector<std::string>& _args)
 {
-  XULOG_INFO ("LoaderCode::load:: " << _name_lib);
-  if (::libs::link::details::TypeRunCode::appl == _type)
+  XULOG_TRACE ("LoaderCode::load:: " << _name_lib);
+  if (::libs::link::details::RunCodeType::appl == _type)
     {
       XULOG_ERROR ("temporarily disabled");
-      UASSERT_SIGNAL ("disabled");
       impl_.reset (new OutProcLoaderCode);
     }
-  else if (::libs::link::details::TypeRunCode::dll == _type)
+  else if (::libs::link::details::RunCodeType::dll == _type)
     {
       impl_.reset (new InProcLoaderCode);
     }

@@ -17,7 +17,7 @@ namespace libs { namespace ievents { namespace props { namespace videos { namesp
 
 VideoScalerProp::VideoScalerProp (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -25,7 +25,7 @@ VideoScalerProp::~VideoScalerProp ()
 {}
 
 
-const std::vector<BuffEventInfoVideoScaler>&
+const std::vector<EventBuffsInfoVideoScaler>&
 VideoScalerProp::get_buffs () const
 {
   return buffs_;
@@ -33,7 +33,7 @@ VideoScalerProp::get_buffs () const
 
 
 ::libs::events::IEvent::ptr
-VideoScalerProp::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+VideoScalerProp::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<VideoScalerProp> (this, _deep);
 }
@@ -53,7 +53,7 @@ VideoScalerProp::load_int (const base_functs::xml::itn& _prop)
 
   while (_param != _params.end ())
     {
-      BuffEventInfoVideoScaler _add;
+      EventBuffsInfoVideoScaler _add;
 
       _add.load (_param);
 

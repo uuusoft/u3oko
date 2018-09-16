@@ -10,8 +10,8 @@
 
 namespace dlls { namespace base_id {
 /**
-  \brief  empty brief
-  */
+\brief  empty brief
+*/
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter
 {
   // ext types
@@ -25,7 +25,7 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
   InfoFilter (const InfoFilter& _src) = delete;
   InfoFilter& operator= (const InfoFilter& _src) = delete;
 
-  ::libs::events::IEvent::ptr props_;       //< ???
+  ::libs::events::IEvent::ptr props_;       //< Свойства фильтра.
   props_type::raw_ptr         rprops_;      //< Настроенный указатель на свойства (для удобства).
 };
 

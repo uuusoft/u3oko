@@ -32,7 +32,7 @@ LinkImplOneProc::LinkImplOneProc (LinkImplOneProcInt::weak_ptr& _helper) :
 
 LinkImplOneProc::~LinkImplOneProc ()
 {
-  CHECK_CALL_NO_THROW (destroy_int (TypeDestroyLink::force));
+  CHECK_CALL_NO_THROW (destroy_int (DestroyLinkType::force));
 }
 
 #if 0
@@ -61,7 +61,7 @@ LinkImplOneProc::connect_int (const CreateInfo& _info)
 
   info_              = _info;
   info_.server_side_ = false;
-  info_.run_as_      = TypeRunCode::dll;
+  info_.run_as_      = RunCodeType::dll;
 
   auto _phelper = get_shared_impl ();
   return _phelper->connect (info_);
@@ -75,7 +75,7 @@ LinkImplOneProc::listen_int (const CreateInfo& _info)
 
   info_              = _info;
   info_.server_side_ = true;
-  info_.run_as_      = TypeRunCode::dll;
+  info_.run_as_      = RunCodeType::dll;
 
   auto _phelper = get_shared_impl ();
   return _phelper->listen (info_);
@@ -83,7 +83,7 @@ LinkImplOneProc::listen_int (const CreateInfo& _info)
 
 
 bool
-LinkImplOneProc::destroy_int (const TypeDestroyLink& _type)
+LinkImplOneProc::destroy_int (const DestroyLinkType& _type)
 {
   guard_type _grd (mtx_);
   auto       _phelper = phelper_.lock ();
@@ -109,8 +109,8 @@ LinkImplOneProc::received_msg_int ()
 IEvent::ptr
 LinkImplOneProc::send_msg_int (
   IEvent::ptr               _msg,
-  const TypeSyncCall&       _sync,
-  const TypeRequestCall&    _req,
+  const SyncCallType&       _sync,
+  const RequestCallType&    _req,
   const ISeqEvent::id_type& _id)
 {
   guard_type _grd (mtx_);

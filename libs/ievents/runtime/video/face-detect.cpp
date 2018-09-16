@@ -17,7 +17,7 @@ namespace libs { namespace ievents { namespace runtime { namespace video {
 FaceDetect::FaceDetect (const Acessor& _ph, bool _start) :
   start_ (_start)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -33,7 +33,7 @@ FaceDetect::is_start () const
 
 
 ::libs::events::IEvent::ptr
-FaceDetect::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+FaceDetect::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<FaceDetect> (this, _deep);
 }

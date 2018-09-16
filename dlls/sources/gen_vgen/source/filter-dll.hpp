@@ -10,8 +10,8 @@
 
 namespace dlls { namespace sources { namespace gen_vgen {
 /**
-  \brief  Базовый фильтр захвата кадров из внешнего источника (web, ip, desktop, etc).
-  */
+\brief  Базовый фильтр захвата кадров из внешнего источника (web, ip, desktop, etc).
+*/
 class Filter final : public ::libs::icore::impl::var1::obj::dll::IFilter,
                      protected ::libs::icore::impl::var1::obj::dll::FilterImpl<InfoFilter>
 {

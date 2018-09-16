@@ -37,7 +37,6 @@
     <ClCompile Include="..\..\impl\var1\path\path-local-int-functs.cpp" />
     <ClCompile Include="..\..\impl\var1\path\path-local-ipath-functs.cpp" />
     <ClCompile Include="..\..\impl\var1\path\path-local-thread-functs.cpp" />
-    <ClCompile Include="..\..\impl\var1\path\PathObjIDExt.cpp" />
     <ClCompile Include="..\..\xml\android\loader-asset-android-impl.cpp" />
     <ClCompile Include="..\..\xml\general\loader-file-impl.cpp" />
     <ClCompile Include="..\..\xml\proxy_pugixml.cpp" />
@@ -69,7 +68,6 @@
     <ClInclude Include="..\..\impl\var1\path\path.hpp" />
     <ClInclude Include="..\..\impl\var1\path\includes.hpp" />
     <ClInclude Include="..\..\impl\var1\path\syn_types.hpp" />
-    <ClInclude Include="..\..\impl\var1\path\PathObjIDExt.hpp" />
     <ClInclude Include="..\..\impl\var1\path\vals.hpp" />
     <ClInclude Include="..\..\includes.hpp" />
     <ClInclude Include="..\..\includes_int.hpp" />

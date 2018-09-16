@@ -11,8 +11,8 @@
 
 namespace libs { namespace ievents { namespace runtime { namespace interf {
 /**
-  \brief  Базовое интерфейсное сообщение.
-  */
+\brief  Базовое интерфейсное сообщение.
+*/
 class BaseInterfEvent : public RuntimeEvent
 {
   friend class boost::serialization::access;
@@ -36,8 +36,8 @@ class BaseInterfEvent : public RuntimeEvent
 
   virtual ~BaseInterfEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/ievents/runtime/interf/base-interf-event";
     return _ret;
@@ -53,6 +53,7 @@ class BaseInterfEvent : public RuntimeEvent
 
 
   protected:
+  //  ievents::Event overrides
   virtual void copy_int (const IEvent::craw_ptr _src) override;
 
 
@@ -62,9 +63,8 @@ class BaseInterfEvent : public RuntimeEvent
 
   bool active_;         //< Флаг активности интерфейса.
   bool available_;      //< Флаг наличия в данный момент возможности работы с интерфейсом. Т.е. при его сбросе флаг активности перестает учитываться.
-  //  RuntimeEvent overrides
-  virtual ::libs::events::IEvent::ptr
-  clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  //  ievents::Event overrides
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
   //virtual void load_int( const base_functs::xml::itn& _node ) override;
 };
 

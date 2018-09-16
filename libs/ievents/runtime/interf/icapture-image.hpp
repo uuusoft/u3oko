@@ -15,8 +15,8 @@ using ::libs::ievents::props::videos::generics::driver::VideoDriverCaptureProp;
 using ::utils::dbuffs::IBuff;
 using ::utils::dbuffs::video::IVideoBuff;
 /**
-  \brief  ��������� ���������� (������ ����� ����������) ������������� �����������.
-  */
+\brief  ��������� ���������� (������ ����� ����������) ������������� �����������.
+*/
 class ICaptureImage
 {
   public:

@@ -20,7 +20,7 @@ StorageModule::update_catch_functs_int ()
 {
   super::update_catch_functs_int ();
 
-  catch_functs_[PropertyStorageModuleEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[PropertyStorageModuleEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         XULOG_TRACE ("received PropertyStorageModuleEvent");
@@ -34,7 +34,7 @@ StorageModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[MemResourceStorageEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[MemResourceStorageEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         XULOG_TRACE ("received MemResourceStorageEvent");
@@ -45,7 +45,7 @@ StorageModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[GetRuntimeInfo::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[GetRuntimeInfo::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         XULOG_TRACE ("received GetRuntimeInfo");
@@ -57,7 +57,7 @@ StorageModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[GetObjects::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[GetObjects::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         XULOG_TRACE ("received GetObjects");
@@ -70,7 +70,7 @@ StorageModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[GetStatisticInfo::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[GetStatisticInfo::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         XULOG_TRACE ("received GetStatisticInfo");
@@ -83,7 +83,7 @@ StorageModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[ReadData::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[ReadData::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         XULOG_TRACE ("received ReadData");
@@ -94,7 +94,7 @@ StorageModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[WriteData::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[WriteData::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         auto _props = ::libs::iproperties::helpers::cast_event<WriteData> (_msg);
@@ -105,10 +105,10 @@ StorageModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[UpdateStream::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[UpdateStream::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
-        XULOG_TEST ("received UpdateStream");
+        XULOG_TRACE ("received UpdateStream");
         auto _props = ::libs::iproperties::helpers::cast_event<UpdateStream> (_msg);
         UASSERT (_props);
         process_update_stream (_props);
@@ -117,7 +117,7 @@ StorageModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[::libs::ievents::runtime::state::ChangStateProcessTypeEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[::libs::ievents::runtime::state::ChangStateProcessTypeEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         XULOG_TRACE ("received ChangStateProcessTypeEvent");
@@ -136,10 +136,11 @@ StorageModule::update_catch_functs_int ()
 void
 StorageModule::process_read_data (ReadData::raw_ptr _props)
 {
-  const auto&                                   _stream_id  = _props->get_stream_id ();
-  const impl::IStorageImpl::info_about_mem_type _sstream_id = _stream_id.name ();
-  auto                                          _int_msg    = _props->get_msg ();
-  XULOG_TEST ("received ReadData event, stream_id=" << _sstream_id);
+  const auto&                           _stream_id  = _props->get_stream_id ();
+  const impl::IStorageImpl::seance_type _sstream_id = _stream_id.name ();
+  auto                                  _int_msg    = _props->get_msg ();
+
+  XULOG_TRACE ("received ReadData event, stream_id=" << _sstream_id);
   UASSERT (_int_msg);
 
   if (!check_acesss_rights (_stream_id, TypeActionStream::read))
@@ -152,6 +153,8 @@ StorageModule::process_read_data (ReadData::raw_ptr _props)
   auto                              _buff_props = ::libs::iproperties::helpers::cast_event<::libs::ievents::runtime::mem::BuffEvent> (_int_msg);
   signed long long                  _size_data  = (*_buff_props->get_buff ())[::utils::dbuffs::TypeMemVar::size_data];
 
+  UASSERT_SIGNAL ("umimplemented");
+#if 0
   storage_impl_->load (_sstream_id, _buff_props->get_buff ()->get_raw_buff ().get ());
 
   if (_props->is_failed ())
@@ -163,6 +166,7 @@ StorageModule::process_read_data (ReadData::raw_ptr _props)
       UASSERT (_size_data > 0);
       streams_runtime_infos_[_stream_id].count_read_bytes_ += _size_data;
     }
+#endif
   return;
 }
 
@@ -170,15 +174,16 @@ StorageModule::process_read_data (ReadData::raw_ptr _props)
 void
 StorageModule::process_write_data (WriteData::raw_ptr _props)
 {
-  const auto&                                   _stream_id  = _props->get_stream_id ();
-  const impl::IStorageImpl::info_about_mem_type _sstream_id = _stream_id.name ();
-  auto                                          _int_msg    = _props->get_msg ();
-  XULOG_TEST ("received WriteData event, stream_id=" << _sstream_id);
+  const auto&                           _stream_id  = _props->get_stream_id ();
+  const impl::IStorageImpl::seance_type _sstream_id = _stream_id.name ();
+  auto                                  _int_msg    = _props->get_msg ();
+
+  XULOG_TRACE ("received WriteData event, stream_id=" << _sstream_id);
   UASSERT (_int_msg);
 
   if (!check_acesss_rights (_stream_id, TypeActionStream::write))
     {
-      XULOG_WARNING ("invalide acess rights for write operation, " << _sstream_id);
+      XULOG_WARNING ("invalid access rights for write operation, " << _sstream_id);
       return;
     }
 
@@ -259,7 +264,7 @@ StorageModule::process_update_stream (UpdateStream::raw_ptr _props)
       UASSERT (streams_rights_.end () == streams_rights_.find (_props->stream_id_));
       UASSERT (!_props->stream_id_.empty ());
       streams_rights_[_props->stream_id_] = _props->operation_;
-      XULOG_TEST ("set rights for " << _props->stream_id_.name () << "=" << to_str (_props->operation_));
+      XULOG_TRACE ("set rights for " << _props->stream_id_.name () << "=" << to_str (_props->operation_));
       break;
     case TypeUpdateStream::close:
       break;

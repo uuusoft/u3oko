@@ -12,8 +12,8 @@
 
 namespace libs { namespace ilink { namespace appl {
 /**
-  \brief  Структура для расширения базового типа необходимим свойствами  для хранения состояния обработки события.
-  */
+\brief  Структура для расширения базового типа необходимим свойствами  для хранения состояния обработки события.
+*/
 struct StateProcessEventExt : public ::libs::link::StateProcessEvent
 {
   StateProcessEventExt ()

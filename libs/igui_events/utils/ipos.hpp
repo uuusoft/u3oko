@@ -10,20 +10,17 @@
 
 namespace libs { namespace igui_events { namespace utils {
 /**
-  \brief  Интерфейс для работы с размерами любых объектов в GUI.
-  */
+\brief  Интерфейс для работы с размерами любых объектов в GUI.
+*/
 class IPos
 {
   public:
   //  ext types
   UUU_THIS_TYPE_HAS_POINTERS_TO_SELF (IPos);
-
   typedef int value_type;
-
+  //  IPos interface
   virtual value_type get_x () const = 0;
-
   virtual value_type get_y () const = 0;
-
   virtual ptr clone () const = 0;
 
 

@@ -17,8 +17,11 @@
 #include <boost/log/utility/setup.hpp>
 #include <boost/log/sources/severity_logger.hpp>
 #include <boost/log/expressions/keyword.hpp>
+#endif
 
 namespace libs { namespace helpers { namespace log { namespace android {
+
+#ifdef UUU_OS_ANDROID
 
 namespace logging = boost::log;
 namespace sinks   = boost::log::sinks;
@@ -66,8 +69,8 @@ deinit ()
   return;
 }
 
+#endif
+
 }}}}      // namespace libs::helpers::log::android
 
 #define SET_MODULE(logger, log_module)      //logger.add_attribute (::libs::helpers::log::android::module.get_name (), boost::log::attributes::constant<std::string> (log_module));
-
-#endif

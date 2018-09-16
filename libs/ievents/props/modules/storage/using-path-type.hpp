@@ -12,13 +12,14 @@
 
 namespace libs { namespace ievents { namespace props { namespace modules { namespace storage {
 /**
-  \brief  Перечисление состояний в которых могут находится данные по данном пути.
-  */
+\brief  Перечисление состояний в которых могут находится данные по некому пути.
+*/
 enum struct UsingPathType
 {
-  disabled,       //< Отключено, запрещен любой доступ.
-  read_only,      //< Только для чтения.
-  read_write      //< Произвольный доступ, запись/чтение.
+  disabled,        //< Отключено, запрещен любой доступ.
+  read_only,       //< Только для чтения.
+  write_only,      //< Только для записи.
+  read_write       //< Произвольный доступ, запись/чтение.
 };
 /**
 \brief  ???
@@ -30,6 +31,7 @@ str2using_path (const std::string& _str)
     { "", UsingPathType::disabled },
     { "disabled", UsingPathType::disabled },
     { "read_only", UsingPathType::read_only },
+    { "write_only", UsingPathType::write_only },
     { "read_write", UsingPathType::read_write }
   };
 

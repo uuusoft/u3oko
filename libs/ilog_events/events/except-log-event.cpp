@@ -18,7 +18,7 @@ namespace libs { namespace ilog_events { namespace events {
 ExceptLogEvent::ExceptLogEvent (const Acessor&, const AppllPartLogInfo& _appl, const std::string& _info) :
   InfoLogEvent (InfoLogEvent::Acessor (0), _appl, _info)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -27,7 +27,7 @@ ExceptLogEvent::~ExceptLogEvent ()
 
 
 ::libs::events::IEvent::ptr
-ExceptLogEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+ExceptLogEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<ExceptLogEvent> (this, _deep);
 }

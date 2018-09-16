@@ -35,8 +35,8 @@ class StateTestIndexer : public ::libs::istorage_events::events::BaseStorageEven
 
   virtual ~StateTestIndexer ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "modules/uuu_storage/appl/impl/indexer/test/state-test-indexer";
     return _ret;
@@ -59,7 +59,7 @@ class StateTestIndexer : public ::libs::istorage_events::events::BaseStorageEven
   void serialize (Archive& ar, const unsigned int /* file_version */);
 
   //virtual void load_int( const base_functs::xml::itn& _prop ) override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
 };
 
 }}}}}}      // namespace modules::uuu_storage::appl::impl::indexer::test

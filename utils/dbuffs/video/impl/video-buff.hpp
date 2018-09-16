@@ -9,8 +9,8 @@
 */
 namespace utils { namespace dbuffs { namespace video { namespace impl {
 /**
-  \brief  Реализация интерфейса для управления буфера с видео данными.
-  */
+\brief  Реализация интерфейса для управления буфера с видео данными.
+*/
 class VideoBuff : public IVideoBuff
 {
   friend class utils::dbuffs::allocator::BuffAllocator;

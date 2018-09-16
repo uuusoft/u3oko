@@ -353,7 +353,7 @@
     <ClInclude Include="..\..\io\mcall-info.hpp" />
     <ClInclude Include="..\..\io\mfunct-params.hpp" />
     <ClInclude Include="..\..\includes.hpp" />
-    <ClInclude Include="..\..\int_optim_typedefs.hpp" />
+    <ClInclude Include="..\..\syn.hpp" />
     <ClInclude Include="..\..\io\ioptim.hpp" />
     <ClInclude Include="..\..\io\hioptim.hpp" />
     <ClInclude Include="..\..\io\ioptim-proxy.hpp" />

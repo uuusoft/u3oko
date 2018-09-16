@@ -12,8 +12,8 @@
 
 namespace libs { namespace imdata_events { namespace events {
 /**
-  \brief  Базовое события для событий работы с узлами пути обработки данных.
-  */
+\brief  Базовое события для событий работы с узлами пути обработки данных.
+*/
 class BaseNodesDataEvent : public BaseDataEvent
 {
   friend class boost::serialization::access;
@@ -28,9 +28,9 @@ class BaseNodesDataEvent : public BaseDataEvent
 
   public:
   //  ext types
-  typedef NodePathInfo                       node_type;
-  typedef std::list<node_type>               nodes_list_type;
-  typedef ChangePathsDataEvent::id_path_type id_path_type;
+  using node_type       = NodePathInfo;
+  using nodes_list_type = std::list<node_type>;
+  using id_path_type    = ChangePathsDataEvent::id_path_type;
   UUU_THIS_TYPE_HAS_POINTERS_TO_SELF (BaseNodesDataEvent);
   UUU_ADD_MAKE_SHARED_FUNCT2THIS_TYPE (BaseNodesDataEvent);
   UUU_DISABLE_ACOPY_TYPE (BaseNodesDataEvent);
@@ -39,8 +39,8 @@ class BaseNodesDataEvent : public BaseDataEvent
 
   virtual ~BaseNodesDataEvent ();
 
-  static const IEvent::text_id_type&
-  gen_get_type_text_id ()
+  static const IEvent::hid_type&
+  gen_get_mid ()
   {
     static const std::string _ret = "libs/imdata_events/events/base-nodes-data-event";
     return _ret;
@@ -59,6 +59,7 @@ class BaseNodesDataEvent : public BaseDataEvent
 
 
   private:
+  // int types
   UUU_THIS_TYPE_HAS_SUPER_CLASS (BaseDataEvent);
 
   id_path_type id_path_;      //< Идентификатор графа, с узлами которого требуется работать.
@@ -68,7 +69,7 @@ class BaseNodesDataEvent : public BaseDataEvent
   template <class Archive>
   void serialize (Archive& ar, const unsigned int /* file_version */);
 
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::TypeCloneEvent& _deep) const override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::DeepEventCloneType& _deep) const override;
 };
 
 }}}      // namespace libs::imdata_events::events

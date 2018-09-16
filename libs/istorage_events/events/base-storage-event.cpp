@@ -17,7 +17,7 @@ namespace libs { namespace istorage_events { namespace events {
 
 BaseStorageEvent::BaseStorageEvent (const Acessor& _ph)
 {
-  property_name_ = gen_get_type_text_id ();
+  property_name_ = gen_get_mid ();
 }
 
 
@@ -26,7 +26,7 @@ BaseStorageEvent::~BaseStorageEvent ()
 
 
 ::libs::events::IEvent::ptr
-BaseStorageEvent::clone_int (const ::libs::events::TypeCloneEvent& _deep) const
+BaseStorageEvent::clone_int (const ::libs::events::DeepEventCloneType& _deep) const
 {
   return helper_impl_clone_funct<BaseStorageEvent> (this, _deep);
 }

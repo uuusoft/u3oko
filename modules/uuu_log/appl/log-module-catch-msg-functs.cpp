@@ -20,7 +20,7 @@ LogModule::update_catch_functs_int ()
 {
   super::update_catch_functs_int ();
 
-  catch_functs_[InfoLogEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[InfoLogEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         auto _props = ::libs::iproperties::helpers::cast_event<InfoLogEvent> (_msg);
@@ -31,7 +31,7 @@ LogModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[mevents::log::PropertyLogModuleEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[mevents::log::PropertyLogModuleEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         auto _props = ::libs::iproperties::helpers::cast_event<mevents::log::PropertyLogModuleEvent> (_msg);
@@ -42,7 +42,7 @@ LogModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[::libs::ievents::runtime::state::ChangStateProcessTypeEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[::libs::ievents::runtime::state::ChangStateProcessTypeEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         auto _props = ::libs::iproperties::helpers::cast_event<::libs::ievents::runtime::state::ChangStateProcessTypeEvent> (_msg);
@@ -53,7 +53,7 @@ LogModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[ProcessListLogsEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[ProcessListLogsEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         XULOG_TRACE ("process levents::ProcessListLogsEvent in " << path2sessions_);
@@ -65,7 +65,7 @@ LogModule::update_catch_functs_int ()
     return _msg;
   };
 
-  catch_functs_[levents::ProcessLogEvent::gen_get_type_text_id ()] = [this](IEvent::ptr _msg, bool _forward) {
+  catch_functs_[levents::ProcessLogEvent::gen_get_mid ()] = [this](IEvent::ptr _msg, bool _forward) {
     if (_forward)
       {
         XULOG_TRACE ("process levents::ProcessLogEvent in " << path2sessions_);

@@ -17,8 +17,8 @@ using ::libs::properties::ISharedProperty;
 using ::libs::iproperties::appl_paths::TypePath;
 using ::utils::mem_functs::IBlockMem;
 /**
-  \brief  Реализация загрузчика неизменяемых файлов из комлпекта поставки системы для Android.
-  */
+\brief  Реализация загрузчика неизменяемых файлов из комлпекта поставки системы для Android.
+*/
 class LoaderAssetAndroidImpl : public ILoaderImpl
 {
   public:
@@ -28,7 +28,7 @@ class LoaderAssetAndroidImpl : public ILoaderImpl
 
 
   private:
-  //  ILoaderImpl impl
+  //  ILoaderImpl overrides
   virtual void get_enum_int (const TypePath& _storage_type, NodeEnumFiles& _enum) override;
   virtual bool get_int (const std::string& _file_name, const TypePath& _storage_type, IBlockMem::ptr& _ret) override;
 

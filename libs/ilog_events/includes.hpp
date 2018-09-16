@@ -12,6 +12,9 @@
 #include "type-log-status.hpp"
 #include "type-log-text.hpp"
 
+#include "events/action-for-process-log.hpp"
+#include "events/info-log-session.hpp"
+#include "events/action-for-list-logs.hpp"
 #include "events/base-log-event.hpp"
 #include "events/info-log-event.hpp"
 #include "events/except-log-event.hpp"

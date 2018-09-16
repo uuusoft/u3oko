@@ -38,7 +38,7 @@ TestIndexerImpl::change_state_int (const StateImplsType& _state)
       break;
     default:
       XULOG_WARNING ("unknown change state, " << UUU_ICAST_INT (_state));
-      break;
+      return false;
     }
   return true;
 }
@@ -62,7 +62,7 @@ TestIndexerImpl::set_info_int (const PathInfo::craw_ptr _info)
 void
 TestIndexerImpl::update_stream_int (UpdateStream::raw_ptr _info)
 {
-  XULOG_TEST ("TestIndexerImpl::update_stream_int, beg");
+  XULOG_TRACE ("TestIndexerImpl::update_stream_int, beg");
 
   switch (_info->action_)
     {
@@ -84,7 +84,7 @@ TestIndexerImpl::update_stream_int (UpdateStream::raw_ptr _info)
     }
 
   state_saved_ = false;
-  XULOG_TEST ("TestIndexerImpl::update_stream_int, end");
+  XULOG_TRACE ("TestIndexerImpl::update_stream_int, end");
   return;
 }
 

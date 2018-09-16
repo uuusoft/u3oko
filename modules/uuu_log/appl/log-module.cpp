@@ -60,7 +60,7 @@ void
 LogModule::init_links_int (const ::libs::link::appl::InitApplication& _info)
 {
   const std::string         _name_data = "";
-  const TypeRunCode         _type_run  = ::libs::link::details::TypeRunCode::appl;
+  const RunCodeType         _type_run  = ::libs::link::details::RunCodeType::appl;
   LinkCreatorProxy::raw_ptr _lproxy    = ::libs::ilink::LinkCreatorProxy::instance ();
   volatile auto             _ipstorage = ::libs::iproperties::helpers::get_storage ();
   volatile auto             _imstorage = ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree ();
@@ -76,7 +76,7 @@ LogModule::init_links_int (const ::libs::link::appl::InitApplication& _info)
       _info.name_company_,
       _info.name_appl_,
       "subsys_appl2log",
-      ::libs::link::details::TypeLinkModules::log,
+      ::libs::link::details::LinkModulesType::log,
       ::libs::link::consts::size::buff_all2log);
 
     links_.log2appl_ = _lproxy->impl ()->get_listen (&_create_info);

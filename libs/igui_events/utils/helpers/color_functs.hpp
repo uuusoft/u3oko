@@ -9,7 +9,9 @@
 */
 
 namespace libs { namespace igui_events { namespace utils { namespace helpers {
-
+/**
+\brief  ???
+*/
 inline Color
 make_rand ()
 {

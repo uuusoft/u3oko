@@ -16,4 +16,5 @@ target_link_libraries( module-uuu_storage
   ${all-igeneric-libs}
   optim-lib
   ${all-event-libs}
+  sqlite-lib
   ${shared_link_flags} )
