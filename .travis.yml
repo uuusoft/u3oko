@@ -11,7 +11,7 @@ branches:
 env:
   global:
     - GH_REPO_NAME: u3oko
-    - DOXYFILE: $TRAVIS_BUILD_DIR/<path_to_your_doxygen_configuration_file>
+    - DOXYFILE: $TRAVIS_BUILD_DIR/doxygen
     - GH_REPO_REF: github.com/uuusoft/u3oko.git
 
 # Install dependencies
