@@ -10,9 +10,9 @@ branches:
 # Environment variables
 env:
   global:
-    - GH_REPO_NAME: <your_repo>
+    - GH_REPO_NAME: u3oko
     - DOXYFILE: $TRAVIS_BUILD_DIR/<path_to_your_doxygen_configuration_file>
-    - GH_REPO_REF: github.com/<your_name>/<your_repo>.git
+    - GH_REPO_REF: github.com/uuusoft/u3oko.git
 
 # Install dependencies
 addons:
