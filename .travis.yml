@@ -23,7 +23,10 @@ addons:
       - doxygen-latex
       - doxygen-gui
       - graphviz
-
+      
+before_install:
+  - gem install bundler
+  
 # Build your code e.g. by calling make
 script:
   #- make
