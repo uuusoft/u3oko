@@ -1,4 +1,3 @@
-
 # This will run on Travis' 'new' container-based infrastructure
 sudo: false
 
@@ -35,5 +34,5 @@ script:
 # Generate and deploy documentation
 after_success:
   - cd $TRAVIS_BUILD_DIR
-  - chmod +x generateDocumentationAndDeploy.sh
+  #- chmod +x generateDocumentationAndDeploy.sh
   #- ./generateDocumentationAndDeploy.sh
