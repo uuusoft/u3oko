@@ -1,0 +1,2 @@
+# file u3-libde265-lib.cmake
+# U3_THIS_COMMERCIAL_PART_SOURCE_CODE

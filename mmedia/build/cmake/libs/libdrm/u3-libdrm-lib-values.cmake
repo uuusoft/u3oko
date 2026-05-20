@@ -1,0 +1,43 @@
+# author      Erashov Anton erashov2026@proton.me
+# date        27.02.2026
+# copyright   Erashov A.I.
+# file        u3-libdrm-lib-values.cmake
+
+#set(U3_URL_TO_EXTERNAL_LIB_LIBDRM_SRC_EXT https://github.com/aleksander0m/libdrm)
+set(U3_URL_TO_EXTERNAL_LIB_LIBDRM_SRC_EXT https://dri.freedesktop.org/libdrm/libdrm-2.4.133.tar.xz)
+set(U3_ARCHIVE_NAME_EXTERNAL_LIB_LIBDRM libdrm.xxx)
+set(U3_NAME_EXTERNAL_LIB_LIBDRM libdrm)
+set(U3_VERSION_EXTERNAL_LIB_LIBDRM 0)
+set(U3_VERSION_EXTERNAL_LIB_LIBDRM_CID)
+
+string(MAKE_C_IDENTIFIER ${U3_VERSION_EXTERNAL_LIB_LIBDRM} U3_VERSION_EXTERNAL_LIB_LIBDRM_CID)
+
+set(U3_URL_TO_EXTERNAL_LIB_LIBDRM_BIN ${U3_URL_TO_EXTERNAL_LIBS_BIN}/lib-libdrm-bin-${U3_VERSION_EXTERNAL_LIB_LIBDRM}-${U3_ENV_GEN_POSTFIX_NAME_TO_EXT_LIB}.zip)
+set(U3_URL_TO_EXTERNAL_LIB_LIBDRM_SRC ${U3_URL_TO_EXTERNAL_LIBS_SRC}/lib-libdrm-src-${U3_VERSION_EXTERNAL_LIB_LIBDRM}.zip)
+set(U3_EXTERNAL_LIB_LIBDRM_FILE_NAME "${U3_PREFIX_LIB_NAME}va_drm.${U3_SUFFIX_LIB_NAME}")
+#set( U3_EXTERNAL_LIB_LIBDRM_FILE_NAME         "${U3_PREFIX_LIB_NAME}libdrm-util.${U3_SUFFIX_LIB_NAME}" )
+
+set(U3_EXTERNAL_LIB_LIBDRM_0_MD5 86c313c24f6821d8b42ce02c83fc55f1 )
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_EXT_MD5 0)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_Windows_MSVC_MSVC__AMD64_Release_none 0)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_Windows_MSVC_MSVC__AMD64_Debug_none 0)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_Windows_MSVC_MSVC__Win32_Release_none 0)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_Windows_MSVC_MSVC__Win32_Debug_none 0)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_Linux_GNU_GNU__x32_Release_none 0)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_Linux_GNU_GNU__x32_Debug_none 0)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_Android_Clang_Clang__aarch64_Release_none 0)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_Android_Clang_Clang__aarch64_RelWithDebInfo_none 0)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_Android_Clang_Clang__aarch64_Debug_none 0)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_Android_Clang_Clang__x86_64_Release_none 0)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_Android_Clang_Clang__x86_64_RelWithDebInfo_none 0)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_Android_Clang_Clang__x86_64_Debug_none 0)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_Raspberry_Clang_Clang__aarch64_Debug_thread 8e3481aac5271aa262182fa0adca6b76)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_Raspberry_Clang_Clang__aarch64_Release_thread 5d4af53c4d15b3bbbadc17665c0d3859)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_Raspberry_Clang_Clang__aarch64_Release_ub 9132bd69f05bb3d6d91ef5e338a67d2b)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_OrangePi_Clang_Clang__aarch64_Debug_thread 8e3481aac5271aa262182fa0adca6b76)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_OrangePi_Clang_Clang__aarch64_Release_thread 5d4af53c4d15b3bbbadc17665c0d3859)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_OrangePi_Clang_Clang__aarch64_Release_ub 9132bd69f05bb3d6d91ef5e338a67d2b)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_OrangePi_Clang_Clang__aarch64_Release_none 16b3a43262d47232f810c9e4b946e90d)
+set(U3_EXTERNAL_LIB_LIBDRM_2_23_0_MD5_OrangePi_GNU_GNU__aarch64_Release_ub b7ff0374bea4187f3c004912873a43b2)
+
+set(U3_EXTERNAL_LIB_LIBDRM_MD5 ${U3_EXTERNAL_LIB_LIBDRM${U3_VERSION_EXTERNAL_LIB_LIBDRM_CID}_MD5})

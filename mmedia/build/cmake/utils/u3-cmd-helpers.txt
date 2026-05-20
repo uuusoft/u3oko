@@ -1,0 +1,231 @@
+# author      Erashov Anton erashov2026@proton.me
+# date        30.08.2024
+# copyright   Erashov A.I.
+# file        u3-cmd-helpers.cmake
+# U3_THIS_COMMERCIAL_PART_SOURCE_CODE
+
+Ключи
+Windows/Linux/Raspberry/OrangePi/ARM/x64/NASM/Win32/Darwin/
+Android/AndroidStudio/VisualCode/cmake/c++20/c++17/c++14/c++11/javascript/html/NDK
+Electron/JNI/boost{interpocess, dll, asio, beast, serialization}/dlib/l4v2/libva/libvips/openg264/x265/av1/
+openssl/pugixml/sqlite/std/tesseract/tirbojpeg/userland/cameralib/
+neon/avx/
+
+
+
+~1. Восстановить использование уже собранных бинарных артефактов для ускорения сборки.
+2. Добавить VA кодек mjpeg.
+4. Добавить архив для видео.
+6. Добавить поддержку архива для аудио.
+8. Добавить поддержку mpeg4/5 софтового  и пр.
+3. Добавить поддержку камеры Raspberry.
+9.  Добавить поддержку mpeg4/5 VA  и пр.
+10. Добавить детекцию лица.
+12. Доюавитб архив событий.
+11. Добавить подключение по протоколу https
+7.  Добавить сетевую подсистему (децентрелизованную)
+13. Добавить захват экрана для Wayland
+5.  Добавить захват аудио.
+
+
+05.02.2026
+Rename buf -> buf
+
+1.1. Reworder files in libs::ilink::appl 
+1.1.1 Remove http-module-iapplication-funcs.cpp and other
+
+4. TODO dbufs-video-const-offs.hpp
+module-http-const-vals.hpp
+
+void
+InProcLoaderCode::load_int (
+  const ::libs::link::CreateInfo* _info,
+  const std::string&              _name_proc,
+  const std::string&              _name_lib,
+  const args_type&                _args)
+
+
+
+02.04.2026
+#    define U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS(super_type) using super = super_type;
+  dll_name_ ("vvd_vcodec_mjpg"),
+
+
+
+
+Strange name types
+
+::dlls::sources::gen_lib::syn::pkeys2bufs_type
+syn::ListDevicesDataEvent::src_infos_type
+get_func_gui_lockfree
+
+1. �������� �������� https
+  1.1. �������� openssl
+  1.2. ���������� ��������
+  1.3. ����������� ��������� http
+
+2. �������� ����� x264
+3. ������� ip ������
+4. �������� �������� ������
+5. �������� �������� ������
+6. �������� �����
+7. �������� ��������� �� ��������
+8.
+
+# Android support
+# Download https://developer.android.com/studio
+
+
+# Linux 32 bit support
+# https://www.baeldung.com/linux/compile-32-bit-binary-on-64-bit-os
+# sudo apt install gcc-multilib g++-multilib
+# debian sudo apt install libx11-dev
+# redhat sudo zypper install libX11-devel
+
+
+# Raspberrypi support
+# https://github.com/raspberrypi/userland
+# https://hackaday.com/2016/02/03/code-craft-cross-compiling-for-the-raspberry-pi/
+# sudo apt-get install build-essential
+# sudo apt-get install g++-arm-linux-gnueabihf
+# sudo apt-get install gdb-multiarch
+
+# Raspberrypi 64 bit support
+# https://stackoverflow.com/questions/61771494/how-do-i-cross-compile-llvm-clang-for-aarch64-on-x64-host
+# apt install g++-10-aarch64-linux-gnu libstdc++-10-dev-arm64-cross gcc-10 g++-10
+# apt install cmake ninja-build python3
+
+# apt install g++-11-aarch64-linux-gnu libstdc++-11-dev-arm64-cross gcc-11 g++-11
+# CC=aarch64-linux-gnu-gcc-11 CXX=aarch64-linux-gnu-g++-11 cmake ../llvm \
+#    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+#    -DLLVM_ENABLE_ASSERTIONS=On \
+#    -DCMAKE_CROSSCOMPILING=True \
+#    -DCMAKE_INSTALL_PREFIX=install \
+#    -DLLVM_DEFAULT_TARGET_TRIPLE=aarch64-linux-gnueabihf \
+#    -DLLVM_TARGET_ARCH=AArch64 \
+#    -DLLVM_TARGETS_TO_BUILD=AArch64 \
+#    -DCMAKE_CXX_FLAGS='-march=armv8-a -mtune=cortex-a72' \
+#    -GNinja \
+#    -DLLVM_ENABLE_PROJECTS='clang;compiler-rt;lld;clang-tools-extra' \
+#    -DLLVM_TABLEGEN=/mnt/repos/llvm-project/build-host/bin/llvm-tblgen \
+#    -DCLANG_TABLEGEN=/mnt/repos/llvm-project/build-host/bin/clang-tblgen \
+#    -DLLVM_BUILD_LLVM_DYLIB=On \
+#    -DLLVM_LINK_LLVM_DYLIB=On \
+#    -DLLVM_INSTALL_TOOLCHAIN_ONLY=On
+
+
+############################################################################
+# build
+# cmake --build ./../builds32 -j 12 --config Release
+# cmake --build ./../builds64 -j 12 --config Release
+# cmake --build ./../builds32 -j 12 --config Debug
+
+
+############################################################################
+# config
+
+# Windows
+# cmake . -A Win32 -B ./../builds32 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=C:\Users\anton\Documents\uuusoft\gitea\u3media2\mmedia\build\cmake\toolchains\windows-x32.cmake
+# cmake . -B ./../builds32 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=C:\Users\anton\Documents\uuusoft\gitea\u3media2\mmedia\build\cmake\toolchains\windows-x32.cmake
+# cmake . -B ./../builds64 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=C:\Users\anton\Documents\uuusoft\gitea\u3media2\mmedia\build\cmake\toolchains\windows-x64.cmake
+# cmake . -B ./../builds64 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=c:/uuusoft/u3media2/mmedia/build/cmake/toolchains/windows-x64.cmake
+
+# Linux
+# cmake . -B ./../builds64 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=~/Documents/uuusoft/u3media/mmedia/build/cmake/toolchains/linux-x64.cmake -DU3_FORCE_COMPILE_ALL_EXTERNAL_LIBS=0 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1
+# cmake . -B ./../builds32 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=~/Documents/uuusoft/u3media2/u3media2/mmedia/build/cmake/toolchains/linux-x32-gcc.cmake -DU3_FORCE_COMPILE_ALL_EXTERNAL_LIBS=0 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1
+# cmake . -B ./../builds32 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=~/Documents/uuusoft/u3media2/u3media2/mmedia/build/cmake/toolchains/linux-x32.cmake -DU3_FORCE_COMPILE_ALL_EXTERNAL_LIBS=0 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1
+# 
+# Raspberry
+# cmake . -B ./../builds64 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DCMAKE_TOOLCHAIN_FILE=/home/erashov/Documents/uuusoft/u3media-rasp/u3media2/mmedia/build/cmake/toolchains/raspberry-arm64.cmake
+# cmake . -B ./../builds64 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DCMAKE_TOOLCHAIN_FILE=~/uuusoft/u3media2/mmedia/build/cmake/toolchains/raspberry-arm64.cmake
+# cmake . -B ./../builds -DU3_SYSTEM_NAME=Raspberry -DU3_BUILD_MODULES_AS_LIBS=1 -DCMAKE_TOOLCHAIN_FILE=./build/cmake/toolchains/raspberry-arm.cmake -DCMAKE_BUILD_TYPE=Release  
+# cmake . -B ./../builds32 -DU3_SYSTEM_NAME=Raspberry -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DCMAKE_TOOLCHAIN_FILE=./build/cmake/toolchains/raspberry-arm64.cmake 
+
+# Darwin
+# cmake . -B ./../builds64 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=/Users/antonerashov/Documents/uuusoft/u3media2/mmedia/build/cmake/toolchains/darwin-arm64.cmake
+# cmake . -G Xcode  -B ./../builds64 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=0 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=/Users/antonerashov/Documents/uuusoft/u3media2/mmedia/build/cmake/toolchains/darwin-arm64.cmak
+
+# cmake . -A x64  -B ./../builds -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1
+# cmake . -A Win32  -B ./../builds32 -DU3_SYSTEM_NAME=Windows -DCMAKE_SYSTEM_NAME=Windows -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1
+# cmake . -A x32 -B ./../builds -DU3_SYSTEM_NAME=Linux -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1
+# cmake . -B ./../builds -DU3_SYSTEM_NAME=Darwin -DCMAKE_BUILD_TYPE=Release -DU3_BUILD_MODULES_AS_LIBS=1
+# cmake . -B ./../builds -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1
+# cmake . -A x32 -B ./../builds -DU3_SYSTEM_NAME=Linux -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=0
+
+
+############################################################################
+# working
+
+# Rapsberry
+# scp -r ~/Documents/uuusoft/u3media-rasp/u3media2/mmedia/appls/u3oko/android/app/src/main/assets/templates erashov@192.168.88.221:~/Documents/uuusoft/arm32/
+# scp -r ~/Documents/uuusoft/u3media-rasp/u3externals_Raspberry.arm./userland/src/userland-util/build/lib erashov@192.168.88.221:~/Documents/uuusoft/arm32/
+# scp -r ~/Documents/uuusoft/u3media-rasp/u3media2/builds32/Raspberry/Release/mpl_uuu_appl erashov@192.168.88.221:~/Documents/uuusoft/arm32/
+# scp -r ~/Documents/uuusoft/u3media-rasp/u3media2/builds64/Raspberry/Release/mpl_uuu_appl erashov@192.168.88.221:~/Documents/uuusoft/arm64/
+
+# ssh erashov@192.168.88.221
+
+
+
+
+
+
+# cmake . -B ./../builds64 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=~/Documents/uuusoft/u3media/mmedia/build/cmake/toolchains/linux-x64.cmake -DU3_FORCE_COMPILE_ALL_EXT_LIBS=0 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1
+-# cmake . -B ./../builds32 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=~/Documents/uuusoft/u3media2/u3media2/mmedia/build/cmake/toolchains/linux-x32-gcc.cmake -DU3_FORCE_COMPILE_ALL_EXT_LIBS=0 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1
+-# cmake . -B ./../builds32 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=~/Documents/uuusoft/u3media2/u3media2/mmedia/build/cmake/toolchains/linux-x32.cmake -DU3_FORCE_COMPILE_ALL_EXT_LIBS=0 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1
+-
+export ASAN_OPTIONS=detect_odr_violation=0 
+export TPPLCHAIN_PATH=~/Documents/u3media/u3media/mmedia/build/cmake/toolchains/linux-x64.cmake
+export TPPLCHAIN_PATH=~/Documents/u3media/u3media/mmedia/build/cmake/toolchains/raspberry-arm64.cmake
+export TPPOUT_PATH=./../builds64-dll-rel-addr
+export TPPOUT_PATH=./../builds64-rel-addr
+export TPPOUT_PATH=./../builds64-dll-rel-ub
+
+cmake . -B ${TPPOUT_PATH} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${TPPLCHAIN_PATH} -DU3_FORCE_COMPILE_ALL_EXT_LIBS=0 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=0 -DU3_SANITY_BUILD_TYPE=address
+cmake . -B ${TPPOUT_PATH} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${TPPLCHAIN_PATH} -DU3_FORCE_COMPILE_ALL_EXT_LIBS=0 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=0 -DU3_SANITY_BUILD_TYPE=ub
+cmake . -B ${TPPOUT_PATH} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${TPPLCHAIN_PATH} -DU3_FORCE_COMPILE_ALL_EXT_LIBS=0 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DU3_SANITY_BUILD_TYPE=address
+cmake --build ${TPPOUT_PATH} -j 1 --config Release
+cp -r ./assets/xmls/templates   ${TPPOUT_PATH}/Linux/Release
+cp -r ./assets/xmls/templates   ${TPPOUT_PATH}/Linux/Debug
+cp -r ./assets/xmls/templates   ${TPPOUT_PATH}/Raspberry/Debug
+cp -r ./assets/xmls/templates   ${TPPOUT_PATH}/Raspberry/Release
+cd ${TPPOUT_PATH}/Linux/Release && ./mpl_uuu_appl
+
+
+
+OrangePI
+export TPPOUT_PATH=./../builds64-lib-rel-ub
+export TPPLCHAIN_PATH=~/Documents/u3media/u3media/mmedia/build/cmake/toolchains/raspberry-arm64.cmake
+cmake . -B ${TPPOUT_PATH} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${TPPLCHAIN_PATH} -DU3_FORCE_COMPILE_ALL_EXT_LIBS=0 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DU3_SANITY_BUILD_TYPE=ub
+cmake --build ${TPPOUT_PATH} -j 4 --config Release
+cp -r ./assets/xmls/templates   ${TPPOUT_PATH}/Raspberry/Release
+
+RaspberryPi
+export TPPLCHAIN_PATH=~/Documents/u3media/mmedia/build/cmake/toolchains/raspberry-arm64.cmake
+cmake . -B ${TPPOUT_PATH} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${TPPLCHAIN_PATH} -DU3_FORCE_COMPILE_ALL_EXT_LIBS=0 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DU3_SANITY_BUILD_TYPE=ub -DU3_DBG_EXTERNAL_LIB_SKIP_DLIB=1
+
+
+# cmake . -B ./../builds64-dll-deb-addr -DCMAKE_TOOLCHAIN_FILE:FILEPATH=~/Documents/u3media/u3media/mmedia/build/cmake/toolchains/linux-x64.cmake -DU3_FORCE_COMPILE_ALL_EXT_LIBS=0 -DCMAKE_BUILD_TYPE=Debug  -DU3_BUILD_MODULES_AS_LIBS=0 -DU3_SANITY_BUILD_TYPE=address
+# cmake --build ./../builds64-dll-deb-addr -j 4 --config Debug
+
+
+# cmake . -B ./../builds64 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=~/Documents/uuusoft/u3media/mmedia/build/cmake/toolchains/linux-x64.cmake -DU3_FORCE_COMPILE_ALL_EXTERNAL_LIBS=0 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1
+# cmake . -B ./../builds32 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=~/Documents/uuusoft/u3media2/u3media2/mmedia/build/cmake/toolchains/linux-x32-gcc.cmake -DU3_FORCE_COMPILE_ALL_EXTERNAL_LIBS=0 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1
+# cmake . -B ./../builds32 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=~/Documents/uuusoft/u3media2/u3media2/mmedia/build/cmake/toolchains/linux-x32.cmake -DU3_FORCE_COMPILE_ALL_EXTERNAL_LIBS=0 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1
+# 
+ # Raspberry
+ # cmake . -B ./../builds64 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DCMAKE_TOOLCHAIN_FILE=/home/erashov/Documents/uuusoft/u3media-rasp/u3media2/mmedia/build/cmake/toolchains/raspberry-arm64.cmake
+ # cmake . -B ./../builds64 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DCMAKE_TOOLCHAIN_FILE=~/uuusoft/u3media2/mmedia/build/cmake/toolchains/raspberry-arm64.cmake
+ # cmake . -B ./../builds -DU3_SYSTEM_NAME=Raspberry -DU3_BUILD_MODULES_AS_LIBS=1 -DCMAKE_TOOLCHAIN_FILE=./build/cmake/toolchains/raspberry-arm.cmake -DCMAKE_BUILD_TYPE=Release  
+ # cmake . -B ./../builds32 -DU3_SYSTEM_NAME=Raspberry -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DCMAKE_TOOLCHAIN_FILE=./build/cmake/toolchains/raspberry-arm64.cmake 
+# cmake . -B ./../builds64-rasp-rel -DU3_SYSTEM_NAME=Raspberry -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DCMAKE_TOOLCHAIN_FILE=~/Documents/uuusoft/u3media/mmedia/build/cmake/toolchains/raspberry-arm64.cmake
+# cmake --build ./../builds64-rasp-rel -j 4 --config Release
+ 
+ # Darwin
+ # cmake . -B ./../builds64 -DCMAKE_BUILD_TYPE=Release  -DU3_BUILD_MODULES_AS_LIBS=1 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=/Users/antonerashov/Documents/uuusoft/u3media2/mmedia/build/cmake/toolchains/darwin-arm64.cmake
+ # scp -r ~/Documents/uuusoft/u3media-rasp/u3media2/builds32/Raspberry/Release/mpl_uuu_appl erashov@192.168.88.221:~/Documents/uuusoft/arm32/
+ # scp -r ~/Documents/uuusoft/u3media-rasp/u3media2/builds64/Raspberry/Release/mpl_uuu_appl erashov@192.168.88.221:~/Documents/uuusoft/arm64/
+ 
+# scp -r ~/Documents/u3media/u3media/mmedia/assets/xmls/templates erashov@192.168.88.217:~/Documents/u3media/u3media/builds64-rasp-rel/Raspberry/Release
+
+scp -r ~/Downloads/test-picters-for-source erashov@192.168.88.221:~/Downloads
+ # ssh erashov@192.168.88.221

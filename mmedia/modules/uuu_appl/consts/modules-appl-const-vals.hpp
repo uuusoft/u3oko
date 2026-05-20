@@ -1,0 +1,17 @@
+#pragma once
+/**
+\file       modules-appl-const-vals.hpp
+\author     Erashov Anton erashov2026@proton.me
+\date       01.01.2017
+\project    u3_module_appl
+*/
+
+namespace modules::uuu_appl
+{
+using main_appl_func_type = int (int argc, char* argv[]);
+}
+
+namespace modules::uuu_appl::consts
+{
+extern const std::string name_main_appl_funct;   //<
+}

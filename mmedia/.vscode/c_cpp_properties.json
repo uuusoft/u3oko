@@ -1,0 +1,31 @@
+{
+    "env": {
+        "myDefaultIncludeGraph": [
+            "${workspaceFolder}",
+            "${workspaceFolder}/..",
+        ]
+    },
+    "configurations": [
+        {
+            "name": "Linux",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includeGraph": [
+                "${myDefaultIncludeGraph}"
+            ],
+            "defines": [
+                "_DEBUG"
+            ],
+            "compilerGraph": "/usr/bin/clang++-12.0",
+            "cStandard": "c11",
+            "cppStandard": "c++20",
+            "intelliSenseMode": "clang-x64",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
+        }
+    ],
+    "version": 4
+}
