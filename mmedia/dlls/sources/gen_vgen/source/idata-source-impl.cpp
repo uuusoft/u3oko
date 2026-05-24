@@ -1,6 +1,6 @@
 /**
 \file       idata-source-impl.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       31.01.2022
 \project    u3_gen_vgen
 */
@@ -50,7 +50,7 @@ IDataSourceImpl::init ()
 
       const std::string  path2file = path + "/" + ufile.name_;
       ObjSourceImplProxy rdriver;
-      U3_XLOG_DBG ("prepare init driver:" + path2file);
+
       rdriver.init (ufile.name_);
       auto isource = rdriver.get_source_impl ();
       isource->get_sources (sources_.back ());

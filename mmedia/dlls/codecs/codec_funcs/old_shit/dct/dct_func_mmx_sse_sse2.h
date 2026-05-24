@@ -2,7 +2,7 @@
 /**
 \file			dct_func_mmx_sse_sse2.h
 \date			23.03.2016
-\author		Erashov Anton erashov2026@proton.me
+\author		Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \brief		Function IDCT coding
 */
 #include "../../codec-funcs-const-vals.hpp"

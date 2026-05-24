@@ -1,7 +1,7 @@
 /**
 \file       mem_funcs.cpp
 \brief      функции работы с памятью
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.07.2016
 \project    u3_mem_funcs
 \brief      Файл реализации низкоуровных функций для работы с памятью

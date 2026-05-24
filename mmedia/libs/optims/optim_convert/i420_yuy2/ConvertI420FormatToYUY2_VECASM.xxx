@@ -1,0 +1,450 @@
+/********************************************************************************************
+�������� : Convertion funct I420 to YUY2
+������              :  21.05.2016
+
+Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+*********************************************************************************************/
+#include "ConvertI420FormatToYUY2_VECASM.h"
+
+//old shit
+namespace optim {
+
+#ifdef GENERATE_I420_CONVERT_FUNCTION
+	bool I420toYUY2FunctALU (
+		std::uint8_t* dest,
+		const std::uint8_t* source,
+		int stride_dest,
+		int width_element,
+		int height_element,
+		uint32_t full_size_source_buf )
+	{
+		const std::uint8_t *p_u_buf = source + width_element * height_element;
+		const std::uint8_t *p_v_buf = p_u_buf + (width_element * height_element ) / 4;
+		const int leak_dest_stride = stride_dest - width_element * 2;
+
+		for (int indx_y = 0; indx_y < height_element; indx_y += 2 )
+		{
+			for (int indx_x = 0; indx_x < width_element; indx_x += 2 )
+			{
+				dest[0] = source[0];
+				dest[1] = p_u_buf[0];
+				dest[2] = source[1];
+				dest[3] = p_v_buf[0];
+
+				dest[0 + stride_dest ] = source[0 + width_element ];
+				dest[1 + stride_dest ] = p_u_buf[0];
+				dest[2 + stride_dest ] = source[1 + width_element ];
+				dest[3 + stride_dest ] = p_v_buf[0];
+
+
+				source += 2;
+				p_u_buf++;
+				p_v_buf++;
+
+				dest += 4;
+
+			};
+
+			dest += leak_dest_stride;
+			source += width_element;
+			dest += stride_dest;
+
+		}
+		return true;
+	}
+#endif
+
+#ifdef GENERATE_I420_CONVERT_FUNCTION
+	bool I420toYUY2FunctMMX (
+#else
+	bool YV12toYUY2FunctMMX (
+#endif
+		std::uint8_t* dest,
+		const std::uint8_t* source,
+		int stride_dest,
+		int width_element,
+		int height_element,
+		uint32_t full_size_source_buf )
+	{
+		std::uint8_t loc_array_mask[8] =
+		{
+			0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00
+		};
+
+#ifdef GENERATE_I420_CONVERT_FUNCTION
+		const std::uint8_t *p_u_buf = source + width_element * height_element;
+		const std::uint8_t *p_v_buf = p_u_buf + (width_element * height_element ) / 4;
+#else
+		const std::uint8_t *p_v_buf = source + width_element * height_element;
+		const std::uint8_t *p_u_buf = p_v_buf + (width_element * height_element ) / 4;
+#endif
+
+		const int leak_dest_stride = stride_dest - width_element * 2;
+		int count_y = height_element;
+		int count_x = width_element;
+
+		__asm
+		{
+			pushad;
+
+#define MMX_UV_4PIXEL    mm0
+#define MMX_TEMP1        mm1
+#define MMX_TEMP2        mm2
+#define MMX_MASK1        mm3
+#define MMX_MASK2        mm4
+
+#define REG_DEST               edx
+#define REG_SOURCE_Y           ebx
+#define REG_STRIDE_SOURCE_Y    edi
+#define REG_STRIDE_DEST        esi
+
+#define REG_SOURCE_U           esi
+#define REG_SOURCE_V           ecx
+
+#define REG_TEMP1              eax
+#define REG_TEMP1_LOW_WORD     ax
+
+#define REG_LEAKE_STRIDE_DEST  leak_dest_stride
+
+#define REG_COUNT_Y            count_y
+#define REG_COUNT_X            count_x
+
+
+
+			lea REG_TEMP1, loc_array_mask;
+			movq MMX_MASK1, [REG_TEMP1];
+			movq MMX_MASK2, MMX_MASK1;
+			psllq MMX_MASK2, 8;
+
+			mov REG_SOURCE_U, p_u_buf;
+			mov REG_SOURCE_V, p_v_buf;
+
+			mov REG_DEST, dest;
+			mov REG_SOURCE_Y, source;
+			mov REG_STRIDE_SOURCE_Y, width_element;
+			mov REG_STRIDE_DEST, stride_dest;
+
+
+			cycle1:
+
+			mov REG_TEMP1, width_element;
+			mov REG_COUNT_X, REG_TEMP1;
+
+			cycle2:
+
+			/*��������� �������� ����� ��� ������� �������� ������ � �������� �����*/
+			push REG_STRIDE_DEST;
+			mov REG_STRIDE_DEST, p_u_buf;
+
+			mov REG_TEMP1_LOW_WORD, [REG_SOURCE_U];
+			shl REG_TEMP1, 16;
+			mov REG_TEMP1_LOW_WORD, [REG_SOURCE_V];
+			movd MMX_UV_4PIXEL, REG_TEMP1; VVUUxxxx
+				pshufw MMX_UV_4PIXEL, MMX_UV_4PIXEL, 17; UUVVUUVV
+				pand MMX_UV_4PIXEL, MMX_MASK2; xUxVxUxV
+
+				/*����� ��������� �� ��������� 4 �������*/
+				add REG_SOURCE_U, 2;
+			add REG_SOURCE_V, 2;
+
+			mov p_u_buf, REG_STRIDE_DEST;
+			pop REG_STRIDE_DEST;
+
+
+			/*��������� �������� ������� ��� ������� �������� ������ ������*/
+			mov REG_TEMP1, [REG_SOURCE_Y];
+			movd MMX_TEMP1, REG_TEMP1;
+			pxor MMX_TEMP2, MMX_TEMP2;
+			/*���������������� ��*/
+			punpcklbw MMX_TEMP1, MMX_TEMP2; YxYxYxYx
+				por MMX_TEMP1, MMX_UV_4PIXEL; YUYVYUYV
+				movq[REG_DEST], MMX_TEMP1;
+
+			; ��������� �� �������� ������ ��� ������������ ��� ������� ��������
+				add REG_DEST, REG_STRIDE_DEST;
+			add REG_SOURCE_Y, REG_STRIDE_SOURCE_Y;
+
+			/*��������� �������� ������� ��� ������� �������� �������� ������*/
+			mov REG_TEMP1, [REG_SOURCE_Y];
+			movd MMX_TEMP1, REG_TEMP1;
+			pxor MMX_TEMP2, MMX_TEMP2;
+			/*���������������� ��*/
+			punpcklbw MMX_TEMP1, MMX_TEMP2; YxYxYxYx
+				por MMX_TEMP1, MMX_UV_4PIXEL; YUYVYUYV
+				movq[REG_DEST], MMX_TEMP1;
+
+			/*����������� �� ������ ������*/
+			sub REG_DEST, REG_STRIDE_DEST;
+			sub REG_SOURCE_Y, REG_STRIDE_SOURCE_Y;
+
+			/*��������� �� ��������� ������ �������*/
+			add REG_DEST, 8;
+			add REG_SOURCE_Y, 4;
+
+
+			mov REG_TEMP1, REG_COUNT_X;
+			sub REG_TEMP1, 4;
+			mov REG_COUNT_X, REG_TEMP1;
+			; sub REG_COUNT_X, 4;
+
+			jg cycle2;
+
+			/*������� �� ��������� ������ ������*/
+			add REG_DEST, REG_LEAKE_STRIDE_DEST;
+			add REG_DEST, REG_STRIDE_DEST;
+
+			add REG_SOURCE_Y, REG_STRIDE_SOURCE_Y;
+
+			sub REG_COUNT_Y, 2;
+
+			jg cycle1;
+
+			popad;
+			emms;
+
+
+#undef MMX_UV_4PIXEL
+#undef MMX_TEMP1
+#undef MMX_TEMP2
+#undef MMX_MASK1
+#undef MMX_MASK2
+
+#undef REG_DEST
+#undef REG_SOURCE_Y
+#undef REG_SOURCE_U
+#undef REG_SOURCE_V
+#undef REG_COUNT_Y
+#undef REG_COUNT_X
+#undef REG_LEAKE_STRIDE_DEST
+#undef REG_STRIDE_DEST
+#undef REG_TEMP1
+#undef REG_TEMP1_LOW_WORD
+#undef REG_STRIDE_SOURCE_Y
+
+		}
+		return true;
+	}
+
+#ifdef GENERATE_I420_CONVERT_FUNCTION
+	bool I420toYUY2FunctSSE (
+#else
+	bool YV12toYUY2FunctSSE (
+#endif
+		std::uint8_t* dest,
+		const std::uint8_t* source,
+		int stride_dest,
+		int width_element,
+		int height_element,
+		uint32_t full_size_source_buf )
+	{
+#ifdef GENERATE_I420_CONVERT_FUNCTION
+		return I420toYUY2FunctMMX (
+#else
+		return YV12toYUY2FunctMMX (
+#endif
+			dest,
+			source,
+			stride_dest,
+			width_element,
+			height_element,
+			full_size_source_buf );
+	}
+
+#ifdef GENERATE_I420_CONVERT_FUNCTION
+	bool I420toYUY2FunctSSE2 (
+#else
+	bool YV12toYUY2FunctSSE2 (
+#endif
+		std::uint8_t* dest,
+		const std::uint8_t* source,
+		int stride_dest,
+		int width_element,
+		int height_element,
+		uint32_t full_size_source_buf )
+	{
+		std::uint8_t loc_array_mask_u[16] =
+		{
+			0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00,
+			0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00
+		};
+
+		std::uint8_t loc_array_mask_v[16] =
+		{
+			0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF,
+			0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF
+		};
+
+#ifdef GENERATE_I420_CONVERT_FUNCTION
+		const std::uint8_t *p_u_buf = source + width_element * height_element;
+		const std::uint8_t *p_v_buf = p_u_buf + (width_element * height_element ) / 4;
+#else
+		const std::uint8_t *p_v_buf = source + width_element * height_element;
+		const std::uint8_t *p_u_buf = p_v_buf + (width_element * height_element ) / 4;
+#endif
+
+		const int leak_dest_stride = stride_dest - width_element * 2;
+		int count_y = height_element;
+		int count_x = width_element;
+
+		__asm
+		{
+			pushad;
+
+#define SSE_UV_8PIXEL    xmm0
+#define SSE_TEMP1        xmm1
+#define SSE_TEMP2        xmm2
+#define SSE_MASK1        xmm3
+#define SSE_MASK2        xmm4
+#define SSE_MASK_U       xmm5
+#define SSE_MASK_V       xmm6
+
+#define MMX_TEMP1        mm0
+
+#define REG_DEST               edx
+#define REG_SOURCE_Y           ebx
+#define REG_STRIDE_SOURCE_Y    edi
+#define REG_STRIDE_DEST        esi
+
+#define REG_SOURCE_U           esi
+#define REG_SOURCE_V           ecx
+
+#define REG_TEMP1              eax
+#define REG_TEMP1_LOW_WORD     ax
+
+#define REG_LEAKE_STRIDE_DEST  leak_dest_stride
+
+#define REG_COUNT_Y            count_y
+#define REG_COUNT_X            count_x
+
+
+			lea REG_TEMP1, loc_array_mask_u;
+			movdqu SSE_MASK_U, [REG_TEMP1];
+
+			lea REG_TEMP1, loc_array_mask_v;
+			movdqu SSE_MASK_V, [REG_TEMP1];
+
+
+			mov REG_SOURCE_U, p_u_buf;
+			mov REG_SOURCE_V, p_v_buf;
+
+			mov REG_DEST, dest;
+			mov REG_SOURCE_Y, source;
+			mov REG_STRIDE_SOURCE_Y, width_element;
+			mov REG_STRIDE_DEST, stride_dest;
+
+
+			cycle1:
+
+			mov REG_TEMP1, width_element;
+			mov REG_COUNT_X, REG_TEMP1;
+
+			cycle2:
+
+			/*��������� �������� ����� ��� 8 �������� ������ � �������� �����*/
+			push REG_STRIDE_DEST;
+			mov REG_STRIDE_DEST, p_u_buf;
+
+			mov REG_TEMP1, [REG_SOURCE_U];
+			movd SSE_TEMP2, REG_TEMP1; U1U2U3U4xxxx
+				punpcklbw SSE_TEMP2, SSE_TEMP2; U1xU2xU3xU4xxxxxxxxx
+				pshufd SSE_TEMP2, SSE_TEMP2, 68; U1xU2xU3xU4xU1xU2xU3xU4x
+				pshuflw SSE_TEMP2, SSE_TEMP2, 16; U1xU2xU2xU4xU1xU2xU3xU4x
+				pshufhw SSE_TEMP2, SSE_TEMP2, 49; U1xU2xU2xU4xU3xU2xU4xU4x
+				psllw SSE_TEMP2, 8; xUxUxUxUxUxUxUxU;
+			pand SSE_TEMP2, SSE_MASK_U; xUxxxUxxxUxxxUxx
+				movdqu SSE_UV_8PIXEL, SSE_TEMP2;
+
+			mov REG_TEMP1, [REG_SOURCE_V];
+			movd SSE_TEMP2, REG_TEMP1; V1V2V3V4xxxx
+				punpcklbw SSE_TEMP2, SSE_TEMP2; V1xV2xV3xV4xxxxxxxxx
+				pshufd SSE_TEMP2, SSE_TEMP2, 68; V1xV2xV3xV4xV1xV2xV3xV4x
+				pshuflw SSE_TEMP2, SSE_TEMP2, 64; V1xV1xV2xV2xV1xV2xV3xV4x
+				pshufhw SSE_TEMP2, SSE_TEMP2, 200; V1xV1xV2xV2xV1xV3xV1xV4x
+				psllw SSE_TEMP2, 8; xV1xV1xV2xV2xV1xV3xV1xV4
+				pand SSE_TEMP2, SSE_MASK_V; xxxVxxxVxxxVxxxV
+
+				por SSE_UV_8PIXEL, SSE_TEMP2; xUxVxUxVxUxVxUxV
+
+				/*����� ��������� �� ��������� 8 �������*/
+				add REG_SOURCE_U, 4;
+			add REG_SOURCE_V, 4;
+
+			mov p_u_buf, REG_STRIDE_DEST;
+			pop REG_STRIDE_DEST;
+
+
+			/*��������� �������� ������� ��� 8 �������� ������ ������*/
+			movq MMX_TEMP1, [REG_SOURCE_Y];
+			movq2dq SSE_TEMP1, MMX_TEMP1;
+			pxor SSE_TEMP2, SSE_TEMP2;
+			/*���������������� ��*/
+			punpcklbw SSE_TEMP1, SSE_TEMP2; YxYxYxYxYxYxYxYx
+				por SSE_TEMP1, SSE_UV_8PIXEL; YUYVYUYVYUYVYUYV
+				movdqu[REG_DEST], SSE_TEMP1;
+
+			/*��������� �� �������� ������ ��� ������������ ��� ������� ��������*/
+			add REG_DEST, REG_STRIDE_DEST;
+			add REG_SOURCE_Y, REG_STRIDE_SOURCE_Y;
+
+			/*��������� �������� ������� ��� 8 �������� �������� ������*/
+			movq MMX_TEMP1, [REG_SOURCE_Y];
+			movq2dq SSE_TEMP1, MMX_TEMP1;
+			pxor SSE_TEMP2, SSE_TEMP2;
+			/*���������������� ��*/
+			punpcklbw SSE_TEMP1, SSE_TEMP2; YxYxYxYxYxYxYxYx
+				por SSE_TEMP1, SSE_UV_8PIXEL; YUYVYUYVYUYVYUYV
+				movdqu[REG_DEST], SSE_TEMP1;
+
+			/*����������� �� ������ ������*/
+			sub REG_DEST, REG_STRIDE_DEST;
+			sub REG_SOURCE_Y, REG_STRIDE_SOURCE_Y;
+
+			/*��������� �� ��������� 8 �������*/
+			add REG_DEST, 16;
+			add REG_SOURCE_Y, 8;
+
+
+			mov REG_TEMP1, REG_COUNT_X;
+			sub REG_TEMP1, 8;
+			mov REG_COUNT_X, REG_TEMP1;
+
+			jg cycle2;
+
+			/*������� �� ��������� ������ ������*/
+			add REG_DEST, REG_LEAKE_STRIDE_DEST;
+			add REG_DEST, REG_STRIDE_DEST;
+
+			add REG_SOURCE_Y, REG_STRIDE_SOURCE_Y;
+
+			sub REG_COUNT_Y, 2;
+
+			jg cycle1;
+
+			popad;
+			emms;
+
+
+#undef MMX_TEMP1
+
+#undef SSE_UV_8PIXEL
+#undef SSE_TEMP1
+#undef SSE_TEMP2
+#undef SSE_MASK1
+#undef SSE_MASK2
+
+#undef REG_DEST
+#undef REG_SOURCE_Y
+#undef REG_SOURCE_U
+#undef REG_SOURCE_V
+#undef REG_COUNT_Y
+#undef REG_COUNT_X
+#undef REG_LEAKE_STRIDE_DEST
+#undef REG_STRIDE_DEST
+#undef REG_TEMP1
+#undef REG_TEMP1_LOW_WORD
+#undef REG_STRIDE_SOURCE_Y
+
+		}
+		return true;
+	}
+}

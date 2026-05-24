@@ -1,7 +1,7 @@
 /**
 \file       codec-gen-main.cpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_codec_gen
 */
 #include "mmedia/includes/control-defines-includes.hpp"

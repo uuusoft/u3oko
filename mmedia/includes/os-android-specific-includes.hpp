@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       os-android-specific-includes.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2018
 \project    u3_includes
 */
@@ -14,13 +14,13 @@ namespace android::log
 inline void
 android_log_write_helper (std::int32_t id, const std::string& tag, const char* info)
 {
-  //__android_log_write (id, tag.c_str (), info);
+  __android_log_write (id, tag.c_str (), info);
 }
 
 inline void
 android_log_write_helper (std::int32_t id, const char* tag, const char* info)
 {
-  //__android_log_write (id, tag, info);
+  __android_log_write (id, tag, info);
 }
 }   // namespace android::log
 #endif

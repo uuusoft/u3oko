@@ -2,13 +2,14 @@
 /**
 \file       irequest-event.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me
-\project    uuu_events
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_events
 */
 
 namespace libs::events
 {
-/// Событие запроса какого либо другого (вложенного в него) события. Используется как флаг запроса (требуется ответ в виде вложенного события)
+/// Событие запроса какого либо другого (вложенного в него) события
+/// Используется как флаг запроса (требуется ответ в виде вложенного события)
 class IRequestEvent : public IWrapBaseEvent
 {
   friend class boost::serialization::access;

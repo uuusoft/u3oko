@@ -1,6 +1,6 @@
 /**
 \file       gen-vgen-filter-dll-thread-funct.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       23.04.2016
 \project    u3_gen_vgen
 */
@@ -70,7 +70,6 @@ Filter::thread_func_impl (std::uint32_t indx_thread)
         continue;
       }
       // Количество уже захваченных кадров больше или равно максимальному - переходим на засыпание
-      U3_LOG_DATA_DBG (VTOLOG (finfo_.impl_frames_.size ()) + VTOLOG (finfo_.capture_props_->capi_.count_preload_frame_));
       if (finfo_.impl_frames_.size () >= finfo_.capture_props_->capi_.count_preload_frame_)
       {
         continue;
@@ -127,7 +126,7 @@ Filter::thread_func_impl (std::uint32_t indx_thread)
 
 
 void
-Filter::thread_postfunc_impl ()
+Filter::thread_postfunc_impl (std::uint32_t indx_thread)
 {
 }
 }   // namespace dlls::sources::gen_vgen

@@ -1,6 +1,6 @@
 /**
 \file       v4l2-vgen-cam-impl.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */
@@ -87,7 +87,7 @@ CamImpl::get_buf ()
 
   timeval       tv       = { 0, 100 };
   const int32_t read_res = v4l2capture_ ? v4l2capture_->isReadable (&tv) : -1;
-  U3_LOG_DATA_DBG ("CamImpl::get_buf::begin" + VTOLOG (read_res) + VTOLOG (U3_CAST_PTR2INT (v4l2capture_.get ())));
+
   if (1 != read_res)
   {
     return syn::IVideoBuf::ptr ();
@@ -98,8 +98,6 @@ CamImpl::get_buf ()
   const auto bpp          = ::libs::helpers::uids::helpers::get_count_bytes_from_format (capparams_.px_format_);
   const auto stride       = capparams_.width_ * bpp;
   const auto align_stride = ::libs::helpers::mem::get_align16 (stride);
-
-  U3_LOG_DATA_DBG (VTOLOG (capparams_.width_) + VTOLOG (capparams_.height_));
 
   new_buf->buf_alloc (
     ::utils::dbufs::video::AllocBufInfo (
@@ -114,12 +112,9 @@ CamImpl::get_buf ()
   U3_MARK_UNUSED const auto size_res = v4l2capture_->read (
     utils::dbufs::video::helpers::get_buf_as< char * > (new_buf.get ()),
     temp_buf_size);
-  U3_LOG_DATA_DBG ("read data with size" + VTOLOG (size_res) + VTOLOG (temp_buf_size) + VTOLOG (req_buf_size));
 
   new_buf->set_mem_var (::utils::dbufs::MemVars::size_data, stride * capparams_.height_);
   new_buf->set_dim_var (utils::dbufs::video::Dims::stride, stride);
-
-  U3_LOG_DATA_DBG (VTOLOG (v4l2capture_->getFormat ()) + VTOLOG (v4l2capture_->getWidth ()) + VTOLOG (v4l2capture_->getHeight ()) + VTOLOG (stride));
   return new_buf;
 }
 

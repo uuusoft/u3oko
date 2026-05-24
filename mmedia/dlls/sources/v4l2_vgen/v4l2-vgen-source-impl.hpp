@@ -1,16 +1,14 @@
 #pragma once
 /**
 \file       v4l2-vgen-source-impl.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */
 
 namespace dlls::sources::v4l2_vgen
 {
-/**
-\brief  Реализация унифицированного захвата данных из системно зависимых устройств.
-*/
+/// Реализация унифицированного захвата данных из системно зависимых устройств
 class SourceImpl final : public ::dlls::sources::gen_lib::ISourceImpl
 {
   public:

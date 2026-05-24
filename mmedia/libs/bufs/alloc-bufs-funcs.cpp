@@ -1,6 +1,6 @@
 /**
 \file       alloc-bufs-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       09.03.2022
 \project    u3_bufs
 */

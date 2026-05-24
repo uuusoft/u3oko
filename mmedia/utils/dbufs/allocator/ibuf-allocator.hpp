@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       ibuf-allocator.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2016
 \project    u3_dbufs
 */
@@ -25,6 +25,7 @@ class IBufAllocator
   /// \param[in]  size опциональный предполагаемый размер данных для буфера или 0, если размер не известен
   /// \return     указатель на выделенный буфер
   virtual utils::dbufs::video::IVideoBuf::ptr create (IBufAllocator::size_type size) = 0;
+
   /// Функция трассировки состояния реализации интерфейса. Количество буферов, количество свободных буферов, используемая память и т.п
   virtual std::string dump_bufs_state () = 0;
 

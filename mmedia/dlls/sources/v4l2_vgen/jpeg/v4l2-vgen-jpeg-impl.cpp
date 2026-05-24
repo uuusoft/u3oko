@@ -1,6 +1,6 @@
 /**
 \file       v4l2-vgen-jpeg-impl.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */

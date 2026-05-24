@@ -1,11 +1,12 @@
 #pragma once
 /**
 \file       memory-casts-defines.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2017
 \project    u3_defines
-\brief      Набор макросов преобразований указателя, чтобы контролировать применение reinterpret_cast.
+\brief      Набор макросов преобразований указателя, чтобы контролировать применение reinterpret_cast
 */
+
 #ifndef U3_CAST_STATIC
 #  define U3_CAST_STATIC static_cast
 #endif

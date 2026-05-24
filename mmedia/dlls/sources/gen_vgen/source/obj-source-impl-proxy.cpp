@@ -1,6 +1,6 @@
 /**
 \file       obj-source-impl-proxy.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       20.05.2017
 \project    u3_gen_vgen
 */
@@ -44,9 +44,7 @@ ObjSourceImplProxy::init (const std::string& name_impl)
   const std::string path      = ::libs::iproperties::appl_paths::get_current_lib_folder ();
   const std::string full_path = ::libs::helpers::files::make_path (path, ::libs::helpers::dlls::decorate_dll_name (name_impl));
 
-  U3_LOG_DATA_DBG ("try load dll source from," + TOLOG (full_path));
   capture_lib_.load (full_path.c_str (), boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
-  U3_LOG_DATA_DBG ("try get create funct from," + TOLOG (full_path));
 
 #ifdef U3_BUILD_MODULES_AS_LIBS
   func_get_  = ::libs::proxy::get_create_source_funct (name_impl);

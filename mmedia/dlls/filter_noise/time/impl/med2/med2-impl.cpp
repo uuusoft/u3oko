@@ -1,8 +1,8 @@
 /**
 \file       med2-impl.cpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me
-\project    uuu_time_filter_noise
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_time_filter_noise
 */
 // #define U3_USE_DEB_LOG_LEVEL
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -15,12 +15,12 @@ namespace dlls::filter_noise::time::impl::med2
 {
 void
 get_params (
-  ::libs::optim::io::MCallInfo&                                                     info,
-  ::libs::optim::io::ProxyBuf**                                                     src_dst,
-  ::libs::optim::io::ProxyBuf**                                                     akk_mbuf,
-  const ::libs::optim::io::ProxyBuf**                                               diff,
-  ::libs::ievents::props::videos::noises::time::ext::MedianTimeFilterProp::raw_ptr& impl_info,
-  BuffMed2Impl**                                                                    parent)
+  ::libs::optim::io::MCallInfo&       info,
+  ::libs::optim::io::ProxyBuf**       src_dst,
+  ::libs::optim::io::ProxyBuf**       akk_mbuf,
+  const ::libs::optim::io::ProxyBuf** diff,
+  syn::MedianTimeFilterProp::raw_ptr& impl_info,
+  BuffMed2Impl**                      parent)
 {
   U3_CHECK (2 == info.params_.evals_.size (), "invald size evals");
   U3_CHECK (1 == info.srcs_.size (), "src not equal 1");
@@ -34,7 +34,7 @@ get_params (
   U3_CHECK (*src_dst, "empty src_dst");
   U3_CHECK (*akk_mbuf, "empty akk_mbuf");
 
-  impl_info = boost::any_cast< ::libs::ievents::props::videos::noises::time::ext::MedianTimeFilterProp::raw_ptr > (info.params_.evals_[0]);
+  impl_info = boost::any_cast< syn::MedianTimeFilterProp::raw_ptr > (info.params_.evals_[0]);
   *parent   = boost::any_cast< BuffMed2Impl* > (info.params_.evals_[1]);
 
   U3_CHECK (impl_info, "empty impl_info");
@@ -46,11 +46,11 @@ get_params (
 void
 ext_mcall (::libs::optim::io::MCallInfo& info)
 {
-  ::libs::optim::io::ProxyBuf*                                                     src_dst  = nullptr;
-  ::libs::optim::io::ProxyBuf*                                                     akk_mbuf = nullptr;
-  const ::libs::optim::io::ProxyBuf*                                               diff     = nullptr;
-  BuffMed2Impl*                                                                    parent   = nullptr;
-  ::libs::ievents::props::videos::noises::time::ext::MedianTimeFilterProp::raw_ptr impl_info;
+  ::libs::optim::io::ProxyBuf*       src_dst  = nullptr;
+  ::libs::optim::io::ProxyBuf*       akk_mbuf = nullptr;
+  const ::libs::optim::io::ProxyBuf* diff     = nullptr;
+  BuffMed2Impl*                      parent   = nullptr;
+  syn::MedianTimeFilterProp::raw_ptr impl_info;
 
   get_params (info, &src_dst, &akk_mbuf, &diff, impl_info, &parent);
 
@@ -88,19 +88,18 @@ Med2Impl::sync_int ()
 
 void
 Med2Impl::transform_int (
-  const ::libs::core::graph::NodeID&                  id_node,
-  ::libs::icore::impl::var1::obj::dll::TransformInfo& transform_info,
-  InfoFilter&                                         finfo,
-  ::libs::bufs::Bufs*                                 pbuf)
+  const ::libs::core::graph::NodeID& id_node,
+  syn::TransformInfo&                transform_info,
+  InfoFilter&                        finfo,
+  ::libs::bufs::Bufs*                pbuf)
 {
   if (sync_request_)
   {
-    U3_LOG_DATA_DBG ("time filtration: sync bufs - free bufs");
     mbufs_.clear ();
     sync_request_ = false;
   }
 
-  auto impl_info = ::libs::iproperties::helpers::cast_event< ::libs::ievents::props::videos::noises::time::ext::MedianTimeFilterProp > (finfo.rprops_->impl_info_);
+  auto impl_info = ::libs::iproperties::helpers::cast_event< syn::MedianTimeFilterProp > (finfo.rprops_->impl_info_);
 
   for (const auto& ibuf : finfo.rprops_->bufs_)
   {
@@ -135,9 +134,9 @@ Med2Impl::transform_int (
     U3_CHECK (!impl_info->motion_detect_ || cdiff, "invalid diff buf");
 
     {
-      ::libs::helpers::statistic::helpers::functors::AddOpTime lslock (finfo.expand_time_algs_, ::libs::core::graph::get_ext_graph_node_id (id_node), "sync_by_vbuf");
-      ::libs::optim::io::ProxyBuf                              src_dst (sbuf, "sbuf dlls::filter_noise::time::impl::med2");
-      ::libs::optim::io::ProxyBuf                              diff (cdiff, "cdiff dlls::filter_noise::time::impl::med2");
+      syn::AddOpTime              lslock (finfo.expand_time_algs_, ::libs::core::graph::get_ext_graph_node_id (id_node), "sync_by_vbuf");
+      ::libs::optim::io::ProxyBuf src_dst (sbuf, "sbuf dlls::filter_noise::time::impl::med2");
+      ::libs::optim::io::ProxyBuf diff (cdiff, "cdiff dlls::filter_noise::time::impl::med2");
 
       mbuf.update_int_bufs (&src_dst, &diff, impl_info);
 

@@ -1,7 +1,7 @@
 /**
 \file       block-mem.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_mem_funcs
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -26,7 +26,6 @@ BlockMem::BlockMem (const size_type size) :
   U3_CHECK (size > 0, "BlockMem, zero size for alloc");
   details::aalloc (U3_CAST_2VOID (&buf_), size);
   U3_CHECK (buf_, "failed alloc buf");
-  // U3_ASSERT (buf_);
   size_ = size;
   reset_memory ();
 }

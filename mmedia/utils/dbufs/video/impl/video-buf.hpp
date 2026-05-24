@@ -1,10 +1,10 @@
 #pragma once
 /**
 \file       video-buf.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2016
 \project    u3_dbufs
-\brief      Объявление реализации буфера под видео.
+\brief      Объявление реализации буфера под видео
 */
 
 namespace utils::dbufs::video::impl

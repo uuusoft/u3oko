@@ -1,14 +1,14 @@
 #pragma once
 /**
 \file       isource-impl.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.06.2016
 \project    u3_vgen_lib
 */
 
 namespace dlls::sources::gen_lib
 {
-/// Интерфейс, который должна поддерживать любая реализация захвата данных из устройства.
+/// Интерфейс, который должна поддерживать любая реализация захвата данных из устройства
 class ISourceImpl
 {
   public:

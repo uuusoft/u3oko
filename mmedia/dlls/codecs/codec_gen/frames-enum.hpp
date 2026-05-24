@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       frames-enum.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2017
 \project    u3_codec_gen
 */
@@ -20,7 +20,7 @@ enum class Frames : std::uint32_t
 
 /// Функция сброса поля в текстовый вид
 /// \param[in]  val указатель на поле
-/// \return     текстовое описание поля.
+/// \return     текстовое описание поля
 inline std::string
 to_string (const Frames& val)
 {

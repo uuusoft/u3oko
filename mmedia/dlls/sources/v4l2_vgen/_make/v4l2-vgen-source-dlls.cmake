@@ -1,8 +1,7 @@
-# author      Erashov Anton erashov2026@proton.me
+# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 # date        20.02.2026
 # copyright   Erashov A.I.
 # file        v4l2-vgen-source-dlls.cmake
-# U3_THIS_COMMERCIAL_PART_SOURCE_CODE
 
 if(NOT ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_LINUX} AND NOT ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_RASPBERRY} AND NOT ${U3_SYSTEM_NAME} STREQUAL
                                                                                                                              ${U3_SYSTEM_NAME_ORANGE_PI})

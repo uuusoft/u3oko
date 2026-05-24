@@ -1,8 +1,8 @@
 /**
 \file       time-noise-filter-dll.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.07.2016
-\project    uuu_time_filter_noise
+\project    u3_time_filter_noise
 */
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
@@ -35,7 +35,7 @@ Filter::load_int (::libs::icore::impl::var1::obj::FilterInfo* info, const ::pugi
 
 
 void
-Filter::transform_int (::libs::icore::impl::var1::obj::dll::TransformInfo& info)
+Filter::transform_int (syn::TransformInfo& info)
 {
   prepare_transform (info);
   if (::libs::events::PropertyUsings::disabled == finfo_.ef_props_.front ()->get_using_state ())

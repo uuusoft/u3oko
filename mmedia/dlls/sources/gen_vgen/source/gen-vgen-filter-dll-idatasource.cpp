@@ -1,6 +1,6 @@
 /**
 \file       gen-vgen-filter-dll-idatasource.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.07.2016
 \project    u3_gen_vgen
 */
@@ -8,7 +8,6 @@
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "gen-vgen-includes_int.hpp"
-#include "mmedia/modules/uuu_log/appl/thread/module-log-exception-logger.hpp"
 #include "gen-vgen-info-filter-dll.hpp"
 #include "gen-vgen-filter-dll.hpp"
 #include "mmedia/dlls/doptim/algs/all_algs_impl.hpp"
@@ -24,7 +23,6 @@ Filter::fill_buf (
 
   bufs->set_flag (::libs::bufs::BufsFlags::empty, true);
 
-  // U3_XLOG_DBG ("prepare lock2 finfo->wdmtx_");
   std::unique_lock< InfoFilter::sync_type > lock (finfo->wdmtx_, consts::ms_wait_capture_device);
   if (!lock.owns_lock ())
   {

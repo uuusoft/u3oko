@@ -1,9 +1,9 @@
 #pragma once
 /**
 \file       info-log-session.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       24.05.2022
-\project    uuu_ilog_events
+\project    u3_ilog_events
 */
 
 namespace libs::ilog_events::events

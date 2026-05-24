@@ -1,8 +1,8 @@
 /**
 \file       gen-vgen-proxy.cpp
 \date       17.04.2022
-\author     Erashov Anton erashov2026@proton.me
-\project    uuu_proxy
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_proxy_libs
 */
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
@@ -18,7 +18,7 @@ extern "C" BOOST_SYMBOL_EXPORT bool get_source_vss_android_vgen (::dlls::sources
 extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_android_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
 #endif
 
-#if defined(U3_LIBS_ENABLE_DESK_VGEN_VSS)
+#if (U3_LIBS_ENABLE_DESK_VGEN_VSS == 1)
 extern "C" BOOST_SYMBOL_EXPORT bool get_source_vss_desk_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
 extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_desk_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
 #endif
@@ -27,14 +27,14 @@ extern "C" BOOST_SYMBOL_EXPORT bool get_source_vss_fake_vgen (::dlls::sources::g
 extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_fake_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
 
 #if defined(U3_OS_RASPBERRY)
-#  if defined(U3_LIBS_ENABLE_RASPBERRY_OPENMAX_VGEN_VSS)
+#  if (U3_LIBS_ENABLE_RASPBERRY_OPENMAX_VGEN_VSS == 1)
 extern "C" BOOST_SYMBOL_EXPORT bool get_source_vss_rasp_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
 extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_rasp_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
 #  endif
 #endif
 
 #if defined(U3_OS_WIN32_DESKTOP)
-#  if defined(U3_LIBS_ENABLE_WIN32_DSHOW_VGEN_VSS)
+#  if (U3_LIBS_ENABLE_WIN32_DSHOW_VGEN_VSS == 1)
 extern "C" BOOST_SYMBOL_EXPORT bool get_source_vss_dshow_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
 extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_dshow_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
 #  endif
@@ -42,7 +42,7 @@ extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_dshow_vgen (::dlls::sources:
 
 
 #if defined(U3_OS_WIN32_DESKTOP) || defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI)
-#  if defined(U3_LIBS_ENABLE_PICT_VGEN_VSS)
+#  if (U3_LIBS_ENABLE_PICT_VGEN_VSS == 1)
 extern "C" BOOST_SYMBOL_EXPORT bool get_source_vss_pict_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
 extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_pict_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
 #  endif
@@ -74,7 +74,7 @@ get_create_source_funct (const std::string& plib_id)
   }
 #endif
 
-#if defined(U3_LIBS_ENABLE_DESK_VGEN_VSS)
+#if (U3_LIBS_ENABLE_DESK_VGEN_VSS == 1)
   if (lib_id == "vss_desk_vgen")
   {
     return get_source_vss_desk_vgen;
@@ -87,7 +87,7 @@ get_create_source_funct (const std::string& plib_id)
   }
 
 #if defined(U3_OS_RASPBERRY)
-#  if defined(U3_LIBS_ENABLE_RASPBERRY_OPENMAX_VGEN_VSS)
+#  if (U3_LIBS_ENABLE_RASPBERRY_OPENMAX_VGEN_VSS == 1)
   if (lib_id == "vss_rasp_vgen")
   {
     return get_source_vss_rasp_vgenn;
@@ -96,7 +96,7 @@ get_create_source_funct (const std::string& plib_id)
 #endif
 
 #if defined(U3_OS_WIN32_DESKTOP)
-#  if defined(U3_LIBS_ENABLE_WIN32_DSHOW_VGEN_VSS)
+#  if (U3_LIBS_ENABLE_WIN32_DSHOW_VGEN_VSS == 1)
   if (lib_id == "vss_dshow_vgen")
   {
     return get_source_vss_dshow_vgen;
@@ -105,7 +105,7 @@ get_create_source_funct (const std::string& plib_id)
 #endif
 
 #if defined(U3_OS_WIN32_DESKTOP) || defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI)
-#  if defined(U3_LIBS_ENABLE_PICT_VGEN_VSS)
+#  if (U3_LIBS_ENABLE_PICT_VGEN_VSS == 1)
   if (lib_id == "vss_pict_vgen")
   {
     return get_source_vss_pict_vgen;
@@ -143,7 +143,7 @@ get_free_source_funct (const std::string& plib_id)
   }
 #endif
 
-#if defined(U3_LIBS_ENABLE_DESK_VGEN_VSS)
+#if (U3_LIBS_ENABLE_DESK_VGEN_VSS == 1)
   if (lib_id == "vss_desk_vgen")
   {
     return free_source_vss_desk_vgen;
@@ -156,7 +156,7 @@ get_free_source_funct (const std::string& plib_id)
   }
 
 #if defined(U3_OS_RASPBERRY)
-#  if defined(U3_LIBS_ENABLE_RASPBERRY_OPENMAX_VGEN_VSS)
+#  if (U3_LIBS_ENABLE_RASPBERRY_OPENMAX_VGEN_VSS == 1)
   if (lib_id == "vss_rasp_vgen")
   {
     return free_source_vss_rasp_vgen;
@@ -165,7 +165,7 @@ get_free_source_funct (const std::string& plib_id)
 #endif
 
 #if defined(U3_OS_WIN32_DESKTOP)
-#  if defined(U3_LIBS_ENABLE_WIN32_DSHOW_VGEN_VSS)
+#  if (U3_LIBS_ENABLE_WIN32_DSHOW_VGEN_VSS == 1)
   if (lib_id == "vss_dshow_vgen")
   {
     return free_source_vss_dshow_vgen;
@@ -174,7 +174,7 @@ get_free_source_funct (const std::string& plib_id)
 #endif
 
 #if defined(U3_OS_WIN32_DESKTOP) || defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI)
-#  if defined(U3_LIBS_ENABLE_PICT_VGEN_VSS)
+#  if (U3_LIBS_ENABLE_PICT_VGEN_VSS == 1)
   if (lib_id == "vss_pict_vgen")
   {
     return free_source_vss_pict_vgen;

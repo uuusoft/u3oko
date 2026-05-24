@@ -2,9 +2,9 @@
 /**
 \file       codec-brower.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_vcodec_gen
-\brief      Интерфейс объекта поиска кодеков в системе.
+\brief      Интерфейс объекта поиска кодеков в системе
 */
 
 namespace dlls::codecs::vcodec_gen::browser
@@ -17,6 +17,7 @@ class CodecBrower final
   ~CodecBrower ();
   CodecBrower (const CodecBrower& src)            = delete;
   CodecBrower& operator= (const CodecBrower& src) = delete;
+
   /// Функция возвращает по идентификатору имя файла с кодеком или пусто
   /// \param[in]  id идентификатор кодека
   /// \return     имя файла

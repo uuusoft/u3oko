@@ -1,10 +1,12 @@
-# author      Erashov Anton erashov2026@proton.me
+# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 # date        12.09.2024
 # copyright   Erashov A.I.
 # file        u3-selector-os-specific-options.cmake
 
 if(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ANDROID})
-  include("./build/cmake/os-specific/u3-android-specific.cmake")
+  if(U3_COMMERCIAL_PART EQUAL 1)
+    include("./build/cmake/os-specific/u3-android-specific.cmake")
+  endif()
 elseif(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_LINUX})
   include("./build/cmake/os-specific/u3-linux-specific.cmake")
 elseif(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_WINDOWS})
@@ -20,11 +22,9 @@ else()
 endif()
 
 # postconditions
-if(DEFINED U3_PREFIX_LIB_NAME AND DEFINED U3_SUFFIX_LIB_NAME AND DEFINED U3_SUFFIX_DLL_NAME)
-
-else()
-  message(NOTICE "U3_PREFIX_LIB_NAME=${U3_PREFIX_LIB_NAME}")
-  message(NOTICE "U3_SUFFIX_LIB_NAME=${U3_SUFFIX_LIB_NAME}")
-  message(NOTICE "U3_SUFFIX_DLL_NAME=${U3_SUFFIX_DLL_NAME}")
-  message(FATAL_ERROR "required platform dependent variables are not set")
+if(NOT (DEFINED U3_PREFIX_LIB_NAME AND DEFINED U3_SUFFIX_LIB_NAME AND DEFINED U3_SUFFIX_DLL_NAME))
+  message(NOTICE "${U3_MARK_REQUARED} U3_PREFIX_LIB_NAME=${U3_PREFIX_LIB_NAME}")
+  message(NOTICE "${U3_MARK_REQUARED} U3_SUFFIX_LIB_NAME=${U3_SUFFIX_LIB_NAME}")
+  message(NOTICE "${U3_MARK_REQUARED} U3_SUFFIX_DLL_NAME=${U3_SUFFIX_DLL_NAME}")
+  message(FATAL_ERROR "${U3_MARK_REQUARED} dependent variables are not set")
 endif()

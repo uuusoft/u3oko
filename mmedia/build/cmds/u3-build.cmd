@@ -1,10 +1,14 @@
 REM u3-build.cmd
-REM author      Erashov Anton erashov2026@proton.me
+REM author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 REM date        01.01.2026
 REM copyright   Erashov A.I.
 
 IF NOT DEFINED ASAN_OPTIONS (
     set "ASAN_OPTIONS=detect_odr_violation=0"
+)
+
+IF NOT DEFINED U3_APPL_NAME (
+    set "U3_APPL_NAME=u3oko"
 )
 
 IF NOT DEFINED U3_TOOLCHAIN (
@@ -29,6 +33,10 @@ IF NOT DEFINED U3_OS (
 
 IF NOT DEFINED U3_AS_LIBS (
     set "U3_AS_LIBS=0"
+)
+
+IF NOT DEFINED U3_COMMERCIAL_PART (
+    set "U3_COMMERCIAL_PART=0"
 )
 
 IF "%U3_AS_LIBS%"=="1" (

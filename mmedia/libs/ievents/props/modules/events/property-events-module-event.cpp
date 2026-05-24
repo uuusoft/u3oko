@@ -1,0 +1,102 @@
+/**
+\file       property-events-module-event.cpp
+\date       01.08.2017
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_ievents_lib
+*/
+#include "mmedia/includes/control-defines-includes.hpp"
+#include "mmedia/includes/includes.hpp"
+#include "../../../includes_int.hpp"
+#include "property-events-module-event.hpp"
+
+namespace libs::ievents::props::modules::events
+{
+PropertyEventsModuleEvent::PropertyEventsModuleEvent (const Acessor& ph)
+{
+  property_name_                       = gen_get_mid ();
+  vals_[EventsVals::max_count_events]  = 0;
+  vals_[EventsVals::max_size_database] = 512;
+}
+
+
+PropertyEventsModuleEvent::~PropertyEventsModuleEvent ()
+{
+}
+
+
+PropertyEventsModuleEvent::value_type
+PropertyEventsModuleEvent::get_val (const EventsVals& key) const
+{
+  return vals_[key];
+}
+
+
+void
+PropertyEventsModuleEvent::set_val (const EventsVals& key, value_type val)
+{
+  vals_[key] = val;
+}
+
+
+::libs::events::IEvent::ptr
+PropertyEventsModuleEvent::clone_int (const ::libs::events::Deeps& deep) const
+{
+  return ::libs::events::deep_clone< PropertyEventsModuleEvent > (this, deep);
+}
+
+
+void
+PropertyEventsModuleEvent::load_json_int (const ::boost::json::object& obj)
+{
+  super::load_json_int (obj);
+  U3_ASSERT_NT (0, "???");
+}
+
+
+void
+PropertyEventsModuleEvent::save_json_int (::boost::json::object& obj) const
+{
+  super::save_json_int (obj);
+  U3_ASSERT_NT (0, "???");
+}
+
+#if 0
+void
+PropertyEventsModuleEvent::correct ()
+{
+  static const std::pair<EventsVals, const PropertyEventsModuleEvent::bounds_type*> ids[] = {
+    { EventsVals::max_cache_events, &consts::bounds_max_cache_events },
+    { EventsVals::ms_max_period_flush_events, &consts::bounds_ms_max_period_flush_events },
+    { EventsVals::max_size_one_log_file_byte, &consts::bounds_max_size_one_log_file_byte }
+  };
+
+  for (const auto& id : ids)
+    {
+      auto val = vals_.get (id.first);
+      val      = ::libs::helpers::utils::ret_check_bound<PropertyEventsModuleEvent::value_type> (val, id.second->first, id.second->second);
+      vals_.set (id.first, val);
+    }
+}
+#endif
+
+void
+PropertyEventsModuleEvent::copy_int (const IEvent::craw_ptr src)
+{
+  U3_CHECK_COPY_EVENT (PropertyEventsModuleEvent);
+  super::copy_int (src);
+  vals_ = dsrc->vals_;
+}
+
+
+template< class Archive >
+void
+PropertyEventsModuleEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+{
+  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  ar& BOOST_SERIALIZATION_NVP (vals_);
+  self_correct ();
+}
+}   // namespace libs::ievents::props::modules::events
+
+BOOST_CLASS_EXPORT_IMPLEMENT (::libs::ievents::props::modules::events::PropertyEventsModuleEvent);
+U3_BOOST_SERIALIZE_ALL_ARCHIVES (::libs::ievents::props::modules::events::PropertyEventsModuleEvent);

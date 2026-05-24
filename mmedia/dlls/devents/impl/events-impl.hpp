@@ -1,16 +1,14 @@
 #pragma once
 /**
 \file       events-impl.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       21.07.2017
-\project    uuu_devents
+\project    u3_devents_dlls
 */
 
 namespace dlls::devents::impl
 {
-/**
-\brief  Реализация управлением событиями в системе.
-*/
+/// Реализация управлением событиями в системе
 class EventsImpl final : public ::libs::events::io::IEvents
 {
   public:
@@ -40,8 +38,8 @@ class EventsImpl final : public ::libs::events::io::IEvents
 
   str2gen_events_type      gen_func_events_;         //< Функции для создания событий по их идентификаторам
   str2cast_events_type     cast_func_events_;        //< Функции преобразования событий
+  sync_type                mtx_;                     //< Синхронизирущий примитив
   str2_counter_events_type counter_create_events_;   //< debug
   str2_counter_events_type counter_clone_events_;    //< debug
-  sync_type                mtx_;                     //< Синхронизирущий примитив
 };
 }   // namespace dlls::devents::impl

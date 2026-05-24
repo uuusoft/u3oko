@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       subs-enum.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       30.07.2018
 \project    u3_dbufs
 */

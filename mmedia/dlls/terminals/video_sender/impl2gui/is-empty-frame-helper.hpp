@@ -2,7 +2,7 @@
 /**
 \file       is-empty-frame-helper.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_video_sender_dll
 */
 
@@ -27,7 +27,6 @@ class IsEmptyFrameHelper : public ::libs::link::mem::IHandlerMem
   {
     return obj_->is_empty_frame (pmem);
   }
-
 
   private:
   mutable Filter* obj_;   //<

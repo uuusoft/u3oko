@@ -1,14 +1,15 @@
 #pragma once
 /**
 \file       buf-allocator.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2016
 \project    u3_dbufs
 */
 
 namespace utils::dbufs::allocator
 {
-/// Реализация по управлению буферами для данных. Полное описание функций в суперклассе
+/// Реализация по управлению буферами для данных
+/// Полное описание функций в суперклассе
 class BufAllocator final : public IBufAllocator
 {
   public:

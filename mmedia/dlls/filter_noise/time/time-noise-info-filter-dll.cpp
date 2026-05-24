@@ -1,8 +1,8 @@
 /**
 \file       time-noise-info-filter-dll.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       20.05.2017
-\project    uuu_time_filter_noise
+\project    u3_time_filter_noise
 */
 // #define U3_USE_DEB_LOG_LEVEL
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -18,10 +18,10 @@ InfoFilter::InfoFilter () :
   synced_ (false)
 {
   //  по умолчанию для всех реализаций стандартное свойство.
-  rprops_ = ::libs::iproperties::helpers::create_event_in_list< ::libs::ievents::props::videos::noises::time::VideoTimeNoiseRemoverProp > (ef_props_);
+  rprops_ = ::libs::iproperties::helpers::create_event_in_list< syn::VideoTimeNoiseRemoverProp > (ef_props_);
   str2props_.insert (str2prop_type::value_type (ef_props_.front ()->get_mid (), rprops_));
 
-  auto temp = ::libs::iproperties::helpers::create_event< ::libs::ievents::props::videos::noises::time::ext::MedianTimeFilterProp > (rprops_->impl_info_);
+  auto temp = ::libs::iproperties::helpers::create_event< syn::MedianTimeFilterProp > (rprops_->impl_info_);
   str2props_.insert (str2prop_type::value_type (rprops_->impl_info_->get_mid (), temp));
 }
 
@@ -38,10 +38,8 @@ InfoFilter::sync_int (bool force)
   {
     return;
   }
-
   if (impl_)
   {
-    U3_LOG_DATA_DBG ("time filtration: sync request");
     impl_->sync_int ();
   }
 
@@ -60,10 +58,10 @@ InfoFilter::sync_int (bool force)
   }
 
   {
-    const auto                                                           morph_op = libs::ievents::props::videos::generic::morph::str2type_op (rprops_->id_morph_op_);
-    ::libs::ievents::props::videos::generic::morph::MorphOperationParams morph_param (morph_op, rprops_->size_core_morph_op_, 0, 1);
-    auto&                                                                last    = mops_props_.diffs_.back ();
-    auto&                                                                last_op = last.second.ops_.back ();
+    const auto                morph_op = libs::ievents::props::videos::generic::morph::str2type_op (rprops_->id_morph_op_);
+    syn::MorphOperationParams morph_param (morph_op, rprops_->size_core_morph_op_, 0, 1);
+    auto&                     last    = mops_props_.diffs_.back ();
+    auto&                     last_op = last.second.ops_.back ();
 
     last.second.bindx_diff_ = rprops_->bufs_.indx_dbuf_;
 

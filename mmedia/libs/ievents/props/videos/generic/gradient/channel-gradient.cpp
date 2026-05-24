@@ -1,0 +1,75 @@
+/**
+\file       channel-gradient.cpp
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\date       28.05.2022
+
+\project    u3_ievents_lib
+*/
+#include "mmedia/includes/control-defines-includes.hpp"
+#include "mmedia/includes/includes.hpp"
+#include "../../../../includes_int.hpp"
+#include "type-gradient.hpp"
+#include "channel-gradient.hpp"
+
+namespace libs::ievents::props::videos::generic::gradient
+{
+ChannelGradient::ChannelGradient (const Gradients& type) :
+  gradient_type_ (type),
+  animation_ (false),
+  blure_ (false),
+  string_vals_ ("#0 20 10\n#20 40 30\n#40 60 50\n#60 80 70\n#80 100 90\n#100 120 110\n#120 140 130\n#140 180 160\n#180 200 190\n#200 240 220\n#240 256 250")
+{
+  std::fill (vals_.begin (), vals_.end (), 0);
+}
+
+
+ChannelGradient::~ChannelGradient ()
+{
+}
+
+
+template< class Archive >
+void
+ChannelGradient::serialize (Archive& ar, const std::uint32_t /* file_version */)
+{
+  ar& BOOST_SERIALIZATION_NVP (gradient_type_);
+  ar& BOOST_SERIALIZATION_NVP (animation_);
+  ar& BOOST_SERIALIZATION_NVP (blure_);
+  ar& BOOST_SERIALIZATION_NVP (vals_);
+  ar& BOOST_SERIALIZATION_NVP (string_vals_);
+  ar& BOOST_SERIALIZATION_NVP (future_ext_);
+}
+
+
+void
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const ChannelGradient& src)
+{
+  jv = {
+    { "gradient_type", ::boost::json::value_from (src.gradient_type_) },
+    { "animation", src.animation_ },
+    { "blure", src.blure_ },
+    { "vals", ::boost::json::value_from (src.vals_) },
+    { "string_vals", src.string_vals_ },
+    { "future_ext", src.future_ext_ }
+  };
+}
+
+
+ChannelGradient
+tag_invoke (::boost::json::value_to_tag< ChannelGradient >, const ::boost::json::value& jv)
+{
+  ChannelGradient              ret;
+  const ::boost::json::object& obj = jv.as_object ();
+
+  ret.gradient_type_ = ::boost::json::value_to< Gradients > (obj.at ("gradient_type"));
+  ret.animation_     = obj.at ("animation").as_bool ();
+  ret.blure_         = obj.at ("blure").as_bool ();
+  ret.vals_          = ::boost::json::value_to< std::array< std::int16_t, 256 > > (obj.at ("vals"));
+  ret.string_vals_   = obj.at ("string_vals").as_string ();
+  ret.future_ext_    = obj.at ("future_ext").as_string ();
+  return ret;
+}
+}   // namespace libs::ievents::props::videos::generic::gradient
+
+BOOST_CLASS_EXPORT_IMPLEMENT (::libs::ievents::props::videos::generic::gradient::ChannelGradient);
+U3_BOOST_SERIALIZE_ALL_ARCHIVES (::libs::ievents::props::videos::generic::gradient::ChannelGradient);

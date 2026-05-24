@@ -1,6 +1,6 @@
 /**
 \file       v4l2-vgen-video-impl.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */
@@ -9,30 +9,24 @@
 #include "../v4l2-vgen-includes_int.hpp"
 #include "v4l2-vgen-video-impl.hpp"
 
+// old shit
 #if 0
 namespace dlls::sources::v4l2_vgen::video
 {
-/**
- * Create the encoder component, set up its ports
- *
- * @param state Pointer to state control struct. encoder_comp_ member set to the created camera_component if successful.
- *
- * @return a MMAL_STATUS, MMAL_SUCCESS if all OK, something else otherwise
- */
 MMAL_STATUS_T
 create_video_component (DriverState* state)
 {
   MMAL_COMPONENT_T* video        = nullptr;
   MMAL_PORT_T*      video_input  = nullptr;
   MMAL_PORT_T*      video_output = nullptr;
-  MMAL_STATUS_T     status      = MMAL_SUCCESS;
+  MMAL_STATUS_T     status       = MMAL_SUCCESS;
 
   CHECK_STATUS (mmal_component_create (MMAL_COMPONENT_DEFAULT_VIDEO_ENCODER, &video), "Unable to create video component");
 
   if (!video->input_num || !video->output_num)
   {
     status = MMAL_ENOSYS;
-    U3_XLOG_WARN ("video doesn't have input/output ports" + VTOLOG( status));
+    U3_XLOG_WARN ("video doesn't have input/output ports" + VTOLOG (status));
     return status;
   }
 
@@ -42,23 +36,22 @@ create_video_component (DriverState* state)
   mmal_format_copy (video_output->format, video_input->format);
 
   video_output->format->encoding = state->encoding_;
-  //video_output->buf_size      = video_output->buf_size_recommended;
+  // video_output->buf_size      = video_output->buf_size_recommended;
 
   switch (state->encoding_)
   {
-  case MMAL_ENCODING_H264:
-  {
-    const std::int32_t max_bitrate    = state->level_ == MMAL_VIDEO_LEVEL_H264_4 ? consts::max_bitrate_x264_level4 : consts::max_bitrate_x264_level42;
-    state->bitrate_          = state->bitrate_ > max_bitrate ? max_bitrate : state->bitrate_;
-    video_output->buf_size = video_output->buf_size_recommended;
+  case MMAL_ENCODING_H264: {
+    const std::int32_t max_bitrate = state->level_ == MMAL_VIDEO_LEVEL_H264_4 ? consts::max_bitrate_x264_level4 : consts::max_bitrate_x264_level42;
+    state->bitrate_                = state->bitrate_ > max_bitrate ? max_bitrate : state->bitrate_;
+    video_output->buf_size         = video_output->buf_size_recommended;
     break;
   }
   case MMAL_ENCODING_MJPEG:
-    state->bitrate_          = state->bitrate_ > consts::max_bitrate_mjpeg ? consts::max_bitrate_mjpeg : state->bitrate_;
+    state->bitrate_        = state->bitrate_ > consts::max_bitrate_mjpeg ? consts::max_bitrate_mjpeg : state->bitrate_;
     video_output->buf_size = 256 << 10;
     break;
   default:
-    U3_XLOG_WARN ("unknown encoding" + VTOLOG(state->encoding_));
+    U3_XLOG_WARN ("unknown encoding" + VTOLOG (state->encoding_));
     break;
   }
 
@@ -83,7 +76,7 @@ create_video_component (DriverState* state)
     format->es->video.frame_rate     = MMAL_RATIONAL_T { 30, 1 };
     format->es->video.frame_rate     = MMAL_RATIONAL_T { 0, 1 };   // We need to set the frame rate on output to 0, to ensure it gets updated correctly from the input framerate when port connected
 
-    //video_output->format->bitrate                  = U3_CAST_UINT32 (state->bitrate_ * 1.0f / 100.0f); //debug
+    // video_output->format->bitrate                  = U3_CAST_UINT32 (state->bitrate_ * 1.0f / 100.0f); //debug
   }
 
   CHECK_STATUS (mmal_port_format_commit (video_output), "Unable to set format on video output port");
@@ -239,7 +232,7 @@ void
 VideoImpl::update_source_info (const ::dlls::sources::gen_lib::SourceImplInfo& info)
 {
   lock_type lock (mtx_);
-  auto       buf_alocator = info.links_props_.pdriver2buf_->impl ();
+  auto      buf_alocator = info.links_props_.pdriver2buf_->impl ();
 
   std::copy (ready_video_bufs_.begin (), ready_video_bufs_.end (), std::back_inserter (empty_video_bufs_));
   ready_video_bufs_.clear ();
@@ -258,7 +251,7 @@ VideoImpl::update_source_info (const ::dlls::sources::gen_lib::SourceImplInfo& i
 bool
 VideoImpl::init_device (const ::dlls::sources::gen_lib::SourceImplInfo& info)
 {
-  lock_type    lock (mtx_);
+  lock_type     lock (mtx_);
   MMAL_STATUS_T status = MMAL_SUCCESS;
 
   if (init_device_)
@@ -278,7 +271,7 @@ VideoImpl::init_device (const ::dlls::sources::gen_lib::SourceImplInfo& info)
   MMAL_ES_FORMAT_T* still_format = cap_port->format;
 
   still_format->encoding = mmal_util_rgb_order_fixed (cap_port) ? MMAL_ENCODING_RGB24 : MMAL_ENCODING_BGR24;
-  //still_format->encoding = MMAL_ENCODING_RGB24;      //debug
+  // still_format->encoding = MMAL_ENCODING_RGB24;      //debug
 
   CHECK_STATUS (mmal_port_format_commit (cap_port), "camera video format couldn't be set");
   CHECK_STATUS (helpers::connect_ports (cap_port, einput_port, &devstate_->video_connect_), "Failed to connect camera video port to video input");
@@ -321,7 +314,7 @@ VideoImpl::deinit_device ()
 void
 VideoImpl::buf_callback_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 {
-  lock_type    lock (mtx_);
+  lock_type     lock (mtx_);
   MMAL_STATUS_T status   = MMAL_SUCCESS;
   bool          complete = false;
   DriverState*  devstate = reinterpret_cast< DriverState* > (port->userdata);
@@ -330,8 +323,8 @@ VideoImpl::buf_callback_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 
   int        bytes_written  = 0;
   int        bytes_to_write = buf->length;
-  const auto width         = port->format->es->video.width;
-  const auto height        = port->format->es->video.height;
+  const auto width          = port->format->es->video.width;
+  const auto height         = port->format->es->video.height;
 
   if (devstate->onlyLuma)
   {
@@ -356,13 +349,13 @@ VideoImpl::buf_callback_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 
       head->reset ();
 
-      //head->base_part_.set_guid_codec (::libs::helpers::uids::codecs::x264);
+      // head->base_part_.set_guid_codec (::libs::helpers::uids::codecs::x264);
       head->base_part_.set_guid_codec (::libs::helpers::uids::codecs::mjpeg);
       head->base_part_.style_         = ::dlls::codecs::codec_gen::Frames::iframe;
       head->base_part_.sinfo_.width_  = width;
       head->base_part_.sinfo_.height_ = height;
       head->base_part_.sinfo_.stride_ = width;
-      head->cinfo_.nocolor_        = false;
+      head->cinfo_.nocolor_           = false;
     }
 
     auto data = buf->get_buf ();
@@ -391,31 +384,31 @@ VideoImpl::buf_callback_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
       head->base_part_.size_compress_ = video_frame_size_ - sizeof (HeaderIFrame);
       head->csize_                    = video_frame_size_ - sizeof (HeaderIFrame);
 
-      //head->csize_ = video_frame_size_;
-      //head->coff_ = from_header;
-      //from_header += video_size;
-      //out_size += video_size;
-      // U3_ASSERT(out_size > 0);
+      // head->csize_ = video_frame_size_;
+      // head->coff_ = from_header;
+      // from_header += video_size;
+      // out_size += video_size;
+      //  U3_ASSERT(out_size > 0);
 
-      //head->base_part_.size_compress_ = out_size;
-      //head->base_part_.sinfo_.width_ = lsrc.width_;
-      //head->base_part_.sinfo_.height_ = lsrc.height_;
-      //head->base_part_.sinfo_.stride_ = lsrc.width_ * (colored ? 3 : 1);
+      // head->base_part_.size_compress_ = out_size;
+      // head->base_part_.sinfo_.width_ = lsrc.width_;
+      // head->base_part_.sinfo_.height_ = lsrc.height_;
+      // head->base_part_.sinfo_.stride_ = lsrc.width_ * (colored ? 3 : 1);
 
-      //head->cinfo_ = cinfo_.plane_;
-      //head->cinfo_.nocolor_ = colored ? false : true; //переопределяем по
-      //факту, т.к. у пользователя может быть установлено сжатие с цветом при
-      //его фактическом отсутствии и наоборот.
+      // head->cinfo_ = cinfo_.plane_;
+      // head->cinfo_.nocolor_ = colored ? false : true; //переопределяем по
+      // факту, т.к. у пользователя может быть установлено сжатие с цветом при
+      // его фактическом отсутствии и наоборот.
 
       // std::copy(
       //  vcodec_mjpg::consts::guid_codec.get_vals().begin(),???
       // vcodec_mjpg::consts::guid_codec.get_vals().end(),
-      //head->base_part_.guid_);
+      // head->base_part_.guid_);
 
       // U3_ASSERT(head->check());
     }
 
-    complete         = true;
+    complete          = true;
     video_frame_size_ = 0;
     video_beg_time_   = U3_GET_CURRENT_TIME;
   }
@@ -447,8 +440,8 @@ VideoImpl::complete_bufs_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 {
   MMAL_STATUS_T status     = MMAL_SUCCESS;
   MMAL_PORT_T*  video_port = devstate_->cam_comp_->output[helpers::consts::indx_camera_port_video];
-  //MMAL_PORT_T*  video_output = devstate_->video_comp_->output[0];
-  //MMAL_PORT_T*  video_input  = devstate_->video_comp_->input[0];
+  // MMAL_PORT_T*  video_output = devstate_->video_comp_->output[0];
+  // MMAL_PORT_T*  video_input  = devstate_->video_comp_->input[0];
 
   if (video_codec_interf_->is_codec_property_update ())
   {
@@ -457,14 +450,14 @@ VideoImpl::complete_bufs_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
   // Enable the camera still output port and tell it its callback function
   // U3_CHECK(MMAL_SUCCESS == mmal_port_enable(video_port, ::buf_callback), "Failed to setup camera output");
   // There is a possibility that shutter needs to be set each loop.
-  //CHECK_STATUS( mmal_port_parameter_set_uint32( devstate_->cam_comp_->control, MMAL_PARAMETER_SHUTTER_SPEED, devstate_->cam_params_.shutter_speed), "Unable to set shutter speed");
+  // CHECK_STATUS( mmal_port_parameter_set_uint32( devstate_->cam_comp_->control, MMAL_PARAMETER_SHUTTER_SPEED, devstate_->cam_params_.shutter_speed), "Unable to set shutter speed");
 
   // Send all the bufs to the camera output port
   free_bufs_int (port, buf);
 
   if (devstate_->burstCaptureMode)
   {
-    //mmal_port_parameter_set_boolean(devstate_->cam_comp_->control, MMAL_PARAMETER_CAMERA_BURST_CAPTURE, 1);
+    // mmal_port_parameter_set_boolean(devstate_->cam_comp_->control, MMAL_PARAMETER_CAMERA_BURST_CAPTURE, 1);
   }
 
   CHECK_STATUS (mmal_port_parameter_set_boolean (video_port, MMAL_PARAMETER_CAPTURE, 1), "Failed to start capture");
@@ -476,11 +469,11 @@ VideoImpl::complete_bufs_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 void
 VideoImpl::free_bufs_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 {
-  MMAL_STATUS_T status      = MMAL_SUCCESS;
-  const std::int32_t     count_bufs = mmal_queue_length (devstate_->video_pool_->queue);
-  MMAL_PORT_T*  video_port  = devstate_->cam_comp_->output[helpers::consts::indx_camera_port_video];
-  //MMAL_PORT_T*  video_output = devstate_->video_comp_->output[0];
-  //MMAL_PORT_T*  video_input  = devstate_->video_comp_->input[0];
+  MMAL_STATUS_T      status     = MMAL_SUCCESS;
+  const std::int32_t count_bufs = mmal_queue_length (devstate_->video_pool_->queue);
+  MMAL_PORT_T*       video_port = devstate_->cam_comp_->output[helpers::consts::indx_camera_port_video];
+  // MMAL_PORT_T*  video_output = devstate_->video_comp_->output[0];
+  // MMAL_PORT_T*  video_input  = devstate_->video_comp_->input[0];
 
   for (int indx = 0; indx < count_bufs; ++indx)
   {
@@ -496,9 +489,9 @@ void
 VideoImpl::update_codec_props_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 {
   MMAL_STATUS_T status = MMAL_SUCCESS;
-  //MMAL_PORT_T*  video_port  = devstate_->cam_comp_->output[helpers::consts::indx_camera_port_video];
-  //MMAL_PORT_T*  video_output = devstate_->video_comp_->output[0];
-  //MMAL_PORT_T*  video_input  = devstate_->video_comp_->input[0];
+  // MMAL_PORT_T*  video_port  = devstate_->cam_comp_->output[helpers::consts::indx_camera_port_video];
+  // MMAL_PORT_T*  video_output = devstate_->video_comp_->output[0];
+  // MMAL_PORT_T*  video_input  = devstate_->video_comp_->input[0];
   /*
   VideoCodecProp::craw_ptr props = video_codec_interf_->get_codec_property ();
 
@@ -547,11 +540,11 @@ VideoImpl::update_codec_props_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 
   video_output->buf_num = video_output->buf_num_recommended;
   */
-  //VideoCodecProp::craw_ptr props = video_codec_interf_->get_codec_property ();
+  // VideoCodecProp::craw_ptr props = video_codec_interf_->get_codec_property ();
   //
-  //const std::uint32_t val = ::libs::helpers::utils::ret_check_bound<uint3-2_t> (U3_CAST_UINT32 (props->plane_.quality_), 1, 100);
-  //CHECK_STATUS ( mmal_port_parameter_set_uint32 ( video_output, MMAL_PARAMETER_JPEG_Q_FACTOR, val), "update video quality");
-  //CHECK_STATUS ( mmal_port_format_commit (video_output), "Unable to update format on video output port");
+  // const std::uint32_t val = ::libs::helpers::utils::ret_check_bound<uint3-2_t> (U3_CAST_UINT32 (props->plane_.quality_), 1, 100);
+  // CHECK_STATUS ( mmal_port_parameter_set_uint32 ( video_output, MMAL_PARAMETER_JPEG_Q_FACTOR, val), "update video quality");
+  // CHECK_STATUS ( mmal_port_format_commit (video_output), "Unable to update format on video output port");
 
   return;
 }
@@ -570,6 +563,6 @@ VideoImpl::buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
   devstate->video_->buf_callback_int (port, buf);
 }
 
-}   // namespace video
+}   // namespace dlls::sources::v4l2_vgen::video
 
 #endif

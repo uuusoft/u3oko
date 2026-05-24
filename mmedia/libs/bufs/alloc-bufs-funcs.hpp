@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       alloc-bufs-funcs.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       15.08.2018
 \project    u3_bufs
 */

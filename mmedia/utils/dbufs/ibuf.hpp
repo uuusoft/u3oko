@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       ibuf.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.07.2016
 \project    u3_dbufs
 */
@@ -23,6 +23,7 @@ class IBuf
 
   IBuf (const IBuf& _rsc)           = delete;
   IBuf& operator= (const IBuf& src) = delete;
+
   // EAI-REFACT
   /// Функция установки значения переменной, для описания данные с точки зрения используемой памяти
   /// \param[in]  _type тип переменной
@@ -32,6 +33,7 @@ class IBuf
   {
     set_mem_var_int (_type, _val);
   }
+
   /// Функция получения значения переменной для описания данные с точки зрения используемой памяти
   /// \param[in]  _type тип переменной
   /// \return     значение переменной
@@ -40,6 +42,7 @@ class IBuf
   {
     return get_mem_var_int (_type);
   }
+
   /// Функция клонирования буфера
   /// \param[in]  _source   источник данных
   /// \param[in]  _perc_copy  проценты копирования по вертикали [0.0f..1000f]
@@ -48,6 +51,7 @@ class IBuf
   {
     clone_int (_source.get (), _perc_copy);
   }
+
   /// Функция клонирования буфера
   /// \param[in]  _source   источник данных
   /// \param[in]  _perc_copy  проценты копирования по вертикали [0.0f..1000f]
@@ -56,19 +60,25 @@ class IBuf
   {
     clone_int (_source, _perc_copy);
   }
-  /// Функция обмена содержимого буферов. \param[in]  buf буфер обмена
+
+  /// Функция обмена содержимого буферов
+  /// \param[in]  buf буфер обмена
   void
   swap (IBuf& buf)
   {
     swap_int (buf);
   }
-  /// Функция получения буфера. \return   буфер
+
+  /// Функция получения буфера
+  /// \return   буфер
   std::uint8_t*
   get_buf ()
   {
     return get_buf_int ();
   }
-  /// Функция получения константного буфера.\return   буфер
+
+  /// Функция получения константного буфера
+  /// \return   буфер
   const std::uint8_t*
   get_cbuf () const
   {

@@ -1,6 +1,6 @@
 /**
 \file       mjpeg-impl-coder-iframe.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.11.2016
 \project    u3_vcodec_mjpg
 */
@@ -18,7 +18,6 @@ MjpegImpl::comp_iframe (
   ::libs::optim::io::ProxyBuf& dst,
   std::int32_t&                out_size)
 {
-  U3_LOG_DATA_DBG ("START dlls::codecs::vcodec_mjpg::MjpegImpl::comp_iframe" + PTR_TOLOG (hjpeg_));
   dst.check ("dst dlls::codecs::vcodec_mjpg");
 
   std::uint8_t*                     dbuf        = dst.ubuf ();
@@ -57,7 +56,6 @@ MjpegImpl::comp_iframe (
     TJFLAG_NOREALLOC | TJFLAG_FASTDCT | TJFLAG_BOTTOMUP);
 
   U3_CHECK_TURBO_JPEG_RET (-1 != res_jpeg, "tjCompress2", false);
-  U3_LOG_DATA_DBG (VTOLOG (jpeg_size) + VTOLOG (out_size) + VTOLOG (dst.width_) + VTOLOG (dst.height_) + VTOLOG (dst.stride_));
   ::libs::helpers::mem::u3copy (jpeg_buf_, dbuf + out_size, jpeg_size);
 
   head->csize_ = jpeg_size;

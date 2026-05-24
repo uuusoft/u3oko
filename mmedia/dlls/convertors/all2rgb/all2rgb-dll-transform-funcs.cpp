@@ -1,6 +1,6 @@
 /**
 \file       all2rgb-dll-transform-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2017
 \project    uuu_all2rgb
 */
@@ -38,7 +38,6 @@ Filter::convert_bufs ()
   if (!finfo_.rprops_->debug_skip_transform_)
   {
     pthreads_->mthreads_call (id_obj_, tfunct, cinfo, transinfo_->exptimes_);
-    U3_LOG_DATA_DBG ("buf after all2rgb" + VTOLOG ((*tempbuf)[::utils::dbufs::MemVars::size_data]));
   }
 
   // rcbuf->c1lone( tempbuf, 100.0f );

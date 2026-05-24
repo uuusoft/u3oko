@@ -1,6 +1,6 @@
 /**
 \file       video-sender-transform-funct.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.07.2016
 \project    u3_video_sender_dll
 */
@@ -65,7 +65,6 @@ Filter::transform_int (syn::TransformInfo& info)
       for (const auto& minfo : minfos)
       {
         auto find = funcs_.find (minfo->dest_module_id_);
-        U3_XLOG_DBG ("send funct for" + TOLOG (minfo->dest_module_id_) + VTOLOG (funcs_.end () == find));
         if (funcs_.end () == find)
         {
           default_send_funct (info, minfo, minfo->dest_module_id_);
@@ -84,7 +83,6 @@ Filter::transform_int (syn::TransformInfo& info)
     {
       syn::IEvent::ptr rmsg;
       auto             dmsg = ::libs::helpers::check::ptr (::libs::iproperties::helpers::create_event< syn::WrapperHttpEvent > (rmsg));
-      // U3_CHECK (dmsg, "syn::WrapperHttpEvent");
       dmsg->set_msg (event);
       helper->send_msg (rmsg, syn::CallSyncs::async, syn::Calls::set);
     }

@@ -1,13 +1,13 @@
 /**
 \file     dct_func_mmx.cpp
 \date     23.03.2016
-\author   Erashov Anton erashov2026@proton.me
+\author   Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \brief    MMX function IDCT coding, var1
 */
 /**
 \file       ???.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_codec_funcs
 */
 #include "mmedia/includes/control-defines-includes.hpp"

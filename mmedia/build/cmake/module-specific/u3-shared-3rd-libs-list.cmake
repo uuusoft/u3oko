@@ -1,12 +1,7 @@
-# author      Erashov Anton erashov2026@proton.me
+# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 # date        12.09.2024
 # copyright   Erashov A.I.
 # file        u3-shared-3rd-libs-list.cmake
-
-#if ( ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ANDROID} )
-#  message( NOTICE "${U3_MARK_TODO} add support sqlite for Android" )
-#  set( U3_DBG_EXTERNAL_LIB_SKIP_SQLITE  TRUE CACHE BOOL "skip for Android" FORCE )
-#endif()
 
 if(U3_DBG_EXTERNAL_LIB_SKIP_SQLITE)
   set(U3_SHARED_COMPILE_DEF_CPP ${U3_SHARED_COMPILE_DEF_CPP} -DU3_DBG_EXTERNAL_LIB_SKIP_SQLITE=1)
@@ -36,10 +31,13 @@ if(U3_DBG_FORCE_COMPILE_AT_BEGIN_ALL_EXT_LIBS)
 
   if(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_LINUX} OR ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_RASPBERRY} OR ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ORANGE_PI})
     include("./build/cmake/libs/libv4l2cpp/u3-libv4l2cpp-lib.cmake")
-    include( "./build/cmake/libs/libva/u3-libva-lib.cmake" )
-    include( "./build/cmake/libs/libva-utils/u3-libva-utils-lib.cmake" )
-    #include( "./build/cmake/libs/libscreencapture-wayland/u3-libscreencapture-wayland-lib.cmake" )
-    #include( "./build/cmake/libs/libdatachannel/u3-libdatachannel-lib.cmake" )
-    #include( "./build/cmake/libs/libcamera/u3-libcamera-lib.cmake" )
+
+    if(U3_COMMERCIAL_PART EQUAL 1)
+      include( "./build/cmake/libs/libva/u3-libva-lib.cmake" )
+      include( "./build/cmake/libs/libva-utils/u3-libva-utils-lib.cmake" )
+      #include( "./build/cmake/libs/libscreencapture-wayland/u3-libscreencapture-wayland-lib.cmake" )
+      #include( "./build/cmake/libs/libdatachannel/u3-libdatachannel-lib.cmake" )
+      #include( "./build/cmake/libs/libcamera/u3-libcamera-lib.cmake" )
+    endif()
   endif()
 endif()

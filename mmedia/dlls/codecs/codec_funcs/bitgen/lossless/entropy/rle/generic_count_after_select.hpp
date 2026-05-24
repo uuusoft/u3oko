@@ -2,9 +2,9 @@
 /**
 \file       generic_count_after_select.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_codec_funcs
-\brief      Объявление обобщенной реализации RLE (метод подсчет после выбора ключа).
+\brief      Объявление обобщенной реализации RLE (метод подсчет после выбора ключа)
 */
 
 namespace dlls::codecs::bitgen::lossless::entropy::rle

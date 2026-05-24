@@ -1,6 +1,6 @@
 /**
 \file       mjpeg-impl-coder-generic.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2017
 \project    u3_vcodec_mjpg
 */
@@ -18,7 +18,6 @@ MjpegImpl::code_int (
   ::libs::bufs::Bufs*               dst,
   syn::TransformInfo::tevents_type* events)
 {
-  U3_LOG_DATA_DBG ("START dlls::codecs::vcodec_mjpg::MjpegImpl::code_int");
   const syn::IVideoBuf::raw_ptr  obuf = (*dst)[cinfo_.bufs_.indx_dbuf_];
   const syn::IVideoBuf::craw_ptr hbuf = (*src)[utils::dbufs::video::consts::offs::hue];
   const syn::IVideoBuf::craw_ptr sbuf = (*src)[utils::dbufs::video::consts::offs::sat];
@@ -63,7 +62,6 @@ MjpegImpl::code_int (
     cinfo.params_.pints_.push_back (&stride_rgb24);
 
     pthreads_->mthreads_call (*id_node_graph_, tfunct, cinfo, transinfo_->exptimes_, 0);
-    U3_LOG_DATA_DBG (FVTOLOG (stride_temp_buf) + VTOLOG (stride_rgb24) + VTOLOG (lbuf_width) + VTOLOG (lbuf_stride));
     U3_ASSERT (stride_rgb24 == U3_CAST_INT32 (stride_temp_buf));
   }
   else

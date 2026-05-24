@@ -2,7 +2,7 @@
 /**
 \file       correct-image-impl.hpp
 \date       01.01.2018
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_vcorrect_vdd
 */
 

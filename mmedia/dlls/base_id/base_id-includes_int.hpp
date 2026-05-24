@@ -2,11 +2,10 @@
 /**
 \file       includes_int.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_base_id_dll
 */
 #include "../dlls-includes_int.hpp"
-
 #include "base_id-includes.hpp"
 
 #undef U3_FILE_LOG_TAG

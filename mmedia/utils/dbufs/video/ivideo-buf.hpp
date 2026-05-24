@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       ivideo-buf.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2018
 \project    u3_dbufs
 */
@@ -26,14 +26,16 @@ class IVideoBuf : public IMemBuf
   virtual ~IVideoBuf ()
   {
   }
-  /// Функция установки формата пикселя в буфере. \param[in]  _id формат пикселей
+  /// Функция установки формата пикселя в буфере
+  /// \param[in]  _id формат пикселей
   void
   set_format (const libs::helpers::uids::minor::id_val& _id)
   {
     std::lock_guard lock (threadsan_mtx_);
     set_format_int (_id);
   }
-  /// Функция получения  формата пикселя в буфере. \return   формат пикселей
+  /// Функция получения  формата пикселя в буфере
+  /// \return   формат пикселей
   libs::helpers::uids::minor::id_val
   get_format () const
   {
@@ -136,6 +138,6 @@ class IVideoBuf : public IMemBuf
   virtual void                               flush_int ()                                                   = 0;
   virtual bool                               check_int (const check_func_type& _obj) const                  = 0;
 
-  mutable sync_type threadsan_mtx_;   //< чтобы успокоить thread sanitizer, т.к. объекты этого типа могут использоваться повторно то и в разных потоках но с разделением по времени. Оно этого не понимает
+  mutable sync_type threadsan_mtx_;   //< чтобы успокоить thread sanitizer, т.к. объекты этого типа могут использоваться повторно то и в разных потоках но с разделением по времени Оно этого не понимает
 };
 }   // namespace utils::dbufs::video

@@ -1,11 +1,12 @@
 #pragma once
 /**
 \file       compiler-type-detect-defines.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2018
 \project    u3_defines
-\brief      Выводим определение компилятора системы.
+\brief      Выводим определение компилятора системы
 */
+
 #ifndef U3_COMPILER_MSC
 #  if defined(_MSC_VER)
 #    define U3_COMPILER_MSC

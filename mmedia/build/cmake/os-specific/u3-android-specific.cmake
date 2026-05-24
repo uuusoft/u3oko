@@ -1,8 +1,8 @@
-# author      Erashov Anton erashov2026@proton.me
+# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 # date        29.08.2024
 # copyright   Erashov A.I.
 # file        u3-android-specific.cmake
-# U3_THIS_COMMERCIAL_PART_SOURCE_CODE
+# U3_COMMERCIAL_PART
 
 include(./build/cmake/toolchains/android.cmake)
 
@@ -18,20 +18,12 @@ set(U3_LIBS_SYSTEM_STATIC_LIST ${U3_LIBS_SYSTEM_STATIC_LIST} camera2ndk mediandk
 set(U3_SHARED_COMPILE_DEF_CPP ${U3_SHARED_COMPILE_DEF_CPP} -DANDROID_ABI=${ANDROID_ABI} -DANDROID_ARM_MODE=${ANDROID_ARM_MODE} -DU3_OS_ANDROID=1)
 set(U3_SHARED_COMPILE_OPTIONS_CPP ${U3_SHARED_COMPILE_OPTIONS_CPP} -std=${U3_CPP_STANDARD})
 
-set(U3_SHARED_LINK_OPTIONS_CPP
-    ${U3_SHARED_LINK_OPTIONS_CPP}
-    -ldl
-    ${android-cpufeatures-lib}
-    android
-    ${android-app-glue-lib}
-    ${android-log-lib})
-
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(U3_PREFIX_LIB_NAME lib)
 set(U3_SUFFIX_LIB_NAME a)
 set(U3_SUFFIX_DLL_NAME so)
 set(U3_ANDROID_NDK_LIB_PATH "%{ANDROID_NDK}/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/aarch64-linux-android")
-#set( U3_SHARED_COMPILE_DEF_CPP         ${U3_SHARED_COMPILE_DEF_CPP}        "-DBOOST_INTERPROCESS_SHARED_DIR_PATH=\"/sdcard\"" )
+#set( U3_SHARED_COMPILE_DEF_CPP         ${U3_SHARED_COMPILE_DEF_CPP}      z  "-DBOOST_INTERPROCESS_SHARED_DIR_PATH=\"/sdcard\"" )
 #set( U3_SHARED_COMPILE_DEF_CPP         ${U3_SHARED_COMPILE_DEF_CPP}        "BOOST_INTERPROCESS_SHARED_DIR_FUNC")
 
 find_library(android-log-lib log REQUIRED)
@@ -42,6 +34,14 @@ add_library(android-app-glue-lib STATIC ${ANDROID_NDK}/sources/android/native_ap
 
 include_directories(./ndk_helper ${ANDROID_NDK}/sources/android/cpufeatures)
 add_library(android-cpufeatures-lib STATIC ${ANDROID_NDK}/sources/android/cpufeatures/cpu-features.c)
+
+set(U3_SHARED_LINK_OPTIONS_CPP
+    ${U3_SHARED_LINK_OPTIONS_CPP}
+    -ldl
+    ${android-cpufeatures-lib}
+    android
+    ${android-app-glue-lib}
+    ${android-log-lib})
 
 include_directories("${U3_BUILD_PATH_TO_LIBS}/../")
 

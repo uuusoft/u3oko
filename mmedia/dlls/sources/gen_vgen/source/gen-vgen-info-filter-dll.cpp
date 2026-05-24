@@ -1,6 +1,6 @@
 /**
 \file       gen-vgen-info-filter-dll.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       20.05.2017
 \project    u3_gen_vgen
 */
@@ -39,7 +39,6 @@ InfoFilter::~InfoFilter ()
     if (recv_thread_)
     {
       {
-        U3_XLOG_DBG ("prepare lock5 finfo->wdmtx_");
         std::unique_lock< InfoFilter::sync_type > lock (wdmtx_, consts::ms_wait_capture_device);
         if (lock.owns_lock ())
         {
@@ -77,7 +76,6 @@ InfoFilter::~InfoFilter ()
 void
 InfoFilter::sync_int (bool force)
 {
-  U3_LOG_DATA_DBG ("InfoFilter::sync_int" + VTOLOG (force));
   if (synced_ && !force)
   {
     return;
@@ -85,7 +83,6 @@ InfoFilter::sync_int (bool force)
   // U3-REFACT
   if (auto impl = capture_impl_.lock ())
   {
-    U3_LOG_DATA_DBG ("sync_int:update properties");
     impl->update_capture_property (capture_props_);
     impl->update_driver_property (rprops_);
     impl->update_system_specific_property (system_props_);

@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       compiler-warnings-suppress-defines.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       04.04.2026
 \project    u3_defines
 */

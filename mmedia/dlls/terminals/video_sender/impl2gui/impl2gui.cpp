@@ -1,6 +1,6 @@
 /**
 \file       impl2gui.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       14.08.2018
 \project    u3_video_sender_dll
 */
@@ -128,13 +128,11 @@ Impl2Gui::send_frame (
     {
       if (!helper->mem_atomic_call (finfo_.last_hmem_, IsEmptyFrameHelper (this)))
       {
-        // U3_ASSERTSIG( "failed" );
         return;
       }
     }
 
     std::size_t size_mem = sizeof (::modules::uuu_gui::appl::io::VideoIO) + 16;
-
     {
       std::size_t count_bufs = 0;
 

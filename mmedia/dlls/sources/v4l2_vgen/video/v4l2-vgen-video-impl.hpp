@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       v4l2-vgen-video-impl.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */
@@ -16,9 +16,7 @@ const std::int32_t max_bitrate_x264_level42 = 62500000;   // 62.5Mbits/s
 
 namespace dlls::sources::v4l2_vgen::video
 {
-/**
-\brief  Реализация унифицированного захвата данных из системно зависимых устройств.
-*/
+  /// Реализация унифицированного захвата данных из системно зависимых устройств
 class VideoImpl final
 {
   public:

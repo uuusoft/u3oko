@@ -1,8 +1,8 @@
 /**
 \file       appll-part-log-info.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me
-\project    uuu_ilog_events
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_ilog_events
 */
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"

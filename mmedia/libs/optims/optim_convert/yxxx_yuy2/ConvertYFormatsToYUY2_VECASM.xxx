@@ -1,0 +1,316 @@
+/**
+\file	???
+\brief	Convertion funct Yformats to YUY2
+\author	Erashov A.
+\date	26.07.2006
+*/
+#include "stdafx.h"
+#include "ConvertYFormatsToYUY2_VECASM.h"
+
+namespace optim {
+#if 0
+	bool UYVYtoYUY2FunctMMX (
+		unsigned char* dest,
+		const unsigned char* source,
+		int stride_dest,
+		int stride_source,
+		int width_element,
+		int height_element)
+	{
+		int number_cycle_string = (width_element + ((width_element & 0x7) ? 7 : 0)) >> 2;
+		int leak_source = stride_source - number_cycle_string * 8;
+		int leak_dest = stride_dest - number_cycle_string * 8;
+
+		unsigned char loc_array_mask[8] =
+		{
+			0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00
+		};
+
+		__asm
+		{
+			pushad;
+
+			lea eax, loc_array_mask;
+			movq mm7, [eax];
+			movq mm6, mm7;
+			psllq mm6, 8;
+
+			mov ecx, height_element;
+			mov ebx, leak_dest;
+			mov edx, leak_source;
+			mov edi, dest;
+			mov esi, source;
+
+			cycle1:
+
+			mov eax, number_cycle_string;
+
+			cycle2:
+
+			movq mm0, [esi]; UY0VY1UY2VY3
+				movq mm1, mm0; UY0VY1UY2VY3
+
+				psrlq mm0, 8; Y0VY1UY2VY3x
+				pand mm0, mm7; Y0xY1xY2xY3x
+				psllq mm1, 8; xUY0VY1UY2V
+				pand mm1, mm6; xUxVxUxV
+
+				por mm0, mm1; Y0UY1VY2UY3V
+
+				movq[edi], mm0;
+
+			add edi, 8;
+			add esi, 8;
+
+			sub eax, 1;
+
+			jg cycle2;
+
+			add edi, ebx;
+			add esi, edx;
+
+			sub ecx, 1;
+
+			jg cycle1;
+
+			popad;
+			emms;
+		}
+		return true;
+	}
+
+	bool UYVYtoYUY2FunctSSE (
+		unsigned char* dest,
+		const unsigned char* source,
+		int stride_dest,
+		int stride_source,
+		int width_element,
+		int height_element)
+	{
+		return UYVYtoYUY2FunctMMX ( dest, source, stride_dest, stride_source, width_element, height_element);
+	}
+
+	bool UYVYtoYUY2FunctSSE2 (
+		unsigned char* dest,
+		const unsigned char* source,
+		int stride_dest,
+		int stride_source,
+		int width_element,
+		int height_element)
+	{
+		int number_cycle_string = (width_element + ((width_element & 0x7) ? 7 : 0)) >> 3;
+		int leak_source = stride_source - number_cycle_string * 16;
+		int leak_dest = stride_dest - number_cycle_string * 16;
+
+		unsigned char loc_array_mask[16] =
+		{
+			0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00,
+			0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00
+		};
+
+		__asm
+		{
+			pushad;
+
+			lea eax, loc_array_mask;
+			movdqu xmm7, [eax];
+			movdqa xmm6, xmm7;
+			pslldq xmm6, 1;
+
+			mov ecx, height_element;
+			mov ebx, leak_dest;
+			mov edx, leak_source;
+			mov edi, dest;
+			mov esi, source;
+
+			cycle1:
+
+			mov eax, number_cycle_string;
+
+			cycle2:
+
+			movdqa xmm0, [esi]; UY0VY1UY2VY3
+				movdqa xmm1, xmm0; UY0VY1UY2VY3
+
+				psrldq xmm0, 1; Y0VY1UY2VY3x
+				pand xmm0, xmm7; Y0xY1xY2xY3x
+				pslldq xmm1, 1; xUY0VY1UY2V
+				pand xmm1, xmm6; xUxVxUxV
+
+				por xmm0, xmm1; Y0UY1VY2UY3V
+
+				movdqa[edi], xmm0;
+
+			add edi, 16;
+			add esi, 16;
+
+			sub eax, 1;
+
+			jg cycle2;
+
+			add edi, ebx;
+			add esi, edx;
+
+			sub ecx, 1;
+
+			jg cycle1;
+
+			popad;
+			emms;
+		}
+		return true;
+	}
+
+	bool YVYUtoYUY2FunctMMX (
+		unsigned char* dest,
+		const unsigned char* source,
+		int stride_dest,
+		int stride_source,
+		int width_element,
+		int height_element)
+	{
+		int number_cycle_string = (width_element + ((width_element & 0x7) ? 7 : 0)) >> 2;
+		int leak_source = stride_source - number_cycle_string * 8;
+		int leak_dest = stride_dest - number_cycle_string * 8;
+
+		unsigned char loc_array_mask[8] =
+		{
+			0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00
+		};
+
+		__asm
+		{
+			pushad;
+
+			lea eax, loc_array_mask;
+			movq mm7, [eax];
+			movq mm6, mm7;
+			psllq mm6, 8;
+
+			mov ecx, height_element;
+			mov ebx, leak_dest;
+			mov edx, leak_source;
+			mov edi, dest;
+			mov esi, source;
+
+			cycle1:
+
+			mov eax, number_cycle_string;
+
+			cycle2:
+
+			movq mm0, [esi]; YVYUYVYU
+				movq mm1, mm0; YVYUYVYU
+
+				pand mm0, mm7; YxYxYxYx
+				pand mm1, mm6; xVxUxVxU
+				pshufw mm1, mm1, 177; xUxVxUxV
+
+				por mm0, mm1; YUYVYUYV
+
+				movq[edi], mm0;
+
+			add edi, 8;
+			add esi, 8;
+
+			sub eax, 1;
+
+			jg cycle2;
+
+			add edi, ebx;
+			add esi, edx;
+
+			sub ecx, 1;
+
+			jg cycle1;
+
+			popad;
+			emms;
+		}
+		return true;
+	}
+
+
+	bool YVYUtoYUY2FunctSSE (
+		unsigned char* dest,
+		const unsigned char* source,
+		int stride_dest,
+		int stride_source,
+		int width_element,
+		int height_element)
+	{
+		return YVYUtoYUY2FunctMMX ( dest, source, stride_dest, stride_source, width_element, height_element);
+	}
+
+	bool YVYUtoYUY2FunctSSE2 (
+		unsigned char* dest,
+		const unsigned char* source,
+		int stride_dest,
+		int stride_source,
+		int width_element,
+		int height_element)
+	{
+		int number_cycle_string = (width_element + ((width_element & 0x7) ? 7 : 0)) >> 3;
+		int leak_source = stride_source - number_cycle_string * 16;
+		int leak_dest = stride_dest - number_cycle_string * 16;
+
+		unsigned char loc_array_mask[16] =
+		{
+			0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00,
+			0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00
+		};
+
+		__asm
+		{
+			pushad;
+
+			lea eax, loc_array_mask;
+			movdqu xmm7, [eax];
+			movdqa xmm6, xmm7;
+			pslldq xmm6, 1;
+
+			mov ecx, height_element;
+			mov ebx, leak_dest;
+			mov edx, leak_source;
+			mov edi, dest;
+			mov esi, source;
+
+			cycle1:
+
+			mov eax, number_cycle_string;
+
+			cycle2:
+
+			movdqa xmm0, [esi]; YVYUYVYU
+				movdqa xmm1, xmm0; YVYUYVYU
+
+				pand xmm0, xmm7; YxYxYxYx
+				pand xmm1, xmm6; xVxUxVxU
+				pshuflw xmm1, xmm1, 177; xUxVxUxV
+				pshufhw xmm1, xmm1, 177; xUxVxUxV
+				por xmm0, xmm1; YUYVYUYV
+
+
+				movdqa[edi], xmm0;
+
+			add edi, 16;
+			add esi, 16;
+
+			sub eax, 1;
+
+			jg cycle2;
+
+			add edi, ebx;
+			add esi, edx;
+
+			sub ecx, 1;
+
+			jg cycle1;
+
+			popad;
+			emms;
+		}
+		return true;
+	}
+#endif
+}

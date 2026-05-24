@@ -1,10 +1,11 @@
 #pragma once
 /**
 \file       convert-vals2string-log-defines.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       25.02.2022
 \project    u3_defines
 */
+
 #ifndef TOLOG
 #  define TOLOG(u3def_param) std::string (" " #u3def_param) + "=" + u3def_param
 #endif

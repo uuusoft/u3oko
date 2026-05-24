@@ -1,0 +1,132 @@
+/**
+\file       cast_events_funcs.cpp
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\date       04.08.2018
+\project    u3_iproperties_lib
+*/
+#include "mmedia/includes/control-defines-includes.hpp"
+#include "mmedia/includes/includes.hpp"
+#include "../libs-iproperties-includes_int.hpp"
+#include "cast_events_funcs.hpp"
+
+namespace libs::iproperties::helpers
+{
+::libs::events::io::IEvents::raw_ptr
+get_events_impl ()
+{
+  auto events = U3_CAST_PROP (vers::demon::IDemonsProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_demons ())->get_events_lockfree ();
+  U3_CHECK (events, "empty events");
+  auto impl = events->impl ();
+  U3_CHECK (impl, "empty events impl");
+  return impl;
+}
+
+
+::libs::events::IEvent::ptr
+get_pure_event_int (const ::libs::events::IEvent::hid_type& id)
+{
+  auto impl = get_events_impl ();
+  auto res  = impl->get (id);
+  U3_CHECK (res, "get_pure_event_int:" + id);
+  return res;
+}
+
+
+void*
+cast_event_int (const ::libs::events::IEvent::ptr& event, const ::libs::events::IEvent::hid_type& id)
+{
+  auto impl = get_events_impl ();
+  auto res  = impl->dcast (event.get (), id);
+  return res;
+}
+
+
+void*
+cast_event_int (const ::libs::events::IEvent::cptr& event, const ::libs::events::IEvent::hid_type& id)
+{
+  auto impl = get_events_impl ();
+  auto res  = impl->dcast (event.get (), id);
+  return res;
+}
+
+
+void*
+cast_event_int (::libs::events::IEvent::raw_ptr event, const ::libs::events::IEvent::hid_type& id)
+{
+  auto impl = get_events_impl ();
+  auto res  = impl->dcast (event, id);
+  return res;
+}
+
+
+void*
+cast_event_int (::libs::events::IEvent::craw_ptr event, const ::libs::events::IEvent::hid_type& id)
+{
+  auto impl = get_events_impl ();
+  auto res  = impl->dcast (event, id);
+  return res;
+}
+
+
+bool
+event2xml (::libs::events::IEvent::ptr& src, std::string& xml)
+{
+  auto impl = get_events_impl ();
+  return impl->event2xml (src, xml);
+}
+
+
+std::string
+event2xml (::libs::events::IEvent::ptr& src)
+{
+  if (!src)
+  {
+    return "";
+  }
+  auto        impl = get_events_impl ();
+  std::string xml;
+  U3_CHECK (impl->event2xml (src, xml), "event2xml - " + TOLOG (src->get_mid ()));
+  return xml;
+}
+
+
+bool
+xml2event (const std::string& xml, ::libs::events::IEvent::ptr& dst)
+{
+  auto impl = get_events_impl ();
+  return impl->xml2event (xml, dst);
+}
+
+
+bool
+xml2event (const char* xml, ::libs::events::IEvent::ptr& dst)
+{
+  auto impl = get_events_impl ();
+  return impl->xml2event (std::string (xml), dst);
+}
+
+
+void
+event2bin (::libs::events::IEvent::ptr& src, std::ostream& bin)
+{
+  auto impl = get_events_impl ();
+  U3_CHECK (impl->event2bin (src, bin), "event2bin - " + TOLOG (src->get_mid ()));
+}
+
+
+bool
+bin2event (std::istream& bin, ::libs::events::IEvent::ptr& dst)
+{
+  auto impl = get_events_impl ();
+  return impl->bin2event (bin, dst);
+}
+
+
+::libs::events::IEvent::ptr
+clone_event (const ::libs::events::IEvent::craw_ptr event, const ::libs::events::Deeps& type)
+{
+  U3_ASSERT (event);
+  auto impl = get_events_impl ();
+  return impl->clone (event, type);
+}
+}   // namespace libs::iproperties::helpers

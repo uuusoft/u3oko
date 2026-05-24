@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       gen-vgen-filter-dll.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2016
 \project    u3_gen_vgen
 */
@@ -18,7 +18,7 @@ class Filter final :
   virtual ~Filter ();
 
   void thread_func_impl (std::uint32_t indx_thread);
-  void thread_postfunc_impl ();
+  void thread_postfunc_impl (std::uint32_t indx_thread);
 
   private:
   // internal types

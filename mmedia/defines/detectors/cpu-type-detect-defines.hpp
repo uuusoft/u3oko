@@ -1,11 +1,12 @@
 #pragma once
 /**
 \file       cpu-type-detect-defines.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2018
 \project    u3_defines
-\brief      Определения типа процессора, под который компилируется система.
+\brief      Определения типа процессора, под который компилируется система
 */
+
 #if defined(__i386__) || defined(__i486__) || defined(__i586__) || defined(__i686__) || defined(_M_IX86) || defined(_X86_) || defined(__I86__)
 #  ifndef U3_CPU_X86_32
 #    define U3_CPU_X86_32

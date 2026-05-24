@@ -1,0 +1,41 @@
+#pragma once
+/**
+\file       system-darwin-property.hpp
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\date       16.10.2024
+\project    u3_iproperties_lib
+*/
+#if defined(U3_OS_MACX_DESKTOP)
+
+namespace libs::iproperties::vers::system
+{
+class SystemDarwinProperty final : public ::libs::properties::ISharedProperty
+{
+  public:
+  // ext types
+  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (SystemDarwinProperty)
+
+  SystemDarwinProperty ()
+  {
+  }
+
+  virtual ~SystemDarwinProperty ()
+  {
+  }
+
+  private:
+  virtual bool
+  self_test_int () const override
+  {
+    return true;
+  }
+
+  virtual void*
+  cast2top_int () override
+  {
+    return this;
+  }
+};
+}   // namespace libs::iproperties::vers::system
+
+#endif

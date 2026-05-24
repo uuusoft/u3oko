@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       impl2gui.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       14.08.2018
 \project    u3_video_sender_dll
 */
@@ -14,18 +14,17 @@ class Impl2Gui final : public IImplSender
   Impl2Gui ();
   virtual ~Impl2Gui ();
 
-
   private:
   //  IImplSender overrides
   virtual void send_int (
-    const InfoFilter&                    finfo,
-    const syn::TransformInfo&            info,
-    const syn::Buff2ModuleInfo::craw_ptr minfo,
-    syn::IVideoBuf::raw_ptr              send_buf) override;
+    const InfoFilter&,
+    const syn::TransformInfo&,
+    const syn::Buff2ModuleInfo::craw_ptr,
+    syn::IVideoBuf::raw_ptr) override;
 
-  bool fill_frame (const syn::TransformInfo& info, void* pmem);
-  void send_frame (const InfoFilter& finfo, const syn::TransformInfo& info, ::libs::link::ILink::ptr helper);
-  bool is_empty_frame (const void* pmem) const;
+  bool fill_frame (const syn::TransformInfo&, void*);
+  void send_frame (const InfoFilter&, const syn::TransformInfo&, ::libs::link::ILink::ptr);
+  bool is_empty_frame (const void*) const;
 
   ::libs::link::mem::IBlockFakeMem last_hmem_;      //<
   ::libs::bufs::Bufs::ptr          fast_buf2gui_;   //<

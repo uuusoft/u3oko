@@ -1,7 +1,7 @@
 /**
 \file       clone-bufs-funcs.cpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_bufs
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -48,7 +48,7 @@ Bufs::clone (const Bufs& src)
       continue;
     }
 
-    dchild = ibuf->impl ()->create (schild.second->get_raw_buf () ? schild.second->get_raw_buf ()->get_data_size () : 0);
+    dchild = ibuf->impl ()->create (schild.second->getraw_buf () ? schild.second->getraw_buf ()->get_data_size () : 0);
     dchild->clone (schild.second.get (), 100.0f);
   }
 

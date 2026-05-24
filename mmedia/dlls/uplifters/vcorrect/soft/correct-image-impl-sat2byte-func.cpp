@@ -1,6 +1,6 @@
 /**
 \file       correct-image-impl-sat2byte-funct.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.11.2016
 \project    u3_vcorrect_vdd
 */

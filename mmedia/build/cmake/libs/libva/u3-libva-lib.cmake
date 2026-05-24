@@ -1,9 +1,9 @@
-# author      Erashov Anton erashov2026@proton.me
+# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 # date        27.02.2026
 # copyright   Erashov A.I.
 # file        u3-libva-lib.cmake
 # U3_LIB_PREPARE sudo apt-get install git cmake pkg-config meson libdrm-dev automake libtool
-# U3_THIS_COMMERCIAL_PART_SOURCE_CODE
+# U3_COMMERCIAL_PART
 
 if(1)
   return()

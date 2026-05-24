@@ -2,15 +2,14 @@
 /**
 \file       med2-impl.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me
-\project    uuu_time_filter_noise
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_time_filter_noise
 */
 
 namespace dlls::filter_noise::time::impl::med2
 {
-/**
-\brief  Медианая фильтрация во временной области. Стандартное решение.
-*/
+/// Медианая фильтрация во временной области
+/// Стандартное решение
 class Med2Impl final : public IFilterImpl
 {
   public:
@@ -24,7 +23,7 @@ class Med2Impl final : public IFilterImpl
   //  internal typess
   using src2meds_type = std::unordered_map< ::utils::dbufs::video::consts::offs::off_buf_type, BuffMed2Impl >;
   //  IFilterImpl overrides
-  virtual void transform_int (const ::libs::core::graph::NodeID& id_node, ::libs::icore::impl::var1::obj::dll::TransformInfo& transform_info, InfoFilter& finfo, ::libs::bufs::Bufs* pbuf) override;
+  virtual void transform_int (const ::libs::core::graph::NodeID& id_node, syn::TransformInfo& transform_info, InfoFilter& finfo, ::libs::bufs::Bufs* pbuf) override;
   virtual void load_int () override;
   virtual void sync_int () override;
 

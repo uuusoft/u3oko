@@ -1,6 +1,6 @@
 /**
 \file       ibit-gen.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.11.2016
 \project    u3_codec_funcs
 */
@@ -35,7 +35,6 @@ IBitGen::forward (
 
   count_byte_dst = 0;
   forward_int (src, count_byte_src, dst, count_byte_dst);
-
   U3_CHECK (count_byte_dst > 0, "dst empty");
 }
 
@@ -53,7 +52,6 @@ IBitGen::backward (
 
   count_byte_dst = 0;
   backward_int (src, count_byte_src, dst, count_byte_dst);
-
   U3_CHECK (count_byte_dst > 0, "impl, dst empty");
 }
 

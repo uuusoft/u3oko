@@ -1,0 +1,14 @@
+/**
+\file	???
+\brief	Convertion funct I420 to YUY2
+\author	Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\date	26.07.2016
+*/
+#include "stdafx.h"
+
+//old shit
+#define GENERATE_I420_CONVERT_FUNCTION
+#include "ConvertI420FormatToYUY2_VECASM.cpp"
+#undef GENERATE_I420_CONVERT_FUNCTION
+
+#include "ConvertI420FormatToYUY2_VECASM.cpp"

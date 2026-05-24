@@ -1,9 +1,9 @@
 /**
 \file       all2hsl-dll-main.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.07.2016
 \project    u3_all2hsl
-\brief      Модуль преобразование RGB24->HSL.
+\brief      Модуль преобразование RGB24->HSL
 */
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"

@@ -1,15 +1,15 @@
 /**
 \file       link-proxy.cpp
 \date       17.04.2022
-\author     Erashov Anton erashov2026@proton.me
-\project    uuu_proxy
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_proxy_libs
 */
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "link-proxy.hpp"
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_uuu_events ();
-extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_uuu_events (::libs::link::appl::IApplication* appl);
+extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_u3_events ();
+extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_u3_events (::libs::link::appl::IApplication* appl);
 
 #if defined(U3_GUI_ENABLE)
 extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_uuu_gui ();
@@ -38,9 +38,9 @@ namespace libs::proxy
 get_create_module_funct (const std::string& plib_id)
 {
   const auto lib_id = libs::helpers::dlls::undecorate_dll_name (plib_id);
-  if (lib_id == "mpl_uuu_events")
+  if (lib_id == "mpl_u3_events")
   {
-    return create_impl_mpl_uuu_events;
+    return create_impl_mpl_u3_events;
   }
 #if defined(U3_GUI_ENABLE)
   if (lib_id == "mpl_uuu_gui")
@@ -77,9 +77,9 @@ get_create_module_funct (const std::string& plib_id)
 get_delete_module_funct (const std::string& plib_id)
 {
   const auto lib_id = libs::helpers::dlls::undecorate_dll_name (plib_id);
-  if (lib_id == "mpl_uuu_events")
+  if (lib_id == "mpl_u3_events")
   {
-    return delete_impl_mpl_uuu_events;
+    return delete_impl_mpl_u3_events;
   }
 #if defined(U3_GUI_ENABLE)
   if (lib_id == "mpl_uuu_gui")

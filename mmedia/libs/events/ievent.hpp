@@ -1,9 +1,9 @@
 #pragma once
 /**
 \file       ievent.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2017
-\project    uuu_events
+\project    u3_events
 */
 
 namespace dlls::devents::impl
@@ -11,7 +11,6 @@ namespace dlls::devents::impl
 //  forward
 class EventsImpl;
 }   // namespace dlls::devents::impl
-
 
 namespace libs::events
 {
@@ -41,12 +40,20 @@ class IEvent
   }
 
   virtual ~IEvent ();
+
+  void
+  sync_event_props ()
+  {
+  }
+
   /// Виртуальное копирование объекта через указатель на базовый класс
   /// \param[in]  src  указатель на объект-источник, должен быть того же типа, что и назначение
   void copy (const IEvent::craw_ptr src);
-  /// Функция загрузки объекта из json. \param[in]  prop узел
+  /// Функция загрузки объекта из json
+  /// \param[in]  prop узел
   void load_json (const std::string& prop);
-  /// Функция загрузки объекта из json. \param[in]  prop узел
+  /// Функция загрузки объекта из json
+  /// \param[in]  prop узел
   std::string save_json () const;
   /// Функция возращает состояние объекта класса, с точки зрения возможности использования его свойств на данный момент
   /// \return   состояние события

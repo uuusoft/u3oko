@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       gen-vgen-info-filter-dll.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.07.2016
 \project    u3_gen_vgen
 */
@@ -9,7 +9,8 @@
 namespace dlls::sources::gen_vgen
 {
 class Filter;
-/// Структура для группировки свойств фильтра захвата данных из источника (ipcam/webcam/ect).
+
+/// Структура для группировки свойств фильтра захвата данных из источника (ipcam/webcam/ect)
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter {
   using sync_type = std::timed_mutex;
 

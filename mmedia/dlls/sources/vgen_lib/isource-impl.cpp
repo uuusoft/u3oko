@@ -1,6 +1,6 @@
 /**
 \file       isource-impl.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.06.2016
 \project    u3_vgen_lib
 */
@@ -99,7 +99,6 @@ ISourceImpl::get_sources (std::vector< syn::DataSourceInfo >& sources)
 void
 ISourceImpl::get_raw_data (syn::pkeys2bufs_type& bufs, syn::tevents_type* events)
 {
-  U3_LOG_DATA_DBG ("ISourceImpl::get_raw_data" + TOLOG (srcimpinfo_.props_->name_impl_dll_) + TOLOG (srcimpinfo_.props_->device_name_));
   try
   {
     get_raw_data_int (bufs, events);
@@ -129,7 +128,6 @@ ISourceImpl::set_cpu (syn::CpuExts cpu)
 void
 ISourceImpl::update_source_info (const SourceImplInfo& info)
 {
-  U3_LOG_DATA_DBG ("update_source_info");
   try
   {
     const bool started = is_source_started ();

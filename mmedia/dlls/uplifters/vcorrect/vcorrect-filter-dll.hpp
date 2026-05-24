@@ -3,13 +3,13 @@
 \file       vcorrect-filter-dll.hpp
 \brief      Filter for corrected image
 \date       01.01.2016
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_vcorrect_vdd
 */
 
 namespace dlls::uplifters::vcorrect
 {
-/// Модуль для коррекции базовых свойств изображения (насыщенность/тон/яркость.etc).
+/// Модуль для коррекции базовых свойств изображения (насыщенность/тон/яркость.etc)
 class Filter final :
   public ::libs::icore::impl::var1::obj::dll::IFilter,
   protected ::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >

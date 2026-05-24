@@ -1,8 +1,8 @@
 /**
 \file       events-buf-consts-vals.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       10.09.2018
-\project    uuu_events
+\project    u3_events
 */
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"

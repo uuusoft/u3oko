@@ -2,9 +2,9 @@
 /**
 \file       boost-lib-serialize-type-to-archive-defines.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me
-\project    uuu_events
-\brief      Макрос для сериализации стандартных типов системы (события, свойства и т.п.) в необходимые (возможно в будущем) архивы.
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_events
+\brief      Макрос для сериализации стандартных типов системы (события, свойства etc) в необходимые (возможно в будущем) архивы
 */
 
 #ifndef U3_BOOST_SERIALIZE_ALL_ARCHIVES

@@ -1,6 +1,6 @@
 /**
 \file       mjpeg-impl.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2017
 \project    u3_vcodec_mjpg
 */
@@ -93,8 +93,6 @@ MjpegImpl::reset_statistic_info_int ()
 void
 MjpegImpl::update_coder (const unsigned long max_size)
 {
-  U3_LOG_DATA_DBG ("dlls::codecs::vcodec_mjpg::MjpegImpl::update_coder" + VTOLOG (max_size));
-
   if (!hjpeg_)
   {
     hjpeg_ = tjInitCompress ();

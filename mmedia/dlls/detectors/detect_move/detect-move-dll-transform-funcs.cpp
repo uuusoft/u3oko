@@ -1,6 +1,6 @@
 /**
 \file       detect-move-dll-transform-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2017
 \project    u3_detect_move
 */
@@ -39,7 +39,6 @@ Filter::get_move_count (syn::IVideoBuf::raw_ptr pdst)
   {
     sum_vals += val;
   }
-  U3_LOG_DATA_DBG (FVTOLOG (counters.size ()) + VTOLOG (sum_vals));
   return sum_vals;
 }
 
@@ -55,7 +54,6 @@ Filter::itransform (syn::TransformInfo& info)
 
   for (std::int32_t indx_mop = 0; indx_mop < finfo_.rprops_->counter_morph_op_; ++indx_mop)
   {
-    U3_LOG_DATA_DBG ("morph" + VTOLOG (indx_mop));
     finfo_.mops_impl_.set_transform_info (transinfo_);
     finfo_.mops_impl_.itransform (id_obj_, *pbuf_);
     finfo_.mops_impl_.set_transform_info (nullptr);
@@ -78,12 +76,10 @@ Filter::itransform (syn::TransformInfo& info)
       time_first_detect_ = boost::posix_time::microsec_clock::universal_time ();
 
       syn::IEvent::ptr irmsg;
-
-      auto dmsg  = ::libs::iproperties::helpers::create_event< syn::AddEvent2Base > (rmsg);
-      auto idmsg = ::libs::iproperties::helpers::create_event< syn::DetectViolation > (irmsg);
-
+      auto             dmsg  = ::libs::iproperties::helpers::create_event< syn::AddEvent2Base > (rmsg, libs::helpers::utils::cuuid (), "???????");
+      auto             idmsg = ::libs::iproperties::helpers::create_event< syn::DetectViolation > (irmsg, ::libs::ievents::runtime::video::DetectViolations::start);
       dmsg->set_event (irmsg);
-      idmsg->set_state (::libs::ievents::runtime::video::DetectViolations::start);
+      // idmsg->set_state (::libs::ievents::runtime::video::DetectViolations::start);
     }
     ++count_detects_;
   }
@@ -98,12 +94,10 @@ Filter::itransform (syn::TransformInfo& info)
         count_detects_ = 0;
 
         syn::IEvent::ptr irmsg;
-
-        auto dmsg  = ::libs::iproperties::helpers::create_event< syn::AddEvent2Base > (rmsg);
-        auto idmsg = ::libs::iproperties::helpers::create_event< syn::DetectViolation > (irmsg);
-
+        auto             dmsg  = ::libs::iproperties::helpers::create_event< syn::AddEvent2Base > (rmsg, libs::helpers::utils::cuuid (), "???????");
+        auto             idmsg = ::libs::iproperties::helpers::create_event< syn::DetectViolation > (irmsg, ::libs::ievents::runtime::video::DetectViolations::stop);
         dmsg->set_event (irmsg);
-        idmsg->set_state (::libs::ievents::runtime::video::DetectViolations::stop);
+        // idmsg->set_state (::libs::ievents::runtime::video::DetectViolations::stop);
       }
     }
   }

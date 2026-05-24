@@ -1,6 +1,6 @@
 /**
 \file       pict-vgen-source-impl.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2017
 \project    u3_pict_vgen
 */
@@ -134,12 +134,9 @@ SourceImpl::print_images2buf (utils::dbufs::video::IVideoBuf::ptr& genimage)
 
     for (std::int32_t iy = 0; iy < image_height; ++iy)
     {
-      // const auto* srcline = image_info.data_->get () + iy * srcstride + offfirst * image_info.bppx_;
       auto* srcline = image_info.data_->get () + iy * srcstride + offfirst * image_info.bppx_;
       auto* dstline = dstbuf + cpwidth * 3 + iy * capstride;
       U3_CHECK (srcline, "get scan file rgb24 image" + VTOLOG (iy));
-      //::libs::helpers::mem::u3copy (dstline, dstline, cpstride);
-      //::libs::helpers::mem::u3copy (srcline, srcline, cpstride);
       ::libs::helpers::mem::u3copy (srcline, dstline, cpstride);
     }
 
@@ -187,8 +184,6 @@ SourceImpl::load_image2buf (const std::string& name)
     return LoadedImage ();
   }
 
-  // U3_CHECK (data, "load image" + TOLOG (name));
-  // U3_CHECK (fileheight > 0 && filewidth > 0 && bbpx > 0, "load image" + TOLOG (name));
   const auto propwidth = U3_CAST_FLOAT (capheight) / U3_CAST_FLOAT (fileheight);
   const auto reswidth  = fileheight == capheight ? capheight : U3_CAST_INT32 (filewidth * propwidth);
   const auto resstride = reswidth * 3;

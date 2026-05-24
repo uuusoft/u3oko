@@ -1,0 +1,3981 @@
+/**
+\file		convert_yuy2_rgb24.cpp
+\author		Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\date		01.11.2016
+\copyright	www.uuusoft.com
+*/
+#include "mmedia/includes/control-defines-includes.hpp"
+#include "mmedia/includes/includes.hpp"
+#include "yuy2_rgb24.hpp"
+#include "yuy2_rgb24_int.hpp"
+
+
+//old shit
+namespace libs { namespace optim { namespace convert { namespace yuy2_rgb24 {
+#if 0
+	/**
+	\brief
+	*/
+	bool ConvertYUY2toSYUY2 (
+		const std::uint8_t*	input_yuy2,
+		int						number_element,
+		std::uint8_t*			output_y,
+		std::uint8_t*			output_u,
+		std::uint8_t*			output_v)
+	{
+		int i1 = 0;
+
+		for (i1 = 0; i1 < (number_element >> 1 ); i1++)
+		{
+			*output_y++ = *input_yuy2++;
+			*output_u++ = *input_yuy2;
+			*output_u++ = *input_yuy2++;
+			*output_y++ = *input_yuy2++;
+			*output_v++ = *input_yuy2;
+			*output_v++ = *input_yuy2++;
+		}
+		return true;
+	}
+	/**
+	\brief
+	*/
+	bool ConvertYUY2toSYUY2 (
+		const std::uint8_t*	input_yuy2,
+		int						input_width,
+		int						input_height,
+		int						input_strude,
+		std::uint8_t*			output_y,
+		std::uint8_t*			output_u,
+		std::uint8_t*			output_v)
+	{
+		int i1 = 0, i2 = 0;
+		const std::uint8_t *temp_p1 = 0;
+
+		temp_p1 = input_yuy2;
+
+		for (i1 = 0; i1 < input_height; i1++)
+		{
+			temp_p1 = input_yuy2;
+
+			for (i2 = 0; i2 < (input_width >> 1 ); i2++)
+			{
+				*output_y++ = *input_yuy2++;
+				*output_u++ = *input_yuy2;
+				*output_u++ = *input_yuy2++;
+				*output_y++ = *input_yuy2++;
+				*output_v++ = *input_yuy2;
+				*output_v++ = *input_yuy2++;
+			}
+			input_yuy2 = temp_p1 + input_strude;
+		}
+		return true;
+	}
+	/**
+	\brief
+	*/
+	bool ConvertSYUY2toRGB24 (
+		const std::uint8_t*	array_y,
+		const std::uint8_t*	array_u,
+		const std::uint8_t*	array_v,
+		int						number_element,
+		std::uint8_t*			output,
+		int						size_output )
+	{
+		int count = 0;
+
+		__int64 const_w16 = 0x0010001000100010;
+		__int64 const_w128 = 0x0080008000800080;
+		__int64 const_w37 = 0x0025002500250025;
+		__int64 const_w13 = 0x000D000D000D000D;
+		__int64 const_w65 = 0x0041004100410041;
+		__int64 const_w51 = 0x0033003300330033;
+		__int64 const_w26 = 0x001A001A001A001A;
+
+		count = number_element >> 2;
+
+		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr ( array_y) );
+		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr ( array_u ) );
+		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr ( array_v) );
+		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr (output ) );
+
+#define OUTPUT_DATA edx
+#define Y_DATA      eax
+#define U_DATA      ebx
+#define V_DATA      edi
+
+		__asm
+		{
+			pushad;
+
+			mov ecx, count;
+			mov OUTPUT_DATA, output;
+			mov Y_DATA, array_y;
+			mov U_DATA, array_v;
+			mov V_DATA, array_u;
+
+			; ��������� � ������� ��������� ��� ��������� ��� ���������;
+			; mmx3 = 37, mmx4 = 13, mmx5 = 65, mmx6 = 51, mmx7 = 26;
+			movq mm4, const_w37;
+			movq mm3, const_w26;
+
+			; ���� ������� �� ���� ���������, ����� ������� 4;
+			loop1:
+
+			; ��������� 4 �������� - y � ��������� � ��� ������� - � ����� mmx7 = 4xY;
+			pxor mm0, mm0;
+			movd mm7, [Y_DATA];
+			punpcklbw mm7, mm0;
+
+			; ��������� 4 �������� - u � ��������� � ��� ������� - � ����� mmx6 = 4xU;
+			movd mm6, [U_DATA];
+			punpcklbw mm6, mm0;
+
+			; ��������� 4 �������� - v � ��������� � ��� ������� - � ����� mmx5 = 4xV;
+			movd mm5, [V_DATA];
+			punpcklbw mm5, mm0;
+
+			; ���������� �������� ������ ����� ��������� �������������� �������������;
+			; Y = Y - 16, U = U - 128, V = V - 128;
+			movq mm0, const_w16;
+			psubsw mm7, mm0;
+			movq mm0, const_w128;
+			psubsw mm6, mm0;
+			psubsw mm5, mm0;
+
+			; ��������� ������� �� ����������� - ��� ��������� ��� ������ ���������� - mmx7 = Y * 37.260;
+			pmullw mm7, mm4;
+
+			; ��������� R ���������� 4 ��������;
+			movq mm0, mm7;        mmx0 = Y * 37.260;
+			movq mm1, const_w51;  mmx1 = V * 51.073;
+			pmullw mm1, mm5;
+			paddsw mm0, mm1;      mmx0 = Y * 37.260 + V * 51.073;
+			psraw mm0, 5;         mmx0 = (Y * 37.260 + V * 51.073) / 32 = R;
+
+			; ����������� � ���������� ���������� � �����;
+			pxor mm1, mm1;
+			packsswb mm0, mm1;
+
+			; ����� � ���� R ���������� 4 ��������, ��� ����� ��������� 32 ���� � ������� ������ �����������;
+			; � ����� ��������������� ������� ��������� R ���������� 4 ��������;
+			push eax;
+			movd eax, mm0;
+			mov 2[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 5[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 8[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 11[OUTPUT_DATA], al;
+			pop eax;
+
+			; ��������� G ���������� 4 ��������;
+			movq mm0, mm7;            mmx0 = Y * 37.260;
+			movq mm1, const_w13;
+			pmullw mm1, mm6;          mmx1 = U * 12.536;
+			paddsw mm0, mm1;          mmx0 = Y * 37.260 + U * 12.536;
+			movq mm1, const_w26;
+			pmullw mm1, mm5;          mmx1 = V * 26.015;
+			psubsw mm0, mm1;          mmx0 = (Y * 37.260 + U * 12.536 - V * 26.015 );
+			psraw mm0, 5;             mmx0 = (Y * 37.260 + U * 12.536 - V * 26.015 ) / 32 = G;
+
+			; ����������� � ���������� ���������� � �����;
+			pxor mm1, mm1;
+			packsswb mm0, mm1;
+
+			; ����� � ����;
+			push eax;
+			movd eax, mm0;
+			mov 1[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 4[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 7[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 10[OUTPUT_DATA], al;
+			pop eax;
+
+			; ��������� B ���������� 4 ��������;
+			movq mm0, mm7;            mmx0 = Y * 37.260;
+			movq mm1, const_w65;
+			pmullw mm1, mm6;          mmx1 = U * 64.551;
+			paddsw mm0, mm1;          mmx0 = (Y * 37.260 + U * 64.551 + V * 0.0);
+			psraw mm0, 5;             mmx0 = (Y * 37.260 + U * 64.551 + V * 0.0) / 32 = B;
+
+			; ����������� � ���������� ���������� � �����;
+			pxor mm1, mm1;
+			packsswb mm0, mm1;
+
+			; ����� � ����;
+			push eax;
+			movd eax, mm0;
+			mov 0[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 3[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 6[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 9[OUTPUT_DATA], al;
+			pop eax;
+
+
+			add Y_DATA, 4;
+			add U_DATA, 4;
+			add V_DATA, 4;
+			add OUTPUT_DATA, 12;
+			sub ecx, 1;
+			jg loop1;
+
+			popad;
+			emms;
+		}
+		return true;
+	}
+	/**
+	\brief
+	*/
+	bool ConvertSYUY2toRGB32 (
+		const std::uint8_t*	array_y,
+		const std::uint8_t*	array_u,
+		const std::uint8_t*	array_v,
+		int						number_element,
+		std::uint8_t*			output,
+		int						size_output )
+	{
+		int count = 0;
+
+		__int64 const_w16 = 0x0010001000100010;
+		__int64 const_w128 = 0x0080008000800080;
+		__int64 const_w37 = 0x0025002500250025;
+		__int64 const_w13 = 0x000D000D000D000D;
+		__int64 const_w65 = 0x0041004100410041;
+		__int64 const_w51 = 0x0033003300330033;
+		__int64 const_w26 = 0x001A001A001A001A;
+
+		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr ( array_y) );
+		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr ( array_u ) );
+		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr ( array_v) );
+		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr (output ) );
+
+		count = number_element >> 2;
+
+#define OUTPUT_DATA edx
+#define Y_DATA      eax
+#define U_DATA      ebx
+#define V_DATA      edi
+
+		__asm
+		{
+			pushad;
+
+			mov ecx, count;
+			mov OUTPUT_DATA, output;
+			mov Y_DATA, array_y;
+			mov U_DATA, array_v;
+			mov V_DATA, array_u;
+
+			; ��������� � ������� ��������� ��� ��������� ��� ���������;
+			; mmx3 = 37, mmx4 = 13, mmx5 = 65, mmx6 = 51, mmx7 = 26;
+			movq mm4, const_w37;
+			movq mm3, const_w26;
+
+			; ���� ������� �� ���� ���������, ����� ������� 4;
+			loop1:
+
+			; ��������� 4 �������� - y � ��������� � ��� ������� - � ����� mmx7 = 4xY;
+			pxor mm0, mm0;
+			movd mm7, [Y_DATA];
+			punpcklbw mm7, mm0;
+
+			; ��������� 4 �������� - u � ��������� � ��� ������� - � ����� mmx6 = 4xU;
+			movd mm6, [U_DATA];
+			punpcklbw mm6, mm0;
+
+			; ��������� 4 �������� - v � ��������� � ��� ������� - � ����� mmx5 = 4xV;
+			movd mm5, [V_DATA];
+			punpcklbw mm5, mm0;
+
+			; ���������� �������� ������ ����� ��������� �������������� �������������;
+			; Y = Y - 16, U = U - 128, V = V - 128;
+			movq mm0, const_w16;
+			psubsw mm7, mm0;
+			movq mm0, const_w128;
+			psubsw mm6, mm0;
+			psubsw mm5, mm0;
+
+			; ��������� ������� �� ����������� - ��� ��������� ��� ������ ���������� - mmx7 = Y * 37.260;
+			pmullw mm7, mm4;
+
+			; ��������� R ���������� 4 ��������;
+			movq mm0, mm7;        mmx0 = Y * 37.260;
+			movq mm1, const_w51;  mmx1 = V * 51.073;
+			pmullw mm1, mm5;
+			paddsw mm0, mm1;      mmx0 = Y * 37.260 + V * 51.073;
+			psraw mm0, 5;         mmx0 = (Y * 37.260 + V * 51.073) / 32 = R;
+
+			; ����������� � ���������� ���������� � �����;
+			pxor mm1, mm1;
+			packuswb mm0, mm1;
+
+			; ����� � ���� R ���������� 4 ��������, ��� ����� ��������� 32 ���� � ������� ������ �����������;
+			; � ����� ��������������� ������� ��������� R ���������� 4 ��������;
+			push eax;
+			movd eax, mm0;
+			mov 0[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 4[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 8[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 12[OUTPUT_DATA], al;
+			pop eax;
+
+			; ��������� G ���������� 4 ��������;
+			movq mm0, mm7;        mmx0 = Y * 37.260;
+			movq mm1, const_w13;
+			pmullw mm1, mm6;      mmx1 = U * 12.536;
+			paddsw mm0, mm1;      mmx0 = Y * 37.260 + U * 12.536;
+			movq mm1, const_w26;
+			pmullw mm1, mm5;      mmx1 = V * 26.015;
+			psubsw mm0, mm1;      mmx0 = (Y * 37.260 + U * 12.536 - V * 26.015 );
+			psraw mm0, 5;         mmx0 = (Y * 37.260 + U * 12.536 - V * 26.015 ) / 32 = G;
+
+			; ����������� � ���������� ���������� � �����;
+			pxor mm1, mm1;
+			packuswb mm0, mm1;
+
+			; ����� � ����;
+			push eax;
+			movd eax, mm0;
+			mov 1[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 5[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 9[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 13[OUTPUT_DATA], al;
+			pop eax;
+
+			; ��������� B ���������� 4 ��������;
+			movq mm0, mm7;        mmx0 = Y * 37.260;
+			movq mm1, const_w65;
+			pmullw mm1, mm6;      mmx1 = U * 64.551;
+			paddsw mm0, mm1;      mmx0 = (Y * 37.260 + U * 64.551 + V * 0.0);
+			psraw mm0, 5;         mmx0 = (Y * 37.260 + U * 64.551 + V * 0.0) / 32 = B;
+
+			; ����������� � ���������� ���������� � �����;
+			pxor mm1, mm1;
+			packuswb mm0, mm1;
+
+			; ����� � ����;
+			push eax;
+			movd eax, mm0;
+			mov 2[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 6[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 10[OUTPUT_DATA], al;
+			shr eax, 8;
+			mov 14[OUTPUT_DATA], al;
+			pop eax;
+
+
+			add Y_DATA, 4;
+			add U_DATA, 4;
+			add V_DATA, 4;
+			add OUTPUT_DATA, 16;
+			sub ecx, 1;
+			jg loop1;
+
+			popad;
+			emms;
+		}
+		return true;
+	}
+	/**
+	\brief
+	*/
+	bool SoftwareConvertSYUY2toRGB32 (
+		const std::uint8_t*	array_y,
+		const std::uint8_t*	array_u,
+		const std::uint8_t*	array_v,
+		int						number_element,
+		std::uint8_t*			output,
+		int						size_output )
+	{
+		signed int Y = 0, U = 0, V = 0;
+		int i1 = 0;
+
+		#define _S( a)		( a)>255 ? 255 : ( a)<0 ? 0 : ( a)
+		#define _R(y,u,v) (0x2568*(y)  			       + 0x3343*(u ) ) /0x2000
+		#define _G(y,u,v) (0x2568*(y) - 0x0c92*(v) - 0x1a1e*(u ) ) /0x2000
+		#define _B(y,u,v) (0x2568*(y) + 0x40cf*(v) )					     /0x2000
+
+		for (i1 = 0; i1 < number_element; i1++)
+		{
+			Y = array_y[i1] - 16;
+			U = array_u[i1] - 128;
+			V = array_v[i1] - 128;
+
+			(*output ) = (std::uint8_t)( _S ( _R (Y, U, V) ) );
+			output++;
+			(*output ) = (std::uint8_t)( _S ( _G (Y, U, V) ) );
+			output++;
+			(*output ) = (std::uint8_t)( _S ( _B (Y, U, V) ) );
+			output++;
+			output++;
+		}
+		return true;
+	}
+	/**
+	\brief
+	*/
+	bool MMXConvertYUY2toMRGB32 (
+		const std::uint8_t*	input_yuy2,
+		int						width,
+		int						height,
+		int						strude_input,
+		std::uint8_t*			output,
+		int						strude_output,
+		int						size_output )
+	{
+		__int64 const_1 = 0x00FF00FF00FF00FF;
+		__int64 const_2 = 0x0000FFFFFFFF0000;
+		__int64 const_3 = 0xFFFF000000000000;
+		__int64 const_4 = 0x000000000000FFFF;
+		int width_8 = width >> 2;
+
+		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr (input_yuy2 ) );
+		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr (output ) );
+
+		strude_input = strude_input - (width << 1 );
+		strude_output = strude_output - (width << 2 );
+
+		__asm
+		{
+			pushad;
+
+			movq mm7, const_1;     mm7 = 0x00FF00FF00FF00FF;
+			movq mm6, const_2;     mm6 = 0x0000FFFFFFFF0000;
+			movq mm5, const_3;     mm5 = 0xFFFF000000000000;
+			movq mm4, const_4;     mm4 = 0x000000000000FFFF;
+
+			mov eax, input_yuy2;
+			mov ebx, output;
+			mov edx, strude_input;
+			mov edi, strude_output;
+
+
+			mov ecx, height;
+			col_cycle:
+			push ecx;
+			mov ecx, width_8;
+
+			row_cycle:
+
+			movq mm1, [eax];       mm1 = 0xV3Y4U3Y3V1Y2U1Y1;
+			pand mm1, mm7;         mm1 = 0x00Y400Y300Y200Y1;
+			movq mm2, mm1;         mm2 = 0x00Y400Y300Y200Y1;
+			psllq mm2, 8;          mm2 = 0xY400Y300Y200Y100;
+
+			por  mm1, mm2;         mm1 = 0xY4Y4Y3Y3Y2Y2Y1Y1;
+			movq mm3, mm1;         mm3 = 0xY4Y4Y3Y3Y2Y2Y1Y1;
+			movq mm0, mm1;         mm0 = 0xY4Y4Y3Y3Y2Y2Y1Y1;
+
+			pand mm3, mm4;         mm3 = 0x000000000000Y1Y1;
+			movq mm2, mm3;         mm2 = 0x000000000000Y1Y1;
+			psllq mm3, 16;         mm3 = 0x00000000Y1Y10000;
+			por mm3, mm2;          mm3 = 0x00000000Y1Y1Y1Y1;
+
+
+			psllq mm1, 32;         mm1 = 0xY2Y2Y1Y100000000;
+			pand mm1, mm5;         mm1 = 0xY2Y2000000000000;
+			movq mm2, mm1;         mm2 = 0xY2Y2000000000000;
+			psrlq mm2, 16;         mm2 = 0x0000Y2Y200000000;
+			por mm2, mm1;          mm2 = 0xY2Y2Y2Y200000000;
+			por mm3, mm2;          mm3 = 0xY2Y2Y2Y2Y1Y1Y1Y1;
+
+			movq[ebx], mm3;       output first 4 pixels;
+			add ebx, 8;
+
+			movq mm2, mm0;         mm2 = 0xY4Y4Y3Y3Y2Y2Y1Y1;
+			movq mm3, mm0;         mm3 = 0xY4Y4Y3Y3Y2Y2Y1Y1;
+			psrlq mm0, 16;         mm0 = 0x0000Y4Y4Y3Y3Y2Y2;
+			pand mm0, mm6;         mm0 = 0x0000Y4Y4Y3Y30000;
+			psrlq mm2, 32;         mm2 = 0x00000000Y4Y4Y3Y3;
+			pand mm2, mm4;         mm2 = 0x000000000000Y3Y3;
+			por  mm0, mm2;         mm0 = 0x0000Y4Y4Y3Y3Y3Y3;
+			movq mm2, mm3;         mm2 = 0xY4Y4Y3Y3Y2Y2Y1Y1;
+			pand mm2, mm5;         mm2 = 0xY4Y4000000000000;
+			por mm0, mm2;          mm0 = 0xY4Y4Y4Y4Y3Y3Y3Y3;
+
+			movq[ebx], mm0;       output second 4 pixels;
+			add ebx, 8;
+
+			add eax, 8;
+			sub ecx, 1;
+			jg row_cycle;
+
+			add eax, edx;
+			add ebx, edi;
+			pop ecx;
+			sub ecx, 1;
+			jg col_cycle;
+
+			popad;
+			emms;
+		}
+		return true;
+	}
+	/**
+	\brief
+	*/
+	bool SoftwareConvertYUY2toMRGB32 (
+		const std::uint8_t*	input_yuy2,
+		int						width,
+		int						height,
+		int						strude_input,
+		std::uint8_t*			output,
+		int						strude_output,
+		int						size_output )
+	{
+		int i1 = 0, i2 = 0;
+		const std::uint8_t* temp_p1 = 0;
+		std::uint8_t* temp_p2 = 0;
+
+		temp_p1 = input_yuy2;
+		temp_p2 = output;
+
+		for (i1 = 0; i1 < height; i1++)
+		{
+			input_yuy2 = temp_p1;
+			output = temp_p2;
+
+			for (i2 = 0; i2 < width << 1; i2 += 2 )
+			{
+				*temp_p2 = temp_p1[i2];
+				temp_p2++;
+
+				*temp_p2 = temp_p1[i2];
+				temp_p2++;
+
+				*temp_p2 = temp_p1[i2];
+				temp_p2++;
+				temp_p2++;
+			}
+
+			temp_p1 = input_yuy2 + strude_input;
+			temp_p2 = output + strude_output;
+		}
+		return true;
+	}
+	/**
+	\brief
+	*/
+	bool SoftwareConvertYUY2toMRGB24 (
+		const std::uint8_t*	input_yuy2,
+		int						width,
+		int						height,
+		int						strude_input,
+		std::uint8_t*			output,
+		int						strude_output,
+		int						size_output )
+	{
+		int i1 = 0, i2 = 0;
+		const std::uint8_t* temp_p1 = 0;
+		std::uint8_t* temp_p2 = 0;
+
+		temp_p1 = input_yuy2;
+		temp_p2 = output;
+
+		for (i1 = 0; i1 < height; i1++)
+		{
+			input_yuy2 = temp_p1;
+			output = temp_p2;
+
+			for (i2 = 0; i2 < width << 1; i2 += 2 )
+			{
+				*temp_p2 = temp_p1[i2];
+				temp_p2++;
+				*temp_p2 = temp_p1[i2];
+				temp_p2++;
+				*temp_p2 = temp_p1[i2];
+				temp_p2++;
+			}
+			temp_p1 = input_yuy2 + strude_input;
+			temp_p2 = output + strude_output;
+		}
+		return true;
+	}
+	/**
+	\brief
+	*/
+	//RGB16 ->565
+	bool SoftwareConvertYUY2toMRGB16 (
+		const std::uint8_t*	input_yuy2,
+		int						width,
+		int						height,
+		int						strude_input,
+		std::uint8_t*			output,
+		int						strude_output,
+		int						size_output )
+	{
+		int i1 = 0, i2 = 0;
+		const std::uint8_t* temp_p1 = 0;
+		std::uint8_t* temp_p2 = 0;
+		int temp_word1 = 0, temp_word2 = 0;
+
+
+		temp_p1 = input_yuy2;
+		temp_p2 = output;
+
+		for (i1 = 0; i1 < height; i1++)
+		{
+			input_yuy2 = temp_p1;
+			output = temp_p2;
+
+			for (i2 = 0; i2 < width << 1; i2 += 2 )
+			{
+				temp_word1 = ( 31 * temp_p1[i2] ) >> 8;
+				temp_word2 = ( 63 * temp_p1[i2] ) >> 8;
+
+				*( (WORD*)temp_p2 ) = (WORD)( temp_word1 | ( temp_word2 << 5 ) | ( temp_word1 << 11 ) );
+				temp_p2++;
+				temp_p2++;
+			}
+
+			temp_p1 = input_yuy2 + strude_input;
+			temp_p2 = output + strude_output;
+		}
+		return true;
+	}
+	/**
+	\brief
+	*/
+	bool SoftwareInplaceConvertRGB24toYUY2 (
+		std::uint8_t*		array_rgb24,
+		int					width,
+		int					height,
+		int					strude_input )
+	{
+		int i1 = 0, i2 = 0;
+		std::uint8_t* temp_input = 0;
+		std::uint8_t* temp_output = 0;
+		int r1 = 0, b1 = 0, g1 = 0;
+		int r2 = 0, b2 = 0, g2 = 0;
+		int y1 = 0, u = 0, y2 = 0, v = 0;
+
+		temp_input = array_rgb24;
+		temp_output = array_rgb24;
+
+		//04.02.2016
+		int add_leake_to_source = strude_input - width * 3;
+
+		base_funcs::c1heck_bound ( add_leake_to_source, 0, add_leake_to_source );
+
+		//Y1U1 Y2V2
+		//RGB  RGB
+		for (i1 = 0; i1 < height; i1++)
+		{
+			//04.02.2016
+			//std::uint8_t *loc_begin_source_string = array_rgb24 + i1 * strude_input;
+
+			//cycle for one string
+			for (i2 = 0; i2 < width; i2 += 2 )
+			{
+				/*
+				//floating point variant
+				//reciving info for two pixel
+				r1 = (*temp_input++);
+				g1 = (*temp_input++);
+				b1 = (*temp_input++);
+
+				r2 = (*temp_input++);
+				g2 = (*temp_input++);
+				b2 = (*temp_input++);
+
+				//process color for two pixel
+				y1 = 16.0 + ( 65.738 * r1 + 129.057 * g1 + 25.064 * b1 ) / 256.0;
+				v  =128.0 + (-37.945 * r1 -  74.494 * g1 +112.439 * b1 ) / 256.0;
+				y2 = 16.0 + ( 65.738 * r2 + 129.057 * g2 + 25.064 * b2 ) / 256.0;
+				u  =128.0 + (112.439 * r1 -  94.154 * g1 - 18.285 * b1 ) / 256.0;
+
+				//write to buf
+				(*temp_output++) = y1;
+				(*temp_output++) = u;
+				(*temp_output++) = y2;
+				(*temp_output++) = v;
+				/**/
+
+				//integer version
+				//reciving info for two pixel
+				r1 = (*temp_input++);
+				g1 = (*temp_input++);
+				b1 = (*temp_input++);
+
+				r2 = (*temp_input++);
+				g2 = (*temp_input++);
+				b2 = (*temp_input++);
+
+				//process color for two pixel
+#define IY_FROM_RGB24( R, G, B ) 16 + ( ( 8414 * R + 16519 * G + 3208 * B ) >> 15 )
+#define IU_FROM_RGB24( R, G, B ) 128 + ( (14392 * R - 12051 * G - 2340 * B ) >> 15 )
+#define IV_FROM_RGB24( R, G, B ) 128 + ( (-4857 * R -  9535 * G +14392 * B ) >> 15 )
+
+				y1 = IY_FROM_RGB24 (r1, g1, b1 );
+				y2 = IY_FROM_RGB24 (r2, g2, b2 );
+				v = IV_FROM_RGB24 (r1, g1, b1 );
+				u = IU_FROM_RGB24 (r2, g2, b2 );
+
+				// 12.01.2016 ���������� ������� ���������� u � v
+				//write to buf
+				(*temp_output++) = (std::uint8_t)(y1 );
+				(*temp_output++) = (std::uint8_t)(v);
+				(*temp_output++) = (std::uint8_t)(y2 );
+				(*temp_output++) = (std::uint8_t)(u );
+				/**/
+			}
+			//04.02.2016
+			temp_input += add_leake_to_source;
+		}
+		return true;
+	}
+	/**
+	\brief
+	*/
+	bool MMXConvertRGB24toY8 (
+		const std::uint8_t*	input,
+		int						size_buf,
+		std::uint8_t*			output )
+	{
+		int i1 = 0;
+		__int64 temp_array1 = 0x00000000000000FF;
+		std::uint8_t* temp_pointer1 = U3_CAST_REINTERPRET<std::uint8_t*>( &temp_array1 );
+		__int64 temp_array2 = 0x002B002B002B002B;
+		std::uint8_t* temp_pointer2 = U3_CAST_REINTERPRET<std::uint8_t*>( &temp_array2 );
+
+		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr (input ) );
+
+		i1 = (size_buf / 3) >> 3;
+
+		__asm
+		{
+			; 25.08.2016;
+			pushad;
+
+			; load  mm6 - maska, mm7 - const 43;
+			mov edx, temp_pointer1;
+			movq mm6, qword ptr[edx];
+
+			mov edx, temp_pointer2;
+			movq mm7, qword ptr[edx];
+
+			mov ecx, i1;
+			mov edx, input;
+			mov ebx, output;
+
+			; mm7 for reset register;
+			; mm6 for emulate div from mul and shift;
+			; mm3, mm4, mm5::ending register for calculate summ;
+			; mm2 ending result - 8 byte - 8 pixel for saved to memory;
+			; mm1 temporarely register;
+			; mm0 for load from memory;
+
+			loop1:
+			; reset ending result;
+			pxor mm3, mm3;
+			pxor mm4, mm4;
+			pxor mm5, mm5;
+
+			; load register - 8 bytes, 2 full pixel;
+			movq mm0, qword ptr[edx];
+
+			; create image first pixel;
+			movq mm1, mm0;
+			pand mm1, mm6;
+			por mm3, mm1;
+
+			movq mm1, mm0;
+			psrlq mm1, 8;
+			pand mm1, mm6;
+			por mm4, mm1;
+
+			movq mm1, mm0;
+			psrlq mm1, 16;
+			pand mm1, mm6;
+			por mm5, mm1;
+
+			; create image for second pixel;
+			psllq mm6, 16;
+
+			movq mm1, mm0;
+			psrlq mm1, 8;
+			pand mm1, mm6;
+			por mm3, mm1;
+
+			movq mm1, mm0;
+			psrlq mm1, 16;
+			pand mm1, mm6;
+			por mm4, mm1;
+
+			movq mm1, mm0;
+			psrlq mm1, 24;
+			pand mm1, mm6;
+			por mm5, mm1;
+
+			; load data for third and four pixel;
+			movq mm1, mm0;
+			add edx, 8;
+			movq mm0, qword ptr[edx];
+			psllq mm0, 16;
+			psrlq mm1, 48;
+			por mm0, mm1;
+
+			; create image for third pixel - almost full eqvuvalen first;
+			psllq mm6, 16;
+
+			movq mm1, mm0;
+			psllq mm1, 32;
+			pand mm1, mm6;
+			por mm3, mm1;
+
+			movq mm1, mm0;
+			psllq mm1, 24;
+			pand mm1, mm6;
+			por mm4, mm1;
+
+			movq mm1, mm0;
+			psllq mm1, 16;
+			pand mm1, mm6;
+			por mm5, mm1;
+
+			; create image for four pixel - almost full eqvivalent second;
+			psllq mm6, 16;
+
+			movq mm1, mm0;
+			psllq mm1, 24;
+			pand mm1, mm6;
+			por mm3, mm1;
+
+			movq mm1, mm0;
+			psllq mm1, 16;
+			pand mm1, mm6;
+			por mm4, mm1;
+
+			movq mm1, mm0;
+			psllq mm1, 8;
+			pand mm1, mm6;
+			por mm5, mm1;
+
+			; reset mask register;
+			psrlq mm6, 48;
+
+			; calculate sum;
+			paddusw mm3, mm4;
+			paddusw mm3, mm5;
+
+			; emulate div to 3 from mul 43 / 128[mul 43 and right shift 7];
+			pmullw mm3, mm7;
+			psrlw mm3, 7;
+
+			; packed and saved to ending result;
+			movq mm2, mm3;
+
+			; reset ending result;
+			pxor mm3, mm3;
+			pxor mm4, mm4;
+			pxor mm5, mm5;
+
+			; next section - full eqvivalent prevouse section, ;
+			; load data for 5 and 6 pixel;
+			add edx, 4;
+			movq mm0, qword ptr[edx];
+
+			movq mm1, mm0;
+			pand mm1, mm6;
+			por mm3, mm1;
+
+			movq mm1, mm0;
+			psrlq mm1, 8;
+			pand mm1, mm6;
+			por mm4, mm1;
+
+			movq mm1, mm0;
+			psrlq mm1, 16;
+			pand mm1, mm6;
+			por mm5, mm1;
+
+			; create image for 4 pixel;
+			psllq mm6, 16;
+
+			movq mm1, mm0;
+			psrlq mm1, 8;
+			pand mm1, mm6;
+			por mm3, mm1;
+
+			movq mm1, mm0;
+			psrlq mm1, 16;
+			pand mm1, mm6;
+			por mm4, mm1;
+
+			movq mm1, mm0;
+			psrlq mm1, 24;
+			pand mm1, mm6;
+			por mm5, mm1;
+
+			; load data for 7 and 8 pixel;
+			add edx, 6;
+			movq mm0, qword ptr[edx];
+
+			; create image for 7 pixel - almost full eqvuvalen first;
+			psllq mm6, 16;
+
+			movq mm1, mm0;
+			psllq mm1, 32;
+			pand mm1, mm6;
+			por mm3, mm1;
+
+			movq mm1, mm0;
+			psllq mm1, 24;
+			pand mm1, mm6;
+			por mm4, mm1;
+
+			movq mm1, mm0;
+			psllq mm1, 16;
+			pand mm1, mm6;
+			por mm5, mm1;
+
+			; create image for 8 pixel - almost full eqvivalent second;
+			psllq mm6, 16;
+
+			movq mm1, mm0;
+			psllq mm1, 24;
+			pand mm1, mm6;
+			por mm3, mm1;
+
+			movq mm1, mm0;
+			psllq mm1, 16;
+			pand mm1, mm6;
+			por mm4, mm1;
+
+			movq mm1, mm0;
+			psllq mm1, 8;
+			pand mm1, mm6;
+			por mm5, mm1;
+
+			; reset mask register;
+			psrlq mm6, 48;
+
+			; calculate sum;
+			paddusw mm3, mm4;
+			paddusw mm3, mm5;
+
+			; emulate div to 3 from mul 43 / 128[mul 43 and right shift 7];
+			pmullw mm3, mm7;
+			psrlw mm3, 7;
+
+			; packed and saved to ending result;
+			packuswb mm2, mm3;
+
+			; saved res in memory;
+			movq qword ptr[ebx], mm2;
+
+			; calculate offset in bufs;
+			add edx, 6;
+			add ebx, 8;
+
+			sub ecx, 1;
+			jg loop1;
+
+			popad;
+			emms;
+		}
+		return true;
+	}
+	/**
+	\brief
+	*/
+	bool ConvertRGB24toY8MMXFunct (
+		std::uint8_t*			dest,
+		const std::uint8_t*	source,
+		int						stride_dest,
+		int						stride_source,
+		int						width_element,
+		int						height_element )
+	{
+		short array_const11[4] =
+		{
+			10, 10, 10, 10
+		};
+
+		int number_cycle_string = (width_element + ( (width_element & 0x7) ? 7 : 0) ) >> 3;
+		int leak_source = stride_source - number_cycle_string * 24;
+		int leak_dest = stride_dest - number_cycle_string * 8;
+
+		__asm
+		{
+			; eax - cycle string;
+			; ebx - leak desination;
+			; edx - leak source;
+			; ecx - cycle col;
+			; edi - destination;
+			; esi - source;
+			; mm0 - first 8 bytes source - 4 word;
+			; mm1 - second 8 bytes source - 4 word and summ;
+			; mm2 - temp;
+			; mm3 - temp;
+			; mm4 - result;
+			; mm5 - result;
+			; mm6 - 10 const;
+			; mm7 - 0 const;
+
+			pushad;
+
+			lea eax, array_const11;
+			movq mm6, [eax];
+			pxor mm7, mm7;
+
+			mov ecx, height_element;
+			mov ebx, leak_dest;
+			mov edx, leak_source;
+			mov edi, dest;
+			mov esi, source;
+
+#define POINTRGB24TOY8_MMX \
+	__asm pmaddwd mm2, mm6\
+	__asm movq mm3, mm2\
+	__asm psrlq mm3, 32\
+	__asm paddsw mm2, mm3\
+	__asm psraw mm2, 5\
+	__asm psllq mm2, 48\
+	__asm psrlq mm2, 48
+
+			cycle1:
+			mov eax, number_cycle_string;
+
+			cycle2:
+			pxor mm4, mm4;
+			pxor mm5, mm5;
+
+			movq mm0, [esi + 0];
+			movq mm1, mm0;
+			pxor mm7, mm7;
+			punpcklbw mm0, mm7;
+			punpckhbw mm1, mm7;
+
+			; point1;
+			movq mm2, mm0;         mm2 = 1112[words];
+			psllq mm2, 16;         mm2 = 0111;
+			psrlq mm2, 16;         mm2 = 1110;
+			POINTRGB24TOY8_MMX;
+			por mm4, mm2;          mm4 = 1000;
+
+			; point2;
+			movq mm2, mm0;         mm2 = 1112;
+			psrlq mm2, 48;         mm2 = 2000;
+			movq mm3, mm1;         mm3 = 2233;
+			psllq mm3, 32;         mm3 = 0022;;
+			psrlq mm3, 16;         mm3 = 0220;
+			por mm2, mm3;          mm2 = 2220;
+			POINTRGB24TOY8_MMX;
+			psllq mm2, 16;         mm2 = 0200;
+			por mm4, mm2;          mm4 = 1200;
+
+			; point3;
+			movq mm0, mm1;         mm0 = 2233;
+			psrlq mm0, 32;         mm0 = 3300;
+			movq mm1, [esi + 8]; mm1 = 34445556[bytes];
+			movq mm2, mm1;         mm2 = 34445556[bytes];;
+			punpcklbw mm1, mm7;    mm1 = 3444;
+			punpckhbw mm2, mm7;    mm2 = 5556;
+			movq mm3, mm1;         mm3 = 3444;
+			psllq mm3, 32;         mm3 = 0034;
+			por mm0, mm3;          mm0 = 3334;
+			psrlq mm1, 32;         mm1 = 4400;
+			movq mm7, mm2;         mm7 = 5556;
+			psllq mm2, 32;         mm2 = 0055;
+			por mm1, mm2;          mm1 = 4455;
+
+			movq mm2, mm0;         mm2 = 3334;
+			psllq mm2, 16;         mm2 = 0333;
+			psrlq mm2, 16;         mm2 = 3330;
+			POINTRGB24TOY8_MMX;
+			psllq mm2, 32;         mm2 = 0030;
+			por mm4, mm2;          mm4 = 1230;
+
+			; point4;
+			movq mm2, mm0;         mm2 = 3334;
+			psrlq mm2, 48;         mm2 = 4000;
+			movq mm3, mm1;         mm3 = 4455;
+			psllq mm3, 32;         mm3 = 0044;
+			psrlq mm3, 16;         mm3 = 0440;
+			por mm2, mm3;          mm2 = 4440;
+			POINTRGB24TOY8_MMX;
+			psllq mm2, 48;         mm2 = 0004;
+			por mm4, mm2;          mm4 = 1234[ready];
+
+			; point5;
+			movq mm0, mm1;         mm0 = 4455;
+			psrlq mm0, 32;         mm0 = 5500;
+			psrlq mm7, 32;         mm7 = 5600;
+			psllq mm7, 32;         mm7 = 0056;
+			por mm0, mm7;          mm0 = 5556;
+			pxor mm7, mm7;         mm7 = 0000;
+			movq mm2, mm0;         mm2 = 5556;
+			psllq mm2, 16;         mm2 = 0555;
+			psrlq mm2, 16;         mm2 = 5550;
+			POINTRGB24TOY8_MMX;
+			por mm5, mm2;          mm5 = 5000;
+
+			; point6;
+			psrlq mm0, 48;         mm0 = 6000;
+			movq mm1, [esi + 16]; mm1 = 66777888[bytes];
+			movq mm2, mm1;         mm2 = 66777888[bytes];
+			punpcklbw mm1, mm7;    mm1 = 6677;
+			punpckhbw mm2, mm7;    mm2 = 7888;
+			movq mm7, mm2;         mm7 = 7888;
+			movq mm2, mm1;         mm2 = 6677;
+			psllq mm2, 32;         mm2 = 0066;
+			psrlq mm2, 16;         mm2 = 0660;
+			por mm2, mm0;          mm2 = 6660;
+			POINTRGB24TOY8_MMX;
+			psllq mm2, 16;         mm2 = 0600;
+			por mm5, mm2;          mm5 = 5600;
+
+			; point7;
+			movq mm0, mm1;         mm0 = 6677;
+			psrlq mm0, 32;         mm0 = 7700;
+			movq mm1, mm7;         mm1 = 7888;
+			psllq mm1, 48;         mm1 = 0007;
+			psrlq mm1, 16;         mm1 = 0070;
+			por mm0, mm1;          mm0 = 7770;
+			movq mm2, mm0;         mm2 = 7770;
+			POINTRGB24TOY8_MMX;
+			psllq mm2, 32;         mm2 = 0070;
+			por mm5, mm2;          mm5 = 5670;
+
+			; point8;
+			movq mm2, mm7;         mm2 = 7888;
+			psrlq mm2, 16;         mm2 = 8880;
+			POINTRGB24TOY8_MMX;
+			psllq mm2, 48;         mm2 = 0008;
+			por mm5, mm2;          mm5 = 5678;
+
+			; save res;
+			packuswb mm4, mm5;
+			movq[edi], mm4;
+
+			add edi, 8;
+			add esi, 24;
+			sub eax, 1;
+			jg cycle2;
+
+			add edi, ebx;
+			add esi, edx;
+			sub ecx, 1;
+			jg cycle1;
+
+#undef POINTRGB24TOY8_MMX
+
+			popad;
+			emms;
+		}
+		return true;
+	}
+	/**
+	\brief
+	*/
+	bool ConvertRGB24toY8SSEFunct (
+		std::uint8_t* dest,
+		const std::uint8_t* source,
+		int stride_dest,
+		int stride_source,
+		int width_element,
+		int height_element )
+	{
+		return ConvertRGB24toY8MMXFunct (
+			dest,
+			source,
+			stride_dest,
+			stride_source,
+			width_element,
+			height_element );
+	}
+	/**
+	\brief
+	*/
+	bool ConvertRGB24toY8SSE2Funct (
+		std::uint8_t* dest,
+		const std::uint8_t* source,
+		int stride_dest,
+		int stride_source,
+		int width_element,
+		int height_element )
+	{
+		short array_const11[8] =
+		{
+			10, 10, 10, 10, 10, 10, 10, 10
+		};
+
+		int number_cycle_string = (width_element + ( (width_element & 0xF) ? 15 : 0) ) >> 4;
+		int leak_source = stride_source - number_cycle_string * 48;
+		int leak_dest = stride_dest - number_cycle_string * 16;
+
+		
+		
+
+		__asm
+		{
+			; eax - cycle string;
+			; ebx - leak desination;
+			; edx - leak source;
+			; ecx - cycle col;
+			; edi - destination;
+			; esi - source;
+			; xmm0 - first 8 bytes source - 4 word;
+			; xmm1 - second 8 bytes source - 4 word and summ;
+			; xmm2 - temp;
+			; xmm3 - temp;
+			; xmm4 - result;
+			; xmm5 - result;
+			; xmm6 - 10 const;
+			; xmm7 - 0 const;
+
+			pushad;
+
+			lea eax, array_const11;
+			movdqu xmm6, [eax];
+			pxor xmm7, xmm7;
+
+			mov ecx, height_element;
+			mov ebx, leak_dest;
+			mov edx, leak_source;
+			mov edi, dest;
+			mov esi, source;
+
+#define POINTRGB24TOY8_SSE2 \
+	__asm pmaddwd xmm2, xmm6\
+	__asm movdqa xmm3, xmm2\
+	__asm psrldq xmm3, 4\
+	__asm paddsw xmm2, xmm3\
+	__asm psraw xmm2, 5
+
+			cycle1:
+			mov eax, number_cycle_string;
+
+			cycle2:
+			pxor xmm4, xmm4;
+			pxor xmm5, xmm5;
+
+			movdqa xmm0, [esi + 0];  xmm0 = 1112223334445556[bytes];
+			movdqa xmm1, xmm0;         xmm1 = 1112223334445556[bytes];
+			pxor xmm7, xmm7;           xmm7 = 00000000[words];
+			punpcklbw xmm0, xmm7;      xmm0 = 11122233[words];
+			punpckhbw xmm1, xmm7;      xmm1 = 34445556[words];
+
+			; points1, 2;
+			movdqa xmm2, xmm0;         xmm2 = 11122233[words];
+			pslldq xmm2, 4;            xmm2 = 00111222;
+			psrldq xmm2, 2;            xmm2 = 01112220;
+			POINTRGB24TOY8_SSE2;
+
+			movdqa xmm3, xmm2;         xmm3 = 10x020x0;
+			pslldq xmm2, 14;           xmm2 = 00000001;
+			psrldq xmm2, 14;           xmm2 = 10000000;
+			por xmm4, xmm2;            xmm4 = 10000000;
+			pslldq xmm3, 6;            xmm3 = 00010x02;
+			psrldq xmm3, 12;           xmm3 = 02000000;
+			por xmm4, xmm3;            xmm4 = 12000000;
+
+			; points3, 4;
+			movdqa xmm2, xmm0;         xmm2 = 11122233[words];
+			psrldq xmm2, 12;           xmm2 = 33000000;
+			movdqa xmm0, xmm1;         xmm0 = 34445556;
+			pslldq xmm0, 8;            xmm0 = 00003444;
+			psrldq xmm0, 2;            xmm0 = 00034440;
+			por xmm2, xmm0;            xmm2 = 33034440;
+			POINTRGB24TOY8_SSE2;
+			movdqa xmm3, xmm2;         xmm3 = 30x040x0;
+			pslldq xmm2, 14;           xmm2 = 00000003;
+			psrldq xmm2, 10;           xmm2 = 00300000;
+			por xmm4, xmm2;            xmm4 = 12300000;
+			pslldq xmm3, 6;            xmm3 = 00030x04;
+			psrldq xmm3, 14;           xmm3 = 40000000;
+			pslldq xmm3, 6;            xmm3 = 00040000;
+			por xmm4, xmm3;            xmm4 = 12340000;
+
+			; points5, 6;
+			movdqa xmm0, xmm1;         xmm0 = 34445556;
+			movdqa xmm1, [esi + 16]; xmm0 = 66777888999AAABB[bytes];
+			movdqa xmm2, xmm1;         xmm2 = 66777888999AAABB[bytes];
+			punpcklbw xmm1, xmm7;      xmm1 = 66777888;
+			punpckhbw xmm2, xmm7;      xmm2 = 999AAABB;
+
+			psrldq xmm0, 8;            xmm0 = 55560000;
+			pslldq xmm0, 2;            xmm0 = 05556000;
+			movdqa xmm3, xmm1;         xmm3 = 66777888;
+			pslldq xmm3, 12;           xmm3 = 00000066 ? ;
+			movdqa xmm7, xmm2;         xmm7 = 999AAABB;
+			movdqa xmm2, xmm3;         xmm2 = 00000066;
+			por xmm2, xmm0;            xmm2 = 05556066;
+			movdqa xmm0, xmm1;         xmm0 = 66777888;
+			POINTRGB24TOY8_SSE2;
+			movdqa xmm3, xmm2;         xmm3 = 50x060x0;
+			pslldq xmm2, 14;           xmm2 = 00000005;
+			psrldq xmm2, 6;            xmm2 = 00005000;
+			por xmm4, xmm2;            xmm4 = 12345000;
+			psrldq xmm3, 8;            xmm3 = 60x00000;
+			pslldq xmm3, 14;           xmm3 = 00000006;
+			psrldq xmm3, 4;            xmm3 = 00000600;
+			por xmm4, xmm3;            xmm4 = 12345600;
+
+			; points7, 8;
+			psrldq xmm0, 4;            xmm0 = 77788800;
+			pslldq xmm0, 2;            xmm0 = 07778880;
+			movdqa xmm2, xmm0;         xmm2 = 07778880;
+			POINTRGB24TOY8_SSE2;
+			movdqa xmm3, xmm2;         xmm3 = 70x080x0;
+			pslldq xmm2, 14;           xmm2 = 00000007;
+			psrldq xmm2, 2;            xmm2 = 00000070;
+			por xmm4, xmm2;            xmm4 = 12345670;
+			psrldq xmm3, 8;            xmm3 = 80x00000;
+			pslldq xmm3, 14;           xmm3 = 00000008;
+			por xmm4, xmm3;            xmm4 = 12345678;
+
+			; points9, A;
+			movdqa xmm0, xmm7;         xmm0 = 999AAABB;
+			movdqa xmm1, xmm7;         xmm1 = 999AAABB;
+			pxor xmm7, xmm7;           xmm7 = 00000000;
+			pslldq xmm0, 4;            xmm2 = 00999AAA;
+			psrldq xmm0, 2;            xmm2 = 0999AAA0;
+			movdqa xmm2, xmm0;         xmm2 = 0999AAA0;
+			POINTRGB24TOY8_SSE2;
+			movdqa xmm3, xmm2;         xmm3 = 90x0A0x0;
+			pslldq xmm2, 14;           xmm2 = 00000009;
+			psrldq xmm2, 14;           xmm2 = 90000000;
+			por xmm5, xmm2;            xmm5 = 90000000;
+			pslldq xmm3, 6;            xmm3 = 00090x0A;
+			psrldq xmm3, 12;           xmm3 = 0A000000;
+			por xmm5, xmm3;            xmm5 = 9A000000;
+
+			; pointsB, C;
+			movdqa xmm2, xmm1;         xmm2 = 999AAABB;
+			psrldq xmm2, 12;           xmm2 = BB000000;
+			movdqa xmm0, [esi + 32]; xmm0 = BCCCDDDEEEFFFfff[bytes];
+			movdqa xmm1, xmm0;         xmm1 = BCCCDDDEEEFFFfff[bytes];
+			punpcklbw xmm0, xmm7;      xmm0 = BCCCDDDE;
+			punpckhbw xmm1, xmm7;      xmm1 = EEFFFfff;
+			movdqa xmm3, xmm0;         xmm3 = BCCCDDDE;
+			pslldq xmm3, 8;            xmm3 = 0000BCCC;
+			psrldq xmm3, 2;            xmm3 = 000BCCC0;
+			por xmm2, xmm3;            xmm2 = BB0BCCC0;
+			POINTRGB24TOY8_SSE2;
+			movdqa xmm3, xmm2;         xmm3 = B0x0C0x0;
+			pslldq xmm2, 14;           xmm2 = 0000000B;
+			psrldq xmm2, 10;           xmm2 = 00B00000;
+			por xmm5, xmm2;            xmm5 = 9AB00000;
+			pslldq xmm3, 6;            xmm3 = 000B0x0C;
+			psrldq xmm3, 14;           xmm3 = C0000000;;
+			pslldq xmm3, 6;            xmm3 = 000C0000;
+			por xmm5, xmm3;            xmm5 = 9ABC0000;
+
+			; pointsD, E;
+			movdqa xmm2, xmm0;         xmm2 = BCCCDDDE;
+			psrldq xmm2, 8;            xmm2 = DDDE0000;
+			movdqa xmm0, xmm1;         xmm0 = EEFFFfff;
+			pslldq xmm0, 12;           xmm0 = 000000EE;
+			pslldq xmm2, 2;            xmm2 = 0DDDE000;
+			por xmm2, xmm0;            xmm2 = 0DDDE0EE;
+			POINTRGB24TOY8_SSE2;
+			movdqa xmm3, xmm2;         xmm3 = D0x0E0x0;
+			pslldq xmm2, 14;           xmm2 = 0000000D;
+			psrldq xmm2, 6;            xmm2 = 0000D000;
+			por xmm5, xmm2;            xmm5 = 9ABCD000;
+			psrldq xmm3, 8;            xmm3 = E0x00000;
+			pslldq xmm3, 14;           xmm3 = 0000000E;
+			psrldq xmm3, 4;            xmm3 = 00000E00;
+			por xmm5, xmm3;            xmm5 = 9ABCDE00;
+
+			; pointsF, f;
+			psrldq xmm1, 4;            xmm1 = FFFfff00;
+			pslldq xmm1, 2;            xmm1 = 0FFFfff0;
+			movdqa xmm2, xmm1;         xmm2 = 0FFFfff0;
+			POINTRGB24TOY8_SSE2;
+			movdqa xmm3, xmm2;         xmm3 = F0x0f0x0;
+			pslldq xmm2, 14;           xmm2 = 0000000F;
+			psrldq xmm2, 2;            xmm2 = 000000F0;
+			por xmm5, xmm2;            xmm5 = 9ABCDEF0;
+			psrldq xmm3, 8;            xmm3 = f0x00000;
+			pslldq xmm3, 14;           xmm3 = 0000000f;
+			por xmm5, xmm3;            xmm5 = 9ABCDEFf;
+
+			; save res;
+			packuswb xmm4, xmm5;
+			movdqa[edi], xmm4;
+
+			add edi, 16;
+			add esi, 48;
+			sub eax, 1;
+			jg cycle2;
+
+			add edi, ebx;
+			add esi, edx;
+			sub ecx, 1;
+			jg cycle1;
+
+#undef POINTRGB24TOY8_SSE2
+
+			popad;
+		}
+		return true;
+	}
+	/**
+	\brief
+	*/
+	bool ConvertRGB24toYUY2MMXFunct (
+		std::uint8_t* dest,
+		const std::uint8_t* source,
+		int stride_dest,
+		int stride_source,
+		int width_element,
+		int height_element )
+	{
+		int number_cycle_string = (width_element + ( (width_element & 0x7) ? 7 : 0) ) >> 3;
+		int leak_source = stride_source - number_cycle_string * 24;
+		int leak_dest = stride_dest - number_cycle_string * 16;
+
+		
+		
+
+		//process color for two pixel
+		//y1 = 16.0 + ( 65.738 * r1 + 129.057 * g1 + 25.064 * b1 ) / 256.0;
+		//u  =128.0 + (112.439 * r1 -  94.154 * g1 - 18.285 * b1 ) / 256.0;
+		//y2 = 16.0 + ( 65.738 * r2 + 129.057 * g2 + 25.064 * b2 ) / 256.0;
+		//v  =128.0 + (-37.945 * r1 -  74.494 * g1 +112.439 * b1 ) / 256.0;
+		//y1 = 16.0 + ( 33.000 * r1 +  65.057 * g1 + 13.064 * b1 ) / 128.0;
+		//u  =128.0 + ( 56.219 * r1 -  47.154 * g1 -  9.285 * b1 ) / 128.0;
+		//v  =128.0 + (-19.045 * r1 -  37.294 * g1 + 56.239 * b1 ) / 128.0;
+
+		short consts_y[4] =
+		{
+			33, 65, 13, 0
+		};
+
+		short consts_u[4] =
+		{
+			56, -47, -9, 0
+		};
+
+		short consts_v[4] =
+		{
+			-19, -37, 56, 0
+		};
+		/**/
+
+		uint32_t array_const1[2] =
+		{
+			16, 16
+		};
+
+		__asm
+		{
+			; eax - cycle string;
+			; ebx - leak desination;
+			; edx - leak source;
+			; ecx - cycle col;
+			; edi - destination;
+			; esi - source;
+			; mm0 - first 8 bytes source - 4 word;
+			; mm1 - second 8 bytes source - 4 word and summ;
+			; mm2 - temp;
+			; mm3 - temp;
+			; mm4 - mull const y;
+			; mm5 - mull const u;
+			; mm6 - mull const v;
+			; mm7 - const dword 16;
+
+			pushad;
+
+			lea eax, consts_y;
+			movq mm4, [eax];
+			lea eax, consts_u;
+			movq mm5, [eax];
+			lea eax, consts_v;
+			movq mm6, [eax];
+			lea eax, array_const1;
+			movq mm7, [eax];
+
+			mov ecx, height_element;
+			mov ebx, leak_dest;
+			mov edx, leak_source;
+			mov edi, dest;
+			mov esi, source;
+
+			; mm0 = [r1, g1, b1, 0]words;
+			; mm1 = [r2, g2, b2, 0]words;
+			; mm2, mm3 - temp register;
+			; eax - temp register;
+			; edi - destination, after add 4 bytes;
+#define RGB24TOYUY2_COMPLITE2PIXEL_MMX( mully_const, mullu_const, mullv_const, add_const ) \
+	__asm movq mm2, mm0\
+	__asm pmaddwd mm2, mully_const\
+	__asm movq mm3, mm2\
+	__asm psrlq mm3, 32\
+	__asm paddd mm2, mm3\
+	__asm psrad mm2, 7\
+	__asm paddd mm2, add_const\
+	__asm packssdw mm2, mm2\
+	__asm packuswb mm2, mm2\
+	__asm movd eax, mm2\
+	__asm mov byte ptr [ edi + 0 ], al\
+	__asm movq mm2, mm1\
+	__asm pmaddwd mm2, mully_const\
+	__asm movq mm3, mm2\
+	__asm psrlq mm3, 32\
+	__asm paddd mm2, mm3\
+	__asm psrad mm2, 7\
+	__asm paddd mm2, add_const\
+	__asm packssdw mm2, mm2\
+	__asm packuswb mm2, mm2\
+	__asm movd eax, mm2\
+	__asm mov byte ptr [ edi + 2 ], al\
+	__asm paddsw mm0, mm1\
+	__asm psraw mm0, 1\
+	__asm movq mm1, mm0\
+	__asm pslld add_const, 3\
+	__asm pmaddwd mm0, mullu_const\
+	__asm movq mm3, mm0\
+	__asm psrlq mm3, 32\
+	__asm paddd mm0, mm3\
+	__asm psrad mm0, 7\
+	__asm paddd mm0, add_const\
+	__asm packssdw mm0, mm0\
+	__asm packuswb mm0, mm0\
+	__asm movd eax, mm0\
+	__asm mov byte ptr [ edi + 1 ], al\
+	__asm pmaddwd mm1, mullv_const\
+	__asm movq mm3, mm1\
+	__asm psrlq mm3, 32\
+	__asm paddd mm1, mm3\
+	__asm psrad mm1, 7\
+	__asm paddd mm1, add_const\
+	__asm packssdw mm1, mm1\
+	__asm packuswb mm1, mm1\
+	__asm movd eax, mm1\
+	__asm mov byte ptr [ edi + 3 ], al\
+	__asm psrld add_const, 3\
+	__asm add edi, 4
+
+			cycle1:
+			mov eax, number_cycle_string;
+
+			cycle2:
+			push eax;
+
+			pxor mm2, mm2;
+			movq mm0, [esi + 0];
+			movq mm1, mm0;
+			psrlq mm1, 24;
+			punpcklbw mm0, mm2;
+			punpcklbw mm1, mm2;
+			psllq mm0, 16;
+			psrlq mm0, 16;
+			psllq mm1, 16;
+			psrlq mm1, 16;
+			RGB24TOYUY2_COMPLITE2PIXEL_MMX ( mm4, mm5, mm6, mm7);
+			pxor mm2, mm2;
+			movq mm0, [esi + 6];
+			movq mm1, mm0;
+			psrlq mm1, 24;
+			punpcklbw mm0, mm2;
+			punpcklbw mm1, mm2;
+			psllq mm0, 16;
+			psrlq mm0, 16;
+			psllq mm1, 16;
+			psrlq mm1, 16;
+			RGB24TOYUY2_COMPLITE2PIXEL_MMX ( mm4, mm5, mm6, mm7);
+			pxor mm2, mm2;
+			movq mm0, [esi + 12];
+			movq mm1, mm0;
+			psrlq mm1, 24;
+			punpcklbw mm0, mm2;
+			punpcklbw mm1, mm2;
+			psllq mm0, 16;
+			psrlq mm0, 16;
+			psllq mm1, 16;
+			psrlq mm1, 16;
+			RGB24TOYUY2_COMPLITE2PIXEL_MMX ( mm4, mm5, mm6, mm7);
+			pxor mm2, mm2;
+			movq mm0, [esi + 16];
+			psrlq mm0, 16;
+			movq mm1, mm0;
+			psrlq mm1, 24;
+			punpcklbw mm0, mm2;
+			punpcklbw mm1, mm2;
+			psllq mm0, 16;
+			psrlq mm0, 16;
+			psllq mm1, 16;
+			psrlq mm1, 16;
+			RGB24TOYUY2_COMPLITE2PIXEL_MMX ( mm4, mm5, mm6, mm7);
+
+			add esi, 24;
+			pop eax;
+			sub eax, 1;
+			jg cycle2;
+
+			add edi, ebx;
+			add esi, edx;
+			sub ecx, 1;
+			jg cycle1;
+
+#undef RGB24TOYUY2_COMPLITE2PIXEL_MMX
+
+			popad;
+			emms;
+		}
+		return true;
+	}
+	/**
+	\brief
+	*/
+	bool ConvertRGB24toYUY2SSEFunct (
+		std::uint8_t* dest,
+		const std::uint8_t* source,
+		int stride_dest,
+		int stride_source,
+		int width_element,
+		int height_element )
+	{
+		return ConvertRGB24toYUY2MMXFunct (
+			dest,
+			source,
+			stride_dest,
+			stride_source,
+			width_element,
+			height_element );
+	}
+	/**
+	\brief
+	*/
+	bool ConvertRGB24toYUY2SSE2Funct (
+		std::uint8_t* dest,
+		const std::uint8_t* source,
+		int stride_dest,
+		int stride_source,
+		int width_element,
+		int height_element )
+	{
+		int number_cycle_string = (width_element + ( (width_element & 0xF) ? 15 : 0) ) >> 4;
+		int leak_source = stride_source - number_cycle_string * 48;
+		int leak_dest = stride_dest - number_cycle_string * 32;
+
+		
+		
+
+		//process color for two pixel
+		//y1 = 16.0 + ( 33.000 * r1 +  65.057 * g1 + 13.064 * b1 ) / 128.0;
+		//u  =128.0 + ( 56.219 * r1 -  47.154 * g1 -  9.285 * b1 ) / 128.0;
+		//v  =128.0 + (-19.045 * r1 -  37.294 * g1 + 56.239 * b1 ) / 128.0;
+
+		short consts_y[8] =
+		{
+			33, 65, 13, 0, 33, 65, 13, 0
+		};
+
+		short consts_u[8] =
+		{
+			56, -47, -9, 0, 56, -47, -9, 0
+		};
+
+		short consts_v[8] =
+		{
+			-19, -37, 56, 0, -19, -37, 56, 0
+		};
+		/**/
+
+		uint32_t array_const1[4] =
+		{
+			16, 16, 16, 16
+		};
+
+		__asm
+		{
+			; eax - cycle string;
+			; ebx - leak desination;
+			; edx - leak source;;
+			; ecx - cycle col;
+			; edi - destination;
+			; esi - source;
+			; xmm0 - first  16 bytes source - 8 word;
+			; xmm1 - second 16 bytes source - 8 word and summ;
+			; xmm2 - temp;
+			; xmm3 - temp;
+			; xmm4 - mull const y;
+			; xmm5 - mull const u;
+			; xmm6 - mull const v;
+			; xmm7 - const dword 16;
+
+			pushad;
+
+			lea eax, consts_y;
+			movdqu xmm4, [eax];
+			lea eax, consts_u;
+			movdqu xmm5, [eax];
+			lea eax, consts_v;
+			movdqu xmm6, [eax];
+			lea eax, array_const1;
+			movdqu xmm7, [eax];
+
+			mov ecx, height_element;
+			mov ebx, leak_dest;
+			mov edx, leak_source;
+			mov edi, dest;
+			mov esi, source;
+
+			; xmm0 = [r1, g1, b1, 0, r2, g2, b2, 0]words;
+			; xmm1 = [r3, g3, b3, 0, r4, g4, b4, 0]words;
+			; xmm2, mm3 - temp register;
+			; eax - temp register;
+			; edi - destination, after add 4 bytes;
+#define RGB24TOYUY2_COMPLITE2PIXEL_SSE2( mully_const, mullu_const, mullv_const, add_const ) \
+	__asm movdqa xmm2, xmm0\
+	__asm pmaddwd xmm2, mully_const\
+	__asm movdqa xmm3, xmm2\
+	__asm psrldq xmm3, 4\
+	__asm paddd xmm2, xmm3\
+	__asm psrad xmm2, 7\
+	__asm paddd xmm2, add_const\
+	__asm packssdw xmm2, xmm2\
+	__asm packuswb xmm2, xmm2\
+	__asm movd eax, xmm2\
+	__asm mov byte ptr [ edi + 0 ], al\
+	__asm shr eax, 16\
+	__asm mov byte ptr [ edi + 2 ], al\
+	__asm movdqa xmm2, xmm1\
+	__asm pmaddwd xmm2, mully_const\
+	__asm movdqa xmm3, xmm2\
+	__asm psrldq xmm3, 4\
+	__asm paddd xmm2, xmm3\
+	__asm psrad xmm2, 7\
+	__asm paddd xmm2, add_const\
+	__asm packssdw xmm2, xmm2\
+	__asm packuswb xmm2, xmm2\
+	__asm movd eax, xmm2\
+	__asm mov byte ptr [ edi + 4 ], al\
+	__asm shr eax, 16\
+	__asm mov byte ptr [ edi + 6 ], al\
+	__asm paddsw xmm0, xmm1\
+	__asm psraw xmm0, 1\
+	__asm movdqa xmm1, xmm0\
+	__asm pslld add_const, 3\
+	__asm pmaddwd xmm0, mullu_const\
+	__asm movdqa xmm3, xmm0\
+	__asm psrldq xmm3, 4\
+	__asm paddd xmm0, xmm3\
+	__asm psrad xmm0, 7\
+	__asm paddd xmm0, add_const\
+	__asm packssdw xmm0, xmm0\
+	__asm packuswb xmm0, xmm0\
+	__asm movd eax, xmm0\
+	__asm mov byte ptr [ edi + 1 ], al\
+	__asm shr eax, 16\
+	__asm mov byte ptr [ edi + 5 ], al\
+	__asm pmaddwd xmm1, mullv_const\
+	__asm movdqa xmm3, xmm1\
+	__asm psrldq xmm3, 4\
+	__asm paddd xmm1, xmm3\
+	__asm psrad xmm1, 7\
+	__asm paddd xmm1, add_const\
+	__asm packssdw xmm1, xmm1\
+	__asm packuswb xmm1, xmm1\
+	__asm movd eax, xmm1\
+	__asm mov byte ptr [ edi + 3 ], al\
+	__asm shr eax, 16\
+	__asm mov byte ptr [ edi + 7 ], al\
+	__asm psrld add_const, 3\
+	__asm add edi, 8
+
+			cycle1:
+			mov eax, number_cycle_string;
+
+			cycle2:
+			push eax;
+
+			movdqa xmm0, [esi + 0];
+			movdqa xmm1, xmm0;
+			movdqa xmm2, xmm0;
+			pslldq xmm0, 13;
+			psrldq xmm0, 13;
+			psrldq xmm2, 3;
+			pslldq xmm2, 4;
+			por xmm0, xmm2;
+			movdqa xmm2, xmm1;
+			pslldq xmm1, 7;
+			psrldq xmm1, 13;
+			psrldq xmm2, 9;
+			pslldq xmm2, 4;
+			por xmm1, xmm2;
+			pxor xmm2, xmm2;
+			punpcklbw xmm0, xmm2;
+			punpcklbw xmm1, xmm2;
+			RGB24TOYUY2_COMPLITE2PIXEL_SSE2 ( xmm4, xmm5, xmm6, xmm7);
+
+			movdqu xmm0, [esi + 12];
+			movdqa xmm1, xmm0;
+			movdqa xmm2, xmm0;
+			pslldq xmm0, 13;
+			psrldq xmm0, 13;
+			psrldq xmm2, 3;
+			pslldq xmm2, 4;
+			por xmm0, xmm2;
+			movdqa xmm2, xmm1;
+			pslldq xmm1, 7;
+			psrldq xmm1, 13;
+			psrldq xmm2, 9;
+			pslldq xmm2, 4;
+			por xmm1, xmm2;
+			pxor xmm2, xmm2;
+			punpcklbw xmm0, xmm2;
+			punpcklbw xmm1, xmm2;
+			RGB24TOYUY2_COMPLITE2PIXEL_SSE2 ( xmm4, xmm5, xmm6, xmm7);
+
+			movdqu xmm0, [esi + 24];
+			movdqa xmm1, xmm0;
+			movdqa xmm2, xmm0;
+			pslldq xmm0, 13;
+			psrldq xmm0, 13;
+			psrldq xmm2, 3;
+			pslldq xmm2, 4;
+			por xmm0, xmm2;
+			movdqa xmm2, xmm1;
+			pslldq xmm1, 7;
+			psrldq xmm1, 13;
+			psrldq xmm2, 9;
+			pslldq xmm2, 4;
+			por xmm1, xmm2;
+			pxor xmm2, xmm2;
+			punpcklbw xmm0, xmm2;
+			punpcklbw xmm1, xmm2;
+			RGB24TOYUY2_COMPLITE2PIXEL_SSE2 ( xmm4, xmm5, xmm6, xmm7);
+
+			movdqa xmm0, [esi + 32];
+			psrldq xmm0, 4;
+			movdqa xmm1, xmm0;
+			movdqa xmm2, xmm0;
+			pslldq xmm0, 13;
+			psrldq xmm0, 13;
+			psrldq xmm2, 3;
+			pslldq xmm2, 4;
+			por xmm0, xmm2;
+			movdqa xmm2, xmm1;
+			pslldq xmm1, 7;
+			psrldq xmm1, 13;
+			psrldq xmm2, 9;
+			pslldq xmm2, 4;
+			por xmm1, xmm2;
+			pxor xmm2, xmm2;
+			punpcklbw xmm0, xmm2;
+			punpcklbw xmm1, xmm2;
+			pxor xmm2, xmm2;
+			RGB24TOYUY2_COMPLITE2PIXEL_SSE2 ( xmm4, xmm5, xmm6, xmm7);
+
+			add esi, 48;
+			pop eax;
+			sub eax, 1;
+			jg cycle2;
+
+			add edi, ebx;
+			add esi, edx;
+			sub ecx, 1;
+			jg cycle1;
+
+#undef RGB24TOYUY2_COMPLITE2PIXEL_SSE2
+
+			popad;
+		}
+		return true;
+	}
+#endif
+} } } }
+
+#if 0
+HRESULT alu(
+	const std::uint8_t*	yuy2_buf,
+	uint32_t			width,
+	uint32_t			height,
+	uint32_t			stride_yuy2,
+	std::uint8_t*			rgb24_buf,
+	uint32_t			stride_rgb24 )
+{
+	HRESULT	hr = S_OK;
+	U3_ASSERT( yuy2_buf );
+	U3_ASSERT( width );
+	U3_ASSERT( height );
+	U3_ASSERT( stride_yuy2 );
+	U3_ASSERT( rgb24_buf );
+	U3_ASSERT( stride_rgb24 );
+	U3_ASSERT( width * sizeof( std::uint8_t ) * 2 <= stride_yuy2 );
+	U3_ASSERT( width * sizeof( std::uint8_t ) * 3 <= stride_rgb24 );
+
+	const std::uint32_t leak_yuy2	= stride_yuy2 - width * sizeof( std::uint8_t ) * 2;
+	const std::uint32_t leak_rgb24	= stride_rgb24 - width * sizeof( std::uint8_t ) * 3;
+
+#define OFFSET_U	3
+#define OFFSET_V	1
+
+	for( std::uint32_t indx_y = 0; indx_y < height; ++indx_y )
+	{
+		for( std::uint32_t indx_x = 0; indx_x < width; indx_x+= 2 )
+		{
+			short y1 = s1tatic_cast<short>(yuy2_buf[ 0 ] ) - 16;
+			short y2 = s1tatic_cast<short>(yuy2_buf[ 2 ] ) - 16;
+			short u = s1tatic_cast<short>(yuy2_buf[ OFFSET_U ] ) - 128;
+			short v = s1tatic_cast<short>(yuy2_buf[ OFFSET_V ] ) - 128;
+			short temp_value = 0;
+
+#define SAT( expr ) ( temp_value = ( expr ), ( temp_value < 0 ? 0 : ( temp_value > 255 ? 255 : temp_value ) ) );
+
+			rgb24_buf[ 0 ] = SAT( (y1 * 37.260 + v * 51.073 + 0 ) / 32 );
+			rgb24_buf[ 1 ] = SAT( (y1 * 37.260 - u * 12.536 - v * 26.015 + 0 ) / 32 );
+			rgb24_buf[ 2 ] = SAT( (y1 * 37.260 + u * 64.551 + 0 ) / 32 );
+
+			rgb24_buf+= 3;
+
+			rgb24_buf[ 0 ] = SAT( (y2 * 37.260 + v * 51.073 + 0 ) / 32 );
+			rgb24_buf[ 1 ] = SAT( (y2 * 37.260 - u * 12.536 - v * 26.015 + 0 ) / 32 );
+			rgb24_buf[ 2 ] = SAT( (y2 * 37.260 + u * 64.551 + 0 ) / 32 );
+
+			yuy2_buf+= 4;
+			rgb24_buf+= 3;
+		}
+
+		yuy2_buf+= leak_yuy2;
+		rgb24_buf+= leak_rgb24;
+	}
+
+#undef SAT
+#undef OFFSET_U
+#undef OFFSET_V
+	U3_ASSERT( SUCCEEDED( hr ) );
+	return hr;
+}
+/**
+\brief	
+*/
+HRESULT ConvertYUY2toSYUY2( 
+	const std::uint8_t*	input_yuy2, 
+	int						number_element, 
+	std::uint8_t*			output_y, 
+	std::uint8_t*			output_u, 
+	std::uint8_t*			output_v )
+{
+	HRESULT hr = S_OK;
+	int i1 = 0;
+
+	SCA_CHECKNULLARG( input_yuy2 );
+	SCA_CHECKNULLARG( output_y );
+	SCA_CHECKNULLARG( output_v );
+	SCA_CHECKNULLARG( output_u );
+	SCA_CHECKCONDITION( number_element <= 0 );
+
+	for( i1 = 0; i1 < (number_element >> 1 ); i1++ )
+	{    
+		*output_y++ = *input_yuy2++;
+		*output_u++ = *input_yuy2;
+		*output_u++ = *input_yuy2++;
+		*output_y++ = *input_yuy2++;
+		*output_v++ = *input_yuy2;
+		*output_v++ = *input_yuy2++;
+	}
+	return hr;
+}
+/**
+\brief	
+*/
+HRESULT ConvertYUY2toSYUY2( 
+	const std::uint8_t*	input_yuy2, 
+	int						input_width, 
+	int						input_height, 
+	int						input_strude,
+	std::uint8_t*			output_y, 
+	std::uint8_t*			output_u, 
+	std::uint8_t*			output_v )
+{
+	HRESULT hr = S_OK;
+	int i1 = 0, i2 = 0;
+	const std::uint8_t *temp_p1 = NULL;
+
+	SCA_CHECKNULLARG( input_yuy2 );
+	SCA_CHECKNULLARG( output_y );
+	SCA_CHECKNULLARG( output_v );
+	SCA_CHECKNULLARG( output_u );
+	SCA_CHECKCONDITION( input_width <= 0 );
+	SCA_CHECKCONDITION( input_height <= 0 );
+	SCA_CHECKCONDITION( input_strude < 0 );
+
+	temp_p1 = input_yuy2;
+
+	for( i1 = 0; i1 < input_height; i1++ )
+	{
+		temp_p1 = input_yuy2;
+
+		for( i2 = 0; i2 < (input_width >> 1 ); i2++ )
+		{
+			*output_y++ = *input_yuy2++;
+			*output_u++ = *input_yuy2;
+			*output_u++ = *input_yuy2++;
+			*output_y++ = *input_yuy2++;
+			*output_v++ = *input_yuy2;
+			*output_v++ = *input_yuy2++;
+		}
+		input_yuy2 = temp_p1 + input_strude;
+	}
+	return hr;
+}
+/**
+\brief	
+*/
+HRESULT ConvertSYUY2toRGB24( 
+	const std::uint8_t*	array_y, 
+	const std::uint8_t*	array_u, 
+	const std::uint8_t*	array_v, 
+	int						number_element, 
+	std::uint8_t*			output, 
+	int						size_output )
+{
+	HRESULT hr = S_OK;
+	int count = 0;
+
+	__int64 const_w16  = 0x0010001000100010;
+	__int64 const_w128 = 0x0080008000800080;
+	__int64 const_w37  = 0x0025002500250025;
+	__int64 const_w13  = 0x000D000D000D000D;
+	__int64 const_w65  = 0x0041004100410041;
+	__int64 const_w51  = 0x0033003300330033;
+	__int64 const_w26  = 0x001A001A001A001A;
+
+	SCA_CHECKNULLARG( array_y );
+	SCA_CHECKNULLARG( array_v );
+	SCA_CHECKNULLARG( array_u );
+	SCA_CHECKNULLARG( output );
+	SCA_CHECKCONDITION( number_element <= 0 );
+	SCA_CHECKCONDITION( size_output < number_element * 3 );
+	/**/
+
+	count = number_element >> 2;
+
+	CHECKALIGHBUFFER_64( array_y );
+	CHECKALIGHBUFFER_64( array_u );
+	CHECKALIGHBUFFER_64( array_v );
+	CHECKALIGHBUFFER_64( output );
+
+#define OUTPUT_DATA edx
+#define Y_DATA      eax
+#define U_DATA      ebx
+#define V_DATA      edi
+
+	__asm
+	{
+		pushad;
+
+		mov ecx, count;
+		mov OUTPUT_DATA, output;
+		mov Y_DATA, array_y;
+		mov U_DATA, array_v;
+		mov V_DATA, array_u;
+
+		;��������� � ������� ��������� ��� ��������� ��� ��������� ;
+		;mmx3 = 37, mmx4 = 13, mmx5 = 65, mmx6 = 51, mmx7 = 26;
+		movq mm4, const_w37;
+		movq mm3, const_w26;
+
+		;���� ������� �� ���� ���������, ����� ������� 4;
+loop1:
+
+		;��������� 4 �������� - y � ��������� � ��� ������� - � ����� mmx7 = 4xY;
+		pxor mm0, mm0;
+		movd mm7, [Y_DATA];
+		punpcklbw mm7, mm0;
+
+		;��������� 4 �������� - u � ��������� � ��� ������� - � ����� mmx6 = 4xU;
+		movd mm6, [U_DATA];
+		punpcklbw mm6, mm0;
+
+		;��������� 4 �������� - v � ��������� � ��� ������� - � ����� mmx5 = 4xV;
+		movd mm5, [V_DATA];
+		punpcklbw mm5, mm0;
+
+		;���������� �������� ������ ����� ��������� �������������� �������������;
+		;Y = Y - 16, U = U - 128, V = V - 128;
+		movq mm0, const_w16;
+		psubsw mm7, mm0;
+		movq mm0, const_w128;
+		psubsw mm6, mm0;
+		psubsw mm5, mm0;
+
+		;��������� ������� �� ����������� - ��� ��������� ��� ������ ���������� - mmx7 = Y * 37.260;
+		pmullw mm7, mm4;
+
+		;��������� R ���������� 4 ��������;
+		movq mm0, mm7;        mmx0 =  Y * 37.260;
+		movq mm1, const_w51;  mmx1 =  V * 51.073;
+		pmullw mm1, mm5;
+		paddsw mm0, mm1;      mmx0 =  Y * 37.260 + V * 51.073 ;
+		psraw mm0, 5;         mmx0 =( Y * 37.260 + V * 51.073 ) / 32 = R;
+
+		;����������� � ���������� ���������� � �����;
+		pxor mm1, mm1;
+		packsswb mm0, mm1;
+
+		;����� � ���� R ���������� 4 ��������, ��� ����� ��������� 32 ���� � ������� ������ �����������;
+		;� ����� ��������������� ������� ��������� R ���������� 4 ��������;
+		push eax;
+		movd eax, mm0;
+		mov 2[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 5[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 8[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 11[ OUTPUT_DATA ], al;
+		pop eax;
+
+		;��������� G ���������� 4 ��������;
+		movq mm0, mm7;            mmx0 =  Y * 37.260;
+		movq mm1, const_w13;
+		pmullw mm1, mm6;          mmx1 =  U * 12.536;
+		paddsw mm0, mm1;          mmx0 =  Y * 37.260 + U * 12.536;
+		movq mm1, const_w26;
+		pmullw mm1, mm5;          mmx1 =  V * 26.015;
+		psubsw mm0, mm1;          mmx0 =  ( Y * 37.260 + U * 12.536  - V * 26.015 );
+		psraw mm0, 5;             mmx0 =  ( Y * 37.260 + U * 12.536  - V * 26.015 ) / 32 = G;
+
+		;����������� � ���������� ���������� � �����;
+		pxor mm1, mm1;
+		packsswb mm0, mm1;
+
+		;����� � ����;
+		push eax;
+		movd eax, mm0;
+		mov 1[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 4[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 7[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 10[ OUTPUT_DATA ], al;
+		pop eax;
+
+		;��������� B ���������� 4 ��������;
+		movq mm0, mm7;            mmx0 =  Y * 37.260;
+		movq mm1, const_w65;
+		pmullw mm1, mm6;          mmx1 =  U * 64.551;
+		paddsw mm0, mm1;          mmx0 =  ( Y * 37.260 + U * 64.551  + V * 0.0    );
+		psraw mm0, 5;             mmx0 =  ( Y * 37.260 + U * 64.551  + V * 0.0    ) / 32 = B;
+
+		;����������� � ���������� ���������� � �����;
+		pxor mm1, mm1;
+		packsswb mm0, mm1;
+
+		;����� � ����;
+		push eax;
+		movd eax, mm0;
+		mov 0[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 3[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 6[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 9[ OUTPUT_DATA ], al;
+		pop eax;
+
+
+		add Y_DATA, 4;
+		add U_DATA, 4;
+		add V_DATA, 4;
+		add OUTPUT_DATA, 12;
+		sub ecx, 1;
+		jg loop1;
+
+		popad;
+		emms;
+	}
+	return hr;
+}
+/**
+\brief	
+*/
+HRESULT ConvertSYUY2toRGB32( 
+	const std::uint8_t*	array_y, 
+	const std::uint8_t*	array_u, 
+	const std::uint8_t*	array_v, 
+	int						number_element, 
+	std::uint8_t*			output, 
+	int						size_output )
+{
+	HRESULT hr = S_OK;
+	int count = 0;
+
+	__int64 const_w16  = 0x0010001000100010;
+	__int64 const_w128 = 0x0080008000800080;
+	__int64 const_w37  = 0x0025002500250025;
+	__int64 const_w13  = 0x000D000D000D000D;
+	__int64 const_w65  = 0x0041004100410041;
+	__int64 const_w51  = 0x0033003300330033;
+	__int64 const_w26  = 0x001A001A001A001A;
+
+	SCA_CHECKNULLARG( array_y );
+	SCA_CHECKNULLARG( array_v );
+	SCA_CHECKNULLARG( array_u );
+	SCA_CHECKNULLARG( output );
+	SCA_CHECKCONDITION( number_element <= 0 );
+	SCA_CHECKCONDITION( size_output < number_element * 3 );
+	/**/
+
+	CHECKALIGHBUFFER_64( array_y );
+	CHECKALIGHBUFFER_64( array_u );
+	CHECKALIGHBUFFER_64( array_v );
+	CHECKALIGHBUFFER_64( output );
+
+	count = number_element >> 2;
+
+#define OUTPUT_DATA edx
+#define Y_DATA      eax
+#define U_DATA      ebx
+#define V_DATA      edi
+
+	__asm
+	{
+		pushad;
+
+		mov ecx, count;
+		mov OUTPUT_DATA, output;
+		mov Y_DATA, array_y;
+		mov U_DATA, array_v;
+		mov V_DATA, array_u;
+
+		;��������� � ������� ��������� ��� ��������� ��� ��������� ;
+		;mmx3 = 37, mmx4 = 13, mmx5 = 65, mmx6 = 51, mmx7 = 26;
+		movq mm4, const_w37;
+		movq mm3, const_w26;
+
+		;���� ������� �� ���� ���������, ����� ������� 4;
+loop1:
+
+		;��������� 4 �������� - y � ��������� � ��� ������� - � ����� mmx7 = 4xY;
+		pxor mm0, mm0;
+		movd mm7, [Y_DATA];
+		punpcklbw mm7, mm0;
+
+		;��������� 4 �������� - u � ��������� � ��� ������� - � ����� mmx6 = 4xU;
+		movd mm6, [U_DATA];
+		punpcklbw mm6, mm0;
+
+		;��������� 4 �������� - v � ��������� � ��� ������� - � ����� mmx5 = 4xV;
+		movd mm5, [V_DATA];
+		punpcklbw mm5, mm0;
+
+		;���������� �������� ������ ����� ��������� �������������� �������������;
+		;Y = Y - 16, U = U - 128, V = V - 128;
+		movq mm0, const_w16;
+		psubsw mm7, mm0;
+		movq mm0, const_w128;
+		psubsw mm6, mm0;
+		psubsw mm5, mm0;
+
+		;��������� ������� �� ����������� - ��� ��������� ��� ������ ���������� - mmx7 = Y * 37.260;
+		pmullw mm7, mm4;
+
+		;��������� R ���������� 4 ��������;
+		movq mm0, mm7;        mmx0 =  Y * 37.260;
+		movq mm1, const_w51;  mmx1 =  V * 51.073;
+		pmullw mm1, mm5;
+		paddsw mm0, mm1;      mmx0 =  Y * 37.260 + V * 51.073 ;
+		psraw mm0, 5;         mmx0 =( Y * 37.260 + V * 51.073 ) / 32 = R;
+
+		;����������� � ���������� ���������� � �����;
+		pxor mm1, mm1;
+		packuswb mm0, mm1;
+
+		;����� � ���� R ���������� 4 ��������, ��� ����� ��������� 32 ���� � ������� ������ �����������;
+		;� ����� ��������������� ������� ��������� R ���������� 4 ��������;
+		push eax;
+		movd eax, mm0;
+		mov 0[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 4[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 8[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 12[ OUTPUT_DATA ], al;
+		pop eax;
+
+		;��������� G ���������� 4 ��������;
+		movq mm0, mm7;        mmx0 =  Y * 37.260;
+		movq mm1, const_w13;
+		pmullw mm1, mm6;      mmx1 =  U * 12.536;
+		paddsw mm0, mm1;      mmx0 =  Y * 37.260 + U * 12.536;
+		movq mm1, const_w26;
+		pmullw mm1, mm5;      mmx1 =  V * 26.015;
+		psubsw mm0, mm1;      mmx0 =  ( Y * 37.260 + U * 12.536  - V * 26.015 );
+		psraw mm0, 5;         mmx0 =  ( Y * 37.260 + U * 12.536  - V * 26.015 ) / 32 = G;
+
+		;����������� � ���������� ���������� � �����;
+		pxor mm1, mm1;
+		packuswb mm0, mm1;
+
+		;����� � ����;
+		push eax;
+		movd eax, mm0;
+		mov 1[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 5[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 9[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 13[ OUTPUT_DATA ], al;
+		pop eax;
+
+		;��������� B ���������� 4 ��������;
+		movq mm0, mm7;        mmx0 =  Y * 37.260;
+		movq mm1, const_w65;
+		pmullw mm1, mm6;      mmx1 =  U * 64.551;
+		paddsw mm0, mm1;      mmx0 =  ( Y * 37.260 + U * 64.551  + V * 0.0    );
+		psraw mm0, 5;         mmx0 =  ( Y * 37.260 + U * 64.551  + V * 0.0    ) / 32 = B;
+
+		;����������� � ���������� ���������� � �����;
+		pxor mm1, mm1;
+		packuswb mm0, mm1;
+
+		;����� � ����;
+		push eax;
+		movd eax, mm0;
+		mov 2[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 6[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 10[ OUTPUT_DATA ], al;
+		shr eax, 8;
+		mov 14[ OUTPUT_DATA ], al;
+		pop eax;
+
+
+		add Y_DATA, 4;
+		add U_DATA, 4;
+		add V_DATA, 4;
+		add OUTPUT_DATA, 16;
+		sub ecx, 1;
+		jg loop1;
+
+		popad;
+		emms;
+	}
+	return hr;
+}
+/**
+\brief	
+*/
+HRESULT SoftwareConvertSYUY2toRGB32( 
+	const std::uint8_t*	array_y, 
+	const std::uint8_t*	array_u, 
+	const std::uint8_t*	array_v, 
+	int						number_element, 
+	std::uint8_t*			output, 
+	int						size_output )
+{
+	HRESULT hr = S_OK;
+	signed int Y = 0, U = 0, V = 0;
+	int i1 = 0;
+
+	SCA_CHECKNULLARG( array_y );
+	SCA_CHECKNULLARG( array_v );
+	SCA_CHECKNULLARG( array_u );
+	SCA_CHECKNULLARG( output );
+	SCA_CHECKCONDITION( number_element <= 0 );
+	SCA_CHECKCONDITION( size_output < number_element * 3 );
+
+#define _S( a)		( a)>255 ? 255 : ( a)<0 ? 0 : ( a)
+#define _R(y,u,v) (0x2568*(y)  			       + 0x3343*(u ) ) /0x2000
+#define _G(y,u,v) (0x2568*(y) - 0x0c92*(v) - 0x1a1e*(u ) ) /0x2000
+#define _B(y,u,v) (0x2568*(y) + 0x40cf*(v) )					     /0x2000
+
+	for( i1 = 0; i1 < number_element; i1++ )
+	{
+		Y = array_y[ i1 ] - 16;
+		U = array_u[ i1 ] - 128;
+		V = array_v[ i1 ] - 128;
+
+		(*output ) = (std::uint8_t)( _S( _R( Y, U, V ) ) );
+		output++;
+		(*output ) = (std::uint8_t)( _S( _G( Y, U, V ) ) );
+		output++;
+		(*output ) = (std::uint8_t)( _S( _B( Y, U, V ) ) );
+		output++;
+		output++;
+	}
+	return hr;
+}
+/**
+\brief	
+*/
+HRESULT MMXConvertYUY2toMRGB32( 
+	const std::uint8_t*	input_yuy2, 
+	int						width, 
+	int						height, 
+	int						strude_input, 
+	std::uint8_t*			output, 
+	int						strude_output, 
+	int						size_output )
+{
+	HRESULT hr = S_OK;
+	__int64 const_1 = 0x00FF00FF00FF00FF;
+	__int64 const_2 = 0x0000FFFFFFFF0000;
+	__int64 const_3 = 0xFFFF000000000000;
+	__int64 const_4 = 0x000000000000FFFF;
+	int width_8 = width >> 2;
+
+	SCA_CHECKNULLARG( input_yuy2 );
+	SCA_CHECKNULLARG( output );
+	SCA_CHECKCONDITION( width <= 0 );
+	SCA_CHECKCONDITION( height <= 0 );
+	SCA_CHECKCONDITION( strude_input <= 0 );
+	SCA_CHECKCONDITION( size_output < ( (width * height ) << 2 ) );
+	/**/
+
+	CHECKALIGHBUFFER_64( input_yuy2 );
+	CHECKALIGHBUFFER_64( output );
+
+	strude_input = strude_input - (width << 1 );
+	strude_output = strude_output - (width << 2 );
+
+	__asm
+	{
+		pushad;
+
+		movq mm7, const_1;     mm7 = 0x00FF00FF00FF00FF;
+		movq mm6, const_2;     mm6 = 0x0000FFFFFFFF0000;
+		movq mm5, const_3;     mm5 = 0xFFFF000000000000;
+		movq mm4, const_4;     mm4 = 0x000000000000FFFF;
+
+		mov eax, input_yuy2;
+		mov ebx, output;
+		mov edx, strude_input;
+		mov edi, strude_output;
+
+
+		mov ecx, height;
+col_cycle:
+		push ecx;
+		mov ecx, width_8;
+
+row_cycle:
+
+		movq mm1, [eax];       mm1 = 0xV3Y4U3Y3V1Y2U1Y1;
+		pand mm1, mm7;         mm1 = 0x00Y400Y300Y200Y1;
+		movq mm2, mm1;         mm2 = 0x00Y400Y300Y200Y1;
+		psllq mm2, 8;          mm2 = 0xY400Y300Y200Y100;
+
+		por  mm1, mm2;         mm1 = 0xY4Y4Y3Y3Y2Y2Y1Y1;
+		movq mm3, mm1;         mm3 = 0xY4Y4Y3Y3Y2Y2Y1Y1;
+		movq mm0, mm1;         mm0 = 0xY4Y4Y3Y3Y2Y2Y1Y1;
+
+		pand mm3, mm4;         mm3 = 0x000000000000Y1Y1;
+		movq mm2, mm3;         mm2 = 0x000000000000Y1Y1;
+		psllq mm3, 16;         mm3 = 0x00000000Y1Y10000;
+		por mm3, mm2;          mm3 = 0x00000000Y1Y1Y1Y1;
+
+
+		psllq mm1, 32;         mm1 = 0xY2Y2Y1Y100000000;
+		pand mm1, mm5;         mm1 = 0xY2Y2000000000000;
+		movq mm2, mm1;         mm2 = 0xY2Y2000000000000;
+		psrlq mm2, 16;         mm2 = 0x0000Y2Y200000000;
+		por mm2, mm1;          mm2 = 0xY2Y2Y2Y200000000;
+		por mm3, mm2;          mm3 = 0xY2Y2Y2Y2Y1Y1Y1Y1;
+
+		movq [ebx], mm3;       output first 4 pixels;
+		add ebx, 8;
+
+		movq mm2, mm0;         mm2 = 0xY4Y4Y3Y3Y2Y2Y1Y1;
+		movq mm3, mm0;         mm3 = 0xY4Y4Y3Y3Y2Y2Y1Y1;
+		psrlq mm0, 16;         mm0 = 0x0000Y4Y4Y3Y3Y2Y2;
+		pand mm0, mm6;         mm0 = 0x0000Y4Y4Y3Y30000;
+		psrlq mm2, 32;         mm2 = 0x00000000Y4Y4Y3Y3;
+		pand mm2, mm4;         mm2 = 0x000000000000Y3Y3;
+		por  mm0, mm2;         mm0 = 0x0000Y4Y4Y3Y3Y3Y3;
+		movq mm2, mm3;         mm2 = 0xY4Y4Y3Y3Y2Y2Y1Y1;
+		pand mm2, mm5;         mm2 = 0xY4Y4000000000000;
+		por mm0, mm2;          mm0 = 0xY4Y4Y4Y4Y3Y3Y3Y3;
+
+		movq [ebx], mm0;       output second 4 pixels;
+		add ebx, 8;
+
+		add eax, 8;
+		sub ecx, 1;
+		jg row_cycle;
+
+		add eax, edx;
+		add ebx, edi;
+		pop ecx;
+		sub ecx, 1;
+		jg col_cycle;
+
+		popad;
+		emms;
+	}
+	return hr;
+}
+/**
+\brief	
+*/
+HRESULT SoftwareConvertYUY2toMRGB32( 
+	const std::uint8_t*	input_yuy2, 
+	int						width, 
+	int						height, 
+	int						strude_input, 
+	std::uint8_t*			output, 
+	int						strude_output, 
+	int						size_output )
+{
+	HRESULT hr = S_OK;
+	int i1 = 0, i2 = 0;
+	const std::uint8_t* temp_p1 = NULL;
+	std::uint8_t* temp_p2 = NULL;
+
+	SCA_CHECKNULLARG( input_yuy2 );
+	SCA_CHECKNULLARG( output );
+	SCA_CHECKCONDITION( width <= 0 );
+	SCA_CHECKCONDITION( height <= 0 );
+	SCA_CHECKCONDITION( strude_input <= 0 );
+	SCA_CHECKCONDITION( size_output < ( (width * height ) << 2 ) );
+	/**/
+
+	temp_p1 = input_yuy2;
+	temp_p2 = output;
+
+	for( i1 = 0; i1 < height; i1++ )
+	{
+		input_yuy2 = temp_p1;
+		output = temp_p2;
+
+		for( i2 = 0; i2 < width << 1; i2+=2 )
+		{
+			*temp_p2 = temp_p1[ i2 ];
+			temp_p2++;
+
+			*temp_p2 = temp_p1[ i2 ];
+			temp_p2++;
+
+			*temp_p2 = temp_p1[ i2 ];
+			temp_p2++;
+			temp_p2++;
+		}
+
+		temp_p1 = input_yuy2 + strude_input;
+		temp_p2 = output + strude_output;
+	}
+	return hr;
+}
+/**
+\brief	
+*/
+HRESULT SoftwareConvertYUY2toMRGB24( 
+	const std::uint8_t*	input_yuy2, 
+	int						width, 
+	int						height, 
+	int						strude_input, 
+	std::uint8_t*			output, 
+	int						strude_output, 
+	int						size_output )
+{
+	HRESULT hr = S_OK;
+	int i1 = 0, i2 = 0;
+	const std::uint8_t* temp_p1 = NULL;
+	std::uint8_t* temp_p2 = NULL;
+
+	SCA_CHECKNULLARG( input_yuy2 );
+	SCA_CHECKNULLARG( output );
+	SCA_CHECKCONDITION( width <= 0 );
+	SCA_CHECKCONDITION( height <= 0 );
+	SCA_CHECKCONDITION( strude_input <= 0 );
+	SCA_CHECKCONDITION( size_output < ( (width * height ) * 3) );
+
+	temp_p1 = input_yuy2;
+	temp_p2 = output;
+
+	for( i1 = 0; i1 < height; i1++ )
+	{
+		input_yuy2 = temp_p1;
+		output = temp_p2;
+
+		for( i2 = 0; i2 < width << 1; i2+=2 )
+		{
+			*temp_p2 = temp_p1[ i2 ];
+			temp_p2++;
+			*temp_p2 = temp_p1[ i2 ];
+			temp_p2++;
+			*temp_p2 = temp_p1[ i2 ];
+			temp_p2++;
+		}
+		temp_p1 = input_yuy2 + strude_input;
+		temp_p2 = output + strude_output;
+	}
+	return hr;
+}
+/**
+\brief	
+*/
+//RGB16 ->565
+HRESULT SoftwareConvertYUY2toMRGB16( 
+	const std::uint8_t*	input_yuy2, 
+	int						width, 
+	int						height, 
+	int						strude_input, 
+	std::uint8_t*			output, 
+	int						strude_output, 
+	int						size_output )
+{
+	HRESULT hr = S_OK;
+	int i1 = 0, i2 = 0;
+	const std::uint8_t* temp_p1 = NULL;
+	std::uint8_t* temp_p2 = NULL;
+	int temp_word1 = 0, temp_word2 = 0;
+
+	SCA_CHECKNULLARG( input_yuy2 );
+	SCA_CHECKNULLARG( output );
+	SCA_CHECKCONDITION( width <= 0 );
+	SCA_CHECKCONDITION( height <= 0 );
+	SCA_CHECKCONDITION( strude_input <= 0 );
+	SCA_CHECKCONDITION( size_output < ( (width * height ) << 1 ) );
+
+	temp_p1 = input_yuy2;
+	temp_p2 = output;
+
+	for( i1 = 0; i1 < height; i1++ )
+	{
+		input_yuy2 = temp_p1;
+		output = temp_p2;
+
+		for( i2 = 0; i2 < width << 1; i2+=2 )
+		{
+			temp_word1 = ( 31 * temp_p1[ i2 ] ) >> 8;
+			temp_word2 = ( 63 * temp_p1[ i2 ] ) >> 8;
+
+			*( (WORD*)temp_p2 ) = (WORD)( temp_word1 | ( temp_word2 << 5 ) | ( temp_word1 << 11 ) );
+			temp_p2++;
+			temp_p2++;
+		}
+
+		temp_p1 = input_yuy2 + strude_input;
+		temp_p2 = output + strude_output;
+	}
+	return hr;
+}
+/**
+\brief	
+*/
+HRESULT SoftwareInplaceConvertRGB24toYUY2( 
+	std::uint8_t*		array_rgb24, 
+	int					width, 
+	int					height, 
+	int					strude_input )
+{
+	HRESULT hr = S_OK;
+	int i1 = 0, i2 = 0;
+	std::uint8_t* temp_input = NULL;
+	std::uint8_t* temp_output = NULL;
+	int r1 = 0, b1 = 0, g1 = 0;
+	int r2 = 0, b2 = 0, g2 = 0;
+	int y1 = 0, u = 0, y2 = 0, v = 0;
+
+	SCA_CHECKNULLARG( array_rgb24 );
+	SCA_CHECKCONDITION( width <= 0 );
+	SCA_CHECKCONDITION( height <= 0 );
+
+	temp_input = array_rgb24;
+	temp_output = array_rgb24;
+
+	//04.02.2016
+	int add_leake_to_source = strude_input - width * 3;
+
+	c1heck_bound( add_leake_to_source, 0, add_leake_to_source );
+
+	//Y1U1 Y2V2
+	//RGB  RGB
+	for( i1 = 0; i1 < height; i1++ )
+	{
+		//04.02.2016
+		//std::uint8_t *loc_begin_source_string = array_rgb24 + i1 * strude_input;
+
+		//cycle for one string
+		for( i2 = 0; i2 < width; i2+= 2 )
+		{
+			/*
+			//floating point variant
+			//reciving info for two pixel
+			r1 = (*temp_input++);
+			g1 = (*temp_input++);
+			b1 = (*temp_input++);
+
+			r2 = (*temp_input++);
+			g2 = (*temp_input++);
+			b2 = (*temp_input++);
+
+			//process color for two pixel
+			y1 = 16.0 + ( 65.738 * r1 + 129.057 * g1 + 25.064 * b1 ) / 256.0;
+			v  =128.0 + (-37.945 * r1 -  74.494 * g1 +112.439 * b1 ) / 256.0;
+			y2 = 16.0 + ( 65.738 * r2 + 129.057 * g2 + 25.064 * b2 ) / 256.0;
+			u  =128.0 + (112.439 * r1 -  94.154 * g1 - 18.285 * b1 ) / 256.0;
+
+			//write to buf
+			(*temp_output++) = y1;
+			(*temp_output++) = u;
+			(*temp_output++) = y2;
+			(*temp_output++) = v;
+			/**/
+
+			//integer version
+			//reciving info for two pixel
+			r1 = (*temp_input++);
+			g1 = (*temp_input++);
+			b1 = (*temp_input++);
+
+			r2 = (*temp_input++);
+			g2 = (*temp_input++);
+			b2 = (*temp_input++);
+
+			//process color for two pixel
+#define IY_FROM_RGB24( R, G, B ) 16 + ( ( 8414 * R + 16519 * G + 3208 * B ) >> 15 )
+#define IU_FROM_RGB24( R, G, B ) 128 + ( (14392 * R - 12051 * G - 2340 * B ) >> 15 )
+#define IV_FROM_RGB24( R, G, B ) 128 + ( (-4857 * R -  9535 * G +14392 * B ) >> 15 )
+
+			y1 = IY_FROM_RGB24( r1, g1, b1 );
+			y2 = IY_FROM_RGB24( r2, g2, b2 );
+			v  = IV_FROM_RGB24( r1, g1, b1 );
+			u  = IU_FROM_RGB24( r2, g2, b2 );
+
+			// 12.01.2016 ���������� ������� ���������� u � v
+			//write to buf
+			(*temp_output++) = (std::uint8_t)(y1 );
+			(*temp_output++) = (std::uint8_t)(v);
+			(*temp_output++) = (std::uint8_t)(y2 );
+			(*temp_output++) = (std::uint8_t)(u );
+			/**/
+		}
+		//04.02.2016
+		temp_input+= add_leake_to_source;
+	}
+	return hr;
+}
+/**
+\brief	
+*/
+HRESULT MMXConvertRGB24toY8( 
+	const std::uint8_t*	input, 
+	int						size_buf, 
+	std::uint8_t*			output )
+{
+	HRESULT hr = S_OK;
+	int i1 = 0;
+	__int64 temp_array1 = 0x00000000000000FF;
+	std::uint8_t* temp_pointer1 = U3_CAST_REINTERPRET<std::uint8_t*>( &temp_array1 );
+	__int64 temp_array2 = 0x002B002B002B002B;
+	std::uint8_t* temp_pointer2 = U3_CAST_REINTERPRET<std::uint8_t*>( &temp_array2 );
+
+	SCA_CHECKNULLARG( input );
+	SCA_CHECKNULLARG( output );
+	SCA_CHECKCONDITION( size_buf <= 0 );
+	/**/
+
+	CHECKALIGHBUFFER_64( input );
+
+	i1 = ( size_buf / 3 ) >> 3;
+
+	__asm
+	{
+		;25.08.2016;
+		pushad;
+
+		;load  mm6 - maska, mm7 - const 43;
+		mov edx, temp_pointer1;
+		movq mm6, qword ptr [ edx ];
+
+		mov edx, temp_pointer2;
+		movq mm7, qword ptr [ edx ];
+
+		mov ecx, i1;
+		mov edx, input;
+		mov ebx, output;
+
+		;mm7 for reset register;
+		;mm6 for emulate div from mul and shift;
+		;mm3, mm4, mm5::ending register for calculate summ;
+		;mm2 ending result - 8 byte - 8 pixel for saved to memory;
+		;mm1 temporarely register;
+		;mm0 for load from memory;
+
+loop1:
+		;reset ending result;
+		pxor mm3, mm3;
+		pxor mm4, mm4;
+		pxor mm5, mm5;
+
+		;load register - 8 bytes, 2 full pixel;
+		movq mm0, qword ptr [ edx ];
+
+		;create image first pixel;
+		movq mm1, mm0;
+		pand mm1, mm6;
+		por mm3, mm1;
+
+		movq mm1, mm0;
+		psrlq mm1, 8;
+		pand mm1, mm6;
+		por mm4, mm1;
+
+		movq mm1, mm0;
+		psrlq mm1, 16;
+		pand mm1, mm6;
+		por mm5, mm1;
+
+		;create image for second pixel;
+		psllq mm6, 16;
+
+		movq mm1, mm0;
+		psrlq mm1, 8;
+		pand mm1, mm6;
+		por mm3, mm1;
+
+		movq mm1, mm0;
+		psrlq mm1, 16;
+		pand mm1, mm6;
+		por mm4, mm1;
+
+		movq mm1, mm0;
+		psrlq mm1, 24;
+		pand mm1, mm6;
+		por mm5, mm1;
+
+		;load data for third and four pixel;
+		movq mm1, mm0;
+		add edx, 8;
+		movq mm0, qword ptr [ edx ];
+		psllq mm0, 16;
+		psrlq mm1, 48;
+		por mm0, mm1;
+
+		;create image for third pixel - almost full eqvuvalen first;
+		psllq mm6, 16;
+
+		movq mm1, mm0;
+		psllq mm1, 32;
+		pand mm1, mm6;
+		por mm3, mm1;
+
+		movq mm1, mm0;
+		psllq mm1, 24;
+		pand mm1, mm6;
+		por mm4, mm1;
+
+		movq mm1, mm0;
+		psllq mm1, 16;
+		pand mm1, mm6;
+		por mm5, mm1;
+
+		;create image for four pixel - almost full eqvivalent second;
+		psllq mm6, 16;
+
+		movq mm1, mm0;
+		psllq mm1, 24;
+		pand mm1, mm6;
+		por mm3, mm1;
+
+		movq mm1, mm0;
+		psllq mm1, 16;
+		pand mm1, mm6;
+		por mm4, mm1;
+
+		movq mm1, mm0;
+		psllq mm1, 8;
+		pand mm1, mm6;
+		por mm5, mm1;
+
+		;reset mask register;
+		psrlq mm6, 48;
+
+		;calculate sum;
+		paddusw mm3, mm4;
+		paddusw mm3, mm5;
+
+		;emulate div to 3 from mul 43 / 128 [ mul 43 and right shift 7 ];
+		pmullw mm3, mm7;
+		psrlw mm3, 7;
+
+		;packed and saved to ending result;
+		movq mm2, mm3;
+
+		;reset ending result;
+		pxor mm3, mm3;
+		pxor mm4, mm4;
+		pxor mm5, mm5;
+
+		;next section - full eqvivalent prevouse section, ;
+		;load data for 5 and 6 pixel;
+		add edx, 4;
+		movq mm0, qword ptr [ edx ];
+
+		movq mm1, mm0;
+		pand mm1, mm6;
+		por mm3, mm1;
+
+		movq mm1, mm0;
+		psrlq mm1, 8;
+		pand mm1, mm6;
+		por mm4, mm1;
+
+		movq mm1, mm0;
+		psrlq mm1, 16;
+		pand mm1, mm6;
+		por mm5, mm1;
+
+		;create image for 4 pixel;
+		psllq mm6, 16;
+
+		movq mm1, mm0;
+		psrlq mm1, 8;
+		pand mm1, mm6;
+		por mm3, mm1;
+
+		movq mm1, mm0;
+		psrlq mm1, 16;
+		pand mm1, mm6;
+		por mm4, mm1;
+
+		movq mm1, mm0;
+		psrlq mm1, 24;
+		pand mm1, mm6;
+		por mm5, mm1;
+
+		;load data for 7 and 8 pixel;
+		add edx, 6;
+		movq mm0, qword ptr [ edx ];
+
+		;create image for 7 pixel - almost full eqvuvalen first;
+		psllq mm6, 16;
+
+		movq mm1, mm0;
+		psllq mm1, 32;
+		pand mm1, mm6;
+		por mm3, mm1;
+
+		movq mm1, mm0;
+		psllq mm1, 24;
+		pand mm1, mm6;
+		por mm4, mm1;
+
+		movq mm1, mm0;
+		psllq mm1, 16;
+		pand mm1, mm6;
+		por mm5, mm1;
+
+		;create image for 8 pixel - almost full eqvivalent second;
+		psllq mm6, 16;
+
+		movq mm1, mm0;
+		psllq mm1, 24;
+		pand mm1, mm6;
+		por mm3, mm1;
+
+		movq mm1, mm0;
+		psllq mm1, 16;
+		pand mm1, mm6;
+		por mm4, mm1;
+
+		movq mm1, mm0;
+		psllq mm1, 8;
+		pand mm1, mm6;
+		por mm5, mm1;
+
+		;reset mask register;
+		psrlq mm6, 48;
+
+		;calculate sum;
+		paddusw mm3, mm4;
+		paddusw mm3, mm5;
+
+		;emulate div to 3 from mul 43 / 128 [ mul 43 and right shift 7 ];
+		pmullw mm3, mm7;
+		psrlw mm3, 7;
+
+		;packed and saved to ending result;
+		packuswb mm2, mm3;
+
+		;saved res in memory;
+		movq qword ptr [ ebx ], mm2;
+
+		;calculate offset in bufs;
+		add edx, 6;
+		add ebx, 8;
+
+		sub ecx, 1;
+		jg loop1;
+
+		popad;
+		emms;
+	}
+	return hr;
+}
+/**
+\brief	
+*/
+HRESULT ConvertRGB24toY8MMXFunct(
+	std::uint8_t*			dest,
+	const std::uint8_t*	source,
+	int						stride_dest,
+	int						stride_source,
+	int						width_element,
+	int						height_element )
+{
+	HRESULT hr = S_OK;
+
+	SCA_CHECKNULLARG( dest );
+	SCA_CHECKNULLARG( source );
+	SCA_CHECKCONDITION( height_element <= 0 );
+	SCA_CHECKCONDITION( width_element <= 0 );
+	SCA_CHECKCONDITION( stride_dest <= 0 );
+	SCA_CHECKCONDITION( stride_source <= 0 );
+	SCA_CHECKCONDITION( stride_source <= stride_dest );
+	SCA_CHECKCONDITION( width_element * 3 > stride_source );
+	/**/
+
+	short array_const11[ 4 ] = 
+	{
+		10, 10, 10, 10
+	};
+
+	int number_cycle_string = (width_element + ( (width_element & 0x7) ? 7 : 0) ) >> 3;
+	int leak_source = stride_source - number_cycle_string * 24;
+	int leak_dest = stride_dest - number_cycle_string * 8;
+
+	SCA_CHECKCONDITION( leak_source < 0 );
+	SCA_CHECKCONDITION( leak_dest < 0 );
+
+	__asm
+	{
+		;eax-cycle string;
+		;ebx-leak desination;
+		;edx-leak source;
+		;ecx-cycle col;
+		;edi-destination;
+		;esi-source;
+		;mm0-first 8 bytes source - 4 word;
+		;mm1-second 8 bytes source - 4 word and summ;
+		;mm2-temp;
+		;mm3-temp;
+		;mm4-result;
+		;mm5-result;
+		;mm6-10 const;
+		;mm7-0 const;
+
+		pushad;
+
+		lea eax, array_const11;
+		movq mm6, [ eax ];
+		pxor mm7, mm7;
+
+		mov ecx, height_element;
+		mov ebx, leak_dest;
+		mov edx, leak_source;
+		mov edi, dest;
+		mov esi, source;
+
+#define POINTRGB24TOY8_MMX \
+	__asm pmaddwd mm2, mm6\
+	__asm movq mm3, mm2\
+	__asm psrlq mm3, 32\
+	__asm paddsw mm2, mm3\
+	__asm psraw mm2, 5\
+	__asm psllq mm2, 48\
+	__asm psrlq mm2, 48
+
+cycle1:
+		mov eax, number_cycle_string;
+
+cycle2:
+		pxor mm4, mm4;
+		pxor mm5, mm5;
+
+		movq mm0, [ esi + 0 ];
+		movq mm1, mm0;
+		pxor mm7, mm7;
+		punpcklbw mm0, mm7;
+		punpckhbw mm1, mm7;
+
+		;point1;
+		movq mm2, mm0;         mm2=1112[words];
+		psllq mm2, 16;         mm2=0111;
+		psrlq mm2, 16;         mm2=1110;
+		POINTRGB24TOY8_MMX;
+		por mm4, mm2;          mm4=1000;
+
+		;point2;
+		movq mm2, mm0;         mm2=1112;
+		psrlq mm2, 48;         mm2=2000;
+		movq mm3, mm1;         mm3=2233;
+		psllq mm3, 32;         mm3=0022;;
+		psrlq mm3, 16;         mm3=0220;
+		por mm2, mm3;          mm2=2220;
+		POINTRGB24TOY8_MMX;
+		psllq mm2, 16;         mm2=0200;
+		por mm4, mm2;          mm4=1200;
+
+		;point3;
+		movq mm0, mm1;         mm0=2233;
+		psrlq mm0, 32;         mm0=3300;
+		movq mm1, [ esi + 8 ]; mm1=34445556[bytes];
+		movq mm2, mm1;         mm2=34445556[bytes];;
+		punpcklbw mm1, mm7;    mm1=3444;
+		punpckhbw mm2, mm7;    mm2=5556;
+		movq mm3, mm1;         mm3=3444;
+		psllq mm3, 32;         mm3=0034;
+		por mm0, mm3;          mm0=3334;
+		psrlq mm1, 32;         mm1=4400;
+		movq mm7, mm2;         mm7=5556;
+		psllq mm2, 32;         mm2=0055;
+		por mm1, mm2;          mm1=4455;
+
+		movq mm2, mm0;         mm2=3334;
+		psllq mm2, 16;         mm2=0333;
+		psrlq mm2, 16;         mm2=3330;
+		POINTRGB24TOY8_MMX;
+		psllq mm2, 32;         mm2=0030;
+		por mm4, mm2;          mm4=1230;
+
+		;point4;
+		movq mm2, mm0;         mm2=3334;
+		psrlq mm2, 48;         mm2=4000;
+		movq mm3, mm1;         mm3=4455;
+		psllq mm3, 32;         mm3=0044;
+		psrlq mm3, 16;         mm3=0440;
+		por mm2, mm3;          mm2=4440;
+		POINTRGB24TOY8_MMX;
+		psllq mm2, 48;         mm2=0004;
+		por mm4, mm2;          mm4=1234[ready];
+
+		;point5;
+		movq mm0, mm1;         mm0=4455;
+		psrlq mm0, 32;         mm0=5500;
+		psrlq mm7, 32;         mm7=5600;
+		psllq mm7, 32;         mm7=0056;
+		por mm0, mm7;          mm0=5556;
+		pxor mm7, mm7;         mm7=0000;
+		movq mm2, mm0;         mm2=5556;
+		psllq mm2, 16;         mm2=0555;
+		psrlq mm2, 16;         mm2=5550;
+		POINTRGB24TOY8_MMX;
+		por mm5, mm2;          mm5=5000;
+
+		;point6;
+		psrlq mm0, 48;         mm0=6000;
+		movq mm1, [ esi + 16 ];mm1=66777888[bytes];
+		movq mm2, mm1;         mm2=66777888[bytes];
+		punpcklbw mm1, mm7;    mm1=6677;
+		punpckhbw mm2, mm7;    mm2=7888;
+		movq mm7, mm2;         mm7=7888;
+		movq mm2, mm1;         mm2=6677;
+		psllq mm2, 32;         mm2=0066;
+		psrlq mm2, 16;         mm2=0660;
+		por mm2, mm0;          mm2=6660;
+		POINTRGB24TOY8_MMX;
+		psllq mm2, 16;         mm2=0600;
+		por mm5, mm2;          mm5=5600;
+
+		;point7;
+		movq mm0, mm1;         mm0=6677;
+		psrlq mm0, 32;         mm0=7700;
+		movq mm1, mm7;         mm1=7888;
+		psllq mm1, 48;         mm1=0007;
+		psrlq mm1, 16;         mm1=0070;
+		por mm0, mm1;          mm0=7770;
+		movq mm2, mm0;         mm2=7770;
+		POINTRGB24TOY8_MMX;
+		psllq mm2, 32;         mm2=0070;
+		por mm5, mm2;          mm5=5670;
+
+		;point8;
+		movq mm2, mm7;         mm2=7888;
+		psrlq mm2, 16;         mm2=8880;
+		POINTRGB24TOY8_MMX;
+		psllq mm2, 48;         mm2=0008;
+		por mm5, mm2;          mm5=5678;
+
+		;save res;
+		packuswb mm4, mm5;
+		movq [ edi ], mm4;
+
+		add edi, 8;
+		add esi, 24;
+		sub eax, 1;
+		jg cycle2;
+
+		add edi, ebx;
+		add esi, edx;
+		sub ecx, 1;
+		jg cycle1;
+
+#undef POINTRGB24TOY8_MMX
+
+		popad;
+		emms;
+	}
+	return hr;
+}
+/**
+\brief	
+*/
+HRESULT ConvertRGB24toY8SSEFunct(
+	std::uint8_t* dest,
+	const std::uint8_t* source,
+	int stride_dest,
+	int stride_source,
+	int width_element,
+	int height_element )
+{
+	return ConvertRGB24toY8MMXFunct(
+		dest,
+		source,
+		stride_dest,
+		stride_source,
+		width_element,
+		height_element );
+}
+/**
+\brief	
+*/
+HRESULT ConvertRGB24toY8SSE2Funct(
+	std::uint8_t* dest,
+	const std::uint8_t* source,
+	int stride_dest,
+	int stride_source,
+	int width_element,
+	int height_element )
+{
+	HRESULT hr = S_OK;
+
+	SCA_CHECKNULLARG( dest );
+	SCA_CHECKNULLARG( source );
+	SCA_CHECKCONDITION( height_element <= 0 );
+	SCA_CHECKCONDITION( width_element <= 0 );
+	SCA_CHECKCONDITION( stride_dest <= 0 );
+	SCA_CHECKCONDITION( stride_source <= 0 );
+	SCA_CHECKCONDITION( stride_source <= stride_dest );
+	SCA_CHECKCONDITION( width_element * 3 > stride_source );
+	/**/
+
+	short array_const11[ 8 ] = 
+	{
+		10, 10, 10, 10, 10, 10, 10, 10
+	};
+
+	int number_cycle_string = (width_element + ( (width_element & 0xF) ? 15 : 0) ) >> 4;
+	int leak_source = stride_source - number_cycle_string * 48;
+	int leak_dest = stride_dest - number_cycle_string * 16;
+
+	SCA_CHECKCONDITION( leak_source < 0 );
+	SCA_CHECKCONDITION( leak_dest < 0 );
+
+	__asm
+	{
+		;eax-cycle string;
+		;ebx-leak desination;
+		;edx-leak source;
+		;ecx-cycle col;
+		;edi-destination;
+		;esi-source;
+		;xmm0-first 8 bytes source - 4 word;
+		;xmm1-second 8 bytes source - 4 word and summ;
+		;xmm2-temp;
+		;xmm3-temp;
+		;xmm4-result;
+		;xmm5-result;
+		;xmm6-10 const;
+		;xmm7-0 const;
+
+		pushad;
+
+		lea eax, array_const11;
+		movdqu xmm6, [ eax ];
+		pxor xmm7, xmm7;
+
+		mov ecx, height_element;
+		mov ebx, leak_dest;
+		mov edx, leak_source;
+		mov edi, dest;
+		mov esi, source;
+
+#define POINTRGB24TOY8_SSE2 \
+	__asm pmaddwd xmm2, xmm6\
+	__asm movdqa xmm3, xmm2\
+	__asm psrldq xmm3, 4\
+	__asm paddsw xmm2, xmm3\
+	__asm psraw xmm2, 5
+
+cycle1:
+		mov eax, number_cycle_string;
+
+cycle2:
+		pxor xmm4, xmm4;
+		pxor xmm5, xmm5;
+
+		movdqa xmm0, [ esi + 0 ];  xmm0=1112223334445556[bytes];
+		movdqa xmm1, xmm0;         xmm1=1112223334445556[bytes];
+		pxor xmm7, xmm7;           xmm7=00000000[words];
+		punpcklbw xmm0, xmm7;      xmm0=11122233[words];
+		punpckhbw xmm1, xmm7;      xmm1=34445556[words];
+
+		;points1,2;
+		movdqa xmm2, xmm0;         xmm2=11122233[words];
+		pslldq xmm2, 4;            xmm2=00111222;
+		psrldq xmm2, 2;            xmm2=01112220;
+		POINTRGB24TOY8_SSE2;
+
+		movdqa xmm3, xmm2;         xmm3=10x020x0;
+		pslldq xmm2, 14;           xmm2=00000001;
+		psrldq xmm2, 14;           xmm2=10000000;
+		por xmm4, xmm2;            xmm4=10000000;
+		pslldq xmm3, 6;            xmm3=00010x02;
+		psrldq xmm3, 12;           xmm3=02000000;
+		por xmm4, xmm3;            xmm4=12000000;
+
+		;points3,4;
+		movdqa xmm2, xmm0;         xmm2=11122233[words];
+		psrldq xmm2, 12;           xmm2=33000000;
+		movdqa xmm0, xmm1;         xmm0=34445556;
+		pslldq xmm0, 8;            xmm0=00003444;
+		psrldq xmm0, 2;            xmm0=00034440;
+		por xmm2, xmm0;            xmm2=33034440;
+		POINTRGB24TOY8_SSE2;
+		movdqa xmm3, xmm2;         xmm3=30x040x0;
+		pslldq xmm2, 14;           xmm2=00000003;
+		psrldq xmm2, 10;           xmm2=00300000;
+		por xmm4, xmm2;            xmm4=12300000;
+		pslldq xmm3, 6;            xmm3=00030x04;
+		psrldq xmm3, 14;           xmm3=40000000;
+		pslldq xmm3, 6;            xmm3=00040000;
+		por xmm4, xmm3;            xmm4=12340000;
+
+		;points5,6;
+		movdqa xmm0, xmm1;         xmm0=34445556;
+		movdqa xmm1, [ esi + 16 ]; xmm0=66777888999AAABB[bytes];
+		movdqa xmm2, xmm1;         xmm2=66777888999AAABB[bytes];
+		punpcklbw xmm1, xmm7;      xmm1=66777888;
+		punpckhbw xmm2, xmm7;      xmm2=999AAABB;
+
+		psrldq xmm0, 8;            xmm0=55560000;
+		pslldq xmm0, 2;            xmm0=05556000;
+		movdqa xmm3, xmm1;         xmm3=66777888;
+		pslldq xmm3, 12;           xmm3=00000066?;
+		movdqa xmm7, xmm2;         xmm7=999AAABB;
+		movdqa xmm2, xmm3;         xmm2=00000066;
+		por xmm2, xmm0;            xmm2=05556066;
+		movdqa xmm0, xmm1;         xmm0=66777888;
+		POINTRGB24TOY8_SSE2;
+		movdqa xmm3, xmm2;         xmm3=50x060x0;
+		pslldq xmm2, 14;           xmm2=00000005;
+		psrldq xmm2, 6;            xmm2=00005000;
+		por xmm4, xmm2;            xmm4=12345000;
+		psrldq xmm3, 8;            xmm3=60x00000;
+		pslldq xmm3, 14;           xmm3=00000006;
+		psrldq xmm3, 4;            xmm3=00000600;
+		por xmm4, xmm3;            xmm4=12345600;
+
+		;points7,8;
+		psrldq xmm0, 4;            xmm0=77788800;
+		pslldq xmm0, 2;            xmm0=07778880;
+		movdqa xmm2, xmm0;         xmm2=07778880;
+		POINTRGB24TOY8_SSE2;
+		movdqa xmm3, xmm2;         xmm3=70x080x0;
+		pslldq xmm2, 14;           xmm2=00000007;
+		psrldq xmm2, 2;            xmm2=00000070;
+		por xmm4, xmm2;            xmm4=12345670;
+		psrldq xmm3, 8;            xmm3=80x00000;
+		pslldq xmm3, 14;           xmm3=00000008;
+		por xmm4, xmm3;            xmm4=12345678;
+
+		;points9,A;
+		movdqa xmm0, xmm7;         xmm0=999AAABB;
+		movdqa xmm1, xmm7;         xmm1=999AAABB;
+		pxor xmm7, xmm7;           xmm7=00000000	;		
+		pslldq xmm0, 4;            xmm2=00999AAA;
+		psrldq xmm0, 2;            xmm2=0999AAA0;
+		movdqa xmm2, xmm0;         xmm2=0999AAA0;
+		POINTRGB24TOY8_SSE2;
+		movdqa xmm3, xmm2;         xmm3=90x0A0x0;
+		pslldq xmm2, 14;           xmm2=00000009;
+		psrldq xmm2, 14;           xmm2=90000000;
+		por xmm5, xmm2;            xmm5=90000000;
+		pslldq xmm3, 6;            xmm3=00090x0A;
+		psrldq xmm3, 12;           xmm3=0A000000;
+		por xmm5, xmm3;            xmm5=9A000000;
+
+		;pointsB,C;
+		movdqa xmm2, xmm1;         xmm2=999AAABB;
+		psrldq xmm2, 12;           xmm2=BB000000;
+		movdqa xmm0, [ esi + 32 ]; xmm0=BCCCDDDEEEFFFfff[bytes];
+		movdqa xmm1, xmm0;         xmm1=BCCCDDDEEEFFFfff[bytes];
+		punpcklbw xmm0, xmm7;      xmm0=BCCCDDDE;
+		punpckhbw xmm1, xmm7;      xmm1=EEFFFfff;
+		movdqa xmm3, xmm0;         xmm3=BCCCDDDE;
+		pslldq xmm3, 8;            xmm3=0000BCCC;
+		psrldq xmm3, 2;            xmm3=000BCCC0;
+		por xmm2, xmm3;            xmm2=BB0BCCC0;
+		POINTRGB24TOY8_SSE2;
+		movdqa xmm3, xmm2;         xmm3=B0x0C0x0;
+		pslldq xmm2, 14;           xmm2=0000000B;
+		psrldq xmm2, 10;           xmm2=00B00000;
+		por xmm5, xmm2;            xmm5=9AB00000;
+		pslldq xmm3, 6;            xmm3=000B0x0C;
+		psrldq xmm3, 14;           xmm3=C0000000;;
+		pslldq xmm3, 6;            xmm3=000C0000;
+		por xmm5, xmm3;            xmm5=9ABC0000;
+
+		;pointsD,E;
+		movdqa xmm2, xmm0;         xmm2=BCCCDDDE;
+		psrldq xmm2, 8;            xmm2=DDDE0000;
+		movdqa xmm0, xmm1;         xmm0=EEFFFfff;
+		pslldq xmm0, 12;           xmm0=000000EE;
+		pslldq xmm2, 2;            xmm2=0DDDE000;
+		por xmm2, xmm0;            xmm2=0DDDE0EE;
+		POINTRGB24TOY8_SSE2;
+		movdqa xmm3, xmm2;         xmm3=D0x0E0x0;
+		pslldq xmm2, 14;           xmm2=0000000D;
+		psrldq xmm2, 6;            xmm2=0000D000;
+		por xmm5, xmm2;            xmm5=9ABCD000;
+		psrldq xmm3, 8;            xmm3=E0x00000;
+		pslldq xmm3, 14;           xmm3=0000000E;
+		psrldq xmm3, 4;            xmm3=00000E00;
+		por xmm5, xmm3;            xmm5=9ABCDE00;
+
+		;pointsF,f;
+		psrldq xmm1, 4;            xmm1=FFFfff00;
+		pslldq xmm1, 2;            xmm1=0FFFfff0;
+		movdqa xmm2, xmm1;         xmm2=0FFFfff0;
+		POINTRGB24TOY8_SSE2;
+		movdqa xmm3, xmm2;         xmm3=F0x0f0x0;
+		pslldq xmm2, 14;           xmm2=0000000F;
+		psrldq xmm2, 2;            xmm2=000000F0;
+		por xmm5, xmm2;            xmm5=9ABCDEF0;
+		psrldq xmm3, 8;            xmm3=f0x00000;
+		pslldq xmm3, 14;           xmm3=0000000f;
+		por xmm5, xmm3;            xmm5=9ABCDEFf;
+
+		;save res;
+		packuswb xmm4, xmm5;
+		movdqa [ edi ], xmm4;
+
+		add edi, 16;
+		add esi, 48;
+		sub eax, 1;
+		jg cycle2;
+
+		add edi, ebx;
+		add esi, edx;
+		sub ecx, 1;
+		jg cycle1;
+
+#undef POINTRGB24TOY8_SSE2
+
+		popad;
+	}
+	return hr;
+}
+/**
+\brief	
+*/
+HRESULT ConvertRGB24toYUY2MMXFunct(
+	std::uint8_t* dest,
+	const std::uint8_t* source,
+	int stride_dest,
+	int stride_source,
+	int width_element,
+	int height_element )
+{
+	HRESULT hr = S_OK;
+
+	SCA_CHECKNULLARG( dest );
+	SCA_CHECKNULLARG( source );
+	SCA_CHECKCONDITION( height_element <= 0 );
+	SCA_CHECKCONDITION( width_element <= 0 );
+	SCA_CHECKCONDITION( stride_dest <= 0 );
+	SCA_CHECKCONDITION( stride_source <= 0 );
+	SCA_CHECKCONDITION( stride_source <= stride_dest );
+	SCA_CHECKCONDITION( width_element * 3 > stride_source );
+	/**/
+
+	int number_cycle_string = (width_element + ( (width_element & 0x7) ? 7 : 0) ) >> 3;
+	int leak_source = stride_source - number_cycle_string * 24;
+	int leak_dest = stride_dest - number_cycle_string * 16;
+
+	SCA_CHECKCONDITION( leak_source < 0 );
+	SCA_CHECKCONDITION( leak_dest < 0 );
+
+	//process color for two pixel
+	//y1 = 16.0 + ( 65.738 * r1 + 129.057 * g1 + 25.064 * b1 ) / 256.0;
+	//u  =128.0 + (112.439 * r1 -  94.154 * g1 - 18.285 * b1 ) / 256.0;
+	//y2 = 16.0 + ( 65.738 * r2 + 129.057 * g2 + 25.064 * b2 ) / 256.0;
+	//v  =128.0 + (-37.945 * r1 -  74.494 * g1 +112.439 * b1 ) / 256.0;
+	//y1 = 16.0 + ( 33.000 * r1 +  65.057 * g1 + 13.064 * b1 ) / 128.0;
+	//u  =128.0 + ( 56.219 * r1 -  47.154 * g1 -  9.285 * b1 ) / 128.0;
+	//v  =128.0 + (-19.045 * r1 -  37.294 * g1 + 56.239 * b1 ) / 128.0;
+
+	short array_const_y[ 4 ] = 
+	{
+		33, 65, 13, 0
+	};
+
+	short array_const_u[ 4 ] = 
+	{
+		56, -47, -9, 0
+	};
+
+	short array_const_v[ 4 ] = 
+	{
+		-19, -37, 56, 0
+	};
+	/**/
+
+	uint32_t array_const1[ 2 ] = 
+	{
+		16, 16
+	};
+
+	__asm
+	{
+		;eax-cycle string;
+		;ebx-leak desination;
+		;edx-leak source;
+		;ecx-cycle col;
+		;edi-destination;
+		;esi-source;
+		;mm0-first 8 bytes source - 4 word;
+		;mm1-second 8 bytes source - 4 word and summ;
+		;mm2-temp;
+		;mm3-temp;
+		;mm4-mull const y;
+		;mm5-mull const u;
+		;mm6-mull const v;
+		;mm7-const dword 16;
+
+		pushad;
+
+		lea eax, array_const_y;
+		movq mm4, [ eax ];
+		lea eax, array_const_u;
+		movq mm5, [ eax ];
+		lea eax, array_const_v;
+		movq mm6, [ eax ];
+		lea eax, array_const1;
+		movq mm7, [ eax ];
+
+		mov ecx, height_element;
+		mov ebx, leak_dest;
+		mov edx, leak_source;
+		mov edi, dest;
+		mov esi, source;
+
+		;mm0=[r1,g1,b1,0]words;
+		;mm1=[r2,g2,b2,0]words;
+		;mm2, mm3 - temp register;
+		;eax-temp register;
+		;edi-destination, after add 4 bytes;
+#define RGB24TOYUY2_COMPLITE2PIXEL_MMX( mully_const, mullu_const, mullv_const, add_const ) \
+	__asm movq mm2, mm0\
+	__asm pmaddwd mm2, mully_const\
+	__asm movq mm3, mm2\
+	__asm psrlq mm3, 32\
+	__asm paddd mm2, mm3\
+	__asm psrad mm2, 7\
+	__asm paddd mm2, add_const\
+	__asm packssdw mm2, mm2\
+	__asm packuswb mm2, mm2\
+	__asm movd eax, mm2\
+	__asm mov byte ptr [ edi + 0 ], al\
+	__asm movq mm2, mm1\
+	__asm pmaddwd mm2, mully_const\
+	__asm movq mm3, mm2\
+	__asm psrlq mm3, 32\
+	__asm paddd mm2, mm3\
+	__asm psrad mm2, 7\
+	__asm paddd mm2, add_const\
+	__asm packssdw mm2, mm2\
+	__asm packuswb mm2, mm2\
+	__asm movd eax, mm2\
+	__asm mov byte ptr [ edi + 2 ], al\
+	__asm paddsw mm0, mm1\
+	__asm psraw mm0, 1\
+	__asm movq mm1, mm0\
+	__asm pslld add_const, 3\
+	__asm pmaddwd mm0, mullu_const\
+	__asm movq mm3, mm0\
+	__asm psrlq mm3, 32\
+	__asm paddd mm0, mm3\
+	__asm psrad mm0, 7\
+	__asm paddd mm0, add_const\
+	__asm packssdw mm0, mm0\
+	__asm packuswb mm0, mm0\
+	__asm movd eax, mm0\
+	__asm mov byte ptr [ edi + 1 ], al\
+	__asm pmaddwd mm1, mullv_const\
+	__asm movq mm3, mm1\
+	__asm psrlq mm3, 32\
+	__asm paddd mm1, mm3\
+	__asm psrad mm1, 7\
+	__asm paddd mm1, add_const\
+	__asm packssdw mm1, mm1\
+	__asm packuswb mm1, mm1\
+	__asm movd eax, mm1\
+	__asm mov byte ptr [ edi + 3 ], al\
+	__asm psrld add_const, 3\
+	__asm add edi, 4
+
+cycle1:
+		mov eax, number_cycle_string;
+
+cycle2:
+		push eax;
+
+		pxor mm2, mm2;
+		movq mm0, [ esi + 0 ];
+		movq mm1, mm0;
+		psrlq mm1, 24;
+		punpcklbw mm0, mm2;
+		punpcklbw mm1, mm2;
+		psllq mm0, 16;
+		psrlq mm0, 16;
+		psllq mm1, 16;
+		psrlq mm1, 16;
+		RGB24TOYUY2_COMPLITE2PIXEL_MMX( mm4, mm5, mm6, mm7 );
+		pxor mm2, mm2;
+		movq mm0, [ esi + 6 ];
+		movq mm1, mm0;
+		psrlq mm1, 24;
+		punpcklbw mm0, mm2;
+		punpcklbw mm1, mm2;
+		psllq mm0, 16;
+		psrlq mm0, 16;
+		psllq mm1, 16;
+		psrlq mm1, 16;
+		RGB24TOYUY2_COMPLITE2PIXEL_MMX( mm4, mm5, mm6, mm7 );
+		pxor mm2, mm2;
+		movq mm0, [ esi + 12 ];
+		movq mm1, mm0;
+		psrlq mm1, 24;
+		punpcklbw mm0, mm2;
+		punpcklbw mm1, mm2;
+		psllq mm0, 16;
+		psrlq mm0, 16;
+		psllq mm1, 16;
+		psrlq mm1, 16;
+		RGB24TOYUY2_COMPLITE2PIXEL_MMX( mm4, mm5, mm6, mm7 );
+		pxor mm2, mm2;
+		movq mm0, [ esi + 16 ];
+		psrlq mm0, 16;
+		movq mm1, mm0;
+		psrlq mm1, 24;
+		punpcklbw mm0, mm2;
+		punpcklbw mm1, mm2;
+		psllq mm0, 16;
+		psrlq mm0, 16;
+		psllq mm1, 16;
+		psrlq mm1, 16;
+		RGB24TOYUY2_COMPLITE2PIXEL_MMX( mm4, mm5, mm6, mm7 );
+
+		add esi, 24;
+		pop eax;
+		sub eax, 1;
+		jg cycle2;
+
+		add edi, ebx;
+		add esi, edx;
+		sub ecx, 1;
+		jg cycle1;
+
+#undef RGB24TOYUY2_COMPLITE2PIXEL_MMX
+
+		popad;
+		emms;
+	}
+	return hr;
+}
+/**
+\brief	
+*/
+HRESULT ConvertRGB24toYUY2SSEFunct(
+	std::uint8_t* dest,
+	const std::uint8_t* source,
+	int stride_dest,
+	int stride_source,
+	int width_element,
+	int height_element )
+{
+	return ConvertRGB24toYUY2MMXFunct(
+		dest,
+		source,
+		stride_dest,
+		stride_source,
+		width_element,
+		height_element );
+}
+/**
+\brief	
+*/
+HRESULT ConvertRGB24toYUY2SSE2Funct(
+	std::uint8_t* dest,
+	const std::uint8_t* source,
+	int stride_dest,
+	int stride_source,
+	int width_element,
+	int height_element )
+{
+	HRESULT hr = S_OK;
+
+	SCA_CHECKNULLARG( dest );
+	SCA_CHECKNULLARG( source );
+	SCA_CHECKCONDITION( height_element <= 0 );
+	SCA_CHECKCONDITION( width_element <= 0 );
+	SCA_CHECKCONDITION( stride_dest <= 0 );
+	SCA_CHECKCONDITION( stride_source <= 0 );
+	SCA_CHECKCONDITION( stride_source <= stride_dest );
+	SCA_CHECKCONDITION( width_element * 3 > stride_source );
+	/**/
+
+	int number_cycle_string = (width_element + ( (width_element & 0xF) ? 15 : 0) ) >> 4;
+	int leak_source = stride_source - number_cycle_string * 48;
+	int leak_dest = stride_dest - number_cycle_string * 32;
+
+	SCA_CHECKCONDITION( leak_source < 0 );
+	SCA_CHECKCONDITION( leak_dest < 0 );
+
+	//process color for two pixel
+	//y1 = 16.0 + ( 33.000 * r1 +  65.057 * g1 + 13.064 * b1 ) / 128.0;
+	//u  =128.0 + ( 56.219 * r1 -  47.154 * g1 -  9.285 * b1 ) / 128.0;
+	//v  =128.0 + (-19.045 * r1 -  37.294 * g1 + 56.239 * b1 ) / 128.0;
+
+	short array_const_y[ 8 ] = 
+	{
+		33, 65, 13, 0, 33, 65, 13, 0
+	};
+
+	short array_const_u[ 8 ] = 
+	{
+		56, -47, -9, 0, 56, -47, -9, 0
+	};
+
+	short array_const_v[ 8 ] = 
+	{
+		-19, -37, 56, 0, -19, -37, 56, 0
+	};
+	/**/
+
+	uint32_t array_const1[ 4 ] = 
+	{
+		16, 16, 16, 16
+	};
+
+	__asm
+	{
+		;eax-cycle string;
+		;ebx-leak desination;
+		;edx-leak source;;
+		;ecx-cycle col;
+		;edi-destination;
+		;esi-source;
+		;xmm0-first  16 bytes source - 8 word;
+		;xmm1-second 16 bytes source - 8 word and summ;
+		;xmm2-temp;
+		;xmm3-temp;
+		;xmm4-mull const y;
+		;xmm5-mull const u;
+		;xmm6-mull const v;
+		;xmm7-const dword 16;
+
+		pushad;
+
+		lea eax, array_const_y;
+		movdqu xmm4, [ eax ];
+		lea eax, array_const_u;
+		movdqu xmm5, [ eax ];
+		lea eax, array_const_v;
+		movdqu xmm6, [ eax ];
+		lea eax, array_const1;
+		movdqu xmm7, [ eax ];
+
+		mov ecx, height_element;
+		mov ebx, leak_dest;
+		mov edx, leak_source;
+		mov edi, dest;
+		mov esi, source;
+
+		;xmm0=[r1,g1,b1,0,r2,g2,b2,0]words;
+		;xmm1=[r3,g3,b3,0,r4,g4,b4,0]words;
+		;xmm2, mm3 - temp register;
+		;eax-temp register;
+		;edi-destination, after add 4 bytes;
+#define RGB24TOYUY2_COMPLITE2PIXEL_SSE2( mully_const, mullu_const, mullv_const, add_const ) \
+	__asm movdqa xmm2, xmm0\
+	__asm pmaddwd xmm2, mully_const\
+	__asm movdqa xmm3, xmm2\
+	__asm psrldq xmm3, 4\
+	__asm paddd xmm2, xmm3\
+	__asm psrad xmm2, 7\
+	__asm paddd xmm2, add_const\
+	__asm packssdw xmm2, xmm2\
+	__asm packuswb xmm2, xmm2\
+	__asm movd eax, xmm2\
+	__asm mov byte ptr [ edi + 0 ], al\
+	__asm shr eax, 16\
+	__asm mov byte ptr [ edi + 2 ], al\
+	__asm movdqa xmm2, xmm1\
+	__asm pmaddwd xmm2, mully_const\
+	__asm movdqa xmm3, xmm2\
+	__asm psrldq xmm3, 4\
+	__asm paddd xmm2, xmm3\
+	__asm psrad xmm2, 7\
+	__asm paddd xmm2, add_const\
+	__asm packssdw xmm2, xmm2\
+	__asm packuswb xmm2, xmm2\
+	__asm movd eax, xmm2\
+	__asm mov byte ptr [ edi + 4 ], al\
+	__asm shr eax, 16\
+	__asm mov byte ptr [ edi + 6 ], al\
+	__asm paddsw xmm0, xmm1\
+	__asm psraw xmm0, 1\
+	__asm movdqa xmm1, xmm0\
+	__asm pslld add_const, 3\
+	__asm pmaddwd xmm0, mullu_const\
+	__asm movdqa xmm3, xmm0\
+	__asm psrldq xmm3, 4\
+	__asm paddd xmm0, xmm3\
+	__asm psrad xmm0, 7\
+	__asm paddd xmm0, add_const\
+	__asm packssdw xmm0, xmm0\
+	__asm packuswb xmm0, xmm0\
+	__asm movd eax, xmm0\
+	__asm mov byte ptr [ edi + 1 ], al\
+	__asm shr eax, 16\
+	__asm mov byte ptr [ edi + 5 ], al\
+	__asm pmaddwd xmm1, mullv_const\
+	__asm movdqa xmm3, xmm1\
+	__asm psrldq xmm3, 4\
+	__asm paddd xmm1, xmm3\
+	__asm psrad xmm1, 7\
+	__asm paddd xmm1, add_const\
+	__asm packssdw xmm1, xmm1\
+	__asm packuswb xmm1, xmm1\
+	__asm movd eax, xmm1\
+	__asm mov byte ptr [ edi + 3 ], al\
+	__asm shr eax, 16\
+	__asm mov byte ptr [ edi + 7 ], al\
+	__asm psrld add_const, 3\
+	__asm add edi, 8
+
+cycle1:
+		mov eax, number_cycle_string;
+
+cycle2:
+		push eax;
+
+		movdqa xmm0, [ esi + 0 ];
+		movdqa xmm1, xmm0;
+		movdqa xmm2, xmm0;
+		pslldq xmm0, 13;
+		psrldq xmm0, 13;
+		psrldq xmm2, 3;
+		pslldq xmm2, 4;
+		por xmm0, xmm2;
+		movdqa xmm2, xmm1;
+		pslldq xmm1, 7;
+		psrldq xmm1, 13;
+		psrldq xmm2, 9;
+		pslldq xmm2, 4;
+		por xmm1, xmm2;
+		pxor xmm2, xmm2;
+		punpcklbw xmm0, xmm2;
+		punpcklbw xmm1, xmm2;
+		RGB24TOYUY2_COMPLITE2PIXEL_SSE2( xmm4, xmm5, xmm6, xmm7 );
+
+		movdqu xmm0, [ esi + 12 ];
+		movdqa xmm1, xmm0;
+		movdqa xmm2, xmm0;
+		pslldq xmm0, 13;
+		psrldq xmm0, 13;
+		psrldq xmm2, 3;
+		pslldq xmm2, 4;
+		por xmm0, xmm2;
+		movdqa xmm2, xmm1;
+		pslldq xmm1, 7;
+		psrldq xmm1, 13;
+		psrldq xmm2, 9;
+		pslldq xmm2, 4;
+		por xmm1, xmm2;
+		pxor xmm2, xmm2;
+		punpcklbw xmm0, xmm2;
+		punpcklbw xmm1, xmm2;
+		RGB24TOYUY2_COMPLITE2PIXEL_SSE2( xmm4, xmm5, xmm6, xmm7 );
+
+		movdqu xmm0, [ esi + 24 ];
+		movdqa xmm1, xmm0;
+		movdqa xmm2, xmm0;
+		pslldq xmm0, 13;
+		psrldq xmm0, 13;
+		psrldq xmm2, 3;
+		pslldq xmm2, 4;
+		por xmm0, xmm2;
+		movdqa xmm2, xmm1;
+		pslldq xmm1, 7;
+		psrldq xmm1, 13;
+		psrldq xmm2, 9;
+		pslldq xmm2, 4;
+		por xmm1, xmm2;
+		pxor xmm2, xmm2;
+		punpcklbw xmm0, xmm2;
+		punpcklbw xmm1, xmm2;
+		RGB24TOYUY2_COMPLITE2PIXEL_SSE2( xmm4, xmm5, xmm6, xmm7 );
+
+		movdqa xmm0, [ esi + 32 ];
+		psrldq xmm0, 4;
+		movdqa xmm1, xmm0;
+		movdqa xmm2, xmm0;
+		pslldq xmm0, 13;
+		psrldq xmm0, 13;
+		psrldq xmm2, 3;
+		pslldq xmm2, 4;
+		por xmm0, xmm2;
+		movdqa xmm2, xmm1;
+		pslldq xmm1, 7;
+		psrldq xmm1, 13;
+		psrldq xmm2, 9;
+		pslldq xmm2, 4;
+		por xmm1, xmm2;
+		pxor xmm2, xmm2;
+		punpcklbw xmm0, xmm2;
+		punpcklbw xmm1, xmm2;
+		pxor xmm2, xmm2;
+		RGB24TOYUY2_COMPLITE2PIXEL_SSE2( xmm4, xmm5, xmm6, xmm7 );
+
+		add esi, 48;
+		pop eax;
+		sub eax, 1;
+		jg cycle2;
+
+		add edi, ebx;
+		add esi, edx;
+		sub ecx, 1;
+		jg cycle1;
+
+#undef RGB24TOYUY2_COMPLITE2PIXEL_SSE2
+
+		popad;
+	}
+	return hr;
+}
+#endif

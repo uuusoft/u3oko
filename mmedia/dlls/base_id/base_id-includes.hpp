@@ -2,11 +2,10 @@
 /**
 \file       base_id-includes.hpp
 \date       20.07.2018
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_base_id_dll
 */
 #include "base_id-syn.hpp"
-#include "consts/base_id-const-vals.hpp"
 #include "base-id-interf.hpp"
 #include "base_id-info-filter.hpp"
 #include "base_id-filter-dll.hpp"

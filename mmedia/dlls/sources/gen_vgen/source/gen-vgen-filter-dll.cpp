@@ -1,6 +1,6 @@
 /**
 \file       gen-vgen-filter-dll.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.07.2016
 \project    u3_gen_vgen
 */
@@ -8,7 +8,6 @@
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "gen-vgen-includes_int.hpp"
-#include "mmedia/modules/uuu_log/appl/thread/module-log-exception-logger.hpp"
 #include "gen-vgen-info-filter-dll.hpp"
 #include "gen-vgen-filter-dll.hpp"
 #include "mmedia/dlls/doptim/algs/all_algs_impl.hpp"

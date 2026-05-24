@@ -2,14 +2,15 @@
 /**
 \file       isync-event.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me
-\project    uuu_events
-\brief      Объявление события синхронизации пересылки другого события.
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_events
+\brief      Объявление события синхронизации пересылки другого события
 */
 
 namespace libs::events
 {
-/// Событие синхронизации. Используется как флаг синхронности (требуется ответ на вложенное событие)
+/// Событие синхронизации
+/// Используется как флаг синхронности (требуется ответ на вложенное событие)
 class ISyncEvent : public IWrapBaseEvent
 {
   friend class boost::serialization::access;

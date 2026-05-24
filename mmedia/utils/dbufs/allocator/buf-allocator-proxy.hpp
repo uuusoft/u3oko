@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       buf-allocator-proxy.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2016
 \project    u3_dbufs
 */
@@ -21,6 +21,7 @@ class BufAllocatorProxy final
 
   BufAllocatorProxy (const BufAllocatorProxy& src)            = delete;
   BufAllocatorProxy& operator= (const BufAllocatorProxy& src) = delete;
+
   /// Функция получения экземпляра заместителя
   /// \param[in]  dll_path путь к загружаемому коду системы
   static BufAllocatorProxy::raw_ptr
@@ -29,6 +30,7 @@ class BufAllocatorProxy final
     static BufAllocatorProxy g_inst (dll_path);
     return &g_inst;
   }
+
   /// Функция получения реализации по управлению буферам (реализации является гарантированно одиночкой для всего процесса системы)
   /// \return   реализацию
   IBufAllocator::raw_ptr
@@ -58,7 +60,6 @@ class BufAllocatorProxy final
     creator_ = boost::dll::import_symbol< create_func_type > (lib_, "create_dbufs_impl");
 #  endif
 #endif
-
     U3_ASSERT (creator_);
   }
 

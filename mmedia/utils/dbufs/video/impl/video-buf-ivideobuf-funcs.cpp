@@ -1,6 +1,6 @@
 /**
 \file       video-buf-ivideobuf-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.11.2016
 \project    u3_dbufs
 */
@@ -60,7 +60,7 @@ VideoBuf::set_dim_var_int (const Dims& _type, dim_type _val)
   {
   case Dims::stride:
     U3_ASSERT (_val > 0);
-    U3_ASSERT (_val * get_dim_var_int (Dims::height) <= get_raw_buf ()->get_buf_size ());
+    U3_ASSERT (_val * get_dim_var_int (Dims::height) <= getraw_buf ()->get_buf_size ());
     break;
   default:
     break;
@@ -144,7 +144,7 @@ VideoBuf::get_flag_int (const BufFlags& _type) const
   switch (_type)
   {
   case BufFlags::null: {
-    if (!get_raw_buf () || 0 == get_raw_buf ()->get_buf_size ())
+    if (!getraw_buf () || 0 == getraw_buf ()->get_buf_size ())
     {
       return true;
     }

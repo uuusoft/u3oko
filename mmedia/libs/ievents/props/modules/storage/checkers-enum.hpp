@@ -1,0 +1,23 @@
+#pragma once
+/**
+\file       checkers-enum.hpp
+\date       15.08.2018
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_ievents_lib
+*/
+
+namespace libs::ievents::props::modules::storage
+{
+enum class Checkers : std::uint32_t
+{
+  disabled                    = 0x00,   //<
+  start_stop                  = 0x01,   //<
+  periodicaly                 = 0x02,   //<
+  after_every_write_operation = 0x03,   //<
+  unknown                     = 0xFF    //<
+};
+
+Checkers str2checker_storage (const std::string& str);
+void     tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const Checkers& src);
+Checkers tag_invoke (::boost::json::value_to_tag< Checkers >, const ::boost::json::value& jv);
+}   // namespace libs::ievents::props::modules::storage

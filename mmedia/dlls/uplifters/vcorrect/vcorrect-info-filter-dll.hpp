@@ -1,16 +1,14 @@
 #pragma once
 /**
 \file       vcorrect-info-filter-dll.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.07.2016
 \project    u3_vcorrect_vdd
 */
 
 namespace dlls::uplifters::vcorrect
 {
-/**
-\brief  Параметры модуля коррекции изображения.
-*/
+/// Параметры модуля коррекции изображения
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter {
   InfoFilter ();
   virtual ~InfoFilter ();

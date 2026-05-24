@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       base-header-frame.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.10.2016
 \project    u3_codec_gen
 */
@@ -9,7 +9,7 @@
 namespace dlls::codecs::codec_gen
 {
 /// Cтруктура, которая предворяет каждый сжатый кадр
-/// Ее можно детектировать без создания кодека.
+/// Ее можно детектировать без создания кодека
 struct BaseHeaderFrame final {
   BaseHeaderFrame ()
   {

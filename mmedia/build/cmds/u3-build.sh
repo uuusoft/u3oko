@@ -1,6 +1,6 @@
 #!/bin/bash
 # u3-build.sh
-# author      Erashov Anton erashov2026@proton.me
+# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 # date        01.01.2026
 # copyright   Erashov A.I.
 
@@ -46,6 +46,10 @@ if [[ ! -v U3_GENERATOR ]]; then
     U3_GENERATOR=Unix Makefiles
 fi
 
+if [[ ! -v U3_COMMERCIAL_PART ]]; then
+    U3_COMMERCIAL_PART=0
+fi
+
 #if [[ ${U3_GENERATOR} == "Ninja" ]]; then
 #    U3_GENERATOR="-G ${U3_GENERATOR}"
 #fi
@@ -69,7 +73,7 @@ echo U3_LIBS_PREFIX=${U3_LIBS_PREFIX}
 echo U3_GENERATOR=${U3_GENERATOR}
 
 cd ./../../
-cmake -G "${U3_GENERATOR}" -S . -B ${U3_BIN} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${U3_ABSOULT_TOOLCHAIN} -DCMAKE_BUILD_TYPE=${U3_BUILD} -DU3_APPL_NAME=${U3_APPL_NAME} -DU3_BUILD_MODULES_AS_LIBS=${U3_AS_LIBS} -DU3_SANITY_BUILD_TYPE=${U3_SANITY} ${U3_EXT_PARAMS}
+cmake -G "${U3_GENERATOR}" -S . -B ${U3_BIN} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${U3_ABSOULT_TOOLCHAIN} -DCMAKE_BUILD_TYPE=${U3_BUILD} -DU3_APPL_NAME=${U3_APPL_NAME} -DU3_COMMERCIAL_PART=${U3_COMMERCIAL_PART} -DU3_BUILD_MODULES_AS_LIBS=${U3_AS_LIBS} -DU3_SANITY_BUILD_TYPE=${U3_SANITY} ${U3_EXT_PARAMS}
 cmake --build ${U3_BIN} -j 1 --config ${U3_BUILD}
 #cmake --build ${U3_BIN}
 echo cp -r ./assets/xmls/templates   ${U3_BIN}/${U3_OS}/${U3_BUILD}

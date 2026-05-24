@@ -1,9 +1,9 @@
 /**
 \file       buf-med3impl.cpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 
-\project    uuu_time_filter_noise
+\project    u3_time_filter_noise
 */
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
@@ -12,7 +12,7 @@
 
 namespace dlls::filter_noise::time::impl::med3
 {
-BuffMed3Impl::BuffMed3Impl (::libs::ievents::props::videos::noises::time::ext::MedianTimeFilterProp::raw_ptr params)
+BuffMed3Impl::BuffMed3Impl (syn::MedianTimeFilterProp::raw_ptr params)
 {
   shared_info_.params_ = params;
 }
@@ -25,9 +25,9 @@ BuffMed3Impl::~BuffMed3Impl ()
 
 void
 BuffMed3Impl::sync_by_vbuf (
-  const ::utils::dbufs::video::IVideoBuf::raw_ptr                                   buf,
-  const ::utils::dbufs::video::IVideoBuf::raw_ptr                                   dbuf,
-  ::libs::ievents::props::videos::noises::time::ext::MedianTimeFilterProp::craw_ptr impl_info)
+  const ::utils::dbufs::video::IVideoBuf::raw_ptr buf,
+  const ::utils::dbufs::video::IVideoBuf::raw_ptr dbuf,
+  syn::MedianTimeFilterProp::craw_ptr             impl_info)
 {
   const std::uint32_t width      = buf->get_dim_var (::utils::dbufs::video::Dims::width);
   const std::uint32_t height     = buf->get_dim_var (::utils::dbufs::video::Dims::height);

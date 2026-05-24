@@ -1,8 +1,8 @@
 /**
 \file       icore-proxy.cpp
 \date       15.04.2022
-\author     Erashov Anton erashov2026@proton.me
-\project    uuu_proxy
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_proxy_libs
 */
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
@@ -15,29 +15,36 @@
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_vcodec_gen ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vcd_all2hsl ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vcd_all2rgb ();
+
 #if defined(U3_LIBS_ENABLE_DETECT_FACE_VDD)
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_detect_face ();
 #endif
 #if defined(U3_LIBS_ENABLE_VDETECT1_VDD)
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_detect_move ();
 #endif
+
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vfn_freq_domain ();
+
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vfn_space ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vfn_time ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_base_id ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vgd_vgen_conv3_11 ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vgd_vgen_diff ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vgd_vgen_mops ();
+
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vsa_fixed ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vsa_flow ();
+
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vsd_gen_vgen ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_vcorrect ();
+
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_vgradient ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_vhistogram ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_vmatrix ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_vsharper ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_vtexter ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vut_vec2image ();
+
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vts_video_sender ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdm_mix_multiplier ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vgd_vgen_motion ();
@@ -53,12 +60,12 @@ get_create_data_path_module_funct (const std::string& plib_id)
   {
     return create_impl_vts_video_sender;
   }
-
+#if (U3_LIBS_ENABLE_MIX_MULTIPLIER_VDM == 1)
   if (lib_id == "vdm_mix_multiplier")
   {
     return create_impl_vdm_mix_multiplier;
   }
-
+#endif
   if (lib_id == "vdd_vcodec_gen")
   {
     return create_impl_vdd_vcodec_gen;
@@ -87,12 +94,12 @@ get_create_data_path_module_funct (const std::string& plib_id)
     return create_impl_vdd_detect_move;
   }
 #endif
-
+#if (U3_LIBS_ENABLE_VCLEANER_FREQ_VDD == 1)
   if (lib_id == "vfn_freq_domain")
   {
     return create_impl_vfn_freq_domain;
   }
-
+#endif
   if (lib_id == "vfn_space")
   {
     return create_impl_vfn_space;
@@ -122,17 +129,18 @@ get_create_data_path_module_funct (const std::string& plib_id)
   {
     return create_impl_vgd_vgen_mops;
   }
-
+#if (U3_LIBS_ENABLE_FIXED_VSA == 1)
   if (lib_id == "vsa_fixed")
   {
     return create_impl_vsa_fixed;
   }
-
+#endif
+#if (U3_LIBS_ENABLE_FLOW_VSA == 1)
   if (lib_id == "vsa_flow")
   {
     return create_impl_vsa_flow;
   }
-
+#endif
   if (lib_id == "vsd_gen_vgen")
   {
     return create_impl_vsd_gen_vgen;
@@ -142,12 +150,12 @@ get_create_data_path_module_funct (const std::string& plib_id)
   {
     return create_impl_vdd_vcorrect;
   }
-
+#if (U3_LIBS_ENABLE_VGRADIENT_VDD == 1)
   if (lib_id == "vdd_vgradient")
   {
     return create_impl_vdd_vgradient;
   }
-
+#endif
 #if 0
   if (lib_id == "vdd_vhistogram")
   {
@@ -169,12 +177,12 @@ get_create_data_path_module_funct (const std::string& plib_id)
     return create_impl_vdd_vtexter;
   }
 #endif
-
+#if (U3_LIBS_ENABLE_VEC2IMAGE_VUT == 1)
   if (lib_id == "vut_vec2image")
   {
     return create_impl_vut_vec2image;
   }
-
+#endif
   if (lib_id == "vgd_vgen_motion")
   {
     return create_impl_vgd_vgen_motion;

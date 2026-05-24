@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me
+# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 # date        01.01.2017
 # copyright   Erashov A.I.
 # file        dlls-list.cmake
@@ -22,15 +22,17 @@ include("${U3_BUILD_PATH_TO_LIBS}/dlls/gens/vgen_mops/lib/_make/gens-vgen-mops-l
 include("${U3_BUILD_PATH_TO_LIBS}/dlls/gens/vgen_mops/_make/gens-vgen-mops.cmake")
 include("${U3_BUILD_PATH_TO_LIBS}/dlls/gens/vgen_motion/gens-vgen-motion.cmake")
 
-include("${U3_BUILD_PATH_TO_LIBS}/dlls/utils/vec2image/utils-vec2image.cmake")
+if(U3_COMMERCIAL_PART EQUAL 1)
+  include("${U3_BUILD_PATH_TO_LIBS}/dlls/utils/vec2image/utils-vec2image.cmake")
+endif()
 
 include("${U3_BUILD_PATH_TO_LIBS}/dlls/sources/vgen_lib/_make/gen-lib-source-dlls.cmake")
 include("${U3_BUILD_PATH_TO_LIBS}/dlls/sources/gen_vgen/gen-vgen-source-dlls.cmake")
 include("${U3_BUILD_PATH_TO_LIBS}/dlls/sources/v4l2_vgen/_make/v4l2-vgen-source-dlls.cmake")
+include("${U3_BUILD_PATH_TO_LIBS}/dlls/sources/fake_vgen/fake-vgen-source-dlls.cmake")
 
-if(U3_USE_COMMERCIAL_PART)
+if(U3_COMMERCIAL_PART EQUAL 1)
   include("${U3_BUILD_PATH_TO_LIBS}/dlls/sources/desk_vgen/desk-vgen-source-dlls.cmake")
-  include("${U3_BUILD_PATH_TO_LIBS}/dlls/sources/fake_vgen/fake-vgen-source-dlls.cmake")
   include("${U3_BUILD_PATH_TO_LIBS}/dlls/sources/dshow_vgen/_make/dshow-vgen-source-dlls.cmake")
   include("${U3_BUILD_PATH_TO_LIBS}/dlls/sources/pict_vgen/_make/pict-vgen-source-dlls.cmake")
   include("${U3_BUILD_PATH_TO_LIBS}/dlls/sources/android_vgen/_make/android-vgen-source-dlls.cmake")
@@ -43,21 +45,27 @@ include("${U3_BUILD_PATH_TO_LIBS}/dlls/codecs/vcodec_gen/vcodec-gen-codecs-dlls.
 include("${U3_BUILD_PATH_TO_LIBS}/dlls/codecs/vcodec_mjpg/_make/vcodec-mjpg-codecs-dlls.cmake")
 include("${U3_BUILD_PATH_TO_LIBS}/dlls/codecs/vcodec_x264/_make/vcodec-x264-codecs-dlls.cmake")
 
-if(U3_USE_COMMERCIAL_PART)
+if(U3_COMMERCIAL_PART EQUAL 1)
   include("${U3_BUILD_PATH_TO_LIBS}/dlls/codecs/vcodec_va/_make/vcodec-va-codecs-dlls.cmake")
   include("${U3_BUILD_PATH_TO_LIBS}/dlls/codecs/vcodec_x265/_make/vcodec-x265-codecs-dlls.cmake")
   #include("${U3_BUILD_PATH_TO_LIBS}/dlls/codecs/vcodec_android/_make/vcodec-android-codecs-dlls.cmake")
   #include("${U3_BUILD_PATH_TO_LIBS}/dlls/codecs/vcodec_test/_make/vcodec-test-codecs-dlls.cmake")
 endif()
 
-include("${U3_BUILD_PATH_TO_LIBS}/dlls/filter_noise/freq_domain/filter-freq-domain.cmake")
+if(U3_COMMERCIAL_PART EQUAL 1)
+  include("${U3_BUILD_PATH_TO_LIBS}/dlls/filter_noise/freq_domain/filter-freq-domain.cmake")
+endif()
+
 include("${U3_BUILD_PATH_TO_LIBS}/dlls/filter_noise/space/_make/filter-space-domain.cmake")
 include("${U3_BUILD_PATH_TO_LIBS}/dlls/filter_noise/time/_make/filter-time-domain.cmake")
 
 include("${U3_BUILD_PATH_TO_LIBS}/dlls/uplifters/vcorrect/_make/uplifterss-vcorrect.cmake")
-include("${U3_BUILD_PATH_TO_LIBS}/dlls/uplifters/vgradient/uplifterss-vgradient.cmake")
 
-include("${U3_BUILD_PATH_TO_LIBS}/dlls/scales/flow/scales-flow.cmake")
-include("${U3_BUILD_PATH_TO_LIBS}/dlls/scales/fixed/scales-fixed.cmake")
+if(U3_COMMERCIAL_PART EQUAL 1)
+  include("${U3_BUILD_PATH_TO_LIBS}/dlls/uplifters/vgradient/uplifterss-vgradient.cmake")
 
-include("${U3_BUILD_PATH_TO_LIBS}/dlls/mixers/mix_multiplier/mixers-mix-mulltiplier.cmake")
+  include("${U3_BUILD_PATH_TO_LIBS}/dlls/scales/flow/scales-flow.cmake")
+  include("${U3_BUILD_PATH_TO_LIBS}/dlls/scales/fixed/scales-fixed.cmake")
+
+  include("${U3_BUILD_PATH_TO_LIBS}/dlls/mixers/mix_multiplier/mixers-mix-mulltiplier.cmake")
+endif()

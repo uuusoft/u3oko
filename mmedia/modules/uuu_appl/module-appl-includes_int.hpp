@@ -2,7 +2,7 @@
 /**
 \file       module-appl-includes_int.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_module_appl
 */
 #include "../modules-includes_int.hpp"

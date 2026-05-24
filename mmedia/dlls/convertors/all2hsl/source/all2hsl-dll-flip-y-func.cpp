@@ -1,7 +1,7 @@
 /**
 \file       all2hsl-dll-flip_y_funct.cpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_all2hsl
 */
 #include "mmedia/includes/control-defines-includes.hpp"

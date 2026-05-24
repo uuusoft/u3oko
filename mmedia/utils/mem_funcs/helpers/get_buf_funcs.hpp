@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       get_buf_funcs.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2018
 \project    u3_mem_funcs
 \brief      Файл вспомогательных функций по работы с буфером памяти, опирающихся на интерфейс IBlockMem

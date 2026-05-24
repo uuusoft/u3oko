@@ -1,14 +1,14 @@
 #pragma once
 /**
 \file       fake-vgen-source-impl.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2017
 \project    u3_fake_vgen
 */
 
 namespace dlls::sources::fake_vgen
 {
-/// Реализация генератора видео для тестов.
+/// Реализация генератора видео для тестов
 class SourceImpl final : public ::dlls::sources::gen_lib::ISourceImpl
 {
   public:
@@ -29,6 +29,7 @@ class SourceImpl final : public ::dlls::sources::gen_lib::ISourceImpl
   virtual void get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* events) override;
   virtual void set_cpu_int (::libs::helpers::sys::cpu::CpuExts current_optim) override;
   virtual void update_source_info_int (const syn::SourceImplInfo& info) override;
+
   //  internals
   bool free_int ();
   void init_gen_funcs ();

@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       block-mem-allocator.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2017
 \project    u3_mem_funcs
 */

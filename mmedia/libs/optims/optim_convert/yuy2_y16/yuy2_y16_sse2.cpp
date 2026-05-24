@@ -1,0 +1,44 @@
+/**
+\file       yuy2_y16_sse2.cpp
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\date       26.07.2016
+\project    u3_optim_gen_convert
+*/
+#include "mmedia/includes/control-defines-includes.hpp"
+#include "mmedia/includes/includes.hpp"
+#include "mmedia/libs/optims/optim_convert/includes_int.hpp"
+#include "yuy2_y16.hpp"
+#include "yuy2_y16_int.hpp"
+
+#if defined(U3_CPU_X86)
+
+namespace libs::optim::convert::yuy2_y16
+{
+U3_SET_TARGET_CPU (sse2)
+void
+sse2 (::libs::optim::io::MCallInfo& info)
+{
+  YUY22Y16_PREFIX (8);
+
+  const __m128i mask = _mm_setr_epi16 (0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF);
+
+  for (std::size_t indx_y = 0; indx_y < height; ++indx_y)
+  {
+    for (std::size_t indx_x = 0; indx_x < width; indx_x += ppc)
+    {
+      __m128i data = _mm_load_si128 (U3_CAST_REINTERPRET< const __m128i* > (yuy2_buf));
+      data         = _mm_and_si128 (data, mask);
+
+      _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (y16_buf), data);
+
+      yuy2_buf += dppc;
+      y16_buf += ppc;
+    }
+
+    U3_FAST_MOVE_CPTR (yuy2_buf, leak_yuy2);
+    U3_FAST_MOVE_PTR (y16_buf, leak_y16);
+  }
+}
+}   // namespace libs::optim::convert::yuy2_y16
+
+#endif

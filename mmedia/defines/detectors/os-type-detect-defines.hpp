@@ -1,11 +1,12 @@
 #pragma once
 /**
 \file       os-type-detect-defines.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2018
 \project    u3_defines
-\brief      Файл с идентификаторами ОС, под которые компилируется проект.
+\brief      Файл с идентификаторами ОС, под которые компилируется проект
 */
+
 #if defined(WIN32) || defined(__WIN32__) || defined(__TOS_WIN__) || defined(__WINDOWS__)
 #  ifndef U3_OS_WIN32_DESKTOP
 #    define U3_OS_WIN32_DESKTOP

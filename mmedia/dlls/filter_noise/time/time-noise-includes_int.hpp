@@ -2,8 +2,8 @@
 /**
 \file       time-noise-includes_int.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me
-\project    uuu_time_filter_noise
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_time_filter_noise
 */
 #include "../../dlls-includes_int.hpp"
 #include "mmedia/libs/helpers/statistic/helpers/expanded-times-helpers.hpp"

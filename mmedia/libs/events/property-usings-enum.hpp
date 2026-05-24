@@ -2,9 +2,9 @@
 /**
 \file       property-usings-enum.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me
-\project    uuu_events
-\brief      Объявление состояний "использование" свойства.
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_events
+\brief      Объявление состояний "использование" свойства
 */
 
 namespace libs::events

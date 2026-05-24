@@ -1,8 +1,8 @@
 /**
 \file       events-impl.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       21.07.2017
-\project    uuu_devents
+\project    u3_devents_dlls
 */
 // #define U3_USE_DEB_LOG_LEVEL
 #include "mmedia/includes/control-defines-includes.hpp"

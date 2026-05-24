@@ -1,9 +1,9 @@
 #pragma once
 /**
 \file       mem-resource-http-event.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       14.04.2018
-\project    uuu_ihttp_events
+\project    u3_ihttp_events
 */
 
 namespace libs::ihttp_events::events

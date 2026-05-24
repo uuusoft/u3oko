@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       base_id-filter-dll.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       16.07.2018
 \project    u3_base_id_dll
 */
@@ -19,6 +19,7 @@ class Filter final :
   private:
   // internal types
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
+
   // IFilter overrides
   virtual void load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node) override;
   virtual void transform_int (syn::TransformInfo& info) override;

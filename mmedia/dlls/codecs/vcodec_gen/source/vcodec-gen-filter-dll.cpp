@@ -1,6 +1,6 @@
 /**
 \file       vcodec-gen-filter-dll.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.07.2016
 \project    u3_vcodec_gen
 */
@@ -251,7 +251,6 @@ Filter::process_frame (syn::TransformInfo& info)
   }
 
   finfo_.dll_codec_->set_transform_info (nullptr, nullptr);
-  // pbuf_->set_flag (libs::bufs::BufsFlags::empty, false);
 
   if (finfo_.rprops_->dump_result2file_)
   {
@@ -338,7 +337,6 @@ Filter::update_int ()
   }
 
   finfo_.file_info_.create_codec_ (&finfo_.dll_codec_);
-  // U3_CHECK (finfo_.dll_codec_, "load codec" + TOLOG (finfo_.rprops_->dll_name_));
   U3_CHECK (finfo_.dll_codec_, "create codec" + finfo_.rprops_->dll_name_);
 
   {

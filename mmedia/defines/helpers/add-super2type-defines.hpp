@@ -1,10 +1,10 @@
 #pragma once
 /**
 \file       add-super2type-defines.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2018
 \project    u3_defines
-\brief      Объявление вспомогательного макроса для декларирования типа на суперкласс внутри производного.
+\brief      Объявление вспомогательного макроса для декларирования типа на суперкласс внутри производного
 */
 
 //  Вспомогательный макрос для декларирования типа на суперкласс

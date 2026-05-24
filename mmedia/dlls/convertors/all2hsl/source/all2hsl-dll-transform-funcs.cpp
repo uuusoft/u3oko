@@ -1,6 +1,6 @@
 /**
 \file       all2hsl-dll-transform-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2017
 \project    u3_all2hsl
 */
@@ -54,10 +54,10 @@ Filter::itransform ()
   }
   else
   {
-    ::utils::dbufs::video::helpers::fill_edges ((*pbuf_)[::utils::dbufs::video::consts::offs::hue], "prepare hue");
-    ::utils::dbufs::video::helpers::fill_edges ((*pbuf_)[::utils::dbufs::video::consts::offs::sat], "prepare sat");
+    ::utils::dbufs::video::helpers::fill_edges ((*pbuf_)[::utils::dbufs::video::consts::offs::hue]);
+    ::utils::dbufs::video::helpers::fill_edges ((*pbuf_)[::utils::dbufs::video::consts::offs::sat]);
   }
 
-  ::utils::dbufs::video::helpers::fill_edges ((*pbuf_)[::utils::dbufs::video::consts::offs::lit], "prepare lit");
+  ::utils::dbufs::video::helpers::fill_edges ((*pbuf_)[::utils::dbufs::video::consts::offs::lit]);
 }
 }   // namespace dlls::convertors::all2hsl

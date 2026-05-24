@@ -1,6 +1,6 @@
 /**
 \file       v4l2-vgen-source-impl.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */
@@ -27,36 +27,29 @@ SourceImpl::init_int ()
 void
 SourceImpl::start_int ()
 {
-  U3_LOG_DATA_DBG ("SourceImpl::start_int begin");
   counter_frames_ = 0;
   U3_CHECK (v4l2_init_, "not init device, skip restart");
   start_capture ();
-  U3_LOG_DATA_DBG ("SourceImpl::start_int end");
 }
 
 
 void
 SourceImpl::start_capture ()
 {
-  // U3_LOG_DATA_DBG ("SourceImpl::start_capture-->begin");
 }
 
 
 void
 SourceImpl::stop_capture ()
 {
-  // U3_LOG_DATA_DBG ("SourceImpl::stop_capture-->begin");
 }
 
 
 void
 SourceImpl::stop_int ()
 {
-  U3_LOG_DATA_DBG ("SourceImpl::stop_int-->begin");
-  // send_interfaces_ = false;
   stop_capture ();
   v4l2_impl_.reset ();
-  U3_LOG_DATA_DBG ("SourceImpl::stop_int-->end");
 }
 
 
@@ -98,7 +91,7 @@ SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo > &sources)
     for (const auto &format : support_formats)
     {
       capture_props.capi_.px_format_ = format;
-      U3_LOG_DATA_DBG ("check format:" + libs::helpers::uids::helpers::get_readable_name (capture_props.capi_.px_format_));
+
       try
       {
         auto v4l2 = std::make_unique< camera::CamImpl > (srcinfo);
@@ -147,8 +140,6 @@ SourceImpl::get_raw_data_int (
     const bool recreate_request             = camera_error_ || !v4l2_init_ ? true : false;
     const auto diff_time_after_last_restart = now - last_time_restart_;
     const bool recreate_request_now         = recreate_request && diff_time_after_last_restart >= consts::ms_timeout_recreate_device;
-    // U3_LOG_DATA_DBG ("recreate device" + VTOLOG (camera_error_) + VTOLOG (recreate_request));
-    // U3_LOG_DATA_DBG ("recreate device" + VTOLOG (diff_time_after_last_restart.count ()) + VTOLOG (recreate_request_now));
 
     if (recreate_request)
     {
@@ -250,10 +241,8 @@ SourceImpl::update_source_info_int (const ::dlls::sources::gen_lib::SourceImplIn
 bool
 SourceImpl::init_device (const ::dlls::sources::gen_lib::SourceImplInfo &info)
 {
-  U3_LOG_DATA_DBG ("SourceImpl::init_device begin");
   if (v4l2_init_)
   {
-    U3_LOG_DATA_DBG ("skip init device");
     return true;
   }
 
@@ -267,7 +256,6 @@ SourceImpl::init_device (const ::dlls::sources::gen_lib::SourceImplInfo &info)
     U3_LOG_DATA_EXCEPT (e.what ());
     return false;
   }
-  U3_LOG_DATA_DBG ("SourceImpl::init_device end");
   return v4l2_init_;
 }
 
@@ -275,12 +263,10 @@ SourceImpl::init_device (const ::dlls::sources::gen_lib::SourceImplInfo &info)
 void
 SourceImpl::deinit_device ()
 {
-  U3_LOG_DATA_DBG ("SourceImpl::deinit_device begin");
   if (!v4l2_init_)
   {
     return;
   }
   v4l2_init_ = false;
-  U3_LOG_DATA_DBG ("SourceImpl::deinit_device end");
 }
 }   // namespace dlls::sources::v4l2_vgen

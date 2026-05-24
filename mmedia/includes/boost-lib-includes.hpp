@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       boost-lib-includes.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2018
 \project    u3_includes
 */
@@ -30,12 +30,6 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/utility/string_view.hpp>
 #include <boost/json.hpp>
-
-//  Данное общее включение boost/asio.hpp НЕЯВНО ломает загрузку dll на ряде старых android платформ (например 4.0).
-//  Поэтому данный файл включается только для тех модулей, в которых он реально необходимо. На момент написания это модуль http сервера.
-//  P.S. Включено обратно, после перехода на boost 1.67.
-//  P.P.S. Снова мать его выключено, теперь ломает только rtti при переходе через dll под android.
-// # include <boost/asio.hpp>
 
 // #include <boost/archive/text_iarchive.hpp>
 // #include <boost/archive/text_oarchive.hpp>
@@ -79,9 +73,6 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/date_time/posix_time/time_serialize.hpp>
-
-// std barrier
-//#include <boost/thread/barrier.hpp>
 
 #include <boost/any.hpp>
 

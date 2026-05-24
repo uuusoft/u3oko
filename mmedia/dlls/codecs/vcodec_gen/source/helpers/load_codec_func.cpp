@@ -1,7 +1,7 @@
 /**
 \file       load_codec_funct.cpp
 \date       14.04.2022
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_vcodec_gen
 */
 #include "mmedia/includes/control-defines-includes.hpp"

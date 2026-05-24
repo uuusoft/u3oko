@@ -1,0 +1,59 @@
+/**
+\file       caller-impl-imcaller-funcs.cpp
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\date       01.01.2017
+\project    u3_optim_lib
+*/
+// #define U3_USE_DEB_LOG_LEVEL
+#include "mmedia/includes/control-defines-includes.hpp"
+#include "mmedia/includes/includes.hpp"
+#include "libs-optims-optim-mcalls-includes_int.hpp"
+#include "caller-impl.hpp"
+#include "mmedia/libs/helpers/statistic/helpers/expanded-times-helpers.hpp"
+
+namespace libs::optim::mcalls
+{
+void
+CallerImpl::mthreads_call (
+  const ::libs::core::graph::NodeID& id_node,
+  const InfoMFunct&                  funct,
+  ::libs::optim::io::MCallInfo&      info,
+  syn::ExpandedTimes&                expand_time_algs,
+  const std::uint16_t                athreads)
+{
+  try
+  {
+    lock_type      lock (mtx_);
+    syn::AddOpTime exp_stat (expand_time_algs, ::libs::core::graph::get_ext_graph_node_id (id_node), funct.pfunc_->get_algoritm_name ());
+    mthreads_call_int (funct, info, athreads);
+  }
+  catch (const std::exception& e)
+  {
+    U3_LOG_DATA_EXCEPT (e.what ());
+  }
+  catch (...)
+  {
+    U3_LOG_DATA_EXCEPT ("...");
+  }
+}
+
+
+void
+CallerImpl::set_count_threads (std::uint16_t count)
+{
+  U3_XLOG_MARK ("update the number of work threads" + VTOLOG (count))
+  lock_type lock (mtx_);
+  ::libs::helpers::utils::check_bound< std::uint16_t > (count, 1, consts::max_threads);
+  stop_and_wait_threads ();
+  max_threads_ = count;
+  create_threads ();
+}
+
+
+std::uint16_t
+CallerImpl::get_count_threads () const
+{
+  lock_type lock (mtx_);
+  return max_threads_;
+}
+}   // namespace libs::optim::mcalls

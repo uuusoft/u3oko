@@ -1,8 +1,7 @@
-# author      Erashov Anton erashov2026@proton.me
+# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 # date        27.02.2026
 # copyright   Erashov A.I.
 # file        u3-libdrm-lib.cmake
-# U3_THIS_COMMERCIAL_PART_SOURCE_CODE
 
 include(ExternalProject)
 include(FetchContent)

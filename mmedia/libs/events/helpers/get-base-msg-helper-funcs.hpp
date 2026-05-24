@@ -2,13 +2,15 @@
 /**
 \file       get-base-msg-helper-funcs.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me
-\project    uuu_events
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_events
 */
 
 namespace libs::events::helpers
 {
-/// Вспомогательная функция для "отчистки" базового сообщения от сообщений-флагов. \param[in]  msg  сообщение до отчистки. \return     базовое сообщение
+/// Вспомогательная функция для "отчистки" базового сообщения от сообщений-флагов
+/// \param[in]  msg  сообщение до отчистки
+/// \return     базовое сообщение
 inline IEvent::ptr
 get_base_msg (IEvent::ptr msg)
 {

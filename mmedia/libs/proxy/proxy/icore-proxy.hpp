@@ -2,8 +2,8 @@
 /**
 \file       icore-proxy.hpp
 \date       15.04.2022
-\author     Erashov Anton erashov2026@proton.me
-\project    uuu_proxy
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_proxy_libs
 */
 #include "mmedia/libs/icore/impl/var1/obj/dll/create_impl_func_type.hpp"   // REFACT
 

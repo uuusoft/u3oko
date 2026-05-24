@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me
+# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 # date        30.08.2024
 # copyright   Erashov A.I.
 # file        u3-check-preconditions.cmake
@@ -52,6 +52,7 @@ set(U3_INTERNAL_SANITY_LIST
     "hwaddress"
     "memory"
     "thread")
+    
 if(NOT ${U3_SANITY_BUILD_TYPE} IN_LIST U3_INTERNAL_SANITY_LIST)
   message(
     FATAL_ERROR "${U3_MARK_FATAL}Unknown sanity type ${U3_MARK_FATAL}U3_SANITY_BUILD_TYPE=${U3_SANITY_BUILD_TYPE} not in list U3_INTERNAL_SANITY_LIST=${U3_INTERNAL_SANITY_LIST}")
@@ -70,6 +71,7 @@ set(U3_INTERNAL_OS_LIST
     ${U3_SYSTEM_NAME_RASPBERRY}
     ${U3_SYSTEM_NAME_DARWIN}
     ${U3_SYSTEM_NAME_ORANGE_PI})
+    
 if(NOT ${U3_SYSTEM_NAME} IN_LIST U3_INTERNAL_OS_LIST)
   message(FATAL_ERROR "${U3_MARK_FATAL}Unknown os type ${U3_MARK_FATAL}U3_SYSTEM_NAME=${U3_SYSTEM_NAME} not in list U3_INTERNAL_OS_LIST=${U3_INTERNAL_OS_LIST}")
 endif()

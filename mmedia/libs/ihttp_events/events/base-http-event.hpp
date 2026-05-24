@@ -1,16 +1,14 @@
 #pragma once
 /**
 \file       base-http-event.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2017
-\project    uuu_ihttp_events
+\project    u3_ihttp_events
 */
 
 namespace libs::ihttp_events::events
 {
-/**
-\brief  Базовый класс для событий подсистемы "http сервер".
-*/
+/// Базовый класс для событий подсистемы "http сервер"
 class BaseHttpEvent : public ::libs::ievents::TimedEvent
 {
   friend class boost::serialization::access;

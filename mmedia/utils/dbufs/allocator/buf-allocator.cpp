@@ -1,6 +1,6 @@
 /**
 \file       buf-allocator.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.07.2016
 \project    u3_dbufs
 */
@@ -59,13 +59,13 @@ BufAllocator::create (IBufAllocator::size_type size)
     // оцениваем его пригодность по размеру - он должен быть достаточным и при этом не слишком большим
     if (size)
     {
-      const auto _raw_buf = buf->get_raw_buf ();
-      if (_raw_buf)
+      const auto raw_buf = buf->getraw_buf ();
+      if (raw_buf)
       {
-        const auto  size_raw_buf = _raw_buf->get_buf_size ();
-        const float _koeff_size   = size_raw_buf / U3_CAST_STATIC< float > (size);
+        const auto  sizeraw_buf = raw_buf->get_buf_size ();
+        const float koeff_size  = sizeraw_buf / U3_CAST_STATIC< float > (size);
 
-        size_ok = _koeff_size >= 1.0f && _koeff_size <= 2.0f;
+        size_ok = koeff_size >= 1.0f && koeff_size <= 2.0f;
       }
     }
 
@@ -77,10 +77,10 @@ BufAllocator::create (IBufAllocator::size_type size)
     }
   }
   //  выделяем новый буфер.
-  utils::dbufs::video::IVideoBuf::ptr _new (new utils::dbufs::video::impl::VideoBuf ());
-  bufs_.push_back (_new);
+  utils::dbufs::video::IVideoBuf::ptr newbuf (new utils::dbufs::video::impl::VideoBuf ());
+  bufs_.push_back (newbuf);
   ++counter_alloc_bufs_;
-  return _new;
+  return newbuf;
 }
 
 
@@ -114,24 +114,24 @@ BufAllocator::dump_bufs_state ()
 std::string
 BufAllocator::dump_state_int ()
 {
-  std::int64_t _all_mem        = 0;
-  std::int64_t _use_mem        = 0;
-  std::int64_t _count_use_bufs = 0;
-  const auto   _count_all_bufs = bufs_.size ();
+  std::int64_t all_mem        = 0;
+  std::int64_t use_mem        = 0;
+  std::int64_t count_use_bufs = 0;
+  const auto   count_all_bufs = bufs_.size ();
 
   for (const utils::dbufs::video::IVideoBuf::ptr& buf : bufs_)
   {
-    auto _mem_buf = (*buf)[::utils::dbufs::MemVars::size_buf];
+    auto mem_buf = (*buf)[::utils::dbufs::MemVars::size_buf];
     if (buf.use_count () > 1)
     {
-      _use_mem += _mem_buf;
-      ++_count_use_bufs;
+      use_mem += mem_buf;
+      ++count_use_bufs;
     }
-    _all_mem += _mem_buf;
+    all_mem += mem_buf;
   }
 
-  return std::to_string (_all_mem) + " bytes {" + std::to_string (_count_all_bufs) + "}, use " +
-         std::to_string (_use_mem) + " {" + std::to_string (_count_use_bufs) + "} koeff " +
-         std::to_string (U3_CAST_STATIC< float > (_use_mem) / (_all_mem ? _all_mem : 1));
+  return std::to_string (all_mem) + " bytes {" + std::to_string (count_all_bufs) + "}, use " +
+         std::to_string (use_mem) + " {" + std::to_string (count_use_bufs) + "} koeff " +
+         std::to_string (U3_CAST_STATIC< float > (use_mem) / (all_mem ? all_mem : 1));
 }
 }   // namespace utils::dbufs::allocator

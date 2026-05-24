@@ -1,8 +1,7 @@
-# author      Erashov Anton erashov2026@proton.me
+# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 # date        01.01.2017
 # copyright   Erashov A.I.
 # file        detect-face.cmake
-# U3_THIS_COMMERCIAL_PART_SOURCE_CODE
 
 if(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_DARWIN})
   message(NOTICE "${U3_MARK_TODO} add support dlib for Darwin")

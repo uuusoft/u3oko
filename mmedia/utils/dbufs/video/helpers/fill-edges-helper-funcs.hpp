@@ -1,10 +1,10 @@
 #pragma once
 /**
 \file       fill-edges-helper-funcs.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2017
 \project    u3_dbufs
-\brief      Объявление вспомогательных функции подгтовки буфера к операции свертка.
+\brief      Объявление вспомогательных функции подгтовки буфера к операции свертка
 */
 
 namespace utils::dbufs::video::helpers
@@ -13,11 +13,11 @@ namespace utils::dbufs::video::helpers
 /// \param[in,out]  buf буфер, выделенный с учетом поддержки операции "свертка"
 /// \return         true при успехе
 inline void
-fill_edges (IVideoBuf::raw_ptr buf, const char* _about)
+fill_edges (IVideoBuf::raw_ptr buf)
 {
-  U3_CHECK (buf, "- empty buf:" + std::string (_about));
-  U3_CHECK (buf->get_flag (BufFlags::convolution_support), "- operation topb_convolution_buf not support:" + std::string (_about));
-  U3_CHECK (buf->get_flag (BufFlags::convolution_data), "- data not support convlution:" + std::string (_about));
+  U3_CHECK (buf, "empty buf");
+  U3_CHECK (buf->get_flag (BufFlags::convolution_support), "- operation topb_convolution_buf not support");
+  U3_CHECK (buf->get_flag (BufFlags::convolution_data), "- data not support convlution");
 
   const auto    buf_width  = buf->get_dim_var (Dims::width);
   const auto    buf_height = buf->get_dim_var (Dims::height);

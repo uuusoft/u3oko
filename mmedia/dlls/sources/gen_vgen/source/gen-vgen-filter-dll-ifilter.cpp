@@ -1,6 +1,6 @@
 /**
 \file       gen-vgen-filter-dll-ifilter.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.07.2016
 \project    u3_gen_vgen
 */
@@ -8,15 +8,13 @@
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "gen-vgen-includes_int.hpp"
-#include "mmedia/modules/uuu_log/appl/thread/module-log-exception-logger.hpp"
+#include "mmedia/libs/helpers/thread/generic-thread-func.hpp"
 #include "gen-vgen-info-filter-dll.hpp"
 #include "gen-vgen-filter-dll.hpp"
 #include "mmedia/dlls/doptim/algs/all_algs_impl.hpp"
 
 namespace dlls::sources::gen_vgen
 {
-using ExceptionLogger = ::modules::uuu_log::appl::thread::ExceptionLogger< ::libs::link::ILink::ptr >;
-
 void
 Filter::load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node)
 {
@@ -36,10 +34,9 @@ Filter::load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& 
 
   finfo_.recv_thread_.reset (
     new std::thread (
-      ::libs::helpers::thread::generic_thread_funct< Filter, ExceptionLogger >,
+      ::libs::helpers::thread::generic_thread_funct< Filter, libs::properties::vers::links::mids::mdata2appl >,
       this,
-      ExceptionLogger (::libs::link::ILink::ptr ()),
-      U3_CAST_UINT32 (0)));
+      0u));
 }
 
 

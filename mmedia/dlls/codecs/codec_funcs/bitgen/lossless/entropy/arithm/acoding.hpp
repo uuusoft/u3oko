@@ -1,81 +1,82 @@
 #pragma once
 /**
 \file       acoding.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2017
-
 \project    u3_codec_funcs
 */
+
 #if 0
-/*
-Функция арифмтического кодирования 
-*/
-HRESULT MainCodecObject1::CompressWithACoding( const std::uint8_t *input,
-  INT size_input,
-  std::uint8_t *output,
-  INT *size_compress_output )
+/// Функция арифмтического кодирования
+HRESULT
+MainCodecObject1::CompressWithACoding (const std::uint8_t *input,
+                                       INT                 size_input,
+                                       std::uint8_t       *output,
+                                       INT                *size_compress_output)
 {
-  DEBUG_INFO_CLASS( "MainCodecObject1::CompressWithACoding" );
-  HRESULT hr = S_OK;
+  DEBUG_INFO_CLASS ("MainCodecObject1::CompressWithACoding");
+  HRESULT      hr = S_OK;
   register INT i1 = 0, i2 = 0;
-  BOOL prev_null_escape = false;
-  INT len_prev_escape = 0;
+  BOOL         prev_null_escape = false;
+  INT          len_prev_escape  = 0;
   FINALLY_BEGIN
 
-    *size_compress_output = 0;
-  encode_symbol(symbol,cum_freq)
-    int symbol;                    /* Кодиpуемый символ     */
-  int cum_freq[];                /* Hакапливаемые частоты */
-  {   long range;                    /* Шиpина текущего       */
-  range = ( long)(high-low)+1;    /* кодового интеpвала    */
-  high = low +                   /* Сужение интеpвала ко- */
-    (range*cum_freq[symbol-1] ) /cum_freq[0]-1; /*  дов  до */
-  low = low +                    /* выделенного для symbol*/
-    (range*cum_freq[symbol] ) /cum_freq[0];
-  for (;;) {                     /* Цикл по выводу битов  */
-    if (high<Half ) {           /* Если в нижней половине*/
-      bits_plus_follow(0);   /* исходного интеpвала,  */
-    }                          /* то вывод 0            */
-    else if ( low>=Half ) {      /* Если в веpхней, то    */
-      bit_plus_follow(1 );    /* вывод 1, а затем      */
-      low -= Half;           /* убpать известную у    */
-      high -= Half;          /* гpаниц общую часть    */
-    }
-    else if ( low>=First_qtr    /* Если текущий интеpвал */
-      && high<Third_qtr) { /* содеpжит сеpедину ис- */
-        bits_to_follow +=1;    /* ходного, то вывод еще */
-        low -= First_qtr;      /* одного обpатного бита */
-        high -= First_qtr;     /* позже, а сейчас       */
-    }                          /* убpать общую часть    */
-    else break;                /* Иначе выйти из цикла  */
-    low = 2*low;               /* Расшиpить текущий pа- */
-    high = 2*high+1;           /* бочий кодовый интеpвал*/
-  }
-  }
-
-  //собственно кодирование
-  for( i1 = 0; i1 < ::dlls::codecs::consts::count_elements_macroblock; i1++ )
+  *size_compress_output = 0;
+  encode_symbol (symbol, cum_freq) int symbol;     /* Кодиpуемый символ     */
+  int                                  cum_freq[]; /* Hакапливаемые частоты */
   {
+    long range;                                              /* Шиpина текущего       */
+    range = (long) (high - low) + 1;                         /* кодового интеpвала    */
+    high  = low +                                            /* Сужение интеpвала ко- */
+           (range * cum_freq[symbol - 1]) / cum_freq[0] - 1; /*  дов  до */
+    low = low +                                              /* выделенного для symbol*/
+          (range * cum_freq[symbol]) / cum_freq[0];
+    for (;;)
+    { /* Цикл по выводу битов  */
+      if (high < Half)
+      {                       /* Если в нижней половине*/
+        bits_plus_follow (0); /* исходного интеpвала,  */
+      } /* то вывод 0            */
+      else if (low >= Half)
+      {                      /* Если в веpхней, то    */
+        bit_plus_follow (1); /* вывод 1, а затем      */
+        low -= Half;         /* убpать известную у    */
+        high -= Half;        /* гpаниц общую часть    */
+      }
+      else if (low >= First_qtr /* Если текущий интеpвал */
+               && high < Third_qtr)
+      {                      /* содеpжит сеpедину ис- */
+        bits_to_follow += 1; /* ходного, то вывод еще */
+        low -= First_qtr;    /* одного обpатного бита */
+        high -= First_qtr;   /* позже, а сейчас       */
+      } /* убpать общую часть    */
+      else
+        break;             /* Иначе выйти из цикла  */
+      low  = 2 * low;      /* Расшиpить текущий pа- */
+      high = 2 * high + 1; /* бочий кодовый интеpвал*/
+    }
+  }
 
-    //встречен не нулевой символ
-    if( input[ i1 ] )
+  // собственно кодирование
+  for (i1 = 0; i1 < ::dlls::codecs::consts::count_elements_macroblock; i1++)
+  {
+    // встречен не нулевой символ
+    if (input[i1])
     {
-
-      //если до этого была нулевая последовательность - надо сформировать соотвествующий байты
-      if( prev_null_escape )
+      // если до этого была нулевая последовательность - надо сформировать соотвествующий байты
+      if (prev_null_escape)
       {
-        output[ (*size_compress_output )++ ] = 0;
-        output[ (*size_compress_output )++ ] = len_prev_escape;
+        output[(*size_compress_output)++] = 0;
+        output[(*size_compress_output)++] = len_prev_escape;
 
         prev_null_escape = false;
-        len_prev_escape = 0;
+        len_prev_escape  = 0;
       };
 
-      //заносим собтсвенно указанное число
-      output[ (*size_compress_output )++ ] = input[ i1 ];
-
+      // заносим собтсвенно указанное число
+      output[(*size_compress_output)++] = input[i1];
     }
-    //встречен нулевой символ
+    // встречен нулевой символ
     else
     {
       len_prev_escape++;
@@ -93,18 +94,16 @@ HRESULT MainCodecObject1::CompressWithACoding( const std::uint8_t *input,
         len_prev_escape = 0;
       };
 #  endif
-
     };
-
   };
 
 
-  //если последний символ был пустой - его то-же надо зафиксировать
-  if( prev_null_escape )
+  // если последний символ был пустой - его то-же надо зафиксировать
+  if (prev_null_escape)
   {
-    output[ (*size_compress_output )++ ] = 0;
-    output[ (*size_compress_output )++ ] = len_prev_escape;
-    prev_null_escape = false;
+    output[(*size_compress_output)++] = 0;
+    output[(*size_compress_output)++] = len_prev_escape;
+    prev_null_escape                  = false;
   };
 
 
@@ -131,8 +130,7 @@ HRESULT MainCodecObject1::CompressWithACoding( const std::uint8_t *input,
 #  endif
 
 
-
-  FINALLY_END( "MainCodecObject1::CompressWithACoding" );
+  FINALLY_END ("MainCodecObject1::CompressWithACoding");
   return hr;
 };
 

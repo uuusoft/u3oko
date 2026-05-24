@@ -1,8 +1,8 @@
 /**
 \file       time-noise--transform-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.07.2016
-\project    uuu_time_filter_noise
+\project    u3_time_filter_noise
 */
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
@@ -28,13 +28,11 @@ Filter::itransform ()
   }
 #if 0
   ::libs::helpers::statistic::ExpandedTimes::infos_type info;
-
   {
-    auto                                                       link2appl = U3_CAST_PROP (::libs::properties::vers::links::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ())->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
-    ::libs::helpers::statistic::helpers::functors::TStatLogger dump (link2appl);
+    auto             link2appl = U3_CAST_PROP (::libs::properties::vers::links::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ())->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
+    syn::TStatLogger dump (link2appl);
     dump (finfo_.expand_time_algs_);
   }
-
   ::libs::helpers::statistic::helpers::functors::TStatReset reset;
   reset (finfo_.expand_time_algs_);
 #endif

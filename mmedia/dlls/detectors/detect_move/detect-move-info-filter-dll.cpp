@@ -1,6 +1,6 @@
 /**
 \file       detect-move-info-filter-dll.cpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2018
 \project    u3_detect_move
 */
@@ -76,7 +76,6 @@ InfoFilter::sync_int (bool force)
     return;
   }
 
-  U3_LOG_DATA_DBG ("sync_int:update diff properties");
   {
     auto& last = diff_props_.diffs_.back ();
 

@@ -1,10 +1,10 @@
 #pragma once
 /**
 \file       add-ptrs2type-defines.hpp
-\author     Erashov Anton erashov2026@proton.me
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2018
 \project    u3_defines
-\brief      Объявление макроса для декларирования типов-указателей на объекты  заданного типа.
+\brief      Объявление макроса для декларирования типов-указателей на объекты  заданного типа
 */
 
 /// Вспомогательный макрос для декларирования указателей на экземпляры типа внутри типа

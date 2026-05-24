@@ -2,8 +2,8 @@
 /**
 \file       time-noise-ifilter-impl.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me
-\project    uuu_time_filter_noise
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_time_filter_noise
 */
 
 namespace dlls::filter_noise::time
@@ -30,9 +30,9 @@ class IFilterImpl
   IFilterImpl (const IFilterImpl& obj)            = delete;
 
   //  IFilterImpl interface
-  virtual void transform_int (const ::libs::core::graph::NodeID&, ::libs::icore::impl::var1::obj::dll::TransformInfo&, InfoFilter&, ::libs::bufs::Bufs*) = 0;
-  virtual void load_int ()                                                                                                                               = 0;
-  virtual void sync_int ()                                                                                                                               = 0;
+  virtual void transform_int (const ::libs::core::graph::NodeID&, syn::TransformInfo&, InfoFilter&, ::libs::bufs::Bufs*) = 0;
+  virtual void load_int ()                                                                                               = 0;
+  virtual void sync_int ()                                                                                               = 0;
 
   protected:
   bool sync_request_;   //< Флаг-требование синхронизировать внутренние данные к внешним

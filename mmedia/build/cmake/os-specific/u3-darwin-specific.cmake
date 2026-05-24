@@ -1,8 +1,7 @@
-# author      Erashov Anton erashov2026@proton.me
+# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 # date        29.08.2024
 # copyright   Erashov A.I.
 # file        u3-darwin-specific.cmake
-# U3_THIS_COMMERCIAL_PART_SOURCE_CODE
 
 set(U3_SHARED_COMPILE_OPTIONS_CPP ${U3_SHARED_COMPILE_OPTIONS_CPP} -std=${U3_CPP_STANDARD} -frtti -fexceptions -pthread)
 set(U3_SHARED_LINK_OPTIONS_CPP ${U3_SHARED_LINK_OPTIONS_CPP} -Wl,-rpath,@executable_path -lpthread -ldl)
