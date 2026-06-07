@@ -32,7 +32,6 @@ void
 Filter::load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node)
 {
   init_pts (&info->pts_);
-
   finfo_.load (node);
 
   auto ioptim = ::libs::iproperties::helpers::cast_prop_demons ()->get_optim_lockfree ()->impl ();

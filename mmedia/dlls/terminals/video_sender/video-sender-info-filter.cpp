@@ -12,9 +12,7 @@
 
 namespace dlls::terminals::video_sender
 {
-InfoFilter::InfoFilter () :
-  rprops_ (nullptr),
-  count_frames_ (0)
+InfoFilter::InfoFilter ()
 {
   rprops_ = ::libs::iproperties::helpers::create_event_in_list< syn::EndPointProp > (ef_props_);
   str2props_.insert (str2prop_type::value_type (ef_props_.front ()->get_mid (), rprops_));

@@ -13,8 +13,7 @@
 
 namespace dlls::gens::vgen_mops
 {
-InfoFilter::InfoFilter () :
-  rprops_ (nullptr)
+InfoFilter::InfoFilter ()
 {
   init ();
 }

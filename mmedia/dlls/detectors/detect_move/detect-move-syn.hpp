@@ -22,4 +22,6 @@ using TransformInfo         = ::libs::icore::impl::var1::obj::dll::TransformInfo
 using CallInterfInfo        = ::libs::icore::impl::var1::obj::dll::CallInterfInfo;
 using FilterInfo            = ::libs::icore::impl::var1::obj::FilterInfo;
 using ConnectInfo           = ::libs::icore::impl::var1::obj::ConnectInfo;
+using DiffImpl              = ::dlls::gens::vgen_diff::lib::DiffImpl;
+using MopsImpl              = ::dlls::gens::vgen_mops::lib::MopsImpl;
 }   // namespace dlls::detectors::detect_move::syn

@@ -19,6 +19,6 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
 
   void init ();
 
-  syn::VideoMorphologyProp::raw_ptr rprops_;   //< Настроенный указатель на свойства (для удобства)
+  syn::VideoMorphologyProp::raw_ptr rprops_ = nullptr;   //< Настроенный указатель на свойства (для удобства)
 };
 }   // namespace dlls::gens::vgen_mops

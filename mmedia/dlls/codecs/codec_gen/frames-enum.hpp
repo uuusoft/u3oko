@@ -18,6 +18,7 @@ enum class Frames : std::uint32_t
   bframe   = 0x4    //< B кадр
 };
 
+// EAI-REFACT
 /// Функция сброса поля в текстовый вид
 /// \param[in]  val указатель на поле
 /// \return     текстовое описание поля

@@ -12,12 +12,6 @@
 namespace dlls::convertors::all2rgb
 {
 void
-Filter::alloc_bufs ()
-{
-}
-
-
-void
 Filter::alloc_temp_bufs ()
 {
   const syn::IVideoBuf::raw_ptr sbuf          = (*pbuf_)[finfo_.rprops_->buf_.indx_sbuf_];
@@ -167,7 +161,6 @@ Filter::convert_bufs ()
 void
 Filter::itransform ()
 {
-  alloc_bufs ();
   alloc_temp_bufs ();
   convert_bufs ();
 }

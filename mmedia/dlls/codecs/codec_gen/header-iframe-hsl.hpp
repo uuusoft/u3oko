@@ -47,9 +47,9 @@ struct HeaderIFrameHSL final {
     return true;
   }
 
-  BaseHeaderFrame         base_part_;     //< Базовая (плоская) часть
-  std::uint32_t           off_lhs_[3];    //< смещение независимо сжатых потоков HSL
-  std::uint32_t           size_lhs_[3];   //< размер независимо сжатых потоков HSL
-  syn::VideoCodecFlatProp cinfo_;         //< установки кодека, используемые для данного кадра (и дальнешей последовательности кадров, зависящих от данного)
+  BaseHeaderFrame         base_part_;                   //< Базовая (плоская) часть
+  std::uint32_t           off_lhs_[3]  = { 0, 0, 0 };   //< смещение независимо сжатых потоков HSL
+  std::uint32_t           size_lhs_[3] = { 0, 0, 0 };   //< размер независимо сжатых потоков HSL
+  syn::VideoCodecFlatProp cinfo_;                       //< установки кодека, используемые для данного кадра (и дальнешей последовательности кадров, зависящих от данного)
 };
 }   // namespace dlls::codecs::codec_gen

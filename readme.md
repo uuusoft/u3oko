@@ -1,8 +1,6 @@
-Описание в разработке
-author Erashov Anton erashov2004@yandex.ru
-date 06.05.2026
-copyright Erashov A.I.
-file readme.md
+Описание в разработке, будет вам и белка будет и свисток
+u3oko
+Open source universal intelligent IP video surveillance system.
 
 dependencies
 all:

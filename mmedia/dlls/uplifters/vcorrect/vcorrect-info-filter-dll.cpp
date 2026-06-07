@@ -12,9 +12,7 @@
 
 namespace dlls::uplifters::vcorrect
 {
-InfoFilter::InfoFilter () :
-  rprops_ (nullptr),
-  synced_ (false)
+InfoFilter::InfoFilter ()
 {
   init ();
 }

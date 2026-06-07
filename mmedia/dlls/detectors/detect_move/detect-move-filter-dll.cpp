@@ -11,13 +11,6 @@
 
 namespace dlls::detectors::detect_move
 {
-Filter::Filter () :
-  count_detects_ (0),
-  time_first_detect_ (boost::posix_time::microsec_clock::universal_time ())
-{
-}
-
-
 void
 Filter::load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node)
 {

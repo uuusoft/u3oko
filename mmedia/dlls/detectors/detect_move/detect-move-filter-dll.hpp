@@ -14,7 +14,7 @@ class Filter final :
   protected ::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >
 {
   public:
-  Filter ();
+  Filter ()  = default;
   ~Filter () = default;
 
   private:
@@ -29,8 +29,8 @@ class Filter final :
   void         itransform (syn::TransformInfo& info);
   std::int32_t get_move_count (syn::IVideoBuf::raw_ptr);
 
-  ::libs::optim::io::hioptim count_if_ge_;         //< Быстрая функция вычисления "если больше"
-  std::int64_t               count_detects_;       //< Счетчик событий фиксации движения в последовательности
-  boost::posix_time::ptime   time_first_detect_;   //< Время первого события детекции в текущей последовательности
+  ::libs::optim::io::hioptim count_if_ge_;                                                                //< Быстрая функция вычисления "если больше"
+  std::int64_t               count_detects_     = 0;                                                      //< Счетчик событий фиксации движения в последовательности
+  boost::posix_time::ptime   time_first_detect_ = boost::posix_time::microsec_clock::universal_time ();   //< Время первого события детекции в текущей последовательности
 };
 }   // namespace dlls::detectors::detect_move

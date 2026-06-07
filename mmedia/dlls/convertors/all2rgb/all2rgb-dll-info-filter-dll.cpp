@@ -10,8 +10,7 @@
 
 namespace dlls::convertors::all2rgb
 {
-InfoFilter::InfoFilter () :
-  rprops_ (nullptr)
+InfoFilter::InfoFilter ()
 {
   init ();
 }

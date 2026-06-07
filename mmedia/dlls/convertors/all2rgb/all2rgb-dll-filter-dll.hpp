@@ -27,7 +27,6 @@ class Filter final :
 
   void init_pts (::libs::icore::impl::var1::obj::ConnectInfo* info);
   void itransform ();
-  void alloc_bufs ();
   void alloc_temp_bufs ();
   void convert_bufs ();
 

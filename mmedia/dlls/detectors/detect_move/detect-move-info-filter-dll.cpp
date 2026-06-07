@@ -11,9 +11,7 @@
 
 namespace dlls::detectors::detect_move
 {
-InfoFilter::InfoFilter () :
-  rprops_ (nullptr),
-  synced_ (false)
+InfoFilter::InfoFilter ()
 {
   init ();
 }

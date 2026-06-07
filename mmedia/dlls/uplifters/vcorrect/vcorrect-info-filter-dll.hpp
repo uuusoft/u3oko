@@ -15,11 +15,11 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
 
   void init ();
 
-  syn::VideoCorrectProp::raw_ptr rprops_;          //< Настроенный указатель на свойства (для удобства)
-  syn::ICorrectImage::weak_ptr   active_impl_;     //< Выбранная на данный момент реализация коррекции изображения Может например прийти вместе с сообщением ::libs::ievents::runtime::interf::InterfCorrectImageEvent
-  syn::ICorrectImage::ptr        soft_impl_;       //< Програмная реализация, которая присутствует всегда
-  syn::ICorrectImage::weak_ptr   hardware_impl_;   //< Аппаратная реализация коррекции изображения Может например прийти вместе с сообщением ::libs::ievents::runtime::interf::InterfCorrectImageEvent
-  bool                           synced_;          //< Флаг требования синхронизации
+  syn::VideoCorrectProp::raw_ptr rprops_ = nullptr;   //< Настроенный указатель на свойства (для удобства)
+  syn::ICorrectImage::weak_ptr   active_impl_;        //< Выбранная на данный момент реализация коррекции изображения Может например прийти вместе с сообщением ::libs::ievents::runtime::interf::InterfCorrectImageEvent
+  syn::ICorrectImage::ptr        soft_impl_;          //< Програмная реализация, которая присутствует всегда
+  syn::ICorrectImage::weak_ptr   hardware_impl_;      //< Аппаратная реализация коррекции изображения Может например прийти вместе с сообщением ::libs::ievents::runtime::interf::InterfCorrectImageEvent
+  bool                           synced_ = false;     //< Флаг требования синхронизации
 
   private:
   // internal types

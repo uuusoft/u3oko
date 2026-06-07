@@ -9,9 +9,7 @@
 namespace dlls::codecs::codec_gen
 {
 struct FrameDims final {
-  ~FrameDims ()
-  {
-  }
+  ~FrameDims () = default;
 
   void
   reset ()

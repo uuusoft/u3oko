@@ -10,8 +10,7 @@
 
 namespace dlls::detectors::detect_face
 {
-InfoFilter::InfoFilter () :
-  rprops_ (nullptr)
+InfoFilter::InfoFilter ()
 {
   init ();
 }
