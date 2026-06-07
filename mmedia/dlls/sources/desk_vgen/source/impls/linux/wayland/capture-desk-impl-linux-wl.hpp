@@ -35,9 +35,11 @@ class CaptureDeskImplLinux : public ::dlls::sources::desk_vgen::ICaptureDeskImpl
   virtual void get_buf_int (const syn::SourceImplInfo& props_info, CaptureDeskInfo& info) override;
 
   void thread_func ();
+
 #  if 0
   std::optional< portal::SharedScreen > share_info_;   //<
 #  endif
+
   std::thread work_thread_;   //<
   // auto pwStream_ = pw::PipeWireStream(shareInfo.value(), true);
   //  xlib_display_type display_;   //<

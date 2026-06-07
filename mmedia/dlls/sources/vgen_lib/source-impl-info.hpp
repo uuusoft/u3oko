@@ -13,15 +13,14 @@ struct SourceImplInfo final {
     const syn::VideoDriverProp::craw_ptr        props         = nullptr,
     const syn::VideoDriverCaptureProp::craw_ptr capture_props = nullptr,
     const syn::LinksVideoDriverProp::craw_ptr   links_props   = nullptr) :
-
     props_ (props),
     capture_props_ (capture_props),
     links_props_ (links_props)
   {
   }
 
-  syn::VideoDriverProp::craw_ptr        props_;           //<
-  syn::VideoDriverCaptureProp::craw_ptr capture_props_;   //<
-  syn::LinksVideoDriverProp::craw_ptr   links_props_;     //<
+  syn::VideoDriverProp::craw_ptr        props_         = nullptr;   //<
+  syn::VideoDriverCaptureProp::craw_ptr capture_props_ = nullptr;   //<
+  syn::LinksVideoDriverProp::craw_ptr   links_props_   = nullptr;   //<
 };
 }   // namespace dlls::sources::gen_lib

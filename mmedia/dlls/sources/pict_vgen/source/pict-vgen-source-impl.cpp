@@ -28,11 +28,7 @@ image2frame (const std::string& val)
 }
 
 
-SourceImpl::SourceImpl () :
-  indx_image_file_ (0),
-  image2frame_style_ (Image2Frames::scroll),
-  off_first_image_ (0.0F),
-  icapture_ (std::make_shared< syn::IHardwareCapture > ())
+SourceImpl::SourceImpl ()
 {
   time_last_change_file_ = boost::posix_time::microsec_clock::universal_time ();
   exts_.fill (0);

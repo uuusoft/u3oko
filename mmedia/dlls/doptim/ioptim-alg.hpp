@@ -20,11 +20,7 @@ class IOptimAlg
   // ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IOptimAlg)
 
-  IOptimAlg () :
-    sel_ (&func_)
-  {
-  }
-
+  IOptimAlg ()          = default;
   virtual ~IOptimAlg () = default;
 
   syn::hioptim
@@ -51,7 +47,7 @@ class IOptimAlg
   //  IOptimAlg interface
   virtual void sync_impl_int (const ::libs::optim::io::TInit& iinfo) = 0;
 
-  syn::hioptim::func_type func_;   //<
-  syn::hioptim            sel_;    //<
+  syn::hioptim::func_type func_;             //<
+  syn::hioptim            sel_ { &func_ };   //<
 };
 }   // namespace dlls::doptim::impl

@@ -1,32 +1,40 @@
-Описание в разработке, будет вам и белка будет и свисток
-u3oko
-Open source universal intelligent IP video surveillance system.
+# u3oko
 
-dependencies
-all:
+Описание в разработке, скоро будет вам и белка будет и свисток.
 
-- perl https://strawberryperl.com/
-- git
-- wget
-- python https://www.python.org/
-- nasm https://www.nasm.us/
-- clang
+Открытая кроссплатформенная масштабируемая система видеонаблюдения.
 
-windows:
+Поддерживаемые операционные системы.
 
-- msys2 https://www.msys2.org/
-- cygwin https://www.cygwin.com/install.html
+- Windows
+- Android
+- Linux (x86/ARM)
+- Darwin
 
-orangepi:
-android:
-linux:
-raspberrypi:
+Зависимости.
+
+- all
+  - perl https://strawberryperl.com/
+  - git
+  - wget
+  - python https://www.python.org/
+  - nasm https://www.nasm.us/
+  - clang
+
+- windows:
+  - msys2 https://www.msys2.org/
+  - cygwin https://www.cygwin.com/install.html
+
+- orangepi:
+- android:
+- linux:
+- raspberrypi:
+  - meson
+  - autoconf
+  - automake
+  - libtool
+  - pkg-config
+
 sudo apt-get update
 sudo apt-get install autoconf automake libtool
 sudo apt-get update && sudo apt-get install pkg-config
-
-- meson
-- autoconf
-- automake
-- libtool
-- pkg-config

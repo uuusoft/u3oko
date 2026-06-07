@@ -17,6 +17,7 @@ class Filter final :
   Filter ();
   virtual ~Filter () = default;
 
+  // EAI-REFACT
   void thread_func_impl (std::uint32_t indx_thread);
   void thread_postfunc_impl (std::uint32_t indx_thread);
 

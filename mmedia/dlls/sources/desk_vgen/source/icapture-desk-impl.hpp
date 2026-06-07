@@ -10,27 +10,21 @@ namespace dlls::sources::desk_vgen
 {
 struct CaptureDeskInfo final {
   explicit CaptureDeskInfo (syn::IBlockMem::ptr& rgb_buf) :
-    rgb_buf_ (rgb_buf),
-    size_dest_data_ (0),
-    width_dest_ (0),
-    height_dest_ (0),
-    stride_dest_ (0)
+    rgb_buf_ (rgb_buf)
   {
   }
 
   syn::IBlockMem::ptr rgb_buf_;
-  std::uint32_t       size_dest_data_;
-  std::uint32_t       width_dest_;
-  std::uint32_t       height_dest_;
-  std::uint32_t       stride_dest_;
+  std::uint32_t       size_dest_data_ = 0;
+  std::uint32_t       width_dest_     = 0;
+  std::uint32_t       height_dest_    = 0;
+  std::uint32_t       stride_dest_    = 0;
 };
 
 class ICaptureDeskImpl
 {
   public:
-  virtual ~ICaptureDeskImpl ()
-  {
-  }
+  virtual ~ICaptureDeskImpl () = default;
 
   void
   get_buf (const syn::SourceImplInfo& props_info, CaptureDeskInfo& info)
@@ -39,9 +33,7 @@ class ICaptureDeskImpl
   }
 
   protected:
-  ICaptureDeskImpl ()
-  {
-  }
+  ICaptureDeskImpl () = default;
 
   private:
   // ICaptureDeskImpl
