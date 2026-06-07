@@ -100,8 +100,8 @@ cp -r ./assets/xmls/templates  ${U3_BIN}/${U3_OS}/${U3_BUILD}
 if [[ ${U3_BUILD} != "Debug" ]]; then
     #du -ch ${U3_BIN}/${U3_OS}/${U3_BUILD}/*.so | tail -n 1
     du -chx ${U3_BIN}/${U3_OS}/${U3_BUILD}/*.so
-    #strip --strip-all ${U3_BIN}/${U3_OS}/${U3_BUILD}/mpl_uuu_appl
-    #strip -g -S -d --strip-debug ${U3_BIN}/${U3_OS}/${U3_BUILD}/mpl_uuu_appl
+    #strip --strip-all ${U3_BIN}/${U3_OS}/${U3_BUILD}/mpl_mappl
+    #strip -g -S -d --strip-debug ${U3_BIN}/${U3_OS}/${U3_BUILD}/mpl_mappl
     
     if [[ ${U3_AS_LIBS} == "0" ]]; then
         for file in ${U3_BIN}/${U3_OS}/${U3_BUILD}/*.so; do
@@ -115,9 +115,9 @@ fi
 du -chx ${U3_BIN}/${U3_OS}/${U3_BUILD}/*.so
 
 # run
-#ps -a | grep mpl_uuu_appl | grep -v grep | awk '{print $2}' | xargs kill
-#ps -a | grep mpl_uuu_appl | awk '{print $1}' | xargs kill -9
-#gnome-terminal -- bash -c "#cd ${U3_BIN}/${U3_OS}/${U3_BUILD} && ./mpl_uuu_appl; exec bash"
+#ps -a | grep mpl_mappl | grep -v grep | awk '{print $2}' | xargs kill
+#ps -a | grep mpl_mappl | awk '{print $1}' | xargs kill -9
+#gnome-terminal -- bash -c "#cd ${U3_BIN}/${U3_OS}/${U3_BUILD} && ./mpl_mappl; exec bash"
 #gnome-terminal -- bash -c "echo Hello World; exec bash"
-#perf record -g ./mpl_uuu_appl
+#perf record -g ./mpl_mappl
 #pert report

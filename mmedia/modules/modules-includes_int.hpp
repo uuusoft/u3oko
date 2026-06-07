@@ -18,7 +18,7 @@
 #include "mmedia/libs/optims/optim/mcalls/libs-optims-optim-mcalls-includes.hpp"
 #include "mmedia/libs/iproperties/libs-iproperties-includes.hpp"
 
-#include "mmedia/modules/uuu_log/module-log-includes.hpp"
+#include "mmedia/modules/mlog/module-log-includes.hpp"
 
 #include "mmedia/libs/icore/libs-icore-includes.hpp"
 

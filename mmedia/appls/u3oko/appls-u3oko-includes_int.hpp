@@ -23,7 +23,7 @@
 
 #include "mmedia/libs/optims/optims.hpp"
 
-#include "mmedia/modules/uuu_log/module-log-includes.hpp"
+#include "mmedia/modules/mlog/module-log-includes.hpp"
 
 #include "mmedia/libs/imdata_events/includes.hpp"
 #include "mmedia/libs/igui_events/includes.hpp"

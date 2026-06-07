@@ -1,0 +1,10 @@
+#pragma once
+/**
+\file       funcs_for_optim.hpp
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\date       01.01.2017
+\project    mappl
+*/
+
+// old shit
+// void debug_func_for_optim1 (const ::libs::properties::vers::links::links_type* plinks);

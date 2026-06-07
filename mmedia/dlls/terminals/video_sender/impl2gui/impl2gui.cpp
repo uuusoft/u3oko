@@ -39,7 +39,7 @@ Impl2Gui::fill_frame (const syn::TransformInfo& info, void* pmem)
 
   try
   {
-    auto       header = ::libs::helpers::casts::reinterpret_cast_helper< ::modules::uuu_gui::appl::io::VideoIO* > (pmem);
+    auto       header = ::libs::helpers::casts::reinterpret_cast_helper< ::modules::mgui::appl::io::VideoIO* > (pmem);
     const auto bbuf   = (**info.ibuf_)[utils::dbufs::video::consts::offs::lit];
 
     U3_CHECK (header, "empty header video frame");
@@ -100,7 +100,7 @@ bool
 Impl2Gui::is_empty_frame (const void* pmem) const
 {
   U3_ASSERT (pmem);
-  auto header = ::libs::helpers::casts::reinterpret_cast_helper< const ::modules::uuu_gui::appl::io::VideoIO* > (pmem);
+  auto header = ::libs::helpers::casts::reinterpret_cast_helper< const ::modules::mgui::appl::io::VideoIO* > (pmem);
   return header->in_.is_valid () ? false : true;
 }
 
@@ -123,7 +123,7 @@ Impl2Gui::send_frame (
       }
     }
 
-    std::size_t size_mem = sizeof (::modules::uuu_gui::appl::io::VideoIO) + 16;
+    std::size_t size_mem = sizeof (::modules::mgui::appl::io::VideoIO) + 16;
     {
       std::size_t count_bufs = 0;
 

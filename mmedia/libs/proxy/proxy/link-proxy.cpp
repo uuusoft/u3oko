@@ -9,30 +9,30 @@
 #include "link-proxy.hpp"
 
 #if (U3_MODULES_ENABLE_EVENTS == 1)
-extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_u3_events ();
-extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_u3_events (::libs::link::appl::IApplication* appl);
+extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_mevents ();
+extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_mevents (::libs::link::appl::IApplication* appl);
 #endif
 
 #ifdef U3_GUI_ENABLE
-extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_uuu_gui ();
-extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_uuu_gui (::libs::link::appl::IApplication* appl);
+extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_mgui ();
+extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_mgui (::libs::link::appl::IApplication* appl);
 #endif
 
 #if (U3_MODULES_ENABLE_HTTP == 1)
-extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_uuu_http ();
-extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_uuu_http (::libs::link::appl::IApplication* appl);
+extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_mhttp ();
+extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_mhttp (::libs::link::appl::IApplication* appl);
 #endif
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_uuu_log ();
-extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_uuu_log (::libs::link::appl::IApplication* appl);
+extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_mlog ();
+extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_mlog (::libs::link::appl::IApplication* appl);
 
 #if (U3_MODULES_ENABLE_MDATA == 1)
-extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_uuu_mdata ();
-extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_uuu_mdata (::libs::link::appl::IApplication* appl);
+extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_mdata ();
+extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_mdata (::libs::link::appl::IApplication* appl);
 #endif
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_uuu_storage ();
-extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_uuu_storage (::libs::link::appl::IApplication* appl);
+extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_mstorage ();
+extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_mstorage (::libs::link::appl::IApplication* appl);
 
 extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_appl_u3oko ();
 extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_appl_u3oko (::libs::link::appl::IApplication* appl);
@@ -45,36 +45,36 @@ get_create_module_funct (const std::string& plib_id)
 {
   const auto lib_id = libs::helpers::dlls::undecorate_dll_name (plib_id);
 #if (U3_MODULES_ENABLE_EVENTS == 1)
-  if (lib_id == "mpl_u3_events")
+  if (lib_id == "mpl_mevents")
   {
-    return create_impl_mpl_u3_events;
+    return create_impl_mpl_mevents;
   }
 #endif
 #ifdef U3_GUI_ENABLE
-  if (lib_id == "mpl_uuu_gui")
+  if (lib_id == "mpl_mgui")
   {
-    return create_impl_mpl_uuu_gui;
+    return create_impl_mpl_mgui;
   }
 #endif
 #if (U3_MODULES_ENABLE_HTTP == 1)
-  if (lib_id == "mpl_uuu_http")
+  if (lib_id == "mpl_mhttp")
   {
-    return create_impl_mpl_uuu_http;
+    return create_impl_mpl_mhttp;
   }
 #endif
-  if (lib_id == "mpl_uuu_log")
+  if (lib_id == "mpl_mlog")
   {
-    return create_impl_mpl_uuu_log;
+    return create_impl_mpl_mlog;
   }
 #if (U3_MODULES_ENABLE_MDATA == 1)
-  if (lib_id == "mpl_uuu_mdata")
+  if (lib_id == "mpl_mdata")
   {
-    return create_impl_mpl_uuu_mdata;
+    return create_impl_mpl_mdata;
   }
 #endif
-  if (lib_id == "mpl_uuu_storage")
+  if (lib_id == "mpl_mstorage")
   {
-    return create_impl_mpl_uuu_storage;
+    return create_impl_mpl_mstorage;
   }
   if (lib_id == "appl_u3oko")
   {
@@ -90,36 +90,36 @@ get_delete_module_funct (const std::string& plib_id)
 {
   const auto lib_id = libs::helpers::dlls::undecorate_dll_name (plib_id);
 #if (U3_MODULES_ENABLE_EVENTS == 1)
-  if (lib_id == "mpl_u3_events")
+  if (lib_id == "mpl_mevents")
   {
-    return delete_impl_mpl_u3_events;
+    return delete_impl_mpl_mevents;
   }
 #endif
 #ifdef U3_GUI_ENABLE
-  if (lib_id == "mpl_uuu_gui")
+  if (lib_id == "mpl_mgui")
   {
-    return delete_impl_mpl_uuu_gui;
+    return delete_impl_mpl_mgui;
   }
 #endif
 #if (U3_MODULES_ENABLE_HTTP == 1)
-  if (lib_id == "mpl_uuu_http")
+  if (lib_id == "mpl_mhttp")
   {
-    return delete_impl_mpl_uuu_http;
+    return delete_impl_mpl_mhttp;
   }
 #endif
-  if (lib_id == "mpl_uuu_log")
+  if (lib_id == "mpl_mlog")
   {
-    return delete_impl_mpl_uuu_log;
+    return delete_impl_mpl_mlog;
   }
 #if (U3_MODULES_ENABLE_MDATA == 1)
-  if (lib_id == "mpl_uuu_mdata")
+  if (lib_id == "mpl_mdata")
   {
-    return delete_impl_mpl_uuu_mdata;
+    return delete_impl_mpl_mdata;
   }
 #endif
-  if (lib_id == "mpl_uuu_storage")
+  if (lib_id == "mpl_mstorage")
   {
-    return delete_impl_mpl_uuu_storage;
+    return delete_impl_mpl_mstorage;
   }
   if (lib_id == "appl_u3oko")
   {

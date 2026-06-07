@@ -15,7 +15,7 @@
 #include "libs-optims-optim-mcalls-includes.hpp"
 #include "helpers/buf_divide_funcs.hpp"
 #include "mmedia/libs/iproperties/libs-iproperties-includes.hpp"
-#include "mmedia/modules/uuu_log/module-log-includes.hpp"
+#include "mmedia/modules/mlog/module-log-includes.hpp"
 
 #include "mmedia/libs/proxy/proxy/ioptim-proxy.hpp"
 #include "mmedia/libs/proxy/proxy/ievents-proxy.hpp"

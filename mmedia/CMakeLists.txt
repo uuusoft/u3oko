@@ -78,7 +78,7 @@ include("./build/cmake/module-specific/u3-shared-3rd-libs-list.cmake")
 include_directories("${U3_BUILD_PATH_TO_LIBS}/../")
 
 # debug test compile
-include("${U3_BUILD_PATH_TO_LIBS}/modules/uuu_test/_make/module-test.cmake")
+include("${U3_BUILD_PATH_TO_LIBS}/modules/mtest/_make/module-test.cmake")
 
 # internal targets
 include("${U3_BUILD_PATH_TO_LIBS}/libs/libs-list.cmake")

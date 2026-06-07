@@ -27,7 +27,7 @@
 #include "mmedia/libs/ihttp_events/includes.hpp"
 #include "mmedia/libs/istorage_events/istorage-events-includes.hpp"
 
-#include "mmedia/modules/uuu_log/module-log-includes.hpp"
+#include "mmedia/modules/mlog/module-log-includes.hpp"
 
 #include "mmedia/libs/proxy/proxy/ioptim-proxy.hpp"
 #include "mmedia/libs/proxy/proxy/ievents-proxy.hpp"

@@ -9,8 +9,8 @@
 #include "mmedia/libs/igui_events/includes.hpp"
 #include "mmedia/libs/istorage_events/istorage-events-includes.hpp"
 #include "mmedia/libs/ihttp_events/includes.hpp"
-#include "mmedia/modules/uuu_gui/io/includes.hpp"
-#include "mmedia/modules/uuu_log/module-log-includes.hpp"
+#include "mmedia/modules/mgui/io/includes.hpp"
+#include "mmedia/modules/mlog/module-log-includes.hpp"
 #include "mmedia/libs/ilink/libs-ilink-includes.hpp"
 
 #include "video-sender-syn.hpp"

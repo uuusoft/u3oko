@@ -41,8 +41,8 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     auto temp_link = iproxy->get_connect (
       ::libs::link::CreateInfo (
         type_run,
-        "uuu_appl.exe",
-        "mpl_uuu_log",
+        "mappl.exe",
+        "mpl_mlog",
         appl_info_.company_name_,
         appl_info_.appl_name_,
         "subsys_appl2log",
@@ -78,8 +78,8 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     auto temp_link = iproxy->get_connect (
       ::libs::link::CreateInfo (
         type_run,
-        "uuu_appl.exe",
-        "mpl_u3_events",
+        "mappl.exe",
+        "mpl_mevents",
         appl_info_.company_name_,
         appl_info_.appl_name_,
         "subsys_events",
@@ -99,8 +99,8 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     auto temp_link = iproxy->get_connect (
       ::libs::link::CreateInfo (
         type_run,
-        "uuu_appl.exe",
-        "mpl_uuu_storage",
+        "mappl.exe",
+        "mpl_mstorage",
         appl_info_.company_name_,
         appl_info_.appl_name_,
         "subsys_storage",
@@ -121,8 +121,8 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     auto temp_link = iproxy->get_connect (
       ::libs::link::CreateInfo (
         type_run,
-        "uuu_appl.exe",
-        "mpl_uuu_gui",
+        "mappl.exe",
+        "mpl_mgui",
         company_name_,
         appl_name_,
         "subsys_gui",
@@ -137,8 +137,8 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     auto temp_link = iproxy->get_connect (
       ::libs::link::CreateInfo (
         type_run,
-        "uuu_appl.exe",
-        "mpl_uuu_mdata",
+        "mappl.exe",
+        "mpl_mdata",
         appl_info_.company_name_,
         appl_info_.appl_name_,
         "subsys_data",
@@ -157,8 +157,8 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     auto temp_link = iproxy->get_connect (
       ::libs::link::CreateInfo (
         type_run,
-        "uuu_appl.exe",
-        "mpl_uuu_http",
+        "mappl.exe",
+        "mpl_mhttp",
         appl_info_.company_name_,
         appl_info_.appl_name_,
         "subsys_http",

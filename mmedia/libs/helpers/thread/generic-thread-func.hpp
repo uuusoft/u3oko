@@ -39,15 +39,15 @@ generic_thread_funct (TTOps* ops, const std::uint32_t indx_thread)
     }
     catch (boost::exception& e)
     {
-      modules::uuu_log::ToLog { TTLinkVal, ::libs::ievents::props::modules::log::LogLevels::exception }(boost::diagnostic_information (e));
+      modules::mlog::ToLog { TTLinkVal, ::libs::ievents::props::modules::log::LogLevels::exception }(boost::diagnostic_information (e));
     }
     catch (std::exception& e)
     {
-      modules::uuu_log::ToLog { TTLinkVal, ::libs::ievents::props::modules::log::LogLevels::exception }(e.what ());
+      modules::mlog::ToLog { TTLinkVal, ::libs::ievents::props::modules::log::LogLevels::exception }(e.what ());
     }
     catch (...)
     {
-      modules::uuu_log::ToLog { TTLinkVal, ::libs::ievents::props::modules::log::LogLevels::exception }("unknown... exception");
+      modules::mlog::ToLog { TTLinkVal, ::libs::ievents::props::modules::log::LogLevels::exception }("unknown... exception");
     }
   }
 }

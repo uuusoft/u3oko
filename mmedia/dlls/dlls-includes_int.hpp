@@ -29,4 +29,4 @@
 
 #include "mmedia/libs/proxy/lib-proxy-includes.hpp"
 
-#include "mmedia/modules/uuu_log/module-log-includes.hpp"
+#include "mmedia/modules/mlog/module-log-includes.hpp"

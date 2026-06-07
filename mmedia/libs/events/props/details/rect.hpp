@@ -3,7 +3,7 @@
 \file       rect.hpp
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2017
-\project    u3_events
+\project    mevents
 */
 
 namespace libs::events::props::details

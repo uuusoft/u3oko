@@ -8,12 +8,12 @@
 #include "../../../dlls-includes_int.hpp"
 
 #include "mmedia/libs/igui_events/includes.hpp"
-#include "mmedia/modules/uuu_gui/io/includes.hpp"
+#include "mmedia/modules/mgui/io/includes.hpp"
 #include "mmedia/dlls/sources/vgen_lib/gen-lib-includes.hpp"
 #include "mmedia/libs/icore/impl/var1/libs-icore-impl-var1-includes.hpp"
 
 #include "obj-source-impl-proxy.hpp"
-#include "mmedia/modules/uuu_log/module-log-includes.hpp"
+#include "mmedia/modules/mlog/module-log-includes.hpp"
 
 #include "gen-vgen-syn.hpp"
 #include "consts/gen-vgen-const-vals.hpp"

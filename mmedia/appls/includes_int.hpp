@@ -27,5 +27,5 @@
 
 #include "mmedia/libs/optims/optims.hpp"
 
-#include "mmedia/modules/uuu_log/source/io/events/includes.hpp"
-#include "mmedia/modules/uuu_log/source/helper_log_call_defines.hpp"
+#include "mmedia/modules/mlog/source/io/events/includes.hpp"
+#include "mmedia/modules/mlog/source/helper_log_call_defines.hpp"
