@@ -28,7 +28,7 @@ class WrapperLogEvent final : public BaseLogEvent
     const Acessor&              = Acessor (0),
     ::libs::events::IEvent::ptr = ::libs::events::IEvent::ptr ());
 
-  virtual ~WrapperLogEvent ();
+  virtual ~WrapperLogEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -51,7 +51,7 @@ class WrapperLogEvent final : public BaseLogEvent
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ievents::TimedEvent)
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   //  ievents::Event overrides
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;

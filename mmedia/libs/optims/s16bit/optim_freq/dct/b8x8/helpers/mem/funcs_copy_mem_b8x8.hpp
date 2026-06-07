@@ -3,7 +3,6 @@
 \file       funcs_copy_mem_b8x8.hpp
 \date       01.11.2016
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
-
 \project    u3_optim_libs_freq
 */
 #include "mmedia/libs/optims/s16bit/optim_freq/dct/b8x8/consts/vals.hpp"
@@ -24,7 +23,7 @@ forward (const std::int16_t* in, std::int16_t* out, const std::size_t stride)
       out[8 * indxy + indxx] = in[indxx];
     }
 
-    U3_FAST_MOVE_CPTR (in, stride);
+    in = ::libs::helpers::mem::move_cptr (in, stride);
   }
 }
 
@@ -43,7 +42,7 @@ backward (const std::int16_t* in, std::int16_t* out, const std::size_t stride)
       out[indxx] = in[8 * indxy + indxx];
     }
 
-    U3_FAST_MOVE_PTR (out, stride);
+    out = ::libs::helpers::mem::move_ptr (out, stride);
   }
 }
 

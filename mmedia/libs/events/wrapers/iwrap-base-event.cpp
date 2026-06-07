@@ -11,15 +11,10 @@
 
 namespace libs::events
 {
-IWrapBaseEvent::IWrapBaseEvent (const Acessor& ph, IEvent::ptr val) :
+IWrapBaseEvent::IWrapBaseEvent (const Acessor& pha, IEvent::ptr val) :
   int_ (val)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-IWrapBaseEvent::~IWrapBaseEvent ()
-{
 }
 
 
@@ -61,19 +56,18 @@ IWrapBaseEvent::save_json_int (::boost::json::object& obj) const
 void
 IWrapBaseEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (IWrapBaseEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< IWrapBaseEvent > (src);
   super::copy_int (src);
-
   int_ = dsrc->int_;
 }
 
 
 template< class Archive >
 void
-IWrapBaseEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+IWrapBaseEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("IEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (int_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("IEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (int_);
 }
 }   // namespace libs::events
 

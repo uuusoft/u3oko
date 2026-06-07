@@ -3,7 +3,6 @@
 \file       cores5x5.hpp
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2017
-
 \project    u3_optim_conv
 */
 #include "consts5x5.hpp"
@@ -11,10 +10,10 @@
 
 namespace libs::optim::s16bit::conv::base::c5x5::cores
 {
-typedef IConvCore< std::int16_t, consts::align_size_core, consts::size_core > TCore;
+using values_core_type = IConvCore< std::int16_t, consts::align_size_core, consts::size_core >;
 
 // clang-format off
-const TCore all_1 = TCore (
+const values_core_type all_1 = values_core_type (
   { 
     1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -23,7 +22,7 @@ const TCore all_1 = TCore (
     1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
   });
 
-const TCore all_m1 = TCore (
+const values_core_type all_m1 = values_core_type (
   { 
     -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -32,7 +31,7 @@ const TCore all_m1 = TCore (
     -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
   });
 
-const TCore gaus1 = TCore (
+const values_core_type gaus1 = values_core_type (
   { 
     1,  4,  7,  4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     4, 16, 26, 16, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -41,7 +40,7 @@ const TCore gaus1 = TCore (
     1,  4,  7,  4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
   });
 
-const TCore gaus2 = TCore (
+const values_core_type gaus2 = values_core_type (
   { 
     1,  4,  7,  4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     4, 16, 26, 16, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -50,7 +49,7 @@ const TCore gaus2 = TCore (
     1,  4,  7,  4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
   });
 
-const TCore gaus3 = TCore (
+const values_core_type gaus3 = values_core_type (
   { 
     1,  4,  7,  4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     4, 16, 26, 16, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -59,7 +58,7 @@ const TCore gaus3 = TCore (
     1,  4,  7,  4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
   });
 
-const TCore laplas1 = TCore (
+const values_core_type laplas1 = values_core_type (
   { 
     0,  0,  -1,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     0,  -1, -2, -1,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -68,7 +67,7 @@ const TCore laplas1 = TCore (
     0,  0,  -1,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
   });
 
-const TCore laplas2 = TCore (
+const values_core_type laplas2 = values_core_type (
   { 
     0,  0,  -1,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     0,  -1, -2, -1,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -77,7 +76,7 @@ const TCore laplas2 = TCore (
     0,  0,  -1,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
   });
 
-const TCore laplas3 = TCore (
+const values_core_type laplas3 = values_core_type (
   { 
     -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -86,7 +85,7 @@ const TCore laplas3 = TCore (
     -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
   });
 
-const TCore avg1 = TCore (
+const values_core_type avg1 = values_core_type (
   { 
     1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -96,7 +95,7 @@ const TCore avg1 = TCore (
   });
 
 
-const TCore spot1 = TCore (
+const values_core_type spot1 = values_core_type (
   {
     1,  1,  1,  1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     1, 17, 17, 17, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -107,7 +106,7 @@ const TCore spot1 = TCore (
 // clang-format on
 
 inline void
-copy (const std::vector< std::int16_t >& vals, TCore& mask)
+copy (const std::vector< std::int16_t >& vals, values_core_type& mask)
 {
   mask.fill (0);
   mask.load (vals);

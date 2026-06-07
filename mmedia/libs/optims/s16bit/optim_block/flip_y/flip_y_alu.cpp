@@ -26,10 +26,10 @@ struct TFlipperAlu final {
   void
   update (std::uint8_t* str1, std::uint8_t* str2)
   {
-    const int temp = *U3_CAST_REINTERPRET< int* > (str1);
+    const int temp = *::libs::helpers::casts::reinterpret_cast_helper< int* > (str1);
 
-    *U3_CAST_REINTERPRET< int* > (str1) = *U3_CAST_REINTERPRET< int* > (str2);
-    *U3_CAST_REINTERPRET< int* > (str2) = temp;
+    *::libs::helpers::casts::reinterpret_cast_helper< int* > (str1) = *::libs::helpers::casts::reinterpret_cast_helper< int* > (str2);
+    *::libs::helpers::casts::reinterpret_cast_helper< int* > (str2) = temp;
   }
 };
 

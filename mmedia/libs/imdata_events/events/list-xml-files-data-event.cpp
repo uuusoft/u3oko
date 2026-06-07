@@ -20,29 +20,19 @@ DataGraphFolderInfoType::DataGraphFolderInfoType (
 }
 
 
-DataGraphFolderInfoType::~DataGraphFolderInfoType ()
-{
-}
-
-
 template< class Archive >
 void
-DataGraphFolderInfoType::serialize (Archive& ar, const std::uint32_t /* file_version */)
+DataGraphFolderInfoType::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (folder_name_);
-  ar& BOOST_SERIALIZATION_NVP (graph_state_);
+  arh& BOOST_SERIALIZATION_NVP (folder_name_);
+  arh& BOOST_SERIALIZATION_NVP (graph_state_);
 }
 
 
-ListXmlFilesDataEvent::ListXmlFilesDataEvent (const Acessor& ph, const data_graph_infos_types& data_graph_infos) :
+ListXmlFilesDataEvent::ListXmlFilesDataEvent (const Acessor& pha, const data_graph_infos_types& data_graph_infos) :
   data_graph_states_ (data_graph_infos)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-ListXmlFilesDataEvent::~ListXmlFilesDataEvent ()
-{
 }
 
 
@@ -94,7 +84,7 @@ ListXmlFilesDataEvent::save_json_int (::boost::json::object& obj) const
 void
 ListXmlFilesDataEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (ListXmlFilesDataEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< ListXmlFilesDataEvent > (src);
   super::copy_int (src);
   data_graph_states_ = dsrc->data_graph_states_;
 }
@@ -102,10 +92,10 @@ ListXmlFilesDataEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-ListXmlFilesDataEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+ListXmlFilesDataEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoimdata_eventsoeventsoBaseDataEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (data_graph_states_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoimdata_eventsoeventsoBaseDataEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (data_graph_states_);
 
   self_correct ();
 }

@@ -5,7 +5,8 @@
 \date       01.01.2017
 \project    u3_codec_funcs
 */
-#if 0
+
+#ifdef U3_FAKE_DISABLE
 #  ifndef rangecod_h
 #    define rangecod_h
 
@@ -96,12 +97,12 @@ typedef uint4 freq;
 /* make the following private in the arithcoder object in C++     */
 
 typedef struct {
-  uint4 low,           /* low end of interval */
-    range,             /* length of interval */
-    help;              /* bytes_to_follow resp. intermediate value */
+  uint4 low,        /* low end of interval */
+    range,          /* length of interval */
+    help;           /* bytes_to_follow resp. intermediate value */
   std::uint8_t buf; /* buf for input/output */
-                       /* the following is used only when encoding */
-  uint4 bytecount;     /* counter for outputed bytes  */
+                    /* the following is used only when encoding */
+  uint4 bytecount;  /* counter for outputed bytes  */
   /* insert fields you need for input/output below this line! */
 } rangecoder;
 

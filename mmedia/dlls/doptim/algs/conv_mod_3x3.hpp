@@ -19,11 +19,7 @@ class CConvMod3x3Alg final : public IOptimAlg
     sel_.set_algoritm_name (val_key);
   }
 
-
-  virtual ~CConvMod3x3Alg ()
-  {
-  }
-
+  virtual ~CConvMod3x3Alg () = default;
 
   protected:
   virtual void
@@ -31,7 +27,7 @@ class CConvMod3x3Alg final : public IOptimAlg
   {
     switch (iinfo.ext_)
     {
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
     case ::libs::helpers::sys::cpu::CpuExts::avx2:
       sel_.set (::libs::optim::s16bit::conv::base::c3x3::mod_avx2);
       break;
@@ -49,7 +45,7 @@ class CConvMod3x3Alg final : public IOptimAlg
       sel_.set (::libs::optim::s16bit::conv::base::c3x3::mod_alu);
       break;
     case ::libs::helpers::sys::cpu::CpuExts::usual:
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
       sel_.set (::libs::optim::s16bit::conv::base::c3x3::mod_sse2);
 #elif defined(U3_CPU_ARM)
       sel_.set (::libs::optim::s16bit::conv::base::c3x3::mod_neon);
@@ -57,7 +53,7 @@ class CConvMod3x3Alg final : public IOptimAlg
       sel_.set (::libs::optim::s16bit::conv::base::c3x3::mod_alu);
 #endif
       break;
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
     case ::libs::helpers::sys::cpu::CpuExts::neon:
       sel_.set (::libs::optim::s16bit::conv::base::c3x3::mod_neon);
       break;

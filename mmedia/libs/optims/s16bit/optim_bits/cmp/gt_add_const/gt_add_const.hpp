@@ -3,7 +3,6 @@
 \file       gt_add_const.hpp
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.11.2016
-
 \project    u3_optim_libs_bits
 
 D[i] = D[i] + (S[i] > Const1 ? Const2 : 0)

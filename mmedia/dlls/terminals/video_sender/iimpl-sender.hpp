@@ -14,9 +14,7 @@ class IImplSender
   // ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IImplSender)
 
-  virtual ~IImplSender ()
-  {
-  }
+  virtual ~IImplSender () = default;
 
   void
   send (
@@ -29,9 +27,7 @@ class IImplSender
   }
 
   protected:
-  IImplSender ()
-  {
-  }
+  IImplSender () = default;
 
   private:
   //  IImplSender interface

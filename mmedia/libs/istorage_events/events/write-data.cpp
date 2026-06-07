@@ -11,14 +11,9 @@
 
 namespace libs::istorage_events::events
 {
-WriteData::WriteData (const Acessor& ph)
+WriteData::WriteData (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-WriteData::~WriteData ()
-{
 }
 
 
@@ -60,8 +55,9 @@ WriteData::clone_int (const ::libs::events::Deeps& deep) const
 void
 WriteData::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (WriteData);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< WriteData > (src);
   super::copy_int (src);
+
   stream_id_ = dsrc->stream_id_;
   buf_       = dsrc->buf_;
 }
@@ -69,11 +65,11 @@ WriteData::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-WriteData::serialize (Archive& ar, const std::uint32_t /* file_version */)
+WriteData::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoistorage_eventsoeventsoBaseStorageEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (stream_id_);
-  ar& BOOST_SERIALIZATION_NVP (buf_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoistorage_eventsoeventsoBaseStorageEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (stream_id_);
+  arh& BOOST_SERIALIZATION_NVP (buf_);
 
   self_correct ();
 }

@@ -27,11 +27,6 @@ ChangeNodeDataEvent::ChangeNodeDataEvent (
 }
 
 
-ChangeNodeDataEvent::~ChangeNodeDataEvent ()
-{
-}
-
-
 const ChangeNodeDataEvent::id_node_graph_type&
 ChangeNodeDataEvent::get_node () const
 {
@@ -138,7 +133,7 @@ ChangeNodeDataEvent::save_json_int (::boost::json::object& obj) const
 void
 ChangeNodeDataEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (ChangeNodeDataEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< ChangeNodeDataEvent > (src);
   super::copy_int (src);
 
   id_node_ = dsrc->id_node_;
@@ -149,12 +144,12 @@ ChangeNodeDataEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-ChangeNodeDataEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+ChangeNodeDataEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoimdata_eventsoeventsoBaseNodesDataEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (id_node_);
-  ar& BOOST_SERIALIZATION_NVP (action_);
-  ar& BOOST_SERIALIZATION_NVP (events_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoimdata_eventsoeventsoBaseNodesDataEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (id_node_);
+  arh& BOOST_SERIALIZATION_NVP (action_);
+  arh& BOOST_SERIALIZATION_NVP (events_);
 
   self_correct ();
 }

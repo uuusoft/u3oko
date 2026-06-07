@@ -10,13 +10,8 @@ namespace dlls::codecs::codec_gen
 {
 struct StatisticStage final {
   public:
-  StatisticStage ()
-  {
-  }
-
-  ~StatisticStage ()
-  {
-  }
+  StatisticStage ()  = default;
+  ~StatisticStage () = default;
 
   bool
   self_test () const

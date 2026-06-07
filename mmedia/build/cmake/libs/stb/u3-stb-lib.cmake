@@ -3,9 +3,6 @@
 # copyright   Erashov A.I.
 # file        u3-stb-lib.cmake
 
-include(ExternalProject)
-include(FetchContent)
-
 include("./build/cmake/libs/stb/u3-stb-lib-values.cmake")
 
 set(U3_NAME_EXTERNAL_LIB_STB_UTIL ${U3_NAME_EXTERNAL_LIB_STB}-util)

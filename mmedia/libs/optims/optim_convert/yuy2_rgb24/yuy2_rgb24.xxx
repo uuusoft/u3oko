@@ -750,9 +750,9 @@ namespace libs { namespace optim { namespace convert { namespace yuy2_rgb24 {
 	{
 		int i1 = 0;
 		__int64 temp_array1 = 0x00000000000000FF;
-		std::uint8_t* temp_pointer1 = U3_CAST_REINTERPRET<std::uint8_t*>( &temp_array1 );
+		std::uint8_t* temp_pointer1 = ::libs::helpers::casts::reinterpret_cast_helper<std::uint8_t*>( &temp_array1 );
 		__int64 temp_array2 = 0x002B002B002B002B;
-		std::uint8_t* temp_pointer2 = U3_CAST_REINTERPRET<std::uint8_t*>( &temp_array2 );
+		std::uint8_t* temp_pointer2 = ::libs::helpers::casts::reinterpret_cast_helper<std::uint8_t*>( &temp_array2 );
 
 		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr (input ) );
 
@@ -2777,9 +2777,9 @@ HRESULT MMXConvertRGB24toY8(
 	HRESULT hr = S_OK;
 	int i1 = 0;
 	__int64 temp_array1 = 0x00000000000000FF;
-	std::uint8_t* temp_pointer1 = U3_CAST_REINTERPRET<std::uint8_t*>( &temp_array1 );
+	std::uint8_t* temp_pointer1 = ::libs::helpers::casts::reinterpret_cast_helper<std::uint8_t*>( &temp_array1 );
 	__int64 temp_array2 = 0x002B002B002B002B;
-	std::uint8_t* temp_pointer2 = U3_CAST_REINTERPRET<std::uint8_t*>( &temp_array2 );
+	std::uint8_t* temp_pointer2 = ::libs::helpers::casts::reinterpret_cast_helper<std::uint8_t*>( &temp_array2 );
 
 	SCA_CHECKNULLARG( input );
 	SCA_CHECKNULLARG( output );

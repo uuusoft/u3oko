@@ -23,28 +23,23 @@ ChannelGradient::ChannelGradient (const Gradients& type) :
 }
 
 
-ChannelGradient::~ChannelGradient ()
-{
-}
-
-
 template< class Archive >
 void
-ChannelGradient::serialize (Archive& ar, const std::uint32_t /* file_version */)
+ChannelGradient::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (gradient_type_);
-  ar& BOOST_SERIALIZATION_NVP (animation_);
-  ar& BOOST_SERIALIZATION_NVP (blure_);
-  ar& BOOST_SERIALIZATION_NVP (vals_);
-  ar& BOOST_SERIALIZATION_NVP (string_vals_);
-  ar& BOOST_SERIALIZATION_NVP (future_ext_);
+  arh& BOOST_SERIALIZATION_NVP (gradient_type_);
+  arh& BOOST_SERIALIZATION_NVP (animation_);
+  arh& BOOST_SERIALIZATION_NVP (blure_);
+  arh& BOOST_SERIALIZATION_NVP (vals_);
+  arh& BOOST_SERIALIZATION_NVP (string_vals_);
+  arh& BOOST_SERIALIZATION_NVP (future_ext_);
 }
 
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const ChannelGradient& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const ChannelGradient& src)
 {
-  jv = {
+  jvs = {
     { "gradient_type", ::boost::json::value_from (src.gradient_type_) },
     { "animation", src.animation_ },
     { "blure", src.blure_ },
@@ -56,10 +51,10 @@ tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const Chann
 
 
 ChannelGradient
-tag_invoke (::boost::json::value_to_tag< ChannelGradient >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< ChannelGradient >, const ::boost::json::value& jvs)
 {
   ChannelGradient              ret;
-  const ::boost::json::object& obj = jv.as_object ();
+  const ::boost::json::object& obj = jvs.as_object ();
 
   ret.gradient_type_ = ::boost::json::value_to< Gradients > (obj.at ("gradient_type"));
   ret.animation_     = obj.at ("animation").as_bool ();

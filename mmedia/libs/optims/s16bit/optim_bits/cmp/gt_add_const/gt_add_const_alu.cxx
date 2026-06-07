@@ -2,16 +2,12 @@
 \file       gt_add_const_alu.cxx
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.11.2016
-
 \project    u3_optim_libs_bits
-\brief
 */
 
 namespace libs::optim::s16bit::bits::cmp::gt_add_const
 {
-
 #ifndef SET_UNALIGNED_FUNCT
-
 void
 alu (::libs::optim::io::MCallInfo& info)
 {
@@ -20,7 +16,16 @@ alu (::libs::optim::io::MCallInfo& info)
   picter_dim_type leak_stride_source = 0;
   picter_dim_type leak_stride_dest   = 0;
 
-  calc_dest_source_dims (info.dsts_[0].stride_, info.srcs_[0].stride_, info.dsts_[0].width_, info.dsts_[0].height_, 4, number_sub_pixel_x, number_sub_pixel_y, leak_stride_source, leak_stride_dest);
+  calc_dest_source_dims (
+    info.dsts_[0].stride_,
+    info.srcs_[0].stride_,
+    info.dsts_[0].width_,
+    info.dsts_[0].height_,
+    4,
+    number_sub_pixel_x,
+    number_sub_pixel_y,
+    leak_stride_source,
+    leak_stride_dest);
 
   U3_ASSERT (0 < number_sub_pixel_y);
 
@@ -41,11 +46,9 @@ alu (::libs::optim::io::MCallInfo& info)
       bdest[indxx] += bsource[indxx] > const1 ? const2 : 0;
     }
 
-    U3_FAST_MOVE_CPTR (bsource, stride);
-    U3_FAST_MOVE_PTR (bdest, stride);
+    bsource = ::libs::helpers::mem::move_cptr (bsource, stride);
+    bdest   = ::libs::helpers::mem::move_ptr (bdest, stride);
   }
 }
-
 #endif
-
 }   // namespace libs::optim::s16bit::bits::cmp::gt_add_const

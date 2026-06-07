@@ -29,7 +29,7 @@ class BaseLogEvent : public ::libs::ievents::TimedEvent
   U3_HELPER_DISABLE_ACOPY_TYPE (BaseLogEvent)
 
   explicit BaseLogEvent (const Acessor& = Acessor (0));
-  virtual ~BaseLogEvent ();
+  virtual ~BaseLogEvent () = default;
 
   virtual std::string text (const LogTexts& type) const;
 
@@ -45,7 +45,7 @@ class BaseLogEvent : public ::libs::ievents::TimedEvent
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ievents::TimedEvent)
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   //  ievents::Event overrides
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;

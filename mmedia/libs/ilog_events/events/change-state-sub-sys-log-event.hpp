@@ -28,9 +28,7 @@ class ChangDShowRunsSubSysLogEvent final : public InfoLogEvent
 
   ChangDShowRunsSubSysLogEvent (const Acessor&, const AppllPartLogInfo& appl, bool start);
 
-  virtual ~ChangDShowRunsSubSysLogEvent ()
-  {
-  }
+  virtual ~ChangDShowRunsSubSysLogEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -53,10 +51,10 @@ class ChangDShowRunsSubSysLogEvent final : public InfoLogEvent
   private:
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ilog_events::events::InfoLogEvent)
 
-  bool start_;   //<
+  bool start_ = false;   //<
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   //  ievents::Event overrides
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;

@@ -11,16 +11,11 @@
 
 namespace libs::ievents::props::modules::events
 {
-PropertyEventsModuleEvent::PropertyEventsModuleEvent (const Acessor& ph)
+PropertyEventsModuleEvent::PropertyEventsModuleEvent (const Acessor& pha)
 {
   property_name_                       = gen_get_mid ();
   vals_[EventsVals::max_count_events]  = 0;
   vals_[EventsVals::max_size_database] = 512;
-}
-
-
-PropertyEventsModuleEvent::~PropertyEventsModuleEvent ()
-{
 }
 
 
@@ -60,29 +55,29 @@ PropertyEventsModuleEvent::save_json_int (::boost::json::object& obj) const
   U3_ASSERT_NT (0, "???");
 }
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 void
 PropertyEventsModuleEvent::correct ()
 {
-  static const std::pair<EventsVals, const PropertyEventsModuleEvent::bounds_type*> ids[] = {
+  static const std::pair< EventsVals, const PropertyEventsModuleEvent::bounds_type* > ids[] = {
     { EventsVals::max_cache_events, &consts::bounds_max_cache_events },
     { EventsVals::ms_max_period_flush_events, &consts::bounds_ms_max_period_flush_events },
     { EventsVals::max_size_one_log_file_byte, &consts::bounds_max_size_one_log_file_byte }
   };
 
   for (const auto& id : ids)
-    {
-      auto val = vals_.get (id.first);
-      val      = ::libs::helpers::utils::ret_check_bound<PropertyEventsModuleEvent::value_type> (val, id.second->first, id.second->second);
-      vals_.set (id.first, val);
-    }
+  {
+    auto val = vals_.get (id.first);
+    val      = ::libs::helpers::utils::ret_check_bound< PropertyEventsModuleEvent::value_type > (val, id.second->first, id.second->second);
+    vals_.set (id.first, val);
+  }
 }
 #endif
 
 void
 PropertyEventsModuleEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (PropertyEventsModuleEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< PropertyEventsModuleEvent > (src);
   super::copy_int (src);
   vals_ = dsrc->vals_;
 }
@@ -90,10 +85,10 @@ PropertyEventsModuleEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-PropertyEventsModuleEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+PropertyEventsModuleEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (vals_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (vals_);
   self_correct ();
 }
 }   // namespace libs::ievents::props::modules::events

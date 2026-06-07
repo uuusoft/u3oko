@@ -11,7 +11,7 @@
 #include "mmedia/dlls/codecs/codec_funcs/codec-funcs-const-vals.hpp"
 
 // old shit
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::freq::dct::b8x8::backward
 {

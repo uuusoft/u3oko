@@ -9,7 +9,7 @@
 #include "../libs-iproperties-xml-includes_int.hpp"
 #include "loader-asset-android-impl.hpp"
 
-#if defined(U3_OS_ANDROID)
+#ifdef U3_OS_ANDROID
 
 namespace libs::iproperties::xml::android
 {

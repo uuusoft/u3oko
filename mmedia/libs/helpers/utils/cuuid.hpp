@@ -16,18 +16,18 @@ class cuuid final
   using value_type = ::boost::uuids::uuid::value_type;
   using data_type  = value_type[16];
 
-  cuuid ();
+  cuuid () = default;
   cuuid (const cuuid& left);
   explicit cuuid (const data_type);
   explicit cuuid (const std::initializer_list< value_type >);
   explicit cuuid (const ::boost::uuids::uuid& base);
 
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
   explicit cuuid (const GUID& guid);
   const GUID* get_guid () const;
 #endif
 
-  virtual ~cuuid ();
+  virtual ~cuuid () = default;
 
   cuuid& operator= (const ::boost::uuids::uuid& left);
   cuuid& operator= (const cuuid& left);
@@ -37,12 +37,12 @@ class cuuid final
   const ::boost::uuids::uuid& get_raw_uuid_vals () const;
 
   private:
-  ::boost::uuids::uuid id_;   //< Поле, которые мы функционально расширяем
+  ::boost::uuids::uuid id_ = boost::uuids::nil_uuid ();   //< Поле, которые мы функционально расширяем
 
   friend class ::boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
 bool operator< (const cuuid& l, const cuuid& r);

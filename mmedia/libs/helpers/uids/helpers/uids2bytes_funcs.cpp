@@ -141,9 +141,7 @@ get_hkoeff_from_format (const libs::helpers::uids::minor::id_val& format)
   {
     return 1;
   }
-  // EAI-BREAK-CHANGE 22.03.2026
   if (minor::id_val::unknown == format)
-  // if (par.empty ())
   {
     return 1;
   }

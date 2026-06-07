@@ -4,19 +4,12 @@
 \date       01.01.2017
 \project    u3_ilink
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "libs-ilink-loader-includes_int.hpp"
 #include "../libs-ilink-includes_int.hpp"
 #include "loader-code.hpp"
 
 namespace libs::ilink::loader
 {
-LoaderCode::LoaderCode ()
-{
-}
-
-
 LoaderCode::~LoaderCode ()
 {
   impl_.reset ();

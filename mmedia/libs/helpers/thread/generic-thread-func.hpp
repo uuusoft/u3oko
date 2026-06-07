@@ -6,6 +6,11 @@
 \project    u3_helpers_lib
 */
 
+namespace libs::helpers::thread::syn
+{
+using key_storage_type = libs::properties::vers::links::mids::key_storage_type;
+}
+
 namespace libs::helpers::thread
 {
 /// Общий каркас для каждой функции потока в данной системе
@@ -13,7 +18,7 @@ namespace libs::helpers::thread
 /// \tparam     TTLinkVal     тип для логирования в функции потока
 /// \param[in]  ops           объект для уникальных операций для которых создается поток
 /// \param[in]  indx_thread   индекс потока внутри каждой группы (по типу TTOps), опционально
-template< typename TTOps, libs::properties::vers::links::mids::key_storage_type TTLinkVal >
+template< typename TTOps, syn::key_storage_type TTLinkVal >
 void
 generic_thread_funct (TTOps* ops, const std::uint32_t indx_thread)
 {

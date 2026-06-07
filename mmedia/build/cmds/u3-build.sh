@@ -4,6 +4,8 @@
 # date        01.01.2026
 # copyright   Erashov A.I.
 
+clear
+
 if [[ ! -v ASAN_OPTIONS ]]; then
     ASAN_OPTIONS=detect_odr_violation=0 
 fi
@@ -18,6 +20,10 @@ fi
 
 if [[ ! -v U3_BUILD ]]; then
     U3_BUILD=Debug
+fi
+
+if [[ ! -v U3_BUILD_TESTING ]]; then
+    U3_BUILD_TESTING=0
 fi
 
 if [[ ! -v U3_BUILD_PREFIX ]]; then
@@ -50,10 +56,6 @@ if [[ ! -v U3_COMMERCIAL_PART ]]; then
     U3_COMMERCIAL_PART=0
 fi
 
-#if [[ ${U3_GENERATOR} == "Ninja" ]]; then
-#    U3_GENERATOR="-G ${U3_GENERATOR}"
-#fi
-
 U3_FILE_TOOLCHAIN=$(basename ${U3_TOOLCHAIN} .cmake)
 U3_BIN=./../builds-${U3_LIBS_PREFIX}-${U3_BUILD_PREFIX}-${U3_SANITY}-${U3_FILE_TOOLCHAIN}-${U3_GENERATOR}
 #U3_EXT_PARAMS="-DU3_FORCE_COMPILE_ALL_EXT_LIBS=0"
@@ -71,15 +73,51 @@ echo U3_AS_LIBS=${U3_AS_LIBS}
 echo U3_EXT_PARAMS=${U3_EXT_PARAMS}
 echo U3_LIBS_PREFIX=${U3_LIBS_PREFIX}
 echo U3_GENERATOR=${U3_GENERATOR}
+echo U3_USE_GIT_HASH_FOR_MARK_BUILD=${U3_USE_GIT_HASH_FOR_MARK_BUILD}
 
 cd ./../../
-cmake -G "${U3_GENERATOR}" -S . -B ${U3_BIN} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${U3_ABSOULT_TOOLCHAIN} -DCMAKE_BUILD_TYPE=${U3_BUILD} -DU3_APPL_NAME=${U3_APPL_NAME} -DU3_COMMERCIAL_PART=${U3_COMMERCIAL_PART} -DU3_BUILD_MODULES_AS_LIBS=${U3_AS_LIBS} -DU3_SANITY_BUILD_TYPE=${U3_SANITY} ${U3_EXT_PARAMS}
+
+#echo "start clang-tidy, results at ${U3_BIN}/clang-tidy-fixes.log"
+#run-clang-tidy -p ${U3_BIN} -config-file ./../.clang-tidy > ${U3_BIN}/clang-tidy-fixes.log 2>&1
+
+# config
+cmake -G "${U3_GENERATOR}" -S . -B ${U3_BIN} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${U3_ABSOULT_TOOLCHAIN} -DCMAKE_BUILD_TYPE=${U3_BUILD} -DU3_APPL_NAME=${U3_APPL_NAME} -DU3_USE_GIT_HASH_FOR_MARK_BUILD=${U3_USE_GIT_HASH_FOR_MARK_BUILD} -DU3_COMMERCIAL_PART=${U3_COMMERCIAL_PART} -DU3_BUILD_MODULES_AS_LIBS=${U3_AS_LIBS} -DU3_SANITY_BUILD_TYPE=${U3_SANITY} -DU3_BUILD_TESTING=${U3_BUILD_TESTING} ${U3_EXT_PARAMS}
+
+if [[ ${U3_BUILD_TESTING} == "1" ]]; then
+    cmake --build ${U3_BIN} -j 1 --config ${U3_BUILD} --target ${U3_APPL_NAME}-tests
+    ./${U3_BIN}/Linux/Release/${U3_APPL_NAME}-tests
+    exit 1
+fi
+
+# build
 cmake --build ${U3_BIN} -j 1 --config ${U3_BUILD}
-#cmake --build ${U3_BIN}
+
+# copy resource
 echo cp -r ./assets/xmls/templates   ${U3_BIN}/${U3_OS}/${U3_BUILD}
 cp -r ./assets/xmls/templates  ${U3_BIN}/${U3_OS}/${U3_BUILD}
 
+# strip debug symbols from release
+if [[ ${U3_BUILD} != "Debug" ]]; then
+    #du -ch ${U3_BIN}/${U3_OS}/${U3_BUILD}/*.so | tail -n 1
+    du -chx ${U3_BIN}/${U3_OS}/${U3_BUILD}/*.so
+    #strip --strip-all ${U3_BIN}/${U3_OS}/${U3_BUILD}/mpl_uuu_appl
+    #strip -g -S -d --strip-debug ${U3_BIN}/${U3_OS}/${U3_BUILD}/mpl_uuu_appl
+    
+    if [[ ${U3_AS_LIBS} == "0" ]]; then
+        for file in ${U3_BIN}/${U3_OS}/${U3_BUILD}/*.so; do
+            #[ -f "$file" ] &&  strip --strip-all "$file"
+            #[ -f "$file" ] &&  strip -g -S -d --strip-debug "$file"            
+        done
+    fi
+fi
+
+#du -ch ${U3_BIN}/${U3_OS}/${U3_BUILD}/*.so | tail -n 1
+du -chx ${U3_BIN}/${U3_OS}/${U3_BUILD}/*.so
+
+# run
 #ps -a | grep mpl_uuu_appl | grep -v grep | awk '{print $2}' | xargs kill
-ps -a | grep mpl_uuu_appl | awk '{print $1}' | xargs kill -9
+#ps -a | grep mpl_uuu_appl | awk '{print $1}' | xargs kill -9
 #gnome-terminal -- bash -c "#cd ${U3_BIN}/${U3_OS}/${U3_BUILD} && ./mpl_uuu_appl; exec bash"
 #gnome-terminal -- bash -c "echo Hello World; exec bash"
+#perf record -g ./mpl_uuu_appl
+#pert report

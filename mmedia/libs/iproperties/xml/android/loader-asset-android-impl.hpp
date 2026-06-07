@@ -5,7 +5,7 @@
 \date       01.01.2017
 \project    u3_iproperties_lib
 */
-#if defined(U3_OS_ANDROID)
+#ifdef U3_OS_ANDROID
 
 namespace libs::iproperties::xml::android
 {
@@ -27,10 +27,10 @@ class LoaderAssetAndroidImpl final : public ILoaderImpl
   void enum_items_struct (const std::string&, const std::string&, ::libs::helpers::files::NodeEnumFiles&);
   bool storage_not_in_asset (const appl_paths::Paths&) const;
 
-  InitLoaderInfo                 iinfo_;           //<
-  AAssetManager*                 asset_manager_;   //<
-  AAssetDir*                     aroot_;           //<
-  std::unique_ptr< ILoaderImpl > common_impl_;     //< Некоторые данные находятся на диске, поэтому используем общую реализацию
+  InitLoaderInfo                 iinfo_;                     //<
+  AAssetManager*                 asset_manager_ = nullptr;   //<
+  AAssetDir*                     aroot_         = nullptr;   //<
+  std::unique_ptr< ILoaderImpl > common_impl_;               //< Некоторые данные находятся на диске, поэтому используем общую реализацию
 };
 }   // namespace libs::iproperties::xml::android
 

@@ -15,10 +15,11 @@ class ILoaderImpl
   // ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ILoaderImpl)
 
-  virtual ~ILoaderImpl ();
+  virtual ~ILoaderImpl () = default;
 
   bool is_exist_file (const std::string&, const appl_paths::Paths&) const;
   bool is_exist_folder (const std::string&, const appl_paths::Paths&) const;
+
   /// Функция загрузки содержимого файла в память
   /// \param[in]  file_name    имя файла
   /// \param[in]  storage_type тип хранилища, в котором находится файл
@@ -35,7 +36,7 @@ class ILoaderImpl
     const std::string&                     mask);
 
   protected:
-  ILoaderImpl ();
+  ILoaderImpl () = default;
 
   private:
   //  ILoaderImpl interface

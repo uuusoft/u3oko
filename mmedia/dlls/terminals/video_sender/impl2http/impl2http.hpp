@@ -11,8 +11,8 @@ namespace dlls::terminals::video_sender::impl2http
 class Impl2Http final : public IImplSender
 {
   public:
-  Impl2Http ();
-  virtual ~Impl2Http ();
+  Impl2Http ()          = default;
+  virtual ~Impl2Http () = default;
 
   private:
   //  IImplSender overrides

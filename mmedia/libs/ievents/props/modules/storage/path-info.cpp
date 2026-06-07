@@ -11,16 +11,6 @@
 
 namespace libs::ievents::props::modules::storage
 {
-PathInfo::PathInfo ()
-{
-}
-
-
-PathInfo::~PathInfo ()
-{
-}
-
-
 bool
 PathInfo::check () const
 {
@@ -30,24 +20,24 @@ PathInfo::check () const
 
 template< class Archive >
 void
-PathInfo::serialize (Archive& ar, const std::uint32_t /* file_version */)
+PathInfo::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (path2data_);
-  ar& BOOST_SERIALIZATION_NVP (impl_storage_name_);
-  ar& BOOST_SERIALIZATION_NVP (impl_indexer_name_);
-  ar& BOOST_SERIALIZATION_NVP (state_);
-  ar& BOOST_SERIALIZATION_NVP (max_data_size_);
+  arh& BOOST_SERIALIZATION_NVP (path2data_);
+  arh& BOOST_SERIALIZATION_NVP (impl_storage_name_);
+  arh& BOOST_SERIALIZATION_NVP (impl_indexer_name_);
+  arh& BOOST_SERIALIZATION_NVP (state_);
+  arh& BOOST_SERIALIZATION_NVP (max_data_size_);
 }
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const PathInfo& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const PathInfo& src)
 {
   U3_ASSERT_NT (0, "???");
 }
 
 
 PathInfo
-tag_invoke (::boost::json::value_to_tag< PathInfo >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< PathInfo >, const ::boost::json::value& jvs)
 {
   U3_ASSERT_NT (0, "???");
   return PathInfo ();

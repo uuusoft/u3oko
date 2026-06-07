@@ -43,7 +43,7 @@ get_count_work_threads_by_count_cpu (unsigned long val)
 // EAI-REFACT
 void
 get_thread_per_height (
-  const InfoMFunct&             funct,
+  const MTFuncInfo&             funct,
   ::libs::optim::io::MCallInfo& info,
   const std::uint16_t           athreads,
   std::uint32_t&                thread_per_height,
@@ -92,11 +92,13 @@ get_thread_per_height (
       }
 
       selected_dst_height = dst.height_;
+
       ::libs::optim::mcalls::helpers::split_height (
         athreads,
         funct.dst_align_.px_y_,
         selected_dst_height,
         thread_per_height_dst);
+
       find_fulled_buf = true;
       break;
     }
@@ -122,12 +124,12 @@ get_thread_per_height (
 
 void
 get_count_threads_funct (
-  const InfoMFunct&   funct,
+  const MTFuncInfo&   funct,
   io::MCallInfo&      info,
   const std::uint16_t max_threads,
   std::uint16_t&      athreads)
 {
-  U3_ASSERT (info.srcs_.size () || info.dsts_.size ());   // очевидно, какие то данные алгоритм должен или получать или генерировать.
+  U3_ASSERT (info.srcs_.size () || info.dsts_.size ());   // очевидно, какие то данные алгоритм должен или получать или генерировать
 
   // Ищем минимальный размер буфера среди всех переданных, как источников, так и приемников результата.
   std::uint32_t min_src_height = std::numeric_limits< std::uint32_t >::max ();
@@ -156,7 +158,7 @@ get_count_threads_funct (
 // EAI-REFACT
 void
 CallerImpl::mthreads_call_int (
-  const InfoMFunct&             funct,
+  const MTFuncInfo&             funct,
   ::libs::optim::io::MCallInfo& info,
   std::uint16_t                 athreads)
 {
@@ -310,29 +312,6 @@ CallerImpl::mthreads_call_int (
   sinfo_.bstart_->arrive_and_wait ();
 }
 
-#if 0
-// EAI-REFACT
-#  if 0
-using ::modules::uuu_log::appl::thread::ExceptionLogger<::libs::link::ILink::ptr> ExceptionLogger;
-#  else
-//  debug
-struct ExceptionLogger {
-  ExceptionLogger (::libs::link::ILink::ptr ptr)
-  {
-  }
-
-  void
-  operator() (const std::string& text) noexcept
-  {
-    if (text.empty ())
-    {
-      return;
-    }
-    U3_LOG_DATA_EXCEPT (text);
-  }
-};
-#  endif
-#endif
 
 void
 CallerImpl::stop_and_wait_threads ()
@@ -340,7 +319,7 @@ CallerImpl::stop_and_wait_threads ()
   U3_XLOG_MARK ("CallerImpl::stop_and_wait_threads->");
   try
   {
-    InfoMFunct    fake_funct;
+    MTFuncInfo    fake_funct;
     io::MCallInfo fake_info;
     io::ProxyBuf  proxy;
 
@@ -380,7 +359,7 @@ void
 CallerImpl::create_threads ()
 {
   U3_XLOG_DEV ("CallerImpl::create_threads START" + VTOLOG (max_threads_));
-  sinfo_.bstart_       = std::make_unique< SharedInfoMFunct::barier_type > (max_threads_ + 1);
+  sinfo_.bstart_       = std::make_unique< MTFuncSharedInfo::barier_type > (max_threads_ + 1);
   sinfo_.exit_request_ = false;
 
   threads_.clear ();

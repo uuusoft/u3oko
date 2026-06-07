@@ -12,15 +12,10 @@
 
 namespace libs::imdata_events::events
 {
-BaseNodesDataEvent::BaseNodesDataEvent (const Acessor& ph, const id_graph_type& id_graph) :
+BaseNodesDataEvent::BaseNodesDataEvent (const Acessor& pha, const id_graph_type& id_graph) :
   id_graph_ (id_graph)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-BaseNodesDataEvent::~BaseNodesDataEvent ()
-{
 }
 
 
@@ -73,7 +68,7 @@ BaseNodesDataEvent::save_json_int (::boost::json::object& obj) const
 void
 BaseNodesDataEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (BaseNodesDataEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< BaseNodesDataEvent > (src);
   super::copy_int (src);
   id_graph_ = dsrc->id_graph_;
 }
@@ -81,10 +76,10 @@ BaseNodesDataEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-BaseNodesDataEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+BaseNodesDataEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoimdata_eventsoeventsoBaseDataEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (id_graph_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoimdata_eventsoeventsoBaseDataEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (id_graph_);
 
   self_correct ();
 }

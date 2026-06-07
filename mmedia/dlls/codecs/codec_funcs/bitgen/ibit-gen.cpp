@@ -11,16 +11,6 @@
 
 namespace dlls::codecs::bitgen
 {
-IBitGen::IBitGen ()
-{
-}
-
-
-IBitGen::~IBitGen ()
-{
-}
-
-
 void
 IBitGen::forward (
   const void*         src,

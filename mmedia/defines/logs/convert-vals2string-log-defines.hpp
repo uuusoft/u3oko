@@ -23,9 +23,9 @@
 #endif
 
 #ifndef PTR_TOLOG
-#  define PTR_TOLOG(u3def_param) std::string (" " #u3def_param) + "=0x?" + std::to_string (U3_CAST_PTR2INT (u3def_param))
+#  define PTR_TOLOG(u3def_param) std::string (" " #u3def_param) + "=0x?" + std::to_string (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (u3def_param))
 #endif
 
 #ifndef PTR_TOLOG
-#  define PTR_TOLOG(u3def_param) std::string (#u3def_param) + "=0x?" + std::to_string (U3_CAST_PTR2INT (u3def_param))
+#  define PTR_TOLOG(u3def_param) std::string (#u3def_param) + "=0x?" + std::to_string (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (u3def_param))
 #endif

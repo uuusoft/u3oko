@@ -27,7 +27,7 @@ class VideoCodecProp : public ievents::Event
   U3_HELPER_DISABLE_ACOPY_TYPE (VideoCodecProp)
 
   explicit VideoCodecProp (const Acessor& = Acessor (0));
-  virtual ~VideoCodecProp ();
+  virtual ~VideoCodecProp () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -40,17 +40,17 @@ class VideoCodecProp : public ievents::Event
   void reset ();
 
   // EAI-REFACT to private
-  std::string                        dll_name_;               //< Имя DLL с реализацией кодека
-  ::libs::events::buf::EventBufsInfo bufs_;                   //< Буфер источника/назначения. Опционален
-  std::uint32_t                      max_period_ic_frame_;    //< Максимальный период ICF
-  std::uint32_t                      fps_coder_;              //< Количество кадров (декодирумых/кодируемых) в секунду. Если значение <= 0 контроль частоты не производится
-  VideoCodecFlatProp                 plane_;                  //< Свойства компрессии, которые будут вложены в каждый сжатый кадр системы
-  Writes                             write_codec_strategy_;   //< Стратегия записи данных в буфер для кодека
-  bool                               decode_flip_y_;          //< Флаг, отразить изображение по вертикали при декодировании
-  bool                               code_flip_y_;            //< Флаг, отразить изображение по вертикали при кодировании
-  ::libs::ievents::SelectorImpls     hint_codec_impl_;        //< Опциональный идентификатор реализации. Например "auto", "hard", "soft", etc
-  bool                               dump_result2file_;       //< Флаг, для отладки добавляем возможность сбрасывать сжатые данные в файл. Каждый блок попадает в свой файл с автоматически сгенерированным уникальным именем
-  std::uint64_t                      dump_counter_frame_;     //< Количество кадров, через которое будет произведен сброс времени работы в лог. 0 - логирование отключено (по умолчанию)
+  std::string                        dll_name_ = "vvd_vcodec_mjpg";                                                                   //< Имя DLL с реализацией кодека
+  ::libs::events::buf::EventBufsInfo bufs_ { ::utils::dbufs::video::consts::offs::raw, ::utils::dbufs::video::consts::offs::mjpg };   //< Буфер источника/назначения. Опционален
+  std::uint32_t                      max_period_ic_frame_ = 0;                                                                        //< Максимальный период ICF
+  std::uint32_t                      fps_coder_           = 0;                                                                        //< Количество кадров (декодирумых/кодируемых) в секунду. Если значение <= 0 контроль частоты не производится
+  VideoCodecFlatProp                 plane_;                                                                                          //< Свойства компрессии, которые будут вложены в каждый сжатый кадр системы
+  Writes                             write_codec_strategy_ = Writes::allways_write;                                                   //< Стратегия записи данных в буфер для кодека
+  bool                               decode_flip_y_        = false;                                                                   //< Флаг, отразить изображение по вертикали при декодировании
+  bool                               code_flip_y_          = false;                                                                   //< Флаг, отразить изображение по вертикали при кодировании
+  ::libs::ievents::SelectorImpls     hint_codec_impl_      = ::libs::ievents::SelectorImpls::automatic;                               //< Опциональный идентификатор реализации. Например "auto", "hard", "soft", etc
+  bool                               dump_result2file_     = false;                                                                   //< Флаг, для отладки добавляем возможность сбрасывать сжатые данные в файл. Каждый блок попадает в свой файл с автоматически сгенерированным уникальным именем
+  std::uint64_t                      dump_counter_frame_   = 0;                                                                       //< Количество кадров, через которое будет произведен сброс времени работы в лог. 0 - логирование отключено (по умолчанию)
 
   private:
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ievents::Event)
@@ -58,7 +58,7 @@ class VideoCodecProp : public ievents::Event
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
   //  ievents::Event overrides
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
   virtual void                        load_json_int (const ::boost::json::object& obj) override;

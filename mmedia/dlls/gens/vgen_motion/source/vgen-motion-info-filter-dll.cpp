@@ -12,15 +12,9 @@
 
 namespace dlls::gens::vgen_motion
 {
-InfoFilter::InfoFilter () :
-  rprops_ (nullptr)
+InfoFilter::InfoFilter ()
 {
   init ();
-}
-
-
-InfoFilter::~InfoFilter ()
-{
 }
 
 

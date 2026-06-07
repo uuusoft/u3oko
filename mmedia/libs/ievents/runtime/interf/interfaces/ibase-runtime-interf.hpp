@@ -14,13 +14,9 @@ class IBaseRuntimeInterf
   //  ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IBaseRuntimeInterf)
 
-  virtual ~IBaseRuntimeInterf ()
-  {
-  }
+  virtual ~IBaseRuntimeInterf () = default;
 
   protected:
-  IBaseRuntimeInterf ()
-  {
-  }
+  IBaseRuntimeInterf () = default;
 };
 }   // namespace libs::ievents::runtime::interf::interfaces

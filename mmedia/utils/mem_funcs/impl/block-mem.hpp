@@ -28,8 +28,8 @@ class BlockMem final : public ::libs::helpers::mem::IBlockMem
 
   void reset_memory ();
 
-  std::uint8_t* buf_;         //< Сырой блок памяти
-  size_type     size_;        //< Размер сырого блока памяти
-  size_type     data_size_;   //< Размер данных в блоке
+  std::uint8_t* buf_       = nullptr;   //< Сырой блок памяти
+  size_type     size_      = 0;         //< Размер сырого блока памяти
+  size_type     data_size_ = 0;         //< Размер данных в блоке
 };
 }   // namespace utils::mem_funcs::impl

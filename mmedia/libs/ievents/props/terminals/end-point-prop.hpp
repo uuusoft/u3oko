@@ -27,7 +27,7 @@ class EndPointProp final : public Event
   U3_HELPER_DISABLE_ACOPY_TYPE (EndPointProp)
 
   explicit EndPointProp (const Acessor& = Acessor (0));
-  virtual ~EndPointProp ();
+  virtual ~EndPointProp () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -52,10 +52,10 @@ class EndPointProp final : public Event
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
-  bool enable_send_;     //< Флаг, глобальный для данной камеры, управляет включением передачи данных в другие модули
-  bool enable_notify_;   //< Флаг включения посылки сообщения о передаче данных
+  bool enable_send_   = true;    //< Флаг, глобальный для данной камеры, управляет включением передачи данных в другие модули
+  bool enable_notify_ = false;   //< Флаг включения посылки сообщения о передаче данных
 };
 }   // namespace libs::ievents::props::terminals
 

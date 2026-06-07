@@ -11,22 +11,15 @@
 
 namespace libs::iproperties::vers::system
 {
-ISystemProperty::ISystemProperty () :
-  main_appl_properties_ (nullptr),
-  module_log_props_ (nullptr)
+ISystemProperty::ISystemProperty ()
 {
   // mthreads_  = std::make_shared< ::libs::optim::mcalls::IMCaller > ();
   appl_path_ = boost::filesystem::current_path ().string ();
 }
 
 
-ISystemProperty::~ISystemProperty ()
-{
-}
-
-
-syn::ApplicationProp::craw_ptr
-ISystemProperty::get_appl_lockfree () const
+auto
+ISystemProperty::get_appl_lockfree () -> syn::ApplicationProp::craw_ptr const
 {
   return main_appl_properties_;
 }
@@ -39,8 +32,8 @@ ISystemProperty::set_appl_lockfree (syn::ApplicationProp::raw_ptr ptr)
 }
 
 
-syn::PropertyLogModuleEvent::craw_ptr
-ISystemProperty::get_log_lockfree () const
+auto
+ISystemProperty::get_log_lockfree () -> syn::PropertyLogModuleEvent::craw_ptr const
 {
   return module_log_props_;
 }
@@ -53,8 +46,8 @@ ISystemProperty::set_log_lockfree (syn::PropertyLogModuleEvent::raw_ptr ptr)
 }
 
 
-iproperties::appl_paths::IAppPaths::cptr
-ISystemProperty::get_paths_lockfree () const
+auto
+ISystemProperty::get_paths_lockfree () -> iproperties::appl_paths::IAppPaths::cptr const
 {
   return appl_paths_;
 }
@@ -67,8 +60,8 @@ ISystemProperty::set_paths_lockfree (iproperties::appl_paths::IAppPaths::ptr& pt
 }
 
 
-std::string
-ISystemProperty::get_appl_path_lockfree () const
+auto
+ISystemProperty::get_appl_path_lockfree () -> std::string const
 {
   return appl_path_;
 }
@@ -81,8 +74,8 @@ ISystemProperty::set_appl_path_lockfree (const std::string& str)
 }
 
 
-std::string
-ISystemProperty::get_mdata_lockfree () const
+auto
+ISystemProperty::get_mdata_lockfree () -> std::string const
 {
   return data_path_;
 }
@@ -95,8 +88,8 @@ ISystemProperty::set_mdata_lockfree (const std::string& str)
 }
 
 
-::libs::optim::mcalls::IMCaller::ptr
-ISystemProperty::get_mcalls_lockfree ()
+auto
+ISystemProperty::get_mcalls_lockfree () -> ::libs::optim::mcalls::IMCaller::ptr
 {
   return mthreads_;
 }

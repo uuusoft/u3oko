@@ -10,7 +10,7 @@
 #include "x8_x16.hpp"
 #include "x8_x16_int.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::convert::x8_x16
 {
@@ -19,7 +19,7 @@ void
 sse2 (::libs::optim::io::MCallInfo& info)
 {
 #  if 1
-  return alu (info);
+  alu (info);
 #  else
   X16_TO_X8_PREFIX (8);
 
@@ -29,18 +29,18 @@ sse2 (::libs::optim::io::MCallInfo& info)
   {
     for (std::size_t indx_x = 0; indx_x < width; indx_x += ppc)
     {
-      __m128i data = _mm_load_si128 (U3_CAST_REINTERPRET< const __m128i* > (yuy2_buf));
+      __m128i data = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (yuy2_buf));
 
       data = _mm_and_si128 (data, mask);
 
-      _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (y16_buf), data);
+      _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (y16_buf), data);
 
       yuy2_buf += dppc;
       y16_buf += ppc;
     }
 
-    U3_FAST_MOVE_CPTR (yuy2_buf, leak_yuy2);
-    U3_FAST_MOVE_PTR (y16_buf, leak_y16);
+    yuy2_buf = ::libs::helpers::mem::move_cptr (yuy2_buf, leak_yuy2);
+    y16_buf  = ::libs::helpers::mem::move_ptr (y16_buf, leak_y16);
   }
 #  endif
 }

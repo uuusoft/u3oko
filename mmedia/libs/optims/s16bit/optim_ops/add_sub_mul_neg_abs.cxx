@@ -15,18 +15,18 @@ namespace libs::optim::s16bit::ops
 #  endif
 
 #  ifdef SET_UNALIGNED_FUNCT
-#    define CHECK_ARG2(mask_dest)                                                                                                                              \
-      if ((U3_CAST_REINTERPRET< long long > (info.srcs_[0].buf ()) & mask_dest) || (info.dsts_[0].stride_ & mask_dest) || (info.srcs_[0].stride_ & mask_dest)) \
-      {                                                                                                                                                        \
-        U3_ASSERT_SIGNAL ("failed");                                                                                                                           \
-        return;                                                                                                                                                \
+#    define CHECK_ARG2(mask_dest)                                                                                                                                                          \
+      if ((::libs::helpers::casts::reinterpret_cast_helper< long long > (info.srcs_[0].buf ()) & mask_dest) || (info.dsts_[0].stride_ & mask_dest) || (info.srcs_[0].stride_ & mask_dest)) \
+      {                                                                                                                                                                                    \
+        U3_ASSERT_SIGNAL ("failed");                                                                                                                                                       \
+        return;                                                                                                                                                                            \
       }
 #  else
-#    define CHECK_ARG2(mask_dest)                                                                                                                                                                                                       \
-      if ((U3_CAST_REINTERPRET< long long > (info.dsts_[0].buf ()) & mask_dest) || (U3_CAST_REINTERPRET< long long > (info.srcs_[0].buf ()) & mask_dest) || (info.dsts_[0].stride_ & mask_dest) || (info.srcs_[0].stride_ & mask_dest)) \
-      {                                                                                                                                                                                                                                 \
-        U3_ASSERT_SIGNAL ("failed");                                                                                                                                                                                                    \
-        return;                                                                                                                                                                                                                         \
+#    define CHECK_ARG2(mask_dest)                                                                                                                                                                                                                                                               \
+      if ((::libs::helpers::casts::reinterpret_cast_helper< long long > (info.dsts_[0].buf ()) & mask_dest) || (::libs::helpers::casts::reinterpret_cast_helper< long long > (info.srcs_[0].buf ()) & mask_dest) || (info.dsts_[0].stride_ & mask_dest) || (info.srcs_[0].stride_ & mask_dest)) \
+      {                                                                                                                                                                                                                                                                                         \
+        U3_ASSERT_SIGNAL ("failed");                                                                                                                                                                                                                                                            \
+        return;                                                                                                                                                                                                                                                                                 \
       }
 #  endif
 #else
@@ -58,8 +58,8 @@ sub_abs_diff_alu (::libs::optim::io::MCallInfo& info)
       bdest[indxx] = diff;
     }
 
-    U3_FAST_MOVE_CPTR (bsource, stride_source);
-    U3_FAST_MOVE_PTR (bdest, stride_dest);
+    bsource = ::libs::helpers::mem::move_cptr (bsource, stride_source);
+    bdest   = ::libs::helpers::mem::move_ptr (bdest, stride_dest);
   }
 }
 
@@ -90,26 +90,26 @@ add_sse2 (::libs::optim::io::MCallInfo& info)
   const picter_dim_type stride_dest    = info.dsts_[0].stride_;
   const picter_dim_type width_element  = info.dsts_[0].width_;
   const picter_dim_type height_element = info.dsts_[0].height_;
-  const __m128i         mask_dest      = _mm_loadu_si128 (U3_CAST_REINTERPRET< const __m128i* > (mask_dest8));
+  const __m128i         mask_dest      = _mm_loadu_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (mask_dest8));
 
   for (std::uint32_t indy = 0; indy < height_element; ++indy)
   {
     for (std::uint32_t indx = 0; indx < sizeof (std::uint16_t) * width_element; indx += 16)
     {
 #      ifdef SET_UNALIGNED_FUNCT
-      __m128i xmm0 = _mm_loadu_si128 (U3_CAST_REINTERPRET< const __m128i* > (dest + indx));
+      __m128i xmm0 = _mm_loadu_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (dest + indx));
 #      else
-      __m128i xmm0 = _mm_load_si128 (U3_CAST_REINTERPRET< const __m128i* > (dest + indx));
+      __m128i xmm0 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (dest + indx));
 #      endif
 
-      __m128i xmm1 = _mm_load_si128 (U3_CAST_REINTERPRET< const __m128i* > (source + indx));
+      __m128i xmm1 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (source + indx));
       xmm1         = _mm_and_si128 (xmm1, mask_dest);
       xmm0         = _mm_adds_epi16 (xmm0, xmm1);
 
 #      ifdef SET_UNALIGNED_FUNCT
-      _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (dest + indx), xmm0);
+      _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (dest + indx), xmm0);
 #      else
-      _mm_storeu_si128 (U3_CAST_REINTERPRET< __m128i* > (dest + indx), xmm0);
+      _mm_storeu_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (dest + indx), xmm0);
 #      endif
     }
     source += stride_source;
@@ -292,8 +292,8 @@ sub_abs_diff_sse2 (::libs::optim::io::MCallInfo& info)
   const picter_dim_type stride_dest      = info.dsts_[0].stride_;
   const picter_dim_type width_element    = info.dsts_[0].width_;
   const picter_dim_type height_element   = info.dsts_[0].height_;
-  const __m128i         mask_dest        = _mm_loadu_si128 (U3_CAST_REINTERPRET< const __m128i* > (mask_dest8));
-  const __m128i         allxffff         = _mm_loadu_si128 (U3_CAST_REINTERPRET< const __m128i* > (::libs::optim::s16bit::consts::us_all_xffff));
+  const __m128i         mask_dest        = _mm_loadu_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (mask_dest8));
+  const __m128i         allxffff         = _mm_loadu_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (::libs::optim::s16bit::consts::us_all_xffff));
   const __m128i         invert_mask_dest = _mm_andnot_si128 (mask_dest, allxffff);
   // const __m128i         invert_mask_dest = _mm_andnot_si128 (mask_dest, mask_dest);
 
@@ -303,13 +303,13 @@ sub_abs_diff_sse2 (::libs::optim::io::MCallInfo& info)
     {
 #      ifdef SET_UNALIGNED_FUNCT
       // movdqu  xmm0, [edi];
-      __m128i xmm0 = _mm_loadu_si128 (U3_CAST_REINTERPRET< const __m128i* > (dest + indx));
+      __m128i xmm0 = _mm_loadu_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (dest + indx));
 #      else
       // movdqa  xmm0, [edi];
-      __m128i xmm0 = _mm_load_si128 (U3_CAST_REINTERPRET< const __m128i* > (dest + indx));
+      __m128i xmm0 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (dest + indx));
 #      endif
 
-      __m128i xmm1 = _mm_load_si128 (U3_CAST_REINTERPRET< const __m128i* > (source + indx));
+      __m128i xmm1 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (source + indx));
       // movdqa  xmm2, xmm0;
       __m128i xmm2 = xmm0;
       // movdqa  xmm4, xmm1;
@@ -329,10 +329,10 @@ sub_abs_diff_sse2 (::libs::optim::io::MCallInfo& info)
 
 #      ifdef SET_UNALIGNED_FUNCT
       // movdqu[edi], xmm0;
-      _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (dest + indx), xmm0);
+      _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (dest + indx), xmm0);
 #      else
       // movdqa[edi], xmm0;
-      _mm_storeu_si128 (U3_CAST_REINTERPRET< __m128i* > (dest + indx), xmm0);
+      _mm_storeu_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (dest + indx), xmm0);
 #      endif
     }
     source += stride_source;

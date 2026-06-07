@@ -44,14 +44,8 @@ constexpr std::uint32_t png       = 0x05;   // BI_PNG;
 constexpr std::uint32_t rle8      = 0x1;    // BI_RLE8
 constexpr std::uint32_t rle4      = 0x2;    // BI_RLE4
 
-#if 0
-BI_RGB (0): Uncompressed RGB.
-BI_RLE8 (1): Run-length encoded 8-bpp.
-BI_RLE4 (2): Run-length encoded 4-bpp.
-BI_BITFIELDS (3): Uncompressed RGB with color masks.
-BI_JPEG (4): JPEG image.
-BI_PNG (5): PNG image. 
-constexpr unsigned long rgb       = BI_RGB;
-constexpr unsigned long jpeg      = BI_JPEG;
+#ifdef U3_FAKE_DISABLE
+BI_RGB (0) : Uncompressed RGB.BI_RLE8 (1) : Run - length encoded 8 - bpp.BI_RLE4 (2) : Run - length encoded 4 - bpp.BI_BITFIELDS (3) : Uncompressed RGB with color masks.BI_JPEG (4) : JPEG image.BI_PNG (5) : PNG image.constexpr unsigned long rgb = BI_RGB;
+constexpr unsigned long jpeg                                                                                                                                                                                                                         = BI_JPEG;
 #endif
 }   // namespace libs::helpers::uids::helpers::consts::fourcc

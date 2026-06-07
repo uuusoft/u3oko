@@ -9,10 +9,8 @@
 namespace libs::optim::mcalls
 {
 struct AlignProperty final {
-  AlignProperty () :
-    px_x_ (16), px_y_ (1)
-  {
-  }
+  AlignProperty ()  = default;
+  ~AlignProperty () = default;
 
   void
   reset ()
@@ -28,7 +26,7 @@ struct AlignProperty final {
     U3_CHECK (::libs::optim::mcalls::helpers::check_mcall_data_align (px_y_), "px_y_ unaligned" + VTOLOG (px_y_));
   }
 
-  std::uint32_t px_x_;   //< Выравнивание  по горизонтали в пикселях для всех буферов
-  std::uint32_t px_y_;   //< Выравнивае по вертикали в пикселях для всех буферов
+  std::uint32_t px_x_ = 16;   //< Выравнивание  по горизонтали в пикселях для всех буферов
+  std::uint32_t px_y_ = 1;    //< Выравнивае по вертикали в пикселях для всех буферов
 };
 }   // namespace libs::optim::mcalls

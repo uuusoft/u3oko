@@ -17,9 +17,7 @@ class IBuf
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IBuf)
 
-  virtual ~IBuf ()
-  {
-  }
+  virtual ~IBuf () = default;
 
   IBuf (const IBuf& _rsc)           = delete;
   IBuf& operator= (const IBuf& src) = delete;
@@ -45,7 +43,7 @@ class IBuf
 
   /// Функция клонирования буфера
   /// \param[in]  _source   источник данных
-  /// \param[in]  _perc_copy  проценты копирования по вертикали [0.0f..1000f]
+  /// \param[in]  _perc_copy  проценты копирования по вертикали [0.0F..1000f]
   void
   clone (IBuf::ptr& _source, float _perc_copy)
   {
@@ -54,7 +52,7 @@ class IBuf
 
   /// Функция клонирования буфера
   /// \param[in]  _source   источник данных
-  /// \param[in]  _perc_copy  проценты копирования по вертикали [0.0f..1000f]
+  /// \param[in]  _perc_copy  проценты копирования по вертикали [0.0F..1000f]
   void
   clone (IBuf::craw_ptr _source, float _perc_copy)
   {
@@ -86,9 +84,7 @@ class IBuf
   }
 
   protected:
-  IBuf ()
-  {
-  }
+  IBuf () = default;
 
   private:
   //  IBuf interface

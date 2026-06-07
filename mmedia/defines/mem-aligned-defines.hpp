@@ -7,7 +7,7 @@
 \brief      Обявление спецификаторов памяти, общих для всей системы
 */
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 #  if defined(U3_CPU_X86_32)
 #    define U3_ALIGN_DEFAULT alignas (4)

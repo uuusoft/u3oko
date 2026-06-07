@@ -15,17 +15,11 @@ InfoCPUEvent::InfoCPUEvent (
   const Acessor&                            ph,
   const ::libs::helpers::sys::cpu::CpuExts& simd,
   const std::uint32_t                       count_cpu) :
-
   count_cpu_ (count_cpu),
   simd_ (simd)
 {
   property_name_ = gen_get_mid ();
   sync_val2txt ();
-}
-
-
-InfoCPUEvent::~InfoCPUEvent ()
-{
 }
 
 
@@ -71,7 +65,7 @@ InfoCPUEvent::load_json_int (const ::boost::json::object& obj)
   super::load_json_int (obj);
 
   text_simd_ = obj.at ("text_simd").as_string ();
-  simd_      = U3_CAST_STATIC< ::libs::helpers::sys::cpu::CpuExts > (::libs::helpers::json::get_uint32 (obj.at ("simd")));
+  simd_      = ::libs::helpers::casts::static_cast_helper< ::libs::helpers::sys::cpu::CpuExts > (::libs::helpers::json::get_uint32 (obj.at ("simd")));
   count_cpu_ = ::libs::helpers::json::get_uint32 (obj.at ("count_cpu"));
 }
 
@@ -106,7 +100,7 @@ InfoCPUEvent::sync_val2txt_int ()
 void
 InfoCPUEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (InfoCPUEvent);
+  auto dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< InfoCPUEvent > (src);
   super::copy_int (src);
 
   text_simd_ = dsrc->text_simd_;
@@ -117,12 +111,12 @@ InfoCPUEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-InfoCPUEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+InfoCPUEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (text_simd_);
-  ar& BOOST_SERIALIZATION_NVP (simd_);
-  ar& BOOST_SERIALIZATION_NVP (count_cpu_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (text_simd_);
+  arh& BOOST_SERIALIZATION_NVP (simd_);
+  arh& BOOST_SERIALIZATION_NVP (count_cpu_);
 }
 }   // namespace libs::ievents::props::hardware
 

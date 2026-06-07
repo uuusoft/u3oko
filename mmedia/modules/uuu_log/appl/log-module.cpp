@@ -21,15 +21,9 @@ make_suppressor_key (const syn::IEvent::ptr& val)
 }
 
 
-LogModule::LogModule () :
-  indx_file_ (0)
+LogModule::LogModule ()
 {
   text_id_module_ = ::libs::ilink::consts::id_log;
-}
-
-
-LogModule::~LogModule ()
-{
 }
 
 

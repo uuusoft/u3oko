@@ -27,7 +27,7 @@ class BaseStorageEvent : public ::libs::ievents::TimedEvent
   U3_HELPER_DISABLE_ACOPY_TYPE (BaseStorageEvent)
 
   explicit BaseStorageEvent (const Acessor& = Acessor (0));
-  virtual ~BaseStorageEvent ();
+  virtual ~BaseStorageEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -47,7 +47,7 @@ class BaseStorageEvent : public ::libs::ievents::TimedEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
   //  ievents::Event overrides
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
 };

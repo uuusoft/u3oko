@@ -22,25 +22,23 @@ class IAppPaths
   // ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IAppPaths)
 
-  virtual ~IAppPaths ()
-  {
-  }
+  virtual ~IAppPaths () = default;
 
   /// Функция полного конструирования объекта
   /// \param[in]  appl_info
   virtual void load_paths (const ::libs::link::appl::InitApplication&) = 0;
+
   /// Функция получения конечного подкаталога по типу пути
   /// \param[in]  type тип пути
   /// \return     строка полного пути
   virtual std::string get_path (const appl_paths::Paths&) const = 0;
+
   /// Функция получения конечного подкаталога по типу пути
   /// \param[in]  type тип пути
   /// \return     строка конечного подкаталога
   virtual std::string get_path_suffix (const appl_paths::Paths&) const = 0;
 
   protected:
-  IAppPaths ()
-  {
-  }
+  IAppPaths () = default;
 };
 }   // namespace libs::iproperties::appl_paths

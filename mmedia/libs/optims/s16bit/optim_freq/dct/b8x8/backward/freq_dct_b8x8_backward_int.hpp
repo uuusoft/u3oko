@@ -56,7 +56,7 @@ freq_dct_b8x8_backward (::libs::optim::io::MCallInfo& info)
       dbuf += b8x8::consts::dim_elements_macroblock;
     }
 
-    U3_FAST_MOVE_PTR (dbuf, (b8x8::consts::dim_elements_macroblock - 1) * params.pdst_->stride_ + ldleak_width);
+    dbuf = ::libs::helpers::mem::move_ptr (dbuf, (b8x8::consts::dim_elements_macroblock - 1) * params.pdst_->stride_ + ldleak_width);
   }
 
   U3_ASSERT ((*params.prets_)[info.indx_thread_].check ());

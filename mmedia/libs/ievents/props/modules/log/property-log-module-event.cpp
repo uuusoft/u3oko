@@ -19,7 +19,7 @@ const PropertyLogModuleEvent::bounds_type bounds_max_size_one_log_file_byte (0, 
 
 namespace libs::ievents::props::modules::log
 {
-PropertyLogModuleEvent::PropertyLogModuleEvent (const Acessor& ph)
+PropertyLogModuleEvent::PropertyLogModuleEvent (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
 
@@ -30,11 +30,6 @@ PropertyLogModuleEvent::PropertyLogModuleEvent (const Acessor& ph)
   vals_[LogVals::enable_log_events]             = 0;
   vals_[LogVals::enable_suppress_duplicate_msg] = 1;
   vals_[LogVals::log_level]                     = static_cast< std::uint32_t > (libs::ievents::props::modules::log::LogLevels::info);
-}
-
-
-PropertyLogModuleEvent::~PropertyLogModuleEvent ()
-{
 }
 
 
@@ -115,7 +110,7 @@ PropertyLogModuleEvent::correct ()
 void
 PropertyLogModuleEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (PropertyLogModuleEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< PropertyLogModuleEvent > (src);
   super::copy_int (src);
   vals_ = dsrc->vals_;
 }
@@ -123,10 +118,10 @@ PropertyLogModuleEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-PropertyLogModuleEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+PropertyLogModuleEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (vals_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (vals_);
   self_correct ();
 }
 }   // namespace libs::ievents::props::modules::log

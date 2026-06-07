@@ -9,7 +9,7 @@
 #include "mmedia/libs/optims/s16bit/optim_s16bit_generic/includes_int.hpp"
 #include "base_3x3.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::conv::base::c3x3
 {

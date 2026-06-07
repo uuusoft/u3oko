@@ -16,9 +16,7 @@ namespace libs::optim::s16bit::motion::est1
 {
 
 struct TAluCalcObj final {
-  TAluCalcObj ()
-  {
-  }
+  TAluCalcObj () = default;
 
   void
   init (::libs::optim::io::MCallInfo& info)
@@ -42,8 +40,8 @@ struct TAluCalcObj final {
         // ret+= iret * iret;   //SSD
       }
 
-      U3_FAST_MOVE_CPTR (src1, stride);
-      U3_FAST_MOVE_CPTR (src2, stride);
+      src1 = ::libs::helpers::mem::move_cptr (src1, stride);
+      src2 = ::libs::helpers::mem::move_cptr (src2, stride);
     }
     return ret;
   }

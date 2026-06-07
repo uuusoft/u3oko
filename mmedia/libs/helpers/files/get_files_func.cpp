@@ -66,7 +66,7 @@ get_files_int (
     {
       if (IncludeFiles::disabled != params.include_files_)
       {
-#if defined(U3_OS_ANDROID)
+#ifdef U3_OS_ANDROID
         U3_XLOG_DEV ("U3TODO: Not implemented at boost library - ::boost::filesystem::creation_time");
         enums.files_.push_back (
           { file_name,

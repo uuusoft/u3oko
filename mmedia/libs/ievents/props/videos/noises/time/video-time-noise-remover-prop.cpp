@@ -11,18 +11,10 @@
 
 namespace libs::ievents::props::videos::noises::time
 {
-VideoTimeNoiseRemoverProp::VideoTimeNoiseRemoverProp (const Acessor& ph) :
-  name_impl_ ("median2"),
-  bufs_ ({ utils::dbufs::video::consts::offs::lit, utils::dbufs::video::consts::offs::sat, utils::dbufs::video::consts::offs::hue }),
-  dump_counter_frame_ (0),
-  indx_diff_buf_ (utils::dbufs::video::consts::offs::move_detect_res)
+VideoTimeNoiseRemoverProp::VideoTimeNoiseRemoverProp (const Acessor& pha) :
+  bufs_ ({ utils::dbufs::video::consts::offs::lit, utils::dbufs::video::consts::offs::sat, utils::dbufs::video::consts::offs::hue })
 {
   property_name_ = gen_get_mid ();
-}
-
-
-VideoTimeNoiseRemoverProp::~VideoTimeNoiseRemoverProp ()
-{
 }
 
 
@@ -74,8 +66,9 @@ VideoTimeNoiseRemoverProp::save_json_int (::boost::json::object& obj) const
 void
 VideoTimeNoiseRemoverProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (VideoTimeNoiseRemoverProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< VideoTimeNoiseRemoverProp > (src);
   super::copy_int (src);
+
   name_impl_          = dsrc->name_impl_;
   bufs_               = dsrc->bufs_;
   dump_counter_frame_ = dsrc->dump_counter_frame_;
@@ -92,15 +85,15 @@ VideoTimeNoiseRemoverProp::self_correct_int ()
 
 template< class Archive >
 void
-VideoTimeNoiseRemoverProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+VideoTimeNoiseRemoverProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
 
-  ar& BOOST_SERIALIZATION_NVP (name_impl_);
-  ar& BOOST_SERIALIZATION_NVP (bufs_);
-  ar& BOOST_SERIALIZATION_NVP (dump_counter_frame_);
-  ar& BOOST_SERIALIZATION_NVP (indx_diff_buf_);
-  ar& BOOST_SERIALIZATION_NVP (impl_info_);
+  arh& BOOST_SERIALIZATION_NVP (name_impl_);
+  arh& BOOST_SERIALIZATION_NVP (bufs_);
+  arh& BOOST_SERIALIZATION_NVP (dump_counter_frame_);
+  arh& BOOST_SERIALIZATION_NVP (indx_diff_buf_);
+  arh& BOOST_SERIALIZATION_NVP (impl_info_);
 
   self_correct ();
 }

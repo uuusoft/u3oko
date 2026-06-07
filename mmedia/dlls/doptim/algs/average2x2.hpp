@@ -8,7 +8,7 @@
 // EAI-REMOVE old shit
 namespace dlls::doptim::impl::algs
 {
-#if 0
+#ifdef U3_FAKE_DISABLE
 class CAverage2x2Alg final : public IOptimAlg
 {
   public:
@@ -20,9 +20,7 @@ class CAverage2x2Alg final : public IOptimAlg
     sel_.set_algoritm_name (val_key);
   }
 
-  virtual ~CAverage2x2Alg ()
-  {
-  }
+  virtual ~CAverage2x2Alg () = default;
 
   protected:
   virtual void

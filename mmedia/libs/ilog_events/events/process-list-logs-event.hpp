@@ -30,7 +30,7 @@ class ProcessListLogsEvent final : public BaseLogEvent
     const Acessor&               = Acessor (0),
     const AppllPartLogInfo& appl = AppllPartLogInfo (::libs::ievents::props::modules::log::LogLevels::info, "xpllex", "xpllex"));
 
-  virtual ~ProcessListLogsEvent ();
+  virtual ~ProcessListLogsEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -57,7 +57,7 @@ class ProcessListLogsEvent final : public BaseLogEvent
   list_folders_type folders_;   //< Список директорий с логированием. Т.е. фактически это список сессий логирования
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   //  ievents::Event overrides
   virtual void                        load_json_int (const ::boost::json::object& obj) override;

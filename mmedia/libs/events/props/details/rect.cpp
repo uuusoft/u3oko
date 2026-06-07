@@ -18,11 +18,6 @@ Rect::Rect (std::uint32_t width, std::uint32_t height) :
 }
 
 
-Rect::~Rect ()
-{
-}
-
-
 std::uint32_t
 Rect::get_width () const
 {
@@ -64,10 +59,10 @@ Rect::load (::pugi::xml_node& param)
 
 template< class Archive >
 void
-Rect::serialize (Archive& ar, const std::uint32_t /* file_version */)
+Rect::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (width_);
-  ar& BOOST_SERIALIZATION_NVP (height_);
+  arh& BOOST_SERIALIZATION_NVP (width_);
+  arh& BOOST_SERIALIZATION_NVP (height_);
 }
 }   // namespace libs::events::props::details
 

@@ -12,7 +12,7 @@ namespace dlls::sources::gen_vgen
 class ObjSourceImplProxy final
 {
   public:
-  ObjSourceImplProxy ();
+  ObjSourceImplProxy () = default;
   ~ObjSourceImplProxy ();
 
   ObjSourceImplProxy (const ObjSourceImplProxy& src)            = delete;
@@ -25,9 +25,9 @@ class ObjSourceImplProxy final
 
   private:
   //  internal typess
-  ::libs::helpers::dlls::dll_type   capture_lib_;   //< Библиотека с выбранной реализацией захвата данных из видеоустройства
-  gen_lib::ISourceImpl::raw_ptr     impl_;          //< Реализация захвата, полученная из библиотеки
-  gen_lib::bcreate_source_func_type func_get_;      //< Функция создания реализации из библиотеки
-  gen_lib::bfree_source_func_type   func_free_;     //< Функция удаления реализации из библиотеки
+  ::libs::helpers::dlls::dll_type   capture_lib_;           //< Библиотека с выбранной реализацией захвата данных из видеоустройства
+  gen_lib::ISourceImpl::raw_ptr     impl_      = nullptr;   //< Реализация захвата, полученная из библиотеки
+  gen_lib::bcreate_source_func_type func_get_  = 0;         //< Функция создания реализации из библиотеки
+  gen_lib::bfree_source_func_type   func_free_ = 0;         //< Функция удаления реализации из библиотеки
 };
 }   // namespace dlls::sources::gen_vgen

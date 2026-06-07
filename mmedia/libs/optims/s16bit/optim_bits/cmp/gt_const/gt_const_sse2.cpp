@@ -11,7 +11,7 @@
 #include "gt_const.hpp"
 #include "gt_const_int.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::bits::cmp::gt_const
 {
@@ -20,7 +20,7 @@ sse2 (::libs::optim::io::MCallInfo& info)
 {
 #  if 1
   U3_ASSERT_TODO_OPTIM;
-  return alu (info);
+  alu (info);
 #  else
   const std::uint16_t* mask_dest8 = 0;
   std::int16_t         const1     = 0;

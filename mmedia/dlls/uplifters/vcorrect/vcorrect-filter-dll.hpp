@@ -16,11 +16,12 @@ class Filter final :
 {
   public:
   Filter ();
-  virtual ~Filter ();
+  virtual ~Filter () = default;
 
   private:
   // internal types
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
+
   // IFilter overrides
   virtual void load_int (::libs::icore::impl::var1::obj::FilterInfo* info, const ::pugi::xml_named_node_iterator& node) override;
   virtual void transform_int (syn::TransformInfo& info) override;

@@ -2,9 +2,7 @@
 \file       gt_add_const_mmx.cxx
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.11.2016
-
 \project    u3_optim_libs_bits
-\brief
 */
 
 #if defined(U3_CPU_X86)

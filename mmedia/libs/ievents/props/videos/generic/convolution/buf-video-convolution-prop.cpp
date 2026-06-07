@@ -68,25 +68,28 @@ BuffVideoConvolutionProp::correct_int ()
 
 template< class Archive >
 void
-BuffVideoConvolutionProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+BuffVideoConvolutionProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoeventsobufoEventBufsInfo", super);
-  ar& BOOST_SERIALIZATION_NVP (core_size_);
-  ar& BOOST_SERIALIZATION_NVP (core_vals_);
-  ar& BOOST_SERIALIZATION_NVP (core_koeff_);
-  ar& BOOST_SERIALIZATION_NVP (convolution_type_);
-  ar& BOOST_SERIALIZATION_NVP (use_module_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoeventsobufoEventBufsInfo", super);
+  arh& BOOST_SERIALIZATION_NVP (core_size_);
+  arh& BOOST_SERIALIZATION_NVP (core_vals_);
+  arh& BOOST_SERIALIZATION_NVP (core_koeff_);
+  arh& BOOST_SERIALIZATION_NVP (convolution_type_);
+  arh& BOOST_SERIALIZATION_NVP (use_module_);
 }
 
 
 void
-tag_invoke (::boost::json::value_from_tag tag, ::boost::json::value& jv, const BuffVideoConvolutionProp& src)
+tag_invoke (::boost::json::value_from_tag tag, ::boost::json::value& jvs, const BuffVideoConvolutionProp& src)
 {
   ::boost::json::value pjv;
-  ::libs::events::buf::tag_invoke (tag, pjv, U3_CAST_STATIC< const ::libs::events::buf::EventBufsInfo& > (src));
+  ::libs::events::buf::tag_invoke (
+    tag,
+    pjv,
+    ::libs::helpers::casts::static_cast_helper< const ::libs::events::buf::EventBufsInfo& > (src));
 
   // EAI-JSON-TEST-86
-  jv = {
+  jvs = {
     { "parent", pjv },
     { "convolution_type", U3_CAST_INT32_FORCE (src.convolution_type_) },
     { "core_size", src.core_size_ },
@@ -98,11 +101,11 @@ tag_invoke (::boost::json::value_from_tag tag, ::boost::json::value& jv, const B
 
 
 BuffVideoConvolutionProp
-tag_invoke (::boost::json::value_to_tag< BuffVideoConvolutionProp >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< BuffVideoConvolutionProp >, const ::boost::json::value& jvs)
 {
-  const auto&                  pobj = jv.at ("parent").as_object ();
+  const auto&                  pobj = jvs.at ("parent").as_object ();
   BuffVideoConvolutionProp     ret (::libs::events::buf::tag_invoke (::boost::json::value_to_tag< ::libs::events::buf::EventBufsInfo > (), pobj));
-  const ::boost::json::object& obj = jv.as_object ();
+  const ::boost::json::object& obj = jvs.as_object ();
 
   ret.convolution_type_ = ::boost::json::value_to< Convs > (obj.at ("convolution_type"));
   ret.core_size_        = ::libs::helpers::json::get_int32 (obj.at ("core_size"));

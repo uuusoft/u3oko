@@ -28,7 +28,7 @@ class ExceptLogEvent final : public InfoLogEvent
     const AppllPartLogInfo& appl = AppllPartLogInfo (::libs::ievents::props::modules::log::LogLevels::info, "xelex", "xelex"),
     const std::string&      info = "???");
 
-  virtual ~ExceptLogEvent ();
+  virtual ~ExceptLogEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -47,7 +47,7 @@ class ExceptLogEvent final : public InfoLogEvent
 
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   //  ievents::Event overrides
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;

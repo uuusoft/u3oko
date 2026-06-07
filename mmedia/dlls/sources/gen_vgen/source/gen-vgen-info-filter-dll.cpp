@@ -12,12 +12,7 @@
 
 namespace dlls::sources::gen_vgen
 {
-InfoFilter::InfoFilter () :
-  rprops_ (nullptr),
-  null_impl_ (std::make_shared< ICaptureImageNullImpl > ()),
-  synced_ (false),
-  capture_impl_ (null_impl_),
-  stop_req_ (false)
+InfoFilter::InfoFilter ()
 {
   rprops_ = ::libs::iproperties::helpers::create_event_in_list< syn::VideoDriverProp > (ef_props_);
   str2props_.insert (str2prop_type::value_type (ef_props_.back ()->get_mid (), rprops_));
@@ -97,7 +92,7 @@ bool
 InfoFilter::load_int (const ::pugi::xml_named_node_iterator& node)
 {
   synced_ = false;
-#if 0
+#ifdef U3_FAKE_DISABLE
   // U3-REFACT
   if (auto impl = capture_impl_.lock ())
   {

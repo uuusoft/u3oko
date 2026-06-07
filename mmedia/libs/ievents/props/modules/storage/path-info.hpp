@@ -18,8 +18,8 @@ struct PathInfo final {
   //  ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (PathInfo)
 
-  PathInfo ();
-  virtual ~PathInfo ();
+  PathInfo ()          = default;
+  virtual ~PathInfo () = default;
 
   bool check () const;
 
@@ -33,11 +33,11 @@ struct PathInfo final {
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
-void     tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const PathInfo& src);
-PathInfo tag_invoke (::boost::json::value_to_tag< PathInfo >, const ::boost::json::value& jv);
+void     tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const PathInfo& src);
+PathInfo tag_invoke (::boost::json::value_to_tag< PathInfo >, const ::boost::json::value& jvs);
 }   // namespace libs::ievents::props::modules::storage
 
 BOOST_CLASS_EXPORT_KEY (::libs::ievents::props::modules::storage::PathInfo);

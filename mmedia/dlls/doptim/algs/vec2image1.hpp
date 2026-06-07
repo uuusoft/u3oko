@@ -19,9 +19,7 @@ class CVec2Image1Alg final : public IOptimAlg
     sel_.set_algoritm_name (val_key);
   }
 
-  virtual ~CVec2Image1Alg ()
-  {
-  }
+  virtual ~CVec2Image1Alg () = default;
 
   protected:
   virtual void

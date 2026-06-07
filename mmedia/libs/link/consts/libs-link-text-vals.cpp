@@ -5,8 +5,6 @@
 \project    u3_link
 \brief      Константы для конструирования ключей к различным частям реализации подсистемы сообщений
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../libs-link-includes_int.hpp"
 #include "libs-link-text-vals.hpp"
 

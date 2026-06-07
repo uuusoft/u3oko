@@ -16,11 +16,6 @@ TypeObjectId::TypeObjectId (const id_type& val)
 }
 
 
-TypeObjectId::~TypeObjectId ()
-{
-}
-
-
 bool
 TypeObjectId::is_valid () const
 {
@@ -44,9 +39,9 @@ TypeObjectId::operator== (const TypeObjectId& obj) const
 
 template< class Archive >
 void
-TypeObjectId::serialize (Archive& ar, const std::uint32_t /* file_version */)
+TypeObjectId::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (val_);
+  arh& BOOST_SERIALIZATION_NVP (val_);
 }
 }   // namespace libs::istorage_events
 

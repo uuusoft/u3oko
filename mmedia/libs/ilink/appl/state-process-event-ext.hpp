@@ -13,8 +13,8 @@ namespace libs::ilink::appl
 class StateProcessEventExt final : public ::libs::link::StateProcessEvent
 {
   public:
-  StateProcessEventExt ();
-  virtual ~StateProcessEventExt ();
+  StateProcessEventExt ()          = default;
+  virtual ~StateProcessEventExt () = default;
 
   void reset ();
 

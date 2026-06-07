@@ -1,5 +1,10 @@
 #pragma once
-
+/**
+\file       optim_bits.hpp
+\date       26.07.2016
+\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\project    u3_optim_libs_bits
+*/
 #include "optim/calls/CCaller.hpp"
 
 #include "optim/s16bit/optim_s16bit.hpp"

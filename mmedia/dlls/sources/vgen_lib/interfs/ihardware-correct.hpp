@@ -14,14 +14,8 @@ class IHardwareCorrect final : public syn::ICorrectImage
   //  ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IHardwareCorrect)
 
-  IHardwareCorrect () :
-    update_ (false)
-  {
-  }
-
-  virtual ~IHardwareCorrect ()
-  {
-  }
+  IHardwareCorrect ()          = default;
+  virtual ~IHardwareCorrect () = default;
 
   bool
   is_correction_property_update () const
@@ -61,7 +55,7 @@ class IHardwareCorrect final : public syn::ICorrectImage
     return false;
   }
 
-  mutable bool          update_;   //< Флаг-признак изменения данных в свойствах
-  syn::VideoCorrectProp prop_;     //<
+  mutable bool          update_ = false;   //< Флаг-признак изменения данных в свойствах
+  syn::VideoCorrectProp prop_;             //<
 };
 }   // namespace dlls::sources::gen_lib::interfs

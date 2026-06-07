@@ -34,21 +34,16 @@ AppllPartLogInfo::AppllPartLogInfo (
 }
 
 
-AppllPartLogInfo::~AppllPartLogInfo ()
-{
-}
-
-
 template< class Archive >
 void
-AppllPartLogInfo::serialize (Archive& ar, const std::uint32_t /* file_version */)
+AppllPartLogInfo::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (msg_state_);
-  ar& BOOST_SERIALIZATION_NVP (subsys_);
-  ar& BOOST_SERIALIZATION_NVP (version_);
-  ar& BOOST_SERIALIZATION_NVP (func_);
-  ar& BOOST_SERIALIZATION_NVP (file_);
-  ar& BOOST_SERIALIZATION_NVP (line_);
+  arh& BOOST_SERIALIZATION_NVP (msg_state_);
+  arh& BOOST_SERIALIZATION_NVP (subsys_);
+  arh& BOOST_SERIALIZATION_NVP (version_);
+  arh& BOOST_SERIALIZATION_NVP (func_);
+  arh& BOOST_SERIALIZATION_NVP (file_);
+  arh& BOOST_SERIALIZATION_NVP (line_);
 }
 }   // namespace libs::ilog_events
 

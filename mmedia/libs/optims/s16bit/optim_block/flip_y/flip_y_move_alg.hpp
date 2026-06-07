@@ -3,7 +3,6 @@
 \file       flip_y_move_alg.hpp
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.11.2016
-
 \project    u3_optim_libs_block
 */
 
@@ -11,13 +10,7 @@ namespace libs::optim::s16bit::block::flip_y
 {
 struct TParams final {
   public:
-  TParams () :
-    width_ (0),
-    height_ (0),
-    dbuf_ (0),
-    stride_ (0)
-  {
-  }
+  TParams () = default;
 
   void
   reset ()
@@ -28,10 +21,10 @@ struct TParams final {
     stride_ = 0;
   }
 
-  std::uint8_t* dbuf_;     //<
-  std::size_t   width_;    //<
-  std::size_t   height_;   //<
-  std::size_t   stride_;   //<
+  std::uint8_t* dbuf_   = nullptr;   //<
+  std::size_t   width_  = 0;         //<
+  std::size_t   height_ = 0;         //<
+  std::size_t   stride_ = 0;         //<
 };
 
 
@@ -77,8 +70,9 @@ move_alg (::libs::optim::io::MCallInfo& info)
       flipper.update (&str1[indxx], &str2[indxx]);
     }
 
-    U3_FAST_MOVE_PTR (str1, params.stride_);
-    U3_FAST_MOVE_PTR_BACK (str2, params.stride_);
+
+    str1 = ::libs::helpers::mem::move_ptr (str1, params.stride_);
+    str2 = ::libs::helpers::mem::move_ptr_back (str2, params.stride_);
   }
 }
 }   // namespace libs::optim::s16bit::block::flip_y

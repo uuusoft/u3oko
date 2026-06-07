@@ -11,14 +11,9 @@
 
 namespace libs::istorage_events::events
 {
-GetRuntimeInfo::GetRuntimeInfo (const Acessor& ph)
+GetRuntimeInfo::GetRuntimeInfo (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-GetRuntimeInfo::~GetRuntimeInfo ()
-{
 }
 
 
@@ -32,20 +27,21 @@ GetRuntimeInfo::clone_int (const ::libs::events::Deeps& deep) const
 void
 GetRuntimeInfo::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (GetRuntimeInfo);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< GetRuntimeInfo > (src);
   super::copy_int (src);
-  id_path_      = dsrc->id_path_;
+
+  path_id_      = dsrc->path_id_;
   stream_infos_ = dsrc->stream_infos_;
 }
 
 
 template< class Archive >
 void
-GetRuntimeInfo::serialize (Archive& ar, const std::uint32_t /* file_version */)
+GetRuntimeInfo::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoistorage_eventsoeventsoBaseStorageEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (id_path_);
-  ar& BOOST_SERIALIZATION_NVP (stream_infos_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoistorage_eventsoeventsoBaseStorageEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (path_id_);
+  arh& BOOST_SERIALIZATION_NVP (stream_infos_);
 
   self_correct ();
 }

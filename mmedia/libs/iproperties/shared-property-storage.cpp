@@ -11,11 +11,6 @@
 
 namespace libs::iproperties
 {
-SharedPropertyStorage::SharedPropertyStorage ()
-{
-}
-
-
 SharedPropertyStorage::~SharedPropertyStorage ()
 {
   lock_type lock (mtx_);

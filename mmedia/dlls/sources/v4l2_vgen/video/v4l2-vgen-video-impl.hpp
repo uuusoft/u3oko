@@ -5,7 +5,7 @@
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */
-#if 0
+#ifdef U3_FAKE_DISABLE
 namespace dlls::sources::v4l2_vgen::video::consts
 {
 const std::int32_t max_bitrate_mjpeg        = 25000000;   // 25Mbits/s
@@ -16,7 +16,7 @@ const std::int32_t max_bitrate_x264_level42 = 62500000;   // 62.5Mbits/s
 
 namespace dlls::sources::v4l2_vgen::video
 {
-  /// Реализация унифицированного захвата данных из системно зависимых устройств
+/// Реализация унифицированного захвата данных из системно зависимых устройств
 class VideoImpl final
 {
   public:
@@ -39,7 +39,7 @@ class VideoImpl final
   //  internal typess
   using std::list< utils::dbufs::video::IVideoBuf::ptr > bufs_type;
   using std::mutex                                       sync_type;
-  using std::lock_guard< sync_type >                     lock_type;
+  using std::scoped_lock< sync_type >                    lock_type;
 
   void buf_callback_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf);
   void complete_bufs_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf);

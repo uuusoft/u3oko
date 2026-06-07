@@ -10,11 +10,11 @@
 #include "gen-vgen-includes_int.hpp"
 #include "gen-vgen-info-filter-dll.hpp"
 #include "gen-vgen-filter-dll.hpp"
-#include "mmedia/dlls/doptim/algs/all_algs_impl.hpp"
+#include "mmedia/dlls/doptim/algs/all_algs.hpp"
 
 namespace dlls::sources::gen_vgen
 {
-::libs::helpers::dlls::ForeverLoadDlls Filter::frozen_dlls_;
+::libs::helpers::dlls::FreezerDlls Filter::frozen_dlls_;
 
 Filter::Filter ()
 {
@@ -22,7 +22,6 @@ Filter::Filter ()
     [this] (syn::CallInterfInfo& info) -> void {
     auto devent = ::libs::iproperties::helpers::cast_event< syn::BufsEvent > (info.event_);
     fill_buf (&finfo_, devent);
-    return;
   };
 
   events2funcs_[syn::ChangeStateProcessEvent::gen_get_mid ()] =
@@ -70,10 +69,5 @@ Filter::Filter ()
       ++indx;
     }
   };
-}
-
-
-Filter::~Filter ()
-{
 }
 }   // namespace dlls::sources::gen_vgen

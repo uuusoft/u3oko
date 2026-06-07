@@ -41,7 +41,7 @@ replace_strings_in_files (
       continue;
     }
 
-    std::string buf (U3_CAST_REINTERPRET< char* > (file_data->get ()), file_data->get_data_size ());
+    std::string buf (::libs::helpers::casts::reinterpret_cast_helper< char* > (file_data->get ()), file_data->get_data_size ());
     std::string dstbuf;
 
     if (::libs::helpers::strings::replace_substring (vals, count_vals, buf, dstbuf))

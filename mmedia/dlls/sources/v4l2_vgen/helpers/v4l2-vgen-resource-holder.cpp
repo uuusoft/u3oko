@@ -10,7 +10,7 @@
 #include "v4l2-vgen-resource-holder.hpp"
 
 // old shit
-#if 0
+#ifdef U3_FAKE_DISABLE
 namespace dlls::sources::v4l2_vgen::helpers
 {
 camera_status_t

@@ -23,7 +23,7 @@ class IDemonsProperty final : public ::libs::properties::ISharedProperty
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IDemonsProperty)
 
   IDemonsProperty ();
-  virtual ~IDemonsProperty ();
+  virtual ~IDemonsProperty () = default;
 
   syn::BlockMemAllocatorProxy::raw_ptr get_mem_lockfree () const;
   void                                 set_mem_lockfree (syn::BlockMemAllocatorProxy::raw_ptr ptr);
@@ -39,9 +39,9 @@ class IDemonsProperty final : public ::libs::properties::ISharedProperty
   virtual bool  self_test_int () const override;
   virtual void* cast2top_int () override;
 
-  std::atomic< syn::BlockMemAllocatorProxy::raw_ptr > all2mem_;       //< Интерфейс для работы с блочной памятью
-  std::atomic< syn::BufAllocatorProxy::raw_ptr >      all2buf_;       //< Интерфейс для работы с буферами данных
-  std::atomic< ::libs::proxy::IOptimProxy* >          all2optim_;     //< Интерфейс для работы с реализациями алгоритмов
-  std::atomic< ::libs::proxy::IEventsProxy* >         all2mevents_;   //< Интерфейс для создания объектов-свойств по текстовым идентификаторорам
+  std::atomic< syn::BlockMemAllocatorProxy::raw_ptr > all2mem_     = nullptr;   //< Интерфейс для работы с блочной памятью
+  std::atomic< syn::BufAllocatorProxy::raw_ptr >      all2buf_     = nullptr;   //< Интерфейс для работы с буферами данных
+  std::atomic< ::libs::proxy::IOptimProxy* >          all2optim_   = nullptr;   //< Интерфейс для работы с реализациями алгоритмов
+  std::atomic< ::libs::proxy::IEventsProxy* >         all2mevents_ = nullptr;   //< Интерфейс для создания объектов-свойств по текстовым идентификаторорам
 };
 }   // namespace libs::iproperties::vers::demon

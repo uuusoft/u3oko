@@ -18,11 +18,6 @@ ProcessLogEvent::ProcessLogEvent (const Acessor&, const AppllPartLogInfo& appl) 
 }
 
 
-ProcessLogEvent::~ProcessLogEvent ()
-{
-}
-
-
 std::string
 ProcessLogEvent::text (const LogTexts& type) const
 {
@@ -103,8 +98,9 @@ ProcessLogEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 ProcessLogEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (ProcessLogEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< ProcessLogEvent > (src);
   super::copy_int (src);
+
   action_  = dsrc->action_;
   session_ = dsrc->session_;
   info_    = dsrc->info_;
@@ -113,12 +109,12 @@ ProcessLogEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-ProcessLogEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+ProcessLogEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoilog_eventsoeventsoBaseLogEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (action_);
-  ar& BOOST_SERIALIZATION_NVP (session_);
-  ar& BOOST_SERIALIZATION_NVP (info_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoilog_eventsoeventsoBaseLogEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (action_);
+  arh& BOOST_SERIALIZATION_NVP (session_);
+  arh& BOOST_SERIALIZATION_NVP (info_);
 
   self_correct ();
 }

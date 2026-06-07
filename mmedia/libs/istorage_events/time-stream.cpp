@@ -18,11 +18,6 @@ TimeStream::TimeStream () :
 }
 
 
-TimeStream::~TimeStream ()
-{
-}
-
-
 const TimeStream::time_point_type&
 TimeStream::get_time () const
 {
@@ -53,10 +48,10 @@ TimeStream::set_type (const StreamTimes& type)
 
 template< class Archive >
 void
-TimeStream::serialize (Archive& ar, const std::uint32_t /* file_version */)
+TimeStream::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (time_);
-  ar& BOOST_SERIALIZATION_NVP (type_);
+  arh& BOOST_SERIALIZATION_NVP (time_);
+  arh& BOOST_SERIALIZATION_NVP (type_);
 }
 
 

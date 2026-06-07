@@ -11,7 +11,7 @@ namespace libs::imdata_events::events
 /// Структура для группировки информации о узле графа обработки данных
 struct NodeGraphInfo {
   explicit NodeGraphInfo (const std::string& id = "", const std::string& name_dll = "");
-  virtual ~NodeGraphInfo ();
+  virtual ~NodeGraphInfo () = default;
 
   bool               check () const;
   const std::string& get_id () const;
@@ -26,11 +26,11 @@ struct NodeGraphInfo {
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
-void          tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const NodeGraphInfo& src);
-NodeGraphInfo tag_invoke (::boost::json::value_to_tag< NodeGraphInfo >, const ::boost::json::value& jv);
+void          tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const NodeGraphInfo& src);
+NodeGraphInfo tag_invoke (::boost::json::value_to_tag< NodeGraphInfo >, const ::boost::json::value& jvs);
 }   // namespace libs::imdata_events::events
 
 BOOST_CLASS_EXPORT_KEY (::libs::imdata_events::events::NodeGraphInfo);

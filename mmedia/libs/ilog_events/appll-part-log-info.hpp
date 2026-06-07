@@ -20,7 +20,7 @@ struct AppllPartLogInfo final {
     const std::string&          version   = "xverx",
     const std::source_location& place     = std::source_location::current ());
 
-  virtual ~AppllPartLogInfo ();
+  virtual ~AppllPartLogInfo () = default;
 
   syn::LogLevels msg_state_;   //< Тип сообщения
   std::string    subsys_;      //< Идентификатор подсистемы
@@ -33,7 +33,7 @@ struct AppllPartLogInfo final {
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 }   // namespace libs::ilog_events
 

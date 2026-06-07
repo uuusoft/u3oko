@@ -14,14 +14,14 @@ namespace libs::istorage_events::events
 void
 register_events_in_archives ()
 {
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::istorage_events::events::BaseStorageEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::istorage_events::events::WrapperStorageEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::istorage_events::events::MemResourceStorageEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::istorage_events::events::GetRuntimeInfo);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::istorage_events::events::GetObjects);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::istorage_events::events::GetStatisticInfo);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::istorage_events::events::ReadData);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::istorage_events::events::WriteData);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::istorage_events::events::UpdateStream);
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::istorage_events::events::BaseStorageEvent > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::istorage_events::events::WrapperStorageEvent > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::istorage_events::events::MemResourceStorageEvent > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::istorage_events::events::GetRuntimeInfo > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::istorage_events::events::GetObjects > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::istorage_events::events::GetStatisticInfo > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::istorage_events::events::ReadData > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::istorage_events::events::WriteData > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::istorage_events::events::UpdateStream > ();
 }
 }   // namespace libs::istorage_events::events

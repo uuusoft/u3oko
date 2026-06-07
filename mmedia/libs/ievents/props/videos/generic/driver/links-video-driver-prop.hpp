@@ -27,7 +27,7 @@ class LinksVideoDriverProp final : public ievents::Event
   U3_HELPER_DISABLE_ACOPY_TYPE (LinksVideoDriverProp)
 
   explicit LinksVideoDriverProp (const Acessor& = Acessor (0));
-  virtual ~LinksVideoDriverProp ();
+  virtual ~LinksVideoDriverProp () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -36,8 +36,8 @@ class LinksVideoDriverProp final : public ievents::Event
     return ret;
   }
 
-  ::utils::dbufs::allocator::BufAllocatorProxy::raw_ptr     pdriver2buf_;   //<
-  ::utils::mem_funcs::impl::BlockMemAllocatorProxy::raw_ptr pdriver2mem_;   //<
+  ::utils::dbufs::allocator::BufAllocatorProxy::raw_ptr     pdriver2buf_ = nullptr;   //<
+  ::utils::mem_funcs::impl::BlockMemAllocatorProxy::raw_ptr pdriver2mem_ = nullptr;   //<
 
   private:
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ievents::Event)
@@ -45,7 +45,7 @@ class LinksVideoDriverProp final : public ievents::Event
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
   virtual void                        load_json_int (const ::boost::json::object& obj) override;

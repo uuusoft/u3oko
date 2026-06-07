@@ -10,11 +10,11 @@
 #include "hsl_vs_rgb.hpp"
 #include "hsl_to_rgb_int.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 #  define HSL_2_RGB_AVX2(out_reg, var1, var2, var3)                                           \
                                                                                               \
-    /*if ( vH < 0 ) vH+= 1.0f*/                                                               \
+    /*if ( vH < 0 ) vH+= 1.0F*/                                                               \
     temp_6 = const_1;                                                                         \
     temp_5 = _mm256_setzero_ps ();                                                            \
     temp_4 = var3;                                                                            \
@@ -22,14 +22,14 @@
     temp_3 = temp_6;                                                                          \
     temp_3 = _mm256_and_ps (temp_3, temp_4);                                                  \
     var3   = _mm256_add_ps (var3, temp_3);                                                    \
-    /*if ( vH > 1 ) vH-= 1.0f*/                                                               \
+    /*if ( vH > 1 ) vH-= 1.0F*/                                                               \
     temp_3 = temp_6;                                                                          \
     temp_3 = _mm256_cmp_ps (temp_3, var3, 1);                                                 \
     temp_3 = _mm256_and_ps (temp_3, temp_6);                                                  \
     var3   = _mm256_sub_ps (var3, temp_3);                                                    \
     /*;return v1;*/                                                                           \
     out_reg = var1;                                                                           \
-    /*;if ( ( 3 * vH ) < 2 ) return ( v1 + ( v2 - v1 ) * ( ( 2.0f / 3.0f ) - vH ) * 6.0f );*/ \
+    /*;if ( ( 3 * vH ) < 2 ) return ( v1 + ( v2 - v1 ) * ( ( 2.0F / 3.0F ) - vH ) * 6.0F );*/ \
     temp_6  = const_2_to_3;                                                                   \
     temp_6  = _mm256_sub_ps (temp_6, var3);                                                   \
     temp_5  = var2;                                                                           \
@@ -56,7 +56,7 @@
     temp_6  = _mm256_andnot_ps (temp_6, out_reg);                                             \
     temp_6  = _mm256_or_ps (temp_6, temp_4);                                                  \
     out_reg = temp_6;                                                                         \
-    /*;if ( ( 6 * vH ) < 1 ) return ( v1 + ( v2 - v1 ) * 6.0f * vH );*/                       \
+    /*;if ( ( 6 * vH ) < 1 ) return ( v1 + ( v2 - v1 ) * 6.0F * vH );*/                       \
     temp_6  = var2;                                                                           \
     temp_6  = _mm256_sub_ps (temp_6, var1);                                                   \
     temp_5  = const_6;                                                                        \
@@ -124,20 +124,21 @@ hsl_to_rgb24_avx2 (::libs::optim::io::MCallInfo& info)
     for (std::uint32_t indxx = 0; indxx < width; indxx += ppc)
     {
       // load 8 std::uint16_t and convert to double word;
-      tempi1 = _mm256_lddqu_si256 (U3_CAST_REINTERPRET< const __m256i* > (h));
-      U3_FAST_MOVE_CPTR (h, 16);
+      tempi1 = _mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (h));
+
+      h      = ::libs::helpers::mem::move_cptr (h, 16);
       tempi1 = _mm256_cvtepi16_epi32 (_mm256_castsi256_si128 (tempi1));
       temph  = _mm256_cvtepi32_ps (tempi1);
       temph  = _mm256_mul_ps (temph, const_1_to_255);
 
-      tempi1 = _mm256_lddqu_si256 (U3_CAST_REINTERPRET< const __m256i* > (s));
-      U3_FAST_MOVE_CPTR (s, 16);
+      tempi1 = _mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (s));
+      s      = ::libs::helpers::mem::move_cptr (s, 16);
       tempi1 = _mm256_cvtepi16_epi32 (_mm256_castsi256_si128 (tempi1));
       temps  = _mm256_cvtepi32_ps (tempi1);
       temps  = _mm256_mul_ps (temps, const_1_to_255);
 
-      tempi1 = _mm256_lddqu_si256 (U3_CAST_REINTERPRET< const __m256i* > (l));
-      U3_FAST_MOVE_CPTR (l, 16);
+      tempi1 = _mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (l));
+      l      = ::libs::helpers::mem::move_cptr (l, 16);
       tempi1 = _mm256_cvtepi16_epi32 (_mm256_castsi256_si128 (tempi1));
       templ  = _mm256_cvtepi32_ps (tempi1);
       templ  = _mm256_mul_ps (templ, const_1_to_255);
@@ -161,7 +162,7 @@ hsl_to_rgb24_avx2 (::libs::optim::io::MCallInfo& info)
       var1 = _mm256_mul_ps (templ, const_2);
       var1 = _mm256_sub_ps (var1, temp_2);
 
-      // float var_3 = H + ( 1.0f / 3.0f );
+      // float var_3 = H + ( 1.0F / 3.0F );
       var3 = _mm256_add_ps (const_1_to_3, temph);
 
       // R = Hue_2_RGB( var1, var_2, var_3 );
@@ -174,13 +175,13 @@ hsl_to_rgb24_avx2 (::libs::optim::io::MCallInfo& info)
       // G =  Hue_2_RGB( var1, var_2, var_3 );
       HSL_2_RGB_AVX2 (temp_g, var1, var2, var3);
 
-      // var_3 = H - ( 1.0f / 3.0f );
+      // var_3 = H - ( 1.0F / 3.0F );
       var3 = _mm256_sub_ps (temph, const_1_to_3);
 
       // B =  Hue_2_RGB( var1, var_2, var_3 );
       HSL_2_RGB_AVX2 (temp_b, var1, var2, var3);
 
-      // if( S == 0.0f )               //HSL values = 0 ? 1
+      // if( S == 0.0F )               //HSL values = 0 ? 1
       //{
       //   R = L;                      //RGB results = 0 ? 255
       //   G = L;
@@ -251,21 +252,21 @@ hsl_to_rgb24_avx2 (::libs::optim::io::MCallInfo& info)
       if (indxy == height - 1 && indxx == width - 1 * ppc)
       {
         // последний блок в последней строке сохраняем точно, чтобы не было перезаписи в данные следующего потока
-        _mm256_maskstore_pd (U3_CAST_REINTERPRET< double* > (rgb24), mask_last_block, _mm256_castsi256_pd (bg8));
+        _mm256_maskstore_pd (::libs::helpers::casts::reinterpret_cast_helper< double* > (rgb24), mask_last_block, _mm256_castsi256_pd (bg8));
       }
       else
       {
-        _mm256_storeu_si256 (U3_CAST_REINTERPRET< __m256i* > (rgb24), bg8);
+        _mm256_storeu_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (rgb24), bg8);
       }
 
       rgb24 += 24;
     }
 
     // go next string
-    U3_FAST_MOVE_PTR (rgb24, leak_rgb24);
-    U3_FAST_MOVE_CPTR (h, leak_hsl);
-    U3_FAST_MOVE_CPTR (s, leak_hsl);
-    U3_FAST_MOVE_CPTR (l, leak_hsl);
+    rgb24 = ::libs::helpers::mem::move_ptr (rgb24, leak_rgb24);
+    h     = ::libs::helpers::mem::move_cptr (h, leak_hsl);
+    s     = ::libs::helpers::mem::move_cptr (s, leak_hsl);
+    l     = ::libs::helpers::mem::move_cptr (l, leak_hsl);
   }
 
   _mm256_zeroupper ();

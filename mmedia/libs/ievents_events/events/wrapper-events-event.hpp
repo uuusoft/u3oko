@@ -27,7 +27,7 @@ class WrapperEventsEvent : public BaseEventsEvent
   U3_HELPER_DISABLE_ACOPY_TYPE (WrapperEventsEvent)
 
   explicit WrapperEventsEvent (const Acessor& = Acessor (0), ::libs::events::IEvent::ptr msg = ::libs::events::IEvent::ptr ());
-  virtual ~WrapperEventsEvent ();
+  virtual ~WrapperEventsEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -48,7 +48,7 @@ class WrapperEventsEvent : public BaseEventsEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
   //  ievents::Event overrides
   virtual void                        load_json_int (const ::boost::json::object& obj) override;
   virtual void                        save_json_int (::boost::json::object& obj) const override;

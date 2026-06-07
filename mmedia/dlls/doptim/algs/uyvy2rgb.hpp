@@ -19,9 +19,7 @@ class CUYVY2RgbAlg final : public IOptimAlg
     sel_.set_algoritm_name (val_key);
   }
 
-  virtual ~CUYVY2RgbAlg ()
-  {
-  }
+  virtual ~CUYVY2RgbAlg () = default;
 
   protected:
   virtual void

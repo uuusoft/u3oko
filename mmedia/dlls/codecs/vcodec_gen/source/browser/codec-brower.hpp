@@ -13,8 +13,8 @@ namespace dlls::codecs::vcodec_gen::browser
 class CodecBrower final
 {
   public:
-  CodecBrower ();
-  ~CodecBrower ();
+  CodecBrower ()                                  = default;
+  ~CodecBrower ()                                 = default;
   CodecBrower (const CodecBrower& src)            = delete;
   CodecBrower& operator= (const CodecBrower& src) = delete;
 
@@ -26,7 +26,7 @@ class CodecBrower final
   private:
   //  internal typess
   using sync_type        = std::mutex;
-  using lock_type        = std::lock_guard< sync_type >;
+  using lock_type        = std::scoped_lock< sync_type >;
   using format2file_type = std::unordered_multimap< libs::helpers::uids::minor::id_val, std::string >;
 
   /// Функция обновляет список кодеков

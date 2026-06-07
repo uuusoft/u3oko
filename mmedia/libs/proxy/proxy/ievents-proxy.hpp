@@ -27,7 +27,7 @@ class IEventsProxy final
 
   private:
   explicit IEventsProxy (const std::string& dll_path);
-  ~IEventsProxy ();
+  ~IEventsProxy () = default;
 
   boost_create_func_type          creator_;   //< Функция создания релизации через dll
   ::libs::helpers::dlls::dll_type lib_;

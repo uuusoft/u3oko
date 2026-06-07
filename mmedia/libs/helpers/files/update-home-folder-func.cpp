@@ -1,5 +1,5 @@
 /**
-\file       update-home-folder-funct.cpp
+\file       update-home-folder-func.cpp
 \date       25.02.2026
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_helpers_lib
@@ -11,7 +11,7 @@
 #include "libs-helpers-files-includes.hpp"
 #include "update-home-folder-func.hpp"
 
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
 #  include <Shlobj.h>
 #endif
 
@@ -20,7 +20,7 @@ namespace libs::helpers::files
 std::string
 get_home_folder ()
 {
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
   PWSTR path = nullptr;
   if (SUCCEEDED (SHGetKnownFolderPath (FOLDERID_Profile, 0, NULL, &path)))
   {
@@ -42,7 +42,7 @@ get_home_folder ()
 std::string
 update_home_folder (const std::string& path)
 {
-  if (path.size () < 1 || path[0] != '~')
+  if (path.empty () || path[0] != '~')
   {
     return path;
   }

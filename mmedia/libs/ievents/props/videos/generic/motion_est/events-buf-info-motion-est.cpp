@@ -16,8 +16,8 @@ EventBufsInfoMotionEst::EventBufsInfoMotionEst (
   const ::utils::dbufs::video::consts::offs::off_buf_type& dst,
   const Acessor&) :
   ::libs::events::buf::EventBufsInfo (src, dst),
-  max_error_ (16.0f * 16.0f * 10.0f),
-  min_error_ (0.0f),
+  max_error_ (16.0F * 16.0F * 10.0F),
+  min_error_ (0.0F),
   size_block_ (16),
   size_search_ (16)
 {
@@ -33,8 +33,8 @@ EventBufsInfoMotionEst::EventBufsInfoMotionEst (const ::libs::events::buf::Event
 void
 EventBufsInfoMotionEst::check_int ()
 {
-  U3_CHECK (min_error_ >= 0.0f, "min large 0");
-  U3_CHECK (max_error_ > 0.0f, "max less 0");
+  U3_CHECK (min_error_ >= 0.0F, "min large 0");
+  U3_CHECK (max_error_ > 0.0F, "max less 0");
   U3_CHECK (min_error_ < max_error_, "min large max");
   U3_CHECK (8 == size_block_ || 16 == size_block_ || 32 == size_block_, "invalid blok size");
   U3_CHECK (size_search_ > 0, "size search less 0");
@@ -45,7 +45,7 @@ EventBufsInfoMotionEst::check_int ()
 void
 EventBufsInfoMotionEst::correct_int ()
 {
-  min_error_   = std::max (0.0f, min_error_);
+  min_error_   = std::max (0.0F, min_error_);
   max_error_   = std::max (0.001f, max_error_);
   max_error_   = std::max (min_error_ + 0.001f, max_error_);
   size_search_ = std::max< std::int16_t > (1, size_search_);
@@ -60,25 +60,28 @@ EventBufsInfoMotionEst::correct_int ()
 
 template< class Archive >
 void
-EventBufsInfoMotionEst::serialize (Archive& ar, const std::uint32_t /* file_version */)
+EventBufsInfoMotionEst::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoeventsobufoEventBufsInfoMotionEst", super);
-  ar& BOOST_SERIALIZATION_NVP (max_error_);
-  ar& BOOST_SERIALIZATION_NVP (min_error_);
-  ar& BOOST_SERIALIZATION_NVP (size_block_);
-  ar& BOOST_SERIALIZATION_NVP (size_search_);
-  ar& BOOST_SERIALIZATION_NVP (search_vecs_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoeventsobufoEventBufsInfoMotionEst", super);
+  arh& BOOST_SERIALIZATION_NVP (max_error_);
+  arh& BOOST_SERIALIZATION_NVP (min_error_);
+  arh& BOOST_SERIALIZATION_NVP (size_block_);
+  arh& BOOST_SERIALIZATION_NVP (size_search_);
+  arh& BOOST_SERIALIZATION_NVP (search_vecs_);
 }
 
 
 void
-tag_invoke (::boost::json::value_from_tag tag, ::boost::json::value& jv, const EventBufsInfoMotionEst& src)
+tag_invoke (::boost::json::value_from_tag tag, ::boost::json::value& jvs, const EventBufsInfoMotionEst& src)
 {
   ::boost::json::value pjv;
-  ::libs::events::buf::tag_invoke (tag, pjv, U3_CAST_STATIC< const ::libs::events::buf::EventBufsInfo& > (src));
+  ::libs::events::buf::tag_invoke (
+    tag,
+    pjv,
+    ::libs::helpers::casts::static_cast_helper< const ::libs::events::buf::EventBufsInfo& > (src));
 
   // EAI-JSON-TEST-86
-  jv = {
+  jvs = {
     { "parent", pjv },
     { "max_error", src.max_error_ },
     { "min_error", src.min_error_ },
@@ -90,11 +93,11 @@ tag_invoke (::boost::json::value_from_tag tag, ::boost::json::value& jv, const E
 
 
 EventBufsInfoMotionEst
-tag_invoke (::boost::json::value_to_tag< EventBufsInfoMotionEst >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< EventBufsInfoMotionEst >, const ::boost::json::value& jvs)
 {
-  const auto&                  pobj = jv.at ("parent").as_object ();
+  const auto&                  pobj = jvs.at ("parent").as_object ();
   EventBufsInfoMotionEst       ret (::libs::events::buf::tag_invoke (::boost::json::value_to_tag< ::libs::events::buf::EventBufsInfo > (), pobj));
-  const ::boost::json::object& obj = jv.as_object ();
+  const ::boost::json::object& obj = jvs.as_object ();
 
   ret.max_error_   = ::libs::helpers::json::get_float (obj.at ("max_error"));
   ret.min_error_   = ::libs::helpers::json::get_float (obj.at ("min_error"));

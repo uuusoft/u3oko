@@ -53,21 +53,24 @@ EventBufsInfoVec2Image1::correct_int ()
 
 template< class Archive >
 void
-EventBufsInfoVec2Image1::serialize (Archive& ar, const std::uint32_t /* file_version */)
+EventBufsInfoVec2Image1::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoeventsobufoEventBufsInfo", super);
-  ar& BOOST_SERIALIZATION_NVP (size_block_);
-  ar& BOOST_SERIALIZATION_NVP (mul_koeff_vec_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoeventsobufoEventBufsInfo", super);
+  arh& BOOST_SERIALIZATION_NVP (size_block_);
+  arh& BOOST_SERIALIZATION_NVP (mul_koeff_vec_);
 }
 
 
 void
-tag_invoke (::boost::json::value_from_tag tag, ::boost::json::value& jv, const EventBufsInfoVec2Image1& src)
+tag_invoke (::boost::json::value_from_tag tag, ::boost::json::value& jvs, const EventBufsInfoVec2Image1& src)
 {
   ::boost::json::value pjv;
-  ::libs::events::buf::tag_invoke (tag, pjv, U3_CAST_STATIC< const ::libs::events::buf::EventBufsInfo& > (src));
+  ::libs::events::buf::tag_invoke (
+    tag,
+    pjv,
+    ::libs::helpers::casts::static_cast_helper< const ::libs::events::buf::EventBufsInfo& > (src));
 
-  jv = {
+  jvs = {
     { "parent", pjv },
     { "size_block", src.size_block_ },
     { "mul_koeff_vec", src.mul_koeff_vec_ }
@@ -76,14 +79,14 @@ tag_invoke (::boost::json::value_from_tag tag, ::boost::json::value& jv, const E
 
 
 EventBufsInfoVec2Image1
-tag_invoke (::boost::json::value_to_tag< EventBufsInfoVec2Image1 >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< EventBufsInfoVec2Image1 >, const ::boost::json::value& jvs)
 {
-  const auto&             pobj = jv.at ("parent").as_object ();
+  const auto&             pobj = jvs.at ("parent").as_object ();
   EventBufsInfoVec2Image1 ret (::libs::events::buf::tag_invoke (::boost::json::value_to_tag< ::libs::events::buf::EventBufsInfo > (), pobj));
-  // const ::boost::json::object& obj = jv.as_object ();
+  // const ::boost::json::object& obj = jvs.as_object ();
 
-  ret.size_block_    = ::libs::helpers::json::get_int32 (jv.at ("size_block"));
-  ret.mul_koeff_vec_ = ::libs::helpers::json::get_int32 (jv.at ("mul_koeff_vec"));
+  ret.size_block_    = ::libs::helpers::json::get_int32 (jvs.at ("size_block"));
+  ret.mul_koeff_vec_ = ::libs::helpers::json::get_int32 (jvs.at ("mul_koeff_vec"));
   return ret;
 }
 }   // namespace libs::ievents::props::videos::generic::vec2image

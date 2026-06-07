@@ -9,7 +9,7 @@
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
 // EAI-REFACT
 #  include <shellscalingapi.h>
 #endif
@@ -43,7 +43,7 @@ signal_abort_process (int signal)
   if (0 == abort_counter % 1024)
   {
     U3_XLOG_DEV ("signal_abort_process" + VTOLOG (signal) + VTOLOG (abort_counter));
-#if 0
+#ifdef U3_FAKE_DISABLE
     std::abort ();   // debug
 #else
     std::exit (signal);
@@ -68,7 +68,7 @@ prepare_process ()
     std::this_thread::get_id (),
     ::libs::helpers::thread::Priorities::time_critical);
 
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
   SetProcessDpiAwareness (PROCESS_SYSTEM_DPI_AWARE);   // windows 8.1 or above
   ::libs::helpers::platforms::win32::add_process_privilage ();
 

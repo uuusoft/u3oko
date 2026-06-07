@@ -15,10 +15,10 @@ class IOptimImpl final : public ::libs::optim::io::IOptim
   //  ext types
   using str2funcs_type = std::unordered_map< std::string, IOptimAlg::ptr >;
   using sync_type      = std::mutex;
-  using lock_type      = std::lock_guard< sync_type >;
+  using lock_type      = std::scoped_lock< sync_type >;
 
   IOptimImpl ();
-  virtual ~IOptimImpl ();
+  virtual ~IOptimImpl () = default;
 
   //  ::libs::optim::io::IOptim overrides
   virtual ::libs::optim::io::hioptim get (const ::libs::optim::io::qoptim& query) override;
@@ -26,6 +26,15 @@ class IOptimImpl final : public ::libs::optim::io::IOptim
 
   private:
   void construct ();
+
+  template< typename TTAlg >
+  void
+  add_alg ()
+  {
+    const auto& key = TTAlg::val_key;
+    U3_ASSERT (algs_.end () == algs_.find (key));
+    algs_.insert (str2funcs_type::value_type (key, std::make_shared< TTAlg > ()));
+  }
 
   str2funcs_type algs_;   //< Массив для быстрого поиска алгоритма по строке
   sync_type      mtx_;    //< Синхронизирующий примитив

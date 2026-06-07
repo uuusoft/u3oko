@@ -11,16 +11,11 @@
 
 namespace libs::ievents::props::videos::generic::driver
 {
-LinksVideoDriverProp::LinksVideoDriverProp (const Acessor& ph) :
+LinksVideoDriverProp::LinksVideoDriverProp (const Acessor& pha) :
   pdriver2buf_ (nullptr),
   pdriver2mem_ (nullptr)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-LinksVideoDriverProp::~LinksVideoDriverProp ()
-{
 }
 
 
@@ -50,8 +45,9 @@ LinksVideoDriverProp::save_json_int (::boost::json::object& obj) const
 void
 LinksVideoDriverProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (LinksVideoDriverProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< LinksVideoDriverProp > (src);
   super::copy_int (src);
+
   pdriver2buf_ = dsrc->pdriver2buf_;
   pdriver2mem_ = dsrc->pdriver2mem_;
 }
@@ -59,9 +55,9 @@ LinksVideoDriverProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-LinksVideoDriverProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+LinksVideoDriverProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
 
   self_correct ();
 }

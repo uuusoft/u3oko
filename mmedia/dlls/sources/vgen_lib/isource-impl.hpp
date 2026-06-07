@@ -15,8 +15,8 @@ class ISourceImpl
   // ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ISourceImpl)
 
-  ISourceImpl ();
-  virtual ~ISourceImpl ();
+  ISourceImpl ()          = default;
+  virtual ~ISourceImpl () = default;
 
   ISourceImpl (const ISourceImpl& src)            = delete;
   ISourceImpl& operator= (const ISourceImpl& src) = delete;
@@ -31,10 +31,10 @@ class ISourceImpl
   bool is_source_started ();
 
   protected:
-  SourceImplInfo srcimpinfo_;        //<
-  bool           started_;           //< Флаг запуска процесса захвата
-  bool           send_interfaces_;   //< Флаг посылки сообщения с интерфейсом кодека, чтобы управлять устройством
-  syn::CpuExts   simd_;              //< Используемое расширение CPU
+  SourceImplInfo srcimpinfo_;                              //<
+  bool           started_         = false;                 //< Флаг запуска процесса захвата
+  bool           send_interfaces_ = false;                 //< Флаг посылки сообщения с интерфейсом кодека, чтобы управлять устройством
+  syn::CpuExts   simd_            = syn::CpuExts::usual;   //< Используемое расширение CPU
 
   private:
   // ISourceImpl interface

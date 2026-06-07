@@ -10,7 +10,7 @@
 #include "hsl_vs_rgb.hpp"
 #include "hsl_to_rgb_int.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::convert::hsl_vs_rgb
 {
@@ -63,7 +63,7 @@ hsl_to_rgb24_sse1 (::libs::optim::io::MCallInfo& info)
 
 
 #    define Hue_2_RGB_SSE(out_reg)                                                              \
-      /*if ( vH < 0 ) vH+= 1.0f*/                                                               \
+      /*if ( vH < 0 ) vH+= 1.0F*/                                                               \
       xmm7 = const_1;                                                                           \
       xmm6 = _mm_setzero_ps ();                                                                 \
       xmm5 = xmm1;                                                                              \
@@ -71,14 +71,14 @@ hsl_to_rgb24_sse1 (::libs::optim::io::MCallInfo& info)
       xmm4 = xmm7;                                                                              \
       xmm4 = _mm_and_ps (xmm4, xmm5);                                                           \
       xmm1 = _mm_add_ps (xmm1, xmm4);                                                           \
-      /*if ( vH > 1 ) vH-= 1.0f*/                                                               \
+      /*if ( vH > 1 ) vH-= 1.0F*/                                                               \
       xmm4 = xmm7;                                                                              \
       xmm4 = _mm_cmplt_ps (xmm4, xmm1);                                                         \
       xmm4 = _mm_and_ps (xmm4, xmm7);                                                           \
       xmm1 = _mm_sub_ps (xmm1, xmm4);                                                           \
       /*;return v1;*/                                                                           \
       out_reg = xmm2;                                                                           \
-      /*;if ( ( 3 * vH ) < 2 ) return ( v1 + ( v2 - v1 ) * ( ( 2.0f / 3.0f ) - vH ) * 6.0f );*/ \
+      /*;if ( ( 3 * vH ) < 2 ) return ( v1 + ( v2 - v1 ) * ( ( 2.0F / 3.0F ) - vH ) * 6.0F );*/ \
       xmm7    = const_2_to_3;                                                                   \
       xmm7    = _mm_sub_ps (xmm7, xmm1);                                                        \
       xmm6    = xmm3;                                                                           \
@@ -105,7 +105,7 @@ hsl_to_rgb24_sse1 (::libs::optim::io::MCallInfo& info)
       xmm7    = _mm_andnot_ps (xmm7, out_reg);                                                  \
       xmm7    = _mm_or_ps (xmm7, xmm5);                                                         \
       out_reg = xmm7;                                                                           \
-      /*;if ( ( 6 * vH ) < 1 ) return ( v1 + ( v2 - v1 ) * 6.0f * vH );*/                       \
+      /*;if ( ( 6 * vH ) < 1 ) return ( v1 + ( v2 - v1 ) * 6.0F * vH );*/                       \
       xmm7    = xmm3;                                                                           \
       xmm7    = _mm_sub_ps (xmm7, xmm2);                                                        \
       xmm6    = const_6;                                                                        \
@@ -146,9 +146,9 @@ hsl_to_rgb24_sse1 (::libs::optim::io::MCallInfo& info)
       // load 4 std::uint16_t and convert to double word;
       __m64 mm2 = _mm_setzero_si64 ();
 
-      mm0 = _mm_set_pi32 (*U3_CAST_REINTERPRET< const int* > (h + 2), *U3_CAST_REINTERPRET< const int* > (h + 0));
-      mm1 = mm0;
-      U3_FAST_MOVE_CPTR (h, 8);
+      mm0   = _mm_set_pi32 (*::libs::helpers::casts::reinterpret_cast_helper< const int* > (h + 2), *::libs::helpers::casts::reinterpret_cast_helper< const int* > (h + 0));
+      mm1   = mm0;
+      h     = ::libs::helpers::mem::move_cptr (h, 8);
       mm0   = m_punpcklwd (mm0, mm2);
       mm1   = m_punpckhwd (mm1, mm2);
       temph = _mm_setzero_ps ();
@@ -157,9 +157,9 @@ hsl_to_rgb24_sse1 (::libs::optim::io::MCallInfo& info)
       temph = _mm_cvt_pi2ps (temph, mm0);
       temph = _mm_mul_ps (temph, const_1_to_255);
 
-      mm0 = _mm_set_pi32 (*U3_CAST_REINTERPRET< const int* > (s + 2), *U3_CAST_REINTERPRET< const int* > (s + 0));
-      mm1 = mm0;
-      U3_FAST_MOVE_CPTR (s, 8);
+      mm0   = _mm_set_pi32 (*::libs::helpers::casts::reinterpret_cast_helper< const int* > (s + 2), *::libs::helpers::casts::reinterpret_cast_helper< const int* > (s + 0));
+      mm1   = mm0;
+      s     = ::libs::helpers::mem::move_cptr (s, 8);
       mm0   = m_punpcklwd (mm0, mm2);
       mm1   = m_punpckhwd (mm1, mm2);
       temps = _mm_cvt_pi2ps (temps, mm1);
@@ -167,9 +167,9 @@ hsl_to_rgb24_sse1 (::libs::optim::io::MCallInfo& info)
       temps = _mm_cvt_pi2ps (temps, mm0);
       temps = _mm_mul_ps (temps, const_1_to_255);
 
-      mm0 = _mm_set_pi32 (*U3_CAST_REINTERPRET< const int* > (l + 2), *U3_CAST_REINTERPRET< const int* > (l + 0));
-      mm1 = mm0;
-      U3_FAST_MOVE_CPTR (l, 8);
+      mm0   = _mm_set_pi32 (*::libs::helpers::casts::reinterpret_cast_helper< const int* > (l + 2), *::libs::helpers::casts::reinterpret_cast_helper< const int* > (l + 0));
+      mm1   = mm0;
+      l     = ::libs::helpers::mem::move_cptr (l, 8);
       mm0   = m_punpcklwd (mm0, mm2);
       mm1   = m_punpckhwd (mm1, mm2);
       templ = _mm_cvt_pi2ps (templ, mm1);
@@ -199,7 +199,7 @@ hsl_to_rgb24_sse1 (::libs::optim::io::MCallInfo& info)
       xmm0  = _mm_sub_ps (xmm0, xmm3);
       var_1 = xmm0;
 
-      // float var_3 = H + ( 1.0f / 3.0f );
+      // float var_3 = H + ( 1.0F / 3.0F );
       xmm0 = const_1_to_3;
       xmm0 = _mm_add_ps (const_1_to_3, temph);
 
@@ -217,13 +217,13 @@ hsl_to_rgb24_sse1 (::libs::optim::io::MCallInfo& info)
       // G =  Hue_2_RGB( var_1, var_2, var_3 );
       Hue_2_RGB_SSE (temp_g);
 
-      // var_3 = H - ( 1.0f / 3.0f );
+      // var_3 = H - ( 1.0F / 3.0F );
       xmm1 = _mm_sub_ps (temph, const_1_to_3);
 
       // B =  Hue_2_RGB( var_1, var_2, var_3 );
       Hue_2_RGB_SSE (temp_b);
 
-      // if( S == 0.0f )               //HSL values = 0 ? 1
+      // if( S == 0.0F )               //HSL values = 0 ? 1
       //{
       //   R = L;                      //RGB results = 0 ? 255
       //   G = L;
@@ -318,9 +318,9 @@ hsl_to_rgb24_sse1 (::libs::optim::io::MCallInfo& info)
     // go next string
     rgb24 += leak_rgb24;
 
-    U3_FAST_MOVE_CPTR (h, leak_hsl);
-    U3_FAST_MOVE_CPTR (s, leak_hsl);
-    U3_FAST_MOVE_CPTR (l, leak_hsl);
+    h = ::libs::helpers::mem::move_cptr (h, leak_hsl);
+    s = ::libs::helpers::mem::move_cptr (s, leak_hsl);
+    l = ::libs::helpers::mem::move_cptr (l, leak_hsl);
   }
 
   _mm_empty ();

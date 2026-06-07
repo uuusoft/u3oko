@@ -31,7 +31,7 @@ image2frame (const std::string& val)
 SourceImpl::SourceImpl () :
   indx_image_file_ (0),
   image2frame_style_ (Image2Frames::scroll),
-  off_first_image_ (0.0f),
+  off_first_image_ (0.0F),
   icapture_ (std::make_shared< syn::IHardwareCapture > ())
 {
   time_last_change_file_ = boost::posix_time::microsec_clock::universal_time ();
@@ -67,7 +67,7 @@ SourceImpl::print_images2buf (utils::dbufs::video::IVideoBuf::ptr& genimage)
 
   auto         dstbuf   = genimage->get_buf ();
   std::int32_t cpwidth  = 0;
-  std::int32_t offfirst = U3_CAST_INT32 (off_first_image_);
+  auto         offfirst = U3_CAST_INT32 (off_first_image_);
 
   const auto   folder         = ::libs::helpers::files::update_home_folder (srcimpinfo_.props_->ext_vals_.at (consts::param_keys::picter_folder));
   auto         loc_image_indx = indx_image_file_;
@@ -193,7 +193,7 @@ SourceImpl::load_image2buf (const std::string& name)
   buf->resize (ressize);
 
   stbir_resize_uint8_srgb (
-    U3_CAST_REINTERPRET< unsigned char* > (*data),
+    ::libs::helpers::casts::reinterpret_cast_helper< unsigned char* > (*data),
     filewidth,
     fileheight,
     filewidth * bbpx,
@@ -218,7 +218,6 @@ SourceImpl::refresh_files ()
                   .xpm?.djvu?");
 
   enum_files_.clear ();
-  type_files_.clear ();
 
   syn::DefaultFileMask check_cond (loc_mask);
   const auto           picters_folder = ::libs::helpers::files::update_home_folder (srcimpinfo_.props_->ext_vals_.at (consts::param_keys::picter_folder));
@@ -255,7 +254,7 @@ void
 SourceImpl::sync_internal_structures ()
 {
   loaded_images_.clear ();
-  off_first_image_ = 0.0f;
+  off_first_image_ = 0.0F;
   refresh_files ();
   image2frame_style_ = image2frame (srcimpinfo_.props_->ext_vals_.at (consts::param_keys::image2frame));
 }

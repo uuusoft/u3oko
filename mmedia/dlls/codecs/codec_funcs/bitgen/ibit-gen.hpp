@@ -14,8 +14,8 @@ class IBitGen
   //  ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IBitGen)
 
-  IBitGen ();
-  virtual ~IBitGen ();
+  IBitGen ()          = default;
+  virtual ~IBitGen () = default;
 
   IBitGen (const IBitGen& src)                  = delete;
   const IBitGen& operator= (const IBitGen& src) = delete;

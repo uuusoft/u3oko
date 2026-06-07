@@ -5,8 +5,6 @@
 \project    u3_detect_face
 \brief      Модуль детекции лица на основе dlib
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "detect-face-includes_int.hpp"
 #include "detect-face-info-filter-dll.hpp"
 #include "detect-face-filter-dll.hpp"

@@ -11,7 +11,7 @@
 #include "l_to_rgb_int.hpp"
 #include "../hsl_vs_rgb/rgb_to_hsl_int.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::convert::l_vs_rgb
 {
@@ -29,21 +29,20 @@ l_to_rgb24_avx2 (::libs::optim::io::MCallInfo& info)
   {
     for (std::uint32_t indxx = 0; indxx < width; indxx += ppc)
     {
-      const __m256i val = _mm256_load_si256 (U3_CAST_REINTERPRET< const __m256i* > (rgb24));
+      const __m256i val = _mm256_load_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (rgb24));
 
-      _mm256_storeu_si256 (U3_CAST_REINTERPRET< __m256i* > (rgb24 + 0), val);
-      _mm256_storeu_si256 (U3_CAST_REINTERPRET< __m256i* > (rgb24 + 16), val);
-      _mm256_storeu_si256 (U3_CAST_REINTERPRET< __m256i* > (rgb24 + 32), val);
+      _mm256_storeu_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (rgb24 + 0), val);
+      _mm256_storeu_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (rgb24 + 16), val);
+      _mm256_storeu_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (rgb24 + 32), val);
 
       l += 16;
       rgb24 += 3 * 16;
     }
 
-    U3_FAST_MOVE_PTR (rgb24, leak_l);
-    U3_FAST_MOVE_CPTR (l, leak_l);
+    rgb24 = ::libs::helpers::mem::move_ptr (rgb24, leak_l);
+    l     = ::libs::helpers::mem::move_cptr (l, leak_l);
   }
 
-  return;
 
 #    if 0
     U3_CHECK( check_l2rgb( info ), "failde check l2rgb" );
@@ -78,8 +77,8 @@ l_to_rgb24_avx2 (::libs::optim::io::MCallInfo& info)
         cstring += 3;
       }
 
-      U3_FAST_MOVE_PTR( cstring,  leak_l);
-      U3_FAST_MOVE_CPTR( buf_l,  leak_bytes);
+      cstring = ::libs::helpers::mem::move_ptr( cstring,  leak_l);
+      buf_l = ::libs::helpers::mem::move_cptr( buf_l,  leak_bytes);
     }
 
     RGB2L_PREFIX(16);
@@ -95,7 +94,7 @@ l_to_rgb24_avx2 (::libs::optim::io::MCallInfo& info)
     {
       for( std::uint32_t indxx = 0; indxx < width; indxx+= ppc )
       {
-        __m256i i256_1 = _mm256_loadu_si256( U3_CAST_REINTERPRET<const __m256i*>( rgb24 ) ); //BOG0R0 B1G1R1 B2G2R2 B3G3R3 B4G4R4 B5G5R5 B6G6R6 B7G7R7
+        __m256i i256_1 = _mm256_loadu_si256( ::libs::helpers::casts::reinterpret_cast_helper<const __m256i*>( rgb24 ) ); //BOG0R0 B1G1R1 B2G2R2 B3G3R3 B4G4R4 B5G5R5 B6G6R6 B7G7R7
 
         SPLIT_RGB24_AVX2( i256_1, ir8, ig8, ib8 );
 
@@ -113,19 +112,19 @@ l_to_rgb24_avx2 (::libs::optim::io::MCallInfo& info)
         //max_min = max + var_Min;
         __m256i max_min = _mm256_add_epi32( var_min, max );
 
-        //L = ( max + var_Min ) / 2.0f;
+        //L = ( max + var_Min ) / 2.0F;
         __m256i l8 = _mm256_srai_epi32( max_min, 1 );
 
         //converting from float HSL to word HSL and saved to bufs
         __m256i l8_2 = _mm256_permute2f128_si256( l8, l8, 1 );
         l8 = _mm256_packs_epi32( l8, l8_2 );
-        _mm256_storeu_si256( U3_CAST_REINTERPRET<__m256i*>( l), l8 );
+        _mm256_storeu_si256( ::libs::helpers::casts::reinterpret_cast_helper<__m256i*>( l), l8 );
 
         l+= 8;
       }
 
-      U3_FAST_MOVE_CPTR( rgb24, leak_rgb );
-      U3_FAST_MOVE_PTR( l, leak_hsl );
+      rgb24 = ::libs::helpers::mem::move_cptr( rgb24, leak_rgb );
+      l = ::libs::helpers::mem::move_ptr( l, leak_hsl );
     }
 
     _mm256_zeroupper();

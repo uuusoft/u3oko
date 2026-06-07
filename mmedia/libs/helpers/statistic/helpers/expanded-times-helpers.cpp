@@ -47,7 +47,7 @@ AddOpTime::set_skip ()
 }
 
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 void
 change_last_name (const std::string& name)
 {
@@ -58,12 +58,12 @@ change_last_name (const std::string& name)
 void
 dump (ExpandedTimes& obj, ::libs::link::ILink::ptr& logger)
 {
-#if 0    
+#ifdef U3_FAKE_DISABLE
   ExpandedTimes::infos_type infos;
   obj.get (infos);
   for (const std::string& info : infos)
   {
-    U~3_MSG2LOGGER (logger, info, "statxx", ::libs::ievents::props::modules::log::LogLevels::info);
+    U ~3_MSG2LOGGER(logger, info, "statxx", ::libs::ievents::props::modules::log::LogLevels::info);
   }
 #endif
 }

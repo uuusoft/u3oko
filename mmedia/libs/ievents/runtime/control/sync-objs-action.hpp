@@ -20,11 +20,12 @@ enum class SyncActions : std::uint32_t
   unknown  = 0xFF    //< для общности
 };
 
+// EAI-REFACT
 std::string to_string (const SyncActions& val);
 
 inline constexpr SyncActions
 sync_objs_action_from_raw_val (std::uint32_t val)
 {
-  return U3_CAST_STATIC< SyncActions > (val);
+  return ::libs::helpers::casts::static_cast_helper< SyncActions > (val);
 }
 }   // namespace libs::ievents::runtime::control

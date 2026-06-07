@@ -15,13 +15,13 @@ struct RegisterHelper {
   void
   process () const
   {
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ilog_events::events::BaseLogEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ilog_events::events::ChangDShowRunsSubSysLogEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ilog_events::events::ExceptLogEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ilog_events::events::InfoLogEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ilog_events::events::ProcessListLogsEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ilog_events::events::ProcessLogEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ilog_events::events::WrapperLogEvent);
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ilog_events::events::BaseLogEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ilog_events::events::ChangDShowRunsSubSysLogEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ilog_events::events::ExceptLogEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ilog_events::events::InfoLogEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ilog_events::events::ProcessListLogsEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ilog_events::events::ProcessLogEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ilog_events::events::WrapperLogEvent > ();
   }
 };
 

@@ -3,10 +3,6 @@
 # copyright   Erashov A.I.
 # file        u3-pugixml-lib.cmake
 
-#message(FATAL_ERROR "DEBUG-STOP")
-include(ExternalProject)
-include(FetchContent)
-
 include("./build/cmake/libs/pugixml/u3-pugixml-lib-values.cmake")
 
 set(U3_NAME_EXTERNAL_LIB_PUGIXML_UTIL ${U3_NAME_EXTERNAL_LIB_PUGIXML}-util)

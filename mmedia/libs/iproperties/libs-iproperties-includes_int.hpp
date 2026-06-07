@@ -20,7 +20,7 @@
 
 #include "libs-iproperties-includes.hpp"
 
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
 #  include <Shlobj.h>
 #endif
 

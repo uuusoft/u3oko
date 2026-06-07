@@ -10,7 +10,7 @@
 #include "v4l2-vgen-video-impl.hpp"
 
 // old shit
-#if 0
+#ifdef U3_FAKE_DISABLE
 namespace dlls::sources::v4l2_vgen::video
 {
 MMAL_STATUS_T
@@ -64,7 +64,7 @@ create_video_component (DriverState* state)
 
     MMAL_ES_FORMAT_T* format = video_output->format;
 
-    format->bitrate                  = U3_CAST_UINT32 (state->bitrate_ * props->plane_.quality_ / 100.0f);
+    format->bitrate                  = U3_CAST_UINT32 (state->bitrate_ * props->plane_.quality_ / 100.0F);
     format->es->video.frame_rate.num = 0;
     format->es->video.frame_rate.den = 1;
     format->es->video.width          = VCOS_ALIGN_UP (state->width, 32);
@@ -76,7 +76,7 @@ create_video_component (DriverState* state)
     format->es->video.frame_rate     = MMAL_RATIONAL_T { 30, 1 };
     format->es->video.frame_rate     = MMAL_RATIONAL_T { 0, 1 };   // We need to set the frame rate on output to 0, to ensure it gets updated correctly from the input framerate when port connected
 
-    // video_output->format->bitrate                  = U3_CAST_UINT32 (state->bitrate_ * 1.0f / 100.0f); //debug
+    // video_output->format->bitrate                  = U3_CAST_UINT32 (state->bitrate_ * 1.0F / 100.0F); //debug
   }
 
   CHECK_STATUS (mmal_port_format_commit (video_output), "Unable to set format on video output port");
@@ -277,7 +277,7 @@ VideoImpl::init_device (const ::dlls::sources::gen_lib::SourceImplInfo& info)
   CHECK_STATUS (helpers::connect_ports (cap_port, einput_port, &devstate_->video_connect_), "Failed to connect camera video port to video input");
   CHECK_STATUS (mmal_port_parameter_set_uint32 (devstate_->cam_comp_->control, MMAL_PARAMETER_SHUTTER_SPEED, devstate_->cam_params_.shutter_speed), "Failed to set shutter speed");
 
-  eoutput_port->userdata = U3_CAST_REINTERPRET< struct MMAL_PORT_USERDATA_T* > (devstate_);
+  eoutput_port->userdata = ::libs::helpers::casts::reinterpret_cast_helper< struct MMAL_PORT_USERDATA_T* > (devstate_);
 
   CHECK_STATUS (mmal_port_enable (eoutput_port, buf_callback), "enable video port");
 
@@ -526,7 +526,7 @@ VideoImpl::update_codec_props_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
         }
     }
 
-  video_output->format->bitrate = U3_CAST_UINT32 (devstate_->bitrate_ * props->plane_.quality_ / 100.0f);
+  video_output->format->bitrate = U3_CAST_UINT32 (devstate_->bitrate_ * props->plane_.quality_ / 100.0F);
 
   if (devstate_->encoding_ == MMAL_ENCODING_H264)
     video_output->buf_size = video_output->buf_size_recommended;
@@ -553,7 +553,7 @@ VideoImpl::update_codec_props_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 void
 VideoImpl::buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 {
-  DriverState* devstate = U3_CAST_REINTERPRET< DriverState* > (port->userdata);
+  DriverState* devstate = ::libs::helpers::casts::reinterpret_cast_helper< DriverState* > (port->userdata);
   if (!devstate)
   {
     U3_LOG_DATA_WRN ("received empty user data");

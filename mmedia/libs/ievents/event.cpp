@@ -38,14 +38,9 @@ str2event_state (const std::string& str)
 }
 
 
-Event::Event (const Acessor& ph)
+Event::Event (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-Event::~Event ()
-{
 }
 
 
@@ -73,16 +68,16 @@ Event::save_json_int (::boost::json::object& obj) const
 void
 Event::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (Event);
+  ::libs::iproperties::helpers::dbg_check_copy_event< Event > (src);
   super::copy_int (src);
 }
 
 
 template< class Archive >
 void
-Event::serialize (Archive& ar, const std::uint32_t /* file_version */)
+Event::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoeventsoIEvent", ::libs::events::IEvent);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoeventsoIEvent", ::libs::events::IEvent);
 }
 }   // namespace libs::ievents
 

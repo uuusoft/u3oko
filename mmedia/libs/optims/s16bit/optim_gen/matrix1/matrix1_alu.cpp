@@ -12,7 +12,7 @@
 // old shit
 namespace libs::optim::s16bit::gen::matrix1
 {
-#if 0
+#ifdef U3_FAKE_DISABLE
 #  if 0
 bool
 alu (
@@ -75,9 +75,9 @@ alu (
 
           const float loc_koeff_assembly = 0.5f;
           std::int16_t loc_average_min_diff_block = loc_min_diff_block / (SIZE_BLOCK_FOR_MATRIX_EFFECT * SIZE_BLOCK_FOR_MATRIX_EFFECT);
-          float loc_koeff_add_extended_block = 1.0f;
+          float loc_koeff_add_extended_block = 1.0F;
 
-          loc_koeff_add_extended_block = (1.0f - ( loc_average_min_diff_block / 255.0f ) * loc_koeff_assembly);
+          loc_koeff_add_extended_block = (1.0F - ( loc_average_min_diff_block / 255.0F ) * loc_koeff_assembly);
 
           for( std::uint32_t indx_y = 0; indx_y < SIZE_BLOCK_FOR_MATRIX_EFFECT; ++indx_y)
           {
@@ -86,7 +86,7 @@ alu (
             for( std::uint32_t indx_x = 0; indx_x < SIZE_BLOCK_FOR_MATRIX_EFFECT; ++indx_x )
             {
               loc_pointer_to_string_dest_block[ indx_x ] = 
-                loc_koeff_add_extended_block * loc_source_block[ indx_y * SIZE_BLOCK_FOR_MATRIX_EFFECT + indx_x ] + (1.0f - loc_koeff_add_extended_block) * loc_pointer_to_string_dest_block[ indx_x ];
+                loc_koeff_add_extended_block * loc_source_block[ indx_y * SIZE_BLOCK_FOR_MATRIX_EFFECT + indx_x ] + (1.0F - loc_koeff_add_extended_block) * loc_pointer_to_string_dest_block[ indx_x ];
 
               ::libs::helpers::utils::check_bound( loc_pointer_to_string_dest_block[ indx_x ], 0, 255 );
             }

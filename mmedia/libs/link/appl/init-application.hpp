@@ -12,11 +12,8 @@ namespace libs::link::appl
 /// Структура для группировки данных по инициализации модуля приложения связи
 struct InitApplication final {
   public:
-  InitApplication () = default;
-
-  ~InitApplication ()
-  {
-  }
+  InitApplication ()  = default;
+  ~InitApplication () = default;
 
   bool
   check () const
@@ -27,7 +24,7 @@ struct InitApplication final {
   std::string service_name_ = consts::text::default_service_name;   //< Имя сервиса, опциональное
   std::string company_name_ = consts::text::default_company_name;   //< Имя компании-разработчика модуля
   std::string appl_name_    = consts::text::default_appl_name;      //< Имя приложения
-  std::string subsys_name_  = "";                                   //< Имя подсистемы, приложения
-  std::string lib_name_     = "";                                   //< Имя файла с разделяемым кодом, который содержит в себе модуль приложения
+  std::string subsys_name_  = {};                                   //< Имя подсистемы, приложения
+  std::string lib_name_     = {};                                   //< Имя файла с разделяемым кодом, который содержит в себе модуль приложения
 };
 }   // namespace libs::link::appl

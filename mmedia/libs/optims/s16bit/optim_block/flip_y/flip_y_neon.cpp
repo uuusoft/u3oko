@@ -11,7 +11,7 @@
 #include "flip_y.hpp"
 #include "flip_y_move_alg.hpp"
 
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
 
 namespace libs::optim::s16bit::block::flip_y
 {
@@ -32,11 +32,11 @@ struct TFlipperNeon final {
     int16x8_t temp1;
     int16x8_t temp2;
 
-    temp1 = vld1q_s16 (U3_CAST_REINTERPRET< const std::int16_t* > (str1));
-    temp2 = vld1q_s16 (U3_CAST_REINTERPRET< const std::int16_t* > (str2));
+    temp1 = vld1q_s16 (::libs::helpers::casts::reinterpret_cast_helper< const std::int16_t* > (str1));
+    temp2 = vld1q_s16 (::libs::helpers::casts::reinterpret_cast_helper< const std::int16_t* > (str2));
 
-    vst1q_s16 (U3_CAST_REINTERPRET< std::int16_t* > (str1), temp2);
-    vst1q_s16 (U3_CAST_REINTERPRET< std::int16_t* > (str2), temp1);
+    vst1q_s16 (::libs::helpers::casts::reinterpret_cast_helper< std::int16_t* > (str1), temp2);
+    vst1q_s16 (::libs::helpers::casts::reinterpret_cast_helper< std::int16_t* > (str2), temp1);
   }
 };
 

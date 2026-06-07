@@ -10,7 +10,7 @@
 #include "hsl_vs_rgb.hpp"
 #include "hsl_to_rgb_int.hpp"
 
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
 
 namespace libs::optim::s16bit::convert::hsl_vs_rgb
 {
@@ -47,7 +47,7 @@ hsl_to_rgb24_neon (::libs::optim::io::MCallInfo& info)
         int16x8_t tload16;
 
         tload16 = vld1q_s16 (h);
-        U3_FAST_MOVE_CPTR (h, 16);
+        h       = ::libs::helpers::mem::move_cptr (h, 16);
 
         tload32 = vmovl_s16 (vget_low_s16 (tload16));
         thue1   = vcvtq_f32_s32 (tload32);
@@ -58,7 +58,7 @@ hsl_to_rgb24_neon (::libs::optim::io::MCallInfo& info)
         thue2   = vmulq_f32 (thue2, const_1_to_255);
 
         tload16 = vld1q_s16 (s);
-        U3_FAST_MOVE_CPTR (s, 16);
+        s       = ::libs::helpers::mem::move_cptr (s, 16);
 
         tload32 = vmovl_s16 (vget_low_s16 (tload16));
         tsat1   = vcvtq_f32_s32 (tload32);
@@ -69,7 +69,7 @@ hsl_to_rgb24_neon (::libs::optim::io::MCallInfo& info)
         tsat2   = vmulq_f32 (tsat2, const_1_to_255);
 
         tload16 = vld1q_s16 (l);
-        U3_FAST_MOVE_CPTR (l, 16);
+        l       = ::libs::helpers::mem::move_cptr (l, 16);
 
         tload32 = vmovl_s16 (vget_low_s16 (tload16));
         tlight1 = vcvtq_f32_s32 (tload32);
@@ -83,17 +83,17 @@ hsl_to_rgb24_neon (::libs::optim::io::MCallInfo& info)
 
 #  define HSL_2_RGB_NEON(mac_res, mac_var1, mac_var2, mac_var3)                       \
                                                                                       \
-    /*if ( vH < 0 ) vH+= 1.0f*/                                                       \
+    /*if ( vH < 0 ) vH+= 1.0F*/                                                       \
     temp_4i  = vcltq_f32 (mac_var3, const_0);                                         \
     temp_3i  = vandq_u32 (vreinterpretq_u32_f32 (const_1), temp_4i);                  \
     mac_var3 = vaddq_f32 (mac_var3, vreinterpretq_f32_u32 (temp_3i));                 \
-    /*if ( vH > 1 ) vH-= 1.0f*/                                                       \
+    /*if ( vH > 1 ) vH-= 1.0F*/                                                       \
     temp_3i  = vcltq_f32 (const_1, mac_var3);                                         \
     temp_3i  = vandq_u32 (temp_3i, vreinterpretq_u32_f32 (const_1));                  \
     mac_var3 = vsubq_f32 (mac_var3, vreinterpretq_f32_u32 (temp_3i));                 \
     /*;return v1;*/                                                                   \
     mac_res = mac_var1;                                                               \
-    /*if ( ( 3 * vH ) < 2 ) return (v1 + (v2-v1 ) * ( ( 2.0f/ 3.0f )- vH) * 6.0f );*/ \
+    /*if ( ( 3 * vH ) < 2 ) return (v1 + (v2-v1 ) * ( ( 2.0F/ 3.0F )- vH) * 6.0F );*/ \
     temp_6f = vsubq_f32 (const_2_to_3, mac_var3);                                     \
     temp_5f = vsubq_f32 (mac_var2, mac_var1);                                         \
     temp_5f = vmulq_f32 (temp_5f, temp_6f);                                           \
@@ -114,7 +114,7 @@ hsl_to_rgb24_neon (::libs::optim::io::MCallInfo& info)
     temp_6i = vandq_u32 (temp_6i, vreinterpretq_u32_f32 (mac_res));                   \
     temp_6i = vorrq_u32 (temp_6i, temp_4i);                                           \
     mac_res = vreinterpretq_f32_u32 (temp_6i);                                        \
-    /*;if ( ( 6 * vH ) < 1 ) return ( v1 + ( v2 - v1 ) * 6.0f * vH );*/               \
+    /*;if ( ( 6 * vH ) < 1 ) return ( v1 + ( v2 - v1 ) * 6.0F * vH );*/               \
     temp_6f = mac_var2;                                                               \
     temp_6f = vsubq_f32 (temp_6f, mac_var1);                                          \
     temp_6f = vmulq_f32 (temp_6f, const_6);                                           \
@@ -152,7 +152,7 @@ hsl_to_rgb24_neon (::libs::optim::io::MCallInfo& info)
     /*float var1 = 2 * L - var_2; */                                                     \
     var1 = vmulq_f32 (mac_light, const_2);                                               \
     var1 = vsubq_f32 (var1, var2);                                                       \
-    /*float var_3 = H + ( 1.0f / 3.0f );  */                                             \
+    /*float var_3 = H + ( 1.0F / 3.0F );  */                                             \
     var3 = vaddq_f32 (const_1_to_3, mac_hue);                                            \
     /*R = Hue_2_RGB( var1, var_2, var_3 );  */                                           \
     HSL_2_RGB_NEON (mac_r, var1, var2, var3);                                            \
@@ -160,11 +160,11 @@ hsl_to_rgb24_neon (::libs::optim::io::MCallInfo& info)
     var3 = mac_hue;                                                                      \
     /*G =  Hue_2_RGB( var1, var_2, var_3 ); */                                           \
     HSL_2_RGB_NEON (mac_g, var1, var2, var3);                                            \
-    /*var_3 = H - ( 1.0f / 3.0f );  */                                                   \
+    /*var_3 = H - ( 1.0F / 3.0F );  */                                                   \
     var3 = vsubq_f32 (mac_hue, const_1_to_3);                                            \
     /*B =  Hue_2_RGB( var1, var_2, var_3 ); */                                           \
     HSL_2_RGB_NEON (mac_b, var1, var2, var3);                                            \
-    /*if( S == 0.0f )                 HSL values = 0 ? 1  */                             \
+    /*if( S == 0.0F )                 HSL values = 0 ? 1  */                             \
     /*{ R = L;  G = L;  B = L; }              */                                         \
     temp_4i = vcleq_f32 (mac_sat, const_0);                                              \
                                                                                          \
@@ -231,10 +231,10 @@ hsl_to_rgb24_neon (::libs::optim::io::MCallInfo& info)
     }
 
     // go next string
-    U3_FAST_MOVE_PTR (rgb24, leak_rgb24);
-    U3_FAST_MOVE_CPTR (h, leak_hsl);
-    U3_FAST_MOVE_CPTR (s, leak_hsl);
-    U3_FAST_MOVE_CPTR (l, leak_hsl);
+    rgb24 = ::libs::helpers::mem::move_ptr (rgb24, leak_rgb24);
+    h     = ::libs::helpers::mem::move_cptr (h, leak_hsl);
+    s     = ::libs::helpers::mem::move_cptr (s, leak_hsl);
+    l     = ::libs::helpers::mem::move_cptr (l, leak_hsl);
   }
 }
 }   // namespace libs::optim::s16bit::convert::hsl_vs_rgb

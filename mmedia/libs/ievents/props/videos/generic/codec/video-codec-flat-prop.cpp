@@ -47,9 +47,9 @@ VideoCodecFlatProp::correct ()
   ::libs::helpers::utils::check_float (&percent_block_);
 
   ::libs::helpers::utils::check_bound (quality_, 0u, 100u);
-  ::libs::helpers::utils::check_bound (max_percent_pframe_, 1.0f, 10.0f);
+  ::libs::helpers::utils::check_bound (max_percent_pframe_, 1.0F, 10.0F);
   ::libs::helpers::utils::check_bound (max_period_kframe_, 1u, 10 * 1024u);
-  ::libs::helpers::utils::check_bound (percent_block_, 0.0f, 100.0f);
+  ::libs::helpers::utils::check_bound (percent_block_, 0.0F, 100.0F);
 }
 
 
@@ -60,9 +60,9 @@ VideoCodecFlatProp::reset ()
 
   format_             = libs::helpers::uids::minor::id_val::unknown;
   quality_            = 50;
-  max_percent_pframe_ = 8.0f;
+  max_percent_pframe_ = 8.0F;
   max_period_kframe_  = 500;
-  percent_block_      = 8.0f;
+  percent_block_      = 8.0F;
   type_               = CodecModes::coder;
   nocolor_            = false;
 }
@@ -92,10 +92,9 @@ to_string (const VideoCodecFlatProp& info)
 
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const VideoCodecFlatProp& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const VideoCodecFlatProp& src)
 {
-  // EAI-JSON-TEST-86
-  jv = {
+  jvs = {
     { "size", src.size_ },
     { "format", U3_CAST_UINT32_FORCE (src.format_) },
     { "max_percent_pframe", src.max_percent_pframe_ },
@@ -109,18 +108,18 @@ tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const Video
 
 
 VideoCodecFlatProp
-tag_invoke (::boost::json::value_to_tag< VideoCodecFlatProp >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< VideoCodecFlatProp >, const ::boost::json::value& jvs)
 {
   VideoCodecFlatProp ret;
 
-  ret.size_               = ::libs::helpers::json::get_uint32 (jv.at ("size"));
-  ret.max_percent_pframe_ = ::libs::helpers::json::get_float (jv.at ("max_percent_pframe"));
-  ret.max_period_kframe_  = ::libs::helpers::json::get_uint32 (jv.at ("max_period_kframe"));
-  ret.percent_block_      = ::libs::helpers::json::get_float (jv.at ("percent_block"));
-  ret.type_               = U3_CAST_STATIC< libs::ievents::props::videos::generic::codec::CodecModes > (::libs::helpers::json::get_uint32 (jv.at ("codec_mode")));
-  ret.format_             = U3_CAST_STATIC< libs::helpers::uids::minor::id_val > (::libs::helpers::json::get_uint32 (jv.at ("format")));
-  ret.quality_            = ::libs::helpers::json::get_uint32 (jv.at ("quality"));
-  ret.nocolor_            = ::libs::helpers::json::get_bool (jv.at ("nocolor"));
+  ret.size_               = ::libs::helpers::json::get_uint32 (jvs.at ("size"));
+  ret.max_percent_pframe_ = ::libs::helpers::json::get_float (jvs.at ("max_percent_pframe"));
+  ret.max_period_kframe_  = ::libs::helpers::json::get_uint32 (jvs.at ("max_period_kframe"));
+  ret.percent_block_      = ::libs::helpers::json::get_float (jvs.at ("percent_block"));
+  ret.type_               = ::libs::helpers::casts::static_cast_helper< libs::ievents::props::videos::generic::codec::CodecModes > (::libs::helpers::json::get_uint32 (jvs.at ("codec_mode")));
+  ret.format_             = ::libs::helpers::casts::static_cast_helper< libs::helpers::uids::minor::id_val > (::libs::helpers::json::get_uint32 (jvs.at ("format")));
+  ret.quality_            = ::libs::helpers::json::get_uint32 (jvs.at ("quality"));
+  ret.nocolor_            = ::libs::helpers::json::get_bool (jvs.at ("nocolor"));
   return ret;
 }
 
@@ -129,6 +128,6 @@ std::uint32_t
 to_bitrate_x264 (const VideoCodecFlatProp& info, std::uint32_t width, std::uint32_t height)
 {
   // see openx264 ecoder_ext.cpp:3909 (pParam->iVideoWidth * pParam->iVideoHeight * 3) >> 2
-  return (width * height * 3 * 8 / 2) * (info.quality_ + 1) / 101.0f;
+  return (width * height * 3 * 8 / 2) * (info.quality_ + 1) / 101.0F;
 }
 }   // namespace libs::ievents::props::videos::generic::codec

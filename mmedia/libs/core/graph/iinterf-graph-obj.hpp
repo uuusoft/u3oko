@@ -23,12 +23,8 @@ class IInterfGraphObj
 
   protected:
   /// Конструктор, защищенный, т.к. создание объектов данного типа не предусмотренно
-  IInterfGraphObj ()
-  {
-  }
+  IInterfGraphObj () = default;
   /// Деструктор. Закрываем, удалить данный объект можно только через удаления производного
-  virtual ~IInterfGraphObj ()
-  {
-  }
+  virtual ~IInterfGraphObj () = default;
 };
 }   // namespace libs::core::graph

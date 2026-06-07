@@ -26,15 +26,13 @@ alloc_buf_by_indx (
     U3_XLOG_WARN ("try alloc buf from empty buf" + TOLOG (indx));
     return;
   }
-
   if (nbuf == src)
   {
     return;
   }
-
   if (!utils::dbufs::video::helpers::is_equal_dim (*nbuf, *src))
   {
-    nbuf->clone (src, 0.0f);
+    nbuf->clone (src, 0.0F);
   }
 }
 }   // namespace libs::bufs

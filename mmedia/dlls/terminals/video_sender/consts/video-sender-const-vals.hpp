@@ -8,6 +8,5 @@
 
 namespace dlls::terminals::video_sender::consts
 {
-// extern const char* id_zip_buf2http;      //< Идентификатор ресурса (jpeg изображение) для http
 extern const char* id_zip_buf2storage;   //< Идентификатор ресурса (jpeg изображение) для storage
 }   // namespace dlls::terminals::video_sender::consts

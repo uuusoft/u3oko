@@ -10,7 +10,7 @@
 #include "flip_y.hpp"
 #include "flip_y_move_alg.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::block::flip_y
 {
@@ -31,11 +31,11 @@ struct TFlipperSSE2 final {
     __m128i _temp1;
     __m128i _temp2;
 
-    _temp1 = _mm_load_si128 (U3_CAST_REINTERPRET< __m128i* > (_str1));
-    _temp2 = _mm_load_si128 (U3_CAST_REINTERPRET< __m128i* > (_str2));
+    _temp1 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (_str1));
+    _temp2 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (_str2));
 
-    _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (_str1), _temp2);
-    _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (_str2), _temp1);
+    _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (_str1), _temp2);
+    _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (_str2), _temp1);
   }
 };
 

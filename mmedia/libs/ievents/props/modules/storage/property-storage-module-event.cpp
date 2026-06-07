@@ -11,15 +11,10 @@
 
 namespace libs::ievents::props::modules::storage
 {
-PropertyStorageModuleEvent::PropertyStorageModuleEvent (const Acessor& ph) :
+PropertyStorageModuleEvent::PropertyStorageModuleEvent (const Acessor& pha) :
   check_ (Checkers::start_stop)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-PropertyStorageModuleEvent::~PropertyStorageModuleEvent ()
-{
 }
 
 
@@ -61,7 +56,7 @@ PropertyStorageModuleEvent::save_json_int (::boost::json::object& obj) const
 void
 PropertyStorageModuleEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (PropertyStorageModuleEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< PropertyStorageModuleEvent > (src);
   super::copy_int (src);
 
   paths_ = dsrc->paths_;
@@ -71,11 +66,11 @@ PropertyStorageModuleEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-PropertyStorageModuleEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+PropertyStorageModuleEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (paths_);
-  ar& BOOST_SERIALIZATION_NVP (check_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (paths_);
+  arh& BOOST_SERIALIZATION_NVP (check_);
 
   self_correct ();
 }

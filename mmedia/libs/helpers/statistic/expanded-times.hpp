@@ -26,13 +26,15 @@ class ExpandedTimes final
   using storage_type     = std::unordered_map< key_storage_type, ExpandedTime >;
   using storages_type    = std::unordered_map< key_storage_type, storage_type >;
 
-  ExpandedTimes ();
+  ExpandedTimes () = default;
   ~ExpandedTimes ();
 
   ExpandedTimes (const ExpandedTimes& src)            = delete;
   ExpandedTimes& operator= (const ExpandedTimes& src) = delete;
+
   /// Основная рабочая функция со статистикой
   void visit_with (const std::function< void (const storages_type& vals) >& func);
+
   /// Функция сброса накопленой информации Например, для нового цикла измерений
   bool clear ();
 
@@ -40,12 +42,16 @@ class ExpandedTimes final
   //  internal typess
   using ops_storage_type      = std::list< std::pair< std::string, std::string > >;
   using time_ops_storage_type = std::list< ::libs::helpers::statistic::time_type >;
+
   /// Функция начала подсчета времени работы
   void begin (const key_storage_type& id_set, const key_storage_type& id_element);
+
   /// Функция завершения подсчета времени работы
   bool end ();
+
   /// Функция завершения с отменой текущего результата измерения времени работы
   void end_skip ();
+
   /// Функция меняет идентификатор последнего измерения времени
   // void change_last_name (const key_storage_type& id_set, const key_storage_type& id_element);
   ExpandedTimes::storages_type::iterator find_time (const key_storage_type& id_set);

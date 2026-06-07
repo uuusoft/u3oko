@@ -13,7 +13,7 @@ namespace libs::ievents::props::modules::log
 LogLevels
 from_raw_val (std::uint32_t val)
 {
-  return U3_CAST_STATIC< LogLevels > (val);
+  return ::libs::helpers::casts::static_cast_helper< LogLevels > (val);
 }
 
 const std::string&

@@ -11,14 +11,9 @@
 
 namespace libs::ievents_events::events
 {
-BaseEventsEvent::BaseEventsEvent (const Acessor& ph)
+BaseEventsEvent::BaseEventsEvent (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-BaseEventsEvent::~BaseEventsEvent ()
-{
 }
 
 
@@ -46,16 +41,16 @@ BaseEventsEvent::save_json_int (::boost::json::object& obj) const
 void
 BaseEventsEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (BaseEventsEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< BaseEventsEvent > (src);
   super::copy_int (src);
 }
 
 
 template< class Archive >
 void
-BaseEventsEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+BaseEventsEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoTimedEvent", super);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoTimedEvent", super);
 
   self_correct ();
 }

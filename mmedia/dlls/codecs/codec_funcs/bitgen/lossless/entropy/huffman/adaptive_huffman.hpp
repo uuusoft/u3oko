@@ -20,8 +20,8 @@ namespace dlls::codecs::bitgen::lossless::entropy::huffman
 class CObj : public IBitGen
 {
   public:
-  CObj ();
-  virtual ~CObj ();
+  CObj ()          = default;
+  virtual ~CObj () = default;
 
   protected:
   virtual void               forward_int (const void* src, const std::uint32_t count_byte_src, void* dst, std::uint32_t& count_byte_dst) override;
@@ -31,7 +31,7 @@ class CObj : public IBitGen
   virtual std::uint32_t      get_max_size_int (const std::uint32_t src_size) const override;
 
   private:
-  const std::string  id_string_;    //<
-  const std::uint8_t key_symbol_;   //<
+  const std::string  id_string_  = huffman::consts::id_string;   //<
+  const std::uint8_t key_symbol_ = 0;                            //<
 };
 }   // namespace dlls::codecs::bitgen::lossless::entropy::huffman

@@ -21,7 +21,7 @@ template< typename TTVal >
 bool
 check_align (const TTVal& val, const TTVal& align)
 {
-  volatile TTVal aval = (val / align) * align;
+  TTVal aval = (val / align) * align;
   return aval == val ? true : false;
 }
 
@@ -30,11 +30,7 @@ template< typename TTVal >
 bool
 check_align2 (TTVal val)
 {
-  if (U3_CAST_SIZE_T (val) & 0x01)
-  {
-    return false;
-  }
-  return true;
+  return U3_CAST_SIZE_T (val) & 0x01 ? false : true;
 }
 
 
@@ -43,13 +39,11 @@ void
 align2 (TVal& val, bool expand = true)
 {
   U3_ASSERT (sizeof (TVal) <= sizeof (std::size_t));
-  if (check_align2 (val))
+  if (!check_align2 (val))
   {
-    return;
+    val = ::libs::helpers::casts::static_cast_helper< TVal > ((U3_CAST_SIZE_T (val) + (expand ? 7 : 0)) & consts::align_ptr2);
+    U3_ASSERT (check_align2 (val));
   }
-  val = U3_CAST_STATIC< TVal > ((U3_CAST_SIZE_T (val) + (expand ? 7 : 0)) & consts::align_ptr2);
-  U3_ASSERT (check_align2 (val));
-  return;
 }
 
 
@@ -67,22 +61,14 @@ template< typename TTVal >
 bool
 check_align8 (TTVal val)
 {
-  if (U3_CAST_SIZE_T (val) & 0x07)
-  {
-    return false;
-  }
-  return true;
+  return U3_CAST_SIZE_T (val) & 0x07 ? false : true;
 }
 
 
 inline bool
 check_align8_ptr (const void* buf)
 {
-  if (U3_CAST_REINTERPRET< std::size_t > (U3_CAST_CONST< void* > (buf)) & 0x07)
-  {
-    return false;
-  }
-  return true;
+  return ::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (buf) & 0x07 ? false : true;
 }
 
 
@@ -91,13 +77,11 @@ void
 align8 (TVal& val, bool expand = true)
 {
   U3_ASSERT (sizeof (TVal) <= sizeof (std::size_t));
-  if (check_align8 (val))
+  if (!check_align8 (val))
   {
-    return;
+    val = ::libs::helpers::casts::static_cast_helper< TVal > ((U3_CAST_SIZE_T (val) + (expand ? 7 : 0)) & consts::align_ptr8);
+    U3_ASSERT (check_align8 (val));
   }
-  val = U3_CAST_STATIC< TVal > ((U3_CAST_SIZE_T (val) + (expand ? 7 : 0)) & consts::align_ptr8);
-  U3_ASSERT (check_align8 (val));
-  return;
 }
 
 
@@ -115,22 +99,14 @@ template< typename TTVal >
 bool
 check_align16 (TTVal val)
 {
-  if (U3_CAST_SIZE_T (val) & 0x0F)
-  {
-    return false;
-  }
-  return true;
+  return U3_CAST_SIZE_T (val) & 0x0F ? false : true;
 }
 
 
 inline bool
 check_align16_ptr (const void* buf)
 {
-  if (U3_CAST_REINTERPRET< std::size_t > (U3_CAST_CONST< void* > (buf)) & 0x0F)
-  {
-    return false;
-  }
-  return true;
+  return ::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (buf) & 0x0F ? false : true;
 }
 
 
@@ -139,12 +115,11 @@ void
 align16 (TTVal& val, bool expand = true)
 {
   U3_ASSERT (sizeof (TTVal) <= sizeof (std::size_t));
-  if (check_align16 (val))
+  if (!check_align16 (val))
   {
-    return;
+    val = ::libs::helpers::casts::static_cast_helper< TTVal > ((U3_CAST_SIZE_T (val) + (expand ? 15 : 0)) & consts::align_ptr16);
+    U3_ASSERT (check_align16 (val));
   }
-  val = U3_CAST_STATIC< TTVal > ((U3_CAST_SIZE_T (val) + (expand ? 15 : 0)) & consts::align_ptr16);
-  U3_ASSERT (check_align16 (val));
 }
 
 
@@ -162,22 +137,14 @@ template< typename TTVal >
 bool
 check_align32 (TTVal val)
 {
-  if (U3_CAST_SIZE_T (val) & 0x1F)
-  {
-    return false;
-  }
-  return true;
+  return U3_CAST_SIZE_T (val) & 0x1F ? false : true;
 }
 
 
 inline bool
 check_align32_ptr (const void* buf)
 {
-  if (U3_CAST_REINTERPRET< std::size_t > (U3_CAST_CONST< void* > (buf)) & 0x1F)
-  {
-    return false;
-  }
-  return true;
+  return ::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (buf) & 0x1F ? false : true;
 }
 
 
@@ -186,12 +153,11 @@ void
 align32 (TTVal& val, bool expand = true)
 {
   U3_ASSERT (sizeof (TTVal) <= sizeof (std::size_t));
-  if (check_align32 (val))
+  if (!check_align32 (val))
   {
-    return;
+    val = ::libs::helpers::casts::static_cast_helper< TTVal > ((U3_CAST_SIZE_T (val) + (expand ? 31 : 0)) & consts::align_ptr32);
+    U3_ASSERT (check_align32 (val));
   }
-  val = U3_CAST_STATIC< TTVal > ((U3_CAST_SIZE_T (val) + (expand ? 31 : 0)) & consts::align_ptr32);
-  U3_ASSERT (check_align32 (val));
 }
 
 
@@ -209,22 +175,14 @@ template< typename TTVal >
 bool
 check_align64 (TTVal val)
 {
-  if (U3_CAST_SIZE_T (val) & 0x3F)
-  {
-    return false;
-  }
-  return true;
+  return U3_CAST_SIZE_T (val) & 0x3F ? false : true;
 }
 
 
 inline bool
 check_align64_ptr (const void* buf)
 {
-  if (U3_CAST_REINTERPRET< std::size_t > (U3_CAST_CONST< void* > (buf)) & 0x3F)
-  {
-    return false;
-  }
-  return true;
+  return ::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (buf) & 0x3F ? false : true;
 }
 
 
@@ -233,12 +191,11 @@ void
 align64 (TTVal& val, bool expand = true)
 {
   U3_ASSERT (sizeof (TTVal) <= sizeof (std::size_t));
-  if (check_align64 (val))
+  if (!check_align64 (val))
   {
-    return;
+    val = ::libs::helpers::casts::static_cast_helper< TTVal > ((U3_CAST_SIZE_T (val) + (expand ? 63 : 0)) & consts::align_ptr64);
+    U3_ASSERT (check_align64 (val));
   }
-  val = U3_CAST_STATIC< TTVal > ((U3_CAST_SIZE_T (val) + (expand ? 63 : 0)) & consts::align_ptr64);
-  U3_ASSERT (check_align64 (val));
 }
 
 
@@ -257,7 +214,6 @@ TTVal
 get_align (const TTVal& val, const TTVal& align, const bool expand = true)
 {
   TTVal ret = val;
-
   switch (align)
   {
   case 1:

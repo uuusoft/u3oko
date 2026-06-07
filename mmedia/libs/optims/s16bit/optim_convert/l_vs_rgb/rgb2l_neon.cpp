@@ -10,7 +10,7 @@ project    u3_optim_convert
 #include "l_vs_rgb.hpp"
 #include "rgb_to_l_int.hpp"
 
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
 
 namespace libs::optim::s16bit::convert::l_vs_rgb
 {
@@ -21,8 +21,8 @@ rgb24_to_l_neon_float (::libs::optim::io::MCallInfo& info)
   U3_MARK_UNUSED_HERE (leak_hsl);
 
   const std::int32_t  stride_hsl = info.dsts_[0].stride_;
-  const std::uint8_t* rgb24str   = U3_CAST_REINTERPRET< const std::uint8_t* > (rgb24);
-  float               sl         = 0.0f;
+  const std::uint8_t* rgb24str   = ::libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (rgb24);
+  float               sl         = 0.0F;
 
   for (std::uint32_t indx_y = 0; indx_y < height; ++indx_y)
   {
@@ -38,8 +38,8 @@ rgb24_to_l_neon_float (::libs::optim::io::MCallInfo& info)
       rgb24str += 3;
     }
 
-    U3_FAST_MOVE_CPTR (rgb24str, leak_rgb);
-    U3_FAST_MOVE_PTR (l, stride_hsl);
+    rgb24str = ::libs::helpers::mem::move_cptr (rgb24str, leak_rgb);
+    l        = ::libs::helpers::mem::move_ptr (l, stride_hsl);
   }
 }
 
@@ -51,7 +51,7 @@ rgb24_to_l_neon (::libs::optim::io::MCallInfo& info)
   U3_MARK_UNUSED_HERE (leak_hsl);
 
   const std::uint32_t stride_hsl = info.dsts_[0].stride_;
-  const std::uint8_t* rgb24str   = U3_CAST_REINTERPRET< const std::uint8_t* > (rgb24);
+  const auto*         rgb24str   = ::libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (rgb24);
 
   for (std::uint32_t indx_y = 0; indx_y < height; ++indx_y)
   {
@@ -64,8 +64,8 @@ rgb24_to_l_neon (::libs::optim::io::MCallInfo& info)
       rgb24str += 3;
     }
 
-    U3_FAST_MOVE_CPTR (rgb24str, leak_rgb);
-    U3_FAST_MOVE_PTR (l, stride_hsl);
+    rgb24str = ::libs::helpers::mem::move_cptr (rgb24str, leak_rgb);
+    l        = ::libs::helpers::mem::move_ptr (l, stride_hsl);
   }
 }
 }   // namespace libs::optim::s16bit::convert::l_vs_rgb

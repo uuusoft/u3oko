@@ -46,21 +46,21 @@ check_rgb2hsl (::libs::optim::io::MCallInfo& info)
 
 
 #if !defined(RGB2HSL_PREFIX)
-#  define RGB2HSL_PREFIX(size)                                                                                 \
-                                                                                                               \
-    U3_CHECK (check_rgb2hsl (info), "failde check rgb2hsl");                                                   \
-    const std::uint32_t  ppc            = size;                                                                \
-    const std::uint32_t  width          = info.srcs_[0].width_;                                                \
-    const std::uint32_t  height         = info.srcs_[0].height_;                                               \
-    std::int16_t*        h              = info.dsts_[0].buf ();                                                \
-    std::int16_t*        s              = info.dsts_[1].buf ();                                                \
-    std::int16_t*        l              = info.dsts_[2].buf ();                                                \
-    const std::uint32_t* rgb24          = U3_CAST_REINTERPRET< const std::uint32_t* > (info.srcs_[0].ubuf ()); \
-    const std::uint32_t  raw_cycle      = width / ppc;                                                         \
-    const std::uint32_t  cycle          = (raw_cycle * ppc < width) ? raw_cycle + 1 : raw_cycle;               \
-    const std::uint32_t  leak_rgb       = info.srcs_[0].stride_ - cycle * ppc * sizeof (std::uint8_t) * 3;     \
-    const std::uint32_t  req_stride_hsl = cycle * sizeof (std::uint16_t) * ppc;                                \
-    const std::uint32_t  leak_hsl       = info.dsts_[0].stride_ - req_stride_hsl;
+#  define RGB2HSL_PREFIX(size)                                                                                                            \
+                                                                                                                                          \
+    U3_CHECK (check_rgb2hsl (info), "failde check rgb2hsl");                                                                              \
+    const std::uint32_t ppc            = size;                                                                                            \
+    const std::uint32_t width          = info.srcs_[0].width_;                                                                            \
+    const std::uint32_t height         = info.srcs_[0].height_;                                                                           \
+    std::int16_t*       h              = info.dsts_[0].buf ();                                                                            \
+    std::int16_t*       s              = info.dsts_[1].buf ();                                                                            \
+    std::int16_t*       l              = info.dsts_[2].buf ();                                                                            \
+    const auto*         rgb24          = ::libs::helpers::casts::reinterpret_cast_helper< const std::uint32_t* > (info.srcs_[0].ubuf ()); \
+    const std::uint32_t raw_cycle      = width / ppc;                                                                                     \
+    const std::uint32_t cycle          = (raw_cycle * ppc < width) ? raw_cycle + 1 : raw_cycle;                                           \
+    const std::uint32_t leak_rgb       = info.srcs_[0].stride_ - cycle * ppc * sizeof (std::uint8_t) * 3;                                 \
+    const std::uint32_t req_stride_hsl = cycle * sizeof (std::uint16_t) * ppc;                                                            \
+    const std::uint32_t leak_hsl       = info.dsts_[0].stride_ - req_stride_hsl;
 
 #endif
 

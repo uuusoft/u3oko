@@ -17,7 +17,7 @@ struct InfoBuffFreqNoiseRemover final : public ::libs::events::buf::EventBufsInf
     const ::utils::dbufs::video::consts::offs::off_buf_type& dst            = utils::dbufs::video::consts::offs::invalid,
     const ::utils::dbufs::video::consts::offs::off_buf_type& bindx_diff     = utils::dbufs::video::consts::offs::invalid,
     std::int16_t                                             bound_x_plus_y = 1,
-    float                                                    dwt_koeff2     = 1.0f);
+    float                                                    dwt_koeff2     = 1.0F);
 
   explicit InfoBuffFreqNoiseRemover (const ::libs::events::buf::EventBufsInfo& buf);
 
@@ -26,11 +26,11 @@ struct InfoBuffFreqNoiseRemover final : public ::libs::events::buf::EventBufsInf
   float                                             dwt_koeff2_;       //<
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
-void                     tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const InfoBuffFreqNoiseRemover& src);
-InfoBuffFreqNoiseRemover tag_invoke (::boost::json::value_to_tag< InfoBuffFreqNoiseRemover >, const ::boost::json::value& jv);
+void                     tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const InfoBuffFreqNoiseRemover& src);
+InfoBuffFreqNoiseRemover tag_invoke (::boost::json::value_to_tag< InfoBuffFreqNoiseRemover >, const ::boost::json::value& jvs);
 }   // namespace libs::ievents::props::videos::noises::freq
 
 BOOST_CLASS_EXPORT_KEY (::libs::ievents::props::videos::noises::freq::InfoBuffFreqNoiseRemover);

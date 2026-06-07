@@ -27,7 +27,7 @@ class ChangeStateProcessEvent final : public RuntimeEvent
   U3_HELPER_DISABLE_ACOPY_TYPE (ChangeStateProcessEvent)
 
   explicit ChangeStateProcessEvent (const Acessor& = Acessor (0), bool start = true);
-  virtual ~ChangeStateProcessEvent ();
+  virtual ~ChangeStateProcessEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -47,7 +47,7 @@ class ChangeStateProcessEvent final : public RuntimeEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   virtual void                        load_json_int (const ::boost::json::object& obj) override;
   virtual void                        save_json_int (::boost::json::object& obj) const override;

@@ -11,14 +11,9 @@
 
 namespace libs::istorage_events::events
 {
-GetObjects::GetObjects (const Acessor& ph)
+GetObjects::GetObjects (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-GetObjects::~GetObjects ()
-{
 }
 
 
@@ -32,20 +27,21 @@ GetObjects::clone_int (const ::libs::events::Deeps& deep) const
 void
 GetObjects::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (GetObjects);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< GetObjects > (src);
   super::copy_int (src);
-  id_path_ = dsrc->id_path_;
+
+  path_id_ = dsrc->path_id_;
   objs_    = dsrc->objs_;
 }
 
 
 template< class Archive >
 void
-GetObjects::serialize (Archive& ar, const std::uint32_t /* file_version */)
+GetObjects::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoistorage_eventsoeventsoBaseStorageEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (id_path_);
-  ar& BOOST_SERIALIZATION_NVP (objs_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoistorage_eventsoeventsoBaseStorageEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (path_id_);
+  arh& BOOST_SERIALIZATION_NVP (objs_);
 
   self_correct ();
 }

@@ -30,7 +30,7 @@ class InfoLogEvent : public BaseLogEvent
     const AppllPartLogInfo& appl = AppllPartLogInfo (::libs::ievents::props::modules::log::LogLevels::info, "xilex", "xilex"),
     const std::string&      info = "xxxxxx");
 
-  virtual ~InfoLogEvent ();
+  virtual ~InfoLogEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -58,7 +58,7 @@ class InfoLogEvent : public BaseLogEvent
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ilog_events::events::BaseLogEvent)
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   virtual void                        load_json_int (const ::boost::json::object& obj) override;
   virtual void                        save_json_int (::boost::json::object& obj) const override;

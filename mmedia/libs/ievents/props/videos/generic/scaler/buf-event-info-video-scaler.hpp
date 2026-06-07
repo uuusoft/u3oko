@@ -34,11 +34,11 @@ struct EventBufsInfoVideoScaler final : public ::libs::events::buf::EventBufsInf
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
-void                     tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const EventBufsInfoVideoScaler& src);
-EventBufsInfoVideoScaler tag_invoke (::boost::json::value_to_tag< EventBufsInfoVideoScaler >, const ::boost::json::value& jv);
+void                     tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const EventBufsInfoVideoScaler& src);
+EventBufsInfoVideoScaler tag_invoke (::boost::json::value_to_tag< EventBufsInfoVideoScaler >, const ::boost::json::value& jvs);
 }   // namespace libs::ievents::props::videos::generic::scaler
 
 BOOST_CLASS_EXPORT_KEY (::libs::ievents::props::videos::generic::scaler::EventBufsInfoVideoScaler);

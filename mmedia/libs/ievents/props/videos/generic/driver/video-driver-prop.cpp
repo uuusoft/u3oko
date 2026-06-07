@@ -11,17 +11,12 @@
 
 namespace libs::ievents::props::videos::generic::driver
 {
-VideoDriverProp::VideoDriverProp (const Acessor& ph) :
+VideoDriverProp::VideoDriverProp (const Acessor& pha) :
   device_indx_ (0)
 {
   cat_dshow_     = ::libs::helpers::uids::minor::get (::libs::helpers::uids::minor::id_val::cat_video_device);
   property_name_ = gen_get_mid ();
   sync_data ();
-}
-
-
-VideoDriverProp::~VideoDriverProp ()
-{
 }
 
 
@@ -74,7 +69,7 @@ VideoDriverProp::sync_data ()
 {
   if (name_impl_dll_.empty ())
   {
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
     name_impl_dll_ = "vss_dshow_vgen";
 #elif defined(U3_OS_ANDROID)
     name_impl_dll_ = "vss_android_vgen";
@@ -96,7 +91,7 @@ VideoDriverProp::sync_data ()
 void
 VideoDriverProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (VideoDriverProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< VideoDriverProp > (src);
   super::copy_int (src);
 
   name_impl_dll_ = dsrc->name_impl_dll_;
@@ -108,14 +103,14 @@ VideoDriverProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-VideoDriverProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+VideoDriverProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
 
-  ar& BOOST_SERIALIZATION_NVP (name_impl_dll_);
-  ar& BOOST_SERIALIZATION_NVP (device_name_);
-  ar& BOOST_SERIALIZATION_NVP (device_indx_);
-  ar& BOOST_SERIALIZATION_NVP (ext_vals_);
+  arh& BOOST_SERIALIZATION_NVP (name_impl_dll_);
+  arh& BOOST_SERIALIZATION_NVP (device_name_);
+  arh& BOOST_SERIALIZATION_NVP (device_indx_);
+  arh& BOOST_SERIALIZATION_NVP (ext_vals_);
 
   self_correct ();
 }

@@ -54,7 +54,7 @@ str2atype (const std::string& str)
 }
 
 
-VideoConvertProp::VideoConvertProp (const Acessor& ph) :
+VideoConvertProp::VideoConvertProp (const Acessor& pha) :
   rwidth_ (100),
   rheight_ (100),
   rtype_ (Src2DstEqs::src_int_dst),
@@ -66,11 +66,6 @@ VideoConvertProp::VideoConvertProp (const Acessor& ph) :
   buf_ (::utils::dbufs::video::consts::offs::raw, ::utils::dbufs::video::consts::offs::invalid)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-VideoConvertProp::~VideoConvertProp ()
-{
 }
 
 
@@ -88,7 +83,7 @@ VideoConvertProp::load_json_int (const ::boost::json::object& obj)
 
   // buf_.load_json (obj);
   rtype_                = src2dst_from_raw_value (::libs::helpers::json::get_uint32 (obj.at ("rtype")));
-  atype_                = U3_CAST_STATIC< Accuracys > (::libs::helpers::json::get_uint32 (obj.at ("atype")));
+  atype_                = ::libs::helpers::casts::static_cast_helper< Accuracys > (::libs::helpers::json::get_uint32 (obj.at ("atype")));
   rwidth_               = ::libs::helpers::json::get_uint32 (obj.at ("rwidth"));
   rheight_              = ::libs::helpers::json::get_uint32 (obj.at ("rheight"));
   duplicate_image_      = obj.at ("duplicate_image").as_bool ();
@@ -120,7 +115,7 @@ VideoConvertProp::save_json_int (::boost::json::object& obj) const
 void
 VideoConvertProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (VideoConvertProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< VideoConvertProp > (src);
   super::copy_int (src);
 
   buf_                  = dsrc->buf_;
@@ -137,19 +132,19 @@ VideoConvertProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-VideoConvertProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+VideoConvertProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
 
-  ar& BOOST_SERIALIZATION_NVP (buf_);
-  ar& BOOST_SERIALIZATION_NVP (rwidth_);
-  ar& BOOST_SERIALIZATION_NVP (rheight_);
-  ar& BOOST_SERIALIZATION_NVP (rtype_);
-  ar& BOOST_SERIALIZATION_NVP (duplicate_image_);
-  ar& BOOST_SERIALIZATION_NVP (strip_color_);
-  ar& BOOST_SERIALIZATION_NVP (debug_skip_transform_);
-  ar& BOOST_SERIALIZATION_NVP (flip_y_);
-  ar& BOOST_SERIALIZATION_NVP (atype_);
+  arh& BOOST_SERIALIZATION_NVP (buf_);
+  arh& BOOST_SERIALIZATION_NVP (rwidth_);
+  arh& BOOST_SERIALIZATION_NVP (rheight_);
+  arh& BOOST_SERIALIZATION_NVP (rtype_);
+  arh& BOOST_SERIALIZATION_NVP (duplicate_image_);
+  arh& BOOST_SERIALIZATION_NVP (strip_color_);
+  arh& BOOST_SERIALIZATION_NVP (debug_skip_transform_);
+  arh& BOOST_SERIALIZATION_NVP (flip_y_);
+  arh& BOOST_SERIALIZATION_NVP (atype_);
 
   self_correct ();
 }

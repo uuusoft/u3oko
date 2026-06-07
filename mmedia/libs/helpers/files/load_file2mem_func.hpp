@@ -53,7 +53,7 @@ load_file2mem (const std::string& file_path, TContainer& ret)
   file.clear ();
   file.seekg (0, std::ios::beg);
   ret.resize (size);
-  file.read (U3_CAST_REINTERPRET< char* > (ret.data ()), size);
+  file.read (::libs::helpers::casts::reinterpret_cast_helper< char* > (ret.data ()), size);
   // ret[size] = '\0';
   return true;
 }

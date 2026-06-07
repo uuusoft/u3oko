@@ -12,14 +12,6 @@
 
 namespace dlls::sources::gen_vgen
 {
-ObjSourceImplProxy::ObjSourceImplProxy () :
-  func_get_ (0),
-  func_free_ (0),
-  impl_ (nullptr)
-{
-}
-
-
 ObjSourceImplProxy::~ObjSourceImplProxy ()
 {
   clear ();
@@ -46,11 +38,11 @@ ObjSourceImplProxy::init (const std::string& name_impl)
 
   capture_lib_.load (full_path.c_str (), boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
 
-#ifdef U3_BUILD_MODULES_AS_LIBS
+#if (U3_BUILD_MODULES_AS_LIBS == 1)
   func_get_  = ::libs::proxy::get_create_source_funct (name_impl);
   func_free_ = ::libs::proxy::get_free_source_funct (name_impl);
 #else
-#  if defined(U3_OS_ANDROID)
+#  ifdef U3_OS_ANDROID
   func_get_  = reinterpret_cast< gen_lib::get_source_func_type* > (dlsym (capture_lib_.native (), make_name_function_for_source_library (name_impl, gen_lib::consts::name_get_funct).c_str ()));
   func_free_ = reinterpret_cast< gen_lib::free_source_func_type* > (dlsym (capture_lib_.native (), make_name_function_for_source_library (name_impl, gen_lib::consts::name_free_funct).c_str ()));
 #  else

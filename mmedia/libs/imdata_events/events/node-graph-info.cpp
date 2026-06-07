@@ -18,11 +18,6 @@ NodeGraphInfo::NodeGraphInfo (const std::string& id, const std::string& name_dll
 }
 
 
-NodeGraphInfo::~NodeGraphInfo ()
-{
-}
-
-
 bool
 NodeGraphInfo::check () const
 {
@@ -60,17 +55,17 @@ NodeGraphInfo::get_name_dll () const
 
 template< class Archive >
 void
-NodeGraphInfo::serialize (Archive& ar, const std::uint32_t /* file_version */)
+NodeGraphInfo::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (id_);
-  ar& BOOST_SERIALIZATION_NVP (name_dll_);
+  arh& BOOST_SERIALIZATION_NVP (id_);
+  arh& BOOST_SERIALIZATION_NVP (name_dll_);
 }
 
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const NodeGraphInfo& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const NodeGraphInfo& src)
 {
-  jv = {
+  jvs = {
     { "id", src.get_id () },
     { "name_dll", src.get_name_dll () }
   };
@@ -78,10 +73,10 @@ tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const NodeG
 
 
 NodeGraphInfo
-tag_invoke (::boost::json::value_to_tag< NodeGraphInfo >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< NodeGraphInfo >, const ::boost::json::value& jvs)
 {
   NodeGraphInfo                ret;
-  const ::boost::json::object& obj = jv.as_object ();
+  const ::boost::json::object& obj = jvs.as_object ();
   ::libs::helpers::json::extract (obj, ret.update_id (), "id");
   ::libs::helpers::json::extract (obj, ret.update_name_dll (), "name_dll");
   return ret;

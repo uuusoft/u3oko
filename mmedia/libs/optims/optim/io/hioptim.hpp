@@ -13,22 +13,19 @@ class hioptim final
 {
   public:
   //  ext types
-  using store_func_type = std::atomic< ::libs::optim::io::mtcall_func >;
+  using func_type = std::atomic< ::libs::optim::io::mtcall_func >;
 
   explicit hioptim (
-    store_func_type* pfunct        = nullptr,
-    std::uint32_t    block_align_x = 1,
-    std::uint32_t    block_align_y = 1) :
-
+    func_type*    pfunct        = nullptr,
+    std::uint32_t block_align_x = 1,
+    std::uint32_t block_align_y = 1) :
     pfunc_ (pfunct),
     block_align_x_ (block_align_x),
     block_align_y_ (block_align_y)
   {
   }
 
-  ~hioptim ()
-  {
-  }
+  ~hioptim () = default;
 
   bool
   self_test () const
@@ -90,9 +87,9 @@ class hioptim final
   }
 
   private:
-  store_func_type* pfunc_         = nullptr;   //< Указатель на функцию
-  std::uint32_t    block_align_x_ = 1;         //< Выравнение блока по оси X
-  std::uint32_t    block_align_y_ = 1;         //< Выравнение блока по оси Y
-  std::string      id_func_;                   //< Текстовый идентификатор алгоритма функции
+  func_type*    pfunc_         = nullptr;         //< Указатель на функцию
+  std::uint32_t block_align_x_ = 1;               //< Выравнение блока по оси X
+  std::uint32_t block_align_y_ = 1;               //< Выравнение блока по оси Y
+  std::string   id_func_       = "unknown alg";   //< Текстовый идентификатор алгоритма функции
 };
 }   // namespace libs::optim::io

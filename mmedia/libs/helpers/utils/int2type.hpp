@@ -20,10 +20,8 @@ class Int2Type
   using value_type = TTBase;
   using item_type  = Int2Type< TTBase, TTDef, TTFakeIdent >;
 
-  Int2Type () :
-    val_ (TTDef)
-  {
-  }
+  Int2Type ()  = default;
+  ~Int2Type () = default;
 
   explicit Int2Type (const TTBase& val) :
     val_ (val)
@@ -117,12 +115,12 @@ class Int2Type
 
   template< class Archive >
   void
-  serialize (Archive& ar, const std::uint32_t /* file_version */)
+  serialize (Archive& arh, const std::uint32_t /* file_version */)
   {
-    ar& BOOST_SERIALIZATION_NVP (val_);
+    arh& BOOST_SERIALIZATION_NVP (val_);
   }
 
   private:
-  TTBase val_;   //<
+  TTBase val_ = TTDef;   //<
 };
 }   // namespace libs::helpers::utils

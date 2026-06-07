@@ -4,24 +4,11 @@
 \date       01.11.2016
 \project    u3_link
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../libs-link-includes_int.hpp"
 #include "iapplication.hpp"
 
 namespace libs::link::appl
 {
-IApplication::IApplication () :
-  init_ (false)
-{
-}
-
-
-IApplication::~IApplication ()
-{
-}
-
-
 void
 IApplication::appl_init (const InitApplication& info)
 {

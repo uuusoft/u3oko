@@ -18,7 +18,7 @@ class VideoBuf final : public IVideoBuf
   //  ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (VideoBuf)
 
-  virtual ~VideoBuf ();
+  virtual ~VideoBuf () = default;
 
   VideoBuf (const VideoBuf& src)            = delete;
   VideoBuf& operator= (const VideoBuf& src) = delete;

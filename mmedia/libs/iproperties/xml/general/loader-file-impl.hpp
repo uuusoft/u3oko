@@ -16,7 +16,7 @@ class LoaderFileImpl final : public ILoaderImpl
   using lfi_path_type = ::libs::iproperties::appl_paths::Paths;
 
   explicit LoaderFileImpl (const InitLoaderInfo& info);
-  virtual ~LoaderFileImpl ();
+  virtual ~LoaderFileImpl () = default;
 
   private:
   //  ILoaderImpl overrides

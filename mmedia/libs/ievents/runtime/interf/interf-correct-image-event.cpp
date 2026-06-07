@@ -11,15 +11,10 @@
 
 namespace libs::ievents::runtime::interf
 {
-InterfCorrectImageEvent::InterfCorrectImageEvent (const Acessor& ph, const impl_ptr_type& impl) :
+InterfCorrectImageEvent::InterfCorrectImageEvent (const Acessor& pha, const impl_ptr_type& impl) :
   impl_ (impl)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-InterfCorrectImageEvent::~InterfCorrectImageEvent ()
-{
 }
 
 
@@ -48,25 +43,25 @@ InterfCorrectImageEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 InterfCorrectImageEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (InterfCorrectImageEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< InterfCorrectImageEvent > (src);
   super::copy_int (src);
   impl_ = dsrc->impl_;
 }
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 template< class Archive >
 void
-InterfCorrectImageEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+InterfCorrectImageEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP (super);
-  ar& BOOST_SERIALIZATION_NVP (impl_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP (super);
+  arh& BOOST_SERIALIZATION_NVP (impl_);
 
   self_correct ();
 }
 #endif
 }   // namespace libs::ievents::runtime::interf
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 BOOST_CLASS_EXPORT_IMPLEMENT (::libs::ievents::runtime::interf::InterfCorrectImageEvent);
 U3_BOOST_SERIALIZE_ALL_ARCHIVES (::libs::ievents::runtime::interf::InterfCorrectImageEvent);
 #endif

@@ -9,7 +9,7 @@
 // old shit
 namespace dlls::terminals::video_sender::impl2gui
 {
-#if 0
+#ifdef U3_FAKE_DISABLE
 class FillFrameHelper : public ::libs::link::mem::IHandlerMem
 {
   public:
@@ -19,9 +19,7 @@ class FillFrameHelper : public ::libs::link::mem::IHandlerMem
   {
   }
 
-  virtual ~FillFrameHelper ()
-  {
-  }
+  virtual ~FillFrameHelper () = default;
 
   virtual bool
   update (void* pmem) const override
@@ -30,8 +28,8 @@ class FillFrameHelper : public ::libs::link::mem::IHandlerMem
   }
 
   private:
-  mutable Filter*     obj_;    //<  ???
-  syn::TransformInfo& info_;   //<  ???
+  mutable Filter*     obj_ = nullptr;   //<
+  syn::TransformInfo& info_;            //<
 };
 #endif
 }   // namespace dlls::terminals::video_sender::impl2gui

@@ -8,7 +8,7 @@
 
 namespace libs::optim::s16bit::consts
 {
-constexpr float f_d0 = 0.0f;
+constexpr float f_d0 = 0.0F;
 
 // clang-format off
 U3_ALIGN_DEFAULT
@@ -19,7 +19,7 @@ constexpr float f_all_d0[32] = {
   f_d0, f_d0, f_d0, f_d0, f_d0, f_d0, f_d0, f_d0
 };
 
-constexpr float f_d1 = 1.0f;
+constexpr float f_d1 = 1.0F;
 
 U3_ALIGN_DEFAULT
 constexpr float f_all_d1[32] = {
@@ -29,7 +29,7 @@ constexpr float f_all_d1[32] = {
   f_d1, f_d1, f_d1, f_d1, f_d1, f_d1, f_d1, f_d1
 };
 
-constexpr float f_d2 = 2.0f;
+constexpr float f_d2 = 2.0F;
 
 U3_ALIGN_DEFAULT
 constexpr float f_all_d2[32] = {
@@ -39,7 +39,7 @@ constexpr float f_all_d2[32] = {
   f_d2, f_d2, f_d2, f_d2, f_d2, f_d2, f_d2, f_d2
 };
 
-constexpr float f_d3 = 3.0f;
+constexpr float f_d3 = 3.0F;
 
 U3_ALIGN_DEFAULT
 constexpr float f_all_d3[32] = {
@@ -49,7 +49,7 @@ constexpr float f_all_d3[32] = {
   f_d3, f_d3, f_d3, f_d3, f_d3, f_d3, f_d3, f_d3
 };
 
-constexpr float f_d4 = 4.0f;
+constexpr float f_d4 = 4.0F;
 
 U3_ALIGN_DEFAULT
 constexpr float f_all_d4[32] = {
@@ -59,7 +59,7 @@ constexpr float f_all_d4[32] = {
   f_d4, f_d4, f_d4, f_d4, f_d4, f_d4, f_d4, f_d4
 };
 
-constexpr float f_d5 = 5.0f;
+constexpr float f_d5 = 5.0F;
 
 U3_ALIGN_DEFAULT
 constexpr float f_all_d5[32] = {
@@ -69,7 +69,7 @@ constexpr float f_all_d5[32] = {
   f_d5, f_d5, f_d5, f_d5, f_d5, f_d5, f_d5, f_d5
 };
 
-constexpr float f_d6 = 6.0f;
+constexpr float f_d6 = 6.0F;
 
 U3_ALIGN_DEFAULT
 constexpr float f_all_d6[32] = {
@@ -79,7 +79,7 @@ constexpr float f_all_d6[32] = {
   f_d6, f_d6, f_d6, f_d6, f_d6, f_d6, f_d6, f_d6
 };
 
-constexpr float f_d128 = 128.0f;
+constexpr float f_d128 = 128.0F;
 
 U3_ALIGN_DEFAULT
 constexpr float f_all_d128[32] = {
@@ -89,7 +89,7 @@ constexpr float f_all_d128[32] = {
   f_d128, f_d128, f_d128, f_d128, f_d128, f_d128, f_d128, f_d128
 };
 
-constexpr float f_d255 = 255.0f;
+constexpr float f_d255 = 255.0F;
 
 U3_ALIGN_DEFAULT
 constexpr float f_all_d255[32] = {

@@ -12,7 +12,7 @@ template< typename TypeAs >
 TypeAs
 get_buf_as (IVideoBuf::raw_ptr buf)
 {
-  return U3_CAST_REINTERPRET< TypeAs > (buf->get_buf ());
+  return ::libs::helpers::casts::reinterpret_cast_helper< TypeAs > (buf->get_buf ());
 }
 
 
@@ -20,7 +20,7 @@ template< typename TypeAs >
 const TypeAs
 get_const_buf_as (IVideoBuf::craw_ptr buf)
 {
-  return U3_CAST_REINTERPRET< const TypeAs > (buf->get_cbuf ());
+  return ::libs::helpers::casts::reinterpret_cast_helper< const TypeAs > (buf->get_cbuf ());
 }
 
 
@@ -29,7 +29,7 @@ TypeAs
 get_data_as (IVideoBuf::raw_ptr buf)
 {
   U3_CHECK (!buf->get_flag (BufFlags::null), "try get data from null buf");
-  return U3_CAST_REINTERPRET< TypeAs > (buf->get_buf () + (*buf)[MemVars::offset_data]);
+  return ::libs::helpers::casts::reinterpret_cast_helper< TypeAs > (buf->get_buf () + (*buf)[MemVars::offset_data]);
 }
 
 
@@ -45,7 +45,7 @@ const TypeAs
 get_const_data_as (IVideoBuf::craw_ptr buf)
 {
   U3_CHECK (!buf->get_flag (BufFlags::null), "try get data from null buf");
-  return U3_CAST_REINTERPRET< const TypeAs > (buf->get_cbuf () + (*buf)[MemVars::offset_data]);
+  return ::libs::helpers::casts::reinterpret_cast_helper< const TypeAs > (buf->get_cbuf () + (*buf)[MemVars::offset_data]);
 }
 
 
@@ -61,7 +61,7 @@ TypeAs
 get_data_with_off_as (IVideoBuf::raw_ptr buf, const IVideoBuf::dim_type off)
 {
   U3_CHECK (!buf->get_flag (BufFlags::null), "try get data from null buf");
-  return U3_CAST_REINTERPRET< TypeAs > (buf->get_buf () + (*buf)[MemVars::offset_data] + off);
+  return ::libs::helpers::casts::reinterpret_cast_helper< TypeAs > (buf->get_buf () + (*buf)[MemVars::offset_data] + off);
 }
 
 
@@ -69,7 +69,7 @@ template< typename TypeAs >
 const TypeAs
 get_const_data_with_off_as (IVideoBuf::craw_ptr buf, const IVideoBuf::dim_type off)
 {
-  return U3_CAST_REINTERPRET< const TypeAs > (get_const_buf_as< const std::uint8_t* > (buf) + (*buf)[MemVars::offset_data] + off);
+  return ::libs::helpers::casts::reinterpret_cast_helper< const TypeAs > (get_const_buf_as< const std::uint8_t* > (buf) + (*buf)[MemVars::offset_data] + off);
 }
 
 

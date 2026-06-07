@@ -16,7 +16,7 @@
 #include "sys/os/lnux/sys-info-impl.hpp"
 #include "sys/os/mac/sys-info-impl.hpp"
 
-#include "dlls/forever-load-dlls.hpp"
+#include "dlls/freezer-dlls.hpp"
 
 #include "../iproperties/appl_paths/libs-iproperties-appl-paths-includes.hpp"
 

@@ -14,7 +14,7 @@ namespace libs::iproperties::xml
 Loader::Loader (const InitLoaderInfo& info) :
   iinfo_ (info)
 {
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
   impl_ = ::std::make_shared< general::LoaderFileImpl > (iinfo_);
 #elif defined(U3_OS_GNU_LINUX)
   impl_ = ::std::make_shared< general::LoaderFileImpl > (iinfo_);

@@ -12,14 +12,9 @@
 
 namespace libs::ievents::props::videos::generic::driver
 {
-VideoDriverCaptureProp::VideoDriverCaptureProp (const Acessor& ph)
+VideoDriverCaptureProp::VideoDriverCaptureProp (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-VideoDriverCaptureProp::~VideoDriverCaptureProp ()
-{
 }
 
 
@@ -47,9 +42,7 @@ VideoDriverCaptureProp::load_json_int (const ::boost::json::object& obj)
   capi_.mirror_y_            = obj.at ("mirror_y").as_bool ();
   capi_.rotation_            = ::libs::helpers::json::get_int32 (obj.at ("rotation"));
   capi_.focus_               = libs::ievents::props::videos::generic::driver::camera_focus_from_raw_value (::libs::helpers::json::get_uint32 (obj.at ("focus")));
-  // EAI-BREAK-CHANGE 22.03.2026
-  capi_.px_format_ = ::libs::helpers::uids::minor::from_raw_value (::libs::helpers::json::get_uint32 (obj.at ("px_format")));
-  // capi_.px_format_           = ::libs::helpers::utils::cuuid_from_string (obj.at ("px_format").as_string ().c_str ());
+  capi_.px_format_           = ::libs::helpers::uids::minor::from_raw_value (::libs::helpers::json::get_uint32 (obj.at ("px_format")));
 }
 
 
@@ -70,17 +63,16 @@ VideoDriverCaptureProp::save_json_int (::boost::json::object& obj) const
   obj["mirror_y"]            = capi_.mirror_y_;
   obj["rotation"]            = capi_.rotation_;
   obj["focus"]               = U3_CAST_UINT32_FORCE (capi_.focus_);
-  // EAI-BREAK-CHANGE 22.03.2026
-  obj["px_format"] = U3_CAST_UINT32_FORCE (capi_.px_format_);
-  // obj["px_format"]           = ::libs::helpers::utils::to_string (capi_.px_format_);
+  obj["px_format"]           = U3_CAST_UINT32_FORCE (capi_.px_format_);
 }
 
 
 void
 VideoDriverCaptureProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (VideoDriverCaptureProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< VideoDriverCaptureProp > (src);
   super::copy_int (src);
+
   capi_.px_format_           = dsrc->capi_.px_format_;
   capi_.type_resize_         = dsrc->capi_.type_resize_;
   capi_.type_capture_        = dsrc->capi_.type_capture_;
@@ -99,22 +91,22 @@ VideoDriverCaptureProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-VideoDriverCaptureProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+VideoDriverCaptureProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (capi_.px_format_);
-  ar& BOOST_SERIALIZATION_NVP (capi_.type_resize_);
-  ar& BOOST_SERIALIZATION_NVP (capi_.type_capture_);
-  ar& BOOST_SERIALIZATION_NVP (capi_.fps_);
-  ar& BOOST_SERIALIZATION_NVP (capi_.width_);
-  ar& BOOST_SERIALIZATION_NVP (capi_.height_);
-  ar& BOOST_SERIALIZATION_NVP (capi_.count_preload_frame_);
-  ar& BOOST_SERIALIZATION_NVP (capi_.mem_frames_cycle_);
-  ar& BOOST_SERIALIZATION_NVP (capi_.ms_delay_load_);
-  ar& BOOST_SERIALIZATION_NVP (capi_.mirror_x_);
-  ar& BOOST_SERIALIZATION_NVP (capi_.mirror_y_);
-  ar& BOOST_SERIALIZATION_NVP (capi_.rotation_);
-  ar& BOOST_SERIALIZATION_NVP (capi_.focus_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (capi_.px_format_);
+  arh& BOOST_SERIALIZATION_NVP (capi_.type_resize_);
+  arh& BOOST_SERIALIZATION_NVP (capi_.type_capture_);
+  arh& BOOST_SERIALIZATION_NVP (capi_.fps_);
+  arh& BOOST_SERIALIZATION_NVP (capi_.width_);
+  arh& BOOST_SERIALIZATION_NVP (capi_.height_);
+  arh& BOOST_SERIALIZATION_NVP (capi_.count_preload_frame_);
+  arh& BOOST_SERIALIZATION_NVP (capi_.mem_frames_cycle_);
+  arh& BOOST_SERIALIZATION_NVP (capi_.ms_delay_load_);
+  arh& BOOST_SERIALIZATION_NVP (capi_.mirror_x_);
+  arh& BOOST_SERIALIZATION_NVP (capi_.mirror_y_);
+  arh& BOOST_SERIALIZATION_NVP (capi_.rotation_);
+  arh& BOOST_SERIALIZATION_NVP (capi_.focus_);
 
   self_correct ();
 }

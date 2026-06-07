@@ -20,12 +20,7 @@ struct AllocBufInfo {
   using dim_type   = ::utils::dbufs::video::DimVars::dim_type;                                              //< REFACT
   using flags_type = ::libs::helpers::utils::ValuesStorage< BufFlags, bool, BufFlags::max_bound, false >;   //<
 
-  AllocBufInfo () :
-    check_dims_ (utils::dbufs::video::DimChecks::enable),
-    force_size_ (0),
-    subsample_ (Subs::sub_444)
-  {
-  }
+  AllocBufInfo () = default;
 
   explicit AllocBufInfo (
     const dim_type&    _width,
@@ -36,7 +31,6 @@ struct AllocBufInfo {
     const Subs&        _subsample  = Subs::sub_444) :
 
     minor_ (_minor),
-    force_size_ (0),
     check_dims_ (_check_dims),
     subsample_ (_subsample)
   {
@@ -53,11 +47,11 @@ struct AllocBufInfo {
 
     geom_dims_ (_geom_dims),
     minor_ (_minor),
-    force_size_ (0),
     check_dims_ (_check_dims),
     subsample_ (_subsample)
   {
   }
+
   /// Конструктор для создания буфера под сжатые данные
   /// EAI-REFACT: compressed buf
   explicit AllocBufInfo (
@@ -68,8 +62,7 @@ struct AllocBufInfo {
 
     minor_ (_minor),
     force_size_ (size),
-    check_dims_ (DimChecks::disable),
-    subsample_ (Subs::sub_444)
+    check_dims_ (DimChecks::disable)
   {
     U3_ASSERT (size > 0);
     geom_dims_[::utils::dbufs::video::Dims::width]  = _width;
@@ -80,18 +73,16 @@ struct AllocBufInfo {
   explicit AllocBufInfo (const dim_type& size) :
     force_size_ (size),
     minor_ (::libs::helpers::uids::minor::id_val::unknown),
-    check_dims_ (DimChecks::disable),
-    subsample_ (Subs::sub_444)
+    check_dims_ (DimChecks::disable)
   {
     U3_ASSERT (size > 0);
   }
+
   /// Функция проверки корректности параметров вызова
   /// \return   true, если параметры консистентны
   bool
   check_alloc_info () const
   {
-    // EAI-BREAK-CHANGE 22.03.2026
-    // if (minor_.empty ())
     if (syn::id_val::unknown == minor_)
     {
       U3_XLOG_WARN ("empty minor format");
@@ -105,13 +96,12 @@ struct AllocBufInfo {
            geom_dims_[::utils::dbufs::video::Dims::height] > 0 &&
            geom_dims_[::utils::dbufs::video::Dims::stride] >= _stride;
   }
+
   /// Функция сброса параметров в начальное состояние,
   /// например для повторного использования или для синхронизации состояния с владельцем при использовании в композиции
   void
   reset ()
   {
-    // EAI-BREAK-CHANGE 22.03.2026
-    // minor_.reset ();
     minor_ = syn::id_val::unknown;
     geom_dims_.reset ();
     flags_.fill (false);
@@ -120,6 +110,7 @@ struct AllocBufInfo {
     force_size_ = 0;
     subsample_  = Subs::sub_444;
   }
+
   /// Функция быстрого обмена полями между двумя объектами типа
   /// \param[in, out] src  второй объект обмена
   void
@@ -139,11 +130,11 @@ struct AllocBufInfo {
     std::swap (subsample_, src.subsample_);
   }
 
-  DimVars     geom_dims_;    //< Размерности буфера
-  flags_type  flags_;        //< Признаки, общие для буфера в целом
-  syn::id_val minor_;        //< Формат пикселей буфера
-  dim_type    force_size_;   //< Размер буфера в байтах, когда его нельзя вычислить от minor_ и прочего
-  DimChecks   check_dims_;   //< Требование проверки размеров при выделении буфера. Т.к. в некоторых случаях (операция свертка), размеры могут превышать явно указанные
-  Subs        subsample_;    //<
+  DimVars     geom_dims_;                                             //< Размерности буфера
+  flags_type  flags_;                                                 //< Признаки, общие для буфера в целом
+  syn::id_val minor_;                                                 //< Формат пикселей буфера
+  dim_type    force_size_ = 0;                                        //< Размер буфера в байтах, когда его нельзя вычислить от minor_ и прочего
+  DimChecks   check_dims_ = utils::dbufs::video::DimChecks::enable;   //< Требование проверки размеров при выделении буфера. Т.к. в некоторых случаях (операция свертка), размеры могут превышать явно указанные
+  Subs        subsample_  = Subs::sub_444;                            //<
 };
 }   // namespace utils::dbufs::video

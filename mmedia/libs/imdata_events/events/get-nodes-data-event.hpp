@@ -34,7 +34,7 @@ class GetNodesDataEvent : public BaseNodesDataEvent
     const id_graph_type&   id_graph = "",
     const nodes_list_type& nodes    = nodes_list_type ());
 
-  virtual ~GetNodesDataEvent ();
+  virtual ~GetNodesDataEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -56,7 +56,7 @@ class GetNodesDataEvent : public BaseNodesDataEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   //  BaseNodesDataEvent overrides
   virtual void                        load_json_int (const ::boost::json::object& obj) override;

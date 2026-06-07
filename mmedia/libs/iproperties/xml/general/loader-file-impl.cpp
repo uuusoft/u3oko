@@ -15,7 +15,7 @@ namespace libs::iproperties::xml::general
 bool
 is_special_folder_for_libs (const appl_paths::Paths& path_type)
 {
-#if defined(U3_BUILD_MODULES_AS_LIBS)
+#if (U3_BUILD_MODULES_AS_LIBS == 1)
   return appl_paths::Paths::bins == path_type || appl_paths::Paths::emulate_bins == path_type;
 #else
   return false;
@@ -24,11 +24,6 @@ is_special_folder_for_libs (const appl_paths::Paths& path_type)
 
 LoaderFileImpl::LoaderFileImpl (const InitLoaderInfo& info) :
   iinfo_ (info)
-{
-}
-
-
-LoaderFileImpl::~LoaderFileImpl ()
 {
 }
 

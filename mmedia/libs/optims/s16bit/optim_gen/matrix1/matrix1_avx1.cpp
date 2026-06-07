@@ -12,7 +12,7 @@
 //  old shit
 namespace libs::optim::s16bit::gen::matrix1
 {
-#if 0
+#ifdef U3_FAKE_DISABLE
 #  if defined(U3_CPU_X86)
 void
 avx1 (::libs::optim::io::MCallInfo& info)

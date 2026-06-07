@@ -11,17 +11,11 @@
 
 namespace libs::bufs
 {
-Bufs::Bufs () :
-  base_buf_index_ (utils::dbufs::video::consts::offs::raw)
+Bufs::Bufs ()
 {
   flags_.fill (false);
   flags_[BufsFlags::request2hsl] = true;
   set_flag (BufsFlags::empty, true);
-}
-
-
-Bufs::~Bufs ()
-{
 }
 
 
@@ -90,6 +84,53 @@ Bufs::operator[] (const syn::off_buf_type& indx) const
     ret       = ibuf->impl ()->create (0);
   }
   return ret.get ();
+}
+
+
+void
+Bufs::swap (Bufs& src)
+{
+  if (this == &src)
+  {
+    U3_ASSERT_SIGNAL ("failed");
+    return;
+  }
+
+  std::swap (childs_, src.childs_);
+  // std::swap( ichilds_, src.ichilds_ );
+  std::swap (flags_, src.flags_);
+  std::swap (base_buf_index_, src.base_buf_index_);
+}
+
+
+void
+Bufs::clone (const Bufs& src)
+{
+  if (&src == this)
+  {
+    U3_ASSERT_SIGNAL ("failed");
+    return;
+  }
+
+  auto ibuf = ::libs::iproperties::helpers::cast_prop_demons ()->get_bufs_lockfree ();
+
+  childs_.clear ();
+
+  for (auto& schild : src.childs_)
+  {
+    auto& dchild = childs_[schild.first];
+    if (!schild.second)
+    {
+      continue;
+    }
+
+    dchild = ibuf->impl ()->create (schild.second->getraw_buf () ? schild.second->getraw_buf ()->get_data_size () : 0);
+    dchild->clone (schild.second.get (), 100.0F);
+  }
+
+  // ichilds_ = src.ichilds_;
+  flags_          = src.flags_;
+  base_buf_index_ = src.base_buf_index_;
 }
 
 

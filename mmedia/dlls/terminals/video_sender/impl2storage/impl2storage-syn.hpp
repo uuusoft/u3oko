@@ -7,7 +7,7 @@
 */
 
 // old shit
-#if 0
+#ifdef U3_FAKE_DISABLE
 namespace dlls::terminals::video_sender::impl2storage::syn
 {
 }   // namespace dlls::terminals::video_sender::impl2storage::syn

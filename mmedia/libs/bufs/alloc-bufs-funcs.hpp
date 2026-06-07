@@ -8,8 +8,5 @@
 
 namespace libs::bufs
 {
-void alloc_buf_by_indx (
-  Bufs::raw_ptr            bufs,
-  const syn::off_buf_type& indx,
-  syn::IVideoBuf::raw_ptr  src);
+void alloc_buf_by_indx (Bufs::raw_ptr, const syn::off_buf_type&, syn::IVideoBuf::raw_ptr);
 }   // namespace libs::bufs

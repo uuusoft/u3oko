@@ -29,7 +29,7 @@ class ApplicationProp : public ievents::Event
   using xml_path_folders_type = std::vector< std::string >;
 
   explicit ApplicationProp (const Acessor& = Acessor (0));
-  virtual ~ApplicationProp ();
+  virtual ~ApplicationProp () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -54,7 +54,7 @@ class ApplicationProp : public ievents::Event
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   std::string                   machine_name_;      //< Имя машины для человека
   ::libs::helpers::utils::cuuid machine_guid_id_;   //< Идентификатор машины (постоянный на все время инсталяции системы на данную машину, генерируется автоматически при инсталяции)

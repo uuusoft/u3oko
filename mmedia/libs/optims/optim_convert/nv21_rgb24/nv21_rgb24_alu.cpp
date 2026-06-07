@@ -23,10 +23,10 @@ alu (::libs::optim::io::MCallInfo& info)
     const std::uint8_t* prev_uv_buf = uv_buf;
     for (std::uint32_t indx_x = 0; indx_x < yuy2->width_; indx_x += ppc)
     {
-      std::int16_t y1 = U3_CAST_INT16 (y_buf[0]) - 16;
-      std::int16_t y2 = U3_CAST_INT16 (y_buf[1]) - 16;
-      std::int16_t u  = U3_CAST_INT16 (uv_buf[0]) - 128;
-      std::int16_t v  = U3_CAST_INT16 (uv_buf[1]) - 128;
+      auto y1 = U3_CAST_INT16 (y_buf[0]) - 16;
+      auto y2 = U3_CAST_INT16 (y_buf[1]) - 16;
+      auto u  = U3_CAST_INT16 (uv_buf[0]) - 128;
+      auto v  = U3_CAST_INT16 (uv_buf[1]) - 128;
 
       const std::int32_t y1_premul = y1 * 4769;
 

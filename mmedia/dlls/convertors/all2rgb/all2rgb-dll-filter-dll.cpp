@@ -2,112 +2,65 @@
 \file       all2rgb-dll-filter-dll.cpp
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.05.2017
-\project    uuu_all2rgb
+\project    u3_all2rgb
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "all2rgb-dll-includes_int.hpp"
 #include "all2rgb-dll-info-filter-dll.hpp"
 #include "all2rgb-dll-filter-dll.hpp"
-#include "mmedia/dlls/doptim/algs/all_algs_impl.hpp"
 
 namespace dlls::convertors::all2rgb
 {
-Filter::Filter ()
-{
-}
-
-
-Filter::~Filter ()
+void
+Filter::alloc_bufs ()
 {
 }
 
 
 void
-Filter::load_int (
-  ::libs::icore::impl::var1::obj::FilterInfo* info,
-  const ::pugi::xml_named_node_iterator&      node)
+Filter::alloc_temp_bufs ()
 {
-  init_pts (&info->pts_);
-  finfo_.load (node);
+  const syn::IVideoBuf::raw_ptr sbuf          = (*pbuf_)[finfo_.rprops_->buf_.indx_sbuf_];
+  const auto                    source_format = sbuf->get_format ();
+  const auto                    px_format     = is_result_mono (source_format) ? ::libs::helpers::uids::minor::id_val::y16 : ::libs::helpers::uids::minor::id_val::rgb24;
+  const std::uint32_t           byte2px       = ::libs::helpers::uids::helpers::get_count_bytes_from_format (px_format);
+  const auto                    swidth        = sbuf->get_dim_var (::utils::dbufs::video::Dims::width);
+  const auto                    sheight       = sbuf->get_dim_var (::utils::dbufs::video::Dims::height);
+  const std::uint32_t           req_stride    = ::libs::helpers::mem::get_align64 (swidth * byte2px, true);
+  const std::uint32_t           req_size      = req_stride * sheight;
 
-  auto ioptim = ::libs::iproperties::helpers::cast_prop_demons ()->get_optim_lockfree ()->impl ();
+  const ::utils::dbufs::video::consts::offs::off_buf_type indx_bufs[] = {
+    ::utils::dbufs::video::consts::offs::temp1
+  };
 
-  rgb32_to_rgb24_ = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CRGB32_RGB24Alg::val_key));
-  yuy2_to_rgb24_  = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CYUY22RgbAlg::val_key));
-  yuy2_to_y16_    = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CYUY22Y16Alg::val_key));
-  nv21_to_rgb24_  = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CNV212RgbAlg::val_key));
-  nv21_to_y16_    = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CNV212Y16Alg::val_key));
-  ycb_to_rgb24_   = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::YCB2RgbAlg::val_key));
-  scale_func_     = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CScaleNearestAlg::val_key));
-  i420_to_rgb24_  = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::I420ToRgb24Alg::val_key));
-  uyvy_to_rgb24_  = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CUYVY2RgbAlg::val_key));
-  uyvy_to_y16_    = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CUYVY2Y16Alg::val_key));
-}
-
-
-bool
-is_valid_format (const ::libs::helpers::uids::minor::id_val& buf_format)
-{
-  if (::libs::helpers::uids::minor::id_val::yuy2 != buf_format &&
-      ::libs::helpers::uids::minor::id_val::yuyv != buf_format &&
-      ::libs::helpers::uids::minor::id_val::uyvy != buf_format &&
-      ::libs::helpers::uids::minor::id_val::nv21 != buf_format &&
-      ::libs::helpers::uids::minor::id_val::ycb != buf_format &&
-      ::libs::helpers::uids::minor::id_val::i420 != buf_format &&
-      ::libs::helpers::uids::minor::id_val::rgb32 != buf_format)
+  for (const ::utils::dbufs::video::consts::offs::off_buf_type& indx_buf : indx_bufs)
   {
-    U3_LOG_DATA_ERROR ("only {rgb24, rgb32, yuy2, yuyv, ycb, nv21, i420} formats accepted");
-    return false;
+    syn::IVideoBuf::raw_ptr tbuf = (*pbuf_)[indx_buf];
+
+    if (is_result_mono (source_format))
+    {
+      //  буфер Y16 напрямую используется далее, поэтому выделяем сразу со всеми отступами.
+      //  U3-REFACT: compressed buf
+      auto alloc_info = ::utils::dbufs::video::AllocBufInfo (
+        swidth,
+        sheight,
+        0,
+        ::libs::helpers::uids::minor::id_val::y16,
+        utils::dbufs::video::DimChecks::enable);
+
+      alloc_info.flags_[::utils::dbufs::BufFlags::convolution_support] = true;
+      tbuf->buf_alloc (alloc_info);
+      tbuf->set_mem_var (::utils::dbufs::MemVars::size_data, req_size);
+    }
+    else
+    {
+      tbuf->buf_alloc (
+        ::utils::dbufs::video::AllocBufInfo (
+          swidth, sheight, req_stride, px_format));
+
+      ::utils::dbufs::video::helpers::override_data (*tbuf, 0, req_size);
+    }
   }
-  return true;
-}
-
-
-void
-Filter::transform_int (::libs::icore::impl::var1::obj::dll::TransformInfo& info)
-{
-  prepare_transform (info);
-
-  auto& ibuf = (*info.ibuf_);
-  if (ibuf->get_flag (::libs::bufs::BufsFlags::empty))
-  {
-    //  Пустой буфер допустим, например если все преобразование происходит аппаратно.
-    return;
-  }
-
-  auto sbuf = (*ibuf)[finfo_.rprops_->buf_.indx_sbuf_];
-  auto dbuf = (*ibuf)[finfo_.rprops_->buf_.indx_dbuf_];
-  if (!sbuf || !dbuf)
-  {
-    return;
-  }
-  if (sbuf->get_flag (utils::dbufs::BufFlags::empty))
-  {
-    return;
-  }
-
-  pbuf_->set_flag (::libs::bufs::BufsFlags::request2hsl, true);
-  if (::libs::helpers::uids::minor::id_val::rgb24 == sbuf->get_format ())
-  {
-    // U3-TODO: restride allready
-    return;
-  }
-
-  if (::libs::events::PropertyUsings::disabled == finfo_.ef_props_.front ()->get_using_state ())
-  {
-    return;
-  }
-
-  const auto buf_format = sbuf->get_format ();
-  if (!is_valid_format (buf_format))
-  {
-    U3_LOG_DATA_ERROR ("invalid format recive " + ::libs::helpers::uids::helpers::get_readable_name (buf_format));
-    return;
-  }
-
-  itransform ();
 }
 
 
@@ -163,14 +116,6 @@ Filter::get_out_format_from_format (const ::libs::helpers::uids::minor::id_val& 
 
 
 void
-Filter::call_int (::libs::icore::impl::var1::obj::dll::CallInterfInfo& info)
-{
-  super::prepare_call (info);
-  super::call_gen (info);
-}
-
-
-void
 Filter::init_pts (::libs::icore::impl::var1::obj::ConnectInfo* info)
 {
   info->count_ins_ = 1;
@@ -178,5 +123,52 @@ Filter::init_pts (::libs::icore::impl::var1::obj::ConnectInfo* info)
 
   info->count_outs_ = 1;
   info->outs_[0].set_info (true);
+}
+
+
+void
+Filter::convert_bufs ()
+{
+  auto       base_buf  = (*pbuf_)[finfo_.rprops_->buf_.indx_sbuf_];
+  const auto pixformat = base_buf->get_format ();
+  auto       rcbuf     = (*pbuf_)[finfo_.rprops_->buf_.indx_dbuf_];
+  auto       tempbuf   = (*pbuf_)[::utils::dbufs::video::consts::offs::temp1];
+
+  ::libs::optim::io::MCallInfo      cinfo;
+  ::libs::optim::mcalls::MTFuncInfo tfunc;
+
+  cinfo.srcs_.emplace_back (rcbuf, "rcbuf dlls::convertors::all2rgb");
+  cinfo.dsts_.emplace_back (tempbuf, "tbuf dlls::convertors::all2rgb");
+
+  tempbuf->set_format (get_out_format_from_format (pixformat));
+
+  tfunc.pfunc_           = get_func_for_format (pixformat);
+  tfunc.src_align_.px_x_ = tfunc.pfunc_->get_block_align_x ();
+  tfunc.dst_align_.px_x_ = tfunc.pfunc_->get_block_align_x ();
+  tfunc.src_align_.px_y_ = tfunc.pfunc_->get_block_align_y ();
+  tfunc.dst_align_.px_y_ = tfunc.pfunc_->get_block_align_y ();
+
+  if (!finfo_.rprops_->debug_skip_transform_)
+  {
+    pthreads_->mthreads_call (id_obj_, tfunc, cinfo, transinfo_->exptimes_);
+  }
+
+  // rcbuf->c1lone( tempbuf, 100.0F );
+  rcbuf->swap (*tempbuf);
+
+  if (is_result_mono (pixformat))
+  {
+    (*pbuf_)[::utils::dbufs::video::consts::offs::hue]->flush ();
+    (*pbuf_)[::utils::dbufs::video::consts::offs::sat]->flush ();
+  }
+}
+
+
+void
+Filter::itransform ()
+{
+  alloc_bufs ();
+  alloc_temp_bufs ();
+  convert_bufs ();
 }
 }   // namespace dlls::convertors::all2rgb

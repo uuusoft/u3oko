@@ -20,46 +20,46 @@ namespace generics
 {
 namespace matrix
 {
-#if 0
-  class CVideoMatrixProp : public ievents::Event
-  {   
+#ifdef U3_FAKE_DISABLE
+class CVideoMatrixProp : public ievents::Event
+{
   friend class boost::serialization::access;
   friend ::dlls::devents::impl::EventsImpl;
   friend struct RegisterHelper;
 
-  public:    
-    U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF( CVideoMatrixProp )
-    U3_HELPER_DISABLE_ACOPY_TYPE()
-    
-    CVideoMatrixProp();
-    
-    virtual ~CVideoMatrixProp()
-    {}
+  public:
+  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (CVideoMatrixProp)
+  U3_HELPER_DISABLE_ACOPY_TYPE ()
 
-    
-    bool      enable_;
-    int       koeff_;
-    int       bound_;
-    bool      change_color_;
-    bool      replicate_images_;
-    std::string   folder_;
+  CVideoMatrixProp ();
+
+  virtual ~CVideoMatrixProp ()
+  {
+  }
+
+
+  bool        enable_;
+  int         koeff_;
+  int         bound_;
+  bool        change_color_;
+  bool        replicate_images_;
+  std::string folder_;
 
 
   protected:
-    
-    virtual ::libs::events::IEvent::ptr clone_int( const ::libs::events::Deeps& deep ) const override;
-    virtual void load_int( const ::pugi::xml_named_node_iterator& node ) override;
-    virtual void copy_int( const IEvent::ptr& src ) override;
+  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
+  virtual void                        load_int (const ::pugi::xml_named_node_iterator& node) override;
+  virtual void                        copy_int (const IEvent::ptr& src) override;
 
 
   private:
-    U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS( ievents::Event )
+  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (ievents::Event)
 
-    friend class boost::serialization::access;
+  friend class boost::serialization::access;
 
-    template<class Archive>
-    void serialize(Archive & ar, const std::uint32_t /* file_version */);
-  };
+  template< class Archive >
+  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+};
 #endif
 }   // namespace matrix
 }   // namespace generics

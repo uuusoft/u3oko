@@ -28,9 +28,7 @@ class IBlockMem
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IBlockMem)
 
-  virtual ~IBlockMem ()
-  {
-  }
+  virtual ~IBlockMem () = default;
 
   IBlockMem (const IBlockMem& src)            = delete;
   IBlockMem& operator= (const IBlockMem& src) = delete;
@@ -85,9 +83,7 @@ class IBlockMem
   }
 
   protected:
-  IBlockMem ()
-  {
-  }
+  IBlockMem () = default;
 
   private:
   // IBlockMem itnterface

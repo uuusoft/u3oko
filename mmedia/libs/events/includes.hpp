@@ -6,8 +6,8 @@ file        includes.hpp
 \project    u3_events
 \brief      Файл, определяет набор интерфейсов и типов для ядра.
 */
-#include "deeps-enum.hpp"
-#include "property-usings-enum.hpp"
+#include "enum-deeps.hpp"
+#include "enum-property-usings.hpp"
 #include "ievent.hpp"
 
 #include "wrapers/iwrap-base-event.hpp"
@@ -20,10 +20,6 @@ file        includes.hpp
 
 #include "buf/consts/events-buf-consts-vals.hpp"
 #include "buf/event-bufs-info.hpp"
-
-// defines
-#include "defines/make-fake-event-objs-defines.hpp"
-#include "defines/check-copy-state-event-defines.hpp"
 
 #include "io/ievents.hpp"
 

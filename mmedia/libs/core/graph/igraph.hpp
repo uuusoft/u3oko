@@ -57,15 +57,11 @@ class IGraph
 
   private:
   /// Конструктор, закрытый для определенности, т.к базовый класс с чисто виртуальными функциями
-  IGraph ()
-  {
-  }
+  IGraph () = default;
 
   /// Деструктор, закрытый, удалить граф может только само ядро
   /// Клиент может только попросить ядро удалить данный граф через сообщение
-  virtual ~IGraph ()
-  {
-  }
+  virtual ~IGraph () = default;
 
   //  IGraph interface
   virtual void                load_int (const std::string& file)                                   = 0;

@@ -2,7 +2,6 @@
 \file       base_7x7_avx2.cpp
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2017
-
 \project    u3_optim_conv
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -10,7 +9,7 @@
 #include "mmedia/libs/optims/s16bit/optim_s16bit_generic/includes_int.hpp"
 #include "base_7x7.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::conv::base::c7x7::consts
 {
@@ -19,14 +18,13 @@ constexpr std::int32_t pxs_per_cycle = 2;   //<
 
 namespace libs::optim::s16bit::conv::base::c7x7
 {
-#  define LOAD_RAW_STR(Data) Data = _mm256_lddqu_si256 (U3_CAST_REINTERPRET< const __m256i* > (csstr));
+#  define LOAD_RAW_STR(Data) Data = _mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (csstr));
 
-
-#  define LOAD_STR(Data, Permute16, Permute8)                                     \
-    LOAD_RAW_STR (Data);                                  /*0123 4567 xxxx xxxx*/ \
-    Data = _mm256_permutevar8x32_epi32 (Data, Permute16); /*0123 4567 2345 67xx*/ \
-    Data = _mm256_shuffle_epi8 (Data, Permute8);          /*0123 4561 2345 67xx*/ \
-    U3_FAST_MOVE_CPTR (csstr, stride);
+#  define LOAD_STR(Data, Permute16, Permute8)                                      \
+    LOAD_RAW_STR (Data);                                   /*0123 4567 xxxx xxxx*/ \
+    Data  = _mm256_permutevar8x32_epi32 (Data, Permute16); /*0123 4567 2345 67xx*/ \
+    Data  = _mm256_shuffle_epi8 (Data, Permute8);          /*0123 4561 2345 67xx*/ \
+    csstr = ::libs::helpers::mem::move_cptr (csstr, stride);
 
 
 #  define PROCESS_STR(Data, Mask)                 \
@@ -58,7 +56,7 @@ struct TAvx2CalcObj {
 
   U3_SET_TARGET_CPU (avx2)
   void
-  init (::libs::optim::io::MCallInfo& info, const cores::TCore** pmask)
+  init (::libs::optim::io::MCallInfo& info, const cores::values_core_type** pmask)
   {
     permute16_ = _mm256_set_epi32 (0, 3, 2, 1, 3, 2, 1, 0);
     permute8_  = _mm256_set_epi8 (15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 3, 2, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0);
@@ -77,13 +75,13 @@ struct TAvx2CalcObj {
     mask_akk2_.m256i_u32[7] = 0;
 #  endif
 
-    str1_core_ = _mm256_lddqu_si256 (U3_CAST_REINTERPRET< const __m256i* > (&(**pmask).get (0, 0)));
-    str2_core_ = _mm256_lddqu_si256 (U3_CAST_REINTERPRET< const __m256i* > (&(**pmask).get (0, 1)));
-    str3_core_ = _mm256_lddqu_si256 (U3_CAST_REINTERPRET< const __m256i* > (&(**pmask).get (0, 2)));
-    str4_core_ = _mm256_lddqu_si256 (U3_CAST_REINTERPRET< const __m256i* > (&(**pmask).get (0, 3)));
-    str5_core_ = _mm256_lddqu_si256 (U3_CAST_REINTERPRET< const __m256i* > (&(**pmask).get (0, 4)));
-    str6_core_ = _mm256_lddqu_si256 (U3_CAST_REINTERPRET< const __m256i* > (&(**pmask).get (0, 5)));
-    str7_core_ = _mm256_lddqu_si256 (U3_CAST_REINTERPRET< const __m256i* > (&(**pmask).get (0, 6)));
+    str1_core_ = _mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (&(**pmask).get (0, 0)));
+    str2_core_ = _mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (&(**pmask).get (0, 1)));
+    str3_core_ = _mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (&(**pmask).get (0, 2)));
+    str4_core_ = _mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (&(**pmask).get (0, 3)));
+    str5_core_ = _mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (&(**pmask).get (0, 4)));
+    str6_core_ = _mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (&(**pmask).get (0, 5)));
+    str7_core_ = _mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (&(**pmask).get (0, 6)));
 
     clone_core_str (str1_core_);
     clone_core_str (str2_core_);
@@ -126,12 +124,12 @@ struct TAvx2CalcObj {
   U3_SET_TARGET_CPU (avx2)
   void
   get_res (
-    const std::int16_t  mul_koeff,
-    const std::int16_t* csstr,
-    const cores::TCore* mask,
-    const std::uint32_t stride,
-    std::int32_t*       tress,
-    std::int16_t*       dstr)
+    const std::int16_t             mul_koeff,
+    const std::int16_t*            csstr,
+    const cores::values_core_type* mask,
+    const std::uint32_t            stride,
+    std::int32_t*                  tress,
+    std::int16_t*                  dstr)
   {
     __m256i akk1 = _mm256_setzero_si256 ();
     __m256i akk2 = _mm256_setzero_si256 ();
@@ -207,26 +205,22 @@ struct TAvx2CalcObj {
 
 
 struct TModAvx2CalcObj : public TAvx2CalcObj {
-  TModAvx2CalcObj ()
-  {
-  }
-
+  TModAvx2CalcObj () = default;
 
   void
-  init (::libs::optim::io::MCallInfo& info, const cores::TCore** pmask)
+  init (::libs::optim::io::MCallInfo& info, const cores::values_core_type** pmask)
   {
     TAvx2CalcObj::init (info, pmask);
   }
 
-
   void
   get_res (
-    const std::int16_t  mul_koeff,
-    const std::int16_t* csstr,
-    const cores::TCore* mask,
-    const std::uint32_t stride,
-    int*                tress,
-    std::int16_t*       dstr)
+    const std::int16_t             mul_koeff,
+    const std::int16_t*            csstr,
+    const cores::values_core_type* mask,
+    const std::uint32_t            stride,
+    int*                           tress,
+    std::int16_t*                  dstr)
   {
     TAvx2CalcObj::get_res (mul_koeff, csstr, mask, stride, tress, dstr);
     tress[0] = std::abs (tress[0]);
@@ -240,7 +234,7 @@ void
 mod_avx2 (::libs::optim::io::MCallInfo& info)
 {
   _mm256_zeroupper ();
-  move_alg< TModAvx2CalcObj, cores::TCore, TPostProcessor, consts::size_core, consts::pxs_per_cycle > (info);
+  move_alg< TModAvx2CalcObj, cores::values_core_type, TPostProcessor, consts::size_core, consts::pxs_per_cycle > (info);
   _mm256_zeroupper ();
 }
 
@@ -250,7 +244,7 @@ void
 avx2 (::libs::optim::io::MCallInfo& info)
 {
   _mm256_zeroupper ();
-  move_alg< TAvx2CalcObj, cores::TCore, TPostProcessor, consts::size_core, consts::pxs_per_cycle > (info);
+  move_alg< TAvx2CalcObj, cores::values_core_type, TPostProcessor, consts::size_core, consts::pxs_per_cycle > (info);
   _mm256_zeroupper ();
 }
 }   // namespace libs::optim::s16bit::conv::base::c7x7

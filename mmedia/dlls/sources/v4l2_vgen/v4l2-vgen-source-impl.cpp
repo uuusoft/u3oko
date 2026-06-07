@@ -131,7 +131,7 @@ SourceImpl::get_raw_data_int (
     const auto now = std::chrono::high_resolution_clock::now ();
     if (icapture_->is_capture_property_update ())
     {
-      U3_LOG_DATA_MARK ("update capture property begin" + VTOLOG (U3_CAST_PTR2INT (srcimpinfo_.capture_props_)));
+      U3_LOG_DATA_MARK ("update capture property begin" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (srcimpinfo_.capture_props_)));
       srcimpinfo_.capture_props_ = icapture_->get_capture_property ();
       last_time_restart_         = now - consts::ms_timeout_recreate_device;
       camera_error_              = 0xFF;
@@ -210,7 +210,7 @@ SourceImpl::get_raw_data_int (
       return;
     }
 
-    buf->clone (raw_buf.get (), 100.0f);
+    buf->clone (raw_buf.get (), 100.0F);
     raw_buf->set_flag (::utils::dbufs::BufFlags::empty, true);
     ++counter_frames_;
   }

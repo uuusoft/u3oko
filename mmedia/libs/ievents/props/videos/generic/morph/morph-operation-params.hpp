@@ -21,7 +21,7 @@ struct MorphOperationParams final {
     const std::int32_t bound_filling = 1,
     const std::int32_t val_filling   = 255);
 
-  virtual ~MorphOperationParams ();
+  virtual ~MorphOperationParams () = default;
 
   bool self_test () const;
 
@@ -35,11 +35,11 @@ struct MorphOperationParams final {
 
   template< class Archive >
   void
-  serialize (Archive& ar, const std::uint32_t /* file_version */);
+  serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
-void                 tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const MorphOperationParams& src);
-MorphOperationParams tag_invoke (::boost::json::value_to_tag< MorphOperationParams >, const ::boost::json::value& jv);
+void                 tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const MorphOperationParams& src);
+MorphOperationParams tag_invoke (::boost::json::value_to_tag< MorphOperationParams >, const ::boost::json::value& jvs);
 }   // namespace libs::ievents::props::videos::generic::morph
 
 BOOST_CLASS_EXPORT_KEY (::libs::ievents::props::videos::generic::morph::MorphOperationParams);

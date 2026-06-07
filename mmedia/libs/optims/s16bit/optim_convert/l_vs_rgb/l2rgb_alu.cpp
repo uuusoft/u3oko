@@ -21,7 +21,7 @@ l_to_rgb24_alu (::libs::optim::io::MCallInfo& info)
   {
     for (std::uint32_t indxx = 0; indxx < width; indxx += ppc)
     {
-      const std::uint8_t val = U3_CAST_STATIC< std::uint8_t > (l[0] & 0xFF);
+      const auto val = U3_CAST_UINT8 (l[0] & 0xFF);
 
       rgb24[0] = val;
       rgb24[1] = val;
@@ -31,8 +31,8 @@ l_to_rgb24_alu (::libs::optim::io::MCallInfo& info)
       rgb24 += 3;
     }
 
-    U3_FAST_MOVE_PTR (rgb24, leak_l);
-    U3_FAST_MOVE_CPTR (l, leak_l);
+    rgb24 = ::libs::helpers::mem::move_ptr (rgb24, leak_l);
+    l     = ::libs::helpers::mem::move_cptr (l, leak_l);
   }
 }
 }   // namespace libs::optim::s16bit::convert::l_vs_rgb

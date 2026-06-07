@@ -59,15 +59,15 @@ to_string (const Scalers& val)
 
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const Scalers& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const Scalers& src)
 {
-  jv = U3_CAST_UINT32_FORCE (src);
+  jvs = U3_CAST_UINT32_FORCE (src);
 }
 
 
 Scalers
-tag_invoke (::boost::json::value_to_tag< Scalers >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< Scalers >, const ::boost::json::value& jvs)
 {
-  return U3_CAST_STATIC< Scalers > (::libs::helpers::json::get_uint32 (jv));
+  return ::libs::helpers::casts::static_cast_helper< Scalers > (::libs::helpers::json::get_uint32 (jvs));
 }
 }   // namespace libs::ievents::props::videos::generic::scaler

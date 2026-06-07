@@ -12,15 +12,9 @@
 
 namespace libs::events
 {
-IEvent::IEvent () :
-  state_ (PropertyUsings::disabled)
+IEvent::IEvent ()
 {
   property_name_ = gen_get_mid ();
-}
-
-
-IEvent::~IEvent ()
-{
 }
 
 
@@ -81,7 +75,7 @@ IEvent::load_json (const std::string& prop)
     return;
   }
 
-  state_         = U3_CAST_STATIC< PropertyUsings > (::libs::helpers::json::get_uint32 (obj.at ("libs_events_ievent_state")));
+  state_         = ::libs::helpers::casts::static_cast_helper< PropertyUsings > (::libs::helpers::json::get_uint32 (obj.at ("libs_events_ievent_state")));
   property_name_ = obj.at ("libs_events_property_name").as_string ();
 
   load_json_int (obj);
@@ -160,10 +154,10 @@ IEvent::is_failed_int () const
 
 template< class Archive >
 void
-IEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+IEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (property_name_);
-  ar& BOOST_SERIALIZATION_NVP (state_);
+  arh& BOOST_SERIALIZATION_NVP (property_name_);
+  arh& BOOST_SERIALIZATION_NVP (state_);
 }
 }   // namespace libs::events
 

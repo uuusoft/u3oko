@@ -17,14 +17,13 @@ namespace modules::u3_events::appl
 void
 free_error_callback (void* parg, int code, const char* msg)
 {
-  EventsModule*     parent     = U3_CAST_REINTERPRET< EventsModule* > (parg);
+  EventsModule*     parent     = ::libs::helpers::casts::reinterpret_cast_helper< EventsModule* > (parg);
   const std::string error_text = std::string (msg) + ", " + std::to_string (code);
   parent->error_callback (error_text);
 }
 
 
-EventsModule::EventsModule () :
-  pbase_ (nullptr)
+EventsModule::EventsModule ()
 {
   try
   {
@@ -63,7 +62,6 @@ EventsModule::prepare_base ()
   const std::string comp_path = ::libs::helpers::files::make_short_path (path);
   const std::string file_path = ::libs::helpers::files::make_path (comp_path, std::string ("events.db"));
 
-#ifndef U3_DBG_EXTERNAL_LIB_SKIP_SQLITE
   // sqlite3_config( SQLITE_CONFIG_LOG,  ::modules::u3_events::appl::free_error_callback, this );
   U3_CHECK (SQLITE_OK == sqlite3_initialize (), "sqlite3_initialize");
 
@@ -81,21 +79,18 @@ EventsModule::prepare_base ()
   }
 
   U3_CHECK (pbase_, "empty pbase_");
-#endif
 }
 
 
 void
 EventsModule::shutdown_base ()
 {
-#ifndef U3_DBG_EXTERNAL_LIB_SKIP_SQLITE
   if (pbase_)
   {
     sqlite3_close (pbase_);
     pbase_ = nullptr;
   }
   sqlite3_shutdown ();
-#endif
 }
 
 
@@ -119,7 +114,6 @@ EventsModule::process_add_event2base (
   U3_LOG_EVENTS_DEV ("add event to store" + TOLOG (::libs::helpers::utils::to_string (props->get_machine_id ())) + TOLOG (props->get_object_id ()));
   try
   {
-#ifndef U3_DBG_EXTERNAL_LIB_SKIP_SQLITE
     const std::string xml_event   = ::libs::iproperties::helpers::event2xml (msg);
     auto              store_event = props->get_event ();
     auto              event       = props->get_event ();
@@ -136,7 +130,6 @@ EventsModule::process_add_event2base (
     // const auto time = props->get_time ();
     //  const std::string time_sql   = "strftime('%s','now')";
     ::libs::helpers::sqlite::call_exec (pbase_, sql, "add event");
-#endif
   }
   catch (const std::exception& e)
   {
@@ -156,7 +149,7 @@ EventsModule::process_get_data_graphs (
     syn::GetDataGraphsFromEventBase::id_graphs_storage_type res;
     props->set_data_graphs (std::move (res));
 
-#if 0
+#ifdef U3_FAKE_DISABLE
     std::string       xml_event;
     auto              store_event = props->get_event ();
     auto              event       = props->get_event ();

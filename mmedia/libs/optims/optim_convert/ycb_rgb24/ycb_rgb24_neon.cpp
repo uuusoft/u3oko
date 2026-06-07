@@ -10,7 +10,7 @@
 #include "ycb_rgb24.hpp"
 #include "ycb_rgb24_int.hpp"
 
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
 
 namespace libs::optim::convert::ycb_rgb24
 {
@@ -18,7 +18,7 @@ void
 neon (::libs::optim::io::MCallInfo& info)
 {
 #  if 1
-  return alu (info);
+  alu (info);
 #  else
   YCB2RGB24_PREFIX;
 

@@ -9,22 +9,12 @@
 #include "../mem-funcs-includes_int.hpp"
 #include "block-mem.hpp"
 
-//  Макрос включает принудительный сброс памяти в utils::mem_funcs::consts::filling после перераспределения. Используется для отладки.
-#if defined(U3_CNTRL_DEBUG) && 0
-#  ifndef U3_CLEAR_BLOCK_MEM_AFTER_ALLOC
-#    define U3_CLEAR_BLOCK_MEM_AFTER_ALLOC
-#  endif
-#endif
-
 namespace utils::mem_funcs::impl
 {
-BlockMem::BlockMem (const size_type size) :
-  buf_ (nullptr),
-  size_ (0),
-  data_size_ (0)
+BlockMem::BlockMem (const size_type size)
 {
   U3_CHECK (size > 0, "BlockMem, zero size for alloc");
-  details::aalloc (U3_CAST_2VOID (&buf_), size);
+  details::aalloc (::libs::helpers::casts::reinterpret_cast_helper< void** > (&buf_), size);
   U3_CHECK (buf_, "failed alloc buf");
   size_ = size;
   reset_memory ();
@@ -33,14 +23,12 @@ BlockMem::BlockMem (const size_type size) :
 
 BlockMem::~BlockMem ()
 {
-  if (!buf_)
+  if (buf_)
   {
-    return;
+    details::afree (::libs::helpers::casts::reinterpret_cast_helper< void** > (&buf_));
+    buf_  = nullptr;
+    size_ = 0;
   }
-
-  details::afree (U3_CAST_2VOID (&buf_));
-  buf_  = nullptr;
-  size_ = 0;
 }
 
 
@@ -95,7 +83,7 @@ BlockMem::resize_int (const BlockMem::size_type size)
 
   size_      = 0;
   data_size_ = 0;
-  details::arealloc (U3_CAST_2VOID (&buf_), size);
+  details::arealloc (::libs::helpers::casts::reinterpret_cast_helper< void** > (&buf_), size);
   U3_CHECK (buf_, "failed alloc buf");
   size_ = size;
 }
@@ -108,9 +96,5 @@ BlockMem::reset_memory ()
   {
     return;
   }
-
-#if defined(U3_CLEAR_BLOCK_MEM_AFTER_ALLOC)
-  memset (buf_, consts::filling, size_);
-#endif
 }
 }   // namespace utils::mem_funcs::impl

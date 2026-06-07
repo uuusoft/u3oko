@@ -15,8 +15,8 @@ class BaseIdInterf final : public ::libs::ievents::runtime::interf::interfaces::
   //  ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (BaseIdInterf)
 
-  BaseIdInterf ();
-  virtual ~BaseIdInterf ();
+  BaseIdInterf ()          = default;
+  virtual ~BaseIdInterf () = default;
 
   bool                      is_correction_property_update () const;
   syn::BaseIdProp::craw_ptr get_base_property () const;
@@ -27,7 +27,7 @@ class BaseIdInterf final : public ::libs::ievents::runtime::interf::interfaces::
   virtual buf2module_infos_type        get_module_infos_int (const syn::off_buf_type& indx_buf) const override;
   virtual const syn::source_name_type& get_source_name_int () const override;
 
-  mutable bool    update_;   //<
-  syn::BaseIdProp props_;    //<
+  mutable bool    update_ = false;   //<
+  syn::BaseIdProp props_;            //<
 };
 }   // namespace dlls::base_id

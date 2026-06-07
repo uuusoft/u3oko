@@ -40,21 +40,19 @@ alu (::libs::optim::io::MCallInfo& info)
   const std::uint32_t leak_uv    = y->stride_ - ((width * sizeof (std::uint8_t) * 1) >> 1);
   const std::uint32_t leak_rgb24 = rgb24->stride_ - width * sizeof (std::uint8_t) * 3;
 
-  // U3_XLOG_WARN ("width=" << width << " height=" << height << " leak_y" << leak_y << " leak_uv" << leak_uv);
-
   for (std::uint32_t indx_y = 0; indx_y < height; ++indx_y)
   {
     for (std::uint32_t indx_x = 0; indx_x < width; indx_x += 2)
     {
-      const std::int16_t y1        = U3_CAST_INT16 (y_buf[0]) - 16;
-      const std::int16_t y2        = U3_CAST_INT16 (y_buf[1]) - 16;
-      const std::int16_t u         = U3_CAST_INT16 (u_buf[0]) - 128;
-      const std::int16_t v         = U3_CAST_INT16 (v_buf[0]) - 128;
+      const auto         y1        = U3_CAST_INT16 (y_buf[0]) - 16;
+      const auto         y2        = U3_CAST_INT16 (y_buf[1]) - 16;
+      const auto         u         = U3_CAST_INT16 (u_buf[0]) - 128;
+      const auto         v         = U3_CAST_INT16 (v_buf[0]) - 128;
       const std::int32_t y1_premul = y1 * 4769;
       const std::int32_t y2_premul = y2 * 4769;
 
-#if 0
-      //debug
+#ifdef U3_FAKE_DISABLE
+      // debug
       rgb24_buf[0] = y1;
       rgb24_buf[1] = y1;
       rgb24_buf[2] = y1;

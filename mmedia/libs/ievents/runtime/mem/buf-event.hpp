@@ -28,7 +28,7 @@ class BuffEvent : public RuntimeEvent
 
   BuffEvent (const Acessor& = Acessor (0));
   explicit BuffEvent (::utils::dbufs::video::IVideoBuf::cptr& buf);
-  virtual ~BuffEvent ();
+  virtual ~BuffEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -50,6 +50,6 @@ class BuffEvent : public RuntimeEvent
 };
 }   // namespace libs::ievents::runtime::mem
 
-#if 0
-BOOST_CLASS_EXPORT_KEY( ::libs::ievents::runtime::mem::BuffEvent );
+#ifdef U3_FAKE_DISABLE
+BOOST_CLASS_EXPORT_KEY (::libs::ievents::runtime::mem::BuffEvent);
 #endif

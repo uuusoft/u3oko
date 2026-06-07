@@ -53,11 +53,11 @@ if(U3_COMMERCIAL_PART EQUAL 1)
 endif()
 
 if(U3_COMMERCIAL_PART EQUAL 1)
-  include("${U3_BUILD_PATH_TO_LIBS}/dlls/filter_noise/freq_domain/filter-freq-domain.cmake")
+  include("${U3_BUILD_PATH_TO_LIBS}/dlls/noisez/freq_domain/filter-freq-domain.cmake")
 endif()
 
-include("${U3_BUILD_PATH_TO_LIBS}/dlls/filter_noise/space/_make/filter-space-domain.cmake")
-include("${U3_BUILD_PATH_TO_LIBS}/dlls/filter_noise/time/_make/filter-time-domain.cmake")
+include("${U3_BUILD_PATH_TO_LIBS}/dlls/noisez/space/_make/filter-space-domain.cmake")
+include("${U3_BUILD_PATH_TO_LIBS}/dlls/noisez/time/_make/filter-time-domain.cmake")
 
 include("${U3_BUILD_PATH_TO_LIBS}/dlls/uplifters/vcorrect/_make/uplifterss-vcorrect.cmake")
 

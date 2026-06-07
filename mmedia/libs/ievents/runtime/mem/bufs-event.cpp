@@ -11,7 +11,7 @@
 
 namespace libs::ievents::runtime::mem
 {
-BufsEvent::BufsEvent (const Acessor& ph)
+BufsEvent::BufsEvent (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
   events_        = nullptr;
@@ -26,11 +26,6 @@ BufsEvent::BufsEvent (
   events_ (events)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-BufsEvent::~BufsEvent ()
-{
 }
 
 
@@ -72,18 +67,18 @@ BufsEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 BufsEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (BufsEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< BufsEvent > (src);
   super::copy_int (src);
   U3_ASSERT_SIGNAL ("unimplemented");
 }
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 template< class Archive >
 void
-BufsEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+BufsEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP (super);
-  ar& BOOST_SERIALIZATION_NVP (buf_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP (super);
+  arh& BOOST_SERIALIZATION_NVP (buf_);
 
   self_correct ();
 }

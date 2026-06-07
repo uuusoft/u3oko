@@ -11,7 +11,7 @@
 #include "rgb_to_l_int.hpp"
 #include "../hsl_vs_rgb/rgb_to_hsl_int.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::convert::l_vs_rgb
 {
@@ -38,7 +38,7 @@ rgb24_to_l_sse2_float (::libs::optim::io::MCallInfo& info)
   {
     for (std::uint32_t indxx = 0; indxx < width; indxx += ppc)
     {
-      _i128_1 = _mm_loadu_si128 (U3_CAST_REINTERPRET< const __m128i* > (rgb24));   // BOG0R0B1G1R1B2G2R2B3G3R3B4G4R4
+      _i128_1 = _mm_loadu_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (rgb24));   // BOG0R0B1G1R1B2G2R2B3G3R3B4G4R4
       //_i128_1 = _mm_setr_epi8( 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F );//debug
 
       SPLIT_RGB24_SSE2 (_i128_1, _ir8, _ig8, _ib8);
@@ -48,7 +48,7 @@ rgb24_to_l_sse2_float (::libs::optim::io::MCallInfo& info)
       __m128 _temp_g = _mm_cvtepi32_ps (_ig8);
       __m128 _temp_b = _mm_cvtepi32_ps (_ib8);
 
-      // normalization from 0..255 to 0.0f..1.0f;
+      // normalization from 0..255 to 0.0F..1.0F;
       _temp_r = _mm_mul_ps (_temp_r, _const_1_to_255);
       _temp_g = _mm_mul_ps (_temp_g, _const_1_to_255);
       _temp_b = _mm_mul_ps (_temp_b, _const_1_to_255);
@@ -66,20 +66,20 @@ rgb24_to_l_sse2_float (::libs::optim::io::MCallInfo& info)
       //_max_min = _max + var_Min;
       const __m128 _max_min = _mm_add_ps (_var_min, _max);
 
-      // L = ( _max + var_Min ) / 2.0f;
+      // L = ( _max + var_Min ) / 2.0F;
       __m128 _l8 = _mm_mul_ps (_const_1_to_2, _max_min);
 
       _l8     = _mm_mul_ps (_l8, _const_255);
       _i128_1 = _mm_cvtps_epi32 (_l8);
       _i128_2 = _mm_castpd_si128 (_mm_shuffle_pd (_mm_castsi128_pd (_i128_1), _mm_castsi128_pd (_i128_1), 1));
       _i128_1 = _mm_packs_epi32 (_i128_1, _i128_2);
-      _mm_storeu_si128 (U3_CAST_REINTERPRET< __m128i* > (l), _i128_1);
+      _mm_storeu_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (l), _i128_1);
 
       l += 4;
     }
 
-    U3_FAST_MOVE_CPTR (rgb24, leak_rgb);
-    U3_FAST_MOVE_PTR (l, leak_hsl);
+    rgb24 = ::libs::helpers::mem::move_cptr (rgb24, leak_rgb);
+    l     = ::libs::helpers::mem::move_ptr (l, leak_hsl);
   }
 }
 
@@ -100,7 +100,7 @@ rgb24_to_l_sse2 (::libs::optim::io::MCallInfo& info)
   {
     for (std::uint32_t indxx = 0; indxx < width; indxx += ppc)
     {
-      __m128i _i128_1 = _mm_loadu_si128 (U3_CAST_REINTERPRET< const __m128i* > (rgb24));   // BOG0R0B1 G1R1B2G2 R2B3G3R3 B4G4R4B5
+      __m128i _i128_1 = _mm_loadu_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (rgb24));   // BOG0R0B1 G1R1B2G2 R2B3G3R3 B4G4R4B5
       //_i128_1 = _mm_setr_epi8( 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F );//debug
 
       SPLIT_RGB24_SSE2 (_i128_1, _ir8, _ig8, _ib8);
@@ -119,17 +119,17 @@ rgb24_to_l_sse2 (::libs::optim::io::MCallInfo& info)
       //_max_min = _max + var_Min;
       const __m128i _max_min = _mm_add_epi16 (_var_min, _max);
 
-      // L = ( _max + var_Min ) / 2.0f;
+      // L = ( _max + var_Min ) / 2.0F;
       __m128i _l8 = _mm_srai_epi16 (_max_min, 1);
 
       _i128_1 = _mm_castpd_si128 (_mm_shuffle_pd (_mm_castsi128_pd (_l8), _mm_castsi128_pd (_l8), 1));
       _l8     = _mm_packs_epi32 (_l8, _i128_1);
-      _mm_storeu_si128 (U3_CAST_REINTERPRET< __m128i* > (l), _l8);
+      _mm_storeu_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (l), _l8);
       l += 4;
     }
 
-    U3_FAST_MOVE_CPTR (rgb24, leak_rgb);
-    U3_FAST_MOVE_PTR (l, leak_hsl);
+    rgb24 = ::libs::helpers::mem::move_cptr (rgb24, leak_rgb);
+    l     = ::libs::helpers::mem::move_ptr (l, leak_hsl);
   }
 }
 }   // namespace libs::optim::s16bit::convert::l_vs_rgb

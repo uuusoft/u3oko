@@ -13,7 +13,7 @@
 
 namespace libs::optim::s16bit::convert::hsl_vs_rgb
 {
-const float epsilon = 1.0f / (256.0f * 2.0f);
+const float epsilon = 1.0F / (256.0F * 2.0F);
 
 inline void
 rgb2hsl (
@@ -31,14 +31,14 @@ rgb2hsl (
   float       max_rgb             = std::max< float > (nr, std::max< float > (ng, nb));   // Max. value of RGB
   const float delta_max_min       = max_rgb - min_rgb;                                    // Delta RGB value
   const float sum_max_min         = max_rgb + min_rgb;                                    //
-  const float _1_to_delta_max_min = 1.0f / delta_max_min;                                 //
+  const float _1_to_delta_max_min = 1.0F / delta_max_min;                                 //
 
   l = sum_max_min * 0.5f;
 
-  if (delta_max_min == 0.0f)   // This is a gray, no chroma...
+  if (delta_max_min == 0.0F)   // This is a gray, no chroma...
   {
-    h = 0.0f;   // HSL results = 0 ? 1
-    s = 0.0f;
+    h = 0.0F;   // HSL results = 0 ? 1
+    s = 0.0F;
     return;
   }
 
@@ -49,12 +49,12 @@ rgb2hsl (
   }
   else
   {
-    s = delta_max_min / (2.0f - sum_max_min);
+    s = delta_max_min / (2.0F - sum_max_min);
   }
 
-#if 0
+#ifdef U3_FAKE_DISABLE
   // debug
-  s = 1.0f;
+  s = 1.0F;
 #endif
 
   if (std::fabs (max_rgb - nr) <= epsilon)
@@ -65,7 +65,7 @@ rgb2hsl (
     }
     else
     {
-      h = ::libs::optim::s16bit::consts::f_d1_to_d6 * (ng - nb) * _1_to_delta_max_min + 1.0f;
+      h = ::libs::optim::s16bit::consts::f_d1_to_d6 * (ng - nb) * _1_to_delta_max_min + 1.0F;
     }
   }
   else if (std::fabs (max_rgb - ng) <= epsilon)
@@ -87,10 +87,10 @@ rgb24_to_hsl_alu (::libs::optim::io::MCallInfo& info)
   U3_MARK_UNUSED_HERE (leak_hsl);
 
   const std::uint32_t stride_hsl = info.dsts_[0].stride_;
-  const std::uint8_t* rgb24str   = U3_CAST_REINTERPRET< const std::uint8_t* > (rgb24);
-  float               sh         = 0.0f;
-  float               ss         = 0.0f;
-  float               sl         = 0.0f;
+  const auto*         rgb24str   = ::libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (rgb24);
+  float               sh         = 0.0F;
+  float               ss         = 0.0F;
+  float               sl         = 0.0F;
 
   for (std::uint32_t indxy = 0; indxy < height; ++indxy)
   {
@@ -98,18 +98,18 @@ rgb24_to_hsl_alu (::libs::optim::io::MCallInfo& info)
     {
       rgb2hsl (rgb24str[2], rgb24str[1], rgb24str[0], sh, ss, sl);
 
-      h[indxx] = ::libs::helpers::utils::ret_check_bound< std::int16_t > (sh * 255.0f, 0, 255);
-      s[indxx] = ::libs::helpers::utils::ret_check_bound< std::int16_t > (ss * 255.0f, 0, 255);
-      l[indxx] = ::libs::helpers::utils::ret_check_bound< std::int16_t > (sl * 255.0f, 0, 255);
+      h[indxx] = ::libs::helpers::utils::ret_check_bound< std::int16_t > (sh * 255.0F, 0, 255);
+      s[indxx] = ::libs::helpers::utils::ret_check_bound< std::int16_t > (ss * 255.0F, 0, 255);
+      l[indxx] = ::libs::helpers::utils::ret_check_bound< std::int16_t > (sl * 255.0F, 0, 255);
 
       rgb24str += 3 * ppc;
     }
 
     rgb24str += leak_rgb;
 
-    U3_FAST_MOVE_PTR (h, stride_hsl);
-    U3_FAST_MOVE_PTR (s, stride_hsl);
-    U3_FAST_MOVE_PTR (l, stride_hsl);
+    h = ::libs::helpers::mem::move_ptr (h, stride_hsl);
+    s = ::libs::helpers::mem::move_ptr (s, stride_hsl);
+    l = ::libs::helpers::mem::move_ptr (l, stride_hsl);
   }
 }
 }   // namespace libs::optim::s16bit::convert::hsl_vs_rgb

@@ -12,9 +12,7 @@
 
 namespace dlls::sources::fake_vgen
 {
-SourceImpl::SourceImpl () :
-  indx_bcomp_ (0),
-  counter_frames_ (0)
+SourceImpl::SourceImpl ()
 {
   fill_rand_vals ();
   init_gen_funcs ();

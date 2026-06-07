@@ -11,7 +11,7 @@
 
 namespace libs::optim::s16bit::gen::matrix1
 {
-#if 0
+#ifdef U3_FAKE_DISABLE
 inline bool
 check (::libs::optim::io::MCallInfo& info)
 {

@@ -13,20 +13,19 @@ namespace libs::ievents::runtime::control
 {
 template< class Archive >
 void
-SyncObjsGroup::serialize (Archive& ar, const std::uint32_t /* file_version */)
+SyncObjsGroup::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (time_);
-  // ar& BOOST_SERIALIZATION_NVP (time_point_);
-  ar& BOOST_SERIALIZATION_NVP (action_);
+  arh& BOOST_SERIALIZATION_NVP (time_);
+  // arh& BOOST_SERIALIZATION_NVP (time_point_);
+  arh& BOOST_SERIALIZATION_NVP (action_);
 }
 
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const SyncObjsGroup& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const SyncObjsGroup& src)
 {
-#if 0
-  //? ? ?
-  jv = {
+#ifdef U3_FAKE_DISABLE
+  jvs = {
     { "time", src.time_ },
     { "time_point", src.time_point_ },
     { "action", src.action_ }
@@ -36,13 +35,13 @@ tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const SyncO
 
 
 SyncObjsGroup
-tag_invoke (::boost::json::value_to_tag< SyncObjsGroup >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< SyncObjsGroup >, const ::boost::json::value& jvs)
 {
   SyncObjsGroup ret;
-#if 0
-  ret.time_       = jv.at ("time").as_string ();
-  ret.time_point_ = ::libs::helpers::json::get_uint32 (jv.at ("time_point"));
-  ret.action_     = ::libs::helpers::json::get_uint32 (jv.at ("action"));
+#ifdef U3_FAKE_DISABLE
+  ret.time_       = jvs.at ("time").as_string ();
+  ret.time_point_ = ::libs::helpers::json::get_uint32 (jvs.at ("time_point"));
+  ret.action_     = ::libs::helpers::json::get_uint32 (jvs.at ("action"));
 #endif
   return ret;
 }

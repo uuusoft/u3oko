@@ -68,7 +68,7 @@ save_mem2file (
     return false;
   }
 
-  file.write (U3_CAST_REINTERPRET< char* > (buf->get ()), buf->get_data_size ());
+  file.write (::libs::helpers::casts::reinterpret_cast_helper< char* > (buf->get ()), buf->get_data_size ());
   return true;
 }
 

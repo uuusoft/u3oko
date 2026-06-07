@@ -21,13 +21,13 @@ struct TTDCT8x8_ALU {
   void
   operator() (std::int16_t* buf)
   {
-#if 0
-      std::int16_t tbuf[ 64 ];
+#ifdef U3_FAKE_DISABLE
+    std::int16_t tbuf[64];
 
-      std::copy( buf, buf + 64, tbuf );
-      alu_b8x8( tbuf );
-      volatile bool test = false;
-      test;
+    std::copy (buf, buf + 64, tbuf);
+    alu_b8x8 (tbuf);
+    volatile bool test = false;
+    test;
 
 #else
     alu_b8x8 (buf);

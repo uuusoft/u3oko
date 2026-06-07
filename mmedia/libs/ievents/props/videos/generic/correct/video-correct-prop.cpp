@@ -18,7 +18,7 @@ constexpr std::int32_t def = 0;
 
 namespace libs::ievents::props::videos::generic::correct
 {
-VideoCorrectProp::VideoCorrectProp (const Acessor& ph) :
+VideoCorrectProp::VideoCorrectProp (const Acessor& pha) :
   saturation_ { consts::def, false },
   bright_ { consts::def, false },
   contrast_ { consts::def, false },
@@ -34,11 +34,6 @@ VideoCorrectProp::VideoCorrectProp (const Acessor& ph) :
   hint_correct_impl_ (::libs::ievents::SelectorImpls::automatic)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-VideoCorrectProp::~VideoCorrectProp ()
-{
 }
 
 
@@ -94,7 +89,7 @@ VideoCorrectProp::save_json_int (::boost::json::object& obj) const
 void
 VideoCorrectProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (VideoCorrectProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< VideoCorrectProp > (src);
   super::copy_int (src);
 
   saturation_             = dsrc->saturation_;
@@ -115,22 +110,22 @@ VideoCorrectProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-VideoCorrectProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+VideoCorrectProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (saturation_);
-  ar& BOOST_SERIALIZATION_NVP (bright_);
-  ar& BOOST_SERIALIZATION_NVP (contrast_);
-  ar& BOOST_SERIALIZATION_NVP (sharp_);
-  ar& BOOST_SERIALIZATION_NVP (hue_);
-  ar& BOOST_SERIALIZATION_NVP (gamma_);
-  ar& BOOST_SERIALIZATION_NVP (white_balance_);
-  ar& BOOST_SERIALIZATION_NVP (exposure_);
-  ar& BOOST_SERIALIZATION_NVP (backlight_compensation_);
-  ar& BOOST_SERIALIZATION_NVP (gain_);
-  ar& BOOST_SERIALIZATION_NVP (adaptive_);
-  ar& BOOST_SERIALIZATION_NVP (short2byte_);
-  ar& BOOST_SERIALIZATION_NVP (hint_correct_impl_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (saturation_);
+  arh& BOOST_SERIALIZATION_NVP (bright_);
+  arh& BOOST_SERIALIZATION_NVP (contrast_);
+  arh& BOOST_SERIALIZATION_NVP (sharp_);
+  arh& BOOST_SERIALIZATION_NVP (hue_);
+  arh& BOOST_SERIALIZATION_NVP (gamma_);
+  arh& BOOST_SERIALIZATION_NVP (white_balance_);
+  arh& BOOST_SERIALIZATION_NVP (exposure_);
+  arh& BOOST_SERIALIZATION_NVP (backlight_compensation_);
+  arh& BOOST_SERIALIZATION_NVP (gain_);
+  arh& BOOST_SERIALIZATION_NVP (adaptive_);
+  arh& BOOST_SERIALIZATION_NVP (short2byte_);
+  arh& BOOST_SERIALIZATION_NVP (hint_correct_impl_);
 
   self_correct ();
 }

@@ -10,12 +10,12 @@ namespace dlls::gens::vgen_conv3_11
 {
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter {
   InfoFilter ();
-  virtual ~InfoFilter ();
+  virtual ~InfoFilter () = default;
 
   InfoFilter (const InfoFilter& src)            = delete;
   InfoFilter& operator= (const InfoFilter& src) = delete;
 
-  syn::VideoConvolutionProp::raw_ptr rprops_;   //< Настроенный указатель на свойства (для удобства)
+  syn::VideoConvolutionProp::raw_ptr rprops_ = nullptr;   //< Настроенный указатель на свойства (для удобства)
 
   protected:
   virtual bool load_int (const ::pugi::xml_named_node_iterator& node) override;

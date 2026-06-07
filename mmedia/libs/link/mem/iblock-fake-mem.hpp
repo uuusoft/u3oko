@@ -14,12 +14,7 @@ class IBlockFakeMem
   // ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IBlockFakeMem)
 
-  IBlockFakeMem ()
-  {
-  }
-
-  virtual ~IBlockFakeMem ()
-  {
-  }
+  IBlockFakeMem ()          = default;
+  virtual ~IBlockFakeMem () = default;
 };
 }   // namespace libs::link::mem

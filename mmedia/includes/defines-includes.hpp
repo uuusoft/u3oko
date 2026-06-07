@@ -6,9 +6,6 @@
 \project    u3_includes
 \brief      Базовые определения для включения во все файлы сборки
 */
-#include "../defines/casts/memory-casts-defines.hpp"
-#include "../defines/casts/numeric-casts-defines.hpp"
-
 #include "../defines/defines_tstring.hpp"
 
 #include "../defines/logs/xlog-trace-defines.hpp"

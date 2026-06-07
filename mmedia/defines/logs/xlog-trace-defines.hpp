@@ -10,11 +10,11 @@
 #  ifdef U3_OS_ANDROID
 #    define U3_XLOG_XXX_IMPL(u3def_mark, u3def_param) ::android::log::android_log_write_helper (ANDROID_LOG_INFO, U3_FILE_LOG_TAG, std::string (u3def_param).c_str ());
 #  else
-#    define U3_XLOG_XXX_IMPL(u3def_mark, u3def_param) std::cout << u3def_mark << "." << U3_FILE_LOG_TAG << "| " << (u3def_param) << std::endl;
+#    define U3_XLOG_XXX_IMPL(u3def_mark, u3def_param) std::cout << u3def_mark << "." << U3_FILE_LOG_TAG << "| " << (u3def_param) << '\n';
 #  endif
 #endif
 
-#if defined(U3_CNTRL_DISABLED_CONSOLE_LOG)
+#ifdef U3_CNTRL_DISABLED_CONSOLE_LOG
 #  ifndef U3_XLOG_DEV
 #    define U3_XLOG_DEV(u3def_param)
 #  endif

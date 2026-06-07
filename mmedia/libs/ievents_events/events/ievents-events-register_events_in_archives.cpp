@@ -14,11 +14,11 @@ namespace libs::ievents_events::events
 void
 register_events_in_archives ()
 {
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents_events::events::BaseEventsEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents_events::events::WrapperEventsEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents_events::events::AddEvent2Base);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents_events::events::GetEventsFromBase);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents_events::events::UpdateListener);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents_events::events::GetDataGraphsFromEventBase);
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents_events::events::BaseEventsEvent > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents_events::events::WrapperEventsEvent > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents_events::events::AddEvent2Base > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents_events::events::GetEventsFromBase > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents_events::events::UpdateListener > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents_events::events::GetDataGraphsFromEventBase > ();
 }
 }   // namespace libs::ievents_events::events

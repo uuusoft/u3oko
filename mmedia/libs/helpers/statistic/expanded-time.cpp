@@ -29,20 +29,20 @@ ExpandedTime::operator+= (const ExpandedTime& val)
 
 template< class Archive >
 void
-ExpandedTime::serialize (Archive& ar, const std::uint32_t /* file_version */)
+ExpandedTime::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (min_);
-  ar& BOOST_SERIALIZATION_NVP (max_);
-  ar& BOOST_SERIALIZATION_NVP (sum_);
-  ar& BOOST_SERIALIZATION_NVP (count_);
+  arh& BOOST_SERIALIZATION_NVP (min_);
+  arh& BOOST_SERIALIZATION_NVP (max_);
+  arh& BOOST_SERIALIZATION_NVP (sum_);
+  arh& BOOST_SERIALIZATION_NVP (count_);
 }
 
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const NodeID& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const NodeID& src)
 {
-  jv = {
+  jvs = {
     { "id_node_name", ::boost::json::value_from (src.get_name ()) },
     { "id_node_name_dll", ::boost::json::value_from (src.get_name_dll ()) }
   };
@@ -50,24 +50,23 @@ tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const NodeI
 
 
 NodeID
-tag_invoke (::boost::json::value_to_tag< NodeID >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< NodeID >, const ::boost::json::value& jvs)
 {
-  NodeID                   ret;
-  const ::boost::json::object& obj = jv.as_object ();
+  NodeID                       ret;
+  const ::boost::json::object& obj = jvs.as_object ();
   ::libs::helpers::json::extract (obj, ret.update_name (), "id_node_name");
   ::libs::helpers::json::extract (obj, ret.update_name_dll (), "id_node_name_dll");
   return ret;
 }
 
 
-
 void
 tag_invoke (
   ::boost::json::value_from_tag,
-  ::boost::json::value& jv,
+  ::boost::json::value& jvs,
   const EventBufsInfo&  src)
 {
-  jv = {
+  jvs = {
     { "indx_sbuf", src.indx_sbuf_ },
     { "indx_dbuf", src.indx_dbuf_ }
   };
@@ -77,10 +76,10 @@ tag_invoke (
 EventBufsInfo
 tag_invoke (
   ::boost::json::value_to_tag< EventBufsInfo >,
-  const ::boost::json::value& jv)
+  const ::boost::json::value& jvs)
 {
   EventBufsInfo                ret;
-  const ::boost::json::object& obj = jv.as_object ();
+  const ::boost::json::object& obj = jvs.as_object ();
 
   ret.indx_sbuf_ = obj.at ("indx_sbuf").as_string ();
   ret.indx_dbuf_ = obj.at ("indx_dbuf").as_string ();
@@ -90,24 +89,24 @@ tag_invoke (
 void
 tag_invoke (
   ::boost::json::value_from_tag,
-  ::boost::json::value& jv,
+  ::boost::json::value& jvs,
   const TimePoint&      src)
 {
-  jv = { "time", std::chrono::system_clock::to_time_t (src.get_time ()) };
+  jvs = { "time", std::chrono::system_clock::to_time_t (src.get_time ()) };
 }
 
 
 TimePoint
 tag_invoke (
   ::boost::json::value_to_tag< TimePoint >,
-  const ::boost::json::value& jv)
+  const ::boost::json::value& jvs)
 {
-  const auto      raw_time = ::libs::helpers::json::get_int64 (jv.at ("time"));
+  const auto      raw_time = ::libs::helpers::json::get_int64 (jvs.at ("time"));
   const TimePoint ret (::std::chrono::system_clock::from_time_t (raw_time));
   return ret;
 }
 
-  // return U3_CAST_STATIC< ExpandedTime > (::libs::helpers::json::get_uint32 (jv));
+// return ::libs::helpers::casts::static_cast_helper< ExpandedTime > (::libs::helpers::json::get_uint32 (jvs));
 
 #endif
 

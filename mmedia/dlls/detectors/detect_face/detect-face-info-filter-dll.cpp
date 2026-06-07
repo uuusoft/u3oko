@@ -4,8 +4,6 @@
 \date       01.05.2018
 \project    u3_detect_face
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "detect-face-includes_int.hpp"
 #include "detect-face-info-filter-dll.hpp"
 #include "detect-face-filter-dll.hpp"
@@ -16,11 +14,6 @@ InfoFilter::InfoFilter () :
   rprops_ (nullptr)
 {
   init ();
-}
-
-
-InfoFilter::~InfoFilter ()
-{
 }
 
 

@@ -23,7 +23,7 @@ class IMemBuf : public IBuf
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IMemBuf)
 
-  virtual ~IMemBuf ();
+  virtual ~IMemBuf () = default;
 
   IMemBuf (const IMemBuf& _rsc)           = delete;
   IMemBuf& operator= (const IMemBuf& src) = delete;
@@ -61,11 +61,11 @@ class IMemBuf : public IBuf
   void ialloc (const mem_type& size);
   void flush ();
 
-  IMemBuf ();
+  IMemBuf () = default;
 
   private:
-  mutable ::libs::helpers::mem::IBlockMem::ptr raw_;         //<
-  mem_vars_type                                mem_vars_;    //<
-  fragments_type                               fragments_;   //<
+  mutable ::libs::helpers::mem::IBlockMem::ptr raw_ = nullptr;   //<
+  mem_vars_type                                mem_vars_;        //<
+  fragments_type                               fragments_;       //<
 };
 }   // namespace utils::dbufs

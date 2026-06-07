@@ -26,7 +26,7 @@ class UpdateStream : public BaseStorageEvent
   U3_HELPER_DISABLE_ACOPY_TYPE (UpdateStream)
 
   explicit UpdateStream (const Acessor& = Acessor (0));
-  virtual ~UpdateStream ();
+  virtual ~UpdateStream () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -51,7 +51,7 @@ class UpdateStream : public BaseStorageEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
 };

@@ -11,16 +11,6 @@
 
 namespace utils::dbufs
 {
-IMemBuf::IMemBuf ()
-{
-}
-
-
-IMemBuf::~IMemBuf ()
-{
-}
-
-
 void
 IMemBuf::ialloc (const mem_type& size)
 {
@@ -119,7 +109,7 @@ IMemBuf::clone_int (IBuf::craw_ptr isrc, float percent)
 
   ialloc ((*src)[MemVars::size_buf]);
 
-  if (percent <= 0.0f)
+  if (percent <= 0.0F)
   {
     mem_vars_[MemVars::size_data] = 0;
     return;

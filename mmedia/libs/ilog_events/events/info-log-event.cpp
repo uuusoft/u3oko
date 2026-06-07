@@ -24,11 +24,6 @@ InfoLogEvent::InfoLogEvent (
 }
 
 
-InfoLogEvent::~InfoLogEvent ()
-{
-}
-
-
 const AppllPartLogInfo&
 InfoLogEvent::get_appl_info () const
 {
@@ -95,7 +90,7 @@ InfoLogEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 InfoLogEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (InfoLogEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< InfoLogEvent > (src);
   super::copy_int (src);
 
   appl_ = dsrc->appl_;
@@ -106,12 +101,12 @@ InfoLogEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-InfoLogEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+InfoLogEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoilog_eventsoeventsoBaseLogEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (appl_);
-  ar& BOOST_SERIALIZATION_NVP (info_);
-  ar& BOOST_SERIALIZATION_NVP (time_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoilog_eventsoeventsoBaseLogEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (appl_);
+  arh& BOOST_SERIALIZATION_NVP (info_);
+  arh& BOOST_SERIALIZATION_NVP (time_);
 
   self_correct ();
 }

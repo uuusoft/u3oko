@@ -31,7 +31,7 @@ class Vec2ImageProp final : public ::libs::ievents::Event
     const Acessor&            = Acessor (0),
     const vec_bufs_type& bufs = { EventBufsInfoVec2Image1 (::utils::dbufs::video::consts::offs::temp1, ::utils::dbufs::video::consts::offs::lit) });
 
-  virtual ~Vec2ImageProp ();
+  virtual ~Vec2ImageProp () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -48,7 +48,7 @@ class Vec2ImageProp final : public ::libs::ievents::Event
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
   virtual void                        load_json_int (const ::boost::json::object& obj) override;

@@ -58,9 +58,7 @@ struct TTParams {
 
 
 struct TEmptyPostProcessor final {
-  TEmptyPostProcessor ()
-  {
-  }
+  TEmptyPostProcessor () = default;
 
   void
   update (
@@ -75,9 +73,7 @@ struct TEmptyPostProcessor final {
 
 
 struct TPostProcessor final {
-  TPostProcessor ()
-  {
-  }
+  TPostProcessor () = default;
 
   void
   update (
@@ -140,13 +136,13 @@ move_alg (::libs::optim::io::MCallInfo& info)
     for (std::uint32_t indxx = 0; indxx < width; indxx += count_ppc)
     {
       const std::int16_t* csstr = sstr + indxx - hmsize;
-      U3_FAST_MOVE_CPTR_BACK (csstr, move_size);
+      csstr                     = ::libs::helpers::mem::move_cptr_back (csstr, move_size);
       calcs.get_res (mul_koeff, csstr, mask, stride, tres, dstr + indxx);
       post_obj.update (mul_koeff, count_ppc, indxx, tres, dstr);
     }
 
-    U3_FAST_MOVE_CPTR (sstr, stride);
-    U3_FAST_MOVE_PTR (dstr, stride);
+    sstr = ::libs::helpers::mem::move_cptr (sstr, stride);
+    dstr = ::libs::helpers::mem::move_ptr (dstr, stride);
   }
 }
 }   // namespace libs::optim::s16bit::conv

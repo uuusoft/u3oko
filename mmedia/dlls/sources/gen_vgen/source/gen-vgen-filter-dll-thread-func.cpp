@@ -16,7 +16,7 @@ namespace dlls::sources::gen_vgen
 void
 Filter::thread_func_impl (std::uint32_t indx_thread)
 {
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
   U3_CHECK (SUCCEEDED (CoInitializeEx (0, COINIT_MULTITHREADED)), "CoInitializeEx");   //  данная подсистема (COM) нужна, пока я использую DirectShow источники данных в адресном пространстве процесса под Win32
 #endif
 

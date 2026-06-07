@@ -30,11 +30,11 @@ struct BuffVideoConvolutionProp final : public ::libs::events::buf::EventBufsInf
     const std::int32_t                        core_koeff       = 0,
     const bool                                use_module       = false);
 
-  Convs                       convolution_type_;   //<
-  std::int32_t                core_size_;          //<
-  std::vector< std::int16_t > core_vals_;          //<
-  std::int32_t                core_koeff_;         //<
-  bool                        use_module_;         //<
+  Convs                       convolution_type_ = Convs::skip;   //<
+  std::int32_t                core_size_        = 5;             //<
+  std::int32_t                core_koeff_       = 0;             //<
+  bool                        use_module_       = false;         //<
+  std::vector< std::int16_t > core_vals_;                        //<
 
   protected:
   virtual void check_int () override;
@@ -46,11 +46,11 @@ struct BuffVideoConvolutionProp final : public ::libs::events::buf::EventBufsInf
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
-void                     tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const BuffVideoConvolutionProp& src);
-BuffVideoConvolutionProp tag_invoke (::boost::json::value_to_tag< BuffVideoConvolutionProp >, const ::boost::json::value& jv);
+void                     tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const BuffVideoConvolutionProp& src);
+BuffVideoConvolutionProp tag_invoke (::boost::json::value_to_tag< BuffVideoConvolutionProp >, const ::boost::json::value& jvs);
 }   // namespace libs::ievents::props::videos::generic::convolution
 
 BOOST_CLASS_EXPORT_KEY (::libs::ievents::props::videos::generic::convolution::BuffVideoConvolutionProp);

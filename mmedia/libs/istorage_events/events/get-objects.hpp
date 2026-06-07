@@ -26,7 +26,7 @@ class GetObjects : public BaseStorageEvent
   U3_HELPER_DISABLE_ACOPY_TYPE (GetObjects)
 
   explicit GetObjects (const Acessor& = Acessor (0));
-  virtual ~GetObjects ();
+  virtual ~GetObjects () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -35,7 +35,7 @@ class GetObjects : public BaseStorageEvent
     return ret;
   }
 
-  path_id_type                id_path_;   //<
+  path_id_type                path_id_;   //<
   std::vector< TypeObjectId > objs_;      //<
 
   protected:
@@ -49,7 +49,7 @@ class GetObjects : public BaseStorageEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   //  ievents::Event overrides
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;

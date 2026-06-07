@@ -26,7 +26,7 @@ dump_buf2file (const ::utils::dbufs::video::IVideoBuf::raw_ptr out_buf, const st
   }
 
   const char*   write_data   = ::utils::dbufs::video::helpers::get_const_buf_as< const char* > (out_buf);
-  auto          head         = U3_CAST_CODECS< const ::dlls::codecs::codec_gen::HeaderIFrame* > (write_data);
+  const auto*   head         = U3_CAST_CODECS< const ::dlls::codecs::codec_gen::HeaderIFrame* > (write_data);
   const char*   sdata        = write_data + head->base_part_.size_;
   const char*   cdata        = sdata + head->coff_;
   std::uint32_t src_size_res = head->csize_;

@@ -1,5 +1,5 @@
 /**
-\file       mem_funcs.cpp
+\file       mem_alloc_funcs.cpp
 \brief      функции работы с памятью
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.07.2016
@@ -28,19 +28,19 @@ afree (void** pptr)
     return;
   }
 
-  const std::size_t _int_ptr = U3_CAST_REINTERPRET< std::size_t > (*pptr);
-  const std::size_t offset   = *U3_CAST_REINTERPRET< std::uint8_t* > (_int_ptr - 1);
+  const auto vptr   = ::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (*pptr);
+  const auto offset = *::libs::helpers::casts::reinterpret_cast_helper< std::uint8_t* > (vptr - 1);
 
   if ((0 == offset) || (offset > consts::count_add_blocks * consts::size_align))
   {
-    U3_XLOG_ERROR ("FAILED GET BLOCK MEMORY FOR CORRECT FREE " + VTOLOG (offset) + VTOLOG (consts::count_add_blocks * consts::size_align));
+    U3_XLOG_ERROR ("failed get block memory for free" + VTOLOG (offset) + VTOLOG (consts::count_add_blocks * consts::size_align));
     free (*pptr);
   }
   else
   {
-    U3_ASSERT_NT (_int_ptr > offset, VTOLOG (_int_ptr) + VTOLOG (offset));
-    void* _real_ptr = U3_CAST_REINTERPRET< void* > (_int_ptr - offset);
-    free (_real_ptr);
+    U3_ASSERT_NT (vptr > offset, VTOLOG (vptr) + VTOLOG (offset));
+    auto* real_ptr = ::libs::helpers::casts::reinterpret_cast_helper< void* > (vptr - offset);
+    free (real_ptr);
   }
 
   *pptr = nullptr;
@@ -61,31 +61,31 @@ aalloc (void** pptr, const std::size_t size)
   U3_ASSERT_NT (nullptr == *pptr, PTR_TOLOG (*pptr));
   *pptr = nullptr;
 
-  const std::size_t _real_size   = size + consts::count_add_blocks * consts::size_align;
-  std::uint8_t      offset       = 0;
-  void*             _raw_ptr     = malloc (_real_size);
-  const std::size_t _int_raw_ptr = U3_CAST_REINTERPRET< std::size_t > (_raw_ptr);
+  const std::size_t real_size   = size + consts::count_add_blocks * consts::size_align;
+  std::uint8_t      offset      = 0;
+  void*             raw_ptr     = malloc (real_size);
+  const auto        int_raw_ptr = ::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (raw_ptr);
 
-  if (nullptr == _raw_ptr)
+  if (nullptr == raw_ptr)
   {
-    U3_ASSERT_SIGNAL_NT ("FAILED ALLOC MEMORY" + VTOLOG (_real_size) + VTOLOG (size));
+    U3_ASSERT_SIGNAL_NT ("failed alloc memory" + VTOLOG (real_size) + VTOLOG (size));
     return;
   }
 
-  *pptr  = U3_CAST_REINTERPRET< void* > ((_int_raw_ptr + 2 * consts::size_align) & ::libs::helpers::mem::consts::align_ptr64);
-  offset = U3_CAST_UINT8 (U3_CAST_REINTERPRET< std::size_t > (*pptr) - _int_raw_ptr);
+  *pptr  = ::libs::helpers::casts::reinterpret_cast_helper< void* > ((int_raw_ptr + 2 * consts::size_align) & ::libs::helpers::mem::consts::align_ptr64);
+  offset = U3_CAST_UINT8 (::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (*pptr) - int_raw_ptr);
 
   if (offset < 1)
   {
-    U3_ASSERT_SIGNAL_NT ("FAILED OFFSET ALLOCATED MEMORY" + VTOLOG (offset) + VTOLOG (_real_size));
-    free (_raw_ptr);
-    _raw_ptr = nullptr;
-    *pptr    = nullptr;
+    U3_ASSERT_SIGNAL_NT ("FAILED OFFSET ALLOCATED MEMORY" + VTOLOG (offset) + VTOLOG (real_size));
+    free (raw_ptr);
+    raw_ptr = nullptr;
+    *pptr   = nullptr;
   }
   else
   {
-    *U3_CAST_REINTERPRET< std::uint8_t* > ((U3_CAST_REINTERPRET< std::size_t > (*pptr)) - 1) = offset;
-    *U3_CAST_REINTERPRET< std::size_t* > (_raw_ptr)                                          = size;
+    *::libs::helpers::casts::reinterpret_cast_helper< std::uint8_t* > ((::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (*pptr)) - 1) = offset;
+    *::libs::helpers::casts::reinterpret_cast_helper< std::size_t* > (raw_ptr)                                                                       = size;
   }
 }
 
@@ -113,29 +113,29 @@ arealloc (void** pptr, const std::size_t size)
     return;
   }
 
-  void*       _new_ptr  = nullptr;
+  void*       new_ptr   = nullptr;
   std::size_t size_copy = 0;
 
-  aalloc (&_new_ptr, size);
+  aalloc (&new_ptr, size);
 
-  if (!_new_ptr)
+  if (!new_ptr)
   {
     U3_ASSERT_SIGNAL_NT ("FAILED AALLOC FUNCT" + VTOLOG (size));
     afree (pptr);
     return;
   }
 
-  const std::size_t _int_ptr  = U3_CAST_REINTERPRET< std::size_t > (*pptr);
-  std::uint8_t      offset    = *U3_CAST_REINTERPRET< std::uint8_t* > (_int_ptr - 1);
-  void*             _real_ptr = U3_CAST_REINTERPRET< void* > (_int_ptr - offset);
-  const std::size_t _old_size = *U3_CAST_REINTERPRET< std::size_t* > (_real_ptr);
+  const auto vptr     = ::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (*pptr);
+  auto       offset   = *::libs::helpers::casts::reinterpret_cast_helper< std::uint8_t* > (vptr - 1);
+  auto*      real_ptr = ::libs::helpers::casts::reinterpret_cast_helper< void* > (vptr - offset);
+  const auto old_size = *::libs::helpers::casts::reinterpret_cast_helper< std::size_t* > (real_ptr);
 
-  size_copy = _old_size - offset;
+  size_copy = old_size - offset;
   size_copy = size_copy > size ? size : size_copy;
 
-  memcpy (_new_ptr, *pptr, size_copy);
+  memcpy (new_ptr, *pptr, size_copy);
 
   afree (pptr);
-  *pptr = _new_ptr;
+  *pptr = new_ptr;
 }
 }   // namespace utils::mem_funcs::details

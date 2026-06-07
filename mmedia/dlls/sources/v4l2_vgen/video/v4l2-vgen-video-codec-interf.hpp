@@ -6,7 +6,7 @@
 \project    u3_v4l2_vgen
 */
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 namespace dlls::sources::v4l2_vgen::video
 {
 class VideoCodecInterf : public ::libs::ievents::runtime::interf::interfaces::ICodecImage

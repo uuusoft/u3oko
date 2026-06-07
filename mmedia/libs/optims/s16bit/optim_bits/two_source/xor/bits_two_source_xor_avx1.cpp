@@ -11,7 +11,7 @@
 #include "../bits_two_source_move_alg.hpp"
 #include "bits_two_source_xor_ops.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::bits::two_source::xor_op
 {

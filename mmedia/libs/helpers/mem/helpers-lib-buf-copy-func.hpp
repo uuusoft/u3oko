@@ -27,8 +27,8 @@ buf_copy (
   for (std::int32_t indxy = 0; indxy < min_height; ++indxy)
   {
     u3copy (src, dst, U3_CAST_SIZE_T (min_stride));
-    U3_FAST_MOVE_CPTR (src, sstride);
-    U3_FAST_MOVE_PTR (dst, dstride);
+    src = ::libs::helpers::mem::move_cptr (src, sstride);
+    dst = ::libs::helpers::mem::move_ptr (dst, dstride);
   }
 }
 }   // namespace libs::helpers::mem

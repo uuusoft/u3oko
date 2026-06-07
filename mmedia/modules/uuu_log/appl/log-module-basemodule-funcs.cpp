@@ -72,7 +72,7 @@ LogModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     links.set (libs::properties::vers::links::mids::log2appl, log2appl);
     logger_ = log2appl;
   }
-#if 0
+#ifdef U3_FAKE_DISABLE
   {
     syn::IEvent::ptr rmsg;
     auto             props = ::libs::iproperties::helpers::create_event< syn::ChangDShowRunsSubSysLogEvent > (rmsg);
@@ -85,7 +85,7 @@ LogModule::init_links_int (const ::libs::link::appl::InitApplication& info)
       "");
 
     props->set_start (true);
-    links_.get(libs::properties::vers::links::mids::mdata2appl)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+    links_.get (libs::properties::vers::links::mids::mdata2appl)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
   }
 #endif
 }
@@ -97,8 +97,8 @@ LogModule::appl_deinit_int ()
   U3_XLOG_MARK ("LogModule::deinit_int begin")
   flush_events ();
 
-#if 0
-  if (links_.get(libs::properties::vers::links::mids::mdata2appl))
+#ifdef U3_FAKE_DISABLE
+  if (links_.get (libs::properties::vers::links::mids::mdata2appl))
   {
     syn::IEvent::ptr rmsg;
     auto             props = ::libs::iproperties::helpers::create_event< syn::ChangDShowRunsSubSysLogEvent > (rmsg);
@@ -111,7 +111,7 @@ LogModule::appl_deinit_int ()
       "");
 
     props->set_start (false);
-    links_.get(libs::properties::vers::links::mids::mdata2appl)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+    links_.get (libs::properties::vers::links::mids::mdata2appl)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
   }
 #endif
   {
@@ -131,63 +131,63 @@ LogModule::update_catch_funcs_int ()
   super::update_catch_funcs_int ();
 
   catch_funcs_[syn::InfoLogEvent::gen_get_mid ()] =
-    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
-      if (forward)
-      {
-        auto props = ::libs::iproperties::helpers::cast_event< syn::InfoLogEvent > (msg);
-        U3_ASSERT (props);
-        process_info_log (props, msg);
-        return syn::IEvent::ptr ();
-      }
-      return msg;
-    };
+    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      auto props = ::libs::iproperties::helpers::cast_event< syn::InfoLogEvent > (msg);
+      U3_ASSERT (props);
+      process_info_log (props, msg);
+      return syn::IEvent::ptr ();
+    }
+    return msg;
+  };
 
   catch_funcs_[syn::PropertyLogModuleEvent::gen_get_mid ()] =
-    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
-      if (forward)
-      {
-        auto props = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (msg);
-        U3_ASSERT (props);
-        process_property_log_module (props);
-        return syn::IEvent::ptr ();
-      }
-      return msg;
-    };
+    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      auto props = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (msg);
+      U3_ASSERT (props);
+      process_property_log_module (props);
+      return syn::IEvent::ptr ();
+    }
+    return msg;
+  };
 
   catch_funcs_[syn::ChangeStateProcessEvent::gen_get_mid ()] =
-    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
-      if (forward)
-      {
-        auto props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
-        U3_ASSERT (props);
-        process_change_state_process (props);
-        return syn::IEvent::ptr ();
-      }
-      return msg;
-    };
+    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      auto props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
+      U3_ASSERT (props);
+      process_change_state_process (props);
+      return syn::IEvent::ptr ();
+    }
+    return msg;
+  };
 
   catch_funcs_[syn::ProcessListLogsEvent::gen_get_mid ()] =
-    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
-      if (forward)
-      {
-        auto props = ::libs::iproperties::helpers::cast_event< syn::ProcessListLogsEvent > (msg);
-        U3_ASSERT (props);
-        process_list_logs (props);
-        return syn::IEvent::ptr ();
-      }
-      return msg;
-    };
+    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      auto props = ::libs::iproperties::helpers::cast_event< syn::ProcessListLogsEvent > (msg);
+      U3_ASSERT (props);
+      process_list_logs (props);
+      return syn::IEvent::ptr ();
+    }
+    return msg;
+  };
 
   catch_funcs_[syn::ProcessLogEvent::gen_get_mid ()] =
-    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
-      if (forward)
-      {
-        auto props = ::libs::iproperties::helpers::cast_event< syn::ProcessLogEvent > (msg);
-        U3_ASSERT (props);
-        process_log (props);
-        return syn::IEvent::ptr ();
-      }
-      return msg;
-    };
+    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      auto props = ::libs::iproperties::helpers::cast_event< syn::ProcessLogEvent > (msg);
+      U3_ASSERT (props);
+      process_log (props);
+      return syn::IEvent::ptr ();
+    }
+    return msg;
+  };
 }
 }   // namespace modules::uuu_log::appl

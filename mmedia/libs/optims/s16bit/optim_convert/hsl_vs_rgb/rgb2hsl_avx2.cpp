@@ -11,7 +11,7 @@
 #include "hsl_vs_rgb.hpp"
 #include "rgb_to_hsl_int.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::convert::hsl_vs_rgb
 {
@@ -43,7 +43,7 @@ rgb24_to_hsl_avx2 (::libs::optim::io::MCallInfo& info)
   {
     for (std::uint32_t indxx = 0; indxx < width; indxx += ppc)
     {
-      __m256i i256_1 = _mm256_loadu_si256 (U3_CAST_REINTERPRET< const __m256i* > (rgb24));   // BOG0R0 B1G1R1 B2G2R2 B3G3R3 B4G4R4 B5G5R5 B6G6R6 B7G7R7
+      __m256i i256_1 = _mm256_loadu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (rgb24));   // BOG0R0 B1G1R1 B2G2R2 B3G3R3 B4G4R4 B5G5R5 B6G6R6 B7G7R7
 
       SPLIT_RGB24_AVX2 (i256_1, ir8, ig8, ib8);
 
@@ -52,7 +52,7 @@ rgb24_to_hsl_avx2 (::libs::optim::io::MCallInfo& info)
       __m256 temp_g = _mm256_cvtepi32_ps (ig8);
       __m256 temp_b = _mm256_cvtepi32_ps (ib8);
 
-      // normalization from 0..255 to 0.0f..1.0f;
+      // normalization from 0..255 to 0.0F..1.0F;
       temp_r = _mm256_mul_ps (temp_r, const_1_to_255);
       temp_g = _mm256_mul_ps (temp_g, const_1_to_255);
       temp_b = _mm256_mul_ps (temp_b, const_1_to_255);
@@ -70,7 +70,7 @@ rgb24_to_hsl_avx2 (::libs::optim::io::MCallInfo& info)
       // max_min = max + var_Min;
       const __m256 max_min = _mm256_add_ps (var_min, max);
 
-      // L = ( max + var_Min ) / 2.0f;
+      // L = ( max + var_Min ) / 2.0F;
       __m256 l8 = _mm256_mul_ps (const_1_to_2, max_min);
 
       // float delta_max = max - var_Min; Delta RGB value
@@ -78,19 +78,19 @@ rgb24_to_hsl_avx2 (::libs::optim::io::MCallInfo& info)
 
       // if ( delta_max == 0 )  This is a gray, no chroma...
       //{
-      //   H = 0.0f;       HSL results = 0 ? 1
-      //   S = 0.0f;
+      //   H = 0.0F;       HSL results = 0 ? 1
+      //   S = 0.0F;
       // }
       // else            Chromatic data...
       __m256 temp1 = _mm256_cmp_ps (const_0, old_delta_max, 0);
       __m256 temp2 = _mm256_and_ps (temp1, const_1);
 
-      // add 1.0f for distance from 0.0;
+      // add 1.0F for distance from 0.0;
       const __m256 delta_max      = _mm256_add_ps (old_delta_max, temp2);
       const __m256 half_delta_max = _mm256_mul_ps (const_1_to_2, delta_max);
 
       // if ( L < 0.5f ) S = delta_max / ( max + var_Min );
-      // else            S = delta_max / ( 2.0f - ( max + var_Min) );
+      // else            S = delta_max / ( 2.0F - ( max + var_Min) );
       __m256 temp4 = _mm256_div_ps (delta_max, max_min);   // RES S
       __m256 s8    = _mm256_sub_ps (const_2, max_min);
 
@@ -104,33 +104,33 @@ rgb24_to_hsl_avx2 (::libs::optim::io::MCallInfo& info)
 
       const __m256 inv_delta_max = _mm256_rcp_ps (delta_max);
 
-      // float delta_r = ( ( ( max - var_R ) / 6.0f ) + ( delta_max / 2.0f ) ) / delta_max;
+      // float delta_r = ( ( ( max - var_R ) / 6.0F ) + ( delta_max / 2.0F ) ) / delta_max;
       //  1.( max - var_R );
-      //  2.( max - var_R ) / 6.0f;
-      //  3.( delta_max / 2.0f )
-      //  4.( ( max - var_R ) / 6.0f ) + ( delta_max / 2.0f ) )
+      //  2.( max - var_R ) / 6.0F;
+      //  3.( delta_max / 2.0F )
+      //  4.( ( max - var_R ) / 6.0F ) + ( delta_max / 2.0F ) )
       //  5.end
       __m256 delta_r = _mm256_sub_ps (max, temp_r);
       delta_r        = _mm256_mul_ps (delta_r, const_1_to_6);
       delta_r        = _mm256_add_ps (delta_r, half_delta_max);
       delta_r        = _mm256_mul_ps (delta_r, inv_delta_max);
 
-      // float delta_g = ( ( ( max - var_G ) / 6.0f ) + ( delta_max / 2.0f ) ) / delta_max;
+      // float delta_g = ( ( ( max - var_G ) / 6.0F ) + ( delta_max / 2.0F ) ) / delta_max;
       //  1.( max - var_G )
-      //  2.( max - var_G ) / 6.0f
-      //  3.( delta_max / 2.0f )
-      //  4.( ( max - var_G ) / 6.0f ) + ( delta_max / 2.0f ) )
+      //  2.( max - var_G ) / 6.0F
+      //  3.( delta_max / 2.0F )
+      //  4.( ( max - var_G ) / 6.0F ) + ( delta_max / 2.0F ) )
       //  5.end
       __m256 delta_g = _mm256_sub_ps (max, temp_g);
       delta_g        = _mm256_mul_ps (delta_g, const_1_to_6);
       delta_g        = _mm256_add_ps (delta_g, half_delta_max);
       delta_g        = _mm256_mul_ps (delta_g, inv_delta_max);
 
-      // float delta_b = ( ( ( max - var_B ) / 6.0f ) + ( delta_max / 2.0f ) ) / delta_max;
+      // float delta_b = ( ( ( max - var_B ) / 6.0F ) + ( delta_max / 2.0F ) ) / delta_max;
       //  1.( max - var_B )
-      //  2.( max - var_B ) / 6.0f
-      //  3.( delta_max / 2.0f )
-      //  4.( ( max - var_B ) / 6.0f ) + ( delta_max / 2.0f ) )
+      //  2.( max - var_B ) / 6.0F
+      //  3.( delta_max / 2.0F )
+      //  4.( ( max - var_B ) / 6.0F ) + ( delta_max / 2.0F ) )
       //  5.end
       __m256 delta_b = _mm256_sub_ps (max, temp_b);
       delta_b        = _mm256_mul_ps (delta_b, const_1_to_6);
@@ -138,13 +138,13 @@ rgb24_to_hsl_avx2 (::libs::optim::io::MCallInfo& info)
       delta_b        = _mm256_mul_ps (delta_b, inv_delta_max);
 
       // if      ( var_R == max ) H = delta_b - delta_g;
-      // else if ( var_G == max ) H = ( 1.0f / 3.0f ) + delta_r - delta_b;
-      // else if ( var_B == max ) H = ( 2.0f / 3.0f ) + delta_g - delta_r;
+      // else if ( var_G == max ) H = ( 1.0F / 3.0F ) + delta_r - delta_b;
+      // else if ( var_B == max ) H = ( 2.0F / 3.0F ) + delta_g - delta_r;
       temp4 = delta_g;
-      // else if ( var_B == max ) H = ( 2.0f / 3.0f ) + delta_g - delta_r;
+      // else if ( var_B == max ) H = ( 2.0F / 3.0F ) + delta_g - delta_r;
       __m256 temp5 = _mm256_add_ps (const_2_to_3, temp4);
       temp5        = _mm256_sub_ps (temp5, delta_r);
-      // else if ( var_G == max ) H = ( 1.0f / 3.0f ) + delta_r - delta_b;
+      // else if ( var_G == max ) H = ( 1.0F / 3.0F ) + delta_r - delta_b;
       __m256 temp6 = _mm256_add_ps (const_1_to_3, delta_r);
       temp6        = _mm256_sub_ps (temp6, delta_b);   // RES H
       temp2        = temp_g;
@@ -166,13 +166,13 @@ rgb24_to_hsl_avx2 (::libs::optim::io::MCallInfo& info)
       temp5 = _mm256_and_ps (temp5, temp3);
       temp5 = _mm256_or_ps (temp5, temp6);
 
-      // if ( H < 0 ) H += 1.0f;
+      // if ( H < 0 ) H += 1.0F;
       temp3 = const_1;
       temp4 = temp5;
       temp4 = _mm256_cmp_ps (temp4, const_0, 1);
       temp3 = _mm256_and_ps (temp3, temp4);
       temp5 = _mm256_add_ps (temp5, temp3);
-      // if ( H > 1 ) H -= 1.0f;
+      // if ( H > 1 ) H -= 1.0F;
       temp4     = temp5;
       temp3     = const_1;
       temp3     = _mm256_cmp_ps (temp3, temp4, 1);
@@ -182,8 +182,8 @@ rgb24_to_hsl_avx2 (::libs::optim::io::MCallInfo& info)
 
       // if ( delta_max == 0 )  This is a gray, no chroma...
       //{
-      //   H = 0.0f;       HSL results = 0 ? 1
-      //   S = 0.0f;
+      //   H = 0.0F;       HSL results = 0 ? 1
+      //   S = 0.0F;
       // }
       // else            Chromatic data...
       temp2 = _mm256_setzero_ps ();
@@ -198,7 +198,7 @@ rgb24_to_hsl_avx2 (::libs::optim::io::MCallInfo& info)
       i256_2 = _mm256_permute2f128_si256 (i256_1, i256_1, 1);
       i256_1 = _mm256_packs_epi32 (i256_1, i256_2);
 
-      _mm256_storeu_si256 (U3_CAST_REINTERPRET< __m256i* > (h), i256_1);
+      _mm256_storeu_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (h), i256_1);
       h += 8;
 
       s8     = _mm256_mul_ps (s8, const_255);
@@ -206,7 +206,7 @@ rgb24_to_hsl_avx2 (::libs::optim::io::MCallInfo& info)
       i256_2 = _mm256_permute2f128_si256 (i256_1, i256_1, 1);
       i256_1 = _mm256_packs_epi32 (i256_1, i256_2);
 
-      _mm256_storeu_si256 (U3_CAST_REINTERPRET< __m256i* > (s), i256_1);
+      _mm256_storeu_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (s), i256_1);
       s += 8;
 
       l8     = _mm256_mul_ps (l8, const_255);
@@ -214,14 +214,14 @@ rgb24_to_hsl_avx2 (::libs::optim::io::MCallInfo& info)
       i256_2 = _mm256_permute2f128_si256 (i256_1, i256_1, 1);
       i256_1 = _mm256_packs_epi32 (i256_1, i256_2);
 
-      _mm256_storeu_si256 (U3_CAST_REINTERPRET< __m256i* > (l), i256_1);
+      _mm256_storeu_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (l), i256_1);
       l += 8;
     }
 
-    U3_FAST_MOVE_CPTR (rgb24, leak_rgb);
-    U3_FAST_MOVE_PTR (h, leak_hsl);
-    U3_FAST_MOVE_PTR (s, leak_hsl);
-    U3_FAST_MOVE_PTR (l, leak_hsl);
+    rgb24 = ::libs::helpers::mem::move_cptr (rgb24, leak_rgb);
+    h     = ::libs::helpers::mem::move_ptr (h, leak_hsl);
+    s     = ::libs::helpers::mem::move_ptr (s, leak_hsl);
+    l     = ::libs::helpers::mem::move_ptr (l, leak_hsl);
   }
 
   _mm256_zeroupper ();

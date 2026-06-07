@@ -14,9 +14,7 @@ class ICaptureImage : public IBaseRuntimeInterf
   //  ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ICaptureImage)
 
-  virtual ~ICaptureImage ()
-  {
-  }
+  virtual ~ICaptureImage () = default;
 
   void
   change_state (bool enable)
@@ -43,9 +41,7 @@ class ICaptureImage : public IBaseRuntimeInterf
   }
 
   protected:
-  ICaptureImage ()
-  {
-  }
+  ICaptureImage () = default;
 
   private:
   //  ICaptureImage interface

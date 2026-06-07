@@ -11,15 +11,10 @@
 
 namespace libs::istorage_events::events
 {
-WrapperStorageEvent::WrapperStorageEvent (const Acessor& ph, ::libs::events::IEvent::ptr msg) :
+WrapperStorageEvent::WrapperStorageEvent (const Acessor& pha, ::libs::events::IEvent::ptr msg) :
   int_ (msg)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-WrapperStorageEvent::~WrapperStorageEvent ()
-{
 }
 
 
@@ -47,18 +42,19 @@ WrapperStorageEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 WrapperStorageEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (WrapperStorageEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< WrapperStorageEvent > (src);
   super::copy_int (src);
+
   int_ = dsrc->int_;
 }
 
 
 template< class Archive >
 void
-WrapperStorageEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+WrapperStorageEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoistorage_eventsoeventsoBaseStorageEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (int_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoistorage_eventsoeventsoBaseStorageEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (int_);
 
   self_correct ();
 }

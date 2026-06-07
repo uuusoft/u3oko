@@ -68,11 +68,6 @@ CamImpl::CamImpl (const gen_lib::SourceImplInfo &props_info) :
 }
 
 
-CamImpl::~CamImpl ()
-{
-}
-
-
 bool
 CamImpl::is_init () const
 {
@@ -83,7 +78,7 @@ CamImpl::is_init () const
 syn::IVideoBuf::ptr
 CamImpl::get_buf ()
 {
-  std::lock_guard< std::mutex > lock (sync_);
+  std::scoped_lock lock (sync_);
 
   timeval       tv       = { 0, 100 };
   const int32_t read_res = v4l2capture_ ? v4l2capture_->isReadable (&tv) : -1;
@@ -127,7 +122,7 @@ CamImpl::sync_correct_props (syn::VideoCorrectProp::craw_ptr correctprops)
     return;
   }
 
-  std::lock_guard< std::mutex > lock (sync_);
+  std::scoped_lock lock (sync_);
   if (nullptr == v4l2capture_)
   {
     return;
@@ -135,13 +130,13 @@ CamImpl::sync_correct_props (syn::VideoCorrectProp::craw_ptr correctprops)
 
   auto convert = [] (const v4l2_queryctrl &queryctrl, float koeff) -> int32_t {
     const auto diff = queryctrl.maximum - queryctrl.minimum;
-    if (koeff < 0.0f)
+    if (koeff < 0.0F)
     {
-      return queryctrl.minimum + diff * (koeff + 1.0f);
+      return queryctrl.minimum + diff * (koeff + 1.0F);
     }
-    else if (koeff > 0.0f)
+    else if (koeff > 0.0F)
     {
-      return queryctrl.maximum - diff * (1.0f - koeff);
+      return queryctrl.maximum - diff * (1.0F - koeff);
     }
     return queryctrl.default_value;
   };

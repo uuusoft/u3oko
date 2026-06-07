@@ -11,14 +11,9 @@
 
 namespace libs::ievents_events::events
 {
-GetEventsFromBase::GetEventsFromBase (const Acessor& ph)
+GetEventsFromBase::GetEventsFromBase (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-GetEventsFromBase::~GetEventsFromBase ()
-{
 }
 
 
@@ -121,7 +116,7 @@ GetEventsFromBase::save_json_int (::boost::json::object& obj) const
   obj["data_graph_ids"] = ::boost::json::value_from (data_graph_ids_);
   obj["event_types"]    = ::boost::json::value_from (event_types_);
 
-#if 0
+#ifdef U3_FAKE_DISABLE
   events_res_type events_from_database_;   //<
 #endif
 }
@@ -130,8 +125,9 @@ GetEventsFromBase::save_json_int (::boost::json::object& obj) const
 void
 GetEventsFromBase::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (GetEventsFromBase);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< GetEventsFromBase > (src);
   super::copy_int (src);
+
   events_from_database_ = dsrc->events_from_database_;
   event_types_          = dsrc->event_types_;
   data_graph_ids_       = dsrc->data_graph_ids_;
@@ -140,12 +136,12 @@ GetEventsFromBase::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-GetEventsFromBase::serialize (Archive& ar, const std::uint32_t /* file_version */)
+GetEventsFromBase::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("BaseEventsEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (events_from_database_);
-  ar& BOOST_SERIALIZATION_NVP (event_types_);
-  ar& BOOST_SERIALIZATION_NVP (data_graph_ids_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("BaseEventsEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (events_from_database_);
+  arh& BOOST_SERIALIZATION_NVP (event_types_);
+  arh& BOOST_SERIALIZATION_NVP (data_graph_ids_);
 
   self_correct ();
 }

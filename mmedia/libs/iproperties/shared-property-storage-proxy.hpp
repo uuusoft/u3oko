@@ -24,10 +24,10 @@ class SharedPropertyStorageProxy final : protected ::libs::helpers::proxy::MemPr
   private:
   //  internal typess
   using sync_type = std::mutex;
-  using lock_type = std::lock_guard< sync_type >;
+  using lock_type = std::scoped_lock< sync_type >;
 
   SharedPropertyStorageProxy ();
-  ~SharedPropertyStorageProxy ();
+  ~SharedPropertyStorageProxy () = default;
 
   std::atomic< SharedPropertyStorage::ptr* > pobj_;   //< Реализация свойств, которая лежит в разделяемой памяти в пределах одного процесса
 };

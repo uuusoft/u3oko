@@ -17,8 +17,8 @@ namespace libs::ievents::props::videos::noises::time::ext
 /// Перечисление различных типов сортировок
 enum class Sortings : std::uint32_t
 {
-  usual             = 0x00,   //< По умолчанию. Обычно это сортировка вставкой
-  adaptive          = 0x01,   //< Адаптивная, в зависимости от размера выборки. <- рекомендуемый
+  usual             = 0x00,   //< По умолчанию, обычно это сортировка вставкой
+  adaptive          = 0x01,   //< Адаптивная, в зависимости от размера выборки <- рекомендуемый
   skip              = 0x02,   //< Пропуск этапа сортировки, т.е. пиксели не обновляются. Используется строго для тестирования времени работы в алгоритме сортировки
   standart          = 0x03,   //< Встроенная сортировка реализации STL C++
   insert            = 0x04,   //< Сортировка вставкой. Самый быстрый вариант для последовательностей длиной меньше или равно 11 на ALU
@@ -26,8 +26,8 @@ enum class Sortings : std::uint32_t
   unknown           = 0xFF    //< Не определенно для общности
 };
 
-void     tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const Sortings& src);
-Sortings tag_invoke (::boost::json::value_to_tag< Sortings >, const ::boost::json::value& jv);
+void     tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const Sortings& src);
+Sortings tag_invoke (::boost::json::value_to_tag< Sortings >, const ::boost::json::value& jvs);
 
 /// Свойства фильтрации во временной области
 class MedianTimeFilterProp final : public ievents::Event
@@ -41,7 +41,6 @@ class MedianTimeFilterProp final : public ievents::Event
     explicit Acessor (int) {};
   };
 
-
   public:
   //  ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (MedianTimeFilterProp)
@@ -49,7 +48,7 @@ class MedianTimeFilterProp final : public ievents::Event
   U3_HELPER_DISABLE_ACOPY_TYPE (MedianTimeFilterProp)
 
   explicit MedianTimeFilterProp (const Acessor& = Acessor (0));
-  virtual ~MedianTimeFilterProp ();
+  virtual ~MedianTimeFilterProp () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -58,10 +57,10 @@ class MedianTimeFilterProp final : public ievents::Event
     return ret;
   }
 
-  std::uint32_t count_bufs_;      //< Количество буферов медианной фильтрации
-  std::uint32_t rang_;            //< Ранг выбираемого числа из отсортированной последовательности 0 <= rang < count_bufs_
-  bool          motion_detect_;   //< Флаг учета движения в кадре при фильтрации
-  Sortings      sort_type_;       //< Тип сортировки
+  std::uint32_t count_bufs_    = 3;                 //< Количество буферов медианной фильтрации
+  std::uint32_t rang_          = 2;                 //< Ранг выбираемого числа из отсортированной последовательности 0 <= rang < count_bufs_
+  bool          motion_detect_ = false;             //< Флаг учета движения в кадре при фильтрации
+  Sortings      sort_type_     = Sortings::usual;   //< Тип сортировки
 
   private:
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ievents::Event)
@@ -69,7 +68,7 @@ class MedianTimeFilterProp final : public ievents::Event
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   // overrides ievents::Event
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;

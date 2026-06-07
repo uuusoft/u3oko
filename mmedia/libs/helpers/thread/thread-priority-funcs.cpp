@@ -46,7 +46,7 @@ void
 set_thread_priority (const std::thread::id& thread, const Priorities& val)
 {
   U3_XLOG_DBG ("change priority thread " << thread << " to " + to_string (val));
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
 #elif defined(U3_OS_ANDROID)
 #elif defined(U3_OS_MACX_DESKTOP)
 #elif defined(U3_OS_GNU_LINUX)

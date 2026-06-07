@@ -12,8 +12,8 @@ namespace libs::ilink::appl::leaf
 class LeafModule : public ::libs::ilink::appl::base::BaseModule
 {
   public:
-  LeafModule ();
-  virtual ~LeafModule ();
+  LeafModule ()          = default;
+  virtual ~LeafModule () = default;
 
   protected:
   //  ::libs::ilink::appl::base::BaseModule impl

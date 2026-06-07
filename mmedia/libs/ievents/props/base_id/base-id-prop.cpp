@@ -11,14 +11,9 @@
 
 namespace libs::ievents::props::base_id
 {
-BaseIdProp::BaseIdProp (const Acessor& ph)
+BaseIdProp::BaseIdProp (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-BaseIdProp::~BaseIdProp ()
-{
 }
 
 
@@ -72,8 +67,9 @@ BaseIdProp::load_buf2module (const ::pugi::xml_named_node_iterator& node, Buff2M
 void
 BaseIdProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (BaseIdProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< BaseIdProp > (src);
   super::copy_int (src);
+
   source_name_ = dsrc->source_name_;
   buf2modules_ = dsrc->buf2modules_;
 }
@@ -81,11 +77,11 @@ BaseIdProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-BaseIdProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+BaseIdProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (source_name_);
-  ar& BOOST_SERIALIZATION_NVP (buf2modules_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (source_name_);
+  arh& BOOST_SERIALIZATION_NVP (buf2modules_);
 
   self_correct ();
 }

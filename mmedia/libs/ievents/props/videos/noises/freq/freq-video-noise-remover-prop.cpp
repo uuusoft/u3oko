@@ -11,17 +11,12 @@
 
 namespace libs::ievents::props::videos::noises::freq
 {
-FreqVideoNoiseRemoverProp::FreqVideoNoiseRemoverProp (const Acessor& ph) :
+FreqVideoNoiseRemoverProp::FreqVideoNoiseRemoverProp (const Acessor& pha) :
   bufs_ ({ { ::utils::dbufs::video::consts::offs::lit, InfoBuffFreqNoiseRemover (::utils::dbufs::video::consts::offs::lit, ::utils::dbufs::video::consts::offs::lit, ::utils::dbufs::video::consts::offs::lit, 8, 1) },
            { ::utils::dbufs::video::consts::offs::hue, InfoBuffFreqNoiseRemover (::utils::dbufs::video::consts::offs::hue, ::utils::dbufs::video::consts::offs::hue, ::utils::dbufs::video::consts::offs::hue, 8, 1) },
            { ::utils::dbufs::video::consts::offs::hue, InfoBuffFreqNoiseRemover (::utils::dbufs::video::consts::offs::sat, ::utils::dbufs::video::consts::offs::sat, ::utils::dbufs::video::consts::offs::sat, 8, 1) } })
 {
   property_name_ = gen_get_mid ();
-}
-
-
-FreqVideoNoiseRemoverProp::~FreqVideoNoiseRemoverProp ()
-{
 }
 
 
@@ -53,7 +48,7 @@ FreqVideoNoiseRemoverProp::save_json_int (::boost::json::object& obj) const
 void
 FreqVideoNoiseRemoverProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (FreqVideoNoiseRemoverProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< FreqVideoNoiseRemoverProp > (src);
   super::copy_int (src);
   bufs_ = dsrc->bufs_;
 }
@@ -61,10 +56,10 @@ FreqVideoNoiseRemoverProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-FreqVideoNoiseRemoverProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+FreqVideoNoiseRemoverProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (bufs_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (bufs_);
 
   self_correct ();
 }

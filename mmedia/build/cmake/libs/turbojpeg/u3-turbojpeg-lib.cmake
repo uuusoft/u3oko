@@ -2,11 +2,9 @@
 # date        18.08.2024
 # copyright   Erashov A.I.
 # file        u3-turbojpeg-lib.cmake
-
 # https://stackoverflow.com/questions/16842218/how-do-i-use-cmake-externalproject-add-or-alternatives-in-a-cross-platform-way
 # https://stackoverflow.com/questions/61893309/cmake-system-processor-value-in-toolchain-file-not-visible-in-top-level-cmakelis
 
-include(ExternalProject)
 include("./build/cmake/libs/turbojpeg/u3-turbojpeg-lib-values.cmake")
 
 set(U3_NAME_EXTERNAL_LIB_TURBO_JPEG_UTIL ${U3_NAME_EXTERNAL_LIB_TURBO_JPEG}-util)
@@ -73,5 +71,3 @@ set_target_properties(turbo_jpeg-lib PROPERTIES IMPORTED_LOCATION ${U3_INSTALL_D
 
 #set( U3_LIBS_3RD_STATIC_LIST ${U3_LIBS_3RD_STATIC_LIST} turbo_jpeg-lib )
 set(U3_DEPENDENCY_TARGETS_LIST ${U3_DEPENDENCY_TARGETS_LIST} ${U3_NAME_EXTERNAL_LIB_TURBO_JPEG_UTIL})
-
-#message(FATAL_ERROR "U3_INCLUDE_DIR_EXTERNAL_LIB_TURBO_JPEG=${U3_INCLUDE_DIR_EXTERNAL_LIB_TURBO_JPEG}")

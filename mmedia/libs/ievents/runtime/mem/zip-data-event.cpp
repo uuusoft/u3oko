@@ -11,16 +11,16 @@
 
 namespace libs::ievents::runtime::mem
 {
-ZipDataEvent::ZipDataEvent (const Acessor& ph) :
+ZipDataEvent::ZipDataEvent (const Acessor& pha) :
   size_zip_buf_ (0)
 {
   property_name_ = gen_get_mid ();
 }
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 ZipDataEvent::ZipDataEvent (
   zip_buf_type&&         buf,
-  std::size_t             size,
+  std::size_t            size,
   const number_buf_type& number_buf,
   const id_buf_type&     id) :
 
@@ -46,7 +46,7 @@ ZipDataEvent::ZipDataEvent (
   size_zip_buf_ = zip_buf_.size ();
 }
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 ZipDataEvent::ZipDataEvent (const ZipDataEvent& src) :
   size_ (0)
 {
@@ -54,14 +54,14 @@ ZipDataEvent::ZipDataEvent (const ZipDataEvent& src) :
   super::operator= (src);
 
   if (src.get_size ())
-    {
-      size_ = src.get_size ();
-      buf_.resize (size_);
-      ::libs::helpers::mem::u3copy (&src.get_zip ()[0], &buf_[0], size_);
-    }
+  {
+    size_ = src.get_size ();
+    buf_.resize (size_);
+    ::libs::helpers::mem::u3copy (&src.get_zip ()[0], &buf_[0], size_);
+  }
 }
 #endif
-#if 0
+#ifdef U3_FAKE_DISABLE
 ZipDataEvent&
 ZipDataEvent::operator= (const ZipDataEvent& src)
 {
@@ -73,11 +73,6 @@ ZipDataEvent::operator= (const ZipDataEvent& src)
   return *this;
 }
 #endif
-
-ZipDataEvent::~ZipDataEvent ()
-{
-}
-
 
 const ZipDataEvent::zip_buf_type&
 ZipDataEvent::get_zip () const
@@ -146,8 +141,9 @@ ZipDataEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 ZipDataEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (ZipDataEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< ZipDataEvent > (src);
   super::copy_int (src);
+
   zip_buf_        = dsrc->zip_buf_;
   size_zip_buf_   = dsrc->size_zip_buf_;
   id_zip_buf_     = dsrc->id_zip_buf_;
@@ -157,13 +153,13 @@ ZipDataEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-ZipDataEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+ZipDataEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (zip_buf_);
-  ar& BOOST_SERIALIZATION_NVP (size_zip_buf_);
-  ar& BOOST_SERIALIZATION_NVP (id_zip_buf_);
-  ar& BOOST_SERIALIZATION_NVP (number_zip_buf_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (zip_buf_);
+  arh& BOOST_SERIALIZATION_NVP (size_zip_buf_);
+  arh& BOOST_SERIALIZATION_NVP (id_zip_buf_);
+  arh& BOOST_SERIALIZATION_NVP (number_zip_buf_);
 
   self_correct ();
 }

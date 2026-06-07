@@ -11,16 +11,11 @@
 
 namespace libs::istorage_events::events
 {
-UpdateStream::UpdateStream (const Acessor& ph) :
+UpdateStream::UpdateStream (const Acessor& pha) :
   operation_ (StreamActions::read),
   direction_ (StreamDirections::unknown)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-UpdateStream::~UpdateStream ()
-{
 }
 
 
@@ -34,8 +29,9 @@ UpdateStream::clone_int (const ::libs::events::Deeps& deep) const
 void
 UpdateStream::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (UpdateStream);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< UpdateStream > (src);
   super::copy_int (src);
+
   obj_id_    = dsrc->obj_id_;
   stream_id_ = dsrc->stream_id_;
   action_    = dsrc->action_;
@@ -47,15 +43,15 @@ UpdateStream::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-UpdateStream::serialize (Archive& ar, const std::uint32_t /* file_version */)
+UpdateStream::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoistorage_eventsoeventsoBaseStorageEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (obj_id_);
-  ar& BOOST_SERIALIZATION_NVP (operation_);
-  ar& BOOST_SERIALIZATION_NVP (stream_id_);
-  ar& BOOST_SERIALIZATION_NVP (action_);
-  ar& BOOST_SERIALIZATION_NVP (direction_);
-  ar& BOOST_SERIALIZATION_NVP (time_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoistorage_eventsoeventsoBaseStorageEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (obj_id_);
+  arh& BOOST_SERIALIZATION_NVP (operation_);
+  arh& BOOST_SERIALIZATION_NVP (stream_id_);
+  arh& BOOST_SERIALIZATION_NVP (action_);
+  arh& BOOST_SERIALIZATION_NVP (direction_);
+  arh& BOOST_SERIALIZATION_NVP (time_);
 
   self_correct ();
 }

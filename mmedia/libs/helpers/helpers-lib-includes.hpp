@@ -7,6 +7,9 @@
 */
 #include "consts/helpers-lib-const-vals.hpp"
 
+#include "casts/memory-casts-funcs.hpp"
+#include "casts/numeric-casts-funcs.hpp"
+
 #include "check/check-ptr-funcs.hpp"
 
 #include "utils/int2type.hpp"
@@ -30,6 +33,8 @@
 #include "statistic/expanded-times-types.hpp"
 #include "statistic/expanded-time.hpp"
 #include "statistic/expanded-times.hpp"
+// EAI-REFACT
+// #include "statistic/helpers/expanded-times-helpers.hpp"
 
 #include "mem/helpers-lib-aligned-mem-funcs.hpp"
 #include "mem/helpers-lib-move-mem-ptr-funcs.hpp"
@@ -40,7 +45,7 @@
 #include "mem/iblock-mem.hpp"
 
 #include "dlls/dll-mock.hpp"
-#include "dlls/forever-load-dlls.hpp"
+#include "dlls/freezer-dlls.hpp"
 #include "dlls/helpers-lib-decorate-dll-name-funcs.hpp"
 
 #include "proxy/mem-proxy-base.hpp"
@@ -54,7 +59,7 @@
 
 #include "fps/fps-controller.hpp"
 
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
 #  include "platforms/win32/last-error-funcs.hpp"
 #  include "platforms/win32/process_gen_funcs.hpp"
 #  include "platforms/win32/window_gen_funcs.hpp"
@@ -86,7 +91,7 @@
 #include "log/suppressor-verbose-log-msg.hpp"
 #include "log/get-module-version-func.hpp"
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 // EAI-REFACT чтобы не тянуть зависимость от sqlite этот файл включается отдельно для каждого модуля, в котором есть потребность в sqlite.
 #  include "sqlite/sql-resource-managment-helpers.hpp"
 #  include "sqlite/sqlite-call-helper-funcs.hpp"

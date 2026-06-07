@@ -11,7 +11,7 @@
 
 namespace libs::ievents_events::events
 {
-GetDataGraphsFromEventBase::GetDataGraphsFromEventBase (const Acessor& ph)
+GetDataGraphsFromEventBase::GetDataGraphsFromEventBase (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
 }
@@ -63,7 +63,7 @@ GetDataGraphsFromEventBase::save_json_int (::boost::json::object& obj) const
 void
 GetDataGraphsFromEventBase::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (GetDataGraphsFromEventBase);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< GetDataGraphsFromEventBase > (src);
   super::copy_int (src);
   data_graph_ids_ = dsrc->data_graph_ids_;
 }
@@ -71,10 +71,10 @@ GetDataGraphsFromEventBase::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-GetDataGraphsFromEventBase::serialize (Archive& ar, const std::uint32_t /* file_version */)
+GetDataGraphsFromEventBase::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("BaseEventsEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (data_graph_ids_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("BaseEventsEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (data_graph_ids_);
 
   self_correct ();
 }

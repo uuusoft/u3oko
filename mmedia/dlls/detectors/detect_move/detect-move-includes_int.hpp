@@ -5,6 +5,8 @@
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_detect_move
 */
+#include "mmedia/includes/control-defines-includes.hpp"
+#include "mmedia/includes/includes.hpp"
 #include "../../dlls-includes_int.hpp"
 #include "mmedia/dlls/gens/vgen_diff/lib/vgen-diff-lib-includes.hpp"
 #include "mmedia/dlls/gens/vgen_mops/lib/vgen-mops-lib-includes.hpp"

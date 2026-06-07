@@ -84,7 +84,7 @@ ChangDShowRunsSubSysLogEvent::clone_int (const ::libs::events::Deeps& deep) cons
 void
 ChangDShowRunsSubSysLogEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (ChangDShowRunsSubSysLogEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< ChangDShowRunsSubSysLogEvent > (src);
   super::copy_int (src);
   start_ = dsrc->start_;
 }
@@ -92,10 +92,10 @@ ChangDShowRunsSubSysLogEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-ChangDShowRunsSubSysLogEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+ChangDShowRunsSubSysLogEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoilog_eventsoeventsoInfoLogEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (start_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoilog_eventsoeventsoInfoLogEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (start_);
 
   self_correct ();
 }

@@ -10,14 +10,14 @@ namespace dlls::detectors::detect_move
 {
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter {
   InfoFilter ();
-  virtual ~InfoFilter ();
+  virtual ~InfoFilter () = default;
 
-  syn::VideoDetectProp::raw_ptr          rprops_;       //< Настроенный указатель на свойства (для удобства)
-  ::dlls::gens::vgen_diff::lib::DiffImpl diff_impl_;    //< Реализация вычисления разности между двумя кадрами
-  syn::VideoDiffProp                     diff_props_;   //< Свойства вычисления разности
-  ::dlls::gens::vgen_mops::lib::MopsImpl mops_impl_;    //< Реализация фильтрации (морфологической) разности
-  syn::VideoMorphologyProp               mops_props_;   //< Свойства фильтрации (морфологической) разности
-  bool                                   synced_;       //< Флаг требования синхронизации
+  syn::VideoDetectProp::raw_ptr          rprops_ = nullptr;   //< Настроенный указатель на свойства (для удобства)
+  ::dlls::gens::vgen_diff::lib::DiffImpl diff_impl_;          //< Реализация вычисления разности между двумя кадрами
+  syn::VideoDiffProp                     diff_props_;         //< Свойства вычисления разности
+  ::dlls::gens::vgen_mops::lib::MopsImpl mops_impl_;          //< Реализация фильтрации (морфологической) разности
+  syn::VideoMorphologyProp               mops_props_;         //< Свойства фильтрации (морфологической) разности
+  bool                                   synced_ = false;     //< Флаг требования синхронизации
 
   private:
   void init ();

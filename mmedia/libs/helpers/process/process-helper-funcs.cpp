@@ -21,7 +21,7 @@ std::int64_t
 get_start_time ()
 {
   std::int64_t ret = 0;
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
   {
     FILETIME tcreate;
     FILETIME texit;

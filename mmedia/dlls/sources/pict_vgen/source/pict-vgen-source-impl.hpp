@@ -63,7 +63,6 @@ class SourceImpl final : public ::dlls::sources::gen_lib::ISourceImpl
 
   private:
   //  internal types
-  using type_files_type       = std::vector< std::uint32_t >;                                   //<
   using exts_type             = std::array< std::uint32_t, 256 >;                               //<
   using ptime_type            = boost::posix_time::ptime;                                       //<
   using sources_type          = std::vector< ::libs::imdata_events::events::DataSourceInfo >;   //<
@@ -86,16 +85,15 @@ class SourceImpl final : public ::dlls::sources::gen_lib::ISourceImpl
   LoadedImage load_image2buf (const std::string& name);
   bool        is_image_valid (const std::string& name);
 
-  std::string                           name_file_;               //<
-  ::libs::helpers::files::NodeEnumFiles enum_files_;              //<
-  type_files_type                       type_files_;              //<
-  std::uint64_t                         indx_image_file_;         //<
-  ptime_type                            time_last_change_file_;   //<
-  exts_type                             exts_;                    //<
-  syn::SourceImplInfo                   source_impl_info_;        //<
-  Image2Frames                          image2frame_style_;       //<
-  bufs_storage_type                     loaded_images_;           //<
-  float                                 off_first_image_;         //<
-  syn::IHardwareCapture::ptr            icapture_;                //<
+  std::string                           name_file_;                                  //<
+  ::libs::helpers::files::NodeEnumFiles enum_files_;                                 //<
+  std::uint64_t                         indx_image_file_ = 0;                        //<
+  ptime_type                            time_last_change_file_;                      //<
+  exts_type                             exts_ = { 0 };                               //<
+  syn::SourceImplInfo                   source_impl_info_;                           //<
+  Image2Frames                          image2frame_style_ = Image2Frames::scroll;   //<
+  bufs_storage_type                     loaded_images_;                              //<
+  float                                 off_first_image_ = 0.0F;                     //<
+  syn::IHardwareCapture::ptr            icapture_;                                   //<
 };
 }   // namespace dlls::sources::pict_vgen

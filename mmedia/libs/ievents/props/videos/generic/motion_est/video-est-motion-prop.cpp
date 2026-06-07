@@ -11,15 +11,10 @@
 
 namespace libs::ievents::props::videos::generic::motion_est
 {
-VideoEstMotionProp::VideoEstMotionProp (const Acessor& ph) :
+VideoEstMotionProp::VideoEstMotionProp (const Acessor& pha) :
   bufs_ ({ EventBufsInfoMotionEst (::utils::dbufs::video::consts::offs::lit, ::utils::dbufs::video::consts::offs::move_est_res) })
 {
   property_name_ = gen_get_mid ();
-}
-
-
-VideoEstMotionProp::~VideoEstMotionProp ()
-{
 }
 
 
@@ -51,7 +46,7 @@ VideoEstMotionProp::save_json_int (::boost::json::object& obj) const
 void
 VideoEstMotionProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (VideoEstMotionProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< VideoEstMotionProp > (src);
   super::copy_int (src);
   bufs_ = dsrc->bufs_;
 }
@@ -59,10 +54,10 @@ VideoEstMotionProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-VideoEstMotionProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+VideoEstMotionProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (bufs_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (bufs_);
 
   self_correct ();
 }

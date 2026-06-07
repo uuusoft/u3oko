@@ -19,9 +19,7 @@ class CRgb2HSLAlg final : public IOptimAlg
     sel_.set_algoritm_name (val_key);
   }
 
-  virtual ~CRgb2HSLAlg ()
-  {
-  }
+  virtual ~CRgb2HSLAlg () = default;
 
   protected:
   virtual void
@@ -29,7 +27,7 @@ class CRgb2HSLAlg final : public IOptimAlg
   {
     switch (iinfo.ext_)
     {
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
     case ::libs::helpers::sys::cpu::CpuExts::avx2:
       sel_.set (::libs::optim::s16bit::convert::hsl_vs_rgb::rgb24_to_hsl_avx2);
       break;
@@ -50,7 +48,7 @@ class CRgb2HSLAlg final : public IOptimAlg
       sel_.set (::libs::optim::s16bit::convert::hsl_vs_rgb::rgb24_to_hsl_alu);
       break;
     case ::libs::helpers::sys::cpu::CpuExts::usual:
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
       sel_.set (::libs::optim::s16bit::convert::hsl_vs_rgb::rgb24_to_hsl_sse2);
 #elif defined(U3_CPU_ARM)
       sel_.set (::libs::optim::s16bit::convert::hsl_vs_rgb::rgb24_to_hsl_neon);
@@ -58,7 +56,7 @@ class CRgb2HSLAlg final : public IOptimAlg
       sel_.set (::libs::optim::s16bit::convert::hsl_vs_rgb::rgb24_to_hsl_alu);
 #endif
       break;
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
     case ::libs::helpers::sys::cpu::CpuExts::neon:
       sel_.set (::libs::optim::s16bit::convert::hsl_vs_rgb::rgb24_to_hsl_neon);
       break;

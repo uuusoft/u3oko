@@ -25,6 +25,6 @@ enum class BufFlags : std::uint32_t
 inline constexpr std::uint32_t
                  enum_to_raw (const BufFlags& _val)
 {
-  return U3_CAST_STATIC< std::uint32_t > (_val);
+  return U3_CAST_UINT32_FORCE (_val);
 }
 }   // namespace utils::dbufs

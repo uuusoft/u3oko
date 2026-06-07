@@ -12,11 +12,6 @@
 
 namespace dlls::terminals::video_sender::impl2storage
 {
-Impl2Storage::Impl2Storage ()
-{
-}
-
-
 Impl2Storage::~Impl2Storage ()
 {
   close_stream ();
@@ -38,9 +33,8 @@ Impl2Storage::send_int (
 
   syn::IEvent::ptr rmsg;
   syn::IEvent::ptr irmsg;
-
-  auto dmsg  = ::libs::iproperties::helpers::create_event< syn::WriteData > (rmsg);
-  auto idmsg = ::libs::iproperties::helpers::create_event< syn::ZipDataEvent > (irmsg);
+  auto             dmsg  = ::libs::iproperties::helpers::create_event< syn::WriteData > (rmsg);
+  auto             idmsg = ::libs::iproperties::helpers::create_event< syn::ZipDataEvent > (irmsg);
 
   dmsg->set_msg (irmsg);
   dmsg->set_stream_id (active_stream_);

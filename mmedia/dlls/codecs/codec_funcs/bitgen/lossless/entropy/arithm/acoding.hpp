@@ -6,13 +6,14 @@
 \project    u3_codec_funcs
 */
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 /// Функция арифмтического кодирования
 HRESULT
-MainCodecObject1::CompressWithACoding (const std::uint8_t *input,
-                                       INT                 size_input,
-                                       std::uint8_t       *output,
-                                       INT                *size_compress_output)
+MainCodecObject1::CompressWithACoding (
+  const std::uint8_t *input,
+  INT                 size_input,
+  std::uint8_t       *output,
+  INT                *size_compress_output)
 {
   DEBUG_INFO_CLASS ("MainCodecObject1::CompressWithACoding");
   HRESULT      hr = S_OK;

@@ -10,16 +10,6 @@
 
 namespace libs::properties
 {
-ISharedProperty::ISharedProperty ()
-{
-}
-
-
-ISharedProperty::~ISharedProperty ()
-{
-}
-
-
 bool
 ISharedProperty::self_test () const
 {

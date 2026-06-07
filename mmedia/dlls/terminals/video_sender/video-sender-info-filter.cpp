@@ -19,9 +19,4 @@ InfoFilter::InfoFilter () :
   rprops_ = ::libs::iproperties::helpers::create_event_in_list< syn::EndPointProp > (ef_props_);
   str2props_.insert (str2prop_type::value_type (ef_props_.front ()->get_mid (), rprops_));
 }
-
-
-InfoFilter::~InfoFilter ()
-{
-}
 }   // namespace dlls::terminals::video_sender

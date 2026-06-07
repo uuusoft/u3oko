@@ -37,26 +37,21 @@ MorphOperationParams::self_test () const
 }
 
 
-MorphOperationParams::~MorphOperationParams ()
-{
-}
-
-
 template< class Archive >
 void
-MorphOperationParams::serialize (Archive& ar, const std::uint32_t /* file_version */)
+MorphOperationParams::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (morph_type_);
-  ar& BOOST_SERIALIZATION_NVP (size_spot_);
-  ar& BOOST_SERIALIZATION_NVP (bound_filling_);
-  ar& BOOST_SERIALIZATION_NVP (val_filling_);
+  arh& BOOST_SERIALIZATION_NVP (morph_type_);
+  arh& BOOST_SERIALIZATION_NVP (size_spot_);
+  arh& BOOST_SERIALIZATION_NVP (bound_filling_);
+  arh& BOOST_SERIALIZATION_NVP (val_filling_);
 }
 
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const MorphOperationParams& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const MorphOperationParams& src)
 {
-  jv = {
+  jvs = {
     { "morph_type", U3_CAST_UINT32_FORCE (src.morph_type_) },
     { "size_spot", src.size_spot_ },
     { "bound_filling", src.bound_filling_ },
@@ -66,14 +61,14 @@ tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const Morph
 
 
 MorphOperationParams
-tag_invoke (::boost::json::value_to_tag< MorphOperationParams >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< MorphOperationParams >, const ::boost::json::value& jvs)
 {
   MorphOperationParams ret;
 
-  ret.morph_type_    = ::boost::json::value_to< MorphOps > (jv.at ("morph_type"));
-  ret.size_spot_     = ::libs::helpers::json::get_uint32 (jv.at ("size_spot"));
-  ret.bound_filling_ = ::libs::helpers::json::get_uint32 (jv.at ("bound_filling"));
-  ret.val_filling_   = ::libs::helpers::json::get_uint32 (jv.at ("val_filling"));
+  ret.morph_type_    = ::boost::json::value_to< MorphOps > (jvs.at ("morph_type"));
+  ret.size_spot_     = ::libs::helpers::json::get_uint32 (jvs.at ("size_spot"));
+  ret.bound_filling_ = ::libs::helpers::json::get_uint32 (jvs.at ("bound_filling"));
+  ret.val_filling_   = ::libs::helpers::json::get_uint32 (jvs.at ("val_filling"));
   return ret;
 }
 }   // namespace libs::ievents::props::videos::generic::morph

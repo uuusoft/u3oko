@@ -15,11 +15,12 @@ enum class SyncTimes : std::uint32_t
   unknown  = 0xFF    //< для общности
 };
 
+// EAI-REFACT
 std::string to_string (const SyncTimes& val);
 
 inline constexpr SyncTimes
 sync_objs_time_from_raw_val (std::uint32_t val)
 {
-  return U3_CAST_STATIC< SyncTimes > (val);
+  return ::libs::helpers::casts::static_cast_helper< SyncTimes > (val);
 }
 }   // namespace libs::ievents::runtime::control

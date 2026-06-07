@@ -13,7 +13,7 @@
 
 namespace boost::interprocess::ipcdetail
 {
-#if defined(U3_OS_ANDROID)
+#ifdef U3_OS_ANDROID
 void
 get_shared_dir (std::string& shared_dir)
 {
@@ -31,7 +31,7 @@ make_short_path (const std::string& path)
 {
   U3_CHECK (!path.empty (), "empty path");
 
-#if defined U3_OS_WIN32_DESKTOP
+#ifdef U3_OS_WIN32_DESKTOP
   const auto req_size = GetShortPathNameA (path.c_str (), nullptr, 0);
   if (0 == req_size || req_size >= 0xFFFFu)
   {

@@ -14,13 +14,8 @@ class SystemWin32Property final : public ::libs::properties::ISharedProperty
   // ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (SystemWin32Property)
 
-  SystemWin32Property ()
-  {
-  }
-
-  virtual ~SystemWin32Property ()
-  {
-  }
+  SystemWin32Property ()          = default;
+  virtual ~SystemWin32Property () = default;
 
   private:
   virtual bool

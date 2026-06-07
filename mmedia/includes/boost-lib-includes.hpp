@@ -5,8 +5,10 @@
 \date       01.05.2018
 \project    u3_includes
 */
+// NOLINTBEGIN
+
 // EAI-REFACT
-#if defined(U3_COMPILER_MSC)
+#ifdef U3_COMPILER_MSC
 #  pragma warning(disable : 4100)
 #  pragma warning(disable : 4127)
 #  pragma warning(disable : 4244)
@@ -94,3 +96,10 @@
 
 #include <boost/container_hash/hash.hpp>
 #include <boost/utility.hpp>
+
+#include <boost/lockfree/policies.hpp>
+#include <boost/lockfree/queue.hpp>
+#include <boost/lockfree/spsc_queue.hpp>
+#include <boost/lockfree/stack.hpp>
+
+// NOLINTEND

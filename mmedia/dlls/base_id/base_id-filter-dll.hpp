@@ -13,8 +13,8 @@ class Filter final :
   protected ::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >
 {
   public:
-  Filter ();
-  virtual ~Filter ();
+  Filter ()          = default;
+  virtual ~Filter () = default;
 
   private:
   // internal types
@@ -30,8 +30,8 @@ class Filter final :
   // internals
   void init_pts (syn::ConnectInfo* info);
 
-  BaseIdInterf::ptr base_interf_;        //<
-  std::int64_t      counter_frames_;     //<
-  bool              send_base_interf_;   //<
+  BaseIdInterf::ptr base_interf_      = std::make_shared< BaseIdInterf > ();   //<
+  std::int64_t      counter_frames_   = 0;                                     //<
+  bool              send_base_interf_ = false;                                 //<
 };
 }   // namespace dlls::base_id

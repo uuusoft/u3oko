@@ -10,13 +10,13 @@ namespace dlls::gens::vgen_diff
 {
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter {
   InfoFilter ();
-  virtual ~InfoFilter ();
+  virtual ~InfoFilter () = default;
 
   InfoFilter (const InfoFilter& src)            = delete;
   InfoFilter& operator= (const InfoFilter& src) = delete;
 
   void init ();
 
-  ::libs::ievents::props::videos::gens::diff::VideoDiffProp::raw_ptr rprops_;   //< Настроенный указатель на свойства (для удобства)
+  ::libs::ievents::props::videos::gens::diff::VideoDiffProp::raw_ptr rprops_ = nullptr;   //< Настроенный указатель на свойства (для удобства)
 };
 }   // namespace dlls::gens::vgen_diff

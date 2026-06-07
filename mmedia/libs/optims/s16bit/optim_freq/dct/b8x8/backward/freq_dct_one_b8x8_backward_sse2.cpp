@@ -9,7 +9,7 @@
 #include "mmedia/libs/optims/s16bit/optim_s16bit_generic/includes_int.hpp"
 #include "freq_dct_b8x8_backward.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::freq::dct::b8x8::backward
 {

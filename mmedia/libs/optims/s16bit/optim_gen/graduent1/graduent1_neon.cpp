@@ -9,7 +9,7 @@
 #include "mmedia/libs/optims/s16bit/optim_s16bit_generic/includes_int.hpp"
 #include "graduent1.hpp"
 
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
 
 namespace libs::optim::s16bit::gen::graduent1
 {
@@ -23,7 +23,7 @@ neon (::libs::optim::io::MCallInfo& cinfo)
   const std::uint32_t  stride = cinfo.dsts_[0].stride_;
   const std::uint32_t  width  = cinfo.dsts_[0].width_;
   const std::uint32_t  height = cinfo.dsts_[0].height_;
-  const std::uint16_t* ivals  = U3_CAST_REINTERPRET< const std::uint16_t* > (cinfo.params_.consts_[0]);
+  const std::uint16_t* ivals  = ::libs::helpers::casts::reinterpret_cast_helper< const std::uint16_t* > (cinfo.params_.consts_[0]);
   const std::uint32_t  leak   = stride - (width / ppc * ppc) * sizeof (std::int16_t);
   // const std::int32_t             size_ivals = cinfo.params_.ints_[0];
 
@@ -41,11 +41,11 @@ neon (::libs::optim::io::MCallInfo& cinfo)
 
   const std::uint32_t lpxs = 8;
 
-#  define LOAD_PART_TABLE(mreg, moff)                                                                                                                           \
-    mreg.val[0] = vmovn_u16 (vld1q_u16 (U3_CAST_REINTERPRET< const std::uint16_t* > (U3_CAST_REINTERPRET< const std::uint8_t* > (ivals + (0 + moff) * lpxs)))); \
-    mreg.val[1] = vmovn_u16 (vld1q_u16 (U3_CAST_REINTERPRET< const std::uint16_t* > (U3_CAST_REINTERPRET< const std::uint8_t* > (ivals + (1 + moff) * lpxs)))); \
-    mreg.val[2] = vmovn_u16 (vld1q_u16 (U3_CAST_REINTERPRET< const std::uint16_t* > (U3_CAST_REINTERPRET< const std::uint8_t* > (ivals + (2 + moff) * lpxs)))); \
-    mreg.val[3] = vmovn_u16 (vld1q_u16 (U3_CAST_REINTERPRET< const std::uint16_t* > (U3_CAST_REINTERPRET< const std::uint8_t* > (ivals + (3 + moff) * lpxs))));
+#  define LOAD_PART_TABLE(mreg, moff)                                                                                                                                                                                   \
+    mreg.val[0] = vmovn_u16 (vld1q_u16 (::libs::helpers::casts::reinterpret_cast_helper< const std::uint16_t* > (::libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (ivals + (0 + moff) * lpxs)))); \
+    mreg.val[1] = vmovn_u16 (vld1q_u16 (::libs::helpers::casts::reinterpret_cast_helper< const std::uint16_t* > (::libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (ivals + (1 + moff) * lpxs)))); \
+    mreg.val[2] = vmovn_u16 (vld1q_u16 (::libs::helpers::casts::reinterpret_cast_helper< const std::uint16_t* > (::libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (ivals + (2 + moff) * lpxs)))); \
+    mreg.val[3] = vmovn_u16 (vld1q_u16 (::libs::helpers::casts::reinterpret_cast_helper< const std::uint16_t* > (::libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (ivals + (3 + moff) * lpxs))));
 
   LOAD_PART_TABLE (table_0_31, 0);
   LOAD_PART_TABLE (table_32_63, 4);
@@ -111,7 +111,7 @@ neon (::libs::optim::io::MCallInfo& cinfo)
       buf += ppc;
     }
 
-    U3_FAST_MOVE_PTR (buf, leak);
+    buf = ::libs::helpers::mem::move_ptr (buf, leak);
   }
 }
 }   // namespace libs::optim::s16bit::gen::graduent1

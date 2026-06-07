@@ -26,8 +26,7 @@ class IOptimProxy final
 
   private:
   explicit IOptimProxy (const std::string& dll_path);
-
-  ~IOptimProxy ();
+  ~IOptimProxy () = default;
 
   boost::function< create_ioptim_func_type > creator_;   //<
   ::libs::helpers::dlls::dll_type            lib_;       //<

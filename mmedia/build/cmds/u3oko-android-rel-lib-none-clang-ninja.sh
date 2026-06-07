@@ -4,6 +4,7 @@
 # date        01.01.2026
 # copyright   Erashov A.I.
 
+clear
 #EAI-REFACT
 #set in gradle.build
 #export U3_APPL_NAME=u3oko
@@ -24,3 +25,4 @@ chmod +x ./gradlew
 ./gradlew assembleRelease
 ./gradlew tasks
 ./gradlew installRelease
+#adb pair 192.168.88.216:41325 <code from device>

@@ -30,7 +30,7 @@ class WrapperStorageEvent : public BaseStorageEvent
     const Acessor&                  = Acessor (0),
     ::libs::events::IEvent::ptr msg = ::libs::events::IEvent::ptr ());
 
-  virtual ~WrapperStorageEvent ();
+  virtual ~WrapperStorageEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -52,7 +52,7 @@ class WrapperStorageEvent : public BaseStorageEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
   virtual void                        copy_int (const IEvent::craw_ptr src) override;

@@ -4,8 +4,6 @@
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_core_lib
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../libs-cores-core-includes_int.hpp"
 #include "node-id.hpp"
 
@@ -16,11 +14,6 @@ NodeID::NodeID (
   const name_dll_type& name_dll) :
   id_node_name_ (name),
   id_node_name_dll_ (name_dll)
-{
-}
-
-
-NodeID::~NodeID ()
 {
 }
 
@@ -80,10 +73,10 @@ NodeID::check () const
 
 template< class Archive >
 void
-NodeID::serialize (Archive& ar, const std::uint32_t /* file_version */)
+NodeID::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (id_node_name_);
-  ar& BOOST_SERIALIZATION_NVP (id_node_name_dll_);
+  arh& BOOST_SERIALIZATION_NVP (id_node_name_);
+  arh& BOOST_SERIALIZATION_NVP (id_node_name_dll_);
 }
 
 
@@ -95,9 +88,9 @@ get_ext_graph_node_id (const NodeID& id)
 
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const NodeID& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const NodeID& src)
 {
-  jv = {
+  jvs = {
     { "id_node_name", ::boost::json::value_from (src.get_name ()) },
     { "id_node_name_dll", ::boost::json::value_from (src.get_name_dll ()) }
   };
@@ -105,10 +98,10 @@ tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const NodeI
 
 
 NodeID
-tag_invoke (::boost::json::value_to_tag< NodeID >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< NodeID >, const ::boost::json::value& jvs)
 {
   NodeID      ret;
-  const auto& obj = jv.as_object ();
+  const auto& obj = jvs.as_object ();
 
   ::libs::helpers::json::extract (obj, ret.update_name (), "id_node_name");
   ::libs::helpers::json::extract (obj, ret.update_name_dll (), "id_node_name_dll");

@@ -1,5 +1,5 @@
 /**
-\file       gradient1_alu.cpp
+\file       graduent1_alu.cpp
 \date       01.05.2017
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_optim_libs_gen
@@ -24,16 +24,15 @@ alu (::libs::optim::io::MCallInfo& cinfo)
   const auto*   ivals      = cinfo.params_.consts_[0];
   const auto    size_ivals = cinfo.params_.ints_[0];
 
-  for (std::uint32_t indxy = 0; indxy < height; ++indxy)
+  for (std::uint32_t y = 0; y < height; ++y)
   {
-    for (std::uint32_t indxx = 0; indxx < width; ++indxx)
+    for (std::uint32_t x = 0; x < width; ++x)
     {
-      U3_ASSERT (buf[indxx] < size_ivals);
-      const auto indx = ::libs::helpers::utils::ret_check_bound< std::int16_t > (buf[indxx], 0, size_ivals - 1);
-      buf[indxx]      = ivals[indx];
+      U3_ASSERT_NT (buf[x] < size_ivals, VTOLOG (buf[x]) + VTOLOG (size_ivals));
+      const auto ival = ::libs::helpers::utils::ret_check_bound< std::int16_t > (buf[x], 0, size_ivals - 1);
+      buf[x]          = ivals[ival];
     }
-
-    U3_FAST_MOVE_PTR (buf, stride);
+    buf = ::libs::helpers::mem::move_ptr (buf, stride);
   }
 }
 }   // namespace libs::optim::s16bit::gen::graduent1

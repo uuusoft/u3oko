@@ -16,9 +16,4 @@ VideoBuf::VideoBuf ()
 {
   flush ();
 }
-
-
-VideoBuf::~VideoBuf ()
-{
-}
 }   // namespace utils::dbufs::video::impl

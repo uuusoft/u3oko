@@ -3,9 +3,6 @@
 # copyright   Erashov A.I.
 # file        u3-libv4l2cpp-lib.cmake
 
-include(ExternalProject)
-include(FetchContent)
-
 include("./build/cmake/libs/libv4l2cpp/u3-libv4l2cpp-lib-values.cmake")
 
 set(U3_NAME_EXTERNAL_LIB_V4L2CPP_UTIL ${U3_NAME_EXTERNAL_LIB_V4L2CPP}-util)

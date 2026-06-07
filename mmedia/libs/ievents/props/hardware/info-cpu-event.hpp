@@ -32,7 +32,7 @@ class InfoCPUEvent : public ievents::Event
     const ::libs::helpers::sys::cpu::CpuExts& simd      = ::libs::helpers::sys::cpu::CpuExts::usual,
     const std::uint32_t                       count_cpu = 0);
 
-  virtual ~InfoCPUEvent ();
+  virtual ~InfoCPUEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -62,7 +62,7 @@ class InfoCPUEvent : public ievents::Event
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   std::string                        text_simd_;   //< Текстовое представление simd
   ::libs::helpers::sys::cpu::CpuExts simd_;        //< Тип simd, который будет использоваться

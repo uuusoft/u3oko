@@ -13,16 +13,6 @@
 
 namespace dlls::gens::vgen_mops
 {
-Filter::Filter ()
-{
-}
-
-
-Filter::~Filter ()
-{
-}
-
-
 void
 Filter::load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node)
 {

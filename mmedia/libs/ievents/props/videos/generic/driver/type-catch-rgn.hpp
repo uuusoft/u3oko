@@ -22,6 +22,6 @@ enum class CatchRgns : std::uint32_t
 inline constexpr CatchRgns
 catch_rgn_from_raw_value (std::uint32_t val)
 {
-  return U3_CAST_STATIC< CatchRgns > (val);
+  return ::libs::helpers::casts::static_cast_helper< CatchRgns > (val);
 }
 }   // namespace libs::ievents::props::videos::generic::driver

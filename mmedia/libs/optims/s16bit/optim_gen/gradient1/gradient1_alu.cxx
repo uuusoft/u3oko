@@ -5,19 +5,8 @@
 \project    u3_optim_libs_gen
 */
 #include "gradient1.hpp"
+
 // old shit
-namespace libs
-{
-namespace optim
-{
-namespace s16bit
-{
-namespace gen
-{
-namespace gradient1
+namespace libs::optim::s16bit::gen::gradient1
 {
 }
-}   // namespace gen
-}   // namespace s16bit
-}   // namespace optim
-}   // namespace libs

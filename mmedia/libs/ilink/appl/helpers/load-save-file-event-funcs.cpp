@@ -5,8 +5,6 @@
 \project    u3_ilink
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../../libs-ilink-includes_int.hpp"
 #include "../libs-ilink-appl-includes_int.hpp"
 #include "load-save-file-event-funcs.hpp"

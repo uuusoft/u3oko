@@ -18,10 +18,10 @@ class SharedPropertyStorage : public ::libs::properties::ISharedPropertyStorage
   //  internal typess
   using storage_type = std::unordered_map< syn::key_property_type, syn::ISharedProperty::ptr >;
   using sync_type    = std::mutex;
-  using lock_type    = std::lock_guard< sync_type >;
+  using lock_type    = std::scoped_lock< sync_type >;
 
   public:
-  SharedPropertyStorage ();
+  SharedPropertyStorage () = default;
   virtual ~SharedPropertyStorage ();
 
   //  ::libs::properties::ISharedPropertyStorage overrides

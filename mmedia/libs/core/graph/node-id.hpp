@@ -20,7 +20,7 @@ class NodeID final
   /// \param[in]  name   идентификатор узла
   /// \param[in]  name_dll имя библиотеки, использованной для создания узла
   explicit NodeID (const name_id_type& name = "", const name_dll_type& name_dll = "");
-  virtual ~NodeID ();
+  virtual ~NodeID () = default;
 
   /// Функция возвращает имя идентификатора
   const name_id_type get_name () const;
@@ -46,16 +46,15 @@ class NodeID final
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
-void        tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const NodeID& src);
-NodeID      tag_invoke (::boost::json::value_to_tag< NodeID >, const ::boost::json::value& jv);
+void        tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const NodeID& src);
+NodeID      tag_invoke (::boost::json::value_to_tag< NodeID >, const ::boost::json::value& jvs);
 std::string get_ext_graph_node_id (const NodeID&);
 }   // namespace libs::core::graph
 
 BOOST_CLASS_EXPORT_KEY (::libs::core::graph::NodeID);
-
 
 namespace std
 {

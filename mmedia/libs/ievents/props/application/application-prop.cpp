@@ -11,16 +11,11 @@
 
 namespace libs::ievents::props::application
 {
-ApplicationProp::ApplicationProp (const Acessor& ph) :
+ApplicationProp::ApplicationProp (const Acessor& pha) :
   single_process_ (true),
   messenger_impl_ ("fast")
 {
   property_name_ = gen_get_mid ();
-}
-
-
-ApplicationProp::~ApplicationProp ()
-{
 }
 
 
@@ -37,7 +32,7 @@ ApplicationProp::get_messenger_impl () const
   return messenger_impl_;
 }
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 const ApplicationProp::xml_path_folders_type&
 ApplicationProp::get_xml_path_folders () const
 {
@@ -71,8 +66,9 @@ ApplicationProp::save_json_int (::boost::json::object& obj) const
 void
 ApplicationProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (ApplicationProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< ApplicationProp > (src);
   super::copy_int (src);
+
   single_process_  = dsrc->single_process_;
   messenger_impl_  = dsrc->messenger_impl_;
   machine_name_    = dsrc->machine_name_;
@@ -82,13 +78,13 @@ ApplicationProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-ApplicationProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+ApplicationProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (single_process_);
-  ar& BOOST_SERIALIZATION_NVP (messenger_impl_);
-  ar& BOOST_SERIALIZATION_NVP (machine_name_);
-  ar& BOOST_SERIALIZATION_NVP (machine_guid_id_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (single_process_);
+  arh& BOOST_SERIALIZATION_NVP (messenger_impl_);
+  arh& BOOST_SERIALIZATION_NVP (machine_name_);
+  arh& BOOST_SERIALIZATION_NVP (machine_guid_id_);
 }
 }   // namespace libs::ievents::props::application
 

@@ -15,8 +15,8 @@ class CodecGeneric
   //  ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (CodecGeneric)
 
-  CodecGeneric ();
-  virtual ~CodecGeneric ();
+  CodecGeneric ()          = default;
+  virtual ~CodecGeneric () = default;
 
   CodecGeneric (const CodecGeneric&)            = delete;
   CodecGeneric& operator= (const CodecGeneric&) = delete;
@@ -44,10 +44,10 @@ class CodecGeneric
   virtual void                 reset_statistic_info_int ()                                                                    = 0;
   virtual const StatisticInfo& get_statistic_info_int () const                                                                = 0;
 
-  syn::CpuExts        simd_;             //< Выбранный тип расширения процессора
-  InfoGenCodec        iinfo_;            //< Общие параметры, разделяемые между всеми реализациями кодеков
-  std::int64_t        counter_frames_;   //< Счетчик кадров в текущем сеансе кодирования/декодирования
-  syn::TransformInfo* transinfo_;        //< Указатель на текущий параметр при вызове функции transform
-  const syn::NodeID*  id_node_graph_;    //< Указатель на идентификатор объекта графа обработки данных, которому принадлежит данный кодек
+  syn::CpuExts        simd_ = syn::CpuExts::usual;   //< Выбранный тип расширения процессора
+  InfoGenCodec        iinfo_;                        //< Общие параметры, разделяемые между всеми реализациями кодеков
+  std::int64_t        counter_frames_ = 0;           //< Счетчик кадров в текущем сеансе кодирования/декодирования
+  syn::TransformInfo* transinfo_      = nullptr;     //< Указатель на текущий параметр при вызове функции transform
+  const syn::NodeID*  id_node_graph_  = nullptr;     //< Указатель на идентификатор объекта графа обработки данных, которому принадлежит данный кодек
 };
 }   // namespace dlls::codecs::codec_gen

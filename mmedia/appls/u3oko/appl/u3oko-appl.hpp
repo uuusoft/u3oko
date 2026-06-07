@@ -13,7 +13,7 @@ class U3OkoAppl final : public ::libs::ilink::appl::root::RootModule
 {
   public:
   U3OkoAppl ();
-  virtual ~U3OkoAppl ();
+  virtual ~U3OkoAppl () = default;
 
   private:
   //  internal types

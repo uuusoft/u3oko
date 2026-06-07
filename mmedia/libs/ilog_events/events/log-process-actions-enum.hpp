@@ -16,6 +16,6 @@ enum class LogProcessActions : std::uint32_t
 };
 
 std::string       to_string (const LogProcessActions& val);
-void              tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const LogProcessActions& src);
-LogProcessActions tag_invoke (::boost::json::value_to_tag< LogProcessActions >, const ::boost::json::value& jv);
+void              tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const LogProcessActions& src);
+LogProcessActions tag_invoke (::boost::json::value_to_tag< LogProcessActions >, const ::boost::json::value& jvs);
 }   // namespace libs::ilog_events::events

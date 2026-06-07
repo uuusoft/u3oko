@@ -34,19 +34,19 @@ TimePoint::set_time (const time_point& time)
 void
 tag_invoke (
   ::boost::json::value_from_tag,
-  ::boost::json::value& jv,
+  ::boost::json::value& jvs,
   const TimePoint&      src)
 {
-  jv = { "time", std::chrono::system_clock::to_time_t (src.get_time ()) };
+  jvs = { "time", std::chrono::system_clock::to_time_t (src.get_time ()) };
 }
 
 
 TimePoint
 tag_invoke (
   ::boost::json::value_to_tag< TimePoint >,
-  const ::boost::json::value& jv)
+  const ::boost::json::value& jvs)
 {
-  const auto      raw_time = ::libs::helpers::json::get_int64 (jv.at ("time"));
+  const auto      raw_time = ::libs::helpers::json::get_int64 (jvs.at ("time"));
   const TimePoint ret (::std::chrono::system_clock::from_time_t (raw_time));
   return ret;
 }

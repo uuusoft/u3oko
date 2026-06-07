@@ -46,6 +46,6 @@ str2focus (const std::string& str)
 Focus
 camera_focus_from_raw_value (uint32_t val)
 {
-  return U3_CAST_STATIC< Focus > (val);
+  return ::libs::helpers::casts::static_cast_helper< Focus > (val);
 }
 }   // namespace libs::ievents::props::videos::generic::driver

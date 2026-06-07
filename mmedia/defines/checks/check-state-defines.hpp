@@ -7,7 +7,7 @@
 \brief      Различные вспомогательные макросы для проверки состояний или результатов вызовов функций
 */
 
-#if defined(U3_CNTRL_FORCE_SKIP_CHECK_CALL)
+#ifdef U3_CNTRL_FORCE_SKIP_CHECK_CALL
 #  define U3_CHECK(u3def_cond, u3def_minfo)
 #  define U3_CHECK_NT(u3def_cond, u3def_mfino)
 #else

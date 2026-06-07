@@ -28,16 +28,16 @@ fill_edges (IVideoBuf::raw_ptr buf)
   {
     const std::int32_t _xshorts = ::libs::optim::s16bit::conv::consts::bufs::x_off_edge_conv / sizeof (std::int16_t);
     std::uint8_t*      _str_buf = buf_beg + buf_stride * _yindx;
-    std::int16_t*      _fstrb   = U3_CAST_REINTERPRET< std::int16_t* > (_str_buf);
-    std::int16_t*      _bstrb   = U3_CAST_REINTERPRET< std::int16_t* > (_str_buf - 2);
+    auto*              _fstrb   = ::libs::helpers::casts::reinterpret_cast_helper< std::int16_t* > (_str_buf);
+    auto*              _bstrb   = ::libs::helpers::casts::reinterpret_cast_helper< std::int16_t* > (_str_buf - 2);
 
     for (std::int32_t _xindx = 0; _xindx < U3_CAST_INT32 (_xshorts); ++_xindx)
     {
       _bstrb[-_xindx] = _fstrb[_xindx];
     }
 
-    std::int16_t* _fstrf = U3_CAST_REINTERPRET< std::int16_t* > (_str_buf + buf_width * sizeof (std::int16_t) - 2);
-    std::int16_t* _bstrf = U3_CAST_REINTERPRET< std::int16_t* > (_str_buf + buf_width * sizeof (std::int16_t));
+    auto* _fstrf = ::libs::helpers::casts::reinterpret_cast_helper< std::int16_t* > (_str_buf + buf_width * sizeof (std::int16_t) - 2);
+    auto* _bstrf = ::libs::helpers::casts::reinterpret_cast_helper< std::int16_t* > (_str_buf + buf_width * sizeof (std::int16_t));
 
     for (std::int32_t _xindx = 0; _xindx < U3_CAST_INT32 (_xshorts); ++_xindx)
     {
@@ -48,8 +48,8 @@ fill_edges (IVideoBuf::raw_ptr buf)
   for (std::uint32_t _yindx = 0; _yindx < ::libs::optim::s16bit::conv::consts::bufs::half_max_size_core_conv; ++_yindx)
   {
     std::uint8_t* _str_buf = buf_beg;
-    std::int16_t* _fstrb   = U3_CAST_REINTERPRET< std::int16_t* > (_str_buf + buf_stride * (_yindx + 0) - ::libs::optim::s16bit::conv::consts::bufs::x_off_edge_conv);
-    std::int16_t* _bstrb   = U3_CAST_REINTERPRET< std::int16_t* > (_str_buf - buf_stride * (_yindx + 1) - ::libs::optim::s16bit::conv::consts::bufs::x_off_edge_conv);
+    auto*         _fstrb   = ::libs::helpers::casts::reinterpret_cast_helper< std::int16_t* > (_str_buf + buf_stride * (_yindx + 0) - ::libs::optim::s16bit::conv::consts::bufs::x_off_edge_conv);
+    auto*         _bstrb   = ::libs::helpers::casts::reinterpret_cast_helper< std::int16_t* > (_str_buf - buf_stride * (_yindx + 1) - ::libs::optim::s16bit::conv::consts::bufs::x_off_edge_conv);
 
     ::libs::helpers::mem::u3copy (_fstrb, _bstrb, buf_stride);
   }
@@ -57,8 +57,8 @@ fill_edges (IVideoBuf::raw_ptr buf)
   for (std::uint32_t _yindx = 0; _yindx < ::libs::optim::s16bit::conv::consts::bufs::half_max_size_core_conv; ++_yindx)
   {
     std::uint8_t* _str_buf = buf_beg + buf_stride * buf_height;
-    std::int16_t* _fstrb   = U3_CAST_REINTERPRET< std::int16_t* > (_str_buf - buf_stride * (_yindx + 1) - ::libs::optim::s16bit::conv::consts::bufs::x_off_edge_conv);
-    std::int16_t* _bstrb   = U3_CAST_REINTERPRET< std::int16_t* > (_str_buf + buf_stride * (_yindx + 0) - ::libs::optim::s16bit::conv::consts::bufs::x_off_edge_conv);
+    auto*         _fstrb   = ::libs::helpers::casts::reinterpret_cast_helper< std::int16_t* > (_str_buf - buf_stride * (_yindx + 1) - ::libs::optim::s16bit::conv::consts::bufs::x_off_edge_conv);
+    auto*         _bstrb   = ::libs::helpers::casts::reinterpret_cast_helper< std::int16_t* > (_str_buf + buf_stride * (_yindx + 0) - ::libs::optim::s16bit::conv::consts::bufs::x_off_edge_conv);
 
     ::libs::helpers::mem::u3copy (_fstrb, _bstrb, buf_stride);
   }

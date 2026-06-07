@@ -111,65 +111,65 @@ EventsModule::update_catch_funcs_int ()
   super::update_catch_funcs_int ();
 
   catch_funcs_[syn::ChangeStateProcessEvent::gen_get_mid ()] =
-    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
-      if (forward)
-      {
-        auto props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
-        U3_ASSERT (props);
-        process_change_state_process (msg, props);
-        return syn::IEvent::ptr ();
-      }
-      return msg;
-    };
+    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      auto props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
+      U3_ASSERT (props);
+      process_change_state_process (msg, props);
+      return syn::IEvent::ptr ();
+    }
+    return msg;
+  };
 
   catch_funcs_[syn::WrapperEventsEvent::gen_get_mid ()] =
-    [] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
-      if (forward)
-      {
-        auto wrap_msg = ::libs::iproperties::helpers::cast_event< syn::WrapperEventsEvent > (msg);
-        return wrap_msg->get_msg ();
-      }
-      return msg;
-    };
+    [] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      auto wrap_msg = ::libs::iproperties::helpers::cast_event< syn::WrapperEventsEvent > (msg);
+      return wrap_msg->get_msg ();
+    }
+    return msg;
+  };
 
   catch_funcs_[syn::AddEvent2Base::gen_get_mid ()] =
-    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
-      U3_LOG_EVENTS_DEV ("received syn::AddEvent2Base:" + TOLOG (msg->get_mid ()));
-      if (forward)
-      {
-        auto props = ::libs::iproperties::helpers::cast_event< syn::AddEvent2Base > (msg);
-        U3_ASSERT (props);
-        process_add_event2base (msg, props);
-        return syn::IEvent::ptr ();
-      }
-      return msg;
-    };
+    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    U3_LOG_EVENTS_DEV ("received syn::AddEvent2Base:" + TOLOG (msg->get_mid ()));
+    if (forward)
+    {
+      auto props = ::libs::iproperties::helpers::cast_event< syn::AddEvent2Base > (msg);
+      U3_ASSERT (props);
+      process_add_event2base (msg, props);
+      return syn::IEvent::ptr ();
+    }
+    return msg;
+  };
 
   catch_funcs_[syn::GetDataGraphsFromEventBase::gen_get_mid ()] =
-    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
-      U3_LOG_EVENTS_DEV ("received syn::GetDataGraphsFromEventBase:" + TOLOG (msg->get_mid ()));
-      if (forward)
-      {
-        auto props = ::libs::iproperties::helpers::cast_event< syn::GetDataGraphsFromEventBase > (msg);
-        U3_ASSERT (props);
-        process_get_data_graphs (msg, props);
-        return syn::IEvent::ptr ();
-      }
-      return msg;
-    };
+    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    U3_LOG_EVENTS_DEV ("received syn::GetDataGraphsFromEventBase:" + TOLOG (msg->get_mid ()));
+    if (forward)
+    {
+      auto props = ::libs::iproperties::helpers::cast_event< syn::GetDataGraphsFromEventBase > (msg);
+      U3_ASSERT (props);
+      process_get_data_graphs (msg, props);
+      return syn::IEvent::ptr ();
+    }
+    return msg;
+  };
 
   catch_funcs_[syn::UpdateListener::gen_get_mid ()] =
-    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
-      U3_LOG_EVENTS_DEV ("received syn::UpdateListener:" + TOLOG (msg->get_mid ()));
-      if (forward)
-      {
-        auto props = ::libs::iproperties::helpers::cast_event< syn::UpdateListener > (msg);
-        U3_ASSERT (props);
-        process_update_listener (msg, props);
-        return syn::IEvent::ptr ();
-      }
-      return msg;
-    };
+    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    U3_LOG_EVENTS_DEV ("received syn::UpdateListener:" + TOLOG (msg->get_mid ()));
+    if (forward)
+    {
+      auto props = ::libs::iproperties::helpers::cast_event< syn::UpdateListener > (msg);
+      U3_ASSERT (props);
+      process_update_listener (msg, props);
+      return syn::IEvent::ptr ();
+    }
+    return msg;
+  };
 }
 
 

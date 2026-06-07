@@ -14,7 +14,7 @@ class LogModule final : public ::libs::ilink::appl::leaf::LeafModule
 {
   public:
   LogModule ();
-  virtual ~LogModule ();
+  virtual ~LogModule () = default;
 
   private:
   //  internal typess
@@ -56,7 +56,7 @@ class LogModule final : public ::libs::ilink::appl::leaf::LeafModule
   syn::InfoLogSession::id_session_type active_session_folder_;   //< Имя директории с логами текущего сеанса работы системы
   std::string                          path2logs_;               //< Директория с логами текущего сеанса работы системы
   std::fstream                         file_for_store_events_;   //< Текущий файл с логом
-  std::uint64_t                        indx_file_;               //< Индекс текущего файла с логом
+  std::uint64_t                        indx_file_ = 0;           //< Индекс текущего файла с логом
   syn::suppressor_type                 suppressor_;              //< Для подавляния повторных сообщений
 };
 }   // namespace modules::uuu_log::appl

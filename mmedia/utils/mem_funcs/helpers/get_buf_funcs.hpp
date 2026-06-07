@@ -13,7 +13,7 @@ template< typename out_type >
 out_type*
 get_as (::libs::helpers::mem::IBlockMem::raw_ptr _obj)
 {
-  return U3_CAST_REINTERPRET< out_type* > (_obj->get ());
+  return ::libs::helpers::casts::reinterpret_cast_helper< out_type* > (_obj->get ());
 }
 
 
@@ -21,6 +21,6 @@ template< typename out_type >
 const out_type*
 get_as (::libs::helpers::mem::IBlockMem::craw_ptr _obj)
 {
-  return U3_CAST_REINTERPRET< const out_type* > (_obj->get ());
+  return ::libs::helpers::casts::reinterpret_cast_helper< const out_type* > (_obj->get ());
 }
 }   // namespace utils::mem_funcs::helpers

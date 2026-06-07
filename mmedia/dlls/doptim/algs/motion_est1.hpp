@@ -19,9 +19,7 @@ class CMotionEst1Alg final : public IOptimAlg
     sel_.set_algoritm_name (val_key);
   }
 
-  virtual ~CMotionEst1Alg ()
-  {
-  }
+  virtual ~CMotionEst1Alg () = default;
 
   protected:
   virtual void
@@ -29,7 +27,7 @@ class CMotionEst1Alg final : public IOptimAlg
   {
     switch (iinfo.ext_)
     {
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
     case ::libs::helpers::sys::cpu::CpuExts::avx2:
       sel_.set (::libs::optim::s16bit::motion::est1::avx2);
       break;
@@ -48,7 +46,7 @@ class CMotionEst1Alg final : public IOptimAlg
       sel_.set (::libs::optim::s16bit::motion::est1::alu);
       break;
     case ::libs::helpers::sys::cpu::CpuExts::usual:
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
       sel_.set (::libs::optim::s16bit::motion::est1::sse2);
 #elif defined(U3_CPU_ARM)
       sel_.set (::libs::optim::s16bit::motion::est1::alu);
@@ -56,7 +54,7 @@ class CMotionEst1Alg final : public IOptimAlg
       sel_.set (::libs::optim::s16bit::motion::est1::alu);
 #endif
       break;
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
     case ::libs::helpers::sys::cpu::CpuExts::neon:
       sel_.set (::libs::optim::s16bit::motion::est1::alu);
       break;

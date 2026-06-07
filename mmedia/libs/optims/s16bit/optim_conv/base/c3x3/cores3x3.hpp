@@ -84,7 +84,6 @@ const values_core_type spot1 = values_core_type (
   });
 // clang-format on
 
-
 inline void
 copy (const std::vector< std::int16_t >& vals, values_core_type& mask)
 {

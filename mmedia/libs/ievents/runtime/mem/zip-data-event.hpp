@@ -34,7 +34,7 @@ class ZipDataEvent : public RuntimeEvent
   explicit ZipDataEvent (const Acessor& = Acessor (0));
   explicit ZipDataEvent (::utils::dbufs::video::IVideoBuf::raw_ptr, const number_buf_type& number_buf = 0, const id_buf_type& id = "");
   ZipDataEvent (zip_buf_type&& buf, std::size_t size, const number_buf_type& number_buf = 0, const id_buf_type& id = "");
-  virtual ~ZipDataEvent ();
+  virtual ~ZipDataEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -63,7 +63,7 @@ class ZipDataEvent : public RuntimeEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
   // virtual void load_int( const ::pugi::xml_named_node_iterator& node ) override;

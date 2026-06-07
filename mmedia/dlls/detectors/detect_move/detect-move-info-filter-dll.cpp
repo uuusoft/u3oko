@@ -5,8 +5,6 @@
 \project    u3_detect_move
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "detect-move-includes_int.hpp"
 #include "detect-move-info-filter-dll.hpp"
 #include "detect-move-filter-dll.hpp"
@@ -18,11 +16,6 @@ InfoFilter::InfoFilter () :
   synced_ (false)
 {
   init ();
-}
-
-
-InfoFilter::~InfoFilter ()
-{
 }
 
 

@@ -16,6 +16,6 @@ enum class CodecModes : std::uint32_t
   unknown = 0xFF    //< Не определенно для общности
 };
 
-void       tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const CodecModes& src);
-CodecModes tag_invoke (::boost::json::value_to_tag< CodecModes >, const ::boost::json::value& jv);
+void       tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const CodecModes& src);
+CodecModes tag_invoke (::boost::json::value_to_tag< CodecModes >, const ::boost::json::value& jvs);
 }   // namespace libs::ievents::props::videos::generic::codec

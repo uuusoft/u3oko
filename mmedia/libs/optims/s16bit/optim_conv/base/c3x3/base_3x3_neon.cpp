@@ -8,7 +8,7 @@
 #include "mmedia/libs/optims/s16bit/optim_s16bit_generic/includes_int.hpp"
 #include "base_3x3.hpp"
 
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
 
 namespace libs::optim::s16bit::conv::base::c3x3::consts
 {
@@ -18,9 +18,7 @@ constexpr std::int32_t pxs_per_cycle = 4;
 namespace libs::optim::s16bit::conv::base::c3x3
 {
 struct TNeonCalcObj {
-  TNeonCalcObj ()
-  {
-  }
+  TNeonCalcObj () = default;
 
   void
   init (::libs::optim::io::MCallInfo& info, const cores::values_core_type** pmask)
@@ -36,7 +34,6 @@ struct TNeonCalcObj {
     clone_core_str (str2_core_);
     clone_core_str (str3_core_);
   }
-
 
   void
   clone_core_str (int16x8x2_t& str)
@@ -87,7 +84,7 @@ struct TNeonCalcObj {
     akk3 = vmlal_s16 (akk3, vget_low_s16 (str_data), vget_low_s16 (str1_core_.val[1]));
     akk4 = vmlal_s16 (akk4, vget_high_s16 (str_data), vget_high_s16 (str1_core_.val[1]));
 
-    U3_FAST_MOVE_CPTR (csstr, stride);
+    csstr = ::libs::helpers::mem::move_cptr (csstr, stride);
 
     str_data8 = vld1_s16 (csstr);
     str_data  = vcombine_s16 (
@@ -99,7 +96,7 @@ struct TNeonCalcObj {
     akk3 = vmlal_s16 (akk3, vget_low_s16 (str_data), vget_low_s16 (str2_core_.val[1]));
     akk4 = vmlal_s16 (akk4, vget_high_s16 (str_data), vget_high_s16 (str2_core_.val[1]));
 
-    U3_FAST_MOVE_CPTR (csstr, stride);
+    csstr = ::libs::helpers::mem::move_cptr (csstr, stride);
 
     str_data8 = vld1_s16 (csstr);
     str_data  = vcombine_s16 (
@@ -111,7 +108,7 @@ struct TNeonCalcObj {
     akk3 = vmlal_s16 (akk3, vget_low_s16 (str_data), vget_low_s16 (str3_core_.val[1]));
     akk4 = vmlal_s16 (akk4, vget_high_s16 (str_data), vget_high_s16 (str3_core_.val[1]));
 
-    U3_FAST_MOVE_CPTR (csstr, stride);
+    csstr = ::libs::helpers::mem::move_cptr (csstr, stride);
 
     tress[0] = vgetq_lane_s32 (akk1, 0);
     tress[0] += vgetq_lane_s32 (akk1, 1);
@@ -140,9 +137,7 @@ struct TNeonCalcObj {
 
 
 struct TModNeonCalcObj : public TNeonCalcObj {
-  TModNeonCalcObj ()
-  {
-  }
+  TModNeonCalcObj () = default;
 
   void
   init (::libs::optim::io::MCallInfo& info, const cores::values_core_type** pmask)
@@ -186,7 +181,7 @@ struct TModNeonCalcObj : public TNeonCalcObj {
     akk.val[2] = vmlal_s16 (akk.val[2], vget_low_s16 (str_data), vget_low_s16 (str1_core_.val[1]));
     akk.val[3] = vmlal_s16 (akk.val[3], vget_high_s16 (str_data), vget_high_s16 (str1_core_.val[1]));
 
-    U3_FAST_MOVE_CPTR (csstr, stride);
+    csstr = ::libs::helpers::mem::move_cptr (csstr, stride);
 
     str_data8     = vld1_s16 (csstr);
     str_data_low  = vreinterpret_s16_s8 (vtbl1_s8 (vreinterpret_s8_s16 (str_data8), permute8_low_));
@@ -198,7 +193,7 @@ struct TModNeonCalcObj : public TNeonCalcObj {
     akk.val[2] = vmlal_s16 (akk.val[2], vget_low_s16 (str_data), vget_low_s16 (str2_core_.val[1]));
     akk.val[3] = vmlal_s16 (akk.val[3], vget_high_s16 (str_data), vget_high_s16 (str2_core_.val[1]));
 
-    U3_FAST_MOVE_CPTR (csstr, stride);
+    csstr = ::libs::helpers::mem::move_cptr (csstr, stride);
 
     str_data8     = vld1_s16 (csstr);
     str_data_low  = vreinterpret_s16_s8 (vtbl1_s8 (vreinterpret_s8_s16 (str_data8), permute8_low_));
@@ -210,7 +205,7 @@ struct TModNeonCalcObj : public TNeonCalcObj {
     akk.val[2] = vmlal_s16 (akk.val[2], vget_low_s16 (str_data), vget_low_s16 (str3_core_.val[1]));
     akk.val[3] = vmlal_s16 (akk.val[3], vget_high_s16 (str_data), vget_high_s16 (str3_core_.val[1]));
 
-    U3_FAST_MOVE_CPTR (csstr, stride);
+    csstr = ::libs::helpers::mem::move_cptr (csstr, stride);
 
     tress[0] = vgetq_lane_s32 (akk.val[0], 0);
     tress[0] += vgetq_lane_s32 (akk.val[0], 1);
@@ -228,7 +223,6 @@ struct TModNeonCalcObj : public TNeonCalcObj {
     tress[3] += vgetq_lane_s32 (akk.val[1], 0);
     tress[3] += vgetq_lane_s32 (akk.val[1], 1);
 
-
     TNeonCalcObj::get_res (mul_koeff, csstr, mask, stride, tress, dstr);
 
     tress[0] = std::abs (tress[0]);
@@ -238,12 +232,12 @@ struct TModNeonCalcObj : public TNeonCalcObj {
     tress[4] = std::abs (tress[4]);
 
 #  if 0
-      tres[indxr] = ( tres[indxr] *mul_koeff ) >> U3_SHIFT_MUL_KOEFF_CONVOLUTION;
+    tres[indxr] = (tres[indxr] * mul_koeff) >> U3_SHIFT_MUL_KOEFF_CONVOLUTION;
 
-      tres[indxr] = tres[indxr] > 255 ? 255 : tres[indxr];
-      tres[indxr] = tres[indxr] < -255 ? -255 : tres[indxr];
+    tres[indxr] = tres[indxr] > 255 ? 255 : tres[indxr];
+    tres[indxr] = tres[indxr] < -255 ? -255 : tres[indxr];
 
-      dstr[indxx + indxr] = s1tatic_cast<short>( tres[indxr] );
+    dstr[indxx + indxr] = s1tatic_cast< short > (tres[indxr]);
 #  endif
   }
 };

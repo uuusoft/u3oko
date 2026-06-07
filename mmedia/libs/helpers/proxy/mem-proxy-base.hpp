@@ -21,11 +21,11 @@ class MemProxyBase
   /// Конструктор
   /// \param[in]  prefix   дополнительный префикс к имени памяти, должен быть уникальным для каждого типа, унаследовавшего данный класс
   /// \param[in]  max_size требуемый размер памяти
-  MemProxyBase (const std::string& prefix, std::size_t max_size);
+  MemProxyBase (const std::string&, std::size_t);
   virtual ~MemProxyBase ();
 
-  MemProxyBase (const MemProxyBase& src)            = delete;
-  MemProxyBase& operator= (const MemProxyBase& src) = delete;
+  MemProxyBase (const MemProxyBase&)            = delete;
+  MemProxyBase& operator= (const MemProxyBase&) = delete;
 
   shared_mem_ptr_type pshm_;   //< Разделяемая память процесса
   std::string         mid_;    //< Идентификатор памяти

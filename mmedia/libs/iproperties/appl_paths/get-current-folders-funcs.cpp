@@ -28,7 +28,7 @@ get_current_lib_folder ()
 {
   std::string ret = get_current_folder ();
 
-#if defined(U3_OS_ANDROID)
+#ifdef U3_OS_ANDROID
   ret = "";
   // ret += "/lib";
   // ret += "/lib/arm64-v8a";

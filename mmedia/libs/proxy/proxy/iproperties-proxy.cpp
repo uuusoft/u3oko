@@ -20,9 +20,10 @@ get_list_dlls_as_libs ()
   ret.emplace_back (::libs::helpers::files::FileNode { "vcd_all2hsl", 0, 0, 0 });
   ret.emplace_back (::libs::helpers::files::FileNode { "vcd_all2rgb", 0, 0, 0 });
 
-#if defined(U3_LIBS_ENABLE_DETECT_FACE_VDD)
+#if (U3_LIBS_ENABLE_DETECT_FACE_VDD == 1)
   ret.emplace_back (::libs::helpers::files::FileNode { "vdd_detect_face", 0, 0, 0 });
 #endif
+
   ret.emplace_back (::libs::helpers::files::FileNode { "vdd_detect_move", 0, 0, 0 });
 
   ret.emplace_back (::libs::helpers::files::FileNode { "vfn_freq_domain", 0, 0, 0 });
@@ -55,27 +56,24 @@ get_list_dlls_as_libs ()
   ret.emplace_back (::libs::helpers::files::FileNode { "vss_fake_vgen", 0, 0, 0 });
   ret.emplace_back (::libs::helpers::files::FileNode { "vss_pict_vgen", 0, 0, 0 });
 
-#if defined(U3_OS_ANDROID)
+#ifdef U3_OS_ANDROID
 #  if defined(U3_USE_SOURCE_VSS_ANDROID_JAVA_VGEN)
   ret.emplace_back (::libs::helpers::files::FileNode { "vss_android_java_vgen", 0, 0, 0 });
 #  endif
   ret.emplace_back (::libs::helpers::files::FileNode { "vss_android_vgen", 0, 0, 0 });
 #endif
 
-#if defined(U3_OS_RASPBERRY)
+#ifdef U3_OS_RASPBERRY
   // ret.emplace_back (::libs::helpers::files::FileNode { "vss_rasp_vgen", 0, 0, 0 });
   ret.emplace_back (::libs::helpers::files::FileNode { "vss_v4l2_vgen", 0, 0, 0 });
 #endif
 
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
   ret.emplace_back (::libs::helpers::files::FileNode { "vss_dshow_vgen", 0, 0, 0 });
 #endif
 
 #if defined(U3_OS_GNU_LINUX) || defined(U3_OS_ORANGE_PI)
   ret.emplace_back (::libs::helpers::files::FileNode { "vss_v4l2_vgen", 0, 0, 0 });
-#endif
-
-#if defined(U3_OS_MACX_DESKTOP)
 #endif
 
   for (auto& file : ret)

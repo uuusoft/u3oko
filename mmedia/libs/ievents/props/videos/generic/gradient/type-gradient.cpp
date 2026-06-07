@@ -2,7 +2,6 @@
 \file       type-gradient.cpp
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       14.06.2022
-
 \project    u3_ievents_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -13,28 +12,15 @@
 namespace libs::ievents::props::videos::generic::gradient
 {
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const Gradients& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const Gradients& src)
 {
-#if 1
-  jv = U3_CAST_UINT32_FORCE (src);
-#else
-  jv = {
-    { "type_gradient", U3_CAST_UINT32 (src) }
-  };
-#endif
+  jvs = U3_CAST_UINT32_FORCE (src);
 }
 
 
 Gradients
-tag_invoke (::boost::json::value_to_tag< Gradients >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< Gradients >, const ::boost::json::value& jvs)
 {
-  Gradients ret = Gradients::unknown;
-#if 1
-  ret = U3_CAST_STATIC< Gradients > (::libs::helpers::json::get_uint32 (jv));
-#else
-  const ::boost::json::object& obj = jv.as_object ();
-  ret                              = U3_CAST_STATIC< Gradients > (::libs::helpers::json::get_uint32 (obj.at ("type_gradient")));
-#endif
-  return ret;
+  return ::libs::helpers::casts::static_cast_helper< Gradients > (::libs::helpers::json::get_uint32 (jvs));
 }
 }   // namespace libs::ievents::props::videos::generic::gradient

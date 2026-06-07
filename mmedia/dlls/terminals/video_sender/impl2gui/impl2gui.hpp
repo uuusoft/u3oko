@@ -11,8 +11,8 @@ namespace dlls::terminals::video_sender::impl2gui
 class Impl2Gui final : public IImplSender
 {
   public:
-  Impl2Gui ();
-  virtual ~Impl2Gui ();
+  Impl2Gui ()          = default;
+  virtual ~Impl2Gui () = default;
 
   private:
   //  IImplSender overrides

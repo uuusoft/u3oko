@@ -11,7 +11,7 @@
 #include "hsl_vs_rgb.hpp"
 #include "rgb_to_hsl_int.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::convert::hsl_vs_rgb
 {

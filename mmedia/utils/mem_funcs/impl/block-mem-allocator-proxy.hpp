@@ -42,7 +42,7 @@ class BlockMemAllocatorProxy final
   private:
   BlockMemAllocatorProxy (const std::string& dll_path)
   {
-#ifdef U3_BUILD_MODULES_AS_LIBS
+#if (U3_BUILD_MODULES_AS_LIBS == 1)
     U3_MARK_UNUSED_HERE (lib_);
     creator_ = create_mem_impl;
 #else
@@ -58,7 +58,7 @@ class BlockMemAllocatorProxy final
       U3_XLOG_ERROR ("try load memory lib " + _cpath.string () + std::string (boost::diagnostic_information_what (_e, true)));
     }
 
-#  if defined(U3_OS_ANDROID)
+#  ifdef U3_OS_ANDROID
     creator_ = reinterpret_cast< create_func_type* > (dlsym (lib_.native (), "create_mem_impl"));
 #  else
     creator_ = ::boost::dll::import_symbol< create_func_type > (_cpath, "create_mem_impl");
@@ -67,9 +67,7 @@ class BlockMemAllocatorProxy final
     U3_ASSERT (creator_);
   }
 
-  ~BlockMemAllocatorProxy ()
-  {
-  }
+  ~BlockMemAllocatorProxy () = default;
 
   ::libs::helpers::dlls::dll_type lib_;       //< Загруженная библиотека по работе с памятью
   bcreate_func_type               creator_;   //< Функция создания реализации функционала в dll/so

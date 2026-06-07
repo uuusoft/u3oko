@@ -11,15 +11,10 @@
 
 namespace libs::ievents::runtime::error
 {
-BaseErrorEvent::BaseErrorEvent (const Acessor& ph, const std::string& info) :
+BaseErrorEvent::BaseErrorEvent (const Acessor& pha, const std::string& info) :
   info_ (info)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-BaseErrorEvent::~BaseErrorEvent ()
-{
 }
 
 
@@ -40,7 +35,7 @@ BaseErrorEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 BaseErrorEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (BaseErrorEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< BaseErrorEvent > (src);
   super::copy_int (src);
   info_ = dsrc->info_;
 }
@@ -48,10 +43,10 @@ BaseErrorEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-BaseErrorEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+BaseErrorEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (info_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (info_);
 
   self_correct ();
 }

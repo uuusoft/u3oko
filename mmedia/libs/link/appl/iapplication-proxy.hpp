@@ -32,12 +32,13 @@ class IApplicationProxy final
 
   private:
   //  internal typess
-  using forever_dlls_type = ::libs::helpers::dlls::ForeverLoadDlls;
+  using frozen_dlls_type = ::libs::helpers::dlls::FreezerDlls;
 
-  ::libs::helpers::dlls::dll_type lib_;           //< Держим в памяти dll принудительно вечно, до завершения работы всего процесса
-  create_func_type                creator_;       //< Указатель на функтор в dll, который собственно и создает приложение
-  delete_func_type                deletor_;       //< Указатель на функтор в dll, который уменьшает ссылку на созданное приложение и при необходимости удаляет его
-  IApplication*                   impl_;          //< Созданное приложение
-  static forever_dlls_type        frozen_dlls_;   //< собственно список для хранения модулей и гарантии, что они будут выгруженны последними
+  ::libs::helpers::dlls::dll_type lib_;              //< Держим в памяти dll принудительно вечно, до завершения работы всего процесса
+  create_func_type                creator_;          //< Указатель на функтор в dll, который собственно и создает приложение
+  delete_func_type                erasor_;           //< Указатель на функтор в dll, который уменьшает ссылку на созданное приложение и при необходимости удаляет его
+  IApplication*                   impl_ = nullptr;   //< Созданное приложение
+
+  static frozen_dlls_type frozen_dlls_;   //< собственно список для хранения модулей и гарантии, что они будут выгруженны последними
 };
 }   // namespace libs::link::appl

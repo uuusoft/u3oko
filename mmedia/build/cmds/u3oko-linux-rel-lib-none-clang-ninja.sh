@@ -14,4 +14,5 @@ export U3_BUILD_PREFIX=rel
 export U3_OS=Linux
 export U3_GENERATOR=Ninja
 
+#exit 1
 source ./u3-build.sh

@@ -12,8 +12,8 @@ namespace dlls::gens::vgen_mops::lib::helpers
 class MorphOperator final
 {
   public:
-  MorphOperator ();
-  ~MorphOperator ();
+  MorphOperator ()  = default;
+  ~MorphOperator () = default;
 
   MorphOperator (const MorphOperator& src)            = delete;
   MorphOperator& operator= (const MorphOperator& src) = delete;
@@ -37,14 +37,16 @@ class MorphOperator final
     const syn::MorphOperationParams&  op,
     ::libs::bufs::Bufs*               pbuf,
     ::utils::dbufs::video::IVideoBuf* pdst);
+
   /// Функция подготовки параметров для МО erosion
   /// \param[in]    size_spot  размер пятна операции
   /// \param[out ]  cinfo      параметры функции
-  /// \param[out ]  tfunct     возвращаемая функция
+  /// \param[out ]  tfunc     возвращаемая функция
   void fill_koeffs_for_erosion_operation (
     const std::int16_t                 size_spot,
     ::libs::optim::io::MCallInfo&      cinfo,
-    ::libs::optim::mcalls::InfoMFunct& tfunct);
+    ::libs::optim::mcalls::MTFuncInfo& tfunc);
+
   /// Функция реализации операции дилатации над буфером
   /// \param[in]  op параметры операции
   /// \param[in]  pbuf  буфер источник
@@ -54,21 +56,22 @@ class MorphOperator final
     const syn::MorphOperationParams&  op,
     ::libs::bufs::Bufs*               pbuf,
     ::utils::dbufs::video::IVideoBuf* pdst);
+
   /// Функция подготовки параметров для МО dilation
   /// \param[in]    size_spot  размер пятна операции
   /// \param[out ]  cinfo    параметры функции
-  /// \param[out ]  tfunct   возвращаемая функция
+  /// \param[out ]  tfunc   возвращаемая функция
   void fill_koeffs_for_dilation_operation (
     const std::int16_t                 size_spot,
     ::libs::optim::io::MCallInfo&      cinfo,
-    ::libs::optim::mcalls::InfoMFunct& tfunct);
+    ::libs::optim::mcalls::MTFuncInfo& tfunc);
 
-  syn::IMCaller::ptr         pthreads_;         //< Указатель на пул потоков для вычисления МО
-  ::libs::optim::io::hioptim conv_mod_3x3_;     //< Функция свертки 3х3
-  ::libs::optim::io::hioptim conv_mod_5x5_;     //< Функция свертки 5х5
-  ::libs::optim::io::hioptim conv_mod_7x7_;     //< Функция свертки 7х7
-  ::libs::optim::io::hioptim conv_mod_9x9_;     //< Функция свертки 9х9
-  ::libs::optim::io::hioptim conv_mod_11x11_;   //< Функция свертки 11х11
-  syn::TransformInfo*        transinfo_;        //< Указатель на текущий параметр при вызове функции transform
+  syn::IMCaller::ptr         pthreads_ = nullptr;    //< Указатель на пул потоков для вычисления МО
+  ::libs::optim::io::hioptim conv_mod_3x3_;          //< Функция свертки 3х3
+  ::libs::optim::io::hioptim conv_mod_5x5_;          //< Функция свертки 5х5
+  ::libs::optim::io::hioptim conv_mod_7x7_;          //< Функция свертки 7х7
+  ::libs::optim::io::hioptim conv_mod_9x9_;          //< Функция свертки 9х9
+  ::libs::optim::io::hioptim conv_mod_11x11_;        //< Функция свертки 11х11
+  syn::TransformInfo*        transinfo_ = nullptr;   //< Указатель на текущий параметр при вызове функции transform
 };
 }   // namespace dlls::gens::vgen_mops::lib::helpers

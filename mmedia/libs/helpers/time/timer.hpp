@@ -17,10 +17,17 @@ class Timer final
 
   U3_HELPER_DISABLE_ACOPY_TYPE (Timer)
 
-  Timer ();
-  time_type get_time () const;
+  Timer ()  = default;
+  ~Timer () = default;
+
+  auto
+  get_time () -> time_type const
+  {
+    auto res = clock_type::now () - begin_time_;
+    return std::chrono::duration_cast< time_type > (res);
+  }
 
   private:
-  clock_type::time_point begin_time_;   //<
+  clock_type::time_point begin_time_ = clock_type::now ();   //<
 };
 }   // namespace libs::helpers::time

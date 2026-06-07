@@ -41,7 +41,7 @@ load_op (const ::pugi::xml_named_node_iterator& prop, MorphOperationParams& info
 }
 
 
-VideoMorphologyProp::VideoMorphologyProp (const Acessor& ph)
+VideoMorphologyProp::VideoMorphologyProp (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
 
@@ -50,15 +50,9 @@ VideoMorphologyProp::VideoMorphologyProp (const Acessor& ph)
 
   diffs_.clear ();
   diffs_.reserve (3);
-
   diffs_.emplace_back (default_morph_buf_info);
   diffs_.emplace_back (default_morph_buf_info);
   diffs_.emplace_back (default_morph_buf_info);
-}
-
-
-VideoMorphologyProp::~VideoMorphologyProp ()
-{
 }
 
 
@@ -91,7 +85,7 @@ VideoMorphologyProp::save_json_int (::boost::json::object& obj) const
 void
 VideoMorphologyProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (VideoMorphologyProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< VideoMorphologyProp > (src);
   super::copy_int (src);
   diffs_ = dsrc->diffs_;
 }
@@ -99,10 +93,10 @@ VideoMorphologyProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-VideoMorphologyProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+VideoMorphologyProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (diffs_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (diffs_);
 
   self_correct ();
 }

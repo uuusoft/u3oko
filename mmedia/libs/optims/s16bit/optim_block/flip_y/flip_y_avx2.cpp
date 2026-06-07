@@ -11,7 +11,7 @@
 #include "flip_y.hpp"
 #include "flip_y_move_alg.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::block::flip_y
 {

@@ -21,19 +21,18 @@ enum class Sortings : std::uint32_t
 {
   usual    = 0x00,   //< По умолчанию, фиксированный выбор, не зависит от размера выборки
   adaptive = 0x01,   //< Адаптивная, в зависимости от размера выборки. <- рекомендуемый тип
-  skip     = 0x02,   //< Пропуск этапа сортировки, т.е. пиксели не обновляются. Для тестирования
+  skip     = 0x02,   //< Пропуск этапа сортировки (Для тестирования)
   standart = 0x03,   //< Встроенная сортировка в стандарт C++
   insert   = 0x04,   //< Сортировка вставкой
-  count    = 0x05,   //< Cортировка подсчетом. Самая быстрая практически всегда, кроме малых окрестностей
-  rand     = 0x06,   //< Выбор случайного значения из окрестности. Не фильтрация, не сортировка, для теста
+  count    = 0x05,   //< Cортировка подсчетом (самая быстрая практически всегда, кроме малых окрестностей)
+  rand     = 0x06,   //< Выбор случайного значения из окрестности (не фильтрация, не сортировка, для теста)
   unknown  = 0xFF    //< Не определенно для общности
 };
 
-std::string to_string (const Sortings& val);
-void        tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const Sortings& src);
-Sortings    tag_invoke (::boost::json::value_to_tag< Sortings >, const ::boost::json::value& jv);
+const std::string& to_string (const Sortings& val);
+void               tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const Sortings& src);
+Sortings           tag_invoke (::boost::json::value_to_tag< Sortings >, const ::boost::json::value& jvs);
 
-/// Свойства фильтрации во временной области
 class MedianSpaceFilterProp final : public ievents::Event
 {
   friend class boost::serialization::access;
@@ -52,7 +51,7 @@ class MedianSpaceFilterProp final : public ievents::Event
   U3_HELPER_DISABLE_ACOPY_TYPE (MedianSpaceFilterProp)
 
   explicit MedianSpaceFilterProp (const Acessor& = Acessor (0));
-  virtual ~MedianSpaceFilterProp ();
+  virtual ~MedianSpaceFilterProp () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -61,12 +60,14 @@ class MedianSpaceFilterProp final : public ievents::Event
     return ret;
   }
 
-  std::int32_t size_core_;        //< Размер ядра медианной фильтрации
-  std::int32_t dim_core_;         //< Размерность ядра фильтрации [1.2]
-  std::int32_t rang_;             //< Ранг выбираемого числа из отсортированной последовательности 0 <= rang < count_core_ ^ dim_core_
-  Sortings     sort_type_;        //< Тип сортировки
-  std::int32_t size_cond_core_;   //< Размер ядра фильтрации, если есть признак в буфере условий. 0 - фильтрации не производится
-  std::int32_t cond_rang_;        //< Ранг числа, если есть буфер условий
+  std::int32_t      size_core_      = 5;                                   //< Размер ядра медианной фильтрации
+  std::int32_t      dim_core_       = 2;                                   //< Размерность ядра фильтрации [1.2]
+  std::int32_t      rang_           = 2;                                   //< Ранг выбираемого числа из отсортированной последовательности 0 <= rang < count_core_ ^ dim_core_
+  Sortings          sort_type_      = Sortings::usual;                     //< Тип сортировки
+  std::int32_t      size_cond_core_ = 0;                                   //< Размер ядра фильтрации, если есть признак в буфере условий. 0 - фильтрации не производится
+  std::int32_t      cond_rang_      = 0;                                   //< Ранг числа, если есть буфер условий
+  syn::off_buf_type indx_cond_buf_  = syn::offs::space_noise_filter_res;   //< Опицональный индекс буфера условий. Буфер условий определяет размер ядра фильтрации (и вообще саму возможность фильтрации)
+  bool              use_cond_buf_   = false;                               //< Флаг учета буфера условий при фильтрации
 
   private:
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ievents::Event)
@@ -74,7 +75,7 @@ class MedianSpaceFilterProp final : public ievents::Event
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   // overrides ievents::Event
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;

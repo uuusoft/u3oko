@@ -29,7 +29,7 @@
 // # define BOOST_SYSTEM_NO_DEPRECATED
 #endif
 
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
 #  ifndef _SCL_SECURE_NO_WARNINGS
 #    define _SCL_SECURE_NO_WARNINGS
 #  endif
@@ -39,7 +39,7 @@
 #  endif
 #endif
 
-#if defined(U3_OS_ANDROID)
+#ifdef U3_OS_ANDROID
 #  ifndef BOOST_INTERPROCESS_SHARED_DIR_PATH
 // #define BOOST_INTERPROCESS_SHARED_DIR_PATH "/sdcard"
 #  endif

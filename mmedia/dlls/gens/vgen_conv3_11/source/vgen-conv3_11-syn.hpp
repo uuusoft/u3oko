@@ -10,4 +10,9 @@ namespace dlls::gens::vgen_conv3_11::syn
 {
 using VideoConvolutionProp     = ::libs::ievents::props::videos::generic::convolution::VideoConvolutionProp;
 using BuffVideoConvolutionProp = ::libs::ievents::props::videos::generic::convolution::BuffVideoConvolutionProp;
+using FilterInfo               = ::libs::icore::impl::var1::obj::FilterInfo;
+using TransformInfo            = ::libs::icore::impl::var1::obj::dll::TransformInfo;
+using CallInterfInfo           = ::libs::icore::impl::var1::obj::dll::CallInterfInfo;
+
+namespace base = ::libs::optim::s16bit::conv::base;
 }   // namespace dlls::gens::vgen_conv3_11::syn

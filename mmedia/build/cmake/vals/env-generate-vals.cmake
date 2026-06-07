@@ -3,6 +3,15 @@
 # copyright   Erashov A.I.
 # file        env-generate-vals.cmake
 
+cmake_host_system_information(RESULT U3_OS_NAME QUERY OS_NAME)
+cmake_host_system_information(RESULT U3_OS_RELEASE QUERY OS_RELEASE)
+cmake_host_system_information(RESULT U3_OS_VERSION QUERY OS_VERSION)
+cmake_host_system_information(RESULT U3_OS_OS_PLATFORM QUERY OS_PLATFORM)
+#message(FATAL_ERROR "U3_OS_NAME=${U3_OS_NAME}")
+#message(FATAL_ERROR "U3_OS_RELEASE=${U3_OS_RELEASE}")
+#message(FATAL_ERROR "U3_OS_VERSION=${U3_OS_VERSION}")
+#message(FATAL_ERROR "U3_OS_VERSION=${U3_OS_OS_PLATFORM}")
+
 u3_get_major_version(CMAKE_CXX_COMPILER_VERSION U3_CMAKE_CXX_COMPILER_VERSION_CID)
 u3_get_major_version(CMAKE_C_COMPILER_VERSION U3_CMAKE_C_COMPILER_VERSION_CID)
 

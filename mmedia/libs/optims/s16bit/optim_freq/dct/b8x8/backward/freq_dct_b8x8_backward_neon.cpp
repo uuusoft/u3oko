@@ -10,7 +10,7 @@
 #include "freq_dct_b8x8_backward.hpp"
 #include "freq_dct_b8x8_backward_int.hpp"
 
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
 
 namespace libs::optim::s16bit::freq::dct::b8x8::backward
 {

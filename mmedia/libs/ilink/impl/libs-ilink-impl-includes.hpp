@@ -5,7 +5,6 @@
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_ilink
 */
-#include "oneproc/libs-ilink-impl-oneproc-syn.hpp"
 #include "oneproc/create-info-ext.hpp"
 #include "oneproc/link-impl-one-proc-int.hpp"
 #include "oneproc/link-impl-one-proc.hpp"

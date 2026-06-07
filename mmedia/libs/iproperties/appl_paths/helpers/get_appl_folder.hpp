@@ -14,7 +14,7 @@ get_appl_folder (const std::string& name_appl)
   U3_CHECK (!name_appl.empty (), "name_appl empty");
   std::string ret;
 
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
   {
     char tbuf[2 * MAX_PATH + 2];
     tbuf[0] = '\0';

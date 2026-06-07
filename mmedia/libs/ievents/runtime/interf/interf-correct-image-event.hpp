@@ -29,7 +29,7 @@ class InterfCorrectImageEvent : public BaseInterfEvent
   U3_HELPER_DISABLE_ACOPY_TYPE (InterfCorrectImageEvent)
 
   explicit InterfCorrectImageEvent (const Acessor& = Acessor (0), const impl_ptr_type& = impl_ptr_type ());
-  virtual ~InterfCorrectImageEvent ();
+  virtual ~InterfCorrectImageEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -52,6 +52,6 @@ class InterfCorrectImageEvent : public BaseInterfEvent
 };
 }   // namespace libs::ievents::runtime::interf
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 BOOST_CLASS_EXPORT_KEY (::libs::ievents::runtime::interf::InterfCorrectImageEvent);
 #endif

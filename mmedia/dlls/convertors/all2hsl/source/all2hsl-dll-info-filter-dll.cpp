@@ -4,8 +4,6 @@
 \date       20.05.2017
 \project    u3_all2hsl
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "all2hsl-dll-includes_int.hpp"
 #include "all2hsl-dll-info-filter-dll.hpp"
 #include "all2hsl-dll-filter-dll.hpp"
@@ -16,10 +14,6 @@ InfoFilter::InfoFilter () :
   rprops_ (nullptr)
 {
   init ();
-}
-
-InfoFilter::~InfoFilter ()
-{
 }
 
 void

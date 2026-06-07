@@ -5,7 +5,7 @@
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */
-#if 0
+#ifdef U3_FAKE_DISABLE
 namespace dlls::sources::v4l2_openmax_vgen::jpeg
 {
 /// Реализация унифицированного захвата данных из системно зависимых устройств
@@ -29,7 +29,7 @@ class JpegImpl final
   //  internal typess
   using std::list< utils::dbufs::video::IVideoBuf::ptr > bufs_type;
   using std::mutex                                       sync_type;
-  using std::lock_guard< sync_type >                     lock_type;
+  using std::scoped_lock< sync_type >                    lock_type;
 
 
   bool                      init_device_;         //< Флаг инициализации устройства openmax

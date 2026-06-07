@@ -56,14 +56,9 @@ class IGraphNode
 
   private:
   /// Конструктор, закрытый, базовый класс с чисто виртуальными функциями
-  IGraphNode ()
-  {
-  }
-
+  IGraphNode () = default;
   /// Деструктор, закрываем, удалить объект может только сам граф или реализации, а не клиент (пусть и по его требованию)
-  virtual ~IGraphNode ()
-  {
-  }
+  virtual ~IGraphNode () = default;
 
   //  IGraphNode interface
   virtual IInterfGraphObj::raw_ptr query_int (const ::libs::helpers::utils::cuuid& id) = 0;

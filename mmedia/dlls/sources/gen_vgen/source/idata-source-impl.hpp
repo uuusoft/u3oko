@@ -11,6 +11,9 @@ namespace dlls::sources::gen_vgen
 class IDataSourceImpl final : public libs::icore::impl::var1::obj::interfs::IDataSourceInterfObjGraph
 {
   public:
+  IDataSourceImpl ()  = default;
+  ~IDataSourceImpl () = default;
+
   void init ();
 
   private:

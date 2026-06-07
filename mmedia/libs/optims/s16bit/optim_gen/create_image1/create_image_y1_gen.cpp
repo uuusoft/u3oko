@@ -14,7 +14,7 @@ Dp[ x, y ] = ( Const2 - abs( Const1 - y ) * abs( Const1 - y ) )
 // old shit
 namespace libs::optim::s16bit::gen::create_image1
 {
-#if 0
+#ifdef U3_FAKE_DISABLE
 inline bool
 check (const ::libs::optim::io::MCallInfo& info)
 {
@@ -49,17 +49,17 @@ check (const ::libs::optim::io::MCallInfo& info)
 }   // namespace libs::optim::s16bit::gen::create_image1
 
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 #  undef SET_UNALIGNED_FUNCT
 #  undef SET_UNMASKDEST_FUNCT
-//aligned masking version
+// aligned masking version
 #  include "create_image_y1_alu.cxx"
 #  include "create_image_y1_sse2.cxx"
 #  include "create_image_y1_avx1.cxx"
 #  include "create_image_y1_avx2.cxx"
 
 #  define SET_UNALIGNED_FUNCT
-//unaligned masking version
+// unaligned masking version
 #  include "create_image_y1_alu.cxx"
 #  include "create_image_y1_sse2.cxx"
 #  include "create_image_y1_avx1.cxx"

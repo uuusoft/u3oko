@@ -8,7 +8,7 @@
 #include "mmedia/includes/includes.hpp"
 #include "gen-vgen-proxy.hpp"
 
-#if defined(U3_OS_ANDROID)
+#ifdef U3_OS_ANDROID
 #  if defined(U3_USE_SOURCE_VSS_ANDROID_JAVA_VGEN)
 extern "C" BOOST_SYMBOL_EXPORT bool get_source_vss_android_java_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
 extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_android_java_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
@@ -33,7 +33,7 @@ extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_rasp_vgen (::dlls::sources::
 #  endif
 #endif
 
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
 #  if (U3_LIBS_ENABLE_WIN32_DSHOW_VGEN_VSS == 1)
 extern "C" BOOST_SYMBOL_EXPORT bool get_source_vss_dshow_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
 extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_dshow_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
@@ -60,7 +60,7 @@ get_create_source_funct (const std::string& plib_id)
 {
   const auto lib_id = libs::helpers::dlls::undecorate_dll_name (plib_id);
 
-#if defined(U3_OS_ANDROID)
+#ifdef U3_OS_ANDROID
 #  if defined(U3_USE_SOURCE_VSS_ANDROID_JAVA_VGEN)
   if (lib_id == "vss_android_java_vgen")
   {
@@ -95,7 +95,7 @@ get_create_source_funct (const std::string& plib_id)
 #  endif
 #endif
 
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
 #  if (U3_LIBS_ENABLE_WIN32_DSHOW_VGEN_VSS == 1)
   if (lib_id == "vss_dshow_vgen")
   {
@@ -129,7 +129,7 @@ get_free_source_funct (const std::string& plib_id)
 {
   const auto lib_id = libs::helpers::dlls::undecorate_dll_name (plib_id);
 
-#if defined(U3_OS_ANDROID)
+#ifdef U3_OS_ANDROID
 #  if defined(U3_USE_SOURCE_VSS_ANDROID_JAVA_VGEN)
   if (lib_id == "vss_android_java_vgen")
   {
@@ -164,7 +164,7 @@ get_free_source_funct (const std::string& plib_id)
 #  endif
 #endif
 
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
 #  if (U3_LIBS_ENABLE_WIN32_DSHOW_VGEN_VSS == 1)
   if (lib_id == "vss_dshow_vgen")
   {

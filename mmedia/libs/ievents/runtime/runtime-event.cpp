@@ -11,14 +11,9 @@
 
 namespace libs::ievents::runtime
 {
-RuntimeEvent::RuntimeEvent (const Acessor& ph)
+RuntimeEvent::RuntimeEvent (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-RuntimeEvent::~RuntimeEvent ()
-{
 }
 
 
@@ -32,16 +27,16 @@ RuntimeEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 RuntimeEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (RuntimeEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< RuntimeEvent > (src);
   super::copy_int (src);
 }
 
 
 template< class Archive >
 void
-RuntimeEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+RuntimeEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoTimedEvent", super);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoTimedEvent", super);
   self_correct ();
 }
 }   // namespace libs::ievents::runtime

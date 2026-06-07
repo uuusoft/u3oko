@@ -27,7 +27,7 @@ class IWrapBaseEvent : public IEvent
   U3_HELPER_DISABLE_ACOPY_TYPE (IWrapBaseEvent)
 
   explicit IWrapBaseEvent (const Acessor& = Acessor (0), IEvent::ptr = IEvent::ptr ());
-  virtual ~IWrapBaseEvent ();
+  virtual ~IWrapBaseEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -53,7 +53,7 @@ class IWrapBaseEvent : public IEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 }   // namespace libs::events
 

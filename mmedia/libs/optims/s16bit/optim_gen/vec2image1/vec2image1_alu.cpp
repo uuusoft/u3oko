@@ -26,7 +26,7 @@ alu (::libs::optim::io::MCallInfo& cinfo)
 
   get_params (cinfo, &src, &dst, &pparams);
 
-  const std::int32_t max_mbound = U3_CAST_STATIC< std::int32_t > (pparams->size_block_ / 2);
+  const auto max_mbound = U3_CAST_INT32 (pparams->size_block_ / 2);
 
   for (std::uint32_t indxy = 0; indxy < src->height_; ++indxy)
   {
@@ -36,7 +36,7 @@ alu (::libs::optim::io::MCallInfo& cinfo)
 
     for (std::uint32_t indxx = 0; indxx < src->width_; ++indxx)
     {
-      const char*     rlsrc = U3_CAST_REINTERPRET< const char* > (&lsrc[indxx]);
+      const auto*     rlsrc = ::libs::helpers::casts::reinterpret_cast_helper< const char* > (&lsrc[indxx]);
       const pair_type rvec (*(rlsrc + 0), *(rlsrc + 1));
       std::int32_t    vx = rvec.first * pparams->mul_koeff_vec_;
       std::int32_t    vy = rvec.second * pparams->mul_koeff_vec_;
@@ -49,7 +49,7 @@ alu (::libs::optim::io::MCallInfo& cinfo)
       const std::uint32_t offx        = max_mbound * sizeof (std::int16_t);
       std::int16_t*       mblock_ldst = bblock_ldst;
 
-      U3_FAST_MOVE_PTR (mblock_ldst, offy + offx);
+      mblock_ldst = ::libs::helpers::mem::move_ptr (mblock_ldst, offy + offx);
 
       // const std::int16_t color = U3_CAST_INT16(rand() % 255 );
       // const std::int16_t color = indxy % 128 + indxx % 128;

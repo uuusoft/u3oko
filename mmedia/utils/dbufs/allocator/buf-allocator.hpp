@@ -23,7 +23,7 @@ class BufAllocator final : public IBufAllocator
   //  internal types
   using bufs_type    = std::list< utils::dbufs::video::IVideoBuf::ptr >;
   using sync_type    = std::mutex;
-  using lock_type    = std::lock_guard< sync_type >;
+  using lock_type    = std::scoped_lock< sync_type >;
   using counter_type = std::int64_t;
 
   BufAllocator ();

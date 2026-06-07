@@ -4,20 +4,11 @@
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_ilink
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "libs-ilink-loader-includes_int.hpp"
 #include "out-proc-loader-code.hpp"
 
 namespace libs::ilink::loader
 {
-OutProcLoaderCode::OutProcLoaderCode () :
-  info_ (nullptr)
-{
-  // thread_done_.store( true );
-}
-
-
 OutProcLoaderCode::~OutProcLoaderCode ()
 {
   while (!unload (true))
@@ -36,7 +27,7 @@ OutProcLoaderCode::load_int (
   info_ = info;
   U3_ASSERT_SIGNAL ("process");
 
-#if 0
+#ifdef U3_FAKE_DISABLE
   if (!child_process_)
   {
     child_process_.reset (
@@ -52,8 +43,8 @@ OutProcLoaderCode::is_load_int () const
 {
   U3_ASSERT_SIGNAL ("process");
   return false;
-#if 0
-  //return child_process_ && *child_process_ ? true : false;
+#ifdef U3_FAKE_DISABLE
+  // return child_process_ && *child_process_ ? true : false;
   return child_process_ && child_process_->get_id () ? true : false;
 #endif
 }
@@ -63,17 +54,17 @@ bool
 OutProcLoaderCode::unload_int (bool force)
 {
   U3_ASSERT_SIGNAL ("process");
-#if 0
+#ifdef U3_FAKE_DISABLE
   if (child_process_)
   {
     if (force)
     {
       U3_ASSERT_SIGNAL ("process");
-      //child_process_->terminate (false );
+      // child_process_->terminate (false );
     }
 
     U3_ASSERT_SIGNAL ("process");
-    //child_process_->wait ();
+    // child_process_->wait ();
     child_process_.reset ();
   }
 #endif

@@ -14,12 +14,12 @@ namespace libs::imdata_events::events
 void
 register_events_in_archives ()
 {
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::imdata_events::events::BaseDataEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::imdata_events::events::GetNodesDataEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::imdata_events::events::ChangeGraphsDataEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::imdata_events::events::ListDevicesDataEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::imdata_events::events::ListXmlFilesDataEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::imdata_events::events::BaseNodesDataEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::imdata_events::events::ChangeNodeDataEvent);
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::imdata_events::events::BaseDataEvent > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::imdata_events::events::GetNodesDataEvent > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::imdata_events::events::ChangeGraphsDataEvent > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::imdata_events::events::ListDevicesDataEvent > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::imdata_events::events::ListXmlFilesDataEvent > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::imdata_events::events::BaseNodesDataEvent > ();
+  ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::imdata_events::events::ChangeNodeDataEvent > ();
 }
 }   // namespace libs::imdata_events::events

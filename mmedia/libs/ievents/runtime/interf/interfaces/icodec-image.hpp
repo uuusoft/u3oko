@@ -16,9 +16,8 @@ class ICodecImage : public IBaseRuntimeInterf
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ICodecImage)
 
-  virtual ~ICodecImage ()
-  {
-  }
+  virtual ~ICodecImage () = default;
+
   /// Функция возвращает индентификатор кодека, который поддерживается данной реализацией
   /// MPEG/x264/etc
   /// \return идентификатор формата из ::libs::helpers::uids::codecs
@@ -52,9 +51,7 @@ class ICodecImage : public IBaseRuntimeInterf
   }
 
   protected:
-  ICodecImage ()
-  {
-  }
+  ICodecImage () = default;
 
   private:
   //  ICodecImage interface

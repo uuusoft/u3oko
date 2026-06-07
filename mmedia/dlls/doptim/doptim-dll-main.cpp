@@ -5,8 +5,6 @@
 \project    u3_doptim_dll
 \brief      Модуль доступа к реализациям алгоритмов обработки данных
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "doptim-includes_int.hpp"
 
 extern "C" BOOST_SYMBOL_EXPORT ::libs::optim::io::IOptim::raw_ptr

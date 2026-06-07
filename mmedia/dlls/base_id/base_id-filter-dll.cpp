@@ -11,19 +11,6 @@
 
 namespace dlls::base_id
 {
-Filter::Filter () :
-  counter_frames_ (0),
-  base_interf_ (std::make_shared< BaseIdInterf > ()),
-  send_base_interf_ (false)
-{
-}
-
-
-Filter::~Filter ()
-{
-}
-
-
 void
 Filter::load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node)
 {
@@ -63,5 +50,32 @@ Filter::init_pts (syn::ConnectInfo* info)
   info->ins_[0].set_info (true, ::libs::icore::impl::var1::obj::Points::input);
   info->count_outs_ = 1;
   info->outs_[0].set_info (true);
+}
+
+
+void
+Filter::transform_int (syn::TransformInfo& info)
+{
+  prepare_transform (info);
+
+  auto events = info.frame_events_;
+  U3_ASSERT (events);
+
+  if (!send_base_interf_)
+  {
+    syn::IEvent::ptr rmsg;
+    auto             dmsg = ::libs::iproperties::helpers::create_event< syn::InterfBaseIdEvent > (rmsg);
+
+    dmsg->set_interface (base_interf_);
+    dmsg->set_active (true);
+    events->push_back (rmsg);
+    send_base_interf_ = true;
+  }
+
+  if (::libs::events::PropertyUsings::disabled == finfo_.ef_props_.front ()->get_using_state ())
+  {
+    return;
+  }
+  ++counter_frames_;
 }
 }   // namespace dlls::base_id

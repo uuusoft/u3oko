@@ -13,7 +13,7 @@ Dp[ x, y ] = unsighsat( Const2 - 2 * ( Const1 - y ) * ( Const1 - y ) )
 // old shit
 namespace libs::optim::s16bit::gen::create_image1
 {
-#if 0
+#ifdef U3_FAKE_DISABLE
 void alu (::libs::optim::io::MCallInfo& info);
 void sse2 (::libs::optim::io::MCallInfo& info);
 void udest_sse2 (::libs::optim::io::MCallInfo& info);

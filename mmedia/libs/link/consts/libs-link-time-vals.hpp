@@ -8,7 +8,7 @@
 
 namespace libs::link::consts
 {
-#if defined(U3_CNTRL_DEBUG)
+#ifdef U3_CNTRL_DEBUG
 constexpr std::int32_t ms_send_msg_max_wait = 10 * 60 * 1000;   //< 10 min
 #else
 constexpr std::int32_t ms_send_msg_max_wait = 1 * 60 * 1000;   //< 1 min

@@ -11,13 +11,13 @@
 
 namespace libs::ievents::props::videos::generics::sharper
 {
-#if 0
+#ifdef U3_FAKE_DISABLE
 template< class Archive >
 void
-EventBufsInfo::serialize (Archive& ar, const std::uint32_t /* file_version */)
+EventBufsInfo::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP (super);
-  ar& BOOST_SERIALIZATION_NVP (koeff_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP (super);
+  arh& BOOST_SERIALIZATION_NVP (koeff_);
   return;
 }
 

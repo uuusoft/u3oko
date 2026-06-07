@@ -22,28 +22,20 @@ Buff2ModuleInfo::Buff2ModuleInfo (
 }
 
 
-Buff2ModuleInfo::~Buff2ModuleInfo ()
-{
-}
-
-
 template< class Archive >
 void
-Buff2ModuleInfo::serialize (Archive& ar, const std::uint32_t /* file_version */)
+Buff2ModuleInfo::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (fps_);
-  ar& BOOST_SERIALIZATION_NVP (indx_buf_);
-  ar& BOOST_SERIALIZATION_NVP (dest_module_id_);
+  arh& BOOST_SERIALIZATION_NVP (fps_);
+  arh& BOOST_SERIALIZATION_NVP (indx_buf_);
+  arh& BOOST_SERIALIZATION_NVP (dest_module_id_);
 }
 
 
 void
-tag_invoke (
-  ::boost::json::value_from_tag,
-  ::boost::json::value&  jv,
-  const Buff2ModuleInfo& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const Buff2ModuleInfo& src)
 {
-  jv = {
+  jvs = {
     { "fps", src.fps_ },
     { "indx_buf", src.indx_buf_ },
     { "dest_module_id", src.dest_module_id_ }
@@ -52,10 +44,10 @@ tag_invoke (
 
 
 Buff2ModuleInfo
-tag_invoke (::boost::json::value_to_tag< Buff2ModuleInfo >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< Buff2ModuleInfo >, const ::boost::json::value& jvs)
 {
   Buff2ModuleInfo              ret;
-  const ::boost::json::object& obj = jv.as_object ();
+  const ::boost::json::object& obj = jvs.as_object ();
   ::libs::helpers::json::extract (obj, ret.fps_, "fps");
   ::libs::helpers::json::extract (obj, ret.indx_buf_, "indx_buf");
   ::libs::helpers::json::extract (obj, ret.dest_module_id_, "dest_module_id");

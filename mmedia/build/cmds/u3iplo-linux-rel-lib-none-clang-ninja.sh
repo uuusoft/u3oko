@@ -13,5 +13,6 @@ export U3_BUILD=Release
 export U3_BUILD_PREFIX=rel
 export U3_OS=Linux
 export U3_GENERATOR=Ninja
+#export U3_USE_GIT_HASH_FOR_MARK_BUILD=TRUE
 
 source ./u3-build.sh

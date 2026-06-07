@@ -11,18 +11,13 @@
 
 namespace libs::ievents::props::videos::generic::gradient
 {
-GradientProp::GradientProp (const Acessor& ph)
+GradientProp::GradientProp (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
 
   channels_.push_back ({ ::utils::dbufs::video::consts::offs::lit, ChannelGradient () });
   channels_.push_back ({ ::utils::dbufs::video::consts::offs::sat, ChannelGradient () });
   channels_.push_back ({ ::utils::dbufs::video::consts::offs::hue, ChannelGradient () });
-}
-
-
-GradientProp::~GradientProp ()
-{
 }
 
 
@@ -166,7 +161,7 @@ GradientProp::load_layer (const std::string& vals, ChannelGradient* prop)
 void
 GradientProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (GradientProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< GradientProp > (src);
   super::copy_int (src);
   channels_ = dsrc->channels_;
 }
@@ -174,10 +169,10 @@ GradientProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-GradientProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+GradientProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (channels_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (channels_);
 
   self_correct ();
 }

@@ -27,15 +27,15 @@ to_string (const LogProcessActions& val)
 }
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const LogProcessActions& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const LogProcessActions& src)
 {
-  jv = U3_CAST_UINT32_FORCE (src);
+  jvs = U3_CAST_UINT32_FORCE (src);
 }
 
 
 LogProcessActions
-tag_invoke (::boost::json::value_to_tag< LogProcessActions >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< LogProcessActions >, const ::boost::json::value& jvs)
 {
-  return U3_CAST_STATIC< LogProcessActions > (::libs::helpers::json::get_uint32 (jv));
+  return ::libs::helpers::casts::static_cast_helper< LogProcessActions > (::libs::helpers::json::get_uint32 (jvs));
 }
 }   // namespace libs::ilog_events::events

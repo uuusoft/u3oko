@@ -15,7 +15,7 @@ class Filter final :
 {
   public:
   Filter ();
-  virtual ~Filter ();
+  virtual ~Filter () = default;
 
   void thread_func_impl (std::uint32_t indx_thread);
   void thread_postfunc_impl (std::uint32_t indx_thread);
@@ -36,9 +36,9 @@ class Filter final :
   void fill_buf (InfoFilter* finfo, syn::BufsEvent::raw_ptr buf);
 
   //  internal realization intreface ICtrlDriverDShow
-  void update_source_driver (InfoFilter* finfo);
-  void update_source_driver_exactly (InfoFilter* finfo, const std::string& name_impl);
-  void init_pts (syn::ConnectInfo* info);
+  void update_source_driver (InfoFilter*);
+  void update_source_driver_exactly (InfoFilter*, const std::string&);
+  void init_pts (syn::ConnectInfo*);
 
   ::libs::optim::io::hioptim scale_;               //< Реализация алгоритма для масштабирования изображения
   ::libs::optim::io::hioptim flip_y_;              //< Реализация алгоритма для отображения изображения по вертикали
@@ -46,6 +46,6 @@ class Filter final :
   IDataSourceImpl            idata_source_impl_;   //< Реализация интерфейса libs::icore::impl::var1::obj::interfs::IDataSourceInterfObjGraph
   syn::tevents_type          events_from_impl_;    //< События, сгенерированные нижележайшем слоем. Передаются данным объектом в граф обработки данных
 
-  static ::libs::helpers::dlls::ForeverLoadDlls frozen_dlls_;   //< Удерживаем в памяти все загруженные библиотеки, чтобы избегать сбоев при работе с событиями, которые были в них сгенерированы
+  static ::libs::helpers::dlls::FreezerDlls frozen_dlls_;   //< Удерживаем в памяти все загруженные библиотеки, чтобы избегать сбоев при работе с событиями, которые были в них сгенерированы
 };
 }   // namespace dlls::sources::gen_vgen

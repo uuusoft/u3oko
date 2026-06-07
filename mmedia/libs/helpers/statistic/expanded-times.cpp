@@ -11,11 +11,6 @@
 
 namespace libs::helpers::statistic
 {
-ExpandedTimes::ExpandedTimes ()
-{
-}
-
-
 ExpandedTimes::~ExpandedTimes ()
 {
   clear ();
@@ -111,10 +106,10 @@ ExpandedTimes::end_skip ()
   times_.pop_back ();
 }
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 void
 ExpandedTimes::change_last_name (
-  const key_storage_type&    id_set,
+  const key_storage_type& id_set,
   const key_storage_type& id_element)
 {
   auto& update_element  = ops_.back ();
@@ -127,7 +122,7 @@ ExpandedTimes::change_last_name (
   }
 }
 #endif
-#if 0
+#ifdef U3_FAKE_DISABLE
 void
 ExpandedTimes::get (std::list< std::string >& info)
 {
@@ -159,7 +154,7 @@ ExpandedTimes::get (std::list< std::string >& info)
       add += '.';
     }
 
-    add += val.second.count_ ? std::to_string (val.second.sum_.total_microseconds () / val.second.count_ / 1000.0f) : "x";
+    add += val.second.count_ ? std::to_string (val.second.sum_.total_microseconds () / val.second.count_ / 1000.0F) : "x";
     add += " ms";
     add += " (";
     add += std::to_string (val.second.count_);

@@ -10,7 +10,7 @@
 #include "gen-vgen-includes_int.hpp"
 #include "gen-vgen-info-filter-dll.hpp"
 #include "gen-vgen-filter-dll.hpp"
-#include "mmedia/dlls/doptim/algs/all_algs_impl.hpp"
+#include "mmedia/dlls/doptim/algs/all_algs.hpp"
 
 namespace dlls::sources::gen_vgen
 {

@@ -9,27 +9,12 @@
 #include "vgen-conv3_11-includes_int.hpp"
 #include "vgen-conv3_11-info-filter-dll.hpp"
 #include "vgen-conv3_11-filter-dll.hpp"
-#include "mmedia/dlls/doptim/algs/all_algs_impl.hpp"
+#include "mmedia/dlls/doptim/algs/all_algs.hpp"
 
 namespace dlls::gens::vgen_conv3_11
 {
-Filter::Filter () :
-  icore_3x3_ (&core_3x3_),
-  icore_5x5_ (&core_5x5_),
-  icore_7x7_ (&core_7x7_),
-  icore_9x9_ (&core_9x9_),
-  icore_11x11_ (&core_11x11_)
-{
-}
-
-
-Filter::~Filter ()
-{
-}
-
-
 void
-Filter::load_int (::libs::icore::impl::var1::obj::FilterInfo* info, const ::pugi::xml_named_node_iterator& node)
+Filter::load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node)
 {
   init_pts (&info->pts_);
   finfo_.load (node);
@@ -45,7 +30,7 @@ Filter::load_int (::libs::icore::impl::var1::obj::FilterInfo* info, const ::pugi
 
 
 void
-Filter::call_int (::libs::icore::impl::var1::obj::dll::CallInterfInfo& info)
+Filter::call_int (syn::CallInterfInfo& info)
 {
   super::prepare_call (info);
   super::call_gen (info);

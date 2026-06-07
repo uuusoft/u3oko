@@ -23,8 +23,8 @@ enum class ApplEventProps : std::uint32_t
 struct EventPropsForApplication final {
   U3_HELPER_DISABLE_ACOPY_TYPE (EventPropsForApplication)
 
-  EventPropsForApplication () = default;
-  ~EventPropsForApplication ();
+  EventPropsForApplication ()  = default;
+  ~EventPropsForApplication () = default;
 
   void init ();
 

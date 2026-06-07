@@ -19,7 +19,7 @@ class Bufs final
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (Bufs)
 
   Bufs ();
-  ~Bufs ();
+  ~Bufs () = default;
 
   void                     set_buf (const syn::off_buf_type& indx, ::utils::dbufs::video::IVideoBuf::ptr& buf);
   syn::IVideoBuf::raw_ptr  operator[] (const syn::off_buf_type& indx);
@@ -38,8 +38,8 @@ class Bufs final
   using video_bufs_type = std::unordered_map< syn::off_buf_type, syn::IVideoBuf::ptr >;
   using flags_type      = ::libs::helpers::utils::ValuesStorage< BufsFlags, bool, BufsFlags::max_bound, false >;
 
-  syn::off_buf_type       base_buf_index_;   //< Индекс базового буфера, который будет ответственен за свойства, общие для всего списка
-  mutable video_bufs_type childs_;           //< Набор дочерних буферов
-  flags_type              flags_;            //< Флаги, разделяемые между всеми буферами
+  syn::off_buf_type       base_buf_index_ = utils::dbufs::video::consts::offs::raw;   //< Индекс базового буфера, который будет ответственен за свойства, общие для всего списка
+  mutable video_bufs_type childs_;                                                    //< Набор дочерних буферов
+  flags_type              flags_;                                                     //< Флаги, разделяемые между всеми буферами
 };
 }   // namespace libs::bufs

@@ -14,13 +14,8 @@ class ICaptureImageNullImpl final : public ::libs::ievents::runtime::interf::int
   //  ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ICaptureImageNullImpl)
 
-  ICaptureImageNullImpl ()
-  {
-  }
-
-  virtual ~ICaptureImageNullImpl ()
-  {
-  }
+  ICaptureImageNullImpl ()          = default;
+  virtual ~ICaptureImageNullImpl () = default;
 
   private:
   virtual void

@@ -17,15 +17,15 @@ class FpsController final
   using duration_type = boost::posix_time::time_duration;
 
   FpsController ();
-  ~FpsController ();
+  ~FpsController () = default;
 
   FpsController (const FpsController& src)            = delete;
   FpsController& operator= (const FpsController& src) = delete;
 
   void  reset_action ();
-  float get_fps ();
+  float get_fps () const;
   void  set_fps (const float& fps);
-  float get_leak ();
+  float get_leak () const;
 
   duration_type get_time_after_last ();
 
@@ -33,9 +33,9 @@ class FpsController final
   bool is_action ();
 
   protected:
-  float     leak_time_;         //<
-  time_type time_last_frame_;   //<
-  float     fps_;               //<
-  float     inv_fps_;           //<
+  float     leak_time_       = 0.0F;                                                   //<
+  time_type time_last_frame_ = boost::posix_time::microsec_clock::universal_time ();   //<
+  float     fps_             = 0.0F;                                                   //<
+  float     inv_fps_         = 0.0F;                                                   //<
 };
 }   // namespace libs::helpers::fps

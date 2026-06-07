@@ -6,11 +6,8 @@
 \project    u3_module_events
 */
 #include "../modules-includes_int.hpp"
-
-#ifndef U3_DBG_EXTERNAL_LIB_SKIP_SQLITE
-#  include "sqlite3.h"
-#  include "mmedia/libs/helpers/sqlite/sqlite-call-helper-funcs.hpp"
-#endif
+#include "sqlite3.h"
+#include "mmedia/libs/helpers/sqlite/sqlite-call-helper-funcs.hpp"
 
 #undef U3_FILE_LOG_TAG
 #define U3_FILE_LOG_TAG ::libs::ilink::consts::id_events_log

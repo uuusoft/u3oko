@@ -7,7 +7,7 @@
 */
 
 // old shit
-#if defined(UNICODE)
+#ifdef UNICODE
 
 #  define U3T(u3def_param) L##u3def_param
 

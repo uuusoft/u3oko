@@ -8,6 +8,7 @@
 */
 // controls
 #include "control-defines-includes.hpp"
+
 // startdard libs
 #include <cstddef>
 #include <iostream>
@@ -63,6 +64,7 @@
 #include <type_traits>
 
 #include <cmath>
+
 // 3rd libs
 #include "os-android-specific-includes.hpp"
 #include "intrunsic-files-include.hpp"
@@ -72,6 +74,7 @@
 // configs
 #include "project_config.hpp"
 #include "defines-includes.hpp"
+
 // impls
 #include "mmedia/libs/helpers/helpers-lib-includes.hpp"
 #include "mmedia/utils/mem_funcs/mem-funcs-includes.hpp"

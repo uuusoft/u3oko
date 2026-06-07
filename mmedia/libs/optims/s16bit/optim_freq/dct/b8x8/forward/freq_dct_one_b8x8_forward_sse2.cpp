@@ -8,7 +8,7 @@
 #include "mmedia/includes/includes.hpp"
 #include "mmedia/libs/optims/s16bit/optim_s16bit_generic/includes_int.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::freq::dct::b8x8::forward
 {
@@ -72,10 +72,10 @@ sse2_b8x8 (std::int16_t* buf)
 
   //; ---- Pass 1: process rows.
 
-  _xmm0 = _mm_load_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 0 * 8));
-  _xmm1 = _mm_load_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 1 * 8));
-  _xmm2 = _mm_load_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 2 * 8));
-  _xmm3 = _mm_load_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 3 * 8));
+  _xmm0 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 0 * 8));
+  _xmm1 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 1 * 8));
+  _xmm2 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 2 * 8));
+  _xmm3 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 3 * 8));
 
   //; _xmm0=(00 01 02 03 04 05 06 07), _xmm2=(20 21 22 23 24 25 26 27)
   //; _xmm1=(10 11 12 13 14 15 16 17), _xmm3=( 30 31 32 33 34 35 36 37)
@@ -87,10 +87,10 @@ sse2_b8x8 (std::int16_t* buf)
   _xmm2 = _mm_unpacklo_epi16 (_xmm2, _xmm3);   //; _xmm2=(20 30 21 31 22 32 23 33)
   _xmm5 = _mm_unpackhi_epi16 (_xmm5, _xmm3);   //; _xmm5=(24 34 25 35 26 36 27 37)
 
-  _xmm6 = _mm_load_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 4 * 8));
-  _xmm7 = _mm_load_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 5 * 8));
-  _xmm1 = _mm_load_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 6 * 8));
-  _xmm3 = _mm_load_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 7 * 8));
+  _xmm6 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 4 * 8));
+  _xmm7 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 5 * 8));
+  _xmm1 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 6 * 8));
+  _xmm3 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 7 * 8));
 
   //; _xmm6=( 4 12 20 28 36 44 52 60), _xmm1=( 6 14 22 30 38 46 54 62 )
   //; _xmm7=( 5 13 21 29 37 45 53 61 ), _xmm3=( 7 15 23 31 39 47 55 63)
@@ -316,10 +316,10 @@ sse2_b8x8 (std::int16_t* buf)
   _xmm6 = _mm_add_epi16 (_xmm6, _xmm1);   //; _xmm6=data0
   _xmm2 = _mm_add_epi16 (_xmm2, _xmm5);   //; _xmm2=data2
 
-  _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 4 * 8), _xmm4);
-  _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 6 * 8), _xmm3);
-  _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 0 * 8), _xmm6);
-  _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 2 * 8), _xmm2);
+  _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 4 * 8), _xmm4);
+  _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 6 * 8), _xmm3);
+  _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 0 * 8), _xmm6);
+  _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 2 * 8), _xmm2);
 
   //; -- Odd part
 
@@ -357,10 +357,10 @@ sse2_b8x8 (std::int16_t* buf)
   _xmm6 = _mm_add_epi16 (_xmm6, _xmm4);   //; _xmm6=data5
   _xmm2 = _mm_add_epi16 (_xmm2, _xmm1);   //; _xmm2=data1
 
-  _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 3 * 8), _xmm5);
-  _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 7 * 8), _xmm3);
-  _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 5 * 8), _xmm6);
-  _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (buf + 1 * 8), _xmm2);
+  _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 3 * 8), _xmm5);
+  _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 7 * 8), _xmm3);
+  _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 5 * 8), _xmm6);
+  _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (buf + 1 * 8), _xmm2);
 }
 
 }   // namespace libs::optim::s16bit::freq::dct::b8x8::forward

@@ -2,7 +2,6 @@
 \file       base_11x11_avx1.cpp
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.01.2017
-
 \project    u3_optim_conv
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -10,7 +9,7 @@
 #include "mmedia/libs/optims/s16bit/optim_s16bit_generic/includes_int.hpp"
 #include "base_11x11.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::conv::base::c11x11
 {

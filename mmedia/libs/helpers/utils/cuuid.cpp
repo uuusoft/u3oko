@@ -11,12 +11,6 @@
 
 namespace libs::helpers::utils
 {
-cuuid::cuuid () :
-  id_ (boost::uuids::nil_uuid ())
-{
-}
-
-
 cuuid::cuuid (const cuuid& left) :
   cuuid (left.get_raw_uuid_vals ())
 {
@@ -43,12 +37,12 @@ cuuid::cuuid (const std::initializer_list< value_type > val_array)
   U3_ASSERT (!id_.is_nil () || 0 == *val_array.begin ());
 }
 
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
 cuuid::cuuid (const GUID& guid)
 {
   std::copy (
-    U3_CAST_REINTERPRET< const std::uint8_t* > (&guid),
-    U3_CAST_REINTERPRET< const std::uint8_t* > (&guid) + sizeof (GUID),
+    ::libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (&guid),
+    ::libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (&guid) + sizeof (GUID),
     id_.begin ());
 }
 
@@ -56,14 +50,9 @@ cuuid::cuuid (const GUID& guid)
 const GUID*
 cuuid::get_guid () const
 {
-  return U3_CAST_REINTERPRET< const GUID* > (&id_.data[0]);
+  return ::libs::helpers::casts::reinterpret_cast_helper< const GUID* > (&id_.data[0]);
 }
 #endif
-
-cuuid::~cuuid ()
-{
-}
-
 
 cuuid&
 cuuid::operator= (const boost::uuids::uuid& left)
@@ -106,31 +95,31 @@ cuuid::empty () const
 
 
 bool
-operator< (const cuuid& l, const cuuid& r)
+operator< (const cuuid& lph, const cuuid& rph)
 {
-  return l.get_raw_uuid_vals () < r.get_raw_uuid_vals ();
+  return lph.get_raw_uuid_vals () < rph.get_raw_uuid_vals ();
 }
 
 
 bool
-operator== (const cuuid& l, const cuuid& r)
+operator== (const cuuid& lph, const cuuid& rph)
 {
-  return l.get_raw_uuid_vals () == r.get_raw_uuid_vals ();
+  return lph.get_raw_uuid_vals () == rph.get_raw_uuid_vals ();
 }
 
 
 bool
-operator!= (const cuuid& l, const cuuid& r)
+operator!= (const cuuid& lph, const cuuid& rph)
 {
-  return l == r ? false : true;
+  return lph == rph ? false : true;
 }
 
 
 template< class Archive >
 void
-cuuid::serialize (Archive& ar, const std::uint32_t /* file_version */)
+cuuid::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (id_);
+  arh& BOOST_SERIALIZATION_NVP (id_);
 }
 
 

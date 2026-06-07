@@ -18,11 +18,6 @@ WrapperLogEvent::WrapperLogEvent (const Acessor&, ::libs::events::IEvent::ptr ms
 }
 
 
-WrapperLogEvent::~WrapperLogEvent ()
-{
-}
-
-
 ::libs::events::IEvent::ptr
 WrapperLogEvent::get_msg () const
 {
@@ -47,7 +42,7 @@ WrapperLogEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 WrapperLogEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (WrapperLogEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< WrapperLogEvent > (src);
   super::copy_int (src);
   int_ = dsrc->int_;
 }
@@ -55,10 +50,10 @@ WrapperLogEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-WrapperLogEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+WrapperLogEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoTimedEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (int_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoTimedEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (int_);
 
   self_correct ();
 }

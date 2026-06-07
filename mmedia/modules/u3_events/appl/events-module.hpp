@@ -45,10 +45,6 @@ class EventsModule final : public ::libs::ilink::appl::leaf::LeafModule
   void process_get_data_graphs (syn::IEvent::ptr& msg, syn::GetDataGraphsFromEventBase::raw_ptr props);
   void process_update_listener (syn::IEvent::ptr& msg, syn::UpdateListener::raw_ptr props);
 
-#ifndef U3_DBG_EXTERNAL_LIB_SKIP_SQLITE
-  sqlite3* pbase_;   //< База данных с событиями
-#else
-  void* pbase_;
-#endif
+  sqlite3* pbase_ = nullptr;   //< База данных с событиями
 };
 }   // namespace modules::u3_events::appl

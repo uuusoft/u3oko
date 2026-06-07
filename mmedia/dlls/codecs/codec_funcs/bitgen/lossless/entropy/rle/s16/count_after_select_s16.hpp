@@ -23,8 +23,8 @@ class CObj : public IBitGen
   //  ext types
   typedef CGenericObj< std::uint16_t > impl_type;
 
-  CObj ();
-  virtual ~CObj ();
+  CObj ()          = default;
+  virtual ~CObj () = default;
 
   protected:
   virtual void               forward_int (const void* src, const std::uint32_t count_byte_src, void* dst, std::uint32_t& count_byte_dst) override;
@@ -34,7 +34,7 @@ class CObj : public IBitGen
   virtual std::uint32_t      get_max_size_int (const std::uint32_t src_size) const override;
 
   private:
-  const std::string id_string_;   //<
-  impl_type         impl_;        //<
+  const std::string id_string_ = consts::id_string;   //<
+  impl_type         impl_;                            //<
 };
 }   // namespace dlls::codecs::bitgen::lossless::entropy::rle::s16

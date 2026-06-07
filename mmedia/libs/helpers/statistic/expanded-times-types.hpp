@@ -15,7 +15,7 @@
 
 namespace libs::helpers::statistic
 {
-#if defined(U3_RDTSC_TIMER)
+#ifdef U3_RDTSC_TIMER
 
 using time_type       = std::uint64_t;
 using duration_type   = std::uint64_t;

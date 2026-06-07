@@ -6,7 +6,7 @@
 \project    u3_optim_libs_freq
 */
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::freq::dct::b8x8::backward
 {

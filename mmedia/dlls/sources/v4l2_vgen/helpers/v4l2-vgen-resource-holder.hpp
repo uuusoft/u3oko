@@ -7,7 +7,7 @@
 */
 
 // old shit
-#if 0
+#ifdef U3_FAKE_DISABLE
 namespace dlls::sources::v4l2_vgen::helpers
 {
 template< typename ResourceTType, camera_status_t (*free_funct) (ResourceTType*) >

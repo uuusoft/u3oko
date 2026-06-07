@@ -11,16 +11,15 @@
 
 namespace libs::ievents::runtime::control
 {
-SyncObjs::SyncObjs (const Acessor& ph)
+SyncObjs::SyncObjs (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-  //????
 }
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 SyncObjs::SyncObjs (
   zip_buf_type&&         buf,
-  std::size_t             size,
+  std::size_t            size,
   const number_buf_type& number_buf,
   const id_buf_type&     id) :
 
@@ -32,11 +31,11 @@ SyncObjs::SyncObjs (
   property_name_ = gen_get_mid ();
 }
 #endif
-#if 0
+#ifdef U3_FAKE_DISABLE
 SyncObjs::SyncObjs (
   ::utils::dbufs::video::IVideoBuf::raw_ptr buf,
-  const number_buf_type&                     number_buf,
-  const id_buf_type&                         id) :
+  const number_buf_type&                    number_buf,
+  const id_buf_type&                        id) :
 
   id_zip_buf_ (id),
   number_zip_buf_ (number_buf)
@@ -46,7 +45,7 @@ SyncObjs::SyncObjs (
   size_zip_buf_ = zip_buf_.size ();
 }
 #endif
-#if 0
+#ifdef U3_FAKE_DISABLE
 SyncObjs::SyncObjs (const SyncObjs& src) :
   size_ (0)
 {
@@ -54,14 +53,14 @@ SyncObjs::SyncObjs (const SyncObjs& src) :
   super::operator= (src);
 
   if (src.get_size ())
-    {
-      size_ = src.get_size ();
-      buf_.resize (size_);
-      ::libs::helpers::mem::u3copy (&src.get_zip ()[0], &buf_[0], size_);
-    }
+  {
+    size_ = src.get_size ();
+    buf_.resize (size_);
+    ::libs::helpers::mem::u3copy (&src.get_zip ()[0], &buf_[0], size_);
+  }
 }
 #endif
-#if 0
+#ifdef U3_FAKE_DISABLE
 SyncObjs&
 SyncObjs::operator= (const SyncObjs& src)
 {
@@ -73,11 +72,6 @@ SyncObjs::operator= (const SyncObjs& src)
   return *this;
 }
 #endif
-
-SyncObjs::~SyncObjs ()
-{
-}
-
 
 const SyncObjs::groups_type&
 SyncObjs::get_groups () const
@@ -110,7 +104,7 @@ void
 SyncObjs::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-#if 0  
+#ifdef U3_FAKE_DISABLE
   action_  = ::boost::json::value_to< LogProcessActions > (obj.at ("action"));
   info_    = ::boost::json::value_to< InfoLogSessionFragment > (obj.at ("info"));
   session_ = obj.at ("session").as_string ();
@@ -122,7 +116,7 @@ void
 SyncObjs::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-#if 0  
+#ifdef U3_FAKE_DISABLE
   obj["action"]  = ::boost::json::value_from (action_);
   obj["info"]    = ::boost::json::value_from (info_);
   obj["session"] = session_;
@@ -140,7 +134,7 @@ SyncObjs::clone_int (const ::libs::events::Deeps& deep) const
 void
 SyncObjs::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (SyncObjs);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< SyncObjs > (src);
   super::copy_int (src);
 
   client_id_  = dsrc->client_id_;
@@ -150,11 +144,11 @@ SyncObjs::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-SyncObjs::serialize (Archive& ar, const std::uint32_t /* file_version */)
+SyncObjs::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (client_id_);
-  ar& BOOST_SERIALIZATION_NVP (obj_groups_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (client_id_);
+  arh& BOOST_SERIALIZATION_NVP (obj_groups_);
 
   self_correct ();
 }

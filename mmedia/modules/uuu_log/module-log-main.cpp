@@ -16,7 +16,7 @@ static ::libs::link::appl::IApplication::raw_ptr g_appl        = nullptr;
 extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication::raw_ptr
 create_impl_mpl_uuu_log ()
 {
-  std::lock_guard< std::mutex > lock (g_sinc);
+  std::scoped_lock lock (g_sinc);
 
   if (!g_appl)
   {
@@ -30,7 +30,7 @@ create_impl_mpl_uuu_log ()
 extern "C" BOOST_SYMBOL_EXPORT void
 delete_impl_mpl_uuu_log (::libs::link::appl::IApplication::raw_ptr appl)
 {
-  std::lock_guard< std::mutex > lock (g_sinc);
+  std::scoped_lock lock (g_sinc);
 
   U3_ASSERT_NT (appl, PTR_TOLOG (appl));
   U3_ASSERT_NT (appl == g_appl, PTR_TOLOG (appl));

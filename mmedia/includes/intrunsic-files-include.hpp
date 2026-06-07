@@ -6,7 +6,7 @@
 \project    u3_includes
 */
 
-#if defined(U3_COMPILER_MSC)
+#ifdef U3_COMPILER_MSC
 
 /* Microsoft C/C++-compatible compiler */
 #  include <intrin.h>

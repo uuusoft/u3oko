@@ -15,9 +15,9 @@ struct VideoCodecFlatProp final {
     const libs::helpers::uids::minor::id_val& format             = libs::helpers::uids::minor::id_val::unknown,
     const CodecModes&                         type               = CodecModes::coder,
     std::uint32_t                             quality            = 50,
-    float                                     max_percent_pframe = 8.0f,
+    float                                     max_percent_pframe = 8.0F,
     std::uint32_t                             max_period_kframe  = 500,
-    float                                     percent_block      = 8.0f,
+    float                                     percent_block      = 8.0F,
     bool                                      nocolor            = false);
 
   VideoCodecFlatProp (const VideoCodecFlatProp& op);
@@ -26,18 +26,18 @@ struct VideoCodecFlatProp final {
   void correct ();
   void reset ();
 
-  std::uint16_t                      size_;                 //< Текущий размер данной структуры, требуется для идентификации версии
-  libs::helpers::uids::minor::id_val format_;               //<
-  CodecModes                         type_;                 //< Режим работы (кодер/декодер)
-  std::uint32_t                      quality_;              //< Качество сжатия от 1 до 100
-  float                              max_percent_pframe_;   //< Максимальный процент обновляея экрана, при котором будет генерироваться P-frame
-  std::uint32_t                      max_period_kframe_;    //< Максимальный период ключевых кадров
-  float                              percent_block_;        //<
-  bool                               nocolor_;              //< Флаг, отбрасывать цвет, даже если он есть в исходном изображении (сжатом/несжатом)
+  std::uint16_t                      size_               = 0;                                             //< Текущий размер данной структуры, требуется для идентификации версии
+  libs::helpers::uids::minor::id_val format_             = libs::helpers::uids::minor::id_val::unknown;   //<
+  CodecModes                         type_               = CodecModes::coder;                             //< Режим работы (кодер/декодер)
+  std::uint32_t                      quality_            = 50;                                            //< Качество сжатия от 1 до 100
+  float                              max_percent_pframe_ = 8.0F;                                          //< Максимальный процент обновляея экрана, при котором будет генерироваться P-frame
+  std::uint32_t                      max_period_kframe_  = 500;                                           //< Максимальный период ключевых кадров
+  float                              percent_block_      = 8.0F;                                          //<
+  bool                               nocolor_            = false;                                         //< Флаг, отбрасывать цвет, даже если он есть в исходном изображении (сжатом/несжатом)
 };
 
 std::string        to_string (const VideoCodecFlatProp& info);
 std::uint32_t      to_bitrate_x264 (const VideoCodecFlatProp& info, std::uint32_t width, std::uint32_t height);
-void               tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const VideoCodecFlatProp& src);
-VideoCodecFlatProp tag_invoke (::boost::json::value_to_tag< VideoCodecFlatProp >, const ::boost::json::value& jv);
+void               tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const VideoCodecFlatProp& src);
+VideoCodecFlatProp tag_invoke (::boost::json::value_to_tag< VideoCodecFlatProp >, const ::boost::json::value& jvs);
 }   // namespace libs::ievents::props::videos::generic::codec

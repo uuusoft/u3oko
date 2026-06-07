@@ -1,4 +1,8 @@
 # u3-applay-cmake-format.py
+# generator   gemini google
+# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# date        01.01.2026
+# copyright   Erashov A.I.
 
 import os
 import subprocess

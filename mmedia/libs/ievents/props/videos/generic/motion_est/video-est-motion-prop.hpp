@@ -8,7 +8,7 @@
 
 namespace libs::ievents::props::videos::generic::motion_est::consts
 {
-const std::pair< std::int8_t, std::int8_t > inv_vec (U3_CAST_STATIC< std::int8_t > (127), U3_CAST_STATIC< std::int8_t > (127));
+const std::pair< std::int8_t, std::int8_t > inv_vec (U3_CAST_INT8 (127), U3_CAST_INT8 (127));
 }   // namespace libs::ievents::props::videos::generic::motion_est::consts
 
 
@@ -34,7 +34,7 @@ class VideoEstMotionProp final : public ievents::Event
   U3_HELPER_DISABLE_ACOPY_TYPE (VideoEstMotionProp)
 
   explicit VideoEstMotionProp (const Acessor& = Acessor (0));
-  virtual ~VideoEstMotionProp ();
+  virtual ~VideoEstMotionProp () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -51,7 +51,7 @@ class VideoEstMotionProp final : public ievents::Event
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
   virtual void                        load_json_int (const ::boost::json::object& obj) override;

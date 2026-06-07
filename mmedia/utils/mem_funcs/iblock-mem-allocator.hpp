@@ -19,20 +19,17 @@ class IBlockMemAllocator
 
   IBlockMemAllocator (const IBlockMemAllocator& src)            = delete;
   IBlockMemAllocator& operator= (const IBlockMemAllocator& src) = delete;
+
   /// Функция выделения блока памяти с выравниваем
   /// \param[in]  size размер памяти под данные
   /// \return     указатель на блок памяти
   virtual ::libs::helpers::mem::IBlockMem::ptr alloc (const size_type& size) = 0;
+
   /// Функция трассировки статуса памяти системы в данном процессе
   virtual std::string dump_memory_status () = 0;
 
   protected:
-  IBlockMemAllocator ()
-  {
-  }
-
-  virtual ~IBlockMemAllocator ()
-  {
-  }
+  IBlockMemAllocator ()          = default;
+  virtual ~IBlockMemAllocator () = default;
 };
 }   // namespace utils::mem_funcs

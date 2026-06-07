@@ -11,15 +11,10 @@
 
 namespace libs::ievents
 {
-TimedEvent::TimedEvent (const Acessor& ph) :
+TimedEvent::TimedEvent (const Acessor& pha) :
   time_ (boost::posix_time::microsec_clock::universal_time ())
 {
   property_name_ = gen_get_mid ();
-}
-
-
-TimedEvent::~TimedEvent ()
-{
 }
 
 
@@ -40,7 +35,7 @@ TimedEvent::get_time () const
 void
 TimedEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (TimedEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< TimedEvent > (src);
   super::copy_int (src);
   time_ = dsrc->time_;
 }
@@ -48,10 +43,10 @@ TimedEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-TimedEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+TimedEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
   U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", ::libs::ievents::Event);
-  ar& BOOST_SERIALIZATION_NVP (time_);
+  arh& BOOST_SERIALIZATION_NVP (time_);
 
   self_correct ();
 }

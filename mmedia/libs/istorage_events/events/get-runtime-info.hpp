@@ -9,9 +9,7 @@
 namespace libs::istorage_events::events
 {
 struct RuntimeStreamInfo {
-  RuntimeStreamInfo ()
-  {
-  }
+  RuntimeStreamInfo () = default;
 
   void
   reset ()
@@ -33,12 +31,12 @@ struct RuntimeStreamInfo {
   // REFACT
   template< class Archive >
   void
-  serialize (Archive& ar, const std::uint32_t /* file_version */)
+  serialize (Archive& arh, const std::uint32_t /* file_version */)
   {
-    ar& BOOST_SERIALIZATION_NVP (stream_id_);
-    ar& BOOST_SERIALIZATION_NVP (count_write_bytes_);
-    ar& BOOST_SERIALIZATION_NVP (count_read_bytes_);
-    ar& BOOST_SERIALIZATION_NVP (count_errors_);
+    arh& BOOST_SERIALIZATION_NVP (stream_id_);
+    arh& BOOST_SERIALIZATION_NVP (count_write_bytes_);
+    arh& BOOST_SERIALIZATION_NVP (count_read_bytes_);
+    arh& BOOST_SERIALIZATION_NVP (count_errors_);
   }
 };
 
@@ -63,7 +61,7 @@ class GetRuntimeInfo : public BaseStorageEvent
   U3_HELPER_DISABLE_ACOPY_TYPE (GetRuntimeInfo)
 
   explicit GetRuntimeInfo (const Acessor& = Acessor (0));
-  virtual ~GetRuntimeInfo ();
+  virtual ~GetRuntimeInfo () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -72,7 +70,7 @@ class GetRuntimeInfo : public BaseStorageEvent
     return ret;
   }
 
-  path_id_type         id_path_;        //<
+  path_id_type         path_id_;        //<
   runtime_storage_type stream_infos_;   //<
 
   protected:
@@ -86,7 +84,7 @@ class GetRuntimeInfo : public BaseStorageEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
   //  ievents::Event overrides
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
 };

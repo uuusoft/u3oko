@@ -21,11 +21,6 @@ ExpandTimesEvent::ExpandTimesEvent (
 }
 
 
-ExpandTimesEvent::~ExpandTimesEvent ()
-{
-}
-
-
 const ExpandTimesEvent::full_storages_type&
 ExpandTimesEvent::get_stats () const
 {
@@ -46,7 +41,7 @@ ExpandTimesEvent::set_stat (const key_storage_type& key, const storages_type& in
   infos_[key] = infos;
 }
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 const ::libs::helpers::statistic::ExpandedTimes::infos_type&
 ExpandTimesEvent::get_stat () const
 {
@@ -137,8 +132,9 @@ ExpandTimesEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 ExpandTimesEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (ExpandTimesEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< ExpandTimesEvent > (src);
   super::copy_int (src);
+
   action_    = dsrc->action_;
   infos_     = dsrc->infos_;
   source_id_ = dsrc->source_id_;
@@ -147,12 +143,12 @@ ExpandTimesEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-ExpandTimesEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+ExpandTimesEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (action_);
-  ar& BOOST_SERIALIZATION_NVP (infos_);
-  ar& BOOST_SERIALIZATION_NVP (source_id_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (action_);
+  arh& BOOST_SERIALIZATION_NVP (infos_);
+  arh& BOOST_SERIALIZATION_NVP (source_id_);
   self_correct ();
 }
 }   // namespace libs::ievents::runtime::state

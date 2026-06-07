@@ -11,17 +11,6 @@
 
 namespace dlls::codecs::bitgen::lossless::entropy::rle::u8
 {
-CObj::CObj () :
-  id_string_ (consts::id_string)
-{
-}
-
-
-CObj::~CObj ()
-{
-}
-
-
 void
 CObj::forward_int (
   const void*         src,

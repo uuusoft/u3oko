@@ -12,14 +12,9 @@
 
 namespace libs::imdata_events::events
 {
-BaseDataEvent::BaseDataEvent (const Acessor& ph)
+BaseDataEvent::BaseDataEvent (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-BaseDataEvent::~BaseDataEvent ()
-{
 }
 
 
@@ -47,16 +42,16 @@ BaseDataEvent::save_json_int (::boost::json::object& obj) const
 void
 BaseDataEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (BaseDataEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< BaseDataEvent > (src);
   super::copy_int (src);
 }
 
 
 template< class Archive >
 void
-BaseDataEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+BaseDataEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
 
   self_correct ();
 }

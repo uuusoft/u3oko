@@ -18,11 +18,6 @@ Vec2ImageProp::Vec2ImageProp (const Acessor&, const vec_bufs_type& bufs) :
 }
 
 
-Vec2ImageProp::~Vec2ImageProp ()
-{
-}
-
-
 ::libs::events::IEvent::ptr
 Vec2ImageProp::clone_int (const ::libs::events::Deeps& deep) const
 {
@@ -51,7 +46,7 @@ Vec2ImageProp::save_json_int (::boost::json::object& obj) const
 void
 Vec2ImageProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (Vec2ImageProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< Vec2ImageProp > (src);
   super::copy_int (src);
   bufs_ = dsrc->bufs_;
 }
@@ -59,10 +54,10 @@ Vec2ImageProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-Vec2ImageProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+Vec2ImageProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (bufs_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (bufs_);
 
   self_correct ();
 }

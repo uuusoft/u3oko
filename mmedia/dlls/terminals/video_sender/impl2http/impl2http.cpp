@@ -11,16 +11,6 @@
 
 namespace dlls::terminals::video_sender::impl2http
 {
-Impl2Http::Impl2Http ()
-{
-}
-
-
-Impl2Http::~Impl2Http ()
-{
-}
-
-
 void
 Impl2Http::send_int (
   const InfoFilter&                    finfo,
@@ -40,9 +30,8 @@ Impl2Http::send_int (
 
   syn::IEvent::ptr rmsg;
   syn::IEvent::ptr irmsg;
-
-  auto dmsg  = ::libs::iproperties::helpers::create_event< syn::WrapperHttpEvent > (rmsg);
-  auto idmsg = ::libs::iproperties::helpers::create_event< syn::ZipDataEvent > (irmsg);
+  auto             dmsg  = ::libs::iproperties::helpers::create_event< syn::WrapperHttpEvent > (rmsg);
+  auto             idmsg = ::libs::iproperties::helpers::create_event< syn::ZipDataEvent > (irmsg);
 
   idmsg->update_zip (send_buf);
   idmsg->set_number (finfo.count_frames_);

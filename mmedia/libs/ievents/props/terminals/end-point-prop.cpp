@@ -11,16 +11,11 @@
 
 namespace libs::ievents::props::terminals
 {
-EndPointProp::EndPointProp (const Acessor& ph) :
+EndPointProp::EndPointProp (const Acessor& pha) :
   enable_send_ (true),
   enable_notify_ (false)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-EndPointProp::~EndPointProp ()
-{
 }
 
 
@@ -68,8 +63,9 @@ EndPointProp::is_notify () const
 void
 EndPointProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (EndPointProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< EndPointProp > (src);
   super::copy_int (src);
+
   enable_send_   = dsrc->enable_send_;
   enable_notify_ = dsrc->enable_notify_;
 }
@@ -77,11 +73,11 @@ EndPointProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-EndPointProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+EndPointProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (enable_send_);
-  ar& BOOST_SERIALIZATION_NVP (enable_notify_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (enable_send_);
+  arh& BOOST_SERIALIZATION_NVP (enable_notify_);
 
   self_correct ();
 }

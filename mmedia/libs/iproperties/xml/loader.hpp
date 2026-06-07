@@ -11,14 +11,16 @@ namespace libs::iproperties::xml
 /// Тип для группировки данных для инициализации Loader
 struct InitLoaderInfo final {
   explicit InitLoaderInfo (
-    appl_paths::IAppPaths::cptr paths, bool disable_change_search_rule = false) :
+    appl_paths::IAppPaths::cptr paths,
+    bool                        disable_change_search_rule = false) :
+
     paths_ (paths),
     disable_change_search_rule_ (disable_change_search_rule)
   {
   }
 
-  appl_paths::IAppPaths::cptr paths_;                        //< Указатель на хранилище путей к различным ресурсам
-  bool                        disable_change_search_rule_;   //< Флаг отключает изменение стандартного поведения при поиске файлов/каталогов (будут найдены все файлы/каталоги рекурсивным способом)
+  appl_paths::IAppPaths::cptr paths_;                                //< Указатель на хранилище путей к различным ресурсам
+  bool                        disable_change_search_rule_ = false;   //< Флаг отключает изменение стандартного поведения при поиске файлов/каталогов (будут найдены все файлы/каталоги рекурсивным способом)
 };
 
 /// Тип для загрузки унифицированной загрузки константных ресурсов (скриптов, файлов и прочего)

@@ -23,7 +23,7 @@ fill (
       buf[indxx] = color;
     }
 
-    U3_FAST_MOVE_PTR (buf, stride);
+    buf = ::libs::helpers::mem::move_ptr (buf, stride);
   }
 }
 
@@ -33,14 +33,12 @@ get_px (std::int16_t* base, std::size_t stride, int x, int y)
 {
   if (y < 0)
   {
-    std::int16_t* ret = base;
-    U3_FAST_MOVE_PTR_BACK (ret, U3_CAST_SIZE_T (-y) * stride);
+    std::int16_t* ret = ::libs::helpers::mem::move_ptr_back (base, U3_CAST_SIZE_T (-y) * stride);
     ret += x;
     return ret;
   }
 
-  std::int16_t* ret = base;
-  U3_FAST_MOVE_PTR (ret, U3_CAST_SIZE_T (y) * stride);
+  std::int16_t* ret = ::libs::helpers::mem::move_ptr (base, U3_CAST_SIZE_T (y) * stride);
   ret += x;
   return ret;
 }
@@ -59,12 +57,12 @@ line (std::int16_t* base, std::size_t stride, int x1, int y1, int x2, int y2)
   if (adx >= ady)
   {
     const std::int32_t addx = x1 > x2 ? -1 : 1;
-    const float        addy = U3_CAST_FLOAT (dy) / U3_CAST_FLOAT (adx);
-    float              ny   = U3_CAST_FLOAT (y1);
+    const auto         addy = U3_CAST_FLOAT (dy) / U3_CAST_FLOAT (adx);
+    auto               ny   = U3_CAST_FLOAT (y1);
 
     for (int nx = x1; nx != x2; nx += addx)
     {
-      std::int16_t* px = get_px (base, stride, nx, U3_CAST_STATIC< std::int32_t > (ny));
+      std::int16_t* px = get_px (base, stride, nx, U3_CAST_INT32 (ny));
 
       *px = color;
       color += dcolor;
@@ -77,12 +75,12 @@ line (std::int16_t* base, std::size_t stride, int x1, int y1, int x2, int y2)
   else
   {
     const std::int32_t addy = y1 > y2 ? -1 : 1;
-    const float        addx = U3_CAST_FLOAT (dx) / U3_CAST_FLOAT (ady);
-    float              nx   = U3_CAST_FLOAT (x1);
+    const auto         addx = U3_CAST_FLOAT (dx) / U3_CAST_FLOAT (ady);
+    auto               nx   = U3_CAST_FLOAT (x1);
 
     for (int ny = y1; ny != y2; ny += addy)
     {
-      std::int16_t* px = get_px (base, stride, U3_CAST_STATIC< std::int32_t > (nx), ny);
+      std::int16_t* px = get_px (base, stride, U3_CAST_INT32 (nx), ny);
 
       *px = color;
       color += dcolor;

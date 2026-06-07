@@ -20,11 +20,6 @@ InfoFilter::InfoFilter () :
 }
 
 
-InfoFilter::~InfoFilter ()
-{
-}
-
-
 void
 InfoFilter::init ()
 {

@@ -75,7 +75,7 @@ class ToLog final
     const auto msglm_impl   = msglm_events->impl ();
     const auto msglm_id     = ::libs::ilog_events::events::InfoLogEvent::gen_get_mid ();
     const auto msglm_revent = msglm_impl->get (msglm_id);
-    auto       msglm_levent = U3_CAST_FORCE_EVENT_INT (msglm_impl->dcast (msglm_revent.get (), msglm_id), ::libs::ilog_events::events::InfoLogEvent*);
+    auto       msglm_levent = ::libs::helpers::casts::reinterpret_cast_helper< ::libs::ilog_events::events::InfoLogEvent* > (msglm_impl->dcast (msglm_revent.get (), msglm_id));
 
     msglm_levent->change_appl_info (::libs::ilog_events::AppllPartLogInfo (level_, to_string (key_.first), "wtfversion", place_), buf.str ());
     logger->send_msg (msglm_revent, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);

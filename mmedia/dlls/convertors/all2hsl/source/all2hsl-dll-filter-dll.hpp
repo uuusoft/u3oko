@@ -14,8 +14,8 @@ class Filter final :
   protected ::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >
 {
   public:
-  Filter ();
-  virtual ~Filter ();
+  Filter ()          = default;
+  virtual ~Filter () = default;
 
   private:
   // internal types

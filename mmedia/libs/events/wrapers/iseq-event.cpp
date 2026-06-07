@@ -11,16 +11,11 @@
 
 namespace libs::events
 {
-ISeqEvent::ISeqEvent (const Acessor& ph, IEvent::ptr val, const id_type& id) :
+ISeqEvent::ISeqEvent (const Acessor& pha, IEvent::ptr val, const id_type& id) :
   IWrapBaseEvent (IWrapBaseEvent::Acessor (0), val),
   id_ (id)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-ISeqEvent::~ISeqEvent ()
-{
 }
 
 
@@ -57,7 +52,7 @@ ISeqEvent::empty () const
 void
 ISeqEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (ISeqEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< ISeqEvent > (src);
   super::copy_int (src);
   id_ = dsrc->id_;
 }
@@ -65,10 +60,10 @@ ISeqEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-ISeqEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+ISeqEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("IWrapBaseEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (id_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("IWrapBaseEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (id_);
 }
 }   // namespace libs::events
 

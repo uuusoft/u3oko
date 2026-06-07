@@ -15,9 +15,7 @@ struct HeaderIFrame final {
     reset ();
   }
 
-  ~HeaderIFrame ()
-  {
-  }
+  ~HeaderIFrame () = default;
 
   void
   reset ()

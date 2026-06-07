@@ -9,13 +9,8 @@
 namespace libs::helpers::thread
 {
 struct EmptyMutex final {
-  EmptyMutex ()
-  {
-  }
-
-  ~EmptyMutex ()
-  {
-  }
+  EmptyMutex ()  = default;
+  ~EmptyMutex () = default;
 
   void
   lock ()

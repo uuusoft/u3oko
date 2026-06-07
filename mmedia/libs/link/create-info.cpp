@@ -4,8 +4,6 @@
 \date       01.01.2017
 \project    u3_link
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "libs-link-includes_int.hpp"
 #include "create-info.hpp"
 
@@ -54,6 +52,7 @@ CreateInfo::CreateInfo (
   const std::string msg2dest        = get_prefix () + ".msgs";
   const std::string name_shared_mem = get_prefix () + ".shared_mem";
 
+  U3_XLOG_DEV (TOLOG (msg2dest));
   U3_ASSERT (!msg2dest.empty ());
   U3_ASSERT (!name_shared_mem.empty ());
 
@@ -75,11 +74,6 @@ CreateInfo::CreateInfo (
       args_.push_back (make_arg (consts::text::id_lib_name, name_lib));
     }
   }
-}
-
-
-CreateInfo::~CreateInfo ()
-{
 }
 
 
@@ -123,11 +117,11 @@ CreateInfo::get_prefix () const
 bool
 CreateInfo::operator< (const CreateInfo& op) const
 {
-#if 0
-    if ( create_side_ < op.create_side_ )
-    {
-      return true;
-    }
+#ifdef U3_FAKE_DISABLE
+  if (create_side_ < op.create_side_)
+  {
+    return true;
+  }
 #endif
   if (pt2pt_ < op.pt2pt_)
   {
@@ -143,8 +137,6 @@ CreateInfo::operator== (const CreateInfo& op) const
   const bool part1 = args_ == op.args_;
   const bool part2 = id_arg2val_ == op.id_arg2val_;
   const bool part3 = pt2pt_ == op.pt2pt_;
-
-  // return part1 && part2 && part3 && ( create_side_ == op.create_side_ );
   return part1 && part2 && part3;
 }
 

@@ -67,6 +67,6 @@ id_val                               get (const ::libs::helpers::utils::cuuid&);
 inline id_val
 from_raw_value (std::uint32_t val)
 {
-  return U3_CAST_STATIC< id_val > (val);
+  return ::libs::helpers::casts::static_cast_helper< id_val > (val);
 }
 }   // namespace libs::helpers::uids::minor

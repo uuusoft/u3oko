@@ -34,9 +34,9 @@ class CGenericObj
   {
     U3_ASSERT (0 == count_byte_dst);
 
-    const value_type* usrc    = U3_CAST_CODECS< const value_type* > (src);
-    value_type*       udst    = U3_CAST_CODECS< value_type* > (dst);
-    value_type        counter = 0;
+    const auto* usrc    = U3_CAST_CODECS< const value_type* > (src);
+    auto*       udst    = U3_CAST_CODECS< value_type* > (dst);
+    value_type  counter = 0;
 
     U3_ASSERT (count_byte_src / sizeof (value_type) * sizeof (value_type) == count_byte_src);
 
@@ -88,8 +88,8 @@ class CGenericObj
     void*          dst,
     std::uint32_t& count_byte_dst)
   {
-    const value_type* usrc = U3_CAST_CODECS< const value_type* > (src);
-    value_type*       udst = U3_CAST_CODECS< value_type* > (dst);
+    const auto* usrc = U3_CAST_CODECS< const value_type* > (src);
+    auto*       udst = U3_CAST_CODECS< value_type* > (dst);
 
     U3_ASSERT (count_byte_src / sizeof (value_type) * sizeof (value_type) == count_byte_src);
 

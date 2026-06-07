@@ -10,7 +10,7 @@
 #include "x16_x8.hpp"
 #include "x16_x8_int.hpp"
 
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
 
 namespace libs::optim::convert::x16_x8
 {
@@ -19,7 +19,7 @@ void
 neon (::libs::optim::io::MCallInfo& info)
 {
 #  if 1
-  return alu (info);
+  alu (info);
 #  else
   X16_TO_X8_PREFIX (8);
 
@@ -29,7 +29,7 @@ neon (::libs::optim::io::MCallInfo& info)
   {
     for (std::size_t indx_x = 0; indx_x < width; indx_x += ppc)
     {
-      int16x8_t data = vld1q_s16 (U3_CAST_REINTERPRET< const std::int16_t* > (yuy2_buf));
+      int16x8_t data = vld1q_s16 (::libs::helpers::casts::reinterpret_cast_helper< const std::int16_t* > (yuy2_buf));
 
       data = vandq_s16 (data, mask);
 
@@ -39,8 +39,8 @@ neon (::libs::optim::io::MCallInfo& info)
       y16_buf += ppc;
     }
 
-    U3_FAST_MOVE_CPTR (yuy2_buf, leak_yuy2);
-    U3_FAST_MOVE_PTR (y16_buf, leak_y16);
+    yuy2_buf = ::libs::helpers::mem::move_cptr (yuy2_buf, leak_yuy2);
+    y16_buf  = ::libs::helpers::mem::move_ptr (y16_buf, leak_y16);
   }
 #  endif
 }

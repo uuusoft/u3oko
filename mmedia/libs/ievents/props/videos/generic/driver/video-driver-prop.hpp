@@ -26,7 +26,7 @@ class VideoDriverProp final : public ievents::Event
   U3_HELPER_DISABLE_ACOPY_TYPE (VideoDriverProp)
 
   explicit VideoDriverProp (const Acessor& = Acessor (0));
-  virtual ~VideoDriverProp ();
+  virtual ~VideoDriverProp () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -35,11 +35,11 @@ class VideoDriverProp final : public ievents::Event
     return ret;
   }
 
-  std::string                                    name_impl_dll_;   //< Имя DLL реализации захвата данных из источника
-  ::libs::helpers::utils::cuuid                  cat_dshow_;       //< Идентификатор каталога dshow. DEPRECATED
-  std::string                                    device_name_;     //< Имя устройства
-  std::int32_t                                   device_indx_;     //< Индекс устройства в каталоге dshow. DEPRECATED
-  std::unordered_map< std::string, std::string > ext_vals_;        //<
+  std::string                                    name_impl_dll_;     //< Имя DLL реализации захвата данных из источника
+  ::libs::helpers::utils::cuuid                  cat_dshow_;         //< Идентификатор каталога dshow. DEPRECATED
+  std::string                                    device_name_;       //< Имя устройства
+  std::int32_t                                   device_indx_ = 0;   //< Индекс устройства в каталоге dshow. DEPRECATED
+  std::unordered_map< std::string, std::string > ext_vals_;          //<
 
   private:
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ievents::Event)
@@ -47,7 +47,7 @@ class VideoDriverProp final : public ievents::Event
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
   virtual void                        load_json_int (const ::boost::json::object& obj) override;

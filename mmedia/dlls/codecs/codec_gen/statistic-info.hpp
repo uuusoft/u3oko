@@ -13,13 +13,8 @@ struct StatisticInfo final {
   //  ext types
   using stages_type = std::unordered_map< std::string, StatisticStage >;
 
-  StatisticInfo ()
-  {
-  }
-
-  ~StatisticInfo ()
-  {
-  }
+  StatisticInfo ()  = default;
+  ~StatisticInfo () = default;
 
   bool
   self_test () const

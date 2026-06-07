@@ -33,7 +33,7 @@ class MemResourceStorageEvent : public BaseStorageEvent
     const id_mem_type&         id     = "",
     const number_mem_buf_type& number = 0);
 
-  virtual ~MemResourceStorageEvent ();
+  virtual ~MemResourceStorageEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -61,7 +61,7 @@ class MemResourceStorageEvent : public BaseStorageEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
   //  ievents::Event overrides
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
   virtual void                        copy_int (const IEvent::craw_ptr src) override;

@@ -22,11 +22,6 @@ ILinksProperty::ILinksProperty (const links_type& links)
 }
 
 
-ILinksProperty::~ILinksProperty ()
-{
-}
-
-
 const ILinksProperty::links_type&
 ILinksProperty::get_links_lockfree () const
 {

@@ -80,7 +80,7 @@
 
 namespace dlls::codecs::dct
 {
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 /* some conversions from readable integer constants to qwords */
 #  define SHORT4_TO_QWORD(A, B, C, D) (                  \
     ((((uint64_t) (A)) & ((uint64_t) (0xffff))) << 0) |  \

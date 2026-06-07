@@ -9,17 +9,17 @@
 // old shit
 namespace libs::ilink::appl::helpers
 {
-#if 0
+#ifdef U3_FAKE_DISABLE
 inline std::string
 to_string (const StateProcessEventExt& obj)
 {
   std::string ret;
 
-  ret += "sync " + std::to_string(obj.sync_event_);
-  ret += ", request_ " + std::to_string(obj.request_);
-  ret += ", answer_ " + std::to_string(obj.answer_);
-  ret += ", recv_seq_ " + std::to_string(obj.recv_seq_);
-  ret += ", make_seq_ " + std::to_string(obj.make_seq_);
+  ret += "sync " + std::to_string (obj.sync_event_);
+  ret += ", request_ " + std::to_string (obj.request_);
+  ret += ", answer_ " + std::to_string (obj.answer_);
+  ret += ", recv_seq_ " + std::to_string (obj.recv_seq_);
+  ret += ", make_seq_ " + std::to_string (obj.make_seq_);
 
   if (obj.make_seq_ || obj.recv_seq_)
   {

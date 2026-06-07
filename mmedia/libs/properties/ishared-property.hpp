@@ -13,12 +13,12 @@ class ISharedProperty
   public:
   //  ext types
   using sync_type = std::mutex;
-  using lock_type = std::lock_guard< sync_type >;
+  using lock_type = std::scoped_lock< sync_type >;
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ISharedProperty)
 
-  ISharedProperty ();
-  virtual ~ISharedProperty ();
+  ISharedProperty ()          = default;
+  virtual ~ISharedProperty () = default;
 
   ISharedProperty (const ISharedProperty& src)            = delete;
   ISharedProperty& operator= (const ISharedProperty& src) = delete;

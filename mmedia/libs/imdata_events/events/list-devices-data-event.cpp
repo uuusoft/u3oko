@@ -24,19 +24,14 @@ DataSourceInfo::DataSourceInfo (
 }
 
 
-DataSourceInfo::~DataSourceInfo ()
-{
-}
-
-
 template< class Archive >
 void
-DataSourceInfo::serialize (Archive& ar, const std::uint32_t /* file_version */)
+DataSourceInfo::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (name_);
-  ar& BOOST_SERIALIZATION_NVP (type_);
-  ar& BOOST_SERIALIZATION_NVP (max_count_);
-  ar& BOOST_SERIALIZATION_NVP (number_);
+  arh& BOOST_SERIALIZATION_NVP (name_);
+  arh& BOOST_SERIALIZATION_NVP (type_);
+  arh& BOOST_SERIALIZATION_NVP (max_count_);
+  arh& BOOST_SERIALIZATION_NVP (number_);
 }
 
 
@@ -128,8 +123,9 @@ ListDevicesDataEvent::save_json_int (::boost::json::object& obj) const
 void
 ListDevicesDataEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (ListDevicesDataEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< ListDevicesDataEvent > (src);
   super::copy_int (src);
+
   source_dll_names_ = dsrc->source_dll_names_;
   dlls_devices_     = dsrc->dlls_devices_;
 }
@@ -137,11 +133,11 @@ ListDevicesDataEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-ListDevicesDataEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+ListDevicesDataEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoimdata_eventsoeventsoBaseDataEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (source_dll_names_);
-  ar& BOOST_SERIALIZATION_NVP (dlls_devices_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoimdata_eventsoeventsoBaseDataEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (source_dll_names_);
+  arh& BOOST_SERIALIZATION_NVP (dlls_devices_);
 
   self_correct ();
 }

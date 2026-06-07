@@ -45,7 +45,7 @@ class BufAllocatorProxy final
   private:
   BufAllocatorProxy (U3_MARK_UNUSED const std::string& dll_path)
   {
-#ifdef U3_BUILD_MODULES_AS_LIBS
+#if (U3_BUILD_MODULES_AS_LIBS == 1)
     U3_MARK_UNUSED_HERE (lib_);
     creator_ = create_dbufs_impl;
 #else
@@ -54,7 +54,7 @@ class BufAllocatorProxy final
     _cpath /= ::libs::helpers::dlls::decorate_dll_name ("dbufs");
     lib_.load (_cpath.string (), boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
 
-#  if defined(U3_OS_ANDROID)
+#  ifdef U3_OS_ANDROID
     creator_ = reinterpret_cast< create_func_type* > (dlsym (lib_.native (), "create_dbufs_impl"));
 #  else
     creator_ = boost::dll::import_symbol< create_func_type > (lib_, "create_dbufs_impl");
@@ -63,9 +63,7 @@ class BufAllocatorProxy final
     U3_ASSERT (creator_);
   }
 
-  ~BufAllocatorProxy ()
-  {
-  }
+  ~BufAllocatorProxy () = default;
 
   ::libs::helpers::dlls::dll_type     lib_;       //< Разделяемый код (dll/so), который содержит в себе реализацию некого интерфейса
   boost::function< create_func_type > creator_;   //< Собственно полученная из dll реализация

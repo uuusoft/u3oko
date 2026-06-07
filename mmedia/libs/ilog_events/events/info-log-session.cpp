@@ -18,24 +18,19 @@ InfoLogSession::InfoLogSession (const id_session_type& session_id, std::uint64_t
 }
 
 
-InfoLogSession::~InfoLogSession ()
-{
-}
-
-
 template< class Archive >
 void
-InfoLogSession::serialize (Archive& ar, const std::uint32_t /* file_version */)
+InfoLogSession::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (session_id_);
-  ar& BOOST_SERIALIZATION_NVP (size_session_data_);
+  arh& BOOST_SERIALIZATION_NVP (session_id_);
+  arh& BOOST_SERIALIZATION_NVP (size_session_data_);
 }
 
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const InfoLogSession& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const InfoLogSession& src)
 {
-  jv = {
+  jvs = {
     { "session_id", src.session_id_ },
     { "size_session_data", src.size_session_data_ }
   };
@@ -43,11 +38,11 @@ tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const InfoL
 
 
 InfoLogSession
-tag_invoke (::boost::json::value_to_tag< InfoLogSession >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< InfoLogSession >, const ::boost::json::value& jvs)
 {
   InfoLogSession ret;
-  ret.session_id_        = jv.at ("session_id").as_string ();
-  ret.size_session_data_ = ::libs::helpers::json::get_uint64 (jv.at ("size_session_data"));
+  ret.session_id_        = jvs.at ("session_id").as_string ();
+  ret.size_session_data_ = ::libs::helpers::json::get_uint64 (jvs.at ("size_session_data"));
   return ret;
 }
 }   // namespace libs::ilog_events::events

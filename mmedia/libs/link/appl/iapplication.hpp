@@ -15,8 +15,8 @@ class IApplication
   // ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IApplication)
 
-  IApplication ();
-  virtual ~IApplication ();
+  IApplication ()          = default;
+  virtual ~IApplication () = default;
 
   IApplication (const IApplication&)            = delete;
   IApplication& operator= (const IApplication&) = delete;
@@ -53,6 +53,6 @@ class IApplication
   ::libs::link::appl::InitApplication appl_info_;   //<
 
   private:
-  bool init_;   //< Флаг инициализации объекта
+  bool init_ = false;   //< Флаг инициализации объекта
 };
 }   // namespace libs::link::appl

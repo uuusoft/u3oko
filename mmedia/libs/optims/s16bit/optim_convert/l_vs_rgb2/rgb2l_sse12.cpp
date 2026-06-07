@@ -12,7 +12,7 @@
 #include "rgb_to_l_int2.hpp"
 #include "../hsl_vs_rgb/rgb_to_hsl_int.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::convert::l_vs_rgb2
 {
@@ -40,7 +40,7 @@ rgb24_to_l_sse1 (::libs::optim::io::MCallInfo& info)
     {
       for( std::uint32_t indxx = 0; indxx < width; indxx+= ppc )
       {
-        i128_1 = _mm_loadu_si128( U3_CAST_REINTERPRET<const __m128i*>( rgb24 ) );  //BOG0R0B1G1R1B2G2R2B3G3R3B4G4R4
+        i128_1 = _mm_loadu_si128( ::libs::helpers::casts::reinterpret_cast_helper<const __m128i*>( rgb24 ) );  //BOG0R0B1G1R1B2G2R2B3G3R3B4G4R4
 
         SLOW_SPLIT_RGB24_SSE1( i128_1, ir8, ig8, ib8 );
 
@@ -49,7 +49,7 @@ rgb24_to_l_sse1 (::libs::optim::io::MCallInfo& info)
         __m128 temp_g = _mm_cvtepi32_ps( ig8 );
         __m128 temp_b = _mm_cvtepi32_ps( ib8 );
 
-        //normalization from 0..255 to 0.0f..1.0f;
+        //normalization from 0..255 to 0.0F..1.0F;
         temp_r = _mm_mul_ps( temp_r, const_1_to_255 );
         temp_g = _mm_mul_ps( temp_g, const_1_to_255 );
         temp_b = _mm_mul_ps( temp_b, const_1_to_255 );
@@ -67,19 +67,19 @@ rgb24_to_l_sse1 (::libs::optim::io::MCallInfo& info)
         //max_min = max + var_Min;
         const __m128 max_min = _mm_add_ps( var_min, max );
 
-        //L = ( max + var_Min ) / 2.0f;
+        //L = ( max + var_Min ) / 2.0F;
         __m128 l8 = _mm_mul_ps( const_1_to_2, max_min );
 
         l8 = _mm_mul_ps( l8, const_255 );
         i128_1 = _mm_cvtps_epi32( l8 );
         i128_2 = _mm_castpd_si128( _mm_shuffle_pd( _mm_castsi128_pd( i128_1 ), _mm_castsi128_pd( i128_1 ), 1 ) );
         i128_1 = _mm_packs_epi32( i128_1, i128_2 );
-        _mm_storeu_si128( U3_CAST_REINTERPRET<__m128i*>( l), i128_1 );
+        _mm_storeu_si128( ::libs::helpers::casts::reinterpret_cast_helper<__m128i*>( l), i128_1 );
         l+= 4;
       }
 
-      U3_FAST_MOVE_CPTR( rgb24,  leak_rgb );
-      U3_FAST_MOVE_PTR( l,  leak_hsl);
+      rgb24 = ::libs::helpers::mem::move_cptr( rgb24,  leak_rgb );
+      l = ::libs::helpers::mem::move_ptr( l,  leak_hsl);
     }
 #  endif
 }

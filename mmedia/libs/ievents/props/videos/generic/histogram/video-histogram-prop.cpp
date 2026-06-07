@@ -12,28 +12,24 @@
 namespace libs::ievents::props::videos::generic::histogram
 {
 EventBufsInfoHistogram::EventBufsInfoHistogram () :
-  norm_ (false), dindx_ (-1)
+  norm_ (false),
+  dindx_ (-1)
 {
 }
 
 
 template< class Archive >
 void
-EventBufsInfoHistogram::serialize (Archive& ar, const std::uint32_t /* file_version */)
+EventBufsInfoHistogram::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (norm_);
-  ar& BOOST_SERIALIZATION_NVP (dindx_);
+  arh& BOOST_SERIALIZATION_NVP (norm_);
+  arh& BOOST_SERIALIZATION_NVP (dindx_);
 }
 
 
-VideoHistogramProp::VideoHistogramProp (const Acessor& ph)
+VideoHistogramProp::VideoHistogramProp (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-VideoHistogramProp::~VideoHistogramProp ()
-{
 }
 
 
@@ -63,7 +59,7 @@ VideoHistogramProp::save_json_int (::boost::json::object& obj) const
 void
 VideoHistogramProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (VideoHistogramProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< VideoHistogramProp > (src);
   super::copy_int (src);
   bufs2norm_ = dsrc->bufs2norm_;
 }
@@ -71,10 +67,10 @@ VideoHistogramProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-VideoHistogramProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+VideoHistogramProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (bufs2norm_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (bufs2norm_);
 
   self_correct ();
 }

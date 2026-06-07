@@ -14,9 +14,7 @@ class ICorrectImage : public IBaseRuntimeInterf
   //  ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ICorrectImage)
 
-  virtual ~ICorrectImage ()
-  {
-  }
+  virtual ~ICorrectImage () = default;
 
   void
   change_state (bool enable)
@@ -47,13 +45,10 @@ class ICorrectImage : public IBaseRuntimeInterf
   }
 
   protected:
-  ICorrectImage () :
-    transinfo_ (nullptr)
-  {
-  }
+  ICorrectImage () = default;
 
-  syn::TransformInfo* transinfo_;       //< Указатель на текущий параметр при вызове функции transform
-  const syn::NodeID*  id_node_graph_;   //<
+  syn::TransformInfo* transinfo_ = nullptr;   //< Указатель на текущий параметр при вызове функции transform
+  const syn::NodeID*  id_node_graph_;         //<
 
   private:
   //  ICorrectImage interface

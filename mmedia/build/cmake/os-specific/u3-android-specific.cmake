@@ -2,7 +2,7 @@
 # date        29.08.2024
 # copyright   Erashov A.I.
 # file        u3-android-specific.cmake
-# U3_COMMERCIAL_PART
+# U3_COMMERCIAL_PART_SOURCE
 
 include(./build/cmake/toolchains/android.cmake)
 

@@ -30,12 +30,7 @@ class IBufAllocator
   virtual std::string dump_bufs_state () = 0;
 
   protected:
-  IBufAllocator ()
-  {
-  }
-
-  virtual ~IBufAllocator ()
-  {
-  }
+  IBufAllocator ()          = default;
+  virtual ~IBufAllocator () = default;
 };
 }   // namespace utils::dbufs::allocator

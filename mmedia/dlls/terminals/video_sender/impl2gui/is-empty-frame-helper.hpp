@@ -9,7 +9,7 @@
 // old shit
 namespace dlls::terminals::video_sender::impl2gui
 {
-#if 0
+#ifdef U3_FAKE_DISABLE
 class IsEmptyFrameHelper : public ::libs::link::mem::IHandlerMem
 {
   public:
@@ -18,9 +18,7 @@ class IsEmptyFrameHelper : public ::libs::link::mem::IHandlerMem
   {
   }
 
-  virtual ~IsEmptyFrameHelper ()
-  {
-  }
+  virtual ~IsEmptyFrameHelper () = default;
 
   virtual bool
   update (void* pmem) const override

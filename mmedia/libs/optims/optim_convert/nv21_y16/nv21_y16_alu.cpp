@@ -26,8 +26,8 @@ alu (::libs::optim::io::MCallInfo& info)
       y16_buf[indxx] = y8_buf[indxx];
     }
 
-    U3_FAST_MOVE_CPTR (y8_buf, stride_y8);
-    U3_FAST_MOVE_PTR (y16_buf, stride_y16);
+    y8_buf  = ::libs::helpers::mem::move_cptr (y8_buf, stride_y8);
+    y16_buf = ::libs::helpers::mem::move_ptr (y16_buf, stride_y16);
   }
 }
 }   // namespace libs::optim::convert::nv21_y16

@@ -46,7 +46,7 @@ process_cmd_line (std::int32_t argc, char* argv[])
 
   boost::program_options::variables_map mapvars;
   {
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
     auto args = boost::program_options::split_winmain (std::string (GetCommandLineA ()));
     auto pars = boost::program_options::basic_command_line_parser< char > (args).options (options).allow_unregistered ().run ();
 
@@ -99,11 +99,11 @@ find_default_appl_lib (const std::string& fullpath)
   boost::filesystem::path bpath (fullpath);
   std::string             ret = "find_default_appl_lib-module-appl-not-found";
 
-#ifdef U3_BUILD_MODULES_AS_LIBS
+#if (U3_BUILD_MODULES_AS_LIBS == 1)
   // EAI-REFACT
   ret = "appl_u3oko";
 #else
-#  if defined(U3_OS_ANDROID)
+#  ifdef U3_OS_ANDROID
   // EAI-REFACT
   ret = "libappl_u3oko";
 #  endif

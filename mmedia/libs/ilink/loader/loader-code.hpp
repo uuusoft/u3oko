@@ -12,7 +12,7 @@ namespace libs::ilink::loader
 class LoaderCode final
 {
   public:
-  LoaderCode ();
+  LoaderCode () = default;
   ~LoaderCode ();
 
   /// Функция загрузки кода

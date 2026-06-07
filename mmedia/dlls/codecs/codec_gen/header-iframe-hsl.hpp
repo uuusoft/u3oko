@@ -15,9 +15,7 @@ struct HeaderIFrameHSL final {
     reset ();
   }
 
-  ~HeaderIFrameHSL ()
-  {
-  }
+  ~HeaderIFrameHSL () = default;
 
   void
   reset ()

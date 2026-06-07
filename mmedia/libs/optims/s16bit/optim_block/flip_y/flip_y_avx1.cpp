@@ -11,7 +11,7 @@
 #include "flip_y.hpp"
 #include "flip_y_move_alg.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::block::flip_y
 {
@@ -32,11 +32,11 @@ struct TFlipperAVX1 final {
     __m256i temp1;
     __m256i temp2;
 
-    temp1 = _mm256_load_si256 (U3_CAST_REINTERPRET< __m256i* > (str1));
-    temp2 = _mm256_load_si256 (U3_CAST_REINTERPRET< __m256i* > (str2));
+    temp1 = _mm256_load_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (str1));
+    temp2 = _mm256_load_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (str2));
 
-    _mm256_store_si256 (U3_CAST_REINTERPRET< __m256i* > (str1), temp2);
-    _mm256_store_si256 (U3_CAST_REINTERPRET< __m256i* > (str2), temp1);
+    _mm256_store_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (str1), temp2);
+    _mm256_store_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (str2), temp1);
   }
 };
 

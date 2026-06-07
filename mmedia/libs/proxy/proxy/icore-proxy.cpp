@@ -16,10 +16,11 @@ extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* cre
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vcd_all2hsl ();
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vcd_all2rgb ();
 
-#if defined(U3_LIBS_ENABLE_DETECT_FACE_VDD)
+#if (U3_LIBS_ENABLE_DETECT_FACE_VDD == 1)
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_detect_face ();
 #endif
-#if defined(U3_LIBS_ENABLE_VDETECT1_VDD)
+
+#if (U3_LIBS_ENABLE_VDETECT1_VDD == 1)
 extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_detect_move ();
 #endif
 
@@ -81,14 +82,14 @@ get_create_data_path_module_funct (const std::string& plib_id)
     return create_impl_vcd_all2rgb;
   }
 
-#if defined(U3_LIBS_ENABLE_DETECT_FACE_VDD)
+#if (U3_LIBS_ENABLE_DETECT_FACE_VDD == 1)
   if (lib_id == "vdd_detect_face")
   {
     return create_impl_vdd_detect_face;
   }
 #endif
 
-#if defined(U3_LIBS_ENABLE_VDETECT1_VDD)
+#if (U3_LIBS_ENABLE_VDETECT1_VDD == 1)
   if (lib_id == "vdd_detect_move")
   {
     return create_impl_vdd_detect_move;
@@ -156,7 +157,7 @@ get_create_data_path_module_funct (const std::string& plib_id)
     return create_impl_vdd_vgradient;
   }
 #endif
-#if 0
+#ifdef U3_FAKE_DISABLE
   if (lib_id == "vdd_vhistogram")
   {
     return create_impl_vdd_vhistogram;

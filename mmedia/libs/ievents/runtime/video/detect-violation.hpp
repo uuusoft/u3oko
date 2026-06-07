@@ -27,7 +27,7 @@ class DetectViolation : public RuntimeEvent
   U3_HELPER_DISABLE_ACOPY_TYPE (DetectViolation)
 
   explicit DetectViolation (const Acessor& = Acessor (0), const DetectViolations& state = DetectViolations::start);
-  virtual ~DetectViolation ();
+  virtual ~DetectViolation () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -50,7 +50,7 @@ class DetectViolation : public RuntimeEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
   // virtual void load_int( const ::pugi::xml_named_node_iterator& node ) override;

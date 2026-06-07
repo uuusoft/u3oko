@@ -15,9 +15,7 @@ struct qoptim final {
   {
   }
 
-  ~qoptim ()
-  {
-  }
+  ~qoptim () = default;
 
   void
   check () const
@@ -25,6 +23,6 @@ struct qoptim final {
     U3_CHECK (!id_.empty (), "empty id");
   }
 
-  std::string id_;   //<
+  std::string id_ = {};   //<
 };
 }   // namespace libs::optim::io

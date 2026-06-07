@@ -11,16 +11,6 @@
 
 namespace libs::iproperties::xml
 {
-ILoaderImpl::ILoaderImpl ()
-{
-}
-
-
-ILoaderImpl::~ILoaderImpl ()
-{
-}
-
-
 bool
 ILoaderImpl::is_exist_file (
   const std::string&       file_name,

@@ -3,7 +3,6 @@
 # copyright   Erashov A.I.
 # file
 
-include(ExternalProject)
 include("./build/cmake/libs/boost/u3-boost-lib-values.cmake")
 
 cmake_policy(SET CMP0167 OLD)

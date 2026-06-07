@@ -23,11 +23,6 @@ MemResourceStorageEvent::MemResourceStorageEvent (
 }
 
 
-MemResourceStorageEvent::~MemResourceStorageEvent ()
-{
-}
-
-
 const MemResourceStorageEvent::id_mem_type&
 MemResourceStorageEvent::get_id () const
 {
@@ -80,8 +75,9 @@ MemResourceStorageEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 MemResourceStorageEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (MemResourceStorageEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< MemResourceStorageEvent > (src);
   super::copy_int (src);
+
   id_                   = dsrc->id_;
   number_               = dsrc->number_;
   request_for_transmit_ = dsrc->request_for_transmit_;
@@ -90,12 +86,12 @@ MemResourceStorageEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-MemResourceStorageEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+MemResourceStorageEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoistorage_eventsoeventsoBaseStorageEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (id_);
-  ar& BOOST_SERIALIZATION_NVP (number_);
-  ar& BOOST_SERIALIZATION_NVP (request_for_transmit_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoistorage_eventsoeventsoBaseStorageEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (id_);
+  arh& BOOST_SERIALIZATION_NVP (number_);
+  arh& BOOST_SERIALIZATION_NVP (request_for_transmit_);
 
   self_correct ();
 }

@@ -33,6 +33,6 @@ LogVals            str2val (const std::string& str);
 inline constexpr std::uint32_t
                  enum_to_raw (const LogVals& val)
 {
-  return U3_CAST_STATIC< std::uint32_t > (val);
+  return U3_CAST_UINT32_FORCE (val);
 }
 }   // namespace libs::ievents::props::modules::log

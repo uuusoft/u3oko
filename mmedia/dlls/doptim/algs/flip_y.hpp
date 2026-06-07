@@ -19,9 +19,7 @@ class CFlipYAlg final : public IOptimAlg
     sel_.set_algoritm_name (val_key);
   }
 
-  virtual ~CFlipYAlg ()
-  {
-  }
+  virtual ~CFlipYAlg () = default;
 
   protected:
   virtual void
@@ -29,7 +27,7 @@ class CFlipYAlg final : public IOptimAlg
   {
     switch (iinfo.ext_)
     {
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
     case ::libs::helpers::sys::cpu::CpuExts::avx2:
       sel_.set (::libs::optim::s16bit::block::flip_y::avx2);
       break;
@@ -51,7 +49,7 @@ class CFlipYAlg final : public IOptimAlg
       sel_.set (::libs::optim::s16bit::block::flip_y::alu);
       break;
     case ::libs::helpers::sys::cpu::CpuExts::usual:
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
       sel_.set (::libs::optim::s16bit::block::flip_y::sse2);
 #elif defined(U3_CPU_ARM)
       sel_.set (::libs::optim::s16bit::block::flip_y::neon);
@@ -59,7 +57,7 @@ class CFlipYAlg final : public IOptimAlg
       sel_.set (::libs::optim::s16bit::block::flip_y::alu);
 #endif
       break;
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
     case ::libs::helpers::sys::cpu::CpuExts::neon:
       sel_.set (::libs::optim::s16bit::block::flip_y::neon);
       break;

@@ -15,7 +15,7 @@
 #include "../../codec-funcs-includes_int.hpp"
 #include "dct_func_mmx_sse_sse2.h"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 //////////////////////////////////////////////////////////////////////////////
 //
 //  fdctmm32.c - AP922 MMX fDCT

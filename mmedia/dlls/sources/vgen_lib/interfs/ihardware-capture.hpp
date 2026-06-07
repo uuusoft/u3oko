@@ -14,14 +14,8 @@ class IHardwareCapture final : public syn::ICaptureImage
   //  ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IHardwareCapture)
 
-  IHardwareCapture () :
-    update_ (false)
-  {
-  }
-
-  virtual ~IHardwareCapture ()
-  {
-  }
+  IHardwareCapture ()          = default;
+  virtual ~IHardwareCapture () = default;
 
   bool
   is_capture_property_update () const
@@ -80,7 +74,7 @@ class IHardwareCapture final : public syn::ICaptureImage
     update_ = true;
   }
 
-  mutable bool                  update_;            //<
+  mutable bool                  update_ = false;    //<
   syn::VideoDriverCaptureProp   capture_;           //<
   syn::VideoDriverProp          vdriver_;           //<
   syn::SystemSpecificDriverProp system_specific_;   //<

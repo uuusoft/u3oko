@@ -22,11 +22,6 @@ ChangeGraphsDataEvent::ChangeGraphsDataEvent (
 }
 
 
-ChangeGraphsDataEvent::~ChangeGraphsDataEvent ()
-{
-}
-
-
 const ChangeGraphsDataEvent::id_graphs_storage_type&
 ChangeGraphsDataEvent::get_graph_folders () const
 {
@@ -93,7 +88,7 @@ ChangeGraphsDataEvent::save_json_int (::boost::json::object& obj) const
 void
 ChangeGraphsDataEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (ChangeGraphsDataEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< ChangeGraphsDataEvent > (src);
   super::copy_int (src);
 
   folders_ = dsrc->folders_;
@@ -103,11 +98,11 @@ ChangeGraphsDataEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-ChangeGraphsDataEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+ChangeGraphsDataEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoimdata_eventsoeventsoBaseDataEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (folders_);
-  ar& BOOST_SERIALIZATION_NVP (action_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoimdata_eventsoeventsoBaseDataEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (folders_);
+  arh& BOOST_SERIALIZATION_NVP (action_);
 
   self_correct ();
 }

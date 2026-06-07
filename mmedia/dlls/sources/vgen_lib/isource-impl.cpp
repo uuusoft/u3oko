@@ -12,19 +12,6 @@
 
 namespace dlls::sources::gen_lib
 {
-ISourceImpl::ISourceImpl () :
-  started_ (false),
-  simd_ (syn::CpuExts::usual),
-  send_interfaces_ (false)
-{
-}
-
-
-ISourceImpl::~ISourceImpl ()
-{
-}
-
-
 void
 ISourceImpl::init ()
 {
@@ -71,7 +58,6 @@ ISourceImpl::stop ()
 
     started_         = false;
     send_interfaces_ = false;
-
     stop_int ();
   }
   catch (const std::exception& e)

@@ -18,7 +18,7 @@ class RootModule : public base::BaseModule
 {
   public:
   RootModule ();
-  virtual ~RootModule ();
+  virtual ~RootModule () = default;
 
   protected:
   //  internal typess

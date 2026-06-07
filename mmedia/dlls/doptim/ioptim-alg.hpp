@@ -25,9 +25,7 @@ class IOptimAlg
   {
   }
 
-  virtual ~IOptimAlg ()
-  {
-  }
+  virtual ~IOptimAlg () = default;
 
   syn::hioptim
   get ()
@@ -53,7 +51,7 @@ class IOptimAlg
   //  IOptimAlg interface
   virtual void sync_impl_int (const ::libs::optim::io::TInit& iinfo) = 0;
 
-  syn::hioptim::store_func_type func_;   //<
-  syn::hioptim                  sel_;    //<
+  syn::hioptim::func_type func_;   //<
+  syn::hioptim            sel_;    //<
 };
 }   // namespace dlls::doptim::impl

@@ -17,7 +17,7 @@ class BaseModule : public ::libs::link::appl::IApplication
   using recv_links_type = std::list< ::libs::link::ILink::ptr >;
 
   BaseModule ();
-  virtual ~BaseModule ();
+  virtual ~BaseModule () = default;
 
   protected:
   //  internal typess

@@ -14,4 +14,8 @@ using ChangeStateProcessEvent = ::libs::ievents::runtime::state::ChangeStateProc
 using IEvent                  = ::libs::events::IEvent;
 using InitApplication         = ::libs::link::appl::InitApplication;
 using StateProcessEventExt    = ::libs::ilink::appl::StateProcessEventExt;
+using CallSyncs               = ::libs::link::details::CallSyncs;
+using Calls                   = ::libs::link::details::Calls;
+
+namespace mids = libs::properties::vers::links::mids;
 }   // namespace appls::u3oko::appl::syn

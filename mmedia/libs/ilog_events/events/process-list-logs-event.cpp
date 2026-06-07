@@ -18,11 +18,6 @@ ProcessListLogsEvent::ProcessListLogsEvent (const Acessor&, const AppllPartLogIn
 }
 
 
-ProcessListLogsEvent::~ProcessListLogsEvent ()
-{
-}
-
-
 std::string
 ProcessListLogsEvent::text (const LogTexts& type) const
 {
@@ -89,8 +84,9 @@ ProcessListLogsEvent::save_json_int (::boost::json::object& obj) const
 void
 ProcessListLogsEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (ProcessListLogsEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< ProcessListLogsEvent > (src);
   super::copy_int (src);
+
   action_  = dsrc->action_;
   folders_ = dsrc->folders_;
 }
@@ -98,11 +94,11 @@ ProcessListLogsEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-ProcessListLogsEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+ProcessListLogsEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoilog_eventsoeventsoBaseLogEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (action_);
-  ar& BOOST_SERIALIZATION_NVP (folders_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoilog_eventsoeventsoBaseLogEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (action_);
+  arh& BOOST_SERIALIZATION_NVP (folders_);
 
   self_correct ();
 }

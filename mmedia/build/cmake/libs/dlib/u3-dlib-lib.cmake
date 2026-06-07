@@ -3,9 +3,6 @@
 # copyright   Erashov A.I.
 # file        u3-dlib-lib.cmake
 
-include(ExternalProject)
-include(FetchContent)
-
 include("./build/cmake/libs/dlib/u3-dlib-lib-values.cmake")
 
 set(U3_NAME_EXTERNAL_LIB_DLIB_UTIL ${U3_NAME_EXTERNAL_LIB_DLIB}-util)

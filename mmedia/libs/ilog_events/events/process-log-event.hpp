@@ -30,7 +30,7 @@ class ProcessLogEvent final : public BaseLogEvent
     const Acessor&               = Acessor (0),
     const AppllPartLogInfo& appl = AppllPartLogInfo (::libs::ievents::props::modules::log::LogLevels::info, "xplex", "xplex"));
 
-  virtual ~ProcessLogEvent ();
+  virtual ~ProcessLogEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -60,7 +60,7 @@ class ProcessLogEvent final : public BaseLogEvent
   InfoLogSessionFragment          info_;      //< данные файлов сессии логирования
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   //  ievents::Event overrides
   virtual void                        load_json_int (const ::boost::json::object& obj) override;

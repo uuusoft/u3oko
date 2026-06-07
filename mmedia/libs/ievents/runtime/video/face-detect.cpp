@@ -11,15 +11,10 @@
 
 namespace libs::ievents::runtime::video
 {
-FaceDetect::FaceDetect (const Acessor& ph, bool start) :
+FaceDetect::FaceDetect (const Acessor& pha, bool start) :
   start_ (start)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-FaceDetect::~FaceDetect ()
-{
 }
 
 
@@ -40,7 +35,7 @@ FaceDetect::clone_int (const ::libs::events::Deeps& deep) const
 void
 FaceDetect::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (FaceDetect);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< FaceDetect > (src);
   super::copy_int (src);
   start_ = dsrc->start_;
 }
@@ -48,10 +43,10 @@ FaceDetect::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-FaceDetect::serialize (Archive& ar, const std::uint32_t /* file_version */)
+FaceDetect::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (start_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (start_);
 
   self_correct ();
 }

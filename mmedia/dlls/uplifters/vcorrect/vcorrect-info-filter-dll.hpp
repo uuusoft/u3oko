@@ -11,7 +11,7 @@ namespace dlls::uplifters::vcorrect
 /// Параметры модуля коррекции изображения
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter {
   InfoFilter ();
-  virtual ~InfoFilter ();
+  virtual ~InfoFilter () = default;
 
   void init ();
 
@@ -24,6 +24,7 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
   private:
   // internal types
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::BaseInfoFilter)
+
   //  BaseInfoFilter overrides
   virtual bool load_int (const ::pugi::xml_named_node_iterator& node) override;
   virtual void sync_int (bool force) override;

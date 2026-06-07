@@ -53,9 +53,7 @@ struct TStatLogger final {
   {
   }
 
-  ~TStatLogger ()
-  {
-  }
+  ~TStatLogger () = default;
 
   bool
   operator() (ExpandedTimes& obj)

@@ -13,16 +13,6 @@
 
 namespace dlls::terminals::video_sender::impl2gui
 {
-Impl2Gui::Impl2Gui ()
-{
-}
-
-
-Impl2Gui::~Impl2Gui ()
-{
-}
-
-
 void
 Impl2Gui::send_int (
   const InfoFilter&                    finfo,
@@ -49,8 +39,8 @@ Impl2Gui::fill_frame (const syn::TransformInfo& info, void* pmem)
 
   try
   {
-    auto                                            header = U3_CAST_REINTERPRET< ::modules::uuu_gui::appl::io::VideoIO* > (pmem);
-    const ::utils::dbufs::video::IVideoBuf::raw_ptr bbuf   = (**info.ibuf_)[utils::dbufs::video::consts::offs::lit];
+    auto       header = ::libs::helpers::casts::reinterpret_cast_helper< ::modules::uuu_gui::appl::io::VideoIO* > (pmem);
+    const auto bbuf   = (**info.ibuf_)[utils::dbufs::video::consts::offs::lit];
 
     U3_CHECK (header, "empty header video frame");
     // U3_CHECK( header->check(), "check header video frame" );
@@ -77,7 +67,7 @@ Impl2Gui::fill_frame (const syn::TransformInfo& info, void* pmem)
 
     for (std::size_t bindx = 0; bindx < std::size (buf_indxs); ++bindx)
     {
-      ::utils::dbufs::video::IVideoBuf::craw_ptr buf = (**info.ibuf_)[buf_indxs[bindx]];
+      auto buf = (**info.ibuf_)[buf_indxs[bindx]];
       if (!buf || buf->get_flag (::utils::dbufs::BufFlags::empty))
       {
         continue;
@@ -87,6 +77,7 @@ Impl2Gui::fill_frame (const syn::TransformInfo& info, void* pmem)
 
       header->in_.stride_ = buf->get_dim_var (::utils::dbufs::video::Dims::stride);
       *buf_offs[bindx]    = off_buf;
+
       ::libs::helpers::mem::u3copy (utils::dbufs::video::helpers::get_const_data (buf), dest_buf, (*buf)[::utils::dbufs::MemVars::size_data]);
       off_buf += (*buf)[::utils::dbufs::MemVars::size_data];
     }
@@ -109,7 +100,7 @@ bool
 Impl2Gui::is_empty_frame (const void* pmem) const
 {
   U3_ASSERT (pmem);
-  auto header = U3_CAST_REINTERPRET< const ::modules::uuu_gui::appl::io::VideoIO* > (pmem);
+  auto header = ::libs::helpers::casts::reinterpret_cast_helper< const ::modules::uuu_gui::appl::io::VideoIO* > (pmem);
   return header->in_.is_valid () ? false : true;
 }
 
@@ -123,7 +114,7 @@ Impl2Gui::send_frame (
   if (U3_MARK_UNUSED auto imem = helper->get_imem ())
   {
     U3_ASSERT_SIGNAL ("failed");
-#if 0
+#ifdef U3_FAKE_DISABLE
     if (finfo_.last_hmem_.check ())
     {
       if (!helper->mem_atomic_call (finfo_.last_hmem_, IsEmptyFrameHelper (this)))
@@ -144,7 +135,7 @@ Impl2Gui::send_frame (
 
       for (std::size_t buf_indx = 0; buf_indx < std::size (buf_indxs); ++buf_indx)
       {
-        ::utils::dbufs::video::IVideoBuf::craw_ptr buf = (**info.ibuf_)[buf_indxs[buf_indx]];
+        auto buf = (**info.ibuf_)[buf_indxs[buf_indx]];
         if (!buf)
         {
           continue;

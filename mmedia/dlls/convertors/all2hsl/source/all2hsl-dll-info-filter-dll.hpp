@@ -12,7 +12,7 @@ namespace dlls::convertors::all2hsl
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter {
   public:
   InfoFilter ();
-  virtual ~InfoFilter ();
+  virtual ~InfoFilter () = default;
 
   InfoFilter (const InfoFilter& src)            = delete;
   InfoFilter& operator= (const InfoFilter& src) = delete;

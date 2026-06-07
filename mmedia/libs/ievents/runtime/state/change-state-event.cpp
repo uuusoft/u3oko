@@ -12,15 +12,10 @@
 
 namespace libs::ievents::runtime::state
 {
-ChangeStateProcessEvent::ChangeStateProcessEvent (const Acessor& ph, bool start) :
+ChangeStateProcessEvent::ChangeStateProcessEvent (const Acessor& pha, bool start) :
   start_ (start)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-ChangeStateProcessEvent::~ChangeStateProcessEvent ()
-{
 }
 
 
@@ -64,7 +59,7 @@ ChangeStateProcessEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 ChangeStateProcessEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (ChangeStateProcessEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< ChangeStateProcessEvent > (src);
   super::copy_int (src);
   start_ = dsrc->start_;
 }
@@ -72,10 +67,10 @@ ChangeStateProcessEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-ChangeStateProcessEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+ChangeStateProcessEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (start_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (start_);
 }
 }   // namespace libs::ievents::runtime::state
 

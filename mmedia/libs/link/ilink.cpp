@@ -4,23 +4,11 @@
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_link
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "libs-link-includes_int.hpp"
 #include "ilink.hpp"
 
 namespace libs::link
 {
-ILink::ILink ()
-{
-}
-
-
-ILink::~ILink ()
-{
-}
-
-
 bool
 ILink::connect (const CreateInfo& info)
 {

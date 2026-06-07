@@ -15,9 +15,7 @@ class ILinkCreator
   // ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ILinkCreator)
 
-  virtual ~ILinkCreator ()
-  {
-  }
+  virtual ~ILinkCreator () = default;
 
   ILinkCreator (const ILinkCreator&)            = delete;
   ILinkCreator& operator= (const ILinkCreator&) = delete;
@@ -30,8 +28,6 @@ class ILinkCreator
   virtual bool       close_all ()                              = 0;
 
   protected:
-  ILinkCreator ()
-  {
-  }
+  ILinkCreator () = default;
 };
 }   // namespace libs::link

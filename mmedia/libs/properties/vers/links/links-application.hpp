@@ -69,9 +69,7 @@ struct LinksApplication final {
   using key_storage_type   = libs::properties::vers::links::mids::key_storage_type;              //<
   using links_storage_type = std::unordered_map< key_storage_type, link_ptr_type, pair_hash >;   //<
 
-  LinksApplication ()
-  {
-  }
+  LinksApplication () = default;
 
   ~LinksApplication ()
   {
@@ -91,9 +89,9 @@ struct LinksApplication final {
   }
 
   void
-  reset ()
+  reset () noexcept
   {
-    std::lock_guard lock (threadsan_mtx_);
+    std::scoped_lock lock (threadsan_mtx_);
     module_links_.clear ();
   }
 
@@ -106,8 +104,8 @@ struct LinksApplication final {
   const TTLinkPtr
   get (const key_storage_type& key) const
   {
-    std::lock_guard lock (threadsan_mtx_);
-    auto            finger = module_links_.find (key);
+    std::scoped_lock lock (threadsan_mtx_);
+    auto             finger = module_links_.find (key);
     U3_CHECK (finger != module_links_.end (), "failed get link to module");
     return finger->second;
   }
@@ -115,15 +113,15 @@ struct LinksApplication final {
   void
   set (const key_storage_type& key, const TTLinkPtr& ptr)
   {
-    std::lock_guard lock (threadsan_mtx_);
+    std::scoped_lock lock (threadsan_mtx_);
     module_links_[key] = ptr;
   }
 
   void
   reset_link (const key_storage_type& key)
   {
-    std::lock_guard lock (threadsan_mtx_);
-    auto            finger = module_links_.find (key);
+    std::scoped_lock lock (threadsan_mtx_);
+    auto             finger = module_links_.find (key);
     U3_CHECK (finger != module_links_.end (), "failed get link to module");
     return finger->second.reset ();
   }

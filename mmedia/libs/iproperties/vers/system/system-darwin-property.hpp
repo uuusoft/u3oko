@@ -5,8 +5,8 @@
 \date       16.10.2024
 \project    u3_iproperties_lib
 */
-#if defined(U3_OS_MACX_DESKTOP)
 
+#ifdef U3_OS_MACX_DESKTOP
 namespace libs::iproperties::vers::system
 {
 class SystemDarwinProperty final : public ::libs::properties::ISharedProperty
@@ -15,13 +15,8 @@ class SystemDarwinProperty final : public ::libs::properties::ISharedProperty
   // ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (SystemDarwinProperty)
 
-  SystemDarwinProperty ()
-  {
-  }
-
-  virtual ~SystemDarwinProperty ()
-  {
-  }
+  SystemDarwinProperty ()          = default;
+  virtual ~SystemDarwinProperty () = default;
 
   private:
   virtual bool
@@ -37,5 +32,4 @@ class SystemDarwinProperty final : public ::libs::properties::ISharedProperty
   }
 };
 }   // namespace libs::iproperties::vers::system
-
 #endif

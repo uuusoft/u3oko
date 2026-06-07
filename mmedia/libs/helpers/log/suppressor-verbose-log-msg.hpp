@@ -28,9 +28,7 @@ class SupressorVerboseLogMsg final
   {
   }
 
-  ~SupressorVerboseLogMsg ()
-  {
-  }
+  ~SupressorVerboseLogMsg () = default;
 
   bool
   process (const TTNode& val, to_string_function_type to_string_func)
@@ -40,10 +38,10 @@ class SupressorVerboseLogMsg final
       return true;
     }
 
-    std::lock_guard lock (mtx_);
-    const auto      now    = std::chrono::system_clock::now ();
-    const auto      strval = to_string_func (val);
-    auto            finger = vals_.find (strval);
+    std::scoped_lock lock (mtx_);
+    const auto       now    = std::chrono::system_clock::now ();
+    const auto       strval = to_string_func (val);
+    auto             finger = vals_.find (strval);
 
     U3_ASSERT (!strval.empty ());
     if (finger == vals_.end ())
@@ -72,7 +70,7 @@ class SupressorVerboseLogMsg final
   void
   flash (flash_function_type& flash_func, bool force)
   {
-    std::lock_guard< TTSync > lock (mtx_);
+    std::scoped_lock lock (mtx_);
 
     for (const auto& val : vals_)
     {
@@ -86,8 +84,8 @@ class SupressorVerboseLogMsg final
   }
 
   private:
-  const bool   disable_;   //<
-  storage_type vals_;      //<
-  TTSync       mtx_;       //<
+  const bool   disable_ = false;   //<
+  storage_type vals_;              //<
+  TTSync       mtx_;               //<
 };
 }   // namespace libs::helpers::log

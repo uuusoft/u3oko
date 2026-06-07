@@ -14,8 +14,8 @@ class Filter final :
   protected ::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >
 {
   public:
-  Filter ();
-  ~Filter ();
+  Filter () = default;
+  virtual ~Filter ();
 
   private:
   // internal types
@@ -30,10 +30,10 @@ class Filter final :
   // void save_buf2file (const std::string& file_name, int counter, int quality, syn::IVideoBuf::raw_ptr psrc);
   // void convert_buf2rgb24 (syn::IVideoBuf::craw_ptr psrc, syn::IVideoBuf::raw_ptr pdst);
 
-  ::libs::optim::io::hioptim fx16_x8_;         //< Указатель на реализацию по преобразованию формата кадра из X16 в X8
-  syn::IVideoBuf::ptr        temp_buf_;        //< Временный буфер для хранения подготовленного к сжатию кадра в совместимом для этого формате (RGB, Y8, etc)
-  tjhandle                   hjpeg_;           //< Устройство для кодирования jpeg для отладки
-  std::uint8_t*              jpeg_buf_;        //< Буфер библиотеки JPEG для кодирования
-  std::uint32_t              size_jpeg_buf_;   //< Размер буфера для кодирования
+  ::libs::optim::io::hioptim fx16_x8_;                   //< Указатель на реализацию по преобразованию формата кадра из X16 в X8
+  syn::IVideoBuf::ptr        temp_buf_;                  //< Временный буфер для хранения подготовленного к сжатию кадра в совместимом для этого формате (RGB, Y8, etc)
+  tjhandle                   hjpeg_         = nullptr;   //< Устройство для кодирования jpeg для отладки
+  std::uint8_t*              jpeg_buf_      = nullptr;   //< Буфер библиотеки JPEG для кодирования
+  std::uint32_t              size_jpeg_buf_ = 0;         //< Размер буфера для кодирования
 };
 }   // namespace dlls::detectors::detect_face

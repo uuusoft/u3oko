@@ -10,11 +10,11 @@ namespace libs::helpers::utils
 {
 /// Функция проверки значения формата плавающей точки одинарной точности на вырожденность
 inline void
-check_float (float* val, float def_val = 0.0f)
+check_float (float* val, float def_val = 0.0F)
 {
   U3_ASSERT (val);
   const bool res = std::isnormal (*val);
-  //  if its SNAN, QNAN or denorm reset to 0.0f
+  //  if its SNAN, QNAN or denorm reset to 0.0F
   if (!res)
   {
     U3_ASSERT_SIGNAL ("failed");

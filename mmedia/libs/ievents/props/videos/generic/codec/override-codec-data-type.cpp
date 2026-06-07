@@ -12,18 +12,18 @@
 namespace libs::ievents::props::videos::generic::codec
 {
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const Writes& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const Writes& src)
 {
-  jv = {
+  jvs = {
     { "override_codec_data", U3_CAST_UINT64_FORCE (src) }
   };
 }
 
 
 Writes
-tag_invoke (::boost::json::value_to_tag< Writes >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< Writes >, const ::boost::json::value& jvs)
 {
-  const ::boost::json::object& obj = jv.as_object ();
-  return U3_CAST_STATIC< Writes > (::libs::helpers::json::get_uint32 (obj.at ("override_codec_data")));
+  const ::boost::json::object& obj = jvs.as_object ();
+  return ::libs::helpers::casts::static_cast_helper< Writes > (::libs::helpers::json::get_uint32 (obj.at ("override_codec_data")));
 }
 }   // namespace libs::ievents::props::videos::generic::codec

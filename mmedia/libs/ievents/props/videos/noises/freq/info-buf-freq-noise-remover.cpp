@@ -30,28 +30,31 @@ InfoBuffFreqNoiseRemover::InfoBuffFreqNoiseRemover (const ::libs::events::buf::E
   ::libs::events::buf::EventBufsInfo (buf),
   bindx_diff_ (utils::dbufs::video::consts::offs::invalid),
   bound_x_plus_y_ (1),
-  dwt_koeff2_ (1.0f)
+  dwt_koeff2_ (1.0F)
 {
 }
 
 
 template< class Archive >
 void
-InfoBuffFreqNoiseRemover::serialize (Archive& ar, const std::uint32_t /* file_version */)
+InfoBuffFreqNoiseRemover::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (bindx_diff_);
-  ar& BOOST_SERIALIZATION_NVP (bound_x_plus_y_);
-  ar& BOOST_SERIALIZATION_NVP (dwt_koeff2_);
+  arh& BOOST_SERIALIZATION_NVP (bindx_diff_);
+  arh& BOOST_SERIALIZATION_NVP (bound_x_plus_y_);
+  arh& BOOST_SERIALIZATION_NVP (dwt_koeff2_);
 }
 
 
 void
-tag_invoke (::boost::json::value_from_tag tag, ::boost::json::value& jv, const InfoBuffFreqNoiseRemover& src)
+tag_invoke (::boost::json::value_from_tag tag, ::boost::json::value& jvs, const InfoBuffFreqNoiseRemover& src)
 {
   ::boost::json::value pjv;
-  ::libs::events::buf::tag_invoke (tag, pjv, U3_CAST_STATIC< const ::libs::events::buf::EventBufsInfo& > (src));
+  ::libs::events::buf::tag_invoke (
+    tag,
+    pjv,
+    ::libs::helpers::casts::static_cast_helper< const ::libs::events::buf::EventBufsInfo& > (src));
 
-  jv = {
+  jvs = {
     { "parent", pjv },
     { "bindx_diff", src.bindx_diff_ },
     { "bound_x_plus_y", src.bound_x_plus_y_ },
@@ -61,11 +64,11 @@ tag_invoke (::boost::json::value_from_tag tag, ::boost::json::value& jv, const I
 
 
 InfoBuffFreqNoiseRemover
-tag_invoke (::boost::json::value_to_tag< InfoBuffFreqNoiseRemover >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< InfoBuffFreqNoiseRemover >, const ::boost::json::value& jvs)
 {
-  const auto&                  pobj = jv.at ("parent").as_object ();
+  const auto&                  pobj = jvs.at ("parent").as_object ();
   InfoBuffFreqNoiseRemover     ret (::libs::events::buf::tag_invoke (::boost::json::value_to_tag< ::libs::events::buf::EventBufsInfo > (), pobj));
-  const ::boost::json::object& obj = jv.as_object ();
+  const ::boost::json::object& obj = jvs.as_object ();
 
   ret.bindx_diff_     = obj.at ("bindx_diff").as_string ();
   ret.bound_x_plus_y_ = ::libs::helpers::json::get_int32 (obj.at ("bound_x_plus_y"));

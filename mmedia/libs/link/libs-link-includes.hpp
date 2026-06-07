@@ -10,10 +10,10 @@ file        libs-link-includes.hpp
 #include "consts/libs-link-size-vals.hpp"
 #include "consts/libs-link-text-vals.hpp"
 
-#include "details/module-links-type.hpp"
-#include "details/run-code-type.hpp"
-#include "details/sync-call-type.hpp"
-#include "details/request-call-type.hpp"
+#include "details/enum-module-links.hpp"
+#include "details/enum-code-runs.hpp"
+#include "details/enum-call-syncs.hpp"
+#include "details/enum-calls.hpp"
 
 #include "mem/iblock-fake-mem.hpp"
 #include "mem/ihandler-mem.hpp"

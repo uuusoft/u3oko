@@ -15,7 +15,7 @@ class TypeObjectId
   using id_type = std::string;
 
   explicit TypeObjectId (const id_type& val = consts::empty_object_id);
-  virtual ~TypeObjectId ();
+  virtual ~TypeObjectId () = default;
 
   bool is_valid () const;
   void reset ();
@@ -29,11 +29,11 @@ class TypeObjectId
 
   template< class Archive >
   void
-  serialize (Archive& ar, const std::uint32_t /* file_version */);
+  serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
-void         tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const TypeObjectId& src);
-TypeObjectId tag_invoke (::boost::json::value_to_tag< TypeObjectId >, const ::boost::json::value& jv);
+void         tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const TypeObjectId& src);
+TypeObjectId tag_invoke (::boost::json::value_to_tag< TypeObjectId >, const ::boost::json::value& jvs);
 }   // namespace libs::istorage_events
 
 BOOST_CLASS_EXPORT_KEY (::libs::istorage_events::TypeObjectId);

@@ -21,15 +21,13 @@ class I420ToRgb24Alg final : public IOptimAlg
     sel_.set_block_align_y (8);
   }
 
-  virtual ~I420ToRgb24Alg ()
-  {
-  }
+  virtual ~I420ToRgb24Alg () = default;
 
   protected:
   virtual void
   sync_impl_int (const ::libs::optim::io::TInit& iinfo) override
   {
-#if 0
+#ifdef U3_FAKE_DISABLE
     switch (iinfo.ext_)
     {
 #  if defined(U3_CPU_X86)

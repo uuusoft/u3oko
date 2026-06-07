@@ -24,12 +24,7 @@ class ISharedPropertyStorage
   virtual void                     reset_prop (const consts::keys::key_property_type&)                            = 0;
 
   protected:
-  ISharedPropertyStorage ()
-  {
-  }
-
-  virtual ~ISharedPropertyStorage ()
-  {
-  }
+  ISharedPropertyStorage ()          = default;
+  virtual ~ISharedPropertyStorage () = default;
 };
 }   // namespace libs::properties

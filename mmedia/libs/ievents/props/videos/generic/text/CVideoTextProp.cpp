@@ -21,33 +21,35 @@ namespace generics
 {
 namespace text
 {
-#if 0
-  CVideoTextProp::CVideoTextProp () : enable_ (false)
+#ifdef U3_FAKE_DISABLE
+CVideoTextProp::CVideoTextProp () : enable_ (false)
+{
+  property_name_ = "libs/ievents/props/videos/generic/text/CVideoTextProp";
+  type_id_       = index_type ({ 0x15, 0x11, 0x0d, 0xb5, 0xec, 0x00, 0x46, 0xf5, 0x9d, 0x4c, 0x33, 0x4c, 0x62, 0x3f, 0x5a, 0x4c });
+}
+
+
+::libs::events::IEvent::ptr
+CVideoTextProp::clone_int (const ::libs::events::Deeps& deep) const
+{
+  if (::libs::events::Deeps::empty == deep)
   {
-    property_name_ = "libs/ievents/props/videos/generic/text/CVideoTextProp";
-    type_id_ = index_type ({ 0x15, 0x11, 0x0d, 0xb5, 0xec, 0x00, 0x46, 0xf5, 0x9d, 0x4c, 0x33, 0x4c, 0x62, 0x3f, 0x5a, 0x4c });
+    return std::m1ake_shared< CVideoTextProp > ();
   }
 
-
-  ::libs::events::IEvent::ptr CVideoTextProp::clone_int( const ::libs::events::Deeps& deep ) const
-  {
-    if( ::libs::events::Deeps::empty == deep )
-    {
-      return std::m1ake_shared<CVideoTextProp>();
-    }
-
-    return std::m1ake_shared<CVideoTextProp>(*this);
-  }
+  return std::m1ake_shared< CVideoTextProp > (*this);
+}
 
 
-  template<class Archive>
-  void CVideoTextProp::serialize (Archive & ar, const std::uint32_t /* file_version */)
-  {
-    ar & U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP( super );
-    ar & BOOST_SERIALIZATION_NVP( enable_ );
+template< class Archive >
+void
+CVideoTextProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+{
+  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP (super);
+  ar& BOOST_SERIALIZATION_NVP (enable_);
 
-    return;
-  }
+  return;
+}
 #endif
 }   // namespace text
 }   // namespace generics

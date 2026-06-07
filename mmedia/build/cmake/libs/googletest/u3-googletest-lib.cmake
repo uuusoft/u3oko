@@ -3,9 +3,6 @@
 # copyright   Erashov A.I.
 # file        u3-googletest-lib.cmake
 
-include(ExternalProject)
-include(FetchContent)
-
 include("./build/cmake/libs/googletest/u3-googletest-lib-values.cmake")
 
 set(U3_NAME_EXTERNAL_LIB_GOOGLETEST_UTIL ${U3_NAME_EXTERNAL_LIB_GOOGLETEST}-util)
@@ -61,3 +58,6 @@ add_dependencies(googletest-lib ${U3_NAME_EXTERNAL_LIB_GOOGLETEST_UTIL})
 add_library(googletest-lib2 STATIC IMPORTED)
 set_target_properties(googletest-lib2 PROPERTIES IMPORTED_LOCATION ${U3_INSTALL_DIR_EXTERNAL_LIB_GOOGLETEST2})
 add_dependencies(googletest-lib2 ${U3_NAME_EXTERNAL_LIB_GOOGLETEST_UTIL})
+
+set(U3_LIBS_3RD_STATIC_LIST ${U3_LIBS_3RD_STATIC_LIST} googletest-lib)
+set(U3_DEPENDENCY_TARGETS_LIST ${U3_DEPENDENCY_TARGETS_LIST} ${U3_NAME_EXTERNAL_LIB_GOOGLETEST_UTIL})

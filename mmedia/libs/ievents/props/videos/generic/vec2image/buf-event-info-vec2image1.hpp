@@ -31,11 +31,11 @@ struct EventBufsInfoVec2Image1 final : public ::libs::events::buf::EventBufsInfo
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
-void                    tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const EventBufsInfoVec2Image1& src);
-EventBufsInfoVec2Image1 tag_invoke (::boost::json::value_to_tag< EventBufsInfoVec2Image1 >, const ::boost::json::value& jv);
+void                    tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const EventBufsInfoVec2Image1& src);
+EventBufsInfoVec2Image1 tag_invoke (::boost::json::value_to_tag< EventBufsInfoVec2Image1 >, const ::boost::json::value& jvs);
 }   // namespace libs::ievents::props::videos::generic::vec2image
 
 BOOST_CLASS_EXPORT_KEY (::libs::ievents::props::videos::generic::vec2image::EventBufsInfoVec2Image1);

@@ -5,16 +5,23 @@
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */
-#if 0
-namespace dlls { namespace sources { namespace v4l2_openmax_vgen { namespace jpeg {
+#ifdef U3_FAKE_DISABLE
+namespace dlls
+{
+namespace sources
+{
+namespace v4l2_openmax_vgen
+{
+namespace jpeg
+{
 /**
 \brief  gpu raspberry
 */
 class JpegCodecImageInterf : public ::libs::ievents::runtime::interf::interfaces::ICodecImage
 {
   public:
-    //  ext types
-U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (JpegCodecImageInterf)
+  //  ext types
+  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (JpegCodecImageInterf)
 
   JpegCodecImageInterf () :
     update_ (false),
@@ -50,7 +57,6 @@ U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (JpegCodecImageInterf)
   virtual void
   update_codec_property_int (const VideoCodecProp::raw_ptr info) override
   {
-    
     update_ = true;
     props_  = *info;
     return;
@@ -68,10 +74,13 @@ U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (JpegCodecImageInterf)
     return;
   }
 
-  mutable bool      update_;         //<
-  const std::string id_format_;      //<
-  VideoCodecProp    props_;          //<
+  mutable bool      update_;      //<
+  const std::string id_format_;   //<
+  VideoCodecProp    props_;       //<
 };
 
-}}}}      // namespace dlls::sources::v4l2_vgen::jpeg
+}   // namespace jpeg
+}   // namespace v4l2_openmax_vgen
+}   // namespace sources
+}   // namespace dlls
 #endif

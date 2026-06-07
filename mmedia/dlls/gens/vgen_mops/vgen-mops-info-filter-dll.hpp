@@ -12,7 +12,7 @@ namespace dlls::gens::vgen_mops
 /// Загружаемые данные для фильтра морфологических операций над изображением
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter {
   InfoFilter ();
-  virtual ~InfoFilter ();
+  virtual ~InfoFilter () = default;
 
   InfoFilter (const InfoFilter& src)            = delete;
   InfoFilter& operator= (const InfoFilter& src) = delete;

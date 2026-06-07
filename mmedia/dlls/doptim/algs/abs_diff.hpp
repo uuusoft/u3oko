@@ -19,11 +19,7 @@ class CAbsDiffAlg final : public IOptimAlg
     sel_.set_algoritm_name (val_key);
   }
 
-
-  virtual ~CAbsDiffAlg ()
-  {
-  }
-
+  virtual ~CAbsDiffAlg () = default;
 
   protected:
   virtual void
@@ -31,7 +27,7 @@ class CAbsDiffAlg final : public IOptimAlg
   {
     switch (iinfo.ext_)
     {
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
     case ::libs::helpers::sys::cpu::CpuExts::avx2:
       // sel_.set (::libs::optim::s16bit::ops::sub_abs_diff_alu);
       sel_.set (::libs::optim::s16bit::ops::sub_abs_diff_avx2);
@@ -51,7 +47,7 @@ class CAbsDiffAlg final : public IOptimAlg
       sel_.set (::libs::optim::s16bit::ops::sub_abs_diff_alu);
       break;
     case ::libs::helpers::sys::cpu::CpuExts::usual:
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
       sel_.set (::libs::optim::s16bit::ops::sub_abs_diff_sse2);
 #elif defined(U3_CPU_ARM)
       sel_.set (::libs::optim::s16bit::ops::sub_abs_diff_alu);
@@ -59,7 +55,7 @@ class CAbsDiffAlg final : public IOptimAlg
       sel_.set (::libs::optim::s16bit::ops::sub_abs_diff_alu);
 #endif
       break;
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
     case ::libs::helpers::sys::cpu::CpuExts::neon:
       sel_.set (::libs::optim::s16bit::ops::sub_abs_diff_alu);
       break;
@@ -69,10 +65,6 @@ class CAbsDiffAlg final : public IOptimAlg
       sel_.set (::libs::optim::s16bit::ops::sub_abs_diff_alu);
       break;
     }
-#if 0
-      U3_ASSERT_SIGNAL( "failed" );
-      sel_.set( ::libs::optim::s16bit::ops::sub_abs_diff_alu;
-#endif
   }
 };
 }   // namespace dlls::doptim::impl::algs

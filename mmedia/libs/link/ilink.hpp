@@ -49,8 +49,8 @@ class ILink
   mem::IMem::raw_ptr get_imem ();
 
   protected:
-  ILink ();
-  virtual ~ILink ();
+  ILink ()          = default;
+  virtual ~ILink () = default;
 
   //  ILink interface
   virtual bool               connect_int (const CreateInfo&)                                                                                          = 0;

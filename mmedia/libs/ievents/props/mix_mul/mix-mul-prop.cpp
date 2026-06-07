@@ -12,14 +12,9 @@
 
 namespace libs::ievents::props::mix_mul
 {
-MixMulProp::MixMulProp (const Acessor& ph)
+MixMulProp::MixMulProp (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-MixMulProp::~MixMulProp ()
-{
 }
 
 
@@ -34,7 +29,6 @@ void
 MixMulProp::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-
   outs_ = ::boost::json::value_to< MixMulProp::out_channels_type > (obj.at ("outs"));
 }
 
@@ -43,7 +37,6 @@ void
 MixMulProp::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-
   obj["outs"] = ::boost::json::value_from (outs_);
 }
 
@@ -51,7 +44,7 @@ MixMulProp::save_json_int (::boost::json::object& obj) const
 void
 MixMulProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (MixMulProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< MixMulProp > (src);
   super::copy_int (src);
   outs_ = dsrc->outs_;
 }
@@ -59,10 +52,10 @@ MixMulProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-MixMulProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+MixMulProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (outs_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (outs_);
 
   self_correct ();
 }

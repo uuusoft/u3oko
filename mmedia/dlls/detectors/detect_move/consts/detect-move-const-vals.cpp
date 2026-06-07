@@ -4,8 +4,6 @@
 \date       01.01.2017
 \project    u3_detect_move
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../detect-move-includes_int.hpp"
 #include "../detect-move-info-filter-dll.hpp"
 #include "../detect-move-filter-dll.hpp"

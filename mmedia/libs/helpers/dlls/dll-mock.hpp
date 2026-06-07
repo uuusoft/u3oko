@@ -33,7 +33,7 @@ struct DllMock final {
   }
 };
 
-#ifdef U3_BUILD_MODULES_AS_LIBS
+#if (U3_BUILD_MODULES_AS_LIBS == 1)
 using dll_type = DllMock;
 #else
 using dll_type = boost::dll::shared_library;

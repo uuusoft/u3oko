@@ -10,30 +10,30 @@ namespace boost::archive
 {
 template< class Archive, typename clock >
 void
-load (Archive& ar, std::chrono::time_point< clock >& tp, unsigned)
+load (Archive& arh, std::chrono::time_point< clock >& tpc, unsigned)
 {
   std::chrono::milliseconds::rep millis;
 
-  ar& BOOST_SERIALIZATION_NVP (millis);
-  tp = std::chrono::time_point< clock > (std::chrono::milliseconds (millis));
+  arh& BOOST_SERIALIZATION_NVP (millis);
+  tpc = std::chrono::time_point< clock > (std::chrono::milliseconds (millis));
 }
 
 
 template< class Archive, typename clock >
 void
-save (Archive& ar, std::chrono::time_point< clock > const& tp, unsigned)
+save (Archive& arh, std::chrono::time_point< clock > const& tpc, unsigned)
 {
-  std::chrono::milliseconds::rep millis = std::chrono::duration_cast< std::chrono::milliseconds > (tp.time_since_epoch ()).count ();
+  std::chrono::milliseconds::rep millis = std::chrono::duration_cast< std::chrono::milliseconds > (tpc.time_since_epoch ()).count ();
 
-  ar& BOOST_SERIALIZATION_NVP (millis);
+  arh& BOOST_SERIALIZATION_NVP (millis);
 }
 
 
 template< class Archive, typename clock >
 inline void
-serialize (Archive& ar, std::chrono::time_point< clock >& tp, unsigned version)
+serialize (Archive& arh, std::chrono::time_point< clock >& tpc, unsigned version)
 {
-  boost::serialization::split_free (ar, tp, version);
+  boost::serialization::split_free (arh, tpc, version);
 }
 }   // namespace boost::archive
 
@@ -47,7 +47,7 @@ class TimeStream final
   using time_point_type = std::chrono::system_clock::time_point;
 
   TimeStream ();
-  virtual ~TimeStream ();
+  virtual ~TimeStream () = default;
 
   const time_point_type& get_time () const;
   void                   set_time (const time_point_type& time);
@@ -62,14 +62,14 @@ class TimeStream final
 
   template< class Archive >
   void
-  serialize (Archive& ar, const std::uint32_t /* file_version */);
+  serialize (Archive& arh, const std::uint32_t /* file_version */);
 };   // namespace istorage_events
 
 bool operator< (const TimeStream& left, const TimeStream& right);
 
 std::string to_string (const TimeStream& val);
-void        tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const TimeStream& src);
-TimeStream  tag_invoke (::boost::json::value_to_tag< TimeStream >, const ::boost::json::value& jv);
+void        tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const TimeStream& src);
+TimeStream  tag_invoke (::boost::json::value_to_tag< TimeStream >, const ::boost::json::value& jvs);
 }   // namespace libs::istorage_events
 
 BOOST_CLASS_EXPORT_KEY (::libs::istorage_events::TimeStream);

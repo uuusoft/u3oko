@@ -15,7 +15,7 @@ class Filter final :
 {
   public:
   Filter ();
-  ~Filter ();
+  ~Filter () = default;
 
   private:
   // internal types

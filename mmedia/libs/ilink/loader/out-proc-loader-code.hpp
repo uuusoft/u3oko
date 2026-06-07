@@ -12,7 +12,7 @@ namespace libs::ilink::loader
 class OutProcLoaderCode final : public ILoaderCodeImpl
 {
   public:
-  OutProcLoaderCode ();
+  OutProcLoaderCode () = default;
   ~OutProcLoaderCode ();
 
   private:
@@ -29,7 +29,7 @@ class OutProcLoaderCode final : public ILoaderCodeImpl
   /// \param[in]  name_lib имя библиотеки
   void set_name_lib (const std::string& name_lib);
 
-  const ::libs::link::CreateInfo* info_;       //< Данные объекта при создании
-  std::string                     lib_name_;   //< Имя библиотеки с кодом объекта
+  const ::libs::link::CreateInfo* info_     = nullptr;   //< Данные объекта при создании
+  std::string                     lib_name_ = {};        //< Имя библиотеки с кодом объекта
 };
 }   // namespace libs::ilink::loader

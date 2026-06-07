@@ -17,7 +17,7 @@ void
 alu (::libs::optim::io::MCallInfo& info)
 {
   YCB2RGB24_PREFIX;
-#if 0
+#ifdef U3_FAKE_DISABLE
   const int           size_block = height * width;
   const std::uint8_t* y          = yuy2_buf;
   const std::uint8_t* rc         = y + size_block;
@@ -29,8 +29,8 @@ alu (::libs::optim::io::MCallInfo& info)
     {
       std::int16_t y1        = y[0];   // U3_CAST_INT16 (y[0]) - 16;
       std::int16_t y2        = y[1];   // U3_CAST_INT16 (y[1]) - 16;
-      std::int16_t u         = U3_CAST_INT16 (rc[0]) - 128;
-      std::int16_t v         = U3_CAST_INT16 (rb[0]) - 128;
+      auto         u         = U3_CAST_INT16 (rc[0]) - 128;
+      auto         v         = U3_CAST_INT16 (rb[0]) - 128;
       const int    y1_premul = y1 * 4769;
 
       rgb24_buf[0] = gen::short2char (gen::yuv2red (y1_premul, u, v));
@@ -41,9 +41,9 @@ alu (::libs::optim::io::MCallInfo& info)
       rgb24_buf[1] = y1;   // debug
       rgb24_buf[2] = y1;   // debug
 
-      //rgb24_buf[0] = rand () % 256;      // debug
-      //rgb24_buf[1] = rand () % 256;      // debug
-      //rgb24_buf[2] = rand () % 256;      // debug
+      // rgb24_buf[0] = rand () % 256;      // debug
+      // rgb24_buf[1] = rand () % 256;      // debug
+      // rgb24_buf[2] = rand () % 256;      // debug
 
       rgb24_buf += 3;
 
@@ -57,9 +57,9 @@ alu (::libs::optim::io::MCallInfo& info)
       rgb24_buf[1] = y2;   // debug
       rgb24_buf[2] = y2;   // debug
 
-      //rgb24_buf[0] = rand () % 256;      // debug
-      //rgb24_buf[1] = rand () % 256;      // debug
-      //rgb24_buf[2] = rand () % 256;      // debug
+      // rgb24_buf[0] = rand () % 256;      // debug
+      // rgb24_buf[1] = rand () % 256;      // debug
+      // rgb24_buf[2] = rand () % 256;      // debug
 
       y += 4;
       ++rc;
@@ -67,7 +67,7 @@ alu (::libs::optim::io::MCallInfo& info)
       rgb24_buf += 3;
     }
 
-    //yuy2_buf += leak_yuy2;
+    // yuy2_buf += leak_yuy2;
     rgb24_buf += leak_rgb24;
   }
 #elif 1
@@ -112,11 +112,11 @@ alu (::libs::optim::io::MCallInfo& info)
   {
     for (std::size_t indx_x = 0; indx_x < width; indx_x += 2)
     {
-      std::int16_t y1        = U3_CAST_INT16 (yuy2_buf[0]) - 16;
-      std::int16_t y2        = U3_CAST_INT16 (yuy2_buf[2]) - 16;
-      std::int16_t u         = U3_CAST_INT16 (yuy2_buf[3]) - 128;
-      std::int16_t v         = U3_CAST_INT16 (yuy2_buf[1]) - 128;
-      const int    y1_premul = y1 * 4769;
+      auto      y1        = U3_CAST_INT16 (yuy2_buf[0]) - 16;
+      auto      y2        = U3_CAST_INT16 (yuy2_buf[2]) - 16;
+      auto      u         = U3_CAST_INT16 (yuy2_buf[3]) - 128;
+      auto      v         = U3_CAST_INT16 (yuy2_buf[1]) - 128;
+      const int y1_premul = y1 * 4769;
 
       rgb24_buf[0] = gen::short2char (gen::yuv2red (y1_premul, u, v));
       rgb24_buf[1] = gen::short2char (gen::yuv2green (y1_premul, u, v));

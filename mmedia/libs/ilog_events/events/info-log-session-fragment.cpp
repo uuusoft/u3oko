@@ -11,31 +11,20 @@
 
 namespace libs::ilog_events::events
 {
-InfoLogSessionFragment::InfoLogSessionFragment () :
-  off_ (0), size_ (0)
-{
-}
-
-
-InfoLogSessionFragment::~InfoLogSessionFragment ()
-{
-}
-
-
 template< class Archive >
 void
-InfoLogSessionFragment::serialize (Archive& ar, const std::uint32_t /* file_version */)
+InfoLogSessionFragment::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (data_);
-  ar& BOOST_SERIALIZATION_NVP (off_);
-  ar& BOOST_SERIALIZATION_NVP (size_);
+  arh& BOOST_SERIALIZATION_NVP (data_);
+  arh& BOOST_SERIALIZATION_NVP (off_);
+  arh& BOOST_SERIALIZATION_NVP (size_);
 }
 
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const InfoLogSessionFragment& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const InfoLogSessionFragment& src)
 {
-  jv = {
+  jvs = {
     { "data", src.data_ },
     { "off", src.off_ },
     { "size", src.size_ }
@@ -44,12 +33,12 @@ tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const InfoL
 
 
 InfoLogSessionFragment
-tag_invoke (::boost::json::value_to_tag< InfoLogSessionFragment >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< InfoLogSessionFragment >, const ::boost::json::value& jvs)
 {
   InfoLogSessionFragment ret;
-  ret.data_ = jv.at ("data").as_string ();
-  ret.off_  = ::libs::helpers::json::get_uint32 (jv.at ("off"));
-  ret.size_ = ::libs::helpers::json::get_uint32 (jv.at ("size"));
+  ret.data_ = jvs.at ("data").as_string ();
+  ret.off_  = ::libs::helpers::json::get_uint32 (jvs.at ("off"));
+  ret.size_ = ::libs::helpers::json::get_uint32 (jvs.at ("size"));
   return ret;
 }
 }   // namespace libs::ilog_events::events

@@ -24,20 +24,11 @@ target_compile_definitions(module-uuu_appl PUBLIC ${U3_SHARED_COMPILE_DEF_CPP})
 target_compile_options(module-uuu_appl PUBLIC ${U3_SHARED_COMPILE_OPTIONS_CPP} $<$<COMPILE_LANGUAGE:CXX>:${shared_cpp_compile_options}>)
 add_dependencies(module-uuu_appl ${U3_DEPENDENCY_TARGETS_LIST} ${U3_LIBS_3RD_STATIC_LIST})
 
-#    if( NOT "${U3_DEPENDENCY_TARGETS_LIST}" STREQUAL "" )
-#      add_dependencies( module-uuu_appl ${U3_DEPENDENCY_TARGETS_LIST} )
-#    endif()
-
-#    if( NOT "${U3_LIBS_3RD_STATIC_LIST}" STREQUAL "" )
-#      add_dependencies( module-uuu_appl ${U3_LIBS_3RD_STATIC_LIST} )
-#    endif()
-
 if(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_WINDOWS})
   set_property(TARGET module-uuu_appl PROPERTY MSVC_RUNTIME_LIBRARY ${U3_TARGET_PROPERTY_MSVC_RUNTIME_LIBRARY})
 endif()
 
 if(NOT U3_BUILD_LOCAL_MODULE_APPL_AS_LIB EQUAL 1)
-
   if(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ANDROID})
     target_link_libraries(module-uuu_appl ${log-lib})
   endif()
@@ -45,8 +36,6 @@ if(NOT U3_BUILD_LOCAL_MODULE_APPL_AS_LIB EQUAL 1)
   set(U3_LOCAL_MODULE_APPL_EXT_LIBS)
 
   if(U3_BUILD_MODULES_AS_LIBS)
-    #add_dependencies( module-uuu_appl ${U3_LIBS_OUR_VARIABLE_LIST} )
-
     set(U3_LOCAL_MODULE_APPL_EXT_LIBS
         ${U3_LOCAL_MODULE_APPL_EXT_LIBS}
         optim_scale-lib
@@ -56,9 +45,7 @@ if(NOT U3_BUILD_LOCAL_MODULE_APPL_AS_LIB EQUAL 1)
         ${U3_LIBS_OUR_STATIC_LIST}
         turbo_jpeg-lib
         ${U3_LIBS_3RD_STATIC_LIST}
-        #${U3_LIBS_OUR_VARIABLE_LIST}
     )
-
   endif()
 
   # ulimit env ARG_MAX
@@ -73,7 +60,7 @@ if(NOT U3_BUILD_LOCAL_MODULE_APPL_AS_LIB EQUAL 1)
     ${U3_LINK_ALL_GENERIC_LIBS}
     devents-dll
     doptim-dll
-    ${all-ievent-libs}
+    #${all-ievent-libs}
     ${U3_LINK_ALL_EVENTS_LIBS}
     optim_gen_convert-lib
     ${U3_LIBS_SYSTEM_STATIC_LIST}
@@ -83,7 +70,6 @@ if(NOT U3_BUILD_LOCAL_MODULE_APPL_AS_LIB EQUAL 1)
     proxy-lib
     ${U3_LOCAL_MODULE_APPL_EXT_LIBS}
     helpers-lib
-    #${U3_LIBS_OUR_VARIABLE_LIST}
   )
 
 endif()

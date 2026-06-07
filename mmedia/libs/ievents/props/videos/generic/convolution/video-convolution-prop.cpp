@@ -11,19 +11,17 @@
 
 namespace libs::ievents::props::videos::generic::convolution
 {
-VideoConvolutionProp::VideoConvolutionProp (const Acessor& ph)
+VideoConvolutionProp::VideoConvolutionProp (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-  bufs_.reserve (4);
 
-  bufs_.emplace_back (BuffVideoConvolutionProp (::utils::dbufs::video::consts::offs::lit, ::utils::dbufs::video::consts::offs::lit));
-  bufs_.emplace_back (BuffVideoConvolutionProp (::utils::dbufs::video::consts::offs::sat, ::utils::dbufs::video::consts::offs::sat));
-  bufs_.emplace_back (BuffVideoConvolutionProp (::utils::dbufs::video::consts::offs::hue, ::utils::dbufs::video::consts::offs::hue));
-}
-
-
-VideoConvolutionProp::~VideoConvolutionProp ()
-{
+  bufs_.reserve (3);
+  bufs_.emplace_back (::utils::dbufs::video::consts::offs::lit, ::utils::dbufs::video::consts::offs::lit);
+  bufs_.emplace_back (::utils::dbufs::video::consts::offs::sat, ::utils::dbufs::video::consts::offs::sat);
+  bufs_.emplace_back (::utils::dbufs::video::consts::offs::hue, ::utils::dbufs::video::consts::offs::hue);
+  // bufs_.emplace_back (BuffVideoConvolutionProp (::utils::dbufs::video::consts::offs::lit, ::utils::dbufs::video::consts::offs::lit));
+  // bufs_.emplace_back (BuffVideoConvolutionProp (::utils::dbufs::video::consts::offs::sat, ::utils::dbufs::video::consts::offs::sat));
+  // bufs_.emplace_back (BuffVideoConvolutionProp (::utils::dbufs::video::consts::offs::hue, ::utils::dbufs::video::consts::offs::hue));
 }
 
 
@@ -53,7 +51,7 @@ VideoConvolutionProp::save_json_int (::boost::json::object& obj) const
 void
 VideoConvolutionProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (VideoConvolutionProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< VideoConvolutionProp > (src);
   super::copy_int (src);
   bufs_ = dsrc->bufs_;
 }
@@ -61,10 +59,10 @@ VideoConvolutionProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-VideoConvolutionProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+VideoConvolutionProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (bufs_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (bufs_);
 
   self_correct ();
 }

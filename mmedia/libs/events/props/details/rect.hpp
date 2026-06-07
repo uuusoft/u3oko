@@ -12,7 +12,7 @@ class Rect
 {
   public:
   explicit Rect (std::uint32_t width = 0, std::uint32_t height = 0);
-  virtual ~Rect ();
+  virtual ~Rect () = default;
 
   std::uint32_t get_width () const;
   std::uint32_t get_height () const;
@@ -26,7 +26,7 @@ class Rect
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 }   // namespace libs::events::props::details
 

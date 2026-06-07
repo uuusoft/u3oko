@@ -18,9 +18,7 @@ class ICore
   // ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ICore)
 
-  virtual ~ICore ()
-  {
-  }
+  virtual ~ICore () = default;
 
   /// Функция создания графа обработки данных
   /// Созданный граф требует явного удаления через функцию delete_graph
@@ -45,9 +43,7 @@ class ICore
 
   protected:
   /// Закрытый конструктор, т.к. это базовый класс и его экземпляры не могут существовать
-  ICore ()
-  {
-  }
+  ICore () = default;
 
   private:
   //  ICore interface

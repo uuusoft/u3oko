@@ -5,10 +5,10 @@
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_detect_face
 */
-#ifndef U3_SKIP_DLIB
 
 namespace dlls::detectors::detect_face::helpers
 {
+#ifndef U3_SKIP_DLIB
 template< typename TPixel >
 void
 copy2dlib (syn::IVideoBuf::raw_ptr psrc, dlib::array2d< TPixel >& img)
@@ -28,10 +28,9 @@ copy2dlib (syn::IVideoBuf::raw_ptr psrc, dlib::array2d< TPixel >& img)
       auto px = srow[indxx];
 
       px         = px < 0 ? 0 : (px > 255 ? 255 : px);
-      row[indxx] = U3_CAST_STATIC< TPixel > (px);
+      row[indxx] = ::libs::helpers::casts::static_cast_helper< TPixel > (px);
     }
   }
 }
-}   // namespace dlls::detectors::detect_face::helpers
-
 #endif
+}   // namespace dlls::detectors::detect_face::helpers

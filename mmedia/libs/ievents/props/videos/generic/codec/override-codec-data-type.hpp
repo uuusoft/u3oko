@@ -16,6 +16,6 @@ enum class Writes : std::uint32_t
   unknown            = 0xFF    //<
 };
 
-void   tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const Writes& src);
-Writes tag_invoke (::boost::json::value_to_tag< Writes >, const ::boost::json::value& jv);
+void   tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const Writes& src);
+Writes tag_invoke (::boost::json::value_to_tag< Writes >, const ::boost::json::value& jvs);
 }   // namespace libs::ievents::props::videos::generic::codec

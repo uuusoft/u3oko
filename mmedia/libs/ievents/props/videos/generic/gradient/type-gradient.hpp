@@ -22,6 +22,6 @@ enum class Gradients : std::uint32_t
   unknown          = 0xFF    //<
 };
 
-void      tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const Gradients& src);
-Gradients tag_invoke (::boost::json::value_to_tag< Gradients >, const ::boost::json::value& jv);
+void      tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const Gradients& src);
+Gradients tag_invoke (::boost::json::value_to_tag< Gradients >, const ::boost::json::value& jvs);
 }   // namespace libs::ievents::props::videos::generic::gradient

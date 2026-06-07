@@ -3,8 +3,6 @@
 # copyright   Erashov A.I.
 # file        u3-openssl-lib.cmake
 
-include(ExternalProject)
-
 include("./build/cmake/libs/openssl/u3-openssl-lib-values.cmake")
 
 set(U3_NAME_EXTERNAL_LIB_OPENSSL_UTIL ${U3_NAME_EXTERNAL_LIB_OPENSSL}-util)

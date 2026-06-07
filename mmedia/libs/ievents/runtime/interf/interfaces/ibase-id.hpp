@@ -16,9 +16,7 @@ class IBaseId : public IBaseRuntimeInterf
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IBaseId)
 
-  virtual ~IBaseId ()
-  {
-  }
+  virtual ~IBaseId () = default;
 
   void
   change_state (bool enable)
@@ -31,6 +29,7 @@ class IBaseId : public IBaseRuntimeInterf
   {
     update_property_int (info);
   }
+
   /// Функция возвращает информацию маршрутизации данных от данного источника
   /// \return информация маршрутизации
   buf2module_infos_type
@@ -38,6 +37,7 @@ class IBaseId : public IBaseRuntimeInterf
   {
     return get_module_infos_int (indx_buf);
   }
+
   /// Функция возвращает имя (идентификатор) источника данных (камера, микрофон etc)
   /// \return идентификатор источника
   const syn::source_name_type&
@@ -47,9 +47,7 @@ class IBaseId : public IBaseRuntimeInterf
   }
 
   protected:
-  IBaseId ()
-  {
-  }
+  IBaseId () = default;
 
   private:
   //  IBaseId interface

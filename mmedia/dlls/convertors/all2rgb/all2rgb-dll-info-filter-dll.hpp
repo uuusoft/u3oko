@@ -3,14 +3,14 @@
 \file       all2rgb-dll-info-filter-dll.hpp
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       26.07.2016
-\project    uuu_all2rgb
+\project    u3_all2rgb
 */
 
 namespace dlls::convertors::all2rgb
 {
 struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter {
   InfoFilter ();
-  virtual ~InfoFilter ();
+  virtual ~InfoFilter () = default;
 
   void init ();
 

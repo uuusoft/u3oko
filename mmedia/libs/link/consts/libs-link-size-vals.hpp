@@ -15,7 +15,7 @@ constexpr std::uint32_t max_width_one_frame  = 8 * 1024;
 constexpr std::uint32_t max_height_one_frame = 8 * 1024;
 constexpr std::uint32_t buf_for_one_frame    = max_width_one_frame * max_height_one_frame * 6 + max_width_one_frame * 64;
 
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
 
 constexpr std::uint32_t buf_appl2gul     = 2 * buf_for_one_frame;
 constexpr std::uint32_t buf_appl2appl    = 20 * 1024 * 1024;

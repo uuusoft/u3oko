@@ -10,6 +10,5 @@
 
 namespace dlls::terminals::video_sender::consts
 {
-// const char* id_zip_buf2http    = "mem.dlls.terminals.video_sender.2http.image_camera.jpg";
 const char* id_zip_buf2storage = "mem.dlls.terminals.video_sender.2storage.image_camera.jpg";
 }   // namespace dlls::terminals::video_sender::consts

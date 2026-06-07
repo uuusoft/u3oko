@@ -12,8 +12,10 @@ namespace libs::link
 struct CreateInfo {
   //  ext types
   using ids2vals_type = std::unordered_map< std::string, std::string >;
+
   /// Конструктор по умолчанию для контейнеров и композиции в другом типе
   CreateInfo ();
+
   /// EAI-REFACT
   /// \brief      Рабочий конструктор
   /// \param[in]  run_as                 тип компоновки кода (в отдельном процессе, в текущем процесса etc)
@@ -34,7 +36,7 @@ struct CreateInfo {
     const details::ModuleLinks& type,
     std::int32_t                size_shared_mem_bytes);
 
-  virtual ~CreateInfo ();
+  virtual ~CreateInfo () = default;
 
   void        check () const;
   std::string make_arg (const std::string&, const std::string&);

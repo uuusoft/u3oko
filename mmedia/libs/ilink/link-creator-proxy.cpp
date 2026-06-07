@@ -4,8 +4,6 @@
 \date       01.11.2016
 \project    u3_ilink
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "libs-ilink-includes_int.hpp"
 #include "impl/libs-ilink-impl-includes.hpp"
 #include "link-creator-proxy.hpp"
@@ -24,22 +22,33 @@ LinkCreatorProxy::LinkCreatorProxy () :
 
   auto                            ipropos = U3_CAST_PROP (syn::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ());
   syn::ISharedProperty::lock_type lock (ipropos->get_sync ());
-  auto                            mainappl = ipropos->get_appl_lockfree ();
 
-  if (mainappl->is_single_process ())
+  auto       mainappl = ipropos->get_appl_lockfree ();
+  const auto implname = mainappl->get_messenger_impl ();
+  const auto issingle = mainappl->is_single_process ();
+  U3_XLOG_DEV (VTOLOG (issingle) + TOLOG (implname));
+
+  if (issingle)
   {
-    if ("fast" == mainappl->get_messenger_impl ())
+    if ("fast" == implname)
     {
       *pimpl_ = std::make_shared< impl::oneproc::LinkCreatorImplOneProc > ();
       return;
     }
   }
-
-  *pimpl_ = std::make_shared< impl::anyproc::LinkCreatorImplAnyProc > ();
-}
-
-
-LinkCreatorProxy::~LinkCreatorProxy ()
-{
+  else
+  {
+    if ("anyproc" == implname)
+    {
+      *pimpl_ = std::make_shared< impl::anyproc::LinkCreatorImplAnyProc > ();
+      return;
+    }
+    else if ("rabbitmq" == implname)
+    {
+      U3_ASSERT_SIGNAL ("not implementated" + VTOLOG (issingle) + TOLOG (implname));
+      return;
+    }
+  }
+  U3_ASSERT_SIGNAL ("unknown impl name for process" + VTOLOG (issingle) + TOLOG (implname));
 }
 }   // namespace libs::ilink

@@ -12,18 +12,6 @@
 
 namespace dlls::codecs::bitgen::lossless::entropy::huffman
 {
-CObj::CObj () :
-  id_string_ (huffman::consts::id_string),
-  key_symbol_ (0)
-{
-}
-
-
-CObj::~CObj ()
-{
-}
-
-
 void
 CObj::forward_int (
   const void*         src,

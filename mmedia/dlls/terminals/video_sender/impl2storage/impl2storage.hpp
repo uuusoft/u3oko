@@ -11,7 +11,7 @@ namespace dlls::terminals::video_sender::impl2storage
 class Impl2Storage final : public IImplSender
 {
   public:
-  Impl2Storage ();
+  Impl2Storage () = default;
   virtual ~Impl2Storage ();
 
   private:

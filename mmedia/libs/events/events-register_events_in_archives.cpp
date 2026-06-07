@@ -14,11 +14,11 @@ namespace libs::events
 void
 register_events_in_archives ()
 {
-  // U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::events::IEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::events::IAnswerEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::events::IRequestEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::events::ISeqEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::events::ISyncEvent);
-  U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::events::IWrapBaseEvent);
+  // libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::events::IEvent > ();
+  libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::events::IAnswerEvent > ();
+  libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::events::IRequestEvent > ();
+  libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::events::ISeqEvent > ();
+  libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::events::ISyncEvent > ();
+  libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::events::IWrapBaseEvent > ();
 }
 }   // namespace libs::events

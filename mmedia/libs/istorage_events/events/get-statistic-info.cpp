@@ -11,15 +11,10 @@
 
 namespace libs::istorage_events::events
 {
-GetStatisticInfo::GetStatisticInfo (const Acessor& ph) :
+GetStatisticInfo::GetStatisticInfo (const Acessor& pha) :
   use_size_ (0)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-GetStatisticInfo::~GetStatisticInfo ()
-{
 }
 
 
@@ -33,18 +28,19 @@ GetStatisticInfo::clone_int (const ::libs::events::Deeps& deep) const
 void
 GetStatisticInfo::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (GetStatisticInfo);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< GetStatisticInfo > (src);
   super::copy_int (src);
+
   use_size_ = dsrc->use_size_;
 }
 
 
 template< class Archive >
 void
-GetStatisticInfo::serialize (Archive& ar, const std::uint32_t /* file_version */)
+GetStatisticInfo::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoistorage_eventsoeventsoBaseStorageEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (use_size_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoistorage_eventsoeventsoBaseStorageEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (use_size_);
 
   self_correct ();
 }

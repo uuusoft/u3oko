@@ -19,10 +19,13 @@ include("./build/cmake/libs/turbojpeg/u3-turbojpeg-lib.cmake")
 include("./build/cmake/libs/pugixml/u3-pugixml-lib.cmake")
 include("./build/cmake/libs/openssl/u3-openssl-lib.cmake")
 
+if(U3_BUILD_TESTING)
+  include("./build/cmake/libs/googletest/u3-googletest-lib.cmake")
+endif()
+
 if(U3_DBG_FORCE_COMPILE_AT_BEGIN_ALL_EXT_LIBS)
   # debug - force first compile
   include("./build/cmake/libs/stb/u3-stb-lib.cmake")
-  include("./build/cmake/libs/googletest/u3-googletest-lib.cmake")
   include("./build/cmake/libs/openh264/u3-openh264-lib.cmake")
 
   if(NOT U3_DBG_EXTERNAL_LIB_SKIP_DLIB)

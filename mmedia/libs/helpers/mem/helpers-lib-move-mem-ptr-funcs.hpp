@@ -8,59 +8,42 @@
 
 namespace libs::helpers::mem
 {
-template< typename T >
-T
-move_ptr (T ptr, std::size_t off)
+template< typename T, typename U, std::enable_if_t< std::is_pointer_v< T >, bool > = true >
+[[nodiscard]] inline constexpr T
+move_ptr (T ptr, U off)
 {
-  std::uint8_t* ret = U3_CAST_REINTERPRET< std::uint8_t* > (ptr);
+  auto* ret = casts::reinterpret_cast_helper< std::uint8_t* > (ptr);
   ret += off;
-  return U3_CAST_REINTERPRET< T > (ret);
+  return casts::reinterpret_cast_helper< T > (ret);
 }
 
 
-template< typename T >
-T
-move_cptr (T ptr, std::size_t off)
+template< typename T, typename U, std::enable_if_t< std::is_pointer_v< T >, bool > = true >
+[[nodiscard]] inline constexpr T
+move_cptr (T ptr, U off)
 {
-  const std::uint8_t* ret = U3_CAST_REINTERPRET< const std::uint8_t* > (ptr);
+  const auto* ret = casts::reinterpret_cast_helper< const std::uint8_t* > (ptr);
   ret += off;
-  return U3_CAST_REINTERPRET< T > (ret);
+  return casts::reinterpret_cast_helper< T > (ret);
 }
 
 
-template< typename T >
-T
-move_ptr_back (T ptr, std::size_t off)
+template< typename T, typename U, std::enable_if_t< std::is_pointer_v< T >, bool > = true >
+[[nodiscard]] inline constexpr T
+move_ptr_back (T ptr, U off)
 {
-  std::uint8_t* ret = U3_CAST_REINTERPRET< std::uint8_t* > (ptr);
+  auto* ret = casts::reinterpret_cast_helper< std::uint8_t* > (ptr);
   ret -= off;
-  return U3_CAST_REINTERPRET< T > (ret);
+  return casts::reinterpret_cast_helper< T > (ret);
 }
 
 
-template< typename T >
-T
-move_cptr_back (T ptr, std::size_t off)
+template< typename T, typename U, std::enable_if_t< std::is_pointer_v< T >, bool > = true >
+[[nodiscard]] inline constexpr T
+move_cptr_back (T ptr, U off)
 {
-  const std::uint8_t* ret = U3_CAST_REINTERPRET< const std::uint8_t* > (ptr);
+  const auto* ret = casts::reinterpret_cast_helper< const std::uint8_t* > (ptr);
   ret -= off;
-  return U3_CAST_REINTERPRET< T > (ret);
+  return casts::reinterpret_cast_helper< T > (ret);
 }
 }   // namespace libs::helpers::mem
-
-
-#if !defined(U3_FAST_MOVE_PTR)
-#  define U3_FAST_MOVE_PTR(ptr, off) ptr = U3_CAST_REINTERPRET< decltype (ptr) > (U3_CAST_REINTERPRET< std::uint8_t* > (ptr) + U3_CAST_SIZE_T (off));
-#endif
-
-#if !defined(U3_FAST_MOVE_CPTR)
-#  define U3_FAST_MOVE_CPTR(ptr, off) ptr = U3_CAST_REINTERPRET< decltype (ptr) > (U3_CAST_REINTERPRET< const std::uint8_t* > (ptr) + U3_CAST_SIZE_T (off));
-#endif
-
-#if !defined(U3_FAST_MOVE_PTR_BACK)
-#  define U3_FAST_MOVE_PTR_BACK(ptr, off) ptr = U3_CAST_REINTERPRET< decltype (ptr) > (U3_CAST_REINTERPRET< std::uint8_t* > (ptr) - U3_CAST_SIZE_T (off));
-#endif
-
-#if !defined(U3_FAST_MOVE_CPTR_BACK)
-#  define U3_FAST_MOVE_CPTR_BACK(ptr, off) ptr = U3_CAST_REINTERPRET< decltype (ptr) > (U3_CAST_REINTERPRET< const std::uint8_t* > (ptr) - U3_CAST_SIZE_T (off));
-#endif

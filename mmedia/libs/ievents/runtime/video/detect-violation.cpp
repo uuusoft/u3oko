@@ -11,15 +11,10 @@
 
 namespace libs::ievents::runtime::video
 {
-DetectViolation::DetectViolation (const Acessor& ph, const DetectViolations& state) :
+DetectViolation::DetectViolation (const Acessor& pha, const DetectViolations& state) :
   state_ (state)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-DetectViolation::~DetectViolation ()
-{
 }
 
 
@@ -54,7 +49,7 @@ DetectViolation::clone_int (const ::libs::events::Deeps& deep) const
 void
 DetectViolation::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (DetectViolation);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< DetectViolation > (src);
   super::copy_int (src);
   state_ = dsrc->state_;
 }
@@ -62,10 +57,10 @@ DetectViolation::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-DetectViolation::serialize (Archive& ar, const std::uint32_t /* file_version */)
+DetectViolation::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (state_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (state_);
 
   self_correct ();
 }

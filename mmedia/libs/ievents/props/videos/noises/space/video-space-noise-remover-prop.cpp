@@ -11,19 +11,14 @@
 
 namespace libs::ievents::props::videos::noises::space
 {
-VideoSpaceNoiseRemoverProp::VideoSpaceNoiseRemoverProp (const Acessor& ph) :
-  name_impl_ ("default"),
-  bufs_ ({ ::utils::dbufs::video::consts::offs::hue, ::utils::dbufs::video::consts::offs::sat, ::utils::dbufs::video::consts::offs::lit }),
-  indx_cond_buf_ (::utils::dbufs::video::consts::offs::space_noise_filter_res),
-  use_cond_buf_ (false),
-  dump_counter_frame_ (0)
+VideoSpaceNoiseRemoverProp::VideoSpaceNoiseRemoverProp (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
 
-
-VideoSpaceNoiseRemoverProp::~VideoSpaceNoiseRemoverProp ()
-{
+  bufs_.reserve (3);
+  bufs_.emplace_back (::utils::dbufs::video::consts::offs::lit, ::utils::dbufs::video::consts::offs::lit);
+  bufs_.emplace_back (::utils::dbufs::video::consts::offs::sat, ::utils::dbufs::video::consts::offs::sat);
+  bufs_.emplace_back (::utils::dbufs::video::consts::offs::hue, ::utils::dbufs::video::consts::offs::hue);
 }
 
 
@@ -39,19 +34,8 @@ VideoSpaceNoiseRemoverProp::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
 
-  name_impl_          = obj.at ("name_impl").as_string ();
-  bufs_               = ::boost::json::value_to< source_bufs_type > (obj.at ("evbufs"));
-  indx_cond_buf_      = obj.at ("indx_cond_buf").as_string ();
-  use_cond_buf_       = obj.at ("use_cond_buf").as_bool ();
-  dump_counter_frame_ = ::libs::helpers::json::get_uint32 (obj.at ("dump_counter_frame"));
-
-  const std::string impl_info_id = obj.at ("impl_info-id").is_string () ? obj.at ("impl_info-id").as_string ().c_str () : "";
-
-  impl_info_ = ::libs::iproperties::helpers::get_pure_event_int (impl_info_id.c_str ());
-  if (impl_info_)
-  {
-    impl_info_->load_json (obj.at ("impl_info").as_string ().c_str ());
-  }
+  name_impl_ = obj.at ("name_impl").as_string ();
+  bufs_      = ::boost::json::value_to< source_bufs_type > (obj.at ("evbufs"));
 }
 
 
@@ -60,32 +44,19 @@ VideoSpaceNoiseRemoverProp::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
 
-  obj["name_impl"]          = name_impl_;
-  obj["evbufs"]             = ::boost::json::value_from (bufs_);
-  obj["indx_cond_buf"]      = indx_cond_buf_;
-  obj["use_cond_buf"]       = use_cond_buf_;
-  obj["dump_counter_frame"] = dump_counter_frame_;
-
-  if (impl_info_)
-  {
-    obj["impl_info-id"] = impl_info_->get_mid ();
-    obj["impl_info"]    = impl_info_->save_json ();
-  }
+  obj["name_impl"] = name_impl_;
+  obj["evbufs"]    = ::boost::json::value_from (bufs_);
 }
 
 
 void
 VideoSpaceNoiseRemoverProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (VideoSpaceNoiseRemoverProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< VideoSpaceNoiseRemoverProp > (src);
   super::copy_int (src);
 
-  name_impl_          = dsrc->name_impl_;
-  bufs_               = dsrc->bufs_;
-  indx_cond_buf_      = dsrc->indx_cond_buf_;
-  use_cond_buf_       = dsrc->use_cond_buf_;
-  dump_counter_frame_ = dsrc->dump_counter_frame_;
-  impl_info_          = ::libs::iproperties::helpers::clone_event (dsrc->impl_info_.get ());
+  name_impl_ = dsrc->name_impl_;
+  bufs_      = dsrc->bufs_;
 }
 
 
@@ -97,16 +68,12 @@ VideoSpaceNoiseRemoverProp::self_correct_int ()
 
 template< class Archive >
 void
-VideoSpaceNoiseRemoverProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+VideoSpaceNoiseRemoverProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
 
-  ar& BOOST_SERIALIZATION_NVP (name_impl_);
-  ar& BOOST_SERIALIZATION_NVP (bufs_);
-  ar& BOOST_SERIALIZATION_NVP (dump_counter_frame_);
-  ar& BOOST_SERIALIZATION_NVP (indx_cond_buf_);
-  ar& BOOST_SERIALIZATION_NVP (impl_info_);
-  ar& BOOST_SERIALIZATION_NVP (use_cond_buf_);
+  arh& BOOST_SERIALIZATION_NVP (name_impl_);
+  arh& BOOST_SERIALIZATION_NVP (bufs_);
 
   self_correct ();
 }

@@ -5,7 +5,7 @@
 \date       01.01.2017
 \project    u3_iproperties_lib
 */
-#if defined(U3_OS_ANDROID)
+#ifdef U3_OS_ANDROID
 
 #  include <android_native_app_glue.h>
 #  include <jni.h>
@@ -28,15 +28,12 @@ class SystemAndroidProperty final : public ::libs::properties::ISharedProperty
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (SystemAndroidProperty)
 
-  SystemAndroidProperty () :
-    pappl_ (nullptr)
+  SystemAndroidProperty ()
   {
     work_cycle_ = false;
   }
 
-  virtual ~SystemAndroidProperty ()
-  {
-  }
+  virtual ~SystemAndroidProperty () = default;
 
   android_app*
   get_aappl_lockfree ()
@@ -102,10 +99,10 @@ class SystemAndroidProperty final : public ::libs::properties::ISharedProperty
     return this;
   }
 
-  std::atomic< android_app* >                          pappl_;           //<
-  std::atomic< syn::VideoDriverCaptureProp::craw_ptr > capture_props_;   //<
-  ::utils::dbufs::video::IVideoBuf::ptr                buf_java2cpp_;    //<
-  gui_functor_type                                     pfunc_gui_;       //<
+  std::atomic< android_app* >                          pappl_         = nullptr;   //<
+  std::atomic< syn::VideoDriverCaptureProp::craw_ptr > capture_props_ = nullptr;   //<
+  ::utils::dbufs::video::IVideoBuf::ptr                buf_java2cpp_;              //<
+  gui_functor_type                                     pfunc_gui_;                 //<
 };
 }   // namespace libs::iproperties::vers::system
 

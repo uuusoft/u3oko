@@ -10,7 +10,7 @@
 #include "yuy2_rgb24.hpp"
 #include "yuy2_rgb24_int.hpp"
 
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
 
 namespace libs::optim::convert::yuy2_rgb24
 {

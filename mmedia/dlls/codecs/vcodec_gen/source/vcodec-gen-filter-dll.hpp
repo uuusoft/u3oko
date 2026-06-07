@@ -14,7 +14,7 @@ class Filter final :
 {
   public:
   Filter ();
-  virtual ~Filter ();
+  virtual ~Filter () = default;
 
   protected:
   virtual void sync_by_events (bool update) override;
@@ -38,11 +38,11 @@ class Filter final :
   void sync_props2int ();
   void flip_y (syn::IVideoBuf::raw_ptr buf);
 
-  static browser::CodecBrower                   codec_browser_;            //< Для инфомации о доступных видеокодеках
-  static ::libs::helpers::dlls::ForeverLoadDlls frozen_dlls_;              //< Удерживаем в памяти все загруженные библиотеки, чтобы избегать сбоев при работе с событиями, которые были в них сгенерированы
-  bool                                          external_codec_ = false;   //<
-  ::libs::optim::io::hioptim                    flip_y_;                   //<
-  ::libs::optim::mcalls::IMCaller::ptr          pthreads_;                 //< Пул рабочих потоков
-  std::string                                   active_dll_name_;          //< U3-REFACT
+  static browser::CodecBrower               codec_browser_;            //< Для инфомации о доступных видеокодеках
+  static ::libs::helpers::dlls::FreezerDlls frozen_dlls_;              //< Удерживаем в памяти все загруженные библиотеки, чтобы избегать сбоев при работе с событиями, которые были в них сгенерированы
+  bool                                      external_codec_ = false;   //<
+  ::libs::optim::io::hioptim                flip_y_;                   //<
+  ::libs::optim::mcalls::IMCaller::ptr      pthreads_;                 //< Пул рабочих потоков
+  std::string                               active_dll_name_;          //< U3-REFACT
 };
 }   // namespace dlls::codecs::vcodec_gen

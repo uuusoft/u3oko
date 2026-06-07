@@ -8,10 +8,6 @@
 
 namespace libs::iproperties::helpers
 {
-#ifndef U3_CAST_FORCE_EVENT_INT
-#  define U3_CAST_FORCE_EVENT_INT(ptr, type) reinterpret_cast< type > (ptr)
-#endif
-
 void* cast_event_int (const ::libs::events::IEvent::ptr& event, const ::libs::events::IEvent::hid_type& id);
 void* cast_event_int (const ::libs::events::IEvent::cptr& event, const ::libs::events::IEvent::hid_type& id);
 void* cast_event_int (::libs::events::IEvent::raw_ptr event, const ::libs::events::IEvent::hid_type& id);
@@ -21,66 +17,92 @@ void* cast_event_int (::libs::events::IEvent::craw_ptr event, const ::libs::even
 ::libs::events::io::IEvents::raw_ptr get_events_impl ();
 
 template< typename T, typename... Args >
-::libs::events::IEvent::ptr
-get_event_int (const ::libs::events::IEvent::hid_type& id, Args... args)
+auto
+get_event_int (const ::libs::events::IEvent::hid_type& id, Args... args) -> ::libs::events::IEvent::ptr
 {
   auto impl = get_events_impl ();
   auto res  = impl->get (id);
   U3_CHECK (res, "get_event_int:" + id);
-  auto res2 = U3_CAST_FORCE_EVENT_INT (cast_event_int (res, id), T*);
+  auto res2 = ::libs::helpers::casts::reinterpret_cast_helper< T* > (cast_event_int (res, id));
   res2->sync_event_props (args...);
   return res;
 }
 
 
 template< typename T, typename... Args >
-T*
-create_event (::libs::events::IEvent::ptr& event, Args... args)
+auto
+create_event (::libs::events::IEvent::ptr& event, Args... args) -> T*
 {
   U3_ASSERT (!event);
   const auto id = T::gen_get_mid ();
   event         = get_event_int< T, Args... > (id, args...);
-  return U3_CAST_FORCE_EVENT_INT (cast_event_int (event, id), T*);
+  return ::libs::helpers::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id));
 }
 
 
 template< typename T, typename... Args >
-T*
-create_event_in_list (std::list< ::libs::events::IEvent::ptr >& events, Args... args)
+auto
+create_event_in_list (std::list< ::libs::events::IEvent::ptr >& events, Args... args) -> T*
 {
   const auto id = T::gen_get_mid ();
   events.push_back (get_event_int< T, Args... > (id, args...));
-  return U3_CAST_FORCE_EVENT_INT (cast_event_int (events.back (), id), T*);
+  return ::libs::helpers::casts::reinterpret_cast_helper< T* > (cast_event_int (events.back (), id));
 }
 
 
 template< typename T >
-T*
-cast_event (const ::libs::events::IEvent::cptr& event)
+auto
+cast_event (const ::libs::events::IEvent::cptr& event) -> T*
 {
   U3_ASSERT (event);
   const auto id = T::gen_get_mid ();
-  return U3_CAST_FORCE_EVENT_INT (cast_event_int (event, id), T*);
+  return ::libs::helpers::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id));
 }
 
 
 template< typename T >
-T*
-cast_event (::libs::events::IEvent::raw_ptr event)
+auto
+cast_event (::libs::events::IEvent::raw_ptr event) -> T*
 {
   U3_ASSERT (event);
   const auto id = T::gen_get_mid ();
-  return U3_CAST_FORCE_EVENT_INT (cast_event_int (event, id), T*);
+  return ::libs::helpers::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id));
 }
 
 
 template< typename T >
-const T*
-cast_event (::libs::events::IEvent::craw_ptr event)
+auto
+cast_event (::libs::events::IEvent::craw_ptr event) -> const T*
 {
   U3_ASSERT (event);
   const auto id = T::gen_get_mid ();
-  return U3_CAST_FORCE_EVENT_INT (cast_event_int (event, id), const T*);
+  return ::libs::helpers::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id));
+}
+
+
+template< typename TTEvent >
+auto
+make_fake_obj_this_type () -> void
+{
+  volatile const typename TTEvent::ptr temp = std::make_shared< TTEvent > ();
+}
+
+
+template< typename TTEvent >
+auto
+make_fake_obj_this_event_type () -> void
+{
+  volatile typename TTEvent::ptr temp = TTEvent::make_shared_this ();
+}
+
+
+template< typename TTEvent >
+auto
+dbg_check_copy_event (const ::libs::events::IEvent::craw_ptr src) -> const TTEvent*
+{
+  auto res = ::libs::iproperties::helpers::cast_event< TTEvent > (src);
+  U3_CHECK (res, std::string ("invalid event type") + PTR_TOLOG (src) + " empty " + PTR_TOLOG (res));
+  return res;
 }
 
 bool        event2xml (::libs::events::IEvent::ptr& src, std::string& xml);

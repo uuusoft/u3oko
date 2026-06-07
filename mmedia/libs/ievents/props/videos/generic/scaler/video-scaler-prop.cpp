@@ -11,15 +11,10 @@
 
 namespace libs::ievents::props::videos::generic::scaler
 {
-VideoScalerProp::VideoScalerProp (const Acessor& ph) :
+VideoScalerProp::VideoScalerProp (const Acessor& pha) :
   bufs_ ({ EventBufsInfoVideoScaler (utils::dbufs::video::consts::offs::lit, utils::dbufs::video::consts::offs::lit) })
 {
   property_name_ = gen_get_mid ();
-}
-
-
-VideoScalerProp::~VideoScalerProp ()
-{
 }
 
 
@@ -58,7 +53,7 @@ VideoScalerProp::save_json_int (::boost::json::object& obj) const
 void
 VideoScalerProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (VideoScalerProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< VideoScalerProp > (src);
   super::copy_int (src);
   bufs_ = dsrc->bufs_;
 }
@@ -66,10 +61,10 @@ VideoScalerProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-VideoScalerProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+VideoScalerProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (bufs_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (bufs_);
 
   self_correct ();
 }

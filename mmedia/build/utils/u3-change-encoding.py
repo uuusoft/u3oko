@@ -1,3 +1,9 @@
+# u3-applay-normalize-cpp.py
+# generator   gemini google
+# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# date        01.01.2026
+# copyright   Erashov A.I.
+
 from __future__ import with_statement
 
 import os

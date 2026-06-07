@@ -32,7 +32,7 @@ class GetEventsFromBase : public BaseEventsEvent
   U3_HELPER_DISABLE_ACOPY_TYPE (GetEventsFromBase)
 
   GetEventsFromBase (const Acessor& = Acessor (0));
-  virtual ~GetEventsFromBase ();
+  virtual ~GetEventsFromBase () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -70,7 +70,7 @@ class GetEventsFromBase : public BaseEventsEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
   //  ievents::Event overrides
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
   virtual void                        load_json_int (const ::boost::json::object& obj) override;

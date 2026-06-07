@@ -19,9 +19,7 @@ class CX16_X8Alg final : public IOptimAlg
     sel_.set_algoritm_name (val_key);
   }
 
-  virtual ~CX16_X8Alg ()
-  {
-  }
+  virtual ~CX16_X8Alg () = default;
 
   protected:
   virtual void
@@ -29,7 +27,7 @@ class CX16_X8Alg final : public IOptimAlg
   {
     switch (iinfo.ext_)
     {
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
     case ::libs::helpers::sys::cpu::CpuExts::avx2:
       sel_.set (::libs::optim::convert::x16_x8::alu);
       break;
@@ -50,7 +48,7 @@ class CX16_X8Alg final : public IOptimAlg
       sel_.set (::libs::optim::convert::x16_x8::alu);
       break;
     case ::libs::helpers::sys::cpu::CpuExts::usual:
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
       sel_.set (::libs::optim::convert::x16_x8::alu);
 #elif defined(U3_CPU_ARM)
       sel_.set (::libs::optim::convert::x16_x8::neon);
@@ -58,7 +56,7 @@ class CX16_X8Alg final : public IOptimAlg
       sel_.set (::libs::optim::convert::x16_x8::alu);
 #endif
       break;
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
     case ::libs::helpers::sys::cpu::CpuExts::neon:
       sel_.set (::libs::optim::convert::x16_x8::neon);
       break;

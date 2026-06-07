@@ -13,13 +13,13 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
   using props_type = ::libs::ievents::props::videos::generic::motion_est::VideoEstMotionProp;
 
   InfoFilter ();
-  virtual ~InfoFilter ();
+  virtual ~InfoFilter () = default;
 
   InfoFilter (const InfoFilter& src)            = delete;
   InfoFilter& operator= (const InfoFilter& src) = delete;
 
   void init ();
 
-  props_type::raw_ptr rprops_;   //< Настроенный указатель на свойства (для удобства)
+  props_type::raw_ptr rprops_ = nullptr;   //< Настроенный указатель на свойства (для удобства)
 };
 }   // namespace dlls::gens::vgen_motion

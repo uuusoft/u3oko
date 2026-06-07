@@ -20,11 +20,6 @@ EventBufsInfo::EventBufsInfo (
 }
 
 
-EventBufsInfo::~EventBufsInfo ()
-{
-}
-
-
 void
 EventBufsInfo::check (bool check_src, bool check_dst)
 {
@@ -49,27 +44,20 @@ EventBufsInfo::correct_int ()
 
 template< class Archive >
 void
-EventBufsInfo::serialize (Archive& ar, const std::uint32_t /* file_version */)
+EventBufsInfo::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (indx_sbuf_);
-  ar& BOOST_SERIALIZATION_NVP (indx_dbuf_);
+  arh& BOOST_SERIALIZATION_NVP (indx_sbuf_);
+  arh& BOOST_SERIALIZATION_NVP (indx_dbuf_);
 }
 
-#if 0
-bool
-is_valid_node (const ::pugi::xml_named_node_iterator& node)
-{
-  return node->name () == consts::node_name ? true : false;
-}
-#endif
 
 void
 tag_invoke (
   ::boost::json::value_from_tag,
-  ::boost::json::value& jv,
+  ::boost::json::value& jvs,
   const EventBufsInfo&  src)
 {
-  jv = {
+  jvs = {
     { "indx_sbuf", src.indx_sbuf_ },
     { "indx_dbuf", src.indx_dbuf_ }
   };
@@ -77,12 +65,10 @@ tag_invoke (
 
 
 EventBufsInfo
-tag_invoke (
-  ::boost::json::value_to_tag< EventBufsInfo >,
-  const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< EventBufsInfo >, const ::boost::json::value& jvs)
 {
   EventBufsInfo                ret;
-  const ::boost::json::object& obj = jv.as_object ();
+  const ::boost::json::object& obj = jvs.as_object ();
 
   ret.indx_sbuf_ = obj.at ("indx_sbuf").as_string ();
   ret.indx_dbuf_ = obj.at ("indx_dbuf").as_string ();

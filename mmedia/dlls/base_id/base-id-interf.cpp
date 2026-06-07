@@ -12,17 +12,6 @@
 
 namespace dlls::base_id
 {
-BaseIdInterf::BaseIdInterf () :
-  update_ (false)
-{
-}
-
-
-BaseIdInterf::~BaseIdInterf ()
-{
-}
-
-
 bool
 BaseIdInterf::is_correction_property_update () const
 {

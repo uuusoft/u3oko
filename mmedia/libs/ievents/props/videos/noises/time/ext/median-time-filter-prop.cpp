@@ -12,42 +12,31 @@
 namespace libs::ievents::props::videos::noises::time::ext
 {
 Sortings
-str2sort (const std::string& str)
+str2sort (const std::string& val)
 {
-  Sortings                                    ret = Sortings::usual;
-  std::unordered_map< std::string, Sortings > str2sort;
+  static const std::unordered_map< std::string, const Sortings > val2val = {
+    { "default", Sortings::usual },
+    { "adaptive", Sortings::adaptive },
+    { "skip", Sortings::skip },
+    { "standart", Sortings::standart },
+    { "insert", Sortings::insert },
+    { "inplace_3_element", Sortings::inplace_3_element },
+    { "unknown", Sortings::unknown }
+  };
 
-  str2sort.insert (std::unordered_map< std::string, Sortings >::value_type ("default", Sortings::usual));
-  str2sort.insert (std::unordered_map< std::string, Sortings >::value_type ("adaptive", Sortings::adaptive));
-  str2sort.insert (std::unordered_map< std::string, Sortings >::value_type ("skip", Sortings::skip));
-  str2sort.insert (std::unordered_map< std::string, Sortings >::value_type ("standart", Sortings::standart));
-  str2sort.insert (std::unordered_map< std::string, Sortings >::value_type ("insert", Sortings::insert));
-
-  auto find = str2sort.find (str);
-  if (str2sort.end () == find)
+  auto finger = val2val.find (val);
+  if (val2val.end () == finger)
   {
-    U3_ASSERT_SIGNAL ("failed");
+    U3_ASSERT_SIGNAL_NT ("failed find sorting type by name" + TOLOG (val));
+    finger = val2val.find ("default");
   }
-  else
-  {
-    ret = find->second;
-  }
-  return ret;
+  return finger->second;
 }
 
 
-MedianTimeFilterProp::MedianTimeFilterProp (const Acessor& ph) :
-  count_bufs_ (3),
-  rang_ (2),
-  motion_detect_ (false),
-  sort_type_ (Sortings::usual)
+MedianTimeFilterProp::MedianTimeFilterProp (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-MedianTimeFilterProp::~MedianTimeFilterProp ()
-{
 }
 
 
@@ -94,8 +83,9 @@ MedianTimeFilterProp::save_json_int (::boost::json::object& obj) const
 void
 MedianTimeFilterProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (MedianTimeFilterProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< MedianTimeFilterProp > (src);
   super::copy_int (src);
+
   count_bufs_    = dsrc->count_bufs_;
   motion_detect_ = dsrc->motion_detect_;
   sort_type_     = dsrc->sort_type_;
@@ -105,29 +95,29 @@ MedianTimeFilterProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-MedianTimeFilterProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+MedianTimeFilterProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (count_bufs_);
-  ar& BOOST_SERIALIZATION_NVP (motion_detect_);
-  ar& BOOST_SERIALIZATION_NVP (sort_type_);
-  ar& BOOST_SERIALIZATION_NVP (rang_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (count_bufs_);
+  arh& BOOST_SERIALIZATION_NVP (motion_detect_);
+  arh& BOOST_SERIALIZATION_NVP (sort_type_);
+  arh& BOOST_SERIALIZATION_NVP (rang_);
 
   self_correct ();
 }
 
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const Sortings& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const Sortings& src)
 {
-  jv = U3_CAST_UINT32_FORCE (src);
+  jvs = U3_CAST_UINT32_FORCE (src);
 }
 
 
 Sortings
-tag_invoke (::boost::json::value_to_tag< Sortings >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< Sortings >, const ::boost::json::value& jvs)
 {
-  return U3_CAST_STATIC< Sortings > (::libs::helpers::json::get_uint32 (jv));
+  return ::libs::helpers::casts::static_cast_helper< Sortings > (::libs::helpers::json::get_uint32 (jvs));
 }
 }   // namespace libs::ievents::props::videos::noises::time::ext
 

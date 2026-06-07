@@ -19,9 +19,7 @@ class CRGB32_RGB24Alg final : public IOptimAlg
     sel_.set_algoritm_name (val_key);
   }
 
-  virtual ~CRGB32_RGB24Alg ()
-  {
-  }
+  virtual ~CRGB32_RGB24Alg () = default;
 
   protected:
   virtual void

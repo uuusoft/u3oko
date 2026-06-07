@@ -5,6 +5,8 @@
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_core_lib
 */
+#include "mmedia/includes/control-defines-includes.hpp"
+#include "mmedia/includes/includes.hpp"
 #include "mmedia/libs/ilink/consts/libs-ilink-const-vals.hpp"
 #include "mmedia/libs/events/includes.hpp"
 #include "mmedia/libs/link/libs-link-includes.hpp"

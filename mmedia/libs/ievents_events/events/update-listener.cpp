@@ -12,19 +12,19 @@
 namespace libs::ievents_events::events
 {
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const SubscribeActions& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const SubscribeActions& src)
 {
-  jv = {
+  jvs = {
     { "action", U3_CAST_UINT64_FORCE (src) }
   };
 }
 
 
 SubscribeActions
-tag_invoke (::boost::json::value_to_tag< SubscribeActions >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< SubscribeActions >, const ::boost::json::value& jvs)
 {
-  const ::boost::json::object& obj = jv.as_object ();
-  return U3_CAST_STATIC< SubscribeActions > (::libs::helpers::json::get_uint64 (obj.at ("action")));
+  const ::boost::json::object& obj = jvs.as_object ();
+  return ::libs::helpers::casts::static_cast_helper< SubscribeActions > (::libs::helpers::json::get_uint64 (obj.at ("action")));
 }
 
 
@@ -39,11 +39,6 @@ UpdateListener::UpdateListener (
   action_ (action)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-UpdateListener::~UpdateListener ()
-{
 }
 
 
@@ -106,12 +101,12 @@ UpdateListener::load_json_int (const ::boost::json::object& obj)
   action_      = ::boost::json::value_to< SubscribeActions > (obj.at ("action"));
   event_types_ = ::boost::json::value_to< hids_storage_type > (obj.at ("event_types"));
 
-#if 0
+#ifdef U3_FAKE_DISABLE
   id_                   = obj.at ("id").as_string ();
   number_               = ::libs::helpers::json::get_int64 (obj.at ("number"));
   request_for_transmit_ = obj.at ("request_for_transmit").as_bool ();
   void   tag_invoke (::boost::json::value_from_tag, ::boost::json::value & jv, const Writes& src);
-  Writes tag_invoke (::boost::json::value_to_tag< Writes >, const ::boost::json::value& jv);
+  Writes tag_invoke (::boost::json::value_to_tag< Writes >, const ::boost::json::value& jvs);
 #endif
 }
 
@@ -130,7 +125,7 @@ UpdateListener::save_json_int (::boost::json::object& obj) const
 void
 UpdateListener::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (UpdateListener);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< UpdateListener > (src);
   super::copy_int (src);
 
   listener_id_ = dsrc->listener_id_;
@@ -141,12 +136,12 @@ UpdateListener::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-UpdateListener::serialize (Archive& ar, const std::uint32_t /* file_version */)
+UpdateListener::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("BaseEventsEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (listener_id_);
-  ar& BOOST_SERIALIZATION_NVP (event_types_);
-  ar& BOOST_SERIALIZATION_NVP (action_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("BaseEventsEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (listener_id_);
+  arh& BOOST_SERIALIZATION_NVP (event_types_);
+  arh& BOOST_SERIALIZATION_NVP (action_);
 
   self_correct ();
 }

@@ -2,7 +2,6 @@
 \file       gt_const_alu.cxx
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.11.2016
-
 \project    u3_optim_libs_bits
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -35,7 +34,7 @@ alu (::libs::optim::io::MCallInfo& info)
       bdest[indxx] = bdest[indxx] > const1 ? const2 : 0;
     }
 
-    U3_FAST_MOVE_PTR (bdest, stride);
+    bdest = ::libs::helpers::mem::move_ptr (bdest, stride);
   }
 }
 

@@ -5,8 +5,6 @@
 \project    u3_devents_dlls
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../generics-devents-includes_int.hpp"
 #include "events-impl.hpp"
 
@@ -14,24 +12,17 @@ namespace dlls::devents::impl
 {
 EventsImpl::EventsImpl ()
 {
-  {
-    lock_type lock (mtx_);
-    construct_func_event ();
-  }
-}
-
-
-EventsImpl::~EventsImpl ()
-{
+  lock_type lock (mtx_);
+  construct_func_event ();
 }
 
 
 syn::IEvent::ptr
-EventsImpl::get (const hid_type& id, const char* debid)
+EventsImpl::get (const hid_type& id)
 {
   lock_type lock (mtx_);
-  auto      itf = gen_func_events_.find (id);
 
+  auto itf = gen_func_events_.find (id);
   if (gen_func_events_.end () == itf)
   {
     U3_XLOG_ERROR ("function for create id event not found" + TOLOG (id));
@@ -42,10 +33,11 @@ EventsImpl::get (const hid_type& id, const char* debid)
   U3_ASSERT (ret);
   ++counter_create_events_[id];
 
-#if 0
+#ifdef U3_FAKE_DISABLE
+  // debug
   if (counter_create_events_[id] >= 1024 && 0 == counter_create_events_[id] % 1024)
   {
-    U3_XLOG_MARK ("dllevents" + TOLOG (id) + VTOLOG (counter_create_events_[id]) + (debid ? TOLOG (std::string (debid)) : ""));
+    U3_XLOG_MARK ("dllevents" + TOLOG (id) + VTOLOG (counter_create_events_[id]));
   }
 #endif
   return ret;
@@ -156,5 +148,121 @@ EventsImpl::bin2event (std::istream& bin, syn::IEvent::ptr& dst)
     return false;
   }
   return true;
+}
+
+
+void
+EventsImpl::construct_func_event ()
+{
+  U3_ASSERT (gen_func_events_.empty ());
+  U3_ASSERT (cast_func_events_.empty ());
+
+  // add_event<::libs::events::IEvent);
+  add_event< ::libs::events::IWrapBaseEvent > ();
+  add_event< ::libs::events::IAnswerEvent > ();
+  add_event< ::libs::events::IRequestEvent > ();
+  add_event< ::libs::events::ISeqEvent > ();
+  add_event< ::libs::events::ISyncEvent > ();
+
+
+  add_event< ::libs::ievents::Event > ();
+  add_event< ::libs::ievents::TimedEvent > ();
+  add_event< ::libs::ievents::props::application::ApplicationProp > ();
+  add_event< ::libs::ievents::props::base_id::BaseIdProp > ();
+  add_event< ::libs::ievents::props::hardware::InfoCPUEvent > ();
+  add_event< ::libs::ievents::props::mix_mul::MixMulProp > ();
+  add_event< ::libs::ievents::props::modules::log::PropertyLogModuleEvent > ();
+  add_event< ::libs::ievents::props::modules::events::PropertyEventsModuleEvent > ();
+  add_event< ::libs::ievents::props::modules::storage::PropertyStorageModuleEvent > ();
+  add_event< ::libs::ievents::props::terminals::EndPointProp > ();
+  add_event< ::libs::ievents::props::videos::generic::morph::VideoMorphologyProp > ();
+  add_event< ::libs::ievents::props::videos::generic::codec::VideoCodecProp > ();
+  add_event< ::libs::ievents::props::videos::generic::convert::VideoConvertProp > ();
+  add_event< ::libs::ievents::props::videos::generic::convolution::VideoConvolutionProp > ();
+  add_event< ::libs::ievents::props::videos::generic::correct::VideoCorrectProp > ();
+  add_event< ::libs::ievents::props::videos::generic::detect::VideoDetectProp > ();
+  add_event< ::libs::ievents::props::videos::generic::driver::LinksVideoDriverProp > ();
+  add_event< ::libs::ievents::props::videos::generic::driver::VideoDriverCaptureProp > ();
+  add_event< ::libs::ievents::props::videos::generic::driver::VideoDriverProp > ();
+  add_event< ::libs::ievents::props::videos::generic::gradient::GradientProp > ();
+  add_event< ::libs::ievents::props::videos::generic::histogram::VideoHistogramProp > ();
+  add_event< ::libs::ievents::props::videos::generic::motion_est::VideoEstMotionProp > ();
+  add_event< ::libs::ievents::props::videos::generic::scaler::VideoScalerProp > ();
+  add_event< ::libs::ievents::props::videos::generic::vec2image::Vec2ImageProp > ();
+  add_event< ::libs::ievents::props::videos::gens::diff::VideoDiffProp > ();
+  add_event< ::libs::ievents::props::videos::noises::freq::FreqVideoNoiseRemoverProp > ();
+  add_event< ::libs::ievents::props::videos::noises::space::VideoSpaceNoiseRemoverProp > ();
+  add_event< ::libs::ievents::props::videos::noises::space::ext::MedianSpaceFilterProp > ();
+  add_event< ::libs::ievents::props::videos::noises::time::VideoTimeNoiseRemoverProp > ();
+  add_event< ::libs::ievents::props::videos::noises::time::ext::MedianTimeFilterProp > ();
+
+  add_event< ::libs::ievents::runtime::RuntimeEvent > ();
+
+  add_event< ::libs::ievents::runtime::error::BaseErrorEvent > ();
+
+  add_event< ::libs::ievents::runtime::interf::BaseInterfEvent > ();
+  add_event< ::libs::ievents::runtime::interf::InterfBaseIdEvent > ();
+  add_event< ::libs::ievents::runtime::interf::InterfCodecImageEvent > ();
+  add_event< ::libs::ievents::runtime::interf::InterfCorrectImageEvent > ();
+  add_event< ::libs::ievents::runtime::interf::InterfCaptureImageEvent > ();
+
+  add_event< ::libs::ievents::runtime::mem::BuffEvent > ();
+  add_event< ::libs::ievents::runtime::mem::BufsEvent > ();
+  add_event< ::libs::ievents::runtime::mem::ZipDataEvent > ();
+
+  add_event< ::libs::ievents::runtime::state::ChangeStateProcessEvent > ();
+  add_event< ::libs::ievents::runtime::state::ExpandTimesEvent > ();
+
+  add_event< ::libs::ievents::runtime::video::DetectViolation > ();
+  add_event< ::libs::ievents::runtime::video::FaceDetect > ();
+  add_event< ::libs::ievents::runtime::video::FrameDone > ();
+  add_event< ::libs::ievents::runtime::video::SystemSpecificDriverProp > ();
+
+  add_event< ::libs::ievents_events::events::BaseEventsEvent > ();
+  add_event< ::libs::ievents_events::events::WrapperEventsEvent > ();
+  add_event< ::libs::ievents_events::events::AddEvent2Base > ();
+  add_event< ::libs::ievents_events::events::GetEventsFromBase > ();
+  add_event< ::libs::ievents_events::events::GetDataGraphsFromEventBase > ();
+  add_event< ::libs::ievents_events::events::UpdateListener > ();
+
+  add_event< ::libs::ilog_events::events::ProcessListLogsEvent > ();
+  add_event< ::libs::ilog_events::events::ProcessLogEvent > ();
+  add_event< ::libs::ilog_events::events::BaseLogEvent > ();
+  add_event< ::libs::ilog_events::events::ChangDShowRunsSubSysLogEvent > ();
+  add_event< ::libs::ilog_events::events::ExceptLogEvent > ();
+  add_event< ::libs::ilog_events::events::InfoLogEvent > ();
+  add_event< ::libs::ilog_events::events::WrapperLogEvent > ();
+
+  add_event< ::libs::imdata_events::events::ListXmlFilesDataEvent > ();
+  add_event< ::libs::imdata_events::events::ChangeGraphsDataEvent > ();
+  add_event< ::libs::imdata_events::events::GetNodesDataEvent > ();
+  add_event< ::libs::imdata_events::events::ListDevicesDataEvent > ();
+  add_event< ::libs::imdata_events::events::ChangeNodeDataEvent > ();
+  add_event< ::libs::imdata_events::events::BaseNodesDataEvent > ();
+  add_event< ::libs::imdata_events::events::BaseDataEvent > ();
+
+  add_event< ::libs::ihttp_events::events::MemResourceHttpEvent > ();
+  add_event< ::libs::ihttp_events::events::BaseHttpEvent > ();
+  add_event< ::libs::ihttp_events::events::WrapperHttpEvent > ();
+
+  add_event< ::libs::istorage_events::events::BaseStorageEvent > ();
+  add_event< ::libs::istorage_events::events::GetObjects > ();
+  add_event< ::libs::istorage_events::events::GetRuntimeInfo > ();
+  add_event< ::libs::istorage_events::events::GetStatisticInfo > ();
+  add_event< ::libs::istorage_events::events::ReadData > ();
+  add_event< ::libs::istorage_events::events::WriteData > ();
+  add_event< ::libs::istorage_events::events::UpdateStream > ();
+  add_event< ::libs::istorage_events::events::WrapperStorageEvent > ();
+  add_event< ::libs::istorage_events::events::MemResourceStorageEvent > ();
+
+  add_event< ::libs::igui_events::events::BaseGUIEvent > ();
+  add_event< ::libs::igui_events::events::CommandCodeEvent > ();
+  add_event< ::libs::igui_events::events::ExitApplEvent > ();
+  add_event< ::libs::igui_events::events::MemBlockEvent > ();
+  add_event< ::libs::igui_events::events::MouseButtonDownEvent > ();
+  add_event< ::libs::igui_events::events::MouseButtonUpEvent > ();
+  add_event< ::libs::igui_events::events::SizeChangedEvent > ();
+  add_event< ::libs::igui_events::events::UpdateDrawEvent > ();
+  add_event< ::libs::igui_events::events::VideoBufEvent > ();
 }
 }   // namespace dlls::devents::impl

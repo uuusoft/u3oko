@@ -16,7 +16,7 @@ get_events_impl ()
 {
   auto events = U3_CAST_PROP (vers::demon::IDemonsProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_demons ())->get_events_lockfree ();
   U3_CHECK (events, "empty events");
-  auto impl = events->impl ();
+  auto* impl = events->impl ();
   U3_CHECK (impl, "empty events impl");
   return impl;
 }
@@ -25,8 +25,8 @@ get_events_impl ()
 ::libs::events::IEvent::ptr
 get_pure_event_int (const ::libs::events::IEvent::hid_type& id)
 {
-  auto impl = get_events_impl ();
-  auto res  = impl->get (id);
+  auto* impl = get_events_impl ();
+  auto  res  = impl->get (id);
   U3_CHECK (res, "get_pure_event_int:" + id);
   return res;
 }
@@ -35,8 +35,8 @@ get_pure_event_int (const ::libs::events::IEvent::hid_type& id)
 void*
 cast_event_int (const ::libs::events::IEvent::ptr& event, const ::libs::events::IEvent::hid_type& id)
 {
-  auto impl = get_events_impl ();
-  auto res  = impl->dcast (event.get (), id);
+  auto* impl = get_events_impl ();
+  auto* res  = impl->dcast (event.get (), id);
   return res;
 }
 
@@ -44,8 +44,8 @@ cast_event_int (const ::libs::events::IEvent::ptr& event, const ::libs::events::
 void*
 cast_event_int (const ::libs::events::IEvent::cptr& event, const ::libs::events::IEvent::hid_type& id)
 {
-  auto impl = get_events_impl ();
-  auto res  = impl->dcast (event.get (), id);
+  auto* impl = get_events_impl ();
+  auto* res  = impl->dcast (event.get (), id);
   return res;
 }
 
@@ -53,8 +53,8 @@ cast_event_int (const ::libs::events::IEvent::cptr& event, const ::libs::events:
 void*
 cast_event_int (::libs::events::IEvent::raw_ptr event, const ::libs::events::IEvent::hid_type& id)
 {
-  auto impl = get_events_impl ();
-  auto res  = impl->dcast (event, id);
+  auto* impl = get_events_impl ();
+  auto* res  = impl->dcast (event, id);
   return res;
 }
 
@@ -62,8 +62,8 @@ cast_event_int (::libs::events::IEvent::raw_ptr event, const ::libs::events::IEv
 void*
 cast_event_int (::libs::events::IEvent::craw_ptr event, const ::libs::events::IEvent::hid_type& id)
 {
-  auto impl = get_events_impl ();
-  auto res  = impl->dcast (event, id);
+  auto* impl = get_events_impl ();
+  auto* res  = impl->dcast (event, id);
   return res;
 }
 
@@ -71,7 +71,7 @@ cast_event_int (::libs::events::IEvent::craw_ptr event, const ::libs::events::IE
 bool
 event2xml (::libs::events::IEvent::ptr& src, std::string& xml)
 {
-  auto impl = get_events_impl ();
+  auto* impl = get_events_impl ();
   return impl->event2xml (src, xml);
 }
 
@@ -83,7 +83,8 @@ event2xml (::libs::events::IEvent::ptr& src)
   {
     return "";
   }
-  auto        impl = get_events_impl ();
+
+  auto*       impl = get_events_impl ();
   std::string xml;
   U3_CHECK (impl->event2xml (src, xml), "event2xml - " + TOLOG (src->get_mid ()));
   return xml;
@@ -93,7 +94,7 @@ event2xml (::libs::events::IEvent::ptr& src)
 bool
 xml2event (const std::string& xml, ::libs::events::IEvent::ptr& dst)
 {
-  auto impl = get_events_impl ();
+  auto* impl = get_events_impl ();
   return impl->xml2event (xml, dst);
 }
 
@@ -101,7 +102,7 @@ xml2event (const std::string& xml, ::libs::events::IEvent::ptr& dst)
 bool
 xml2event (const char* xml, ::libs::events::IEvent::ptr& dst)
 {
-  auto impl = get_events_impl ();
+  auto* impl = get_events_impl ();
   return impl->xml2event (std::string (xml), dst);
 }
 
@@ -109,7 +110,7 @@ xml2event (const char* xml, ::libs::events::IEvent::ptr& dst)
 void
 event2bin (::libs::events::IEvent::ptr& src, std::ostream& bin)
 {
-  auto impl = get_events_impl ();
+  auto* impl = get_events_impl ();
   U3_CHECK (impl->event2bin (src, bin), "event2bin - " + TOLOG (src->get_mid ()));
 }
 
@@ -117,7 +118,7 @@ event2bin (::libs::events::IEvent::ptr& src, std::ostream& bin)
 bool
 bin2event (std::istream& bin, ::libs::events::IEvent::ptr& dst)
 {
-  auto impl = get_events_impl ();
+  auto* impl = get_events_impl ();
   return impl->bin2event (bin, dst);
 }
 
@@ -126,7 +127,7 @@ bin2event (std::istream& bin, ::libs::events::IEvent::ptr& dst)
 clone_event (const ::libs::events::IEvent::craw_ptr event, const ::libs::events::Deeps& type)
 {
   U3_ASSERT (event);
-  auto impl = get_events_impl ();
+  auto* impl = get_events_impl ();
   return impl->clone (event, type);
 }
 }   // namespace libs::iproperties::helpers

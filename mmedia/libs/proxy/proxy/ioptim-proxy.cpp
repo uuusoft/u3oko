@@ -33,7 +33,7 @@ IOptimProxy::impl ()
 
 IOptimProxy::IOptimProxy (const std::string& dll_path)
 {
-#ifdef U3_BUILD_MODULES_AS_LIBS
+#if (U3_BUILD_MODULES_AS_LIBS == 1)
   U3_MARK_UNUSED_HERE (lib_);
   creator_ = create_impl_vdd_doptim;
 #else
@@ -56,10 +56,5 @@ IOptimProxy::IOptimProxy (const std::string& dll_path)
 #  endif
 #endif
   U3_ASSERT (creator_);
-}
-
-
-IOptimProxy::~IOptimProxy ()
-{
 }
 }   // namespace libs::proxy

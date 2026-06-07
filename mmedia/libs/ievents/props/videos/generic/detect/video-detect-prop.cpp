@@ -12,27 +12,10 @@
 
 namespace libs::ievents::props::videos::generic::detect
 {
-VideoDetectProp::VideoDetectProp (const Acessor& ph) :
-  mode_ ("default"),
-  bound_ (5),
-  size_core_morph_op_ (7),
-  id_morph_op_ (to_string (libs::ievents::props::videos::generic::morph::MorphOps::erosion)),
-  counter_morph_op_ (1),
-  min_size_spot_ (0),
-  max_size_spot_ (0),
-  bufs_ ({ libs::events::buf::EventBufsInfo (utils::dbufs::video::consts::offs::lit, utils::dbufs::video::consts::offs::move_detect_res) }),
-  time_after_last_move_ (10),
-  lazy_optim_ (true),
-  time_id_ (::libs::helpers::consts::iinvalid),
-  zone_id_ (::libs::helpers::consts::iinvalid),
-  hint_detector_impl_ (::libs::ievents::SelectorImpls::automatic)
+VideoDetectProp::VideoDetectProp (const Acessor& pha) :
+  id_morph_op_ (to_string (libs::ievents::props::videos::generic::morph::MorphOps::erosion))
 {
   property_name_ = gen_get_mid ();
-}
-
-
-VideoDetectProp::~VideoDetectProp ()
-{
 }
 
 
@@ -88,7 +71,7 @@ VideoDetectProp::save_json_int (::boost::json::object& obj) const
 void
 VideoDetectProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (VideoDetectProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< VideoDetectProp > (src);
   super::copy_int (src);
 
   time_id_              = dsrc->time_id_;
@@ -121,23 +104,23 @@ VideoDetectProp::self_correct_int ()
 
 template< class Archive >
 void
-VideoDetectProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+VideoDetectProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
 
-  ar& BOOST_SERIALIZATION_NVP (time_id_);
-  ar& BOOST_SERIALIZATION_NVP (mode_);
-  ar& BOOST_SERIALIZATION_NVP (zone_id_);
-  ar& BOOST_SERIALIZATION_NVP (bound_);
-  ar& BOOST_SERIALIZATION_NVP (bufs_);
-  ar& BOOST_SERIALIZATION_NVP (time_after_last_move_);
-  ar& BOOST_SERIALIZATION_NVP (lazy_optim_);
-  ar& BOOST_SERIALIZATION_NVP (min_size_spot_);
-  ar& BOOST_SERIALIZATION_NVP (max_size_spot_);
-  ar& BOOST_SERIALIZATION_NVP (size_core_morph_op_);
-  ar& BOOST_SERIALIZATION_NVP (id_morph_op_);
-  ar& BOOST_SERIALIZATION_NVP (counter_morph_op_);
-  ar& BOOST_SERIALIZATION_NVP (hint_detector_impl_);
+  arh& BOOST_SERIALIZATION_NVP (time_id_);
+  arh& BOOST_SERIALIZATION_NVP (mode_);
+  arh& BOOST_SERIALIZATION_NVP (zone_id_);
+  arh& BOOST_SERIALIZATION_NVP (bound_);
+  arh& BOOST_SERIALIZATION_NVP (bufs_);
+  arh& BOOST_SERIALIZATION_NVP (time_after_last_move_);
+  arh& BOOST_SERIALIZATION_NVP (lazy_optim_);
+  arh& BOOST_SERIALIZATION_NVP (min_size_spot_);
+  arh& BOOST_SERIALIZATION_NVP (max_size_spot_);
+  arh& BOOST_SERIALIZATION_NVP (size_core_morph_op_);
+  arh& BOOST_SERIALIZATION_NVP (id_morph_op_);
+  arh& BOOST_SERIALIZATION_NVP (counter_morph_op_);
+  arh& BOOST_SERIALIZATION_NVP (hint_detector_impl_);
 
   self_correct ();
 }

@@ -11,35 +11,24 @@
 
 namespace libs::ievents::props::videos::gens::diff
 {
-InfoBuffVideoDiffProp::InfoBuffVideoDiffProp () :
-  bindx_diff_ (utils::dbufs::video::consts::offs::invalid)
-{
-}
-
-
-InfoBuffVideoDiffProp::~InfoBuffVideoDiffProp ()
-{
-}
-
-
 template< class Archive >
 void
-InfoBuffVideoDiffProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+InfoBuffVideoDiffProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (bindx_diff_);
-  ar& BOOST_SERIALIZATION_NVP (op_);
+  arh& BOOST_SERIALIZATION_NVP (bindx_diff_);
+  arh& BOOST_SERIALIZATION_NVP (op_);
 }
 
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const InfoBuffVideoDiffProp& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const InfoBuffVideoDiffProp& src)
 {
   U3_ASSERT_NT (0, "???");
 }
 
 
 InfoBuffVideoDiffProp
-tag_invoke (::boost::json::value_to_tag< InfoBuffVideoDiffProp >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< InfoBuffVideoDiffProp >, const ::boost::json::value& jvs)
 {
   InfoBuffVideoDiffProp ret;
   U3_ASSERT_NT (0, "???");

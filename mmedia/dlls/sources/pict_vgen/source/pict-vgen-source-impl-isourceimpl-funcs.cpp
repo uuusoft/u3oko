@@ -83,11 +83,11 @@ SourceImpl::get_raw_data_int (
   {
     auto               diff              = now - time_last_change_file_;
     const std::int32_t user_scroll_speed = std::stoi (srcimpinfo_.props_->ext_vals_.at (consts::param_keys::scroll_speed));
-    float              scroll_speed      = user_scroll_speed * 30.0f * diff.total_milliseconds () / 1000.0f;
+    float              scroll_speed      = user_scroll_speed * 30.0F * diff.total_milliseconds () / 1000.0F;
 
-    ::libs::helpers::utils::check_bound (scroll_speed, 1.0f, 500.0f);
-    // scroll_speed     = 1.0f;   // debug
-    off_first_image_ = off_first_image_ > 0.0f ? off_first_image_ : 0.0f;
+    ::libs::helpers::utils::check_bound (scroll_speed, 1.0F, 500.0F);
+    // scroll_speed     = 1.0F;   // debug
+    off_first_image_ = off_first_image_ > 0.0F ? off_first_image_ : 0.0F;
     off_first_image_ += scroll_speed;
   }
 

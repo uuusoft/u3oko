@@ -13,16 +13,6 @@
 
 namespace libs::iproperties::appl_paths
 {
-AppPaths::AppPaths ()
-{
-}
-
-
-AppPaths::~AppPaths ()
-{
-}
-
-
 void
 AppPaths::load_paths (const ::libs::link::appl::InitApplication& appl_info)
 {
@@ -52,7 +42,7 @@ AppPaths::load_paths (const ::libs::link::appl::InitApplication& appl_info)
   paths_[Paths::templates_gui_module]   = ::libs::helpers::files::make_path (paths_[Paths::generic_appl], get_path_suffix (Paths::templates_gui_module));
   paths_[Paths::templates_http_module]  = ::libs::helpers::files::make_path (paths_[Paths::generic_appl], get_path_suffix (Paths::templates_http_module));
 
-#if defined(U3_OS_ANDROID)
+#ifdef U3_OS_ANDROID
   paths_[Paths::bins]         = "";
   paths_[Paths::emulate_bins] = ::libs::helpers::files::make_path (paths_[Paths::generic_appl], get_path_suffix (Paths::emulate_bins));
   paths_[Paths::main_appl]    = paths_[Paths::bins];
@@ -71,7 +61,7 @@ AppPaths::get_path_suffix (const Paths& type) const
   switch (type)
   {
   case Paths::emulate_bins: {
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
     return "";
 #elif defined(U3_OS_ANDROID)
     return "emulate_bins";

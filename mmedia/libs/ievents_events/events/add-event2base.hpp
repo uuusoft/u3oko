@@ -34,7 +34,7 @@ class AddEvent2Base : public BaseEventsEvent
     const machine_id_type&             machine_id = machine_id_type (),
     const object_id_type&              object_id  = object_id_type ());
 
-  virtual ~AddEvent2Base ();
+  virtual ~AddEvent2Base () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -62,7 +62,7 @@ class AddEvent2Base : public BaseEventsEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
   //  ievents::Event overrides
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
   virtual void                        load_json_int (const ::boost::json::object& obj) override;

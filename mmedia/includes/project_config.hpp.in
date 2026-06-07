@@ -5,6 +5,7 @@
 \date		01.11.2016
 */
 
+// clang-format off
 namespace configure
 {
 constexpr const char* project_name     = "@project_name@";
@@ -12,6 +13,7 @@ constexpr const char* git_hash         = "@U3_GIT_HASH@";
 constexpr const char* start_build_time = "@U3_TIME_START_BUILD@";
 constexpr const char* compilers_info   = "@U3_ENV_GEN_POSTFIX_NAME_TO_EXT_LIB@";
 
-constexpr std::uint32_t project_ver_major = @project_version_major @;
-constexpr std::uint32_t project_ver_minor = @project_version_minor @;
+constexpr std::uint32_t project_ver_major = @project_version_major@;
+constexpr std::uint32_t project_ver_minor = @project_version_minor@;
 }   // namespace configure
+// clang-format on

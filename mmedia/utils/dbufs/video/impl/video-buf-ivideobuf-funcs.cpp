@@ -41,14 +41,9 @@ VideoBuf::flush_int ()
   IMemBuf::flush ();
 
   params_.reset ();
-  // EAI-BREAK-CHANGE 22.03.2026
   params_.minor_ = ::libs::helpers::uids::minor::id_val::unknown;
-  // params_.minor_.reset ();
   params_.flags_.fill (false);
-
   params_.geom_dims_[Dims::stride] = 0;
-  // dim_vars_.set (Dims::stride, 0);
-
   set_flag_int (BufFlags::empty, true);
 }
 
@@ -161,9 +156,7 @@ VideoBuf::get_flag_int (const BufFlags& _type) const
     {
       return true;
     }
-    // EAI-BREAK-CHANGE 22.03.2026
     if (::libs::helpers::uids::minor::id_val::unknown == params_.minor_)
-    // if (params_.minor_.empty ())
     {
       return true;
     }
@@ -211,9 +204,7 @@ VideoBuf::buf_alloc_int (const AllocBufInfo& info)
     check_dims (info.geom_dims_[Dims::width], info.geom_dims_[Dims::height]);
   }
 
-  // EAI-BREAK-CHANGE 22.03.2026
-  params_.minor_ = info.minor_ != ::libs::helpers::uids::minor::id_val::unknown ? info.minor_ : params_.minor_;
-  // params_.minor_     = info.minor_ != ::libs::helpers::utils::cuuid () ? info.minor_ : params_.minor_;
+  params_.minor_     = info.minor_ != ::libs::helpers::uids::minor::id_val::unknown ? info.minor_ : params_.minor_;
   params_.geom_dims_ = info.geom_dims_;
   params_.flags_     = info.flags_;
 
@@ -280,7 +271,7 @@ VideoBuf::clone_int (IBuf::craw_ptr isrc, float percent)
   // params_.minor_ = src->params_.minor_;
   params_ = src->params_;
 
-  if (!src->get_flag (BufFlags::empty) && (percent > 0.0f) && src->get_flag (BufFlags::convolution_data))
+  if (!src->get_flag (BufFlags::empty) && (percent > 0.0F) && src->get_flag (BufFlags::convolution_data))
   {
     ::libs::helpers::mem::u3copy (src->get_cbuf (), get_buf (), (*src)[MemVars::size_buf]);
   }

@@ -1,5 +1,5 @@
 /**
-\file       gradient1_alu.cpp
+\file       gradient1_sse2.cpp
 \date       01.05.2017
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_optim_libs_gen
@@ -9,7 +9,7 @@
 #include "mmedia/libs/optims/s16bit/optim_s16bit_generic/includes_int.hpp"
 #include "graduent1.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::gen::graduent1
 {
@@ -28,8 +28,8 @@ sse2 (::libs::optim::io::MCallInfo& cinfo)
   const picter_dim_type stride_dest    = info.dsts_[0].stride_;
   const picter_dim_type width_element  = info.dsts_[0].width_;
   const picter_dim_type height_element = info.dsts_[0].height_;
-  const __m128i         mask_dest      = _mm_loadu_si128 (U3_CAST_REINTERPRET< const __m128i* > (mask_dest8));
-  __m128i               consts         = _mm_loadu_si128 (U3_CAST_REINTERPRET< const __m128i* > (loc_array_const));
+  const __m128i         mask_dest      = _mm_loadu_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (mask_dest8));
+  __m128i               consts         = _mm_loadu_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (loc_array_const));
   consts                               = _mm_and_si128 (consts, mask_dest);
 
   for (std::uint32_t indy = 0; indy < height_element; ++indy)
@@ -37,17 +37,17 @@ sse2 (::libs::optim::io::MCallInfo& cinfo)
     for (std::uint32_t indx = 0; indx < sizeof (std::uint16_t) * width_element; indx += 16)
     {
 #      ifdef SET_UNALIGNED_FUNCT
-      __m128i xmm0 = _mm_loadu_si128 (U3_CAST_REINTERPRET< const __m128i* > (dest + indx));
+      __m128i xmm0 = _mm_loadu_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (dest + indx));
 #      else
-      __m128i xmm0 = _mm_load_si128 (U3_CAST_REINTERPRET< const __m128i* > (dest + indx));
+      __m128i xmm0 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (dest + indx));
 #      endif
 
       xmm0 = _mm_adds_epi16 (xmm0, consts);
 
 #      ifdef SET_UNALIGNED_FUNCT
-      _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (dest + indx), xmm0);
+      _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (dest + indx), xmm0);
 #      else
-      _mm_storeu_si128 (U3_CAST_REINTERPRET< __m128i* > (dest + indx), xmm0);
+      _mm_storeu_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (dest + indx), xmm0);
 #      endif
     }
     //dest += width_element;

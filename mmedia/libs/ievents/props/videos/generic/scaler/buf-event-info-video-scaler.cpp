@@ -30,23 +30,26 @@ EventBufsInfoVideoScaler::EventBufsInfoVideoScaler (const ::libs::events::buf::E
 
 template< class Archive >
 void
-EventBufsInfoVideoScaler::serialize (Archive& ar, const std::uint32_t /* file_version */)
+EventBufsInfoVideoScaler::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoeventsobufoEventBufsInfo", super);
-  ar& BOOST_SERIALIZATION_NVP (type_);
-  ar& BOOST_SERIALIZATION_NVP (src_rect_);
-  ar& BOOST_SERIALIZATION_NVP (dst_rect_);
-  ar& BOOST_SERIALIZATION_NVP (koeff_pow2_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoeventsobufoEventBufsInfo", super);
+  arh& BOOST_SERIALIZATION_NVP (type_);
+  arh& BOOST_SERIALIZATION_NVP (src_rect_);
+  arh& BOOST_SERIALIZATION_NVP (dst_rect_);
+  arh& BOOST_SERIALIZATION_NVP (koeff_pow2_);
 }
 
 
 void
-tag_invoke (::boost::json::value_from_tag tag, ::boost::json::value& jv, const EventBufsInfoVideoScaler& src)
+tag_invoke (::boost::json::value_from_tag tag, ::boost::json::value& jvs, const EventBufsInfoVideoScaler& src)
 {
   ::boost::json::value pjv;
-  ::libs::events::buf::tag_invoke (tag, pjv, U3_CAST_STATIC< const ::libs::events::buf::EventBufsInfo& > (src));
+  ::libs::events::buf::tag_invoke (
+    tag,
+    pjv,
+    ::libs::helpers::casts::static_cast_helper< const ::libs::events::buf::EventBufsInfo& > (src));
 
-  jv = {
+  jvs = {
     { "parent", pjv },
     { "type", ::boost::json::value_from (src.type_) },
     { "koeff_pow2", src.koeff_pow2_ }
@@ -57,16 +60,16 @@ tag_invoke (::boost::json::value_from_tag tag, ::boost::json::value& jv, const E
 
 
 EventBufsInfoVideoScaler
-tag_invoke (::boost::json::value_to_tag< EventBufsInfoVideoScaler >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< EventBufsInfoVideoScaler >, const ::boost::json::value& jvs)
 {
-  const auto&              pobj = jv.at ("parent").as_object ();
+  const auto&              pobj = jvs.at ("parent").as_object ();
   EventBufsInfoVideoScaler ret (::libs::events::buf::tag_invoke (::boost::json::value_to_tag< ::libs::events::buf::EventBufsInfo > (), pobj));
-  // const ::boost::json::object& obj = jv.as_object ();
+  // const ::boost::json::object& obj = jvs.as_object ();
 
-  ret.type_       = ::boost::json::value_to< Scalers > (jv.at ("type"));
-  ret.koeff_pow2_ = ::libs::helpers::json::get_int32 (jv.at ("koeff_pow2"));
-  // ret.src_rect_   = ::boost::json::value_to< ::libs::events::props::details::Rect > (jv.at ("src_rect"));
-  // ret.dst_rect_   = ::boost::json::value_to< ::libs::events::props::details::Rect > (jv.at ("dst_rect"));
+  ret.type_       = ::boost::json::value_to< Scalers > (jvs.at ("type"));
+  ret.koeff_pow2_ = ::libs::helpers::json::get_int32 (jvs.at ("koeff_pow2"));
+  // ret.src_rect_   = ::boost::json::value_to< ::libs::events::props::details::Rect > (jvs.at ("src_rect"));
+  // ret.dst_rect_   = ::boost::json::value_to< ::libs::events::props::details::Rect > (jvs.at ("dst_rect"));
   return ret;
 }
 }   // namespace libs::ievents::props::videos::generic::scaler

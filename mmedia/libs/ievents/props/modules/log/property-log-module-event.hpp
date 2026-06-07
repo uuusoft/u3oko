@@ -30,7 +30,7 @@ class PropertyLogModuleEvent final : public ievents::Event
   U3_HELPER_DISABLE_ACOPY_TYPE (PropertyLogModuleEvent)
 
   explicit PropertyLogModuleEvent (const Acessor& = Acessor (0));
-  virtual ~PropertyLogModuleEvent ();
+  virtual ~PropertyLogModuleEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -62,7 +62,7 @@ class PropertyLogModuleEvent final : public ievents::Event
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 }   // namespace libs::ievents::props::modules::log
 

@@ -2,9 +2,7 @@
 \file       gt_add_const_mmx.cpp
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.11.2016
-
 \project    u3_optim_libs_bits
-\brief
 */
 
 #if defined(U3_CPU_X86)
@@ -19,7 +17,6 @@ avx2 (::libs::optim::io::MCallInfo& info)
   avx1 (info);
 }
 #  endif
-
 }   // namespace libs::optim::s16bit::bits::cmp::gt_add_const
 
 #endif

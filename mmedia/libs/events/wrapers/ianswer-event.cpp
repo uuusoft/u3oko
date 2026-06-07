@@ -11,15 +11,10 @@
 
 namespace libs::events
 {
-IAnswerEvent::IAnswerEvent (const Acessor& ph, IEvent::ptr val) :
+IAnswerEvent::IAnswerEvent (const Acessor& pha, IEvent::ptr val) :
   IWrapBaseEvent (IWrapBaseEvent::Acessor (0), val)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-IAnswerEvent::~IAnswerEvent ()
-{
 }
 
 
@@ -33,16 +28,16 @@ IAnswerEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 IAnswerEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (IAnswerEvent);
+  ::libs::iproperties::helpers::dbg_check_copy_event< IAnswerEvent > (src);
   super::copy_int (src);
 }
 
 
 template< class Archive >
 void
-IAnswerEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+IAnswerEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("IWrapBaseEvent", super);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("IWrapBaseEvent", super);
 }
 }   // namespace libs::events
 

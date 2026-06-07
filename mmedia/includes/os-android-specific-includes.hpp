@@ -5,7 +5,7 @@
 \date       01.05.2018
 \project    u3_includes
 */
-#if defined(U3_OS_ANDROID)
+#ifdef U3_OS_ANDROID
 #  include <unistd.h>
 #  include <android/log.h>
 

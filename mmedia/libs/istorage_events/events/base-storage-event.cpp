@@ -11,14 +11,9 @@
 
 namespace libs::istorage_events::events
 {
-BaseStorageEvent::BaseStorageEvent (const Acessor& ph)
+BaseStorageEvent::BaseStorageEvent (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-BaseStorageEvent::~BaseStorageEvent ()
-{
 }
 
 
@@ -32,16 +27,16 @@ BaseStorageEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 BaseStorageEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (BaseStorageEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< BaseStorageEvent > (src);
   super::copy_int (src);
 }
 
 
 template< class Archive >
 void
-BaseStorageEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+BaseStorageEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoTimedEvent", super);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoTimedEvent", super);
 
   self_correct ();
 }

@@ -36,4 +36,7 @@ extern const char* id_u3ipcam;
 extern const char* id_u3drv;
 extern const char* id_u3watch;
 extern const char* id_u3mask;
+
+constexpr std::uint32_t max_count_unsend_msg     = 16 * 1024;   //<
+constexpr std::uint32_t warning_count_unsend_msg = 1 * 1024;    //<
 }   // namespace libs::ilink::consts

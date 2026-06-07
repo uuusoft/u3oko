@@ -9,7 +9,7 @@
 #include "mmedia/libs/optims/s16bit/optim_s16bit_generic/includes_int.hpp"
 #include "base_3x3.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::conv::base::c3x3::consts
 {
@@ -18,11 +18,11 @@ constexpr std::int32_t pxs_per_cycle = 5;   //<
 
 namespace libs::optim::s16bit::conv::base::c3x3
 {
-#  define LOAD_STR(data, permute16, permute8)                                                          \
-    data = _mm256_lddqu_si256 (U3_CAST_REINTERPRET< const __m256i* > (csstr)); /*0123 456x xxxx xxxx*/ \
-    data = _mm256_permutevar8x32_epi32 (data, permute16);                      /*0123 2323 2345 456x*/ \
-    data = _mm256_shuffle_epi8 (data, permute8);                               /*0121 2323 4345 456x*/ \
-    U3_FAST_MOVE_CPTR (csstr, stride);
+#  define LOAD_STR(data, permute16, permute8)                                                                                       \
+    data  = _mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (csstr)); /*0123 456x xxxx xxxx*/ \
+    data  = _mm256_permutevar8x32_epi32 (data, permute16);                                                  /*0123 2323 2345 456x*/ \
+    data  = _mm256_shuffle_epi8 (data, permute8);                                                           /*0121 2323 4345 456x*/ \
+    csstr = ::libs::helpers::mem::move_cptr (csstr, stride);
 
 
 #  define PROCESS_STR(str_mask)                   \
@@ -52,9 +52,9 @@ struct TAvx2CalcObj {
   {
     permute16_ = _mm256_set_epi32 (3, 2, 2, 1, 1, 1, 1, 0);
     permute8_  = _mm256_set_epi8 (15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 5, 4, 15, 14, 13, 12, 11, 10, 9, 4, 3, 2, 5, 4, 3, 2, 1, 0);
-    str1_core_ = _mm256_lddqu_si256 (U3_CAST_REINTERPRET< const __m256i* > (&(**pmask).get (0, 0)));
-    str2_core_ = _mm256_lddqu_si256 (U3_CAST_REINTERPRET< const __m256i* > (&(**pmask).get (0, 1)));
-    str3_core_ = _mm256_lddqu_si256 (U3_CAST_REINTERPRET< const __m256i* > (&(**pmask).get (0, 2)));
+    str1_core_ = _mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (&(**pmask).get (0, 0)));
+    str2_core_ = _mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (&(**pmask).get (0, 1)));
+    str3_core_ = _mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (&(**pmask).get (0, 2)));
 
     clone_core_str (str1_core_);
     clone_core_str (str2_core_);
@@ -150,7 +150,7 @@ struct TAvx2CalcObj {
     akk2 = _mm256_permute2x128_si256 (akk1, akk1, 1);
     akk1 = _mm256_packus_epi32 (akk1, akk2);
 
-    _mm256_storeu_si256 (U3_CAST_REINTERPRET< __m256i* > (dstr), akk1);
+    _mm256_storeu_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (dstr), akk1);
   }
 
 
@@ -163,9 +163,7 @@ struct TAvx2CalcObj {
 
 
 struct TModAvx2CalcObj : public TAvx2CalcObj {
-  TModAvx2CalcObj ()
-  {
-  }
+  TModAvx2CalcObj () = default;
 
   void
   init (::libs::optim::io::MCallInfo& info, const cores::values_core_type** pmask)
@@ -247,7 +245,7 @@ struct TModAvx2CalcObj : public TAvx2CalcObj {
     akk2 = _mm256_permute2x128_si256 (akk1, akk1, 1);
     akk1 = _mm256_packus_epi32 (akk1, akk2);
 
-    _mm256_storeu_si256 (U3_CAST_REINTERPRET< __m256i* > (dstr), akk1);
+    _mm256_storeu_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (dstr), akk1);
   }
 };
 

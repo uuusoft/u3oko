@@ -15,8 +15,8 @@ enum class SubscribeActions : std::uint32_t
   unknown = 0xFF    //<
 };
 
-void             tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const SubscribeActions& src);
-SubscribeActions tag_invoke (::boost::json::value_to_tag< SubscribeActions >, const ::boost::json::value& jv);
+void             tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const SubscribeActions& src);
+SubscribeActions tag_invoke (::boost::json::value_to_tag< SubscribeActions >, const ::boost::json::value& jvs);
 
 class UpdateListener : public BaseEventsEvent
 {
@@ -44,7 +44,7 @@ class UpdateListener : public BaseEventsEvent
     const hids_storage_type& = hids_storage_type (),
     const SubscribeActions&  = SubscribeActions::enable);
 
-  virtual ~UpdateListener ();
+  virtual ~UpdateListener () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -71,7 +71,7 @@ class UpdateListener : public BaseEventsEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
   //  ievents::Event overrides
   virtual void                        load_json_int (const ::boost::json::object& obj) override;
   virtual void                        save_json_int (::boost::json::object& obj) const override;

@@ -22,11 +22,11 @@ class BlockMemAllocator final : public IBlockMemAllocator
   friend IBlockMemAllocator::raw_ptr instance ();
   //  internal typess
   using sync_type   = std::mutex;
-  using lock_type   = std::lock_guard< sync_type >;
+  using lock_type   = std::scoped_lock< sync_type >;
   using blocks_type = std::vector< BlockMem::ptr >;
 
   BlockMemAllocator ();
-  virtual ~BlockMemAllocator ();
+  virtual ~BlockMemAllocator () = default;
 
   ::libs::helpers::mem::IBlockMem::ptr find_exist_block (const size_type& size);
   std::string                          dump_status_int ();

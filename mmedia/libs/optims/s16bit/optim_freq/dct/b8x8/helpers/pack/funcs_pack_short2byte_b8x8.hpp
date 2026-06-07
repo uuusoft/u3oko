@@ -32,7 +32,7 @@ forward64 (const std::int16_t* src, std::uint8_t* dst)
   res2 = ((res2 << 10) & 0x0007FC00) | ((res2 >> 12) & 0x00080000);
   res3 = (res3 & 0x000001FF) | ((res3 >> 22) & 0x00000200);
 
-  *U3_CAST_REINTERPRET< unsigned long* > (dst) = res1 | res2 | res3;
+  *::libs::helpers::casts::reinterpret_cast_helper< unsigned long* > (dst) = res1 | res2 | res3;
 
   for (std::size_t indx = 3; indx < b8x8::consts::count_elements_macroblock; ++indx)
   {
@@ -44,7 +44,7 @@ forward64 (const std::int16_t* src, std::uint8_t* dst)
 inline void
 backward64 (const std::uint8_t* src, std::int16_t* dst)
 {
-  unsigned long first = *U3_CAST_REINTERPRET< const unsigned long* > (src);
+  unsigned long first = *::libs::helpers::casts::reinterpret_cast_helper< const unsigned long* > (src);
 
   dst[0] = ((first >> 20) & 0x000007FF);
 
@@ -69,7 +69,7 @@ backward64 (const std::uint8_t* src, std::int16_t* dst)
 
   for (std::size_t indx = 3; indx < b8x8::consts::count_elements_macroblock; ++indx)
   {
-    dst[indx] = U3_CAST_REINTERPRET< const char* > (src)[indx + 1];
+    dst[indx] = ::libs::helpers::casts::reinterpret_cast_helper< const char* > (src)[indx + 1];
   }
 }
 

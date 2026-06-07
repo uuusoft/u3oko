@@ -13,13 +13,13 @@
 #  endif
 #endif
 
-#if defined(_WIN32_WCE)
+#ifdef _WIN32_WCE
 #  ifndef U3_OS_WIN32_CE
 #    define U3_OS_WIN32_CE
 #  endif
 #endif
 
-#if defined(__ANDROID__)
+#ifdef __ANDROID__
 #  ifndef U3_OS_ANDROID
 #    define U3_OS_ANDROID
 #  endif

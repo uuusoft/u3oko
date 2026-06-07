@@ -18,6 +18,6 @@ enum class GraphStates : std::uint32_t
 inline constexpr std::uint32_t
                  graph_state_type_to_raw (const GraphStates& val)
 {
-  return U3_CAST_STATIC< std::uint32_t > (val);
+  return U3_CAST_UINT32_FORCE (val);
 }
 }   // namespace libs::core::graph

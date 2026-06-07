@@ -11,7 +11,7 @@
 
 namespace libs::ievents::runtime::mem
 {
-BuffEvent::BuffEvent (const Acessor& ph)
+BuffEvent::BuffEvent (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
 }
@@ -23,15 +23,10 @@ BuffEvent::BuffEvent (::utils::dbufs::video::IVideoBuf::cptr& buf)
   {
     auto impl = ::libs::helpers::check::ptr (::libs::iproperties::helpers::cast_prop_demons ()->get_bufs_lockfree ()->impl ());
     buf_      = impl->create (buf->getraw_buf () ? buf->getraw_buf ()->get_data_size () : 0);
-    buf_->clone (&*buf, 100.0f);
+    buf_->clone (&*buf, 100.0F);
   }
 
   property_name_ = gen_get_mid ();
-}
-
-
-BuffEvent::~BuffEvent ()
-{
 }
 
 
@@ -52,19 +47,18 @@ BuffEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 BuffEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (BuffEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< BuffEvent > (src);
   super::copy_int (src);
-  // buf_
   U3_ASSERT_SIGNAL ("unimplemented");
 }
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 template< class Archive >
 void
-BuffEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+BuffEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP (super);
-  ar& BOOST_SERIALIZATION_NVP (buf_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP (super);
+  arh& BOOST_SERIALIZATION_NVP (buf_);
 
   self_correct ();
 }

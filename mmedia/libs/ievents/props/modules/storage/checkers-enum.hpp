@@ -18,6 +18,6 @@ enum class Checkers : std::uint32_t
 };
 
 Checkers str2checker_storage (const std::string& str);
-void     tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const Checkers& src);
-Checkers tag_invoke (::boost::json::value_to_tag< Checkers >, const ::boost::json::value& jv);
+void     tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const Checkers& src);
+Checkers tag_invoke (::boost::json::value_to_tag< Checkers >, const ::boost::json::value& jvs);
 }   // namespace libs::ievents::props::modules::storage

@@ -3,8 +3,6 @@
 # copyright   Erashov A.I.
 # file        u3-sqlite-lib.cmake
 
-include(ExternalProject)
-include(FetchContent)
 include("./build/cmake/libs/sqlite/u3-sqlite-lib-values.cmake")
 
 set(U3_NAME_EXTERNAL_LIB_SQLITE_UTIL ${U3_NAME_EXTERNAL_LIB_SQLITE}-util)

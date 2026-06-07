@@ -44,25 +44,9 @@ str2write_strategy (const std::string& str)
 }
 
 
-VideoCodecProp::VideoCodecProp (const Acessor& ph) :
-  dll_name_ ("vvd_vcodec_mjpg"),
-  bufs_ (::utils::dbufs::video::consts::offs::raw, ::utils::dbufs::video::consts::offs::mjpg),
-  max_period_ic_frame_ (0),
-  fps_coder_ (0),
-  plane_ (),
-  write_codec_strategy_ (Writes::allways_write),
-  decode_flip_y_ (false),
-  code_flip_y_ (false),
-  hint_codec_impl_ (::libs::ievents::SelectorImpls::automatic),
-  dump_result2file_ (false),
-  dump_counter_frame_ (0)
+VideoCodecProp::VideoCodecProp (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-VideoCodecProp::~VideoCodecProp ()
-{
 }
 
 
@@ -129,7 +113,7 @@ VideoCodecProp::save_json_int (::boost::json::object& obj) const
 void
 VideoCodecProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (VideoCodecProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< VideoCodecProp > (src);
   super::copy_int (src);
 
   dll_name_             = dsrc->dll_name_;
@@ -147,26 +131,25 @@ VideoCodecProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-VideoCodecProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+VideoCodecProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
 
-  ar& BOOST_SERIALIZATION_NVP (dll_name_);
-  ar& BOOST_SERIALIZATION_NVP (dump_result2file_);
-  ar& BOOST_SERIALIZATION_NVP (plane_.type_);
-  ar& BOOST_SERIALIZATION_NVP (plane_.quality_);
-  ar& BOOST_SERIALIZATION_NVP (plane_.max_percent_pframe_);
-  ar& BOOST_SERIALIZATION_NVP (plane_.max_period_kframe_);
-  ar& BOOST_SERIALIZATION_NVP (plane_.percent_block_);
-  ar& BOOST_SERIALIZATION_NVP (plane_.nocolor_);
-  // ar& BOOST_SERIALIZATION_NVP (plane_.entropy_coders_);
-  ar& BOOST_SERIALIZATION_NVP (dump_counter_frame_);
-  ar& BOOST_SERIALIZATION_NVP (fps_coder_);
-  ar& BOOST_SERIALIZATION_NVP (bufs_);
-  ar& BOOST_SERIALIZATION_NVP (write_codec_strategy_);
-  ar& BOOST_SERIALIZATION_NVP (decode_flip_y_);
-  ar& BOOST_SERIALIZATION_NVP (code_flip_y_);
-  ar& BOOST_SERIALIZATION_NVP (hint_codec_impl_);
+  arh& BOOST_SERIALIZATION_NVP (dll_name_);
+  arh& BOOST_SERIALIZATION_NVP (dump_result2file_);
+  arh& BOOST_SERIALIZATION_NVP (plane_.type_);
+  arh& BOOST_SERIALIZATION_NVP (plane_.quality_);
+  arh& BOOST_SERIALIZATION_NVP (plane_.max_percent_pframe_);
+  arh& BOOST_SERIALIZATION_NVP (plane_.max_period_kframe_);
+  arh& BOOST_SERIALIZATION_NVP (plane_.percent_block_);
+  arh& BOOST_SERIALIZATION_NVP (plane_.nocolor_);
+  arh& BOOST_SERIALIZATION_NVP (dump_counter_frame_);
+  arh& BOOST_SERIALIZATION_NVP (fps_coder_);
+  arh& BOOST_SERIALIZATION_NVP (bufs_);
+  arh& BOOST_SERIALIZATION_NVP (write_codec_strategy_);
+  arh& BOOST_SERIALIZATION_NVP (decode_flip_y_);
+  arh& BOOST_SERIALIZATION_NVP (code_flip_y_);
+  arh& BOOST_SERIALIZATION_NVP (hint_codec_impl_);
 
   self_correct ();
 }

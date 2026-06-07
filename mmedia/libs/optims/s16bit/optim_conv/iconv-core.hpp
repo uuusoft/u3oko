@@ -33,9 +33,7 @@ class IConvCore final
     U3_CHECK (load (vals), "failde load vals");
   }
 
-  ~IConvCore ()
-  {
-  }
+  ~IConvCore () = default;
 
   bool
   load (const std::vector< TTElement >& vals)
@@ -115,7 +113,6 @@ class IConvCore final
         ret += get (indxx, indxy);
       }
     }
-
     return ret;
   }
 

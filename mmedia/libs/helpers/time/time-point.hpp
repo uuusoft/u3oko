@@ -24,6 +24,6 @@ class TimePoint final
   time_point time_;   //<
 };
 
-void      tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const TimePoint& src);
-TimePoint tag_invoke (::boost::json::value_to_tag< TimePoint >, const ::boost::json::value& jv);
+void      tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const TimePoint& src);
+TimePoint tag_invoke (::boost::json::value_to_tag< TimePoint >, const ::boost::json::value& jvs);
 }   // namespace libs::helpers::time

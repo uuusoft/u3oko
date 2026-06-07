@@ -39,43 +39,53 @@ class IEvent
     return ret;
   }
 
-  virtual ~IEvent ();
+  virtual ~IEvent () = default;
 
   void
   sync_event_props ()
   {
+    // empty ok
   }
 
   /// Виртуальное копирование объекта через указатель на базовый класс
   /// \param[in]  src  указатель на объект-источник, должен быть того же типа, что и назначение
   void copy (const IEvent::craw_ptr src);
+
   /// Функция загрузки объекта из json
   /// \param[in]  prop узел
   void load_json (const std::string& prop);
+
   /// Функция загрузки объекта из json
   /// \param[in]  prop узел
   std::string save_json () const;
+
   /// Функция возращает состояние объекта класса, с точки зрения возможности использования его свойств на данный момент
   /// \return   состояние события
   const PropertyUsings& get_using_state () const;
+
   /// Функция возращает текстовый идентификатор типа для использоваения в файлах, которые могут формироваться в том числе и пользователем системы
   /// Обычно это просто путь к файлу с реализацией, что гарантирует его уникальность по определению
   /// \return   идентификатор типа события
   const hid_type& get_mid () const;
+
   /// Вспомогательная функция для синронизации текстового поля и значения используемого расширения CPU
   //// Нужна для работы с HTTP сервером, который работает только с текстовым полем
   void sync_txt2val ();
+
   /// Вспомогательная функция для синронизации текстового поля и значения используемого расширения CPU
   /// Нужна для работы с HTTP сервером, который работает только с текстовым полем
   void sync_val2txt ();
+
   /// Корректировка внутренних переменных структуры
   void self_correct ();
+
   ///
   bool
   is_failed () const
   {
     return is_failed_int ();
   }
+
   /// Функция клонирования объекта
   /// \param[in]  deep параметр задает глубину копирования (полное/только создание объекта по умолчанию)
   /// \return     копия объекта
@@ -98,15 +108,16 @@ class IEvent
   virtual void        sync_val2txt_int ();
   virtual bool        is_failed_int () const;
 
-  hid_type       property_name_;   //< Имя свойства (события), переопределяется классом-потомком. Используется при загрузке из xml
-  PropertyUsings state_;           //< Общее состояние свойства (события). Отключено, включено и прочее
+  hid_type       property_name_ = {};                         //< Имя свойства (события), переопределяется классом-потомком. Используется при загрузке из xml
+  PropertyUsings state_         = PropertyUsings::disabled;   //< Общее состояние свойства (события). Отключено, включено и прочее
 
   private:
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
+
 /// Вспомогательная функция для облегчения реализации клонирования в производных типах
 /// \tparam     EventType тип события для которого будет реализовано клонирование
 /// \param[in]  src      источник данных для клонирования

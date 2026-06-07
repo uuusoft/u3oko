@@ -8,22 +8,17 @@
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "vcodec-gen-includes_int.hpp"
-#include "mmedia/dlls/doptim/algs/all_algs_impl.hpp"
+#include "mmedia/dlls/doptim/algs/all_algs.hpp"
 #include "vcodec-gen-filter-dll.hpp"
 
 namespace dlls::codecs::vcodec_gen
 {
-browser::CodecBrower                   Filter::codec_browser_;
-::libs::helpers::dlls::ForeverLoadDlls Filter::frozen_dlls_;
+browser::CodecBrower               Filter::codec_browser_;
+::libs::helpers::dlls::FreezerDlls Filter::frozen_dlls_;
 
 Filter::Filter ()
 {
   pthreads_ = U3_CAST_PROP (syn::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ())->get_mcalls_lockfree ();
-}
-
-
-Filter::~Filter ()
-{
 }
 
 
@@ -88,13 +83,13 @@ Filter::flip_y (syn::IVideoBuf::raw_ptr buf)
   }
 
   ::libs::optim::io::MCallInfo      cinfo;
-  ::libs::optim::mcalls::InfoMFunct tfunct (&flip_y_);
+  ::libs::optim::mcalls::MTFuncInfo tfunc (&flip_y_);
 
-  cinfo.dsts_.push_back (::libs::optim::io::ProxyBuf (buf, "Filter::flip_y"));
+  cinfo.dsts_.emplace_back (buf, "Filter::flip_y");
 
   pthreads_->mthreads_call (
     id_obj_,
-    tfunct,
+    tfunc,
     cinfo,
     transinfo_->exptimes_,
     1);
@@ -239,13 +234,13 @@ Filter::process_frame (syn::TransformInfo& info)
   else
   {
     finfo_.dll_codec_->code (pbuf_, pbuf_, info.frame_events_);
-#if 0
+#ifdef U3_FAKE_DISABLE
     // EAI-DEBUG
     {
       U3_LOG_DATA_DBG ("debug->copy frame for send to storage");
-      const syn::IVideoBuf::raw_ptr in_buf   = (*pbuf_)[finfo_.rprops_->bufs_.indx_dbuf_];
-      const syn::IVideoBuf::raw_ptr out_buf  = (*pbuf_)[::utils::dbufs::video::consts::offs::storage];
-      out_buf->clone (in_buf, 100.0f);
+      const syn::IVideoBuf::raw_ptr in_buf  = (*pbuf_)[finfo_.rprops_->bufs_.indx_dbuf_];
+      const syn::IVideoBuf::raw_ptr out_buf = (*pbuf_)[::utils::dbufs::video::consts::offs::storage];
+      out_buf->clone (in_buf, 100.0F);
     }
 #endif
   }

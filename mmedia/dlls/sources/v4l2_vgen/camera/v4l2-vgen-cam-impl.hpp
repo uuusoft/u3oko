@@ -15,7 +15,7 @@ class CamImpl final
   U3_HELPER_DISABLE_ACOPY_TYPE (CamImpl)
 
   explicit CamImpl (const gen_lib::SourceImplInfo& props_info);
-  ~CamImpl ();
+  ~CamImpl () = default;
 
   syn::IVideoBuf::ptr get_buf ();
   void                sync_correct_props (syn::VideoCorrectProp::craw_ptr correctprops);

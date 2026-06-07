@@ -15,7 +15,7 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
   using icodecs_type = std::vector< icodec_type >;
 
   InfoFilter ();
-  virtual ~InfoFilter ();
+  virtual ~InfoFilter () = default;
 
   InfoFilter (const InfoFilter& src)            = delete;
   InfoFilter& operator= (const InfoFilter& src) = delete;

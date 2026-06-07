@@ -5,6 +5,8 @@
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \project    u3_all2hsl
 */
+#include "mmedia/includes/control-defines-includes.hpp"
+#include "mmedia/includes/includes.hpp"
 #include "../../../dlls-includes_int.hpp"
 #include "all2hsl-dll-syn.hpp"
 #include "consts/all2hsl-dll-const-vals.hpp"

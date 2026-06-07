@@ -1,8 +1,7 @@
 /**
-\file
+\file       graduent1_gen.cpp
 \date       01.05.2017
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
-
 \project    u3_optim_libs_gen
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -12,7 +11,7 @@
 // old shit
 namespace libs::optim::s16bit::gen::gradient1
 {
-#if 0
+#ifdef U3_FAKE_DISABLE
 inline bool
 check (const ::libs::optim::io::MCallInfo& info)
 {
@@ -45,7 +44,7 @@ check (const ::libs::optim::io::MCallInfo& info)
 }   // namespace libs::optim::s16bit::gen::gradient1
 
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 #  define SET_UNALIGNED_FUNCT
 #  include "gradient1_alu.cxx"
 #  include "gradient1_sse2.cxx"

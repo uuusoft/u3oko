@@ -36,7 +36,7 @@ Filter::transform_int (syn::TransformInfo& info)
     send_info_msg (info);
   }
 
-  ::libs::link::ILink::ptr helper = U3_CAST_PROP (::libs::properties::vers::links::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ())->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
+  ::libs::link::ILink::ptr helper = U3_CAST_PROP (syn::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ())->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
   if (!helper)
   {
     U3_LOG_DATA_ERROR ("empty sender helper, skip send msg");
@@ -54,7 +54,7 @@ Filter::transform_int (syn::TransformInfo& info)
   }
 
   bufs->enum_bufs (
-    [this, &impl, &info] (const ::utils::dbufs::video::consts::offs::off_buf_type& indx, const syn::IVideoBuf::cptr& buf) {
+    [this, &impl, &info] (const ::utils::dbufs::video::consts::offs::off_buf_type& indx, const syn::IVideoBuf::cptr& buf) -> void {
       auto minfos = impl->get_module_infos (indx);
 
       if (minfos.empty ())
@@ -74,7 +74,6 @@ Filter::transform_int (syn::TransformInfo& info)
           find->second (info, minfo);
         }
       }
-      return;
     });
 
   if (info.frame_events_ && !info.frame_events_->empty ())
@@ -93,7 +92,7 @@ Filter::transform_int (syn::TransformInfo& info)
 void
 Filter::send_info_msg (syn::TransformInfo& info)
 {
-  auto             idata = U3_CAST_PROP (::libs::properties::vers::links::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ())->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
+  auto             idata = U3_CAST_PROP (syn::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ())->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
   syn::IEvent::ptr rmsg;
 
   U3_CHECK (::libs::iproperties::helpers::create_event< syn::FrameDone > (rmsg), "syn::FrameDone");

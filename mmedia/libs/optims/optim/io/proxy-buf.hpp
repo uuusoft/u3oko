@@ -15,14 +15,7 @@ namespace libs::optim::io
 /// Легкий класс-обертка для работы с буфером данных
 /// Используется для упрощения интерфейса для ряда операций над оригинальным буфером
 struct ProxyBuf final {
-  ProxyBuf () :
-    buf_ (nullptr),
-    stride_ (0),
-    width_ (0),
-    height_ (0),
-    const_data_ (false)
-  {
-  }
+  ProxyBuf () = default;
 
   ProxyBuf (
     std::int16_t* buf,
@@ -112,9 +105,7 @@ struct ProxyBuf final {
     const_data_ = true;
   }
 
-  ~ProxyBuf ()
-  {
-  }
+  ~ProxyBuf () = default;
 
   void
   reinit (syn::IVideoBuf::raw_ptr src, const char* debinfo)
@@ -229,12 +220,12 @@ struct ProxyBuf final {
     return U3_CAST_CPROXY_BUFF< const std::int16_t* > (ubuf () + stride_ * indx);
   }
 
-  std::uint32_t width_;    //< Ширина данных в пикселях
-  std::uint32_t height_;   //< Высота данных в пикселях
-  std::uint32_t stride_;   //< Ширина строки в байтах
+  std::uint32_t width_  = 0;   //< Ширина данных в пикселях
+  std::uint32_t height_ = 0;   //< Высота данных в пикселях
+  std::uint32_t stride_ = 0;   //< Ширина строки в байтах
 
   private:
-  std::int16_t* buf_;          //< Указатель на буфер с данными
-  bool          const_data_;   //< Флаг константности данных REFACT
+  std::int16_t* buf_        = nullptr;   //< Указатель на буфер с данными
+  bool          const_data_ = false;     //< Флаг константности данных REFACT
 };
 }   // namespace libs::optim::io

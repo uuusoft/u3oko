@@ -95,6 +95,7 @@ LogModule::flush_events ()
     flush_event (evnt);
   }
 
+  file_for_store_events_.flush ();
   events_for_save_.clear ();
 
   auto       log_prop = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
@@ -200,7 +201,7 @@ LogModule::flush_event (syn::IEvent::ptr& evnt)
 
       if (indx_first < length_txt)
       {
-        file_for_store_events_ << std::endl;
+        file_for_store_events_ << '\n';
         tabs += fill_tab (0, consts::g_info_off_tabs, consts::g_size_tab);
       }
     } while (true);
@@ -214,6 +215,6 @@ LogModule::flush_event (syn::IEvent::ptr& evnt)
     len += flush_long_descr_event (file_for_store_events_, cevnt);
   }
 
-  file_for_store_events_ << std::endl;
+  file_for_store_events_ << '\n';
 }
 }   // namespace modules::uuu_log::appl

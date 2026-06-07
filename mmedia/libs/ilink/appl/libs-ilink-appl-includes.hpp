@@ -10,6 +10,6 @@
 #include "event-props-for-application.hpp"
 #include "state-process-event-ext.hpp"
 #include "base/base-module.hpp"
-#include "root/deinit-stages-enum.hpp"
+#include "root/enum-deinit-stages.hpp"
 #include "root/root-module.hpp"
 #include "leaf/leaf-module.hpp"

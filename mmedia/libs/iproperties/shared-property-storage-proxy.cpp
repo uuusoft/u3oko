@@ -29,12 +29,6 @@ SharedPropertyStorageProxy::SharedPropertyStorageProxy () :
 }
 
 
-SharedPropertyStorageProxy::~SharedPropertyStorageProxy ()
-{
-  // lock_type  lock(mtx_);
-}
-
-
 SharedPropertyStorageProxy::raw_ptr
 SharedPropertyStorageProxy::instance ()
 {

@@ -3,7 +3,6 @@
 \file       graduent1.hpp
 \date       01.05.2017
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
-
 \project    u3_optim_libs_gen
 
 Формат источника 16 битовое слово, но перед вычислением формат усекается до беззнакового байта.

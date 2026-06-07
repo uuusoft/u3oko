@@ -31,15 +31,15 @@ to_string (const LogActions& act)
 
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const LogActions& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const LogActions& src)
 {
-  jv = U3_CAST_UINT32_FORCE (src);
+  jvs = U3_CAST_UINT32_FORCE (src);
 }
 
 
 LogActions
-tag_invoke (::boost::json::value_to_tag< LogActions >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< LogActions >, const ::boost::json::value& jvs)
 {
-  return U3_CAST_STATIC< LogActions > (::libs::helpers::json::get_uint32 (jv));
+  return ::libs::helpers::casts::static_cast_helper< LogActions > (::libs::helpers::json::get_uint32 (jvs));
 }
 }   // namespace libs::ilog_events::events

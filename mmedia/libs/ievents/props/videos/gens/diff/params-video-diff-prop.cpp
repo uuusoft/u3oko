@@ -11,15 +11,13 @@
 
 namespace libs::ievents::props::videos::gens::diff
 {
-ParamsVideoDiffProp::ParamsVideoDiffProp (bool enable, std::int16_t bound_filling, std::int16_t val_filling) :
+ParamsVideoDiffProp::ParamsVideoDiffProp (
+  bool         enable,
+  std::int16_t bound_filling,
+  std::int16_t val_filling) :
   enable_ (enable),
   bound_filling_ (bound_filling),
   val_filling_ (val_filling)
-{
-}
-
-
-ParamsVideoDiffProp::~ParamsVideoDiffProp ()
 {
 }
 
@@ -37,22 +35,22 @@ ParamsVideoDiffProp::self_test () const
 
 template< class Archive >
 void
-ParamsVideoDiffProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+ParamsVideoDiffProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (enable_);
-  ar& BOOST_SERIALIZATION_NVP (bound_filling_);
-  ar& BOOST_SERIALIZATION_NVP (val_filling_);
+  arh& BOOST_SERIALIZATION_NVP (enable_);
+  arh& BOOST_SERIALIZATION_NVP (bound_filling_);
+  arh& BOOST_SERIALIZATION_NVP (val_filling_);
 }
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const ParamsVideoDiffProp& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const ParamsVideoDiffProp& src)
 {
   U3_ASSERT_NT (0, "???");
 }
 
 
 ParamsVideoDiffProp
-tag_invoke (::boost::json::value_to_tag< ParamsVideoDiffProp >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< ParamsVideoDiffProp >, const ::boost::json::value& jvs)
 {
   ParamsVideoDiffProp ret;
   U3_ASSERT_NT (0, "???");

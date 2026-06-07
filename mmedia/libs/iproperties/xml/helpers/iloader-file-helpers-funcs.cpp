@@ -76,7 +76,7 @@ copy_files (
           std::ofstream file_stream (dst_path_file.c_str (), std::ios_base::binary | std::ios_base::out | std::ios_base::trunc);
           if (file_data->get_data_size ())
           {
-            file_stream.write (U3_CAST_REINTERPRET< char* > (file_data->get ()), file_data->get_data_size ());
+            file_stream.write (::libs::helpers::casts::reinterpret_cast_helper< char* > (file_data->get ()), file_data->get_data_size ());
           }
         }
         else

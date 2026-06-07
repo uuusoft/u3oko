@@ -6,7 +6,7 @@ file        includes.hpp
 \project    u3_ievents_lib
 \brief      Файл, определяет набор интерфейсов и типов для ядра
 */
-#include "selector-impl-type.hpp"
+#include "enum-selector-impls.hpp"
 
 #include "event.hpp"
 
@@ -34,10 +34,11 @@ file        includes.hpp
 #include "props/videos/noises/freq/info-buf-freq-noise-remover.hpp"
 #include "props/videos/noises/freq/freq-video-noise-remover-prop.hpp"
 
+#include "props/videos/noises/space/buf-video-space-noise-remover-prop.hpp"
 #include "props/videos/noises/space/video-space-noise-remover-prop.hpp"
 #include "props/videos/noises/space/ext/median-space-filter-prop.hpp"
 
-#include "props/videos/generic/convolution/convolution-metod-type.hpp"
+#include "props/videos/generic/convolution/enum-convs.hpp"
 #include "props/videos/generic/convolution/buf-video-convolution-prop.hpp"
 #include "props/videos/generic/convolution/video-convolution-prop.hpp"
 
@@ -55,8 +56,8 @@ file        includes.hpp
 
 #include "props/videos/generic/detect/video-detect-prop.hpp"
 
-#include "props/videos/generic/convert/type-src2dst.hpp"
-#include "props/videos/generic/convert/type-convert-accuracy.hpp"
+#include "props/videos/generic/convert/enum-src2dsteqs.hpp"
+#include "props/videos/generic/convert/enum-accuracys.hpp"
 #include "props/videos/generic/convert/video-convert-prop.hpp"
 
 #include "props/videos/generic/correct/video-correct-prop.hpp"
@@ -83,7 +84,7 @@ file        includes.hpp
 #include "props/videos/generic/codec/video-codec-flat-prop.hpp"
 #include "props/videos/generic/codec/video-codec-prop.hpp"
 
-#include "props/videos/generic/morph/morph-operation-type.hpp"
+#include "props/videos/generic/morph/enum-morph-ops.hpp"
 #include "props/videos/generic/morph/morph-operation-params.hpp"
 #include "props/videos/generic/morph/morph-buf-info.hpp"
 #include "props/videos/generic/morph/video-morphology-prop.hpp"

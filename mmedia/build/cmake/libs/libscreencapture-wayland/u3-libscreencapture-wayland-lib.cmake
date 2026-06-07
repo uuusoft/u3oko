@@ -4,9 +4,6 @@
 # file        u3-libscreencapture-wayland-lib.cmake
 # https://github.com/DafabHoid/libscreencapture-wayland
 
-include(ExternalProject)
-include(FetchContent)
-
 include("./build/cmake/libs/libscreencapture-wayland/u3-libscreencapture-wayland-lib-values.cmake")
 
 set(U3_NAME_EXTERNAL_LIB_WAYLAND_SCREEN_CAPTURE_UTIL ${U3_NAME_EXTERNAL_LIB_WAYLAND_SCREEN_CAPTURE}-util)

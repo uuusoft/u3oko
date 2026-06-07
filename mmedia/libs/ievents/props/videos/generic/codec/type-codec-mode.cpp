@@ -12,17 +12,17 @@
 namespace libs::ievents::props::videos::generic::codec
 {
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const CodecModes& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const CodecModes& src)
 {
-  jv = { "codec_mode", U3_CAST_UINT32_FORCE (src) };
+  jvs = { "codec_mode", U3_CAST_UINT32_FORCE (src) };
 }
 
 
 CodecModes
-tag_invoke (::boost::json::value_to_tag< CodecModes >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< CodecModes >, const ::boost::json::value& jvs)
 {
   U3_XLOG_DEV ("CodecModes::tag_invoke::load::begin");
-  // const ::boost::json::object& obj = jv.as_object ();
-  return U3_CAST_STATIC< CodecModes > (::libs::helpers::json::get_uint32 (jv.at ("codec_mode")));
+  // const ::boost::json::object& obj = jvs.as_object ();
+  return ::libs::helpers::casts::static_cast_helper< CodecModes > (::libs::helpers::json::get_uint32 (jvs.at ("codec_mode")));
 }
 }   // namespace libs::ievents::props::videos::generic::codec

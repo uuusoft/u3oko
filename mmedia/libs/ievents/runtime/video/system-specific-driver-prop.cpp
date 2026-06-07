@@ -11,15 +11,10 @@
 
 namespace libs::ievents::runtime::video
 {
-SystemSpecificDriverProp::SystemSpecificDriverProp (const Acessor& ph) :
+SystemSpecificDriverProp::SystemSpecificDriverProp (const Acessor& pha) :
   show_system_page_ (false)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-SystemSpecificDriverProp::~SystemSpecificDriverProp ()
-{
 }
 
 
@@ -51,7 +46,7 @@ SystemSpecificDriverProp::save_json_int (::boost::json::object& obj) const
 void
 SystemSpecificDriverProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (SystemSpecificDriverProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< SystemSpecificDriverProp > (src);
   super::copy_int (src);
   show_system_page_ = dsrc->show_system_page_;
 }
@@ -59,10 +54,10 @@ SystemSpecificDriverProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-SystemSpecificDriverProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+SystemSpecificDriverProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (show_system_page_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoruntimeoRuntimeEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (show_system_page_);
 
   self_correct ();
 }

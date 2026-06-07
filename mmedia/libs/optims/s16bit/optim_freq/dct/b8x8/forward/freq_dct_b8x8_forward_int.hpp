@@ -97,20 +97,20 @@ freq_dct_b8x8_forward_generic (::libs::optim::io::MCallInfo& info)
         test;
       }
 #endif
-#if 0
-        helpers::pack::forward64 ( src_block, byte_src_block);
+#ifdef U3_FAKE_DISABLE
+      helpers::pack::forward64 (src_block, byte_src_block);
 
 #  if defined(DEBUG) && 0
-        {
-          U3_ALIGN_DEFAULT std::int16_t deb_src_block[ ::dlls::codecs::consts::count_elements_macroblock ];
-          //memcpy( deb_src_block, src_block, sizeof( deb_src_block) );
-          //ASSERT(0 == memcmp( deb_src_block, src_block, sizeof( deb_src_block) ) );          
-          //quant_.forward( deb_src_block );
-          mem::pack::backward64( byte_src_block, deb_src_block );
+      {
+        U3_ALIGN_DEFAULT std::int16_t deb_src_block[::dlls::codecs::consts::count_elements_macroblock];
+        // memcpy( deb_src_block, src_block, sizeof( deb_src_block) );
+        // ASSERT(0 == memcmp( deb_src_block, src_block, sizeof( deb_src_block) ) );
+        // quant_.forward( deb_src_block );
+        mem::pack::backward64 (byte_src_block, deb_src_block);
 
-          U3_CHECK(0 == memcmp( deb_src_block, src_block, sizeof( deb_src_block) ) );
-          volatile bool test = false;
-        }
+        U3_CHECK (0 == memcmp (deb_src_block, src_block, sizeof (deb_src_block)));
+        volatile bool test = false;
+      }
 #  endif
 #endif
       /*
@@ -155,7 +155,7 @@ freq_dct_b8x8_forward_generic (::libs::optim::io::MCallInfo& info)
       cur_buf += b8x8::consts::dim_elements_macroblock;
     }
 
-    U3_FAST_MOVE_CPTR (cur_buf, (b8x8::consts::dim_elements_macroblock - 1) * params.psrc_->stride_ + lsleak_width);
+    cur_buf = ::libs::helpers::mem::move_cptr (cur_buf, (b8x8::consts::dim_elements_macroblock - 1) * params.psrc_->stride_ + lsleak_width);
   }
 
   U3_ASSERT ((*params.prets_)[info.indx_thread_].check ());

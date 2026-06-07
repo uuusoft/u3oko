@@ -11,38 +11,27 @@
 
 namespace libs::ievents::props::mix_mul
 {
-OutChannelInfo::OutChannelInfo ()
-{
-}
-
-
-OutChannelInfo::~OutChannelInfo ()
-{
-}
-
-
 template< class Archive >
 void
-OutChannelInfo::serialize (Archive& ar, const std::uint32_t /* file_version */)
+OutChannelInfo::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& BOOST_SERIALIZATION_NVP (srcs2dsts_);
+  arh& BOOST_SERIALIZATION_NVP (srcs2dsts_);
 }
 
 
 void
-tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const OutChannelInfo& src)
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const OutChannelInfo& src)
 {
-  // EAI-JSON-TEST-86
-  jv = { { "srcs2dsts", boost::json::value_from (src.srcs2dsts_) } };
+  jvs = { { "srcs2dsts", boost::json::value_from (src.srcs2dsts_) } };
 }
 
 
 OutChannelInfo
-tag_invoke (::boost::json::value_to_tag< OutChannelInfo >, const ::boost::json::value& jv)
+tag_invoke (::boost::json::value_to_tag< OutChannelInfo >, const ::boost::json::value& jvs)
 {
   OutChannelInfo ret;
 
-  ret.srcs2dsts_ = ::boost::json::value_to< OutChannelInfo::src2dst_bufs_type > (jv.at ("srcs2dsts"));
+  ret.srcs2dsts_ = ::boost::json::value_to< OutChannelInfo::src2dst_bufs_type > (jvs.at ("srcs2dsts"));
   return ret;
 }
 }   // namespace libs::ievents::props::mix_mul

@@ -17,16 +17,6 @@ const std::string id_codecs_in_name_file = "vvd_";
 
 namespace dlls::codecs::vcodec_gen::browser
 {
-CodecBrower::CodecBrower ()
-{
-}
-
-
-CodecBrower::~CodecBrower ()
-{
-}
-
-
 std::string
 CodecBrower::get_codec (const libs::helpers::uids::minor::id_val& id)
 {
@@ -58,7 +48,7 @@ CodecBrower::refresh_list_codecs ()
   const std::string                     libs_path = ::libs::iproperties::appl_paths::get_current_lib_folder ();
   ::libs::helpers::files::NodeEnumFiles files;
 
-#ifdef U3_BUILD_MODULES_AS_LIBS
+#if (U3_BUILD_MODULES_AS_LIBS == 1)
   files.files_ = ::libs::proxy::get_list_dlls_as_libs ();
 #else
   ::libs::helpers::files::get_files (

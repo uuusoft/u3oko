@@ -11,7 +11,7 @@
 #include "libs-helpers-files-includes.hpp"
 #include "path_funcs.hpp"
 
-#if defined(U3_OS_WIN32_DESKTOP)
+#ifdef U3_OS_WIN32_DESKTOP
 #  include "Shlobj.h"
 
 namespace libs::helpers::files
@@ -31,7 +31,7 @@ update_register_lib (const std::string& path, bool need_reg)
 
   if (need_reg)
   {
-    reg_func_type reg_funct = U3_CAST_REINTERPRET< reg_func_type > (GetProcAddress (module, "DllRegisterServer"));
+    reg_func_type reg_funct = ::libs::helpers::casts::reinterpret_cast_helper< reg_func_type > (GetProcAddress (module, "DllRegisterServer"));
     if (!reg_funct || FAILED ((*reg_funct) ()))
     {
       U3_XLOG_ERROR ("register lib" + TOLOG (path));
@@ -40,7 +40,7 @@ update_register_lib (const std::string& path, bool need_reg)
   }
   else
   {
-    unreg_func_type unreg_funct = U3_CAST_REINTERPRET< unreg_func_type > (GetProcAddress (module, "DllUnregisterServer"));
+    unreg_func_type unreg_funct = ::libs::helpers::casts::reinterpret_cast_helper< unreg_func_type > (GetProcAddress (module, "DllUnregisterServer"));
     U3_ASSERT (unreg_funct);
     if (!unreg_funct || (FAILED ((*unreg_funct) ())))
     {

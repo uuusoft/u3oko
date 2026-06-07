@@ -36,8 +36,8 @@ class LinkCreatorProxy final : protected ::libs::helpers::proxy::MemProxyBase
 
   private:
   LinkCreatorProxy ();
-  virtual ~LinkCreatorProxy ();
+  virtual ~LinkCreatorProxy () = default;
 
-  ::libs::link::ILinkCreator::ptr* pimpl_;   //<
+  ::libs::link::ILinkCreator::ptr* pimpl_ = nullptr;   //<
 };
 }   // namespace libs::ilink

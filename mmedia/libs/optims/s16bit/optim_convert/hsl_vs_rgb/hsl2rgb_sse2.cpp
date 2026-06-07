@@ -12,7 +12,7 @@
 
 namespace libs::optim::s16bit::convert::hsl_vs_rgb
 {
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 U3_SET_TARGET_CPU (sse2)
 void

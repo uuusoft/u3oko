@@ -15,7 +15,7 @@ class DataGraphFolderInfoType final
     const std::string&                      name       = "",
     const ::libs::core::graph::GraphStates& path_state = ::libs::core::graph::GraphStates::unknown);
 
-  virtual ~DataGraphFolderInfoType ();
+  virtual ~DataGraphFolderInfoType () = default;
 
   std::string                      folder_name_;   //<
   ::libs::core::graph::GraphStates graph_state_;   //<
@@ -24,7 +24,7 @@ class DataGraphFolderInfoType final
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
 /// Событие содержит в себе список доступных xml файлов конфигурации графов обработки данных
@@ -49,7 +49,7 @@ class ListXmlFilesDataEvent : public BaseDataEvent
   U3_HELPER_DISABLE_ACOPY_TYPE (ListXmlFilesDataEvent)
 
   explicit ListXmlFilesDataEvent (const Acessor& = Acessor (0), const data_graph_infos_types& = data_graph_infos_types ());
-  virtual ~ListXmlFilesDataEvent ();
+  virtual ~ListXmlFilesDataEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -68,7 +68,7 @@ class ListXmlFilesDataEvent : public BaseDataEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   virtual void                        load_json_int (const ::boost::json::object& obj) override;
   virtual void                        save_json_int (::boost::json::object& obj) const override;

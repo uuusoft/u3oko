@@ -11,20 +11,6 @@
 
 namespace dlls::codecs::codec_gen
 {
-CodecGeneric::CodecGeneric () :
-  counter_frames_ (0),
-  simd_ (syn::CpuExts::usual),
-  transinfo_ (nullptr),
-  id_node_graph_ (nullptr)
-{
-}
-
-
-CodecGeneric::~CodecGeneric ()
-{
-}
-
-
 void
 CodecGeneric::init (const InfoGenCodec& info)
 {

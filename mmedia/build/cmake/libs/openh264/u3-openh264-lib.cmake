@@ -3,7 +3,6 @@
 # copyright   Erashov A.I.
 # file        u3-openh264-lib.cmake
 
-include(ExternalProject)
 include("./build/cmake/libs/openh264/u3-openh264-lib-values.cmake")
 
 set(U3_NAME_EXTERNAL_LIB_OPENH264_UTIL ${U3_NAME_EXTERNAL_LIB_OPENH264}-util)

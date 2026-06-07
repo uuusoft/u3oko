@@ -11,17 +11,6 @@
 
 namespace dlls::codecs::bitgen::lossy::pack_64s_to_70b_1
 {
-CObj::CObj () :
-  id_string_ (consts::id_string)
-{
-}
-
-
-CObj::~CObj ()
-{
-}
-
-
 void
 CObj::forward_int (
   const void*         src,
@@ -30,8 +19,8 @@ CObj::forward_int (
   std::uint32_t&      count_byte_dst)
 {
   U3_CHECK (count_byte_src >= 4, "source too small");
-  const std::int16_t* ssrc = U3_CAST_CODECS< const std::int16_t* > (src);
-  char*               udst = U3_CAST_CODECS< char* > (dst);
+  const auto* ssrc = U3_CAST_CODECS< const std::int16_t* > (src);
+  auto*       udst = U3_CAST_CODECS< char* > (dst);
 
   for (std::uint32_t bindx = 0; bindx < count_byte_src / consts::src_granularity; ++bindx)
   {
@@ -72,12 +61,12 @@ CObj::backward_int (
   void*               dst,
   std::uint32_t&      count_byte_dst)
 {
-  const char*   usrc = U3_CAST_CODECS< const char* > (src);
-  std::int16_t* sdst = U3_CAST_CODECS< std::int16_t* > (dst);
+  const auto* usrc = U3_CAST_CODECS< const char* > (src);
+  auto*       sdst = U3_CAST_CODECS< std::int16_t* > (dst);
 
   for (std::uint32_t bindx = 0; bindx < count_byte_src / consts::dst_granularity; ++bindx)
   {
-    const std::int32_t first = *U3_CAST_CODECS< const std::int32_t* > (usrc);
+    const auto first = *U3_CAST_CODECS< const std::int32_t* > (usrc);
 
     sdst[0] = ((first >> 20) & 0x000007FF);
     count_byte_dst += sizeof (std::int16_t);

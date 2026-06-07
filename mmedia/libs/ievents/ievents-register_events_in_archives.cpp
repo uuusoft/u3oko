@@ -15,62 +15,57 @@ struct RegisterEventsHelper final {
   void
   process () const
   {
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::TimedEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::Event);
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::TimedEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::Event > ();
 
-#if defined(DEVENTS_COMPILE)
-    // U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::wtf::WtfBase);
-    // U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::wtf::WtfChild1);
-#endif
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::runtime::RuntimeEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::runtime::error::BaseErrorEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::runtime::mem::BufsEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::runtime::mem::ZipDataEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::runtime::state::ChangeStateProcessEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::runtime::state::ExpandTimesEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::runtime::video::DetectViolation > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::runtime::video::FrameDone > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::runtime::video::FaceDetect > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::runtime::interf::BaseInterfEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::runtime::interf::InterfCorrectImageEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::runtime::interf::InterfCodecImageEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::runtime::control::SyncObjs > ();
 
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::runtime::RuntimeEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::runtime::error::BaseErrorEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::runtime::mem::BufsEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::runtime::mem::ZipDataEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::runtime::state::ChangeStateProcessEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::runtime::state::ExpandTimesEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::runtime::video::DetectViolation);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::runtime::video::FrameDone);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::runtime::video::FaceDetect);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::runtime::interf::BaseInterfEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::runtime::interf::InterfCorrectImageEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::runtime::interf::InterfCodecImageEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::runtime::control::SyncObjs);
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::application::ApplicationProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::hardware::InfoCPUEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::mix_mul::MixMulProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::modules::log::PropertyLogModuleEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::modules::events::PropertyEventsModuleEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::modules::storage::PropertyStorageModuleEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::terminals::EndPointProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::base_id::BaseIdProp > ();
 
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::application::ApplicationProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::hardware::InfoCPUEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::mix_mul::MixMulProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::modules::log::PropertyLogModuleEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::modules::events::PropertyEventsModuleEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::modules::storage::PropertyStorageModuleEvent);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::terminals::EndPointProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::base_id::BaseIdProp);
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::generic::morph::VideoMorphologyProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::generic::codec::VideoCodecProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::generic::convert::VideoConvertProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::generic::convolution::VideoConvolutionProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::generic::correct::VideoCorrectProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::generic::detect::VideoDetectProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::generic::vec2image::Vec2ImageProp > ();
 
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::generic::morph::VideoMorphologyProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::generic::codec::VideoCodecProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::generic::convert::VideoConvertProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::generic::convolution::VideoConvolutionProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::generic::correct::VideoCorrectProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::generic::detect::VideoDetectProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::generic::vec2image::Vec2ImageProp);
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::generic::driver::VideoDriverCaptureProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::generic::driver::LinksVideoDriverProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::generic::driver::VideoDriverProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::runtime::video::SystemSpecificDriverProp > ();
 
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::generic::driver::VideoDriverCaptureProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::generic::driver::LinksVideoDriverProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::generic::driver::VideoDriverProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::runtime::video::SystemSpecificDriverProp);
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::generic::gradient::GradientProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::generic::histogram::VideoHistogramProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::generic::motion_est::VideoEstMotionProp > ();
 
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::generic::gradient::GradientProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::generic::histogram::VideoHistogramProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::generic::motion_est::VideoEstMotionProp);
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::noises::space::VideoSpaceNoiseRemoverProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::noises::space::ext::MedianSpaceFilterProp > ();
 
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::noises::space::VideoSpaceNoiseRemoverProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::noises::space::ext::MedianSpaceFilterProp);
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::noises::time::VideoTimeNoiseRemoverProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::noises::time::ext::MedianTimeFilterProp > ();
 
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::noises::time::VideoTimeNoiseRemoverProp);
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::noises::time::ext::MedianTimeFilterProp);
-
-    U3_MAKE_FAKE_EVENT_OBJ_THIS_TYPE (::libs::ievents::props::videos::noises::freq::FreqVideoNoiseRemoverProp);
-    U3_HELPER_MAKE_FAKE_OBJ_THIS_TYPE (::libs::ievents::props::videos::noises::freq::InfoBuffFreqNoiseRemover);
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ievents::props::videos::noises::freq::FreqVideoNoiseRemoverProp > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_type< ::libs::ievents::props::videos::noises::freq::InfoBuffFreqNoiseRemover > ();
   }
 };
 

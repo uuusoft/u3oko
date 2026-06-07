@@ -21,11 +21,6 @@ Filter::Filter ()
 }
 
 
-Filter::~Filter ()
-{
-}
-
-
 void
 Filter::load_int (::libs::icore::impl::var1::obj::FilterInfo* info, const ::pugi::xml_named_node_iterator& node)
 {
@@ -41,7 +36,7 @@ Filter::transform_int (syn::TransformInfo& info)
 {
   prepare_transform (info);
 
-  U3_LOG_DATA_DATA ("Filter::transform_int" + VTOLOG (U3_CAST_PTR2INT (info.frame_events_)));
+  U3_LOG_DATA_DATA ("Filter::transform_int" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (info.frame_events_)));
   if (info.frame_events_)
   {
     for (const auto& event : *info.frame_events_)

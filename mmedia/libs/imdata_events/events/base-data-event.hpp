@@ -29,7 +29,7 @@ class BaseDataEvent : public ::libs::ievents::Event
   U3_HELPER_DISABLE_ACOPY_TYPE (BaseDataEvent)
 
   BaseDataEvent (const Acessor& = Acessor (0));
-  virtual ~BaseDataEvent ();
+  virtual ~BaseDataEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -52,7 +52,7 @@ class BaseDataEvent : public ::libs::ievents::Event
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 }   // namespace libs::imdata_events::events
 

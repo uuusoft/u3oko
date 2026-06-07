@@ -30,12 +30,12 @@ load_codec_from_file (
 
   info.lib_.load (full_path.c_str (), boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
 
-#ifdef U3_BUILD_MODULES_AS_LIBS
+#if (U3_BUILD_MODULES_AS_LIBS == 1)
   info.create_codec_   = ::libs::proxy::get_create_codec_func (file_name);
   info.free_codec_     = ::libs::proxy::get_free_codec_func (file_name);
   info.get_codec_info_ = ::libs::proxy::get_info_codec_func (file_name);
 #else
-#  if defined(U3_OS_ANDROID)
+#  ifdef U3_OS_ANDROID
   const auto native    = info.lib_.native ();
   info.create_codec_   = reinterpret_cast< funcs::get_codec_func_type* > (dlsym (native, make_name_function (file_name, consts::func_name_create_codec).c_str ()));
   info.free_codec_     = reinterpret_cast< funcs::free_codec_func_type* > (dlsym (native, make_name_function (file_name, consts::func_name_delete_codec).c_str ()));

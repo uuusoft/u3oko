@@ -28,7 +28,7 @@ struct DataSourceInfo final {
     std::int32_t       max_count = 1,
     std::int32_t       number    = 1);
 
-  virtual ~DataSourceInfo ();
+  virtual ~DataSourceInfo () = default;
 
   std::string  name_;        //< Имя источника данных
   DataSources  type_;        //< Тип источника данных
@@ -39,7 +39,7 @@ struct DataSourceInfo final {
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
 /// Событие содержит в себе список устройств захвата данных в системе
@@ -94,7 +94,7 @@ class ListDevicesDataEvent : public BaseDataEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   virtual void                        load_json_int (const ::boost::json::object& obj) override;
   virtual void                        save_json_int (::boost::json::object& obj) const override;

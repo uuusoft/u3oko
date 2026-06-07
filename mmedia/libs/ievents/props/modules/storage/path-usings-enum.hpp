@@ -18,6 +18,6 @@ enum class PathUsings : std::uint32_t
 };
 
 PathUsings str2using_path (const std::string& str);
-void       tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const PathUsings& src);
-PathUsings tag_invoke (::boost::json::value_to_tag< PathUsings >, const ::boost::json::value& jv);
+void       tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const PathUsings& src);
+PathUsings tag_invoke (::boost::json::value_to_tag< PathUsings >, const ::boost::json::value& jvs);
 }   // namespace libs::ievents::props::modules::storage

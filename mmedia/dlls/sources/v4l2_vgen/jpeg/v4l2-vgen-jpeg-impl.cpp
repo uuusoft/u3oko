@@ -9,7 +9,7 @@
 #include "../v4l2-vgen-includes_int.hpp"
 #include "v4l2-vgen-jpeg-impl.hpp"
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 namespace dlls::sources::v4l2_openmax_vgen::jpeg
 {
 
@@ -65,7 +65,7 @@ void
 JpegImpl::update_source_info (const ::dlls::sources::gen_lib::SourceImplInfo& info)
 {
   lock_type lock (mtx_);
-  auto       buf_alocator = info.links_props_.pdriver2buf_->impl ();
+  auto      buf_alocator = info.links_props_.pdriver2buf_->impl ();
 
   std::copy (ready_jpeg_bufs_.begin (), ready_jpeg_bufs_.end (), std::back_inserter (empty_jpeg_bufs_));
   ready_jpeg_bufs_.clear ();
@@ -109,13 +109,13 @@ JpegImpl::init_device (const ::dlls::sources::gen_lib::SourceImplInfo& info)
   MMAL_ES_FORMAT_T* still_format = still_port->format;
 
   still_format->encoding = mmal_util_rgb_order_fixed (still_port) ? MMAL_ENCODING_RGB24 : MMAL_ENCODING_BGR24;
-  //still_format->encoding = MMAL_ENCODING_RGB24;      //debug
+  // still_format->encoding = MMAL_ENCODING_RGB24;      //debug
 
   CHECK_STATUS (mmal_port_format_commit (still_port), "camera still format couldn't be set");
   CHECK_STATUS (helpers::connect_ports (still_port, einput_port, &devstate_->encoder_connect_), "Failed to connect camera video port to encoder input");
   CHECK_STATUS (mmal_port_parameter_set_uint32 (devstate_->cam_comp_->control, MMAL_PARAMETER_SHUTTER_SPEED, devstate_->cam_params_.shutter_speed), "Failed to set shutter speed, ");
 
-  eoutput_port->userdata = U3_CAST_REINTERPRET< MMAL_PORT_USERDATA_T* > (devstate_);
+  eoutput_port->userdata = ::libs::helpers::casts::reinterpret_cast_helper< MMAL_PORT_USERDATA_T* > (devstate_);
 
   CHECK_STATUS (mmal_port_enable (eoutput_port, helpers::encoder_buf_callback), "enable encoder port");
 
@@ -154,7 +154,7 @@ JpegImpl::deinit_device ()
 void
 JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 {
-  lock_type    lock (mtx_);
+  lock_type     lock (mtx_);
   MMAL_STATUS_T status   = MMAL_SUCCESS;
   bool          complete = false;
   DriverState*  devstate = reinterpret_cast< DriverState* > (port->userdata);
@@ -164,8 +164,8 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 
   int        bytes_written  = 0;
   int        bytes_to_write = buf->length;
-  const auto width         = port->format->es->video.width;
-  const auto height        = port->format->es->video.height;
+  const auto width          = port->format->es->video.width;
+  const auto height         = port->format->es->video.height;
 
   if (devstate->onlyLuma)
   {
@@ -184,15 +184,15 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
       buf->buf_alloc (::utils::dbufs::video::AllocBufInfo (
         2048,
         2048,
-        //width,
-        //height,
+        // width,
+        // height,
         2048 * 3,
         ::libs::helpers::uids::minor::id_val::y8));
 
       jpeg_frame_size_ = sizeof (HeaderIFrame);
       ::utils::dbufs::video::helpers::override_data (*buf, 0, jpeg_frame_size_);
 
-      HeaderIFrame* head = U3_CAST_CODECS< HeaderIFrame* > (buf->get_buf ());
+      auto* head = U3_CAST_CODECS< HeaderIFrame* > (buf->get_buf ());
       head->reset ();
 
       head->base_part_.set_guid_codec (::libs::helpers::uids::codecs::mjpeg);
@@ -200,9 +200,9 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
       head->base_part_.sinfo_.width_  = width;
       head->base_part_.sinfo_.height_ = height;
       head->base_part_.sinfo_.stride_ = width;
-      head->cinfo_.nocolor_        = false;
-      //head->base_part_.size_compress_ = jpeg_frame_size_;
-      //head->csize_                    = jpeg_frame_size_;
+      head->cinfo_.nocolor_           = false;
+      // head->base_part_.size_compress_ = jpeg_frame_size_;
+      // head->csize_                    = jpeg_frame_size_;
     }
 
     auto data = buf->get_buf ();
@@ -225,34 +225,34 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
       empty_jpeg_bufs_.pop_front ();
       ready_jpeg_bufs_.push_back (buf);
 
-      HeaderIFrame* head = U3_CAST_CODECS< HeaderIFrame* > (buf->get_buf ());
+      auto* head = U3_CAST_CODECS< HeaderIFrame* > (buf->get_buf ());
 
       head->base_part_.size_compress_ = jpeg_frame_size_ - sizeof (HeaderIFrame);
       head->csize_                    = jpeg_frame_size_ - sizeof (HeaderIFrame);
 
-      //head->csize_ = jpeg_frame_size_;
-      //head->coff_ = from_header;
-      //from_header += jpeg_size;
-      //out_size += jpeg_size;
-      // U3_ASSERT(out_size > 0);
+      // head->csize_ = jpeg_frame_size_;
+      // head->coff_ = from_header;
+      // from_header += jpeg_size;
+      // out_size += jpeg_size;
+      //  U3_ASSERT(out_size > 0);
 
-      //head->base_part_.size_compress_ = out_size;
-      //head->base_part_.sinfo_.width_ = lsrc.width_;
-      //head->base_part_.sinfo_.height_ = lsrc.height_;
-      //head->base_part_.sinfo_.stride_ = lsrc.width_ * (colored ? 3 : 1);
+      // head->base_part_.size_compress_ = out_size;
+      // head->base_part_.sinfo_.width_ = lsrc.width_;
+      // head->base_part_.sinfo_.height_ = lsrc.height_;
+      // head->base_part_.sinfo_.stride_ = lsrc.width_ * (colored ? 3 : 1);
 
-      //head->cinfo_ = cinfo_.plane_;
-      //head->cinfo_.nocolor_ = colored ? false : true; //переопределяем по факту, т.к. у пользователя может быть установлено сжатие с цветом при его фактическом отсутствии и наоборот.
+      // head->cinfo_ = cinfo_.plane_;
+      // head->cinfo_.nocolor_ = colored ? false : true; //переопределяем по факту, т.к. у пользователя может быть установлено сжатие с цветом при его фактическом отсутствии и наоборот.
 
       // std::copy(
       //   vcodec_mjpg::consts::guid_codec.get_vals().begin(),????
       // vcodec_mjpg::consts::guid_codec.get_vals().end(),
-      //head->base_part_.guid_);
+      // head->base_part_.guid_);
 
       // U3_ASSERT(head->check());
     }
 
-    complete        = true;
+    complete         = true;
     jpeg_frame_size_ = 0;
     jpeg_beg_time_   = U3_GET_CURRENT_TIME;
   }
@@ -282,7 +282,7 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 
       VideoCodecProp::craw_ptr props = jpeg_codec_interf_->get_codec_property ();
 
-      const std::uint32_t val = ::libs::helpers::utils::ret_check_bound(U3_CAST_UINT32 (props->plane_.quality_), 1u, 100u);
+      const std::uint32_t val = ::libs::helpers::utils::ret_check_bound (U3_CAST_UINT32 (props->plane_.quality_), 1u, 100u);
 
       CHECK_STATUS (mmal_port_parameter_set_uint32 (encoder_output, MMAL_PARAMETER_JPEG_Q_FACTOR, val), "update jpeg quality");
     }
@@ -315,5 +315,5 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
   return;
 }
 
-}   // namespace jpeg
+}   // namespace dlls::sources::v4l2_openmax_vgen::jpeg
 #endif

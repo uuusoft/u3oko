@@ -4,94 +4,12 @@
 \date       01.05.2017
 \project    u3_all2hsl
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "all2hsl-dll-includes_int.hpp"
 #include "all2hsl-dll-info-filter-dll.hpp"
 #include "all2hsl-dll-filter-dll.hpp"
-#include "mmedia/dlls/doptim/algs/all_algs_impl.hpp"
 
 namespace dlls::convertors::all2hsl
 {
-Filter::Filter ()
-{
-}
-
-
-Filter::~Filter ()
-{
-}
-
-
-void
-Filter::load_int (
-  ::libs::icore::impl::var1::obj::FilterInfo* info,
-  const ::pugi::xml_named_node_iterator&      node)
-{
-  init_pts (&info->pts_);
-  finfo_.load (node);
-
-  auto ioptim = ::libs::iproperties::helpers::cast_prop_demons ()->get_optim_lockfree ()->impl ();
-
-  fx8_to_x16_          = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CX8_X16Alg::val_key));
-  rgb24_to_hsl_        = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CRgb2HSLAlg::val_key));
-  rgb24_to_l_fast_     = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CRgb2LAlg::val_key));
-  rgb24_to_l_accurate_ = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CRgb2LAlg2::val_key));
-  set_const_func_      = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CSetConstAlg::val_key));
-  scale_func_          = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CScaleNearestAlg::val_key));
-  flip_y_              = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CFlipYAlg::val_key));
-}
-
-
-void
-Filter::transform_int (::libs::icore::impl::var1::obj::dll::TransformInfo& info)
-{
-  prepare_transform (info);
-  if (::libs::events::PropertyUsings::disabled == finfo_.ef_props_.front ()->get_using_state ())
-  {
-    return;
-  }
-
-  auto& ibufs = (*info.ibuf_);
-  if (ibufs->get_flag (::libs::bufs::BufsFlags::empty))
-  {
-    //  Пустой буфер допустим, например если все преобразование происходит аппаратно.
-    return;
-  }
-  if (!ibufs->get_flag (::libs::bufs::BufsFlags::request2hsl))
-  {
-    return;
-  }
-
-  auto        indx_base_buf = ::utils::dbufs::video::consts::offs::raw;
-  auto        base_buf      = (*ibufs)[indx_base_buf];
-  const auto& format        = base_buf->get_format ();
-
-  if (base_buf->get_flag (::utils::dbufs::BufFlags::empty))
-  {
-    //  Требуется уточнение уже для непосредственного буфера источника. Пустой буфер допустим, например если все преобразование происходит аппаратно.
-    return;
-  }
-  if (::libs::helpers::uids::minor::id_val::rgb24 != format && ::libs::helpers::uids::minor::id_val::y16 != format && ::libs::helpers::uids::minor::id_val::y8 != format)
-  {
-    U3_LOG_DATA_WRN ("unknow format for HSL convert, skip, indx=" + indx_base_buf + ", format=" + ::libs::helpers::uids::helpers::get_readable_name (format));
-    return;
-  }
-
-  //  add offset for active data and corrected active data correct frame
-  itransform ();
-  pbuf_->set_flag (::libs::bufs::BufsFlags::request2hsl, false);
-}
-
-
-void
-Filter::call_int (::libs::icore::impl::var1::obj::dll::CallInterfInfo& info)
-{
-  super::prepare_call (info);
-  super::call_gen (info);
-}
-
-
 void
 Filter::init_pts (::libs::icore::impl::var1::obj::ConnectInfo* info)
 {
@@ -129,5 +47,276 @@ Filter::alloc_fake_frame (::libs::icore::impl::var1::obj::dll::TransformInfo& in
       ::libs::helpers::uids::minor::id_val::rgb24));
 
   ::utils::dbufs::video::helpers::override_data (*raw_buf, 0, req_size);
+}
+
+
+void
+Filter::alloc_bufs ()
+{
+  syn::IVideoBuf::raw_ptr braw     = (*pbuf_)[::utils::dbufs::video::consts::offs::raw];
+  auto                    base_buf = (*pbuf_)[pbuf_->get_base_index ()];
+  const auto              width    = base_buf->get_dim_var (::utils::dbufs::video::Dims::width);
+  const auto              height   = base_buf->get_dim_var (::utils::dbufs::video::Dims::height);
+  // const auto              format    = base_buf->get_format ();
+
+  finfo_.strip_color_ = finfo_.rprops_->strip_color_ || (::libs::helpers::uids::minor::id_val::rgb24 != braw->get_format ());
+
+  syn::IVideoBuf::raw_ptr hsl[3] = {
+    finfo_.strip_color_ ? nullptr : (*pbuf_)[::utils::dbufs::video::consts::offs::hue],
+    finfo_.strip_color_ ? nullptr : (*pbuf_)[::utils::dbufs::video::consts::offs::sat],
+    (*pbuf_)[::utils::dbufs::video::consts::offs::lit]
+  };
+
+  for (syn::IVideoBuf::raw_ptr cbuf : hsl)
+  {
+    if (!cbuf)
+    {
+      continue;
+    }
+
+    auto alloc_info = ::utils::dbufs::video::AllocBufInfo (
+      width,
+      height,
+      0,
+      ::libs::helpers::uids::minor::id_val::y16,
+      utils::dbufs::video::DimChecks::enable);
+
+    alloc_info.flags_[::utils::dbufs::BufFlags::convolution_support] = true;
+    cbuf->buf_alloc (alloc_info);
+  }
+}
+
+
+void
+Filter::alloc_temp_bufs ()
+{
+  //  Резервируем память под второстепенные буфера, связанные с основным.
+#ifdef U3_FAKE_DISABLE
+  const syn::IVideoBuf::raw_ptr                           l16_buf     = (*pbuf_)[::utils::dbufs::video::consts::offs::lit];
+  const ::utils::dbufs::video::consts::offs::off_buf_type indx_bufs[] = { ::utils::dbufs::video::consts::offs::temp1, ::utils::dbufs::video::consts::offs::temp2 };
+
+  for (const ::utils::dbufs::video::consts::offs::off_buf_type& indx_buf : indx_bufs)
+  {
+    syn::IVideoBuf::raw_ptr tbuf = (*pbuf_)[indx_buf];
+    tbuf->clone (l16_buf, 0.0F);
+  }
+#endif
+}
+
+
+void
+Filter::convert_bufs_from_rgb ()
+{
+  syn::IVideoBuf::raw_ptr hsl[3] = {
+    finfo_.strip_color_ ? nullptr : (*pbuf_)[::utils::dbufs::video::consts::offs::hue],
+    finfo_.strip_color_ ? nullptr : (*pbuf_)[::utils::dbufs::video::consts::offs::sat],
+    (*pbuf_)[::utils::dbufs::video::consts::offs::lit]
+  };
+
+  syn::IVideoBuf::raw_ptr           rcbuf = (*pbuf_)[::utils::dbufs::video::consts::offs::raw];
+  ::libs::optim::io::MCallInfo      cinfo;
+  ::libs::optim::mcalls::MTFuncInfo tfunc;
+
+  cinfo.srcs_.emplace_back (rcbuf, "rcbuf convertors::all2hsl");
+
+  if (finfo_.strip_color_)
+  {
+    cinfo.dsts_.emplace_back (hsl[2], "hsl 2 convertors::all2hsl");
+
+    tfunc.pfunc_           = ::libs::ievents::props::videos::generic::convert::Accuracys::best == finfo_.rprops_->atype_ ? &rgb24_to_l_accurate_ : &rgb24_to_l_fast_;
+    tfunc.src_align_.px_x_ = 1;
+    tfunc.dst_align_.px_x_ = 1;
+    tfunc.src_align_.px_y_ = 1;
+    tfunc.dst_align_.px_y_ = 1;
+  }
+  else
+  {
+    cinfo.dsts_.emplace_back (hsl[0], "hsl 0 convertors::all2hsl");
+    cinfo.dsts_.emplace_back (hsl[1], "hsl 1 convertors::all2hsl");
+    cinfo.dsts_.emplace_back (hsl[2], "hsl 2 convertors::all2hsl");
+
+    tfunc.pfunc_           = &rgb24_to_hsl_;
+    tfunc.src_align_.px_x_ = 1;
+    tfunc.dst_align_.px_x_ = 1;
+    tfunc.src_align_.px_y_ = 1;
+    tfunc.dst_align_.px_y_ = 1;
+  }
+
+  if (!finfo_.rprops_->debug_skip_transform_)
+  {
+    pthreads_->mthreads_call (id_obj_, tfunc, cinfo, transinfo_->exptimes_);
+  }
+
+  for (syn::IVideoBuf::raw_ptr cbuf : hsl)
+  {
+    if (!cbuf)
+    {
+      continue;
+    }
+
+    cbuf->set_mem_var (
+      ::utils::dbufs::MemVars::size_data,
+      cbuf->get_dim_var (::utils::dbufs::video::Dims::height) * cbuf->get_dim_var (::utils::dbufs::video::Dims::stride));
+    // cbuf->fill( rand() % 255 );//debug
+  }
+}
+
+
+void
+Filter::convert_bufs_from_y8 ()
+{
+  syn::IVideoBuf::raw_ptr l     = (*pbuf_)[::utils::dbufs::video::consts::offs::lit];
+  syn::IVideoBuf::raw_ptr rcbuf = (*pbuf_)[::utils::dbufs::video::consts::offs::raw];
+
+  {
+    ::libs::optim::io::MCallInfo cinfo;
+
+    cinfo.srcs_.emplace_back (rcbuf, "rcbuf convertors::all2hsl");
+    cinfo.dsts_.emplace_back (l, "l convertors::all2hsl");
+
+    ::libs::optim::mcalls::MTFuncInfo tfunc (&fx8_to_x16_);
+
+    pthreads_->mthreads_call (
+      id_obj_,
+      tfunc,
+      cinfo,
+      transinfo_->exptimes_);
+  }
+
+  l->set_mem_var (
+    ::utils::dbufs::MemVars::size_data,
+    l->get_dim_var (::utils::dbufs::video::Dims::height) * l->get_dim_var (::utils::dbufs::video::Dims::stride));
+  // utils::dbufs::video::helpers::fill( l, rand() % 256 );//debug
+}
+
+
+void
+Filter::convert_bufs_from_y16 ()
+{
+  syn::IVideoBuf::raw_ptr l     = (*pbuf_)[::utils::dbufs::video::consts::offs::lit];
+  syn::IVideoBuf::raw_ptr rcbuf = (*pbuf_)[::utils::dbufs::video::consts::offs::raw];
+
+  l->clone (rcbuf, 100.0F);
+  l->set_mem_var (
+    ::utils::dbufs::MemVars::size_data,
+    l->get_dim_var (::utils::dbufs::video::Dims::height) * l->get_dim_var (::utils::dbufs::video::Dims::stride));
+
+#ifdef U3_FAKE_DISABLE
+  // debug
+  l->fill (rand () % 255);
+#endif
+}
+
+
+void
+Filter::duplicate_bufs ()
+{
+  if (!finfo_.rprops_->duplicate_image_)
+  {
+    return;
+  }
+
+  const syn::IVideoBuf::raw_ptr l16_buf      = (*pbuf_)[::utils::dbufs::video::consts::offs::lit];
+  syn::IVideoBuf::raw_ptr       copy_l16_buf = (*pbuf_)[consts::dupl_l];
+
+  copy_l16_buf->clone (l16_buf, 100.0F);
+
+  if (finfo_.strip_color_)
+  {
+    return;
+  }
+
+  const syn::IVideoBuf::raw_ptr h16_buf      = (*pbuf_)[::utils::dbufs::video::consts::offs::hue];
+  const syn::IVideoBuf::raw_ptr s16_buf      = (*pbuf_)[::utils::dbufs::video::consts::offs::sat];
+  syn::IVideoBuf::raw_ptr       copy_h16_buf = (*pbuf_)[consts::dupl_h];
+  syn::IVideoBuf::raw_ptr       copy_s16_buf = (*pbuf_)[consts::dupl_s];
+
+  copy_h16_buf->clone (h16_buf, 100.0F);
+  copy_s16_buf->clone (s16_buf, 100.0F);
+}
+
+
+void
+Filter::flip_y_bufs ()
+{
+  if (!finfo_.rprops_->flip_y_)
+  {
+    return;
+  }
+
+  syn::IVideoBuf::raw_ptr hsl[3] = {
+    finfo_.strip_color_ ? nullptr : (*pbuf_)[::utils::dbufs::video::consts::offs::hue],
+    finfo_.strip_color_ ? nullptr : (*pbuf_)[::utils::dbufs::video::consts::offs::sat],
+    (*pbuf_)[::utils::dbufs::video::consts::offs::lit]
+  };
+
+  for (syn::IVideoBuf::raw_ptr cbuf : hsl)
+  {
+    if (!cbuf)
+    {
+      continue;
+    }
+
+    //  sync y
+    ::libs::optim::io::MCallInfo      cinfo;
+    ::libs::optim::mcalls::MTFuncInfo tfunc (&flip_y_);
+
+    cinfo.dsts_.emplace_back (cbuf, "dst Filter::flip_y_bufs");
+
+    pthreads_->mthreads_call (
+      id_obj_,
+      tfunc,
+      cinfo,
+      transinfo_->exptimes_,
+      1);
+  }
+}
+
+
+void
+Filter::itransform ()
+{
+  alloc_bufs ();
+
+  auto       rcbuf  = (*pbuf_)[::utils::dbufs::video::consts::offs::raw];
+  const auto format = rcbuf->get_format ();
+
+  if (rcbuf->get_flag (::utils::dbufs::BufFlags::empty))
+  {
+    return;
+  }
+
+  switch (format)
+  {
+  case ::libs::helpers::uids::minor::id_val::rgb24:
+    convert_bufs_from_rgb ();
+    break;
+  case ::libs::helpers::uids::minor::id_val::y8:
+    convert_bufs_from_y8 ();
+    break;
+  case ::libs::helpers::uids::minor::id_val::y16:
+    convert_bufs_from_y16 ();
+    break;
+  default:
+    U3_LOG_DATA_ERROR ("unknown raw format - skip convert: " + ::libs::helpers::uids::helpers::get_readable_name (format));
+    return;
+  }
+
+  flip_y_bufs ();
+  duplicate_bufs ();
+  alloc_temp_bufs ();
+
+  if (finfo_.strip_color_)
+  {
+    (*pbuf_)[::utils::dbufs::video::consts::offs::hue]->flush ();
+    (*pbuf_)[::utils::dbufs::video::consts::offs::sat]->flush ();
+  }
+  else
+  {
+    ::utils::dbufs::video::helpers::fill_edges ((*pbuf_)[::utils::dbufs::video::consts::offs::hue]);
+    ::utils::dbufs::video::helpers::fill_edges ((*pbuf_)[::utils::dbufs::video::consts::offs::sat]);
+  }
+
+  ::utils::dbufs::video::helpers::fill_edges ((*pbuf_)[::utils::dbufs::video::consts::offs::lit]);
 }
 }   // namespace dlls::convertors::all2hsl

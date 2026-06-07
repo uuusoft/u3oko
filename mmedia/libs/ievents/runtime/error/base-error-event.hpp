@@ -28,7 +28,7 @@ class BaseErrorEvent : public RuntimeEvent
   U3_HELPER_DISABLE_ACOPY_TYPE (BaseErrorEvent)
 
   explicit BaseErrorEvent (const Acessor& = Acessor (0), const std::string& info = std::string ());
-  virtual ~BaseErrorEvent ();
+  virtual ~BaseErrorEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -47,7 +47,7 @@ class BaseErrorEvent : public RuntimeEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   //  ievents::Event overrides
   virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;

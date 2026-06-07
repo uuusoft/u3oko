@@ -30,7 +30,7 @@ class BufsEvent : public RuntimeEvent
 
   explicit BufsEvent (const Acessor& = Acessor (0));
   explicit BufsEvent (const Acessor&, ::libs::bufs::Bufs::ptr& buf, std::list< IEvent::ptr >* events);
-  virtual ~BufsEvent ();
+  virtual ~BufsEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -56,6 +56,6 @@ class BufsEvent : public RuntimeEvent
 };
 }   // namespace libs::ievents::runtime::mem
 
-#if 0
-BOOST_CLASS_EXPORT_KEY( ::libs::ievents::runtime::mem::BufsEvent );
+#ifdef U3_FAKE_DISABLE
+BOOST_CLASS_EXPORT_KEY (::libs::ievents::runtime::mem::BufsEvent);
 #endif

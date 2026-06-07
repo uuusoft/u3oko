@@ -11,16 +11,12 @@ namespace libs::link::mem
 class IHandlerMem
 {
   public:
-  virtual ~IHandlerMem ()
-  {
-  }
+  virtual ~IHandlerMem () = default;
 
   //  IHandlerMem interface
   virtual bool update (void*) const = 0;
 
   protected:
-  IHandlerMem ()
-  {
-  }
+  IHandlerMem () = default;
 };
 }   // namespace libs::link::mem

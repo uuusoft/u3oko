@@ -49,7 +49,7 @@ move_alg (::libs::optim::io::MCallInfo& info)
     {
       const std::int16_t*     cur_ssrc = &cur_src->get_cline (indxy)[indxx];
       std::int32_t            diff     = std::numeric_limits< std::int32_t >::max ();
-      char*                   rldst    = U3_CAST_REINTERPRET< char* > (&ldst[dindxx]);
+      char*                   rldst    = ::libs::helpers::casts::reinterpret_cast_helper< char* > (&ldst[dindxx]);
       std::pair< char, char > rvec     = ::libs::ievents::props::videos::generic::motion_est::consts::inv_vec;
 
       ++dindxx;
@@ -61,9 +61,9 @@ move_alg (::libs::optim::io::MCallInfo& info)
 
       for (std::size_t indxv = 0; indxv < pparams->search_vecs_.size (); ++indxv)
       {
-        const auto&  ivec   = pparams->search_vecs_[indxv];
-        std::int32_t pindxx = U3_CAST_INT32 (indxx) + ivec.first;
-        std::int32_t pindxy = U3_CAST_INT32 (indxy) + ivec.second;
+        const auto& ivec   = pparams->search_vecs_[indxv];
+        auto        pindxx = U3_CAST_INT32 (indxx) + ivec.first;
+        auto        pindxy = U3_CAST_INT32 (indxy) + ivec.second;
 
         if (pindxx < 0 || pindxy < 0)
         {

@@ -13,8 +13,8 @@ namespace libs::iproperties::appl_paths
 class AppPaths : public IAppPaths
 {
   public:
-  AppPaths ();
-  virtual ~AppPaths ();
+  AppPaths ()          = default;
+  virtual ~AppPaths () = default;
 
   AppPaths (const AppPaths& obj)            = delete;
   AppPaths& operator= (const AppPaths& obj) = delete;

@@ -6,7 +6,7 @@
 \project    u3_defines
 */
 
-#if defined(U3_COMPILER_MSC)
+#ifdef U3_COMPILER_MSC
 // #pragma warning(disable : 4996)
 #elif defined(U3_COMPILER_GNUC)
 #elif defined(U3_COMPILER_CLANG)

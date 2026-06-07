@@ -23,7 +23,7 @@ struct EventBufsInfo {
     const syn::off_buf_type& src = utils::dbufs::video::consts::offs::invalid,
     const syn::off_buf_type& dst = utils::dbufs::video::consts::offs::invalid);
 
-  virtual ~EventBufsInfo ();
+  virtual ~EventBufsInfo () = default;
 
   void check (bool check_src = true, bool check_dst = true);
 
@@ -38,11 +38,11 @@ struct EventBufsInfo {
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
-void          tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jv, const EventBufsInfo& src);
-EventBufsInfo tag_invoke (::boost::json::value_to_tag< EventBufsInfo >, const ::boost::json::value& jv);
+void          tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const EventBufsInfo& src);
+EventBufsInfo tag_invoke (::boost::json::value_to_tag< EventBufsInfo >, const ::boost::json::value& jvs);
 }   // namespace libs::events::buf
 
 BOOST_CLASS_EXPORT_KEY (::libs::events::buf::EventBufsInfo);

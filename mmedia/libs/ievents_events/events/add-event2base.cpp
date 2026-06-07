@@ -24,11 +24,6 @@ AddEvent2Base::AddEvent2Base (
 }
 
 
-AddEvent2Base::~AddEvent2Base ()
-{
-}
-
-
 void
 AddEvent2Base::sync_event_props (const machine_id_type& machine_id, const object_id_type& object_id)
 {
@@ -105,7 +100,7 @@ AddEvent2Base::save_json_int (::boost::json::object& obj) const
 void
 AddEvent2Base::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (AddEvent2Base);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< AddEvent2Base > (src);
   super::copy_int (src);
 
   machine_id_ = dsrc->machine_id_;
@@ -116,12 +111,12 @@ AddEvent2Base::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-AddEvent2Base::serialize (Archive& ar, const std::uint32_t /* file_version */)
+AddEvent2Base::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("BaseEventsEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (machine_id_);
-  ar& BOOST_SERIALIZATION_NVP (object_id_);
-  ar& BOOST_SERIALIZATION_NVP (add_event_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("BaseEventsEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (machine_id_);
+  arh& BOOST_SERIALIZATION_NVP (object_id_);
+  arh& BOOST_SERIALIZATION_NVP (add_event_);
 
   self_correct ();
 }

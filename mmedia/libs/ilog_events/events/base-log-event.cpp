@@ -17,11 +17,6 @@ BaseLogEvent::BaseLogEvent (const BaseLogEvent::Acessor&)
 }
 
 
-BaseLogEvent::~BaseLogEvent ()
-{
-}
-
-
 std::string
 BaseLogEvent::text (const LogTexts& type) const
 {
@@ -40,16 +35,16 @@ BaseLogEvent::clone_int (const ::libs::events::Deeps& deep) const
 void
 BaseLogEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (BaseLogEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< BaseLogEvent > (src);
   super::copy_int (src);
 }
 
 
 template< class Archive >
 void
-BaseLogEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+BaseLogEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoTimedEvent", super);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoTimedEvent", super);
 
   self_correct ();
 }

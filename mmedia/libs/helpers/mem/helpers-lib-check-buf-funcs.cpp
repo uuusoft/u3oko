@@ -13,7 +13,7 @@ namespace libs::helpers::mem
 bool
 check_buf (void* sbuf, const std::uint32_t size)
 {
-  std::uint8_t*         buf     = U3_CAST_REINTERPRET< std::uint8_t* > (sbuf);
+  std::uint8_t*         buf     = ::libs::helpers::casts::reinterpret_cast_helper< std::uint8_t* > (sbuf);
   volatile bool         read_op = false;
   std::size_t           cindx   = 0;
   volatile std::uint8_t val     = 0;

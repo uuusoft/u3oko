@@ -31,14 +31,9 @@ load_op (const ::pugi::xml_named_node_iterator& prop, ParamsVideoDiffProp& info)
 }
 
 
-VideoDiffProp::VideoDiffProp (const Acessor& ph)
+VideoDiffProp::VideoDiffProp (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-VideoDiffProp::~VideoDiffProp ()
-{
 }
 
 
@@ -68,7 +63,7 @@ VideoDiffProp::save_json_int (::boost::json::object& obj) const
 void
 VideoDiffProp::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (VideoDiffProp);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< VideoDiffProp > (src);
   super::copy_int (src);
   diffs_ = dsrc->diffs_;
 }
@@ -76,10 +71,10 @@ VideoDiffProp::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-VideoDiffProp::serialize (Archive& ar, const std::uint32_t /* file_version */)
+VideoDiffProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (diffs_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (diffs_);
 
   self_correct ();
 }

@@ -15,6 +15,6 @@ get_module_version ()
          "." + std::to_string (::configure::project_ver_minor) +
          "." + std::string (::configure::git_hash) +
          " build time:" + std::string (::configure::start_build_time) +
-         " compile time id:" + std::string (::configure::compilers_info);
+         " compilers-ids:" + std::string (::configure::compilers_info);
 }
 }   // namespace libs::helpers::log

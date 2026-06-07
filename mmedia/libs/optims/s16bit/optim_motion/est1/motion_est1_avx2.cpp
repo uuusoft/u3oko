@@ -12,7 +12,7 @@
 #include "mmedia/libs/optims/optim/mcalls/helpers/buf_helpers_funcs.hpp"
 #include "move_alg.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::motion::est1
 {
@@ -57,8 +57,8 @@ struct TAvx2CalcObj final {
 
     for (std::uint32_t indxy = 0; indxy < U3_CAST_UINT32 (size_block); ++indxy)
     {
-      const __m256i* isrc1 = U3_CAST_REINTERPRET< const __m256i* > (src1);
-      const __m256i* isrc2 = U3_CAST_REINTERPRET< const __m256i* > (src2);
+      const __m256i* isrc1 = ::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (src1);
+      const __m256i* isrc2 = ::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (src2);
 
       // базовое сравнение по горизонтали, которое есть всегда
       {
@@ -87,8 +87,8 @@ struct TAvx2CalcObj final {
         iymm2 = _mm256_add_epi16 (iymm2, iymm0);
       }
 
-      U3_FAST_MOVE_CPTR (src1, stride);
-      U3_FAST_MOVE_CPTR (src2, stride);
+      src1 = ::libs::helpers::mem::move_cptr (src1, stride);
+      src2 = ::libs::helpers::mem::move_cptr (src2, stride);
     }
 
     iymm1     = _mm256_permute2f128_si256 (iymm2, iymm2, 1);

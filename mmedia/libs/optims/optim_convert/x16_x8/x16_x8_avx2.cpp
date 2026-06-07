@@ -10,7 +10,7 @@
 #include "x16_x8.hpp"
 #include "x16_x8_int.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::convert::x16_x8
 {
@@ -19,7 +19,7 @@ void
 avx2 (::libs::optim::io::MCallInfo& info)
 {
 #  if 1
-  return alu (info);
+  alu (info);
 #  else
   X16_TO_X8_PREFIX (16);
 
@@ -32,18 +32,18 @@ avx2 (::libs::optim::io::MCallInfo& info)
   {
     for (std::size_t indx_x = 0; indx_x < width; indx_x += ppc)
     {
-      __m256i data = _mm256_load_si256 (U3_CAST_REINTERPRET< const __m256i* > (yuy2_buf));
+      __m256i data = _mm256_load_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (yuy2_buf));
 
       data = _mm256_and_si256 (data, mask);
 
-      _mm256_store_si256 (U3_CAST_REINTERPRET< __m256i* > (y16_buf), data);
+      _mm256_store_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (y16_buf), data);
 
       yuy2_buf += dppc;
       y16_buf += ppc;
     }
 
-    U3_FAST_MOVE_CPTR (yuy2_buf, leak_yuy2);
-    U3_FAST_MOVE_PTR (y16_buf, leak_y16);
+    yuy2_buf = ::libs::helpers::mem::move_cptr (yuy2_buf, leak_yuy2);
+    y16_buf  = ::libs::helpers::mem::move_ptr (y16_buf, leak_y16);
   }
 
   _mm256_zeroupper ();

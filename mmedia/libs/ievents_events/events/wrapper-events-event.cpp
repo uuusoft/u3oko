@@ -11,15 +11,10 @@
 
 namespace libs::ievents_events::events
 {
-WrapperEventsEvent::WrapperEventsEvent (const Acessor& ph, ::libs::events::IEvent::ptr msg) :
+WrapperEventsEvent::WrapperEventsEvent (const Acessor& pha, ::libs::events::IEvent::ptr msg) :
   int_ (msg)
 {
   property_name_ = gen_get_mid ();
-}
-
-
-WrapperEventsEvent::~WrapperEventsEvent ()
-{
 }
 
 
@@ -61,7 +56,7 @@ WrapperEventsEvent::save_json_int (::boost::json::object& obj) const
 void
 WrapperEventsEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (WrapperEventsEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< WrapperEventsEvent > (src);
   super::copy_int (src);
   int_ = dsrc->int_;
 }
@@ -69,10 +64,10 @@ WrapperEventsEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-WrapperEventsEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+WrapperEventsEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoTimedEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (int_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoTimedEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (int_);
 
   self_correct ();
 }

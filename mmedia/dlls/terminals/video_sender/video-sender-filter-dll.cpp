@@ -23,11 +23,6 @@ Filter::Filter ()
 }
 
 
-Filter::~Filter ()
-{
-}
-
-
 void
 Filter::init_send_funcs ()
 {

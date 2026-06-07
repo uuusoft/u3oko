@@ -16,7 +16,7 @@ namespace libs::optim::mcalls
 void
 CallerImpl::mthreads_call (
   const ::libs::core::graph::NodeID& id_node,
-  const InfoMFunct&                  funct,
+  const MTFuncInfo&                  funct,
   ::libs::optim::io::MCallInfo&      info,
   syn::ExpandedTimes&                expand_time_algs,
   const std::uint16_t                athreads)

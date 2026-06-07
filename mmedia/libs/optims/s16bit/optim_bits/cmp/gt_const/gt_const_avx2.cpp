@@ -11,7 +11,7 @@
 #include "gt_const.hpp"
 #include "gt_const_int.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::bits::cmp::gt_const
 {

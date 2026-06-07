@@ -11,16 +11,7 @@
 
 namespace libs::iproperties::vers::demon
 {
-IDemonsProperty::IDemonsProperty () :
-  all2mem_ (nullptr),
-  all2buf_ (nullptr),
-  all2optim_ (nullptr),
-  all2mevents_ (nullptr)
-{
-}
-
-
-IDemonsProperty::~IDemonsProperty ()
+IDemonsProperty::IDemonsProperty ()
 {
 }
 

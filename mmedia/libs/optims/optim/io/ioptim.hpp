@@ -24,18 +24,15 @@ class IOptim
   public:
   // ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IOptim)
+
   /// Функция возвращает по запросу реализацию оптимизированного алгоритма
   virtual hioptim get (const qoptim& info) = 0;
+
   /// Функция обновляет реализацию оптимизированного алгоритма
   virtual void sync_impl (const TInit& iinfo) = 0;
 
   protected:
-  IOptim ()
-  {
-  }
-
-  virtual ~IOptim ()
-  {
-  }
+  IOptim ()          = default;
+  virtual ~IOptim () = default;
 };
 }   // namespace libs::optim::io

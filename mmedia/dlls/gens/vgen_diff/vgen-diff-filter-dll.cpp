@@ -13,16 +13,6 @@
 
 namespace dlls::gens::vgen_diff
 {
-Filter::Filter ()
-{
-}
-
-
-Filter::~Filter ()
-{
-}
-
-
 void
 Filter::load_int (::libs::icore::impl::var1::obj::FilterInfo* info, const ::pugi::xml_named_node_iterator& node)
 {

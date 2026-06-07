@@ -18,7 +18,7 @@ class ILinksProperty : public ISharedProperty
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ILinksProperty)
 
   explicit ILinksProperty (const links_type& links);
-  virtual ~ILinksProperty ();
+  virtual ~ILinksProperty () = default;
 
   const links_type& get_links_lockfree () const;
   links_type&       update_links_lockfree ();

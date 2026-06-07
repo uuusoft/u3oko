@@ -2,7 +2,6 @@
 \file       add_sub_mul_neg_abs_gen.cpp
 \date       26.07.2016
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
-
 \project    u3_optim_libs_ops
 */
 #include "mmedia/includes/control-defines-includes.hpp"

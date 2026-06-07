@@ -3,7 +3,6 @@
 \file       const_add_sub_mul_neg_abs.hpp
 \date       26.07.2016
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
-
 \project    u3_optim_libs_ops
 */
 

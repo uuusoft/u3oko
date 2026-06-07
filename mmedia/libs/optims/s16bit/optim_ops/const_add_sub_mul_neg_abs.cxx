@@ -16,18 +16,18 @@ namespace libs::optim::s16bit::ops
 #  ifdef SET_UNALIGNED_FUNCT
 #    define CHECK_ARG2(mask_dest)
 #  else
-#    define CHECK_ARG2(mask_dest)                                                                                       \
-      if ((U3_CAST_REINTERPRET< long long > (info.dsts_[0].buf ()) & mask_dest) || (info.dsts_[0].stride_ & mask_dest)) \
-      {                                                                                                                 \
-        U3_ASSERT_SIGNAL ("failed");                                                                                    \
-        return;                                                                                                         \
+#    define CHECK_ARG2(mask_dest)                                                                                                                   \
+      if ((::libs::helpers::casts::reinterpret_cast_helper< long long > (info.dsts_[0].buf ()) & mask_dest) || (info.dsts_[0].stride_ & mask_dest)) \
+      {                                                                                                                                             \
+        U3_ASSERT_SIGNAL ("failed");                                                                                                                \
+        return;                                                                                                                                     \
       }
 
-#    define CHECK_ARG2_FOR_SATURATION(mask_dest)                                                                        \
-      if ((U3_CAST_REINTERPRET< long long > (info.dsts_[0].buf ()) & mask_dest) || (info.dsts_[0].stride_ & mask_dest)) \
-      {                                                                                                                 \
-        U3_ASSERT_SIGNAL ("failed");                                                                                    \
-        return;                                                                                                         \
+#    define CHECK_ARG2_FOR_SATURATION(mask_dest)                                                                                                    \
+      if ((::libs::helpers::casts::reinterpret_cast_helper< long long > (info.dsts_[0].buf ()) & mask_dest) || (info.dsts_[0].stride_ & mask_dest)) \
+      {                                                                                                                                             \
+        U3_ASSERT_SIGNAL ("failed");                                                                                                                \
+        return;                                                                                                                                     \
       }
 
 #  endif
@@ -67,8 +67,7 @@ add_const_alu (::libs::optim::io::MCallInfo& info)
     {
       bdst[ix] += val;
     }
-
-    U3_FAST_MOVE_PTR (bdst, sdst);
+    bdst = ::libs::helpers::mem::move_ptr (bdst, sdst);
   }
 }
 
@@ -234,10 +233,10 @@ sat_2byte_sse2 (::libs::optim::io::MCallInfo& info)
   {
     for (std::uint32_t indx = 0; indx < sizeof (std::uint16_t) * width_element; indx += 16)
     {
-      __m128i xmm0 = _mm_load_si128 (U3_CAST_REINTERPRET< __m128i* > (dest + indx));
+      __m128i xmm0 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (dest + indx));
       xmm0         = _mm_packus_epi16 (xmm0, xmm1);
       xmm0         = _mm_unpacklo_epi8 (xmm0, xmm1);
-      _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (dest + indx), xmm0);
+      _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (dest + indx), xmm0);
     }
     dest += stride_dest;
   }
@@ -333,8 +332,8 @@ add_const_sse2 (::libs::optim::io::MCallInfo& info)
   const picter_dim_type stride_dest    = info.dsts_[0].stride_;
   const picter_dim_type width_element  = info.dsts_[0].width_;
   const picter_dim_type height_element = info.dsts_[0].height_;
-  const __m128i         mask_dest      = _mm_loadu_si128 (U3_CAST_REINTERPRET< const __m128i* > (mask_dest8));
-  __m128i               consts         = _mm_loadu_si128 (U3_CAST_REINTERPRET< const __m128i* > (loc_array_const));
+  const __m128i         mask_dest      = _mm_loadu_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (mask_dest8));
+  __m128i               consts         = _mm_loadu_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (loc_array_const));
   consts                               = _mm_and_si128 (consts, mask_dest);
 
   for (std::uint32_t indy = 0; indy < height_element; ++indy)
@@ -342,20 +341,19 @@ add_const_sse2 (::libs::optim::io::MCallInfo& info)
     for (std::uint32_t indx = 0; indx < sizeof (std::uint16_t) * width_element; indx += 16)
     {
 #      ifdef SET_UNALIGNED_FUNCT
-      __m128i xmm0 = _mm_loadu_si128 (U3_CAST_REINTERPRET< const __m128i* > (dest + indx));
+      __m128i xmm0 = _mm_loadu_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (dest + indx));
 #      else
-      __m128i xmm0 = _mm_load_si128 (U3_CAST_REINTERPRET< const __m128i* > (dest + indx));
+      __m128i xmm0 = _mm_load_si128 (::libs::helpers::casts::reinterpret_cast_helper< const __m128i* > (dest + indx));
 #      endif
 
       xmm0 = _mm_adds_epi16 (xmm0, consts);
 
 #      ifdef SET_UNALIGNED_FUNCT
-      _mm_store_si128 (U3_CAST_REINTERPRET< __m128i* > (dest + indx), xmm0);
+      _mm_store_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (dest + indx), xmm0);
 #      else
-      _mm_storeu_si128 (U3_CAST_REINTERPRET< __m128i* > (dest + indx), xmm0);
+      _mm_storeu_si128 (::libs::helpers::casts::reinterpret_cast_helper< __m128i* > (dest + indx), xmm0);
 #      endif
     }
-    // dest += width_element;
     dest += stride_dest;
   }
 
@@ -369,8 +367,6 @@ add_const_sse2 (::libs::optim::io::MCallInfo& info)
   const picter_dim_type stride_dest    = info.dsts_[0].stride_;
   const picter_dim_type width_element  = info.dsts_[0].width_;
   const picter_dim_type height_element = info.dsts_[0].height_;
-
-  // U3_XLOG_DEV (VTOLOG (stride_dest) + VTOLOG (width_element) + VTOLOG (height_element));
 
   __asm {
 			pushad;

@@ -4,6 +4,7 @@
 # date        01.01.2026
 # copyright   Erashov A.I.
 
+clear
 #EAI-REFACT
 #set in gradle.build
 #export U3_APPL_NAME=u3oko
@@ -24,3 +25,11 @@ chmod +x ./gradlew
 ./gradlew assembleDebug
 ./gradlew tasks
 ./gradlew installDebug
+
+#adb pair 192.168.88.216:41325 <code from device>
+#adb connect 192.168.88.216:45289
+#adb -s 192.168.88.216:41807 shell pidof com.uuusoft.u3oko
+#adb -s 192.168.88.216:41807 logcat uuu:V *:S
+#adb -s 192.168.88.216:43249 logcat --pid=29821
+#adb -s 192.168.88.216:41807 shell am set-debug-app -w com.uuusoft.u3oko
+#adb -s 192.168.88.216:41807 shell am start -n com.uuusoft.u3oko/com.uuusoft.android.u3m.u3oko.U3NativeActivity -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -D --suspend --splashscreen-show-icon

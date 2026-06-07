@@ -26,8 +26,8 @@ alu (::libs::optim::io::MCallInfo& info)
       y16_buf += ppc;
     }
 
-    U3_FAST_MOVE_CPTR (yuy2_buf, leak_yuy2);
-    U3_FAST_MOVE_PTR (y16_buf, leak_y16);
+    yuy2_buf = ::libs::helpers::mem::move_cptr (yuy2_buf, leak_yuy2);
+    y16_buf  = ::libs::helpers::mem::move_ptr (y16_buf, leak_y16);
   }
 }
 }   // namespace libs::optim::convert::uyvy_y16

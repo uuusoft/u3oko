@@ -10,7 +10,7 @@
 #include "hsl_vs_rgb.hpp"
 #include "rgb_to_hsl_int.hpp"
 
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
 
 namespace libs::optim::s16bit::convert::hsl_vs_rgb
 {
@@ -63,7 +63,7 @@ rgb24_to_hsl_neon (::libs::optim::io::MCallInfo& info)
   {
     for (std::uint32_t indxx = 0; indxx < width; indxx += ppc)
     {
-      vrgb24 = vld3_u8 (U3_CAST_REINTERPRET< const std::uint8_t* > (rgb24));
+      vrgb24 = vld3_u8 (::libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (rgb24));
 
       uint16x8_t  r16;
       uint16x8_t  g16;
@@ -88,7 +88,7 @@ rgb24_to_hsl_neon (::libs::optim::io::MCallInfo& info)
       fg32_low = vcvtq_f32_u32 (g32_low);
       fb32_low = vcvtq_f32_u32 (b32_low);
 
-      // normalization from 0..255 to 0.0f..1.0f;
+      // normalization from 0..255 to 0.0F..1.0F;
       ymm5 = vmulq_f32 (fr32_low, const_1_to_255);
       ymm6 = vmulq_f32 (fg32_low, const_1_to_255);
       ymm7 = vmulq_f32 (fb32_low, const_1_to_255);
@@ -111,7 +111,7 @@ rgb24_to_hsl_neon (::libs::optim::io::MCallInfo& info)
       // max_min = max + var_Min;
       max_min = vaddq_f32 (ymm4, ymm3);
 
-      // L = ( max + var_Min ) / 2.0f;
+      // L = ( max + var_Min ) / 2.0F;
       l8 = vmulq_f32 (const_1_to_2, max_min);
 
       // float delta_max = max - var_Min; Delta RGB value
@@ -119,18 +119,18 @@ rgb24_to_hsl_neon (::libs::optim::io::MCallInfo& info)
 
       // if ( delta_max == 0 )              This is a gray, no chroma...
       //{
-      //   H = 0.0f;                   HSL results = 0 ? 1
-      //   S = 0.0f;
+      //   H = 0.0F;                   HSL results = 0 ? 1
+      //   S = 0.0F;
       // }
       // else                        Chromatic data...
       iymm0 = vceqq_f32 (const_0, old_delta_max);
       ymm1  = vreinterpretq_f32_u32 (vandq_u32 (iymm0, vreinterpretq_u32_f32 (const_1)));
 
-      // add 1.0f for distance from 0.0;
+      // add 1.0F for distance from 0.0;
       delta_max = vaddq_f32 (old_delta_max, ymm1);
 
       // if ( L < 0.5f ) S = delta_max / ( max + var_Min );
-      // else            S = delta_max / ( 2.0f - ( max + var_Min) );
+      // else            S = delta_max / ( 2.0F - ( max + var_Min) );
       ymm3 = vrecpeq_f32 (max_min);
       ymm3 = vmulq_f32 (vrecpsq_f32 (max_min, ymm3), ymm3);
       ymm3 = vmulq_f32 (vrecpsq_f32 (max_min, ymm3), ymm3);
@@ -156,7 +156,7 @@ rgb24_to_hsl_neon (::libs::optim::io::MCallInfo& info)
       ymm5  = vreinterpretq_f32_u32 (vandq_u32 (vreinterpretq_u32_f32 (ymm5), iymm1));
       ymm5  = vreinterpretq_f32_u32 (vorrq_u32 (vreinterpretq_u32_f32 (ymm5), vreinterpretq_u32_f32 (ymm3)));
       s8    = ymm5;
-      // s8     = vdupq_n_f32(1.0f );//debug
+      // s8     = vdupq_n_f32(1.0F );//debug
 
       // inverse delta_max;
       inv_delta_max = vrecpeq_f32 (delta_max);
@@ -167,57 +167,57 @@ rgb24_to_hsl_neon (::libs::optim::io::MCallInfo& info)
       ymm2 = inv_delta_max;
       ymm4 = temp_r;
 
-      // float delta_r = ( ( ( max - var_R ) / 6.0f ) + ( delta_max / 2.0f ) ) / delta_max;
+      // float delta_r = ( ( ( max - var_R ) / 6.0F ) + ( delta_max / 2.0F ) ) / delta_max;
       //  1.( max - var_R );
       ymm3 = vsubq_f32 (ymm0, ymm4);
-      // 2.( max - var_R ) / 6.0f;
+      // 2.( max - var_R ) / 6.0F;
       ymm3 = vmulq_f32 (ymm3, const_1_to_6);
-      // 3.( delta_max / 2.0f )
+      // 3.( delta_max / 2.0F )
       ymm5 = vmulq_f32 (const_1_to_2, delta_max);
-      // 4.( ( max - var_R ) / 6.0f ) + ( delta_max / 2.0f ) )
+      // 4.( ( max - var_R ) / 6.0F ) + ( delta_max / 2.0F ) )
       ymm3 = vaddq_f32 (ymm3, ymm5);
       // 5.end
       ymm3    = vmulq_f32 (ymm3, ymm2);
       delta_r = ymm3;
 
-      // float delta_g = ( ( ( max - var_G ) / 6.0f ) + ( delta_max / 2.0f ) ) / delta_max;
+      // float delta_g = ( ( ( max - var_G ) / 6.0F ) + ( delta_max / 2.0F ) ) / delta_max;
       ymm4 = temp_g;
       // 1.( max - var_G )
       ymm3 = vsubq_f32 (ymm0, ymm4);
-      // 2.( max - var_G ) / 6.0f
+      // 2.( max - var_G ) / 6.0F
       ymm3 = vmulq_f32 (ymm3, const_1_to_6);
-      // 3.( delta_max / 2.0f )
+      // 3.( delta_max / 2.0F )
       ymm5 = vmulq_f32 (const_1_to_2, delta_max);
-      // 4.( ( max - var_G ) / 6.0f ) + ( delta_max / 2.0f ) )
+      // 4.( ( max - var_G ) / 6.0F ) + ( delta_max / 2.0F ) )
       ymm3 = vaddq_f32 (ymm3, ymm5);
       // 5.end
       ymm3    = vmulq_f32 (ymm3, ymm2);
       delta_g = ymm3;
 
-      // float delta_b = ( ( ( max - var_B ) / 6.0f ) + ( delta_max / 2.0f ) ) / delta_max;
+      // float delta_b = ( ( ( max - var_B ) / 6.0F ) + ( delta_max / 2.0F ) ) / delta_max;
       ymm4 = temp_b;
       // 1.( max - var_B )
       ymm3 = vsubq_f32 (ymm0, ymm4);
-      // 2.( max - var_B ) / 6.0f
+      // 2.( max - var_B ) / 6.0F
       ymm3 = vmulq_f32 (ymm3, const_1_to_6);
-      // 3.( delta_max / 2.0f )
+      // 3.( delta_max / 2.0F )
       ymm5 = vmulq_f32 (const_1_to_2, delta_max);
-      // 4.( ( max - var_B ) / 6.0f ) + ( delta_max / 2.0f ) )
+      // 4.( ( max - var_B ) / 6.0F ) + ( delta_max / 2.0F ) )
       ymm3 = vaddq_f32 (ymm3, ymm5);
       // 5.end
       ymm3    = vmulq_f32 (ymm3, ymm2);
       delta_b = ymm3;
 
       // if      ( var_R == max ) H = delta_b - delta_g;
-      // else if ( var_G == max ) H = ( 1.0f / 3.0f ) + delta_r - delta_b;
-      // else if ( var_B == max ) H = ( 2.0f / 3.0f ) + delta_g - delta_r;
+      // else if ( var_G == max ) H = ( 1.0F / 3.0F ) + delta_r - delta_b;
+      // else if ( var_B == max ) H = ( 2.0F / 3.0F ) + delta_g - delta_r;
       // ymm1 = const_2_to_3;//fuke
       ymm3 = delta_g;
       ymm2 = delta_r;
-      // else if ( var_B == max ) H = ( 2.0f / 3.0f ) + delta_g - delta_r;
+      // else if ( var_B == max ) H = ( 2.0F / 3.0F ) + delta_g - delta_r;
       ymm7 = vaddq_f32 (const_2_to_3, ymm3);
       ymm7 = vsubq_f32 (ymm7, ymm2);
-      // else if ( var_G == max ) H = ( 1.0f / 3.0f ) + delta_r - delta_b;
+      // else if ( var_G == max ) H = ( 1.0F / 3.0F ) + delta_r - delta_b;
       // ymm1 = const_1_to_3;//fuke
       ymm4  = delta_b;
       ymm6  = vaddq_f32 (const_1_to_3, ymm2);
@@ -245,12 +245,12 @@ rgb24_to_hsl_neon (::libs::optim::io::MCallInfo& info)
       ymm7  = vreinterpretq_f32_u32 (vandq_u32 (vreinterpretq_u32_f32 (ymm7), iymm2));
       ymm7  = vreinterpretq_f32_u32 (vorrq_u32 (vreinterpretq_u32_f32 (ymm7), vreinterpretq_u32_f32 (ymm6)));
 
-      // if ( H < 0 ) H += 1.0f;
+      // if ( H < 0 ) H += 1.0F;
       ymm3  = ymm7;
       iymm3 = vcltq_f32 (ymm3, const_0);
       ymm2  = vreinterpretq_f32_u32 (vandq_u32 (vreinterpretq_u32_f32 (const_1), iymm3));
       ymm7  = vaddq_f32 (ymm7, ymm2);
-      // if ( H > 1 ) H -= 1.0f;
+      // if ( H > 1 ) H -= 1.0F;
       ymm3  = ymm7;
       iymm2 = vcltq_f32 (const_1, ymm3);
       ymm1  = vreinterpretq_f32_u32 (vandq_u32 (vreinterpretq_u32_f32 (const_1), iymm2));
@@ -260,8 +260,8 @@ rgb24_to_hsl_neon (::libs::optim::io::MCallInfo& info)
 
       // if ( delta_max == 0 )      This is a gray, no chroma...
       //{
-      //   H = 0.0f;                 HSL results = 0 ? 1
-      //   S = 0.0f;
+      //   H = 0.0F;                 HSL results = 0 ? 1
+      //   S = 0.0F;
       // }
       // else                        Chromatic data...
       iymm0 = vceqq_f32 (old_delta_max, const_0);
@@ -292,10 +292,10 @@ rgb24_to_hsl_neon (::libs::optim::io::MCallInfo& info)
       l += ppc;
     }
 
-    U3_FAST_MOVE_CPTR (rgb24, leak_rgb);
-    U3_FAST_MOVE_PTR (h, leak_hsl);
-    U3_FAST_MOVE_PTR (s, leak_hsl);
-    U3_FAST_MOVE_PTR (l, leak_hsl);
+    rgb24 = ::libs::helpers::mem::move_cptr (rgb24, leak_rgb);
+    h     = ::libs::helpers::mem::move_ptr (h, leak_hsl);
+    s     = ::libs::helpers::mem::move_ptr (s, leak_hsl);
+    l     = ::libs::helpers::mem::move_ptr (l, leak_hsl);
   }
 }
 }   // namespace libs::optim::s16bit::convert::hsl_vs_rgb

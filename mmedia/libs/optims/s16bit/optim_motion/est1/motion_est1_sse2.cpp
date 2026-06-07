@@ -12,7 +12,7 @@
 #include "mmedia/libs/optims/optim/mcalls/helpers/buf_helpers_funcs.hpp"
 #include "move_alg.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::motion::est1
 {

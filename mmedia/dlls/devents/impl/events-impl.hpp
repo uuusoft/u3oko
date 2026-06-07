@@ -19,13 +19,13 @@ class EventsImpl final : public ::libs::events::io::IEvents
   using str2cast_events_type     = std::unordered_map< hid_type, cast_event_func_type >;
   using str2_counter_events_type = std::unordered_map< hid_type, std::uint64_t >;
   using sync_type                = std::mutex;
-  using lock_type                = std::lock_guard< sync_type >;
+  using lock_type                = std::scoped_lock< sync_type >;
 
   EventsImpl ();
-  virtual ~EventsImpl ();
+  virtual ~EventsImpl () = default;
 
   //  IEvents overrides
-  virtual syn::IEvent::ptr get (const hid_type& id, const char* debid) override;
+  virtual syn::IEvent::ptr get (const hid_type& id) override;
   virtual syn::IEvent::ptr clone (const syn::IEvent::craw_ptr src, const ::libs::events::Deeps& type) override;
   virtual void*            dcast (syn::IEvent::craw_ptr src, const hid_type& id) override;
   virtual bool             event2xml (syn::IEvent::ptr& src, std::string& xml) override;
@@ -35,6 +35,31 @@ class EventsImpl final : public ::libs::events::io::IEvents
 
   private:
   void construct_func_event ();
+
+  template< typename TTEvent >
+  void
+  add_event_generator ()
+  {
+    gen_func_events_[TTEvent::gen_get_mid ()] = [] () { return std::make_shared< TTEvent > (); };
+  }
+
+  template< typename TTEvent >
+  void
+  add_event_cast ()
+  {
+    cast_func_events_[TTEvent::gen_get_mid ()] = [] (::libs::events::IEvent::craw_ptr src) -> ::libs::events::IEvent::craw_ptr {
+      auto res = dynamic_cast< typename TTEvent::craw_ptr > (src);
+      return res;
+    };
+  }
+
+  template< typename TTEvent >
+  void
+  add_event ()
+  {
+    add_event_generator< TTEvent > ();
+    add_event_cast< TTEvent > ();
+  }
 
   str2gen_events_type      gen_func_events_;         //< Функции для создания событий по их идентификаторам
   str2cast_events_type     cast_func_events_;        //< Функции преобразования событий

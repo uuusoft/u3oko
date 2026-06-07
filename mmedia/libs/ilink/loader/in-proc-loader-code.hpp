@@ -32,10 +32,10 @@ class InProcLoaderCode final : public ILoaderCodeImpl
   /// \param[in]  name_lib имя библиотеки
   void set_name_lib (const std::string& name_lib);
 
-  const ::libs::link::CreateInfo* info_;           //< Информация, использовання при создании объекта типа
-  std::thread                     child_thread_;   //< Рабочий поток испольнения кода для текущего процесса
-  iappl_uptr_type                 thread_appl_;    //< Прокси для доступа к функциям загруженного кода
-  std::string                     lib_name_;       //< Имя библиотеки, содержащей загружаемый код
-  std::atomic_bool                thread_done_;    //< Флаг инициализации рабочего потока для теущего процесса
+  const ::libs::link::CreateInfo* info_ = nullptr;   //< Информация, использовання при создании объекта типа
+  std::thread                     child_thread_;     //< Рабочий поток испольнения кода для текущего процесса
+  iappl_uptr_type                 thread_appl_;      //< Прокси для доступа к функциям загруженного кода
+  std::string                     lib_name_;         //< Имя библиотеки, содержащей загружаемый код
+  std::atomic_bool                thread_done_;      //< Флаг инициализации рабочего потока для теущего процесса
 };
 }   // namespace libs::ilink::loader

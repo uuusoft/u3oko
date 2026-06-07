@@ -40,8 +40,9 @@ alu (::libs::optim::io::MCallInfo& info)
       rgb24_buf += rgb24_bpp;
     }
 
-    U3_FAST_MOVE_CPTR (rgb32_buf, rgb32_leak);
-    U3_FAST_MOVE_PTR (rgb24_buf, rgb24_leak);
+
+    rgb32_buf = ::libs::helpers::mem::move_cptr (rgb32_buf, rgb32_leak);
+    rgb24_buf = ::libs::helpers::mem::move_ptr (rgb24_buf, rgb24_leak);
   }
 }
 }   // namespace libs::optim::convert::rgb32_rgb24

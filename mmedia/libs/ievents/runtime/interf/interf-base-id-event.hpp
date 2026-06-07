@@ -29,7 +29,7 @@ class InterfBaseIdEvent : public BaseInterfEvent
   U3_HELPER_DISABLE_ACOPY_TYPE (InterfBaseIdEvent)
 
   explicit InterfBaseIdEvent (const Acessor& = Acessor (0), const impl_ptr_type& = impl_ptr_type ());
-  virtual ~InterfBaseIdEvent ();
+  virtual ~InterfBaseIdEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -52,6 +52,6 @@ class InterfBaseIdEvent : public BaseInterfEvent
 };
 }   // namespace libs::ievents::runtime::interf
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 BOOST_CLASS_EXPORT_KEY (::libs::ievents::runtime::interf::InterfBaseIdEvent);
 #endif

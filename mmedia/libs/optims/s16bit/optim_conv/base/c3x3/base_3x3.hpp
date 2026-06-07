@@ -16,7 +16,6 @@ void avx1 (::libs::optim::io::MCallInfo& info);
 void avx2 (::libs::optim::io::MCallInfo& info);
 void neon (::libs::optim::io::MCallInfo& info);
 
-
 void mod_alu (::libs::optim::io::MCallInfo& info);
 void mod_sse2 (::libs::optim::io::MCallInfo& info);
 void mod_avx1 (::libs::optim::io::MCallInfo& info);

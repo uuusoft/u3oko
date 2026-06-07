@@ -10,7 +10,7 @@
 #include "l_vs_rgb.hpp"
 #include "rgb_to_l_int.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::s16bit::convert::l_vs_rgb
 {

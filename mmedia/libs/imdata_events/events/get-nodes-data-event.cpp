@@ -22,11 +22,6 @@ GetNodesDataEvent::GetNodesDataEvent (
 }
 
 
-GetNodesDataEvent::~GetNodesDataEvent ()
-{
-}
-
-
 const GetNodesDataEvent::nodes_list_type&
 GetNodesDataEvent::get_nodes () const
 {
@@ -89,7 +84,7 @@ GetNodesDataEvent::save_json_int (::boost::json::object& obj) const
 void
 GetNodesDataEvent::copy_int (const IEvent::craw_ptr src)
 {
-  U3_CHECK_COPY_EVENT (GetNodesDataEvent);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< GetNodesDataEvent > (src);
   super::copy_int (src);
   nodes_ = dsrc->nodes_;
 }
@@ -97,10 +92,10 @@ GetNodesDataEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-GetNodesDataEvent::serialize (Archive& ar, const std::uint32_t /* file_version */)
+GetNodesDataEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  ar& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoimdata_eventsoeventsoBaseNodesDataEvent", super);
-  ar& BOOST_SERIALIZATION_NVP (nodes_);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoimdata_eventsoeventsoBaseNodesDataEvent", super);
+  arh& BOOST_SERIALIZATION_NVP (nodes_);
 
   self_correct ();
 }

@@ -11,7 +11,7 @@
 #include "appl/events-module-syn.hpp"
 #include "appl/events-module.hpp"
 
-#if 0
+#ifdef U3_FAKE_DISABLE
 static std::mutex                                g_sinc;
 static volatile std::int32_t                     counter_refs_ = 0;
 static ::libs::link::appl::IApplication::raw_ptr g_appl        = nullptr;
@@ -19,7 +19,7 @@ static ::libs::link::appl::IApplication::raw_ptr g_appl        = nullptr;
 extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication::raw_ptr
 create_impl_mpl_u3_events ()
 {
-  std::lock_guard< std::mutex > lock (g_sinc);
+  std::scoped_lock lock (g_sinc);
 
   if (!g_appl)
   {
@@ -33,7 +33,7 @@ create_impl_mpl_u3_events ()
 extern "C" BOOST_SYMBOL_EXPORT void
 delete_impl_mpl_u3_events (::libs::link::appl::IApplication::raw_ptr appl)
 {
-  std::lock_guard< std::mutex > lock (g_sinc);
+  std::scoped_lock lock (g_sinc);
 
   U3_ASSERT_NT (appl, PTR_TOLOG (appl));
   U3_ASSERT_NT (appl == g_appl, PTR_TOLOG (appl));
@@ -57,7 +57,7 @@ factory_impl_mpl_u3_events (::libs::link::appl::IApplication::raw_ptr impl, bool
   static std::int64_t               count_eventsrefs = 0;
   static syn::IApplication::raw_ptr eventsappl       = nullptr;
   static std::mutex                 eventssinc;
-  std::lock_guard< std::mutex >     lock (eventssinc);
+  std::scoped_lock                  lock (eventssinc);
   if (create)
   {
     U3_ASSERT_NT (nullptr == impl, PTR_TOLOG (impl));

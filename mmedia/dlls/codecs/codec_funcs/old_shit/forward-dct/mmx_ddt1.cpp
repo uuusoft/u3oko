@@ -45,7 +45,7 @@
 
 namespace dlls::codecs::dct
 {
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 #  undef OUT
 

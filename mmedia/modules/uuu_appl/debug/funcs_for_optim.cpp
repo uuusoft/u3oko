@@ -9,7 +9,7 @@
 #include "../module-appl-includes_int.hpp"
 
 // old shit
-#if 0
+#ifdef U3_FAKE_DISABLE
 void
 debug_func_for_optim1 (const ::libs::properties::vers::links::links_type* plinks)
 {
@@ -57,10 +57,10 @@ debug_func_for_optim1 (const ::libs::properties::vers::links::links_type* plinks
 
     for (std::size_t indxe = 0; indxe < count_elements; indxe += 4)
     {
-      __m256i data1 = mm256_lddqu_si256 (U3_CAST_REINTERPRET< __m256i* > (&vals1[indxe]));
+      __m256i data1 = mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (&vals1[indxe]));
       data1         = mm256_adds_epi16 (data1, addreg1);
       data1         = mm256_mulhi_epi16 (data1, addreg2);
-      mm256_storeu_si256 (U3_CAST_REINTERPRET< __m256i* > (&vals1[indxe]), data1);
+      mm256_storeu_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (&vals1[indxe]), data1);
     }
 #  endif
   }

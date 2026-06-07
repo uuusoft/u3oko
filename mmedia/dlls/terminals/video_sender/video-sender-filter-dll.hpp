@@ -23,7 +23,7 @@ class Filter final :
 
   public:
   Filter ();
-  virtual ~Filter ();
+  virtual ~Filter () = default;
 
   private:
   // internal types

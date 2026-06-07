@@ -38,9 +38,7 @@ str_res (
 
 
 struct TAluCalcObj {
-  TAluCalcObj ()
-  {
-  }
+  TAluCalcObj () = default;
 
   void
   init (::libs::optim::io::MCallInfo& info, const cores::values_core_type** pmask)
@@ -61,21 +59,19 @@ struct TAluCalcObj {
     tres = 0;
 
     tres += str_res (csstr, mask, 0);
-    U3_FAST_MOVE_CPTR (csstr, stride);
+    csstr = ::libs::helpers::mem::move_cptr (csstr, stride);
 
     tres += str_res (csstr, mask, 1);
-    U3_FAST_MOVE_CPTR (csstr, stride);
+    csstr = ::libs::helpers::mem::move_cptr (csstr, stride);
 
     tres += str_res (csstr, mask, 2);
-    U3_FAST_MOVE_CPTR (csstr, stride);
+    csstr = ::libs::helpers::mem::move_cptr (csstr, stride);
   }
 };
 
 
 struct TModAluCalcObj : public TAluCalcObj {
-  TModAluCalcObj ()
-  {
-  }
+  TModAluCalcObj () = default;
 
   void
   init (::libs::optim::io::MCallInfo& info, const cores::values_core_type** pmask)

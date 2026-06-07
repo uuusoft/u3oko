@@ -21,7 +21,7 @@ template<
   typename TTVal,
   TTKey max_key,
   TTVal def_val,
-  typename TTStorage = std::array< TTVal, U3_CAST_STATIC< std::size_t > (max_key) > >
+  typename TTStorage = std::array< TTVal, U3_CAST_SIZE_T_FORCE (max_key) > >
 class ValuesStorage final
 {
   public:
@@ -35,9 +35,7 @@ class ValuesStorage final
     fill (def_val);
   }
 
-  ~ValuesStorage ()
-  {
-  }
+  ~ValuesStorage () = default;
 
   raw_value_type&
   operator[] (const key_type& indx)
@@ -50,6 +48,7 @@ class ValuesStorage final
   {
     return raw_vals_[enum_to_raw (indx)];
   }
+
   /// Установка значений
   /// \param[in]  val  новое значение для всего контейнера
   void
@@ -65,9 +64,9 @@ class ValuesStorage final
 
   template< class Archive >
   void
-  serialize (Archive& ar, const std::uint32_t /* file_version */)
+  serialize (Archive& arh, const std::uint32_t /* file_version */)
   {
-    ar& BOOST_SERIALIZATION_NVP (raw_vals_);
+    arh& BOOST_SERIALIZATION_NVP (raw_vals_);
   }
 };
 }   // namespace libs::helpers::utils

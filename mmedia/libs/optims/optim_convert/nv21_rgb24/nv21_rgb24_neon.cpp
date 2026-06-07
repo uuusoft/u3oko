@@ -11,7 +11,7 @@
 #include "nv21_rgb24.hpp"
 #include "nv21_rgb24_int.hpp"
 
-#if defined(U3_CPU_ARM)
+#ifdef U3_CPU_ARM
 
 namespace libs::optim::convert::nv21_rgb24
 {

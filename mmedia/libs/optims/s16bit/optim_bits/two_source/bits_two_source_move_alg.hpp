@@ -3,7 +3,6 @@
 \file       bits_two_source_move_alg.hpp
 \author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
 \date       01.11.2016
-
 \project    u3_optim_libs_bits
 */
 
@@ -11,14 +10,7 @@ namespace libs::optim::s16bit::bits::two_source
 {
 struct TParams {
   public:
-  TParams () :
-    sbuf_ (0),
-    width_ (0),
-    height_ (0),
-    dbuf_ (0),
-    stride_ (0)
-  {
-  }
+  TParams () = default;
 
   void
   reset ()
@@ -30,12 +22,11 @@ struct TParams {
     stride_ = 0;
   }
 
-
-  const std::int16_t* sbuf_;     //<
-  std::int16_t*       dbuf_;     //<
-  std::size_t         width_;    //<
-  std::size_t         height_;   //<
-  std::size_t         stride_;   //<
+  const std::int16_t* sbuf_   = nullptr;   //<
+  std::int16_t*       dbuf_   = nullptr;   //<
+  std::size_t         width_  = 0;         //<
+  std::size_t         height_ = 0;         //<
+  std::size_t         stride_ = 0;         //<
 };
 
 
@@ -81,8 +72,8 @@ move_alg (::libs::optim::io::MCallInfo& info)
       filling.update (sstr + indxx, dstr + indxx);
     }
 
-    U3_FAST_MOVE_CPTR (sstr, params.stride_);
-    U3_FAST_MOVE_PTR (dstr, params.stride_);
+    sstr = ::libs::helpers::mem::move_cptr (sstr, params.stride_);
+    dstr = ::libs::helpers::mem::move_ptr (dstr, params.stride_);
   }
 }
 }   // namespace libs::optim::s16bit::bits::two_source

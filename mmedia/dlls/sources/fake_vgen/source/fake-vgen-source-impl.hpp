@@ -35,11 +35,11 @@ class SourceImpl final : public ::dlls::sources::gen_lib::ISourceImpl
   void init_gen_funcs ();
   void fill_rand_vals ();
 
-  rvals_array_type         rand_bcomp_;        //< Случайные числа для генерации шума
-  std::uint64_t            indx_bcomp_;        //< Индекс в массиве случайных чисел
-  boost::posix_time::ptime time_last_frame_;   //< Время последнег выданного кадра
-  std::uint64_t            counter_frames_;    //< Счетчик выданных кадров
-  gen_funcs_type           gen_funcs_;         //< Функции для генерации изображения с заданным форматом пиксела
+  rvals_array_type         rand_bcomp_;           //< Случайные числа для генерации шума
+  std::uint64_t            indx_bcomp_ = 0;       //< Индекс в массиве случайных чисел
+  boost::posix_time::ptime time_last_frame_;      //< Время последнег выданного кадра
+  std::uint64_t            counter_frames_ = 0;   //< Счетчик выданных кадров
+  gen_funcs_type           gen_funcs_;            //< Функции для генерации изображения с заданным форматом пиксела
 };
 
 }   // namespace dlls::sources::fake_vgen

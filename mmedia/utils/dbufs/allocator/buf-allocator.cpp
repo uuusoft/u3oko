@@ -63,9 +63,9 @@ BufAllocator::create (IBufAllocator::size_type size)
       if (raw_buf)
       {
         const auto  sizeraw_buf = raw_buf->get_buf_size ();
-        const float koeff_size  = sizeraw_buf / U3_CAST_STATIC< float > (size);
+        const float koeff_size  = sizeraw_buf / U3_CAST_FLOAT (size);
 
-        size_ok = koeff_size >= 1.0f && koeff_size <= 2.0f;
+        size_ok = koeff_size >= 1.0F && koeff_size <= 2.0F;
       }
     }
 
@@ -132,6 +132,6 @@ BufAllocator::dump_state_int ()
 
   return std::to_string (all_mem) + " bytes {" + std::to_string (count_all_bufs) + "}, use " +
          std::to_string (use_mem) + " {" + std::to_string (count_use_bufs) + "} koeff " +
-         std::to_string (U3_CAST_STATIC< float > (use_mem) / (all_mem ? all_mem : 1));
+         std::to_string (U3_CAST_FLOAT (use_mem) / (all_mem ? all_mem : 1));
 }
 }   // namespace utils::dbufs::allocator

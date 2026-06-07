@@ -11,6 +11,7 @@ namespace libs::helpers::mem
 {
 /// функия проверки блока памяти на чтение и запись
 bool check_buf (void* buf, const std::uint32_t size);
+
 /// функия проверки блока памяти на чтение и запись
 bool check_read_buf (const void* sbuf, const std::uint32_t size);
 }   // namespace libs::helpers::mem

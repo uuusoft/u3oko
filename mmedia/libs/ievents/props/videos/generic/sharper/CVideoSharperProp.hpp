@@ -10,7 +10,7 @@
 // old shit
 namespace libs::ievents::props::videos::generics::sharper
 {
-#if 0
+#ifdef U3_FAKE_DISABLE
 struct EventBufsInfo : public ::libs::events::buf::E - ventBufsInfo {
   friend class boost::serialization::access;
   friend ::dlls::devents::impl::EventsImpl;
@@ -18,7 +18,7 @@ struct EventBufsInfo : public ::libs::events::buf::E - ventBufsInfo {
 
   public:
   EventBufsInfo () :
-    koeff_ (0.0f)
+    koeff_ (0.0F)
   {
   }
 
@@ -41,7 +41,7 @@ struct EventBufsInfo : public ::libs::events::buf::E - ventBufsInfo {
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
 
@@ -70,7 +70,7 @@ class CVideoSharperProp : public ievents::Event
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 #endif
 }   // namespace libs::ievents::props::videos::generics::sharper

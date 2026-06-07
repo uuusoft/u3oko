@@ -9,7 +9,7 @@
 
 namespace libs::ievents::runtime::state
 {
-#if 0
+#ifdef U3_FAKE_DISABLE
 /// Тип источника времени работы
 enum class StatSources : std::uint32_t
 {
@@ -53,7 +53,7 @@ class ExpandTimesEvent : public RuntimeEvent
     const Acessor&                  = Acessor (0),
     const full_storages_type& infos = full_storages_type ());
 
-  virtual ~ExpandTimesEvent ();
+  virtual ~ExpandTimesEvent () = default;
 
   static const IEvent::hid_type&
   gen_get_mid ()
@@ -81,7 +81,7 @@ class ExpandTimesEvent : public RuntimeEvent
   friend class boost::serialization::access;
 
   template< class Archive >
-  void serialize (Archive& ar, const std::uint32_t /* file_version */);
+  void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   virtual void                        load_json_int (const ::boost::json::object& obj) override;
   virtual void                        save_json_int (::boost::json::object& obj) const override;

@@ -7,7 +7,7 @@
 */
 
 // old shit
-#if 0
+#ifdef U3_FAKE_DISABLE
 namespace dlls::sources::v4l2_vgen::camera
 {
 class CorrectImageInterf : public ::libs::ievents::runtime::interf::interfaces::ICorrectImage
@@ -16,14 +16,8 @@ class CorrectImageInterf : public ::libs::ievents::runtime::interf::interfaces::
   //  ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (CorrectImageInterf)
 
-  CorrectImageInterf () :
-    update_ (false)
-  {
-  }
-
-  virtual ~CorrectImageInterf ()
-  {
-  }
+  CorrectImageInterf ()          = default;
+  virtual ~CorrectImageInterf () = default;
 
   bool
   is_correction_property_update () const
@@ -57,16 +51,16 @@ class CorrectImageInterf : public ::libs::ievents::runtime::interf::interfaces::
 
   virtual bool
   process_int (
-    syn::IVideoBuf::raw_ptr h16s, 
-    syn::IVideoBuf::raw_ptr s16s, 
+    syn::IVideoBuf::raw_ptr h16s,
+    syn::IVideoBuf::raw_ptr s16s,
     syn::IVideoBuf::raw_ptr l16s) override
   {
     // Вся работа идет аппаратно.
     return false;
   }
 
-  mutable bool     update_;   //< 
-  VideoCorrectProp prop_;     //< 
+  mutable bool     update_ = false;   //<
+  VideoCorrectProp prop_;             //<
 };
 }   // namespace dlls::sources::v4l2_vgen::camera
 #endif

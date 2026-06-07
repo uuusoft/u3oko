@@ -10,7 +10,7 @@
 #include "nv21_y16.hpp"
 #include "nv21_y16_int.hpp"
 
-#if defined(U3_CPU_X86)
+#ifdef U3_CPU_X86
 
 namespace libs::optim::convert::nv21_y16
 {

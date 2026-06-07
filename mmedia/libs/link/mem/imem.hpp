@@ -25,12 +25,7 @@ class IMem
   virtual bool  mem_atomic_call (IBlockFakeMem::cptr, const IHandlerMem&) = 0;
 
   protected:
-  IMem ()
-  {
-  }
-
-  virtual ~IMem ()
-  {
-  }
+  IMem ()          = default;
+  virtual ~IMem () = default;
 };
 }   // namespace libs::link::mem
