@@ -1,7 +1,7 @@
 /**
 \file       enum-graph-actions.cpp
 \date       22.02.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_imdata_events
 */
 #include "mmedia/includes/control-defines-includes.hpp"

@@ -1,7 +1,7 @@
 /**
 \file       rang-filter.cpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_time_noisez
 */
 // #define U3_USE_DEB_LOG_LEVEL
@@ -24,7 +24,6 @@ get_params (
   ProcessAlgInfo&                      iinfo,
   syn::MedianSpaceFilterProp::raw_ptr& impl_info,
   RangFilter::algs_storage_type**      ppimpls)
-// std::vector< IAlgImpl::ptr >**       ppimpls)
 {
   iinfo.reset ();
 
@@ -40,7 +39,6 @@ get_params (
   iinfo.pfinfo_    = boost::any_cast< InfoFilter* > (mcinfo.params_.evals_[1]);
   iinfo.impl_info_ = impl_info;
   *ppimpls         = boost::any_cast< RangFilter::algs_storage_type* > (mcinfo.params_.evals_[2]);
-  //*ppimpls = boost::any_cast< algs_storage_typestd::vector< IAlgImpl::ptr >* > (mcinfo.params_.evals_[2]);
 
   U3_CHECK (*ppimpls, "empty impls");
   U3_CHECK (iinfo.check (), "check params");
@@ -58,14 +56,14 @@ ext_mcall (::libs::optim::io::MCallInfo& info)
   get_params (info, icall_info, impl_info, &pimpls);
   auto& algs = (*pimpls)[impl_info->sort_type_];
   // проверяем на рассинхронизацию, если пользователь изменил параметры рабочих потоков
-  U3_CHECK (info.indx_thread_ < algs.size (), "skip rang filter, parameters changed:" + VTOLOG (info.indx_thread_) + VTOLOG (algs.size ()) + TOLOG (to_string (impl_info->sort_type_)));
-  algs.at (info.indx_thread_)->process (icall_info);
+  U3_CHECK (info.thread_indx_ < algs.size (), "skip rang filter, parameters changed:" + VTOLOG (info.thread_indx_) + VTOLOG (algs.size ()) + TOLOG (to_string (impl_info->sort_type_)));
+  algs.at (info.thread_indx_)->process (icall_info);
 }
 
 
 RangFilter::RangFilter ()
 {
-  pthreads_ = U3_CAST_PROP (syn::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ())->get_mcalls_lockfree ();
+  pthreads_ = ::libs::iproperties::helpers::get_shared_prop_os ()->get_mcalls_lockfree ();
   //  заполняем его исскуственно.
   ext_call_.set (ext_mcall);
   ext_call_.set_algoritm_name ("dlls.noisez.space.impl.rang");
@@ -92,7 +90,7 @@ RangFilter::transform_int (
 
   for (auto& bufs : finfo.rprops_->bufs_)
   {
-    syn::MedianSpaceFilterProp::raw_ptr impl_info = ::libs::iproperties::helpers::cast_event< syn::MedianSpaceFilterProp > (bufs.impl_info_);
+    auto* impl_info = ::libs::iproperties::helpers::cast_event< syn::MedianSpaceFilterProp > (bufs.impl_info_);
     U3_CHECK (impl_info, "empty syn::MedianSpaceFilterProp");
     if (libs::ievents::props::videos::noises::space::ext::Sortings::skip == impl_info->sort_type_)
     {

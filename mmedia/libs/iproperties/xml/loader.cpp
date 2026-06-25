@@ -1,6 +1,6 @@
 /**
 \file       loader.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_iproperties_lib
 */
@@ -62,9 +62,9 @@ Loader::load (
     U3_CHECK (impl_->get (file_name, path_type, bmem), ("load file: " + file_name).c_str ());
     // U3_CHECK( bmem->get() && bmem->get_data_size(), ("load file, empty bmem,"  + file_name ).c_str() );
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_XLOG_ERROR (std::string ("exception Loader::load:") + e.what ());
+    U3_XLOG_ERROR (std::string ("exception Loader::load:") + excpt.what ());
   }
 }
 
@@ -75,7 +75,7 @@ Loader::get_enum (
   ::libs::helpers::files::NodeEnumFiles& fenum,
   const std::string&                     mask)
 {
-  U3_XLOG_DEV ("Loader::get_enum" + TOLOG (to_string (path_type)) + VTOLOG (iinfo_.disable_change_search_rule_));
+  U3_XLOG_DBG ("Loader::get_enum" + TOLOG (to_string (path_type)) + VTOLOG (iinfo_.disable_change_search_rule_));
   impl_->get_enum (path_type, fenum, mask);
   if (iinfo_.disable_change_search_rule_)
   {

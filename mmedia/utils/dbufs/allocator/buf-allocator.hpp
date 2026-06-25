@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       buf-allocator.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2016
 \project    u3_dbufs
 */
@@ -16,8 +16,8 @@ class BufAllocator final : public IBufAllocator
   /// Функция возврата одиночки в слабом смысле (только для статически линкуемых модулей) т.к. она определена только в модулей dbufs
   static BufAllocator* instance ();
   //  IBufAllocator
-  virtual utils::dbufs::video::IVideoBuf::ptr create (IBufAllocator::size_type size) override;
-  virtual std::string                         dump_bufs_state () override;
+  virtual auto create (size_buf_type size) -> utils::dbufs::video::IVideoBuf::ptr override;
+  virtual auto dump_bufs_state () -> std::string override;
 
   private:
   //  internal types

@@ -1,7 +1,7 @@
 /**
 \file       vcodec-gen-proxy.cpp
 \date       17.04.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_proxy_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"

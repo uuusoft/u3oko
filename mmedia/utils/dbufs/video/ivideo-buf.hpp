@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       ivideo-buf.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.05.2018
 \project    u3_dbufs
 */
@@ -21,7 +21,7 @@ class IVideoBuf : public IMemBuf
   /// \param[in]  x    позиция пикселя по горизонтали
   /// \param[in]  y    позиция пикселя по вертикали
   /// \param[in]  val  значение пикселя
-  using check_func_type = boost::function< bool (dim_type x, dim_type y, std::int16_t val) >;
+  using check_func_type = std::function< bool (dim_type, dim_type, std::int16_t) >;
 
   /// Открытый деструктор базового класса, т.е пользователь может удалять такие объекты полиморфно
   virtual ~IVideoBuf () = default;
@@ -133,16 +133,16 @@ class IVideoBuf : public IMemBuf
 #endif
 
   //  IVideoBuf interface
-  virtual void                               set_format_int (const libs::helpers::uids::minor::id_val&) = 0;
-  virtual libs::helpers::uids::minor::id_val get_format_int () const                                    = 0;
-  virtual void                               set_dim_var_int (const Dims&, dim_type)                    = 0;
-  virtual dim_type                           get_dim_var_int (const Dims&) const                        = 0;
-  virtual const DimVars&                     get_dim_vars_int () const                                  = 0;
-  virtual void                               set_flag_int (const BufFlags&, bool)                       = 0;
-  virtual bool                               get_flag_int (const BufFlags&) const                       = 0;
-  virtual void                               buf_alloc_int (const AllocBufInfo&)                        = 0;
-  virtual void                               flush_int ()                                               = 0;
-  virtual bool                               check_int (const check_func_type&) const                   = 0;
+  virtual auto set_format_int (const libs::helpers::uids::minor::id_val&) -> void = 0;
+  virtual auto get_format_int () const -> libs::helpers::uids::minor::id_val      = 0;
+  virtual auto set_dim_var_int (const Dims&, dim_type) -> void                    = 0;
+  virtual auto get_dim_var_int (const Dims&) const -> dim_type                    = 0;
+  virtual auto get_dim_vars_int () const -> const DimVars&                        = 0;
+  virtual auto set_flag_int (const BufFlags&, bool) -> void                       = 0;
+  virtual auto get_flag_int (const BufFlags&) const -> bool                       = 0;
+  virtual auto buf_alloc_int (const AllocBufInfo&) -> void                        = 0;
+  virtual auto flush_int () -> void                                               = 0;
+  virtual auto check_int (const check_func_type&) const -> bool                   = 0;
 
   mutable sync_type threadsan_mtx_;   //< чтобы успокоить thread sanitizer, т.к. объекты этого типа могут использоваться повторно то и в разных потоках но с разделением по времени Оно этого не понимает
 };

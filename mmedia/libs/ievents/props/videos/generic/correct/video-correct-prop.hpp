@@ -1,14 +1,21 @@
 #pragma once
 /**
 \file       video-correct-prop.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
 
+namespace libs::ievents::props::videos::generic::correct::consts
+{
+constexpr std::int32_t min = -1;
+constexpr std::int32_t max = 1;
+constexpr std::int32_t def = 0;
+}   // namespace libs::ievents::props::videos::generic::correct::consts
+
 namespace libs::ievents::props::videos::generic::correct
 {
-class VideoCorrectProp final : public ievents::Event
+class VideoCorrectProp final : virtual public ievents::Event
 {
   friend class boost::serialization::access;
   friend ::dlls::devents::impl::EventsImpl;
@@ -19,10 +26,9 @@ class VideoCorrectProp final : public ievents::Event
     explicit Acessor (int) {};
   };
 
-
   public:
   //  ext types
-  using correction_parameter_type = std::pair< float, bool >;
+  using parameter_type = std::pair< float, bool >;
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (VideoCorrectProp)
   U3_HELPER_ADD_MAKE_SHARED_FUNCT2THIS_TYPE (VideoCorrectProp)
@@ -31,27 +37,27 @@ class VideoCorrectProp final : public ievents::Event
   explicit VideoCorrectProp (const Acessor& = Acessor (0));
   virtual ~VideoCorrectProp () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ievents/props/videos/generic/correct/video-correct-prop";
+    static constexpr const char* chret = "libs/ievents/props/videos/generic/correct/video-correct-prop";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
-  correction_parameter_type saturation_;               //< [-1.0, +1.0]
-  correction_parameter_type bright_;                   //< [-1.0, +1.0]
-  correction_parameter_type contrast_;                 //< [-1.0, +1.0]
-  correction_parameter_type sharp_;                    //< [-1.0, +1.0]
-  correction_parameter_type hue_;                      //< [-1.0, +1.0]
-  correction_parameter_type gamma_;                    //< [-1.0, +1.0]
-  correction_parameter_type white_balance_;            //< [-1.0, +1.0]
-  correction_parameter_type backlight_compensation_;   //<
-  correction_parameter_type gain_;                     //<
-  correction_parameter_type exposure_;                 //<
-  bool                      adaptive_;                 //<
-  bool                      short2byte_;               //<
-  SelectorImpls             hint_correct_impl_;        //< "auto", "hard", "soft", etc
-
+  parameter_type saturation_ { consts::def, false };                               //< [-1.0, +1.0]
+  parameter_type bright_ { consts::def, false };                                   //< [-1.0, +1.0]
+  parameter_type contrast_ { consts::def, false };                                 //< [-1.0, +1.0]
+  parameter_type sharp_ { consts::def, false };                                    //< [-1.0, +1.0]
+  parameter_type hue_ { consts::def, false };                                      //< [-1.0, +1.0]
+  parameter_type gamma_ { consts::def, false };                                    //< [-1.0, +1.0]
+  parameter_type white_balance_ { consts::def, false };                            //< [-1.0, +1.0]
+  parameter_type backlight_compensation_ { consts::def, false };                   //<
+  parameter_type gain_ { consts::def, false };                                     //<
+  parameter_type exposure_ { consts::def, false };                                 //<
+  bool           adaptive_          = false;                                       //<
+  bool           short2byte_        = true;                                        //<
+  SelectorImpls  hint_correct_impl_ = ::libs::ievents::SelectorImpls::automatic;   //< "auto", "hard", "soft", etc
 
   private:
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ievents::Event)
@@ -61,12 +67,11 @@ class VideoCorrectProp final : public ievents::Event
   template< class Archive >
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
-
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void                        load_json_int (const ::boost::json::object& obj) override;
-  virtual void                        save_json_int (::boost::json::object& obj) const override;
-  virtual void                        copy_int (const IEvent::craw_ptr src) override;
-  virtual void                        self_correct_int () override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
+  virtual auto load_json_int (const ::boost::json::object&) -> void override;
+  virtual auto save_json_int (::boost::json::object&) const -> void override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
+  virtual void self_correct_int () override;
 };
 }   // namespace libs::ievents::props::videos::generic::correct
 

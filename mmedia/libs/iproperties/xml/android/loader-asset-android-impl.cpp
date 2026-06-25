@@ -1,7 +1,7 @@
 /**
 \file       loader-asset-android-impl.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_iproperties_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -19,8 +19,8 @@ LoaderAssetAndroidImpl::LoaderAssetAndroidImpl (const InitLoaderInfo& info) :
   aroot_ (nullptr),
   common_impl_ (std::make_unique< xml::general::LoaderFileImpl > (info))
 {
-  vers::system::SystemAndroidProperty* osinfo = U3_CAST_PROP (vers::system::SystemAndroidProperty*) (::libs::iproperties::helpers::get_spec_prop_os ());
-  syn::ISharedProperty::lock_type      lock (osinfo->get_sync ());
+  auto*                           osinfo = ::libs::helpers::casts::reinterpret_cast_helper< vers::system::SystemAndroidProperty* > (::libs::iproperties::helpers::get_spec_prop_os ());
+  syn::ISharedProperty::lock_type lock (osinfo->get_sync ());
 
   asset_manager_ = osinfo->get_aappl_lockfree ()->activity->assetManager;
   U3_CHECK (asset_manager_, "empty asset_manager_");
@@ -160,12 +160,12 @@ LoaderAssetAndroidImpl::is_exist_folder_int (
   const std::string folder_name = file_name + ".dir";
   return is_exist_file_int (folder_name, path_type);
 
-#  if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   U3_ASSERT (!file_name.empty ());
   const std::string folder_name = file_name;   // + ".dir";
   const std::string root        = iinfo_.paths_->get_path (path_type);
   const std::string file_path   = ::libs::helpers::files::make_path (root, folder_name);
-  AAssetDir*        dbuf       = AAssetManager_openDir (asset_manager_, file_path.c_str ());
+  AAssetDir*        dbuf        = AAssetManager_openDir (asset_manager_, file_path.c_str ());
 
   const bool ret = dbuf ? true : false;
   if (dbuf)

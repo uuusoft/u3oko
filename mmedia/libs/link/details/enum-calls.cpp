@@ -1,7 +1,7 @@
 /**
 \file       enum-calls.cpp
 \date       04.03.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_link
 */
 #include "mmedia/includes/control-defines-includes.hpp"

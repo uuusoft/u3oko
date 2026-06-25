@@ -1,6 +1,6 @@
 /**
 \file       helpers-lib-u3copy-func.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_helpers_lib
 \brief      Реализация функции копирования блока памяти для всей системы

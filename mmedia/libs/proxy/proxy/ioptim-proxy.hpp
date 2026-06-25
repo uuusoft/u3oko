@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       ioptim-proxy.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_proxy_libs
 */
@@ -28,7 +28,7 @@ class IOptimProxy final
   explicit IOptimProxy (const std::string& dll_path);
   ~IOptimProxy () = default;
 
-  boost::function< create_ioptim_func_type > creator_;   //<
-  ::libs::helpers::dlls::dll_type            lib_;       //<
+  std::function< create_ioptim_func_type > creator_;   //<
+  ::libs::helpers::dlls::dll_type          lib_;       //<
 };
 }   // namespace libs::proxy

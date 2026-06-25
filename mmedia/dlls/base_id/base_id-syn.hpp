@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       base_id-syn.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       16.07.2018
 \project    u3_base_id_dll
 */

@@ -1,7 +1,7 @@
 /**
 \file       video-sender-info-filter.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_video_sender_dll
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -15,6 +15,6 @@ namespace dlls::terminals::video_sender
 InfoFilter::InfoFilter ()
 {
   rprops_ = ::libs::iproperties::helpers::create_event_in_list< syn::EndPointProp > (ef_props_);
-  str2props_.insert (str2prop_type::value_type (ef_props_.front ()->get_mid (), rprops_));
+  str2props_.insert ({ ef_props_.front ()->get_mid (), rprops_ });
 }
 }   // namespace dlls::terminals::video_sender

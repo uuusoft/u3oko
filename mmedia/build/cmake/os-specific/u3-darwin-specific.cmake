@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        29.08.2024
 # copyright   Erashov A.I.
 # file        u3-darwin-specific.cmake
@@ -17,5 +17,5 @@ set(U3_SUFFIX_DLL_NAME dylib)
 if(1)
   message(NOTICE "${U3_MARK_REFACT}add support dlib for Darwin")
   set(U3_SHARED_COMPILE_DEF_CPP ${U3_SHARED_COMPILE_DEF_CPP} -DU3_SKIP_DLIB=TRUE)
-  set(U3_DBG_EXTERNAL_LIB_SKIP_DLIB TRUE)
+  set(U3_DBG_EXTLIB_SKIP_DLIB TRUE)
 endif()

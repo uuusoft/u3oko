@@ -1,6 +1,6 @@
 /**
 \file       gen-vgen-filter-dll-idatasource.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_gen_vgen
 */
@@ -70,7 +70,7 @@ Filter::fill_buf (
 
     for (const auto& event : *events)
     {
-      auto devent = ::libs::iproperties::helpers::cast_event< ::libs::ievents::runtime::interf::InterfCaptureImageEvent > (event);
+      auto* devent = ::libs::iproperties::helpers::cast_event< ::libs::ievents::runtime::interf::InterfCaptureImageEvent > (event);
       if (devent)
       {
         U3_LOG_DATA_MARK ("recive ::libs::ievents::runtime::interf::InterfCaptureImageEvent -> update properties" + VTOLOG (devent->is_active ()));

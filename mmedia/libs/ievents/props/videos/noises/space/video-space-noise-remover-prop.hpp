@@ -1,14 +1,14 @@
 #pragma once
 /**
 \file       video-space-noise-remover-prop.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
 
 namespace libs::ievents::props::videos::noises::space
 {
-class VideoSpaceNoiseRemoverProp final : public ievents::Event
+class VideoSpaceNoiseRemoverProp final : virtual public ievents::Event
 {
   friend class boost::serialization::access;
   friend ::dlls::devents::impl::EventsImpl;
@@ -30,10 +30,11 @@ class VideoSpaceNoiseRemoverProp final : public ievents::Event
   explicit VideoSpaceNoiseRemoverProp (const Acessor& = Acessor (0));
   virtual ~VideoSpaceNoiseRemoverProp () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ievents/props/videos/noises/space/video-space-noise-remover-prop";
+    static constexpr const char* chret = "libs/ievents/props/videos/noises/space/video-space-noise-remover-prop";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
@@ -49,11 +50,11 @@ class VideoSpaceNoiseRemoverProp final : public ievents::Event
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   // overrides ievents::Event
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void                        load_json_int (const ::boost::json::object& obj) override;
-  virtual void                        save_json_int (::boost::json::object& obj) const override;
-  virtual void                        copy_int (const IEvent::craw_ptr src) override;
-  virtual void                        self_correct_int () override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
+  virtual auto load_json_int (const ::boost::json::object&) -> void override;
+  virtual auto save_json_int (::boost::json::object&) const -> void override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
+  virtual void self_correct_int () override;
 };
 }   // namespace libs::ievents::props::videos::noises::space
 

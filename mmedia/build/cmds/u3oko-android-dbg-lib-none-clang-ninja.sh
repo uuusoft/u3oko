@@ -1,6 +1,6 @@
 #!/bin/bash
 # u3oko-android-dbg-lib-none-clang-ninja.sh
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        01.01.2026
 # copyright   Erashov A.I.
 
@@ -22,8 +22,8 @@ export JAVA_HOME=/home/erashov/Documents/android-studio/jbr
 cd ./../../appls/u3oko/android
 chmod +x ./gradlew
 #./gradlew clean build
-./gradlew assembleDebug
-./gradlew tasks
+#./gradlew assembleDebug
+#./gradlew tasks
 ./gradlew installDebug
 
 #adb pair 192.168.88.216:41325 <code from device>
@@ -32,4 +32,6 @@ chmod +x ./gradlew
 #adb -s 192.168.88.216:41807 logcat uuu:V *:S
 #adb -s 192.168.88.216:43249 logcat --pid=29821
 #adb -s 192.168.88.216:41807 shell am set-debug-app -w com.uuusoft.u3oko
-#adb -s 192.168.88.216:41807 shell am start -n com.uuusoft.u3oko/com.uuusoft.android.u3m.u3oko.U3NativeActivity -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -D --suspend --splashscreen-show-icon
+#adb -s 192.168.88.216:41807 shell am clear-debug-app -w com.uuusoft.u3oko
+#adb -s 192.168.88.216:45181 shell am start -n com.uuusoft.u3oko/com.uuusoft.android.u3m.u3oko.U3NativeActivity -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -D --suspend --splashscreen-show-icon
+#adb -s adb-d1793818-rf19jH._adb-tls-connect._tcp shell am start -n com.uuusoft.u3oko/com.uuusoft.android.u3m.u3oko.U3NativeActivity -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -D --suspend --splashscreen-show-icon

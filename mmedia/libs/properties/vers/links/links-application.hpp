@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       links-application.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_properties_libs
 */
@@ -71,20 +71,24 @@ struct LinksApplication final {
 
   LinksApplication () = default;
 
-  ~LinksApplication ()
+  ~LinksApplication () noexcept
   {
     reset ();
   }
 
   template< typename TTLinkPtrRsp >
   void
-  copy_links (const LinksApplication< TTLinkPtrRsp >& rsh)
+  copy_links (const LinksApplication< TTLinkPtrRsp >& rsh, bool debug = false)
   {
     std::scoped_lock lock (threadsan_mtx_, rsh.threadsan_mtx_);
     module_links_.clear ();
     for (const auto& [key, val] : rsh.module_links_)
     {
       module_links_[key] = val;
+      if (debug)
+      {
+        U3_XLOG_DEV ("copy link" + TOLOG (to_string (key)) + PTR_TOLOG (module_links_[key].lock ().get ()) + PTR_TOLOG (this));
+      }
     }
   }
 
@@ -106,8 +110,8 @@ struct LinksApplication final {
   {
     std::scoped_lock lock (threadsan_mtx_);
     auto             finger = module_links_.find (key);
-    U3_CHECK (finger != module_links_.end (), "failed get link to module");
-    return finger->second;
+    U3_CHECK_NT (finger != module_links_.end (), "failed get link to module" + TOLOG (to_string (key)) + PTR_TOLOG (this));
+    return finger != module_links_.end () ? finger->second : TTLinkPtr ();
   }
 
   void
@@ -122,12 +126,14 @@ struct LinksApplication final {
   {
     std::scoped_lock lock (threadsan_mtx_);
     auto             finger = module_links_.find (key);
-    U3_CHECK (finger != module_links_.end (), "failed get link to module");
-    return finger->second.reset ();
+    U3_CHECK_NT (finger != module_links_.end (), "failed get link to module" + TOLOG (to_string (key)) + PTR_TOLOG (this));
+    if (finger != module_links_.end ())
+    {
+      finger->second.reset ();
+    }
   }
 
   // EAI-REFACT -> private
-  // private:
 #ifdef U3_FORCE_SYNC_FOR_THREAD_SANITIZER
   using sync_type = std::mutex;
 #else

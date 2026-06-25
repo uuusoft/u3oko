@@ -2,7 +2,7 @@
 /**
 \file       buf-video-space-noise-remover-prop.hpp
 \date       01.04.2026
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 namespace libs::ievents::props::videos::noises::space::syn

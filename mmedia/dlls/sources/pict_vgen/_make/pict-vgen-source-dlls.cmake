@@ -1,22 +1,22 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        01.01.2017-01.01.2024
 # copyright   Erashov A.I.
 # file        pict-vgen-source-dlls.cmake
 
-if(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ANDROID})
-  return()
-endif()
+#if(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ANDROID})
+#  return()
+#endif()
 
 if(U3_USE_FREEIMAGE_LIB)
-  if(NOT U3_DBG_FORCE_COMPILE_AT_BEGIN_ALL_EXT_LIBS)
+  if(NOT U3_DBG_COMPILE_AT_BEGIN_EXTLIBS)
     include("./build/cmake/libs/freeimage/u3-freeimage-lib.cmake")
   endif()
-  set(U3_PICT_VGEN_VSS_INCLUDE_DIR_EXTERNAL_LIB ${U3_INCLUDE_DIR_EXTERNAL_LIB_FREEIMAGE})
+  set(U3_PICT_VGEN_VSS_INCLUDE_DIR_EXTLIB ${U3_INCLUDE_DIR_EXTLIB_FREEIMAGE})
 else()
-  if(NOT U3_DBG_FORCE_COMPILE_AT_BEGIN_ALL_EXT_LIBS)
+  if(NOT U3_DBG_COMPILE_AT_BEGIN_EXTLIBS)
     include("./build/cmake/libs/stb/u3-stb-lib.cmake")
   endif()
-  set(U3_PICT_VGEN_VSS_INCLUDE_DIR_EXTERNAL_LIB ${U3_INCLUDE_DIR_EXTERNAL_LIB_STB})
+  set(U3_PICT_VGEN_VSS_INCLUDE_DIR_EXTLIB ${U3_INCLUDE_DIR_EXTLIB_STB})
 endif()
 
 u3_add_target_dylib(
@@ -36,6 +36,9 @@ u3_add_target_dylib(
   gen_lib-lib
   dbufs-dll
   DEPEND_TARGETS
-  dbufs-dll)
+  dbufs-dll
+  stb-lib)
+#add_dependencies(std-lib ${U3_NAME_EXTLIB_STB_UTIL})
 
-target_include_directories(pict_vgen-vss PUBLIC "${U3_PICT_VGEN_VSS_INCLUDE_DIR_EXTERNAL_LIB}")
+#message(FATAL_ERROR "U3_PICT_VGEN_VSS_INCLUDE_DIR_EXTLIB=${U3_PICT_VGEN_VSS_INCLUDE_DIR_EXTLIB}")
+target_include_directories(pict_vgen-vss PUBLIC "${U3_PICT_VGEN_VSS_INCLUDE_DIR_EXTLIB}")

@@ -1,6 +1,6 @@
 /**
 \file       vcodec-mjpg-main.cpp:18:80
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_vcodec_mjpg
 */

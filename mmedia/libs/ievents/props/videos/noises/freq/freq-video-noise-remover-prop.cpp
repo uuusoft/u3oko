@@ -1,6 +1,6 @@
 /**
 \file       freq-video-noise-remover-prop.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
@@ -12,9 +12,9 @@
 namespace libs::ievents::props::videos::noises::freq
 {
 FreqVideoNoiseRemoverProp::FreqVideoNoiseRemoverProp (const Acessor& pha) :
-  bufs_ ({ { ::utils::dbufs::video::consts::offs::lit, InfoBuffFreqNoiseRemover (::utils::dbufs::video::consts::offs::lit, ::utils::dbufs::video::consts::offs::lit, ::utils::dbufs::video::consts::offs::lit, 8, 1) },
-           { ::utils::dbufs::video::consts::offs::hue, InfoBuffFreqNoiseRemover (::utils::dbufs::video::consts::offs::hue, ::utils::dbufs::video::consts::offs::hue, ::utils::dbufs::video::consts::offs::hue, 8, 1) },
-           { ::utils::dbufs::video::consts::offs::hue, InfoBuffFreqNoiseRemover (::utils::dbufs::video::consts::offs::sat, ::utils::dbufs::video::consts::offs::sat, ::utils::dbufs::video::consts::offs::sat, 8, 1) } })
+  bufs_ ({ { syn::offs::lit, InfoBuffFreqNoiseRemover (syn::offs::lit, syn::offs::lit, syn::offs::lit, 8, 1) },
+           { syn::offs::hue, InfoBuffFreqNoiseRemover (syn::offs::hue, syn::offs::hue, syn::offs::hue, 8, 1) },
+           { syn::offs::hue, InfoBuffFreqNoiseRemover (syn::offs::sat, syn::offs::sat, syn::offs::sat, 8, 1) } })
 {
   property_name_ = gen_get_mid ();
 }

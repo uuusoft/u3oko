@@ -1,6 +1,6 @@
 /**
 \file       runtime-event.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
@@ -28,7 +28,8 @@ void
 RuntimeEvent::copy_int (const IEvent::craw_ptr src)
 {
   const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< RuntimeEvent > (src);
-  super::copy_int (src);
+  ::libs::ievents::TimedEvent::copy_int (src);
+  ::libs::ievents::OpsStatusEvent::copy_int (src);
 }
 
 
@@ -36,7 +37,8 @@ template< class Archive >
 void
 RuntimeEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoTimedEvent", super);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoTimedEvent", ::libs::ievents::TimedEvent);
+  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoieventsoOpsStatusEvent", ::libs::ievents::OpsStatusEvent);
   self_correct ();
 }
 }   // namespace libs::ievents::runtime

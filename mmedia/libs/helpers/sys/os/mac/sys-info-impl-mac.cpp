@@ -1,6 +1,6 @@
 /**
 \file       sys-info-impl-mac.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       06.02.2022
 \project    u3_helpers_lib
 */
@@ -61,11 +61,11 @@ SysInfoImpl::get (const TypeInfo& type) const
   case TypeInfo::cpu:
     helper_.full_text (ret);
     break;
-#  if 0
-    case TypeInfo::cpu_speed:
-      //ret = helpers::sys::cpu::x86::get_speed();
-      ret = "???";
-      break;
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
+  case TypeInfo::cpu_speed:
+    // ret = helpers::sys::cpu::x86::get_speed();
+    ret = "???";
+    break;
 #  endif
   default:
     U3_ASSERT_SIGNAL ("failed");

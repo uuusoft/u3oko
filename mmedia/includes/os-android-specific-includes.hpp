@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       os-android-specific-includes.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.05.2018
 \project    u3_includes
 */

@@ -1,6 +1,6 @@
 /**
 \file       enum-module-links.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       04.03.2022
 \project    u3_link
 */
@@ -36,5 +36,12 @@ to_string (const ModuleLinks& val)
     finger = vals.find (ModuleLinks::unknown);
   }
   return finger->second;
+}
+
+
+std::string
+to_string (const std::pair< ModuleLinks, ModuleLinks >& val)
+{
+  return to_string (val.first) + "<->" + to_string (val.second);
 }
 }   // namespace libs::link::details

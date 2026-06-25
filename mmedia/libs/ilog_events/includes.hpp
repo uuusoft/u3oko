@@ -1,18 +1,18 @@
 #pragma once
 /**
 \file       includes.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       24.05.2017
 \project    u3_ilog_events
 */
 #include "appll-part-log-info.hpp"
 
-#include "log-texts-enum.hpp"
+#include "enum-log-texts.hpp"
 
-#include "events/log-process-actions-enum.hpp"
+#include "events/enum-log-process-actions.hpp"
 #include "events/info-log-session.hpp"
 #include "events/info-log-session-fragment.hpp"
-#include "events/action-for-list-logs.hpp"
+#include "events/enum-log-actions.hpp"
 #include "events/base-log-event.hpp"
 #include "events/info-log-event.hpp"
 #include "events/except-log-event.hpp"

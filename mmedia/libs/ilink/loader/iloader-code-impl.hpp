@@ -2,7 +2,7 @@
 /**
 \file       iloader-code-impl.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ilink
 */
 
@@ -18,9 +18,7 @@ class ILoaderCodeImpl
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ILoaderCodeImpl)
 
-  virtual ~ILoaderCodeImpl ()
-  {
-  }
+  virtual ~ILoaderCodeImpl () = default;
 
   /// Функция загрузки кода (dll) в процесс
   /// \param[in]  info       общая информация о параметрах
@@ -57,13 +55,8 @@ class ILoaderCodeImpl
 
   private:
   //  ILoaderCodeImpl interface
-  virtual void load_int (
-    const ::libs::link::CreateInfo* info,
-    const std::string&              name_proc,
-    const std::string&              name_lib,
-    const args_type&                args) = 0;
-
-  virtual bool is_load_int () const    = 0;
-  virtual bool unload_int (bool force) = 0;
+  virtual void load_int (const ::libs::link::CreateInfo*, const std::string&, const std::string&, const args_type&) = 0;
+  virtual bool is_load_int () const                                                                                 = 0;
+  virtual bool unload_int (bool)                                                                                    = 0;
 };
 }   // namespace libs::ilink::loader

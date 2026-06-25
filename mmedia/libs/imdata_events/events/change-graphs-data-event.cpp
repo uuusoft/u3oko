@@ -1,6 +1,6 @@
 /**
 \file       change-graphs-data-event.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_imdata_events
 */
@@ -70,7 +70,7 @@ ChangeGraphsDataEvent::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
 
-  action_  = change_graph_action_from_raw_val (::libs::helpers::json::get_uint32 (obj.at ("action")));
+  action_  = change_graph_action_from_raw_val (::libs::helpers::json::get_uint32 (obj.at ("graph_actions")));
   folders_ = ::boost::json::value_to< ChangeGraphsDataEvent::id_graphs_storage_type > (obj.at ("folders"));
 }
 
@@ -80,8 +80,8 @@ ChangeGraphsDataEvent::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
 
-  obj["action"]  = U3_CAST_UINT32_FORCE (action_);
-  obj["folders"] = ::boost::json::value_from (folders_);
+  obj["graph_actions"] = U3_CAST_UINT32_FORCE (action_);
+  obj["folders"]       = ::boost::json::value_from (folders_);
 }
 
 

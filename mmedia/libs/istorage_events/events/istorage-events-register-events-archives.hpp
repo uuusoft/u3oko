@@ -2,7 +2,7 @@
 /**
 \file       istorage-events-register-events-archives.hpp
 \date       21.07.2018
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_istorage_events
 */
 

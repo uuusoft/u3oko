@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       generic-thread-func.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.12.2016
 \project    u3_helpers_lib
 */
@@ -15,12 +15,11 @@ namespace libs::helpers::thread
 {
 /// Общий каркас для каждой функции потока в данной системе
 /// \tparam     TTOps         тип для уникальных операций в функции потока
-/// \tparam     TTLinkVal     тип для логирования в функции потока
 /// \param[in]  ops           объект для уникальных операций для которых создается поток
 /// \param[in]  indx_thread   индекс потока внутри каждой группы (по типу TTOps), опционально
-template< typename TTOps, syn::key_storage_type TTLinkVal >
+template< typename TTOps >
 void
-generic_thread_funct (TTOps* ops, const std::uint32_t indx_thread)
+generic_thread_funct (const syn::key_storage_type& sval, TTOps* ops, const std::uint32_t indx_thread)
 {
   ::libs::helpers::thread::set_thread_priority (std::this_thread::get_id (), ::libs::helpers::thread::Priorities::normal);
 
@@ -37,17 +36,17 @@ generic_thread_funct (TTOps* ops, const std::uint32_t indx_thread)
     {
       (ops->*func) (indx_thread);
     }
-    catch (boost::exception& e)
+    catch (boost::exception& excpt)
     {
-      modules::mlog::ToLog { TTLinkVal, ::libs::ievents::props::modules::log::LogLevels::exception }(boost::diagnostic_information (e));
+      modules::mlog::ToLog { sval, ::libs::ievents::props::modules::log::LogLevels::exception }(boost::diagnostic_information (excpt));
     }
-    catch (std::exception& e)
+    catch (std::exception& excpt)
     {
-      modules::mlog::ToLog { TTLinkVal, ::libs::ievents::props::modules::log::LogLevels::exception }(e.what ());
+      modules::mlog::ToLog { sval, ::libs::ievents::props::modules::log::LogLevels::exception }(excpt.what ());
     }
     catch (...)
     {
-      modules::mlog::ToLog { TTLinkVal, ::libs::ievents::props::modules::log::LogLevels::exception }("unknown... exception");
+      modules::mlog::ToLog { sval, ::libs::ievents::props::modules::log::LogLevels::exception }("unknown... exception");
     }
   }
 }

@@ -1,6 +1,6 @@
 /**
 \file       loader-code.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ilink
 */
@@ -24,14 +24,18 @@ LoaderCode::load (
   const std::string&                     name_lib,
   const std::vector< std::string >&      args)
 {
-  if (::libs::link::details::CodeRuns::appl == type)
+  if (!impl_)
   {
-    U3_XLOG_ERROR ("temporarily disabled");
-    impl_.reset (new OutProcLoaderCode);
-  }
-  else if (::libs::link::details::CodeRuns::dll == type)
-  {
-    impl_.reset (new InProcLoaderCode);
+    switch (type)
+    {
+    case ::libs::link::details::CodeRuns::appl:
+      impl_.reset (new OutProcLoaderCode);
+      break;
+    case ::libs::link::details::CodeRuns::dll:
+    default:
+      impl_.reset (new InProcLoaderCode);
+      break;
+    }
   }
 
   U3_ASSERT (impl_);

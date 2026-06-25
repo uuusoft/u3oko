@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        29.08.2024
 # copyright   Erashov A.I.
 # file        u3-windows-specific.cmake
@@ -12,5 +12,5 @@ set(U3_PREFIX_LIB_NAME "")
 set(U3_SUFFIX_LIB_NAME lib)
 set(U3_SUFFIX_DLL_NAME dll)
 
-#set( U3_TARGET_PROPERTY_MSVC_RUNTIME_LIBRARY      "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL" CACHE FORCE )
-#set( U3_SHARED_LINK_OPTIONS_CPP                   ${U3_SHARED_LINK_OPTIONS_CPP}       -Wl, --no-undefined  )
+#set(U3_TARGET_PROPERTY_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL" CACHE FORCE)
+#set(U3_SHARED_LINK_OPTIONS_CPP ${U3_SHARED_LINK_OPTIONS_CPP} -Wl, --no-undefined )

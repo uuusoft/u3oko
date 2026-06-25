@@ -1,7 +1,7 @@
 /**
 \file       capture-desk-impl-win32.cpp
 \date       16.05.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_desk_vgen
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -32,7 +32,7 @@ CaptureDeskImplWin32::get_buf_int (
     window_rect.bottom = GetDeviceCaps (*hdc, VERTRES);
     // U3_LOG_APPL_MARK (VTOLOG (window_rect.right) + VTOLOG (window_rect.bottom));
 
-#  if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
     std::uint32_t   dev_index = 0;
     DISPLAY_DEVICEA _DisplayDevice;
 
@@ -57,7 +57,7 @@ CaptureDeskImplWin32::get_buf_int (
     };
 #  endif
 
-#  if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
     const auto window = GetDesktopWindow ();
     U3_CHECK_WIN32_CALL (GetClientRect (window, &window_rect), "GetClientRect");
 #  endif

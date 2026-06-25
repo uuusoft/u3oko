@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       base-log-event.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ilog_events
 */
@@ -35,7 +35,7 @@ class BaseLogEvent : public ::libs::ievents::TimedEvent
 
   protected:
   //  ievents::Event overrides
-  virtual void copy_int (const IEvent::craw_ptr src) override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 
   struct Acessor {
     explicit Acessor (int) {};
@@ -48,7 +48,7 @@ class BaseLogEvent : public ::libs::ievents::TimedEvent
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   //  ievents::Event overrides
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
 };
 }   // namespace libs::ilog_events::events
 

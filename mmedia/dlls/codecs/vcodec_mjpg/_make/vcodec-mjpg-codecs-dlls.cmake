@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        01.01.2017
 # copyright   Erashov A.I.
 # file        vcodec-mjpg-codecs-dlls.cmake
@@ -27,4 +27,4 @@ u3_add_target_dylib(
   DEPEND_TARGETS
   dbufs-dll)
 
-target_include_directories(vcodec_mjpg_vvd SYSTEM PRIVATE "${U3_INCLUDE_DIR_EXTERNAL_LIB_TURBO_JPEG}")
+target_include_directories(vcodec_mjpg_vvd SYSTEM PRIVATE "${U3_INCLUDE_DIR_EXTLIB_TURBO_JPEG}")

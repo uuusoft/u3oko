@@ -1,6 +1,6 @@
 /**
 \file       video-sender-main.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       06.03.2016
 \project    u3_video_sender_dll
 \brief      Модуль передачи данных в другие подсистемы (http/etc)

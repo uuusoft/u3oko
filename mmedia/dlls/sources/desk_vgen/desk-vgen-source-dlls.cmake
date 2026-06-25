@@ -1,9 +1,9 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        01.01.2017
 # copyright   Erashov A.I.
 # file        desk-vgen-source-dlls.cmake
 
-if(NOT U3_DBG_FORCE_COMPILE_AT_BEGIN_ALL_EXT_LIBS)
+if(NOT U3_DBG_COMPILE_AT_BEGIN_EXTLIBS)
   if(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_LINUX} OR ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_RASPBERRY})
     #include( "./build/cmake/libs/libscreencapture-wayland/u3-libscreencapture-wayland-lib.cmake" )
     find_package(PkgConfig REQUIRED)
@@ -46,19 +46,19 @@ u3_add_target_dylib(
 #endif()
 
 if(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_LINUX} OR ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_RASPBERRY} OR ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ORANGE_PI})
-  #message( FATAL_ERROR "U3_INCLUDE_DIR_EXTERNAL_LIB_WAYLAND_SCREEN_CAPTURE=${U3_INCLUDE_DIR_EXTERNAL_LIB_WAYLAND_SCREEN_CAPTURE}" )
-  #message( FATAL_ERROR "U3_INSTALL_DIR_EXTERNAL_LIB_WAYLAND_SCREEN_CAPTURE=${U3_INSTALL_DIR_EXTERNAL_LIB_WAYLAND_SCREEN_CAPTURE}")
-  #U3_INCLUDE_DIR_EXTERNAL_LIB_WAYLAND_SCREEN_CAPTURE
-  target_include_directories(desk_vgen-vss SYSTEM PRIVATE "${U3_INCLUDE_DIR_EXTERNAL_LIB_WAYLAND_SCREEN_CAPTURE}" ${SYSTEMD_INCLUDE_DIRS})
+  #message( FATAL_ERROR "U3_INCLUDE_DIR_EXTLIB_WAYLAND_SCREEN_CAPTURE=${U3_INCLUDE_DIR_EXTLIB_WAYLAND_SCREEN_CAPTURE}" )
+  #message( FATAL_ERROR "U3_INSTALL_DIR_EXTLIB_WAYLAND_SCREEN_CAPTURE=${U3_INSTALL_DIR_EXTLIB_WAYLAND_SCREEN_CAPTURE}")
+  #U3_INCLUDE_DIR_EXTLIB_WAYLAND_SCREEN_CAPTURE
+  target_include_directories(desk_vgen-vss SYSTEM PRIVATE "${U3_INCLUDE_DIR_EXTLIB_WAYLAND_SCREEN_CAPTURE}" ${SYSTEMD_INCLUDE_DIRS})
   #target_include_directories(my_app PRIVATE ${SYSTEMD_INCLUDE_DIRS})
   #/home/erashov/Documents/u3media/u3temp-Raspberry-Clang-Clang--aarch64-Release-ub/wlscreencapture-util/wlscreencapture-util/src/wlscreencapture-util/include
   #/home/erashov/Documents/u3media/u3temp-Raspberry-Clang-Clang--aarch64-Release-ub/wlscreencapture-util/src/wlscreencapture-util/wlscreencapture-util/include
   #u3_make_fake_file(
-  #  FILE_NAME ${U3_INCLUDE_DIR_EXTERNAL_LIB_WAYLAND_SCREEN_CAPTURE}/c_common.h2
+  #  FILE_NAME ${U3_INCLUDE_DIR_EXTLIB_WAYLAND_SCREEN_CAPTURE}/c_common.h2
   #  CONTENT "c_common.h2"
   #)
 
-  #target_include_directories( vcodec_mjpg_vvd   SYSTEM PRIVATE  "${U3_INCLUDE_DIR_EXTERNAL_LIB_TURBO_JPEG}" )
+  #target_include_directories( vcodec_mjpg_vvd   SYSTEM PRIVATE  "${U3_INCLUDE_DIR_EXTLIB_TURBO_JPEG}" )
 
   # for Ubuntu
   # sudo apt update

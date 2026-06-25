@@ -1,6 +1,6 @@
 /**
 \file       process-helper-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.11.2016
 \project    u3_helpers_lib
 */
@@ -32,7 +32,20 @@ get_start_time ()
     ret = (U3_CAST_INT64 (tcreate.dwHighDateTime) << 32) | tcreate.dwLowDateTime;
   }
 #else
-  U3_XLOG_UNIMPL ("libs::helpers::process::get_start_time");
+  std::ifstream infile ("/proc/stat");
+  std::string   line;
+  while (std::getline (infile, line))
+  {
+    if (line.rfind ("btime", 0) == 0)
+    {
+      std::istringstream iss (line);
+      std::string        label;
+      if (iss >> label >> ret)
+      {
+        break;
+      }
+    }
+  }
 #endif
   return ret;
 }

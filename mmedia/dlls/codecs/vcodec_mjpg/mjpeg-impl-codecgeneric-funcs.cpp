@@ -1,6 +1,6 @@
 /**
 \file       mjpeg-impl-codecgeneric-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.05.2017
 \project    u3_vcodec_mjpg
 */
@@ -149,12 +149,12 @@ MjpegImpl::decode_int (
 {
   const syn::IVideoBuf::craw_ptr compbuf   = (*src)[cinfo_.bufs_.indx_sbuf_];
   const auto                     compsize  = (*compbuf)[::utils::dbufs::MemVars::size_data];
-  const auto*                    head      = U3_CAST_CODECS< const syn::HeaderIFrame* > (utils::dbufs::video::helpers::get_const_data (compbuf));
+  const auto*                    head      = ::libs::helpers::casts::reinterpret_cast_helper< const syn::HeaderIFrame* > (utils::dbufs::video::helpers::get_const_data (compbuf));
   const bool                     use_color = !head->cinfo_.nocolor_;
   const auto&                    base_head = head->base_part_;
   const auto&                    info_head = base_head.sinfo_;
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   // debug
   ::dlls::codecs::codec_gen::dump (head);
   ::utils::dbufs::video::helpers::dump (compbuf);
@@ -181,7 +181,7 @@ MjpegImpl::decode_int (
   temp_buf_->set_flag (utils::dbufs::BufFlags::empty, true);
   dbuf->set_flag (utils::dbufs::BufFlags::empty, true);
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   // debug
   ::utils::dbufs::video::helpers::dump (&*temp_buf_);
 #endif

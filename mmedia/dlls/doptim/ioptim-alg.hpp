@@ -2,7 +2,7 @@
 /**
 \file       ioptim-alg.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_doptim_dll
 */
 
@@ -37,9 +37,9 @@ class IOptimAlg
     {
       sync_impl_int (iinfo);
     }
-    catch (const std::exception& e)
+    catch (const std::exception& excpt)
     {
-      U3_LOG_DATA_EXCEPT (e.what ());
+      U3_LOG_DATA_EXCEPT (excpt.what ());
     }
   }
 

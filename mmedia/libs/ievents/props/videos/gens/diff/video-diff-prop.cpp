@@ -1,6 +1,6 @@
 /**
 \file       video-diff-prop.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
@@ -48,7 +48,7 @@ void
 VideoDiffProp::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-  U3_ASSERT_NT (0, "???");
+  U3_ASSERT_NT (0, "VideoDiffProp::load_json_int:: wtf???");
 }
 
 
@@ -56,7 +56,7 @@ void
 VideoDiffProp::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-  U3_ASSERT_NT (0, "???");
+  U3_ASSERT_NT (0, "VideoDiffProp::save_json_int:: wtf???");
 }
 
 

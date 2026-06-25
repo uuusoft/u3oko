@@ -1,7 +1,7 @@
 /**
 \file       enum-morph-ops.cpp
 \date       08.03.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -14,7 +14,7 @@ namespace libs::ievents::props::videos::generic::morph
 MorphOps
 str2type_morph_op (const std::string& val)
 {
-  static const std::unordered_map< std::string, const MorphOps > val2val = {
+  static const std::unordered_map< std::string, const MorphOps > vals = {
     { "erosion", MorphOps::erosion },
     { "dilation", MorphOps::dilation },
     { "binary", MorphOps::binary },
@@ -22,11 +22,11 @@ str2type_morph_op (const std::string& val)
     { "unknown", MorphOps::unknown }
   };
 
-  auto finger = val2val.find (val);
-  if (val2val.end () == finger)
+  auto finger = vals.find (val);
+  if (vals.end () == finger)
   {
     U3_ASSERT_SIGNAL_NT ("failed find morph type");
-    finger = val2val.find ("skip");
+    finger = vals.find ("skip");
   }
   return finger->second;
 }
@@ -35,7 +35,7 @@ str2type_morph_op (const std::string& val)
 const std::string&
 to_string (const MorphOps& val)
 {
-  static const std::unordered_map< MorphOps, const std::string > val2val = {
+  static const std::unordered_map< MorphOps, const std::string > vals = {
     { MorphOps::erosion, "erosion" },
     { MorphOps::dilation, "dilation" },
     { MorphOps::binary, "binary" },
@@ -43,11 +43,11 @@ to_string (const MorphOps& val)
     { MorphOps::unknown, "unknown" }
   };
 
-  auto finger = val2val.find (val);
-  if (val2val.end () == finger)
+  auto finger = vals.find (val);
+  if (vals.end () == finger)
   {
     U3_ASSERT_SIGNAL_NT ("failed find name morph type");
-    finger = val2val.find (MorphOps::empty);
+    finger = vals.find (MorphOps::empty);
   }
   return finger->second;
 }

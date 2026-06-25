@@ -2,7 +2,7 @@
 /**
 \file       idemons-property.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_iproperties_lib
 */
 
@@ -25,14 +25,14 @@ class IDemonsProperty final : public ::libs::properties::ISharedProperty
   IDemonsProperty ();
   virtual ~IDemonsProperty () = default;
 
-  syn::BlockMemAllocatorProxy::raw_ptr get_mem_lockfree () const;
-  void                                 set_mem_lockfree (syn::BlockMemAllocatorProxy::raw_ptr ptr);
-  syn::BufAllocatorProxy::raw_ptr      get_bufs_lockfree () const;
-  void                                 set_bufs_lockfree (syn::BufAllocatorProxy::raw_ptr ptr);
-  ::libs::proxy::IOptimProxy*          get_optim_lockfree () const;
-  void                                 set_optim_lockfree (::libs::proxy::IOptimProxy* ptr);
-  ::libs::proxy::IEventsProxy*         get_events_lockfree () const;
-  void                                 set_events_lockfree (::libs::proxy::IEventsProxy* ptr);
+  auto get_mem_lockfree () const -> syn::BlockMemAllocatorProxy::raw_ptr;
+  auto set_mem_lockfree (syn::BlockMemAllocatorProxy::raw_ptr ptr) -> void;
+  auto get_bufs_lockfree () const -> syn::BufAllocatorProxy::raw_ptr;
+  auto set_bufs_lockfree (syn::BufAllocatorProxy::raw_ptr ptr) -> void;
+  auto get_optim_lockfree () const -> ::libs::proxy::IOptimProxy*;
+  auto set_optim_lockfree (::libs::proxy::IOptimProxy* ptr) -> void;
+  auto get_events_lockfree () const -> ::libs::proxy::IEventsProxy*;
+  auto set_events_lockfree (::libs::proxy::IEventsProxy* ptr) -> void;
 
   private:
   // ::libs::properties::ISharedProperty

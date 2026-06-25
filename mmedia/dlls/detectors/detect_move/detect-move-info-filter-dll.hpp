@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       detect-move-info-filter-dll.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_detect_move
 */
@@ -20,9 +20,9 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
   bool                          synced_ = false;     //< Флаг требования синхронизации
 
   private:
-  void init ();
+  auto init () -> void;
 
   // overrides ::libs::icore::impl::var1::obj::dll::BaseInfoFilter
-  virtual void sync_int (bool force) override;
+  virtual auto sync_int (bool force) -> void override;
 };
 }   // namespace dlls::detectors::detect_move

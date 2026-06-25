@@ -2,7 +2,7 @@
 /**
 \file       buf-event.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 
@@ -30,10 +30,11 @@ class BuffEvent : public RuntimeEvent
   explicit BuffEvent (::utils::dbufs::video::IVideoBuf::cptr& buf);
   virtual ~BuffEvent () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ievents/runtime/mem/buf-event";
+    static constexpr const char* chret = "libs/ievents/runtime/mem/buf-event";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
@@ -44,12 +45,12 @@ class BuffEvent : public RuntimeEvent
 
   ::utils::dbufs::video::IVideoBuf::ptr buf_;   //< Буфер с данными, связанный с событием
 
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
   // virtual void load_int( const ::pugi::xml_named_node_iterator& node ) override;
-  virtual void copy_int (const IEvent::craw_ptr src) override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 };
 }   // namespace libs::ievents::runtime::mem
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 BOOST_CLASS_EXPORT_KEY (::libs::ievents::runtime::mem::BuffEvent);
 #endif

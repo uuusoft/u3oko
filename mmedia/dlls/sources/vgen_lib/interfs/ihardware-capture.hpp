@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       ihardware-capture.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       15.03.2022
 \project    u3_vgen_lib
 */
@@ -53,7 +53,7 @@ class IHardwareCapture final : public syn::ICaptureImage
   virtual void
   update_capture_property_int (const syn::VideoDriverCaptureProp::raw_ptr info) override
   {
-    U3_LOG_DATA_DATA ("update prop:" + syn::VideoDriverCaptureProp::gen_get_mid ());
+    U3_LOG_DATA_DATA ("update prop:" + STOLOG (syn::VideoDriverCaptureProp::gen_get_mid ()));
     capture_.copy (info);
     update_ = true;
   }
@@ -61,7 +61,7 @@ class IHardwareCapture final : public syn::ICaptureImage
   virtual void
   update_driver_property_int (const syn::VideoDriverProp::raw_ptr info) override
   {
-    U3_LOG_DATA_DATA ("update prop:" + syn::VideoDriverProp::gen_get_mid ());
+    U3_LOG_DATA_DATA ("update prop:" + STOLOG (syn::VideoDriverProp::gen_get_mid ()));
     vdriver_.copy (info);
     update_ = true;
   }
@@ -69,7 +69,7 @@ class IHardwareCapture final : public syn::ICaptureImage
   virtual void
   update_system_specific_property_int (const syn::SystemSpecificDriverProp::raw_ptr info) override
   {
-    U3_LOG_DATA_DATA ("update prop:" + syn::SystemSpecificDriverProp::gen_get_mid ());
+    U3_LOG_DATA_DATA ("update prop:" + STOLOG (syn::SystemSpecificDriverProp::gen_get_mid ()));
     system_specific_.copy (info);
     update_ = true;
   }

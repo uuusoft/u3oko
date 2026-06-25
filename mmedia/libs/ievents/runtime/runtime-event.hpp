@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       runtime-event.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
@@ -9,7 +9,7 @@
 namespace libs::ievents::runtime
 {
 /// Базовый класс всех событий системы с временной меткой
-class RuntimeEvent : public ievents::TimedEvent
+class RuntimeEvent : virtual public TimedEvent, virtual public OpsStatusEvent
 {
   friend class boost::serialization::access;
   friend ::dlls::devents::impl::EventsImpl;
@@ -29,19 +29,20 @@ class RuntimeEvent : public ievents::TimedEvent
   explicit RuntimeEvent (const Acessor& = Acessor (0));
   virtual ~RuntimeEvent () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ievents/runtime/runtime-event";
+    static constexpr const char* chret = "libs/ievents/runtime/runtime-event";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
   protected:
-  virtual void copy_int (const IEvent::craw_ptr src) override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 
   private:
   // internal types
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ievents::TimedEvent)
+  // U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ievents::TimedEvent)
 
   friend class boost::serialization::access;
 
@@ -49,7 +50,7 @@ class RuntimeEvent : public ievents::TimedEvent
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   //  ievents::TimedEvent overrides
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
 };
 }   // namespace libs::ievents::runtime
 

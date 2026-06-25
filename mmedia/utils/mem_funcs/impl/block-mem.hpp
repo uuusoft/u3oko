@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       block-mem.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_mem_funcs
 */
@@ -19,14 +19,14 @@ class BlockMem final : public ::libs::helpers::mem::IBlockMem
 
   private:
   // ::libs::helpers::mem:: IBlockMem overrides
-  virtual std::uint8_t*       get_int () override;
-  virtual const std::uint8_t* get_int () const override;
-  virtual BlockMem::size_type get_buf_size_int () const override;
-  virtual BlockMem::size_type get_data_size_int () const override;
-  virtual void                set_data_size_int (size_type) override;
-  virtual void                resize_int (size_type) override;
+  virtual auto get_int () -> std::uint8_t* override;
+  virtual auto get_int () const -> const std::uint8_t* override;
+  virtual auto get_buf_size_int () const -> BlockMem::size_type override;
+  virtual auto get_data_size_int () const -> BlockMem::size_type override;
+  virtual auto set_data_size_int (size_type) -> void override;
+  virtual auto resize_int (size_type) -> void override;
 
-  void reset_memory ();
+  auto reset_memory () -> void;
 
   std::uint8_t* buf_       = nullptr;   //< Сырой блок памяти
   size_type     size_      = 0;         //< Размер сырого блока памяти

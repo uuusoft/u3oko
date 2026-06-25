@@ -1,0 +1,30 @@
+# author      Erashov Anton erashov2026@proton.me
+# date        06.03.2026
+# copyright   Erashov A.I.
+# file        u3-sqlitecpp-lib-values.cmake
+
+set(U3_URL_TO_EXTLIB_SQLITECPP_SRC_EXT https://github.com/SRombauts/SQLiteCpp.git)
+set(U3_ARCHIVE_NAME_EXTLIB_SQLITECPP sqlitecpp.xxx)
+set(U3_NAME_EXTLIB_SQLITECPP sqlitecpp)
+set(U3_VERSION_EXTLIB_SQLITECPP 3.3.3)
+
+string(MAKE_C_IDENTIFIER ${U3_VERSION_EXTLIB_SQLITECPP} U3_VERSION_EXTLIB_SQLITECPP_CID)
+
+set(U3_URL_TO_EXTLIB_SQLITECPP_BIN ${U3_URL_TO_EXTLIBS_BIN}/lib-sqlitecpp-bin-${U3_VERSION_EXTLIB_SQLITECPP}-${U3_ENV_GEN_POSTFIX_NAME_TO_EXT_LIB}.zip)
+set(U3_URL_TO_EXTLIB_SQLITECPP_SRC ${U3_URL_TO_EXTLIBS_SRC}/lib-sqlitecpp-src-${U3_VERSION_EXTLIB_SQLITECPP}.zip)
+
+set(U3_EXTLIB_SQLITECPP_3_3_3_MD5 f1290dbc52166570601d6ddfcaf54a3f)
+
+set(U3_EXTLIB_SQLITECPP_3_3_3_MD5_OrangePi_Clang_22_Clang_22__aarch64_Release_none 0)
+
+set(U3_EXTLIB_SQLITECPP_3_3_3_MD5_Linux_Clang_21_Clang_21__x64_Release_none 0)
+set(U3_EXTLIB_SQLITECPP_3_3_3_MD5_Linux_Clang_21_Clang_21__x64_Debug_ub 0)
+set(U3_EXTLIB_SQLITECPP_3_3_3_MD5_Linux_GNU_15_GNU_15__x64_Debug_thread 0)
+set(U3_EXTLIB_SQLITECPP_3_3_3_MD5_Linux_Clang_21_Clang_21__x64_Debug_none 0)
+set(U3_EXTLIB_SQLITECPP_3_3_3_MD5_Linux_Clang_21_Clang_21__x64_Debug_address d0cdc55313fbaa0829c99e043a54ef3d)
+set(U3_EXTLIB_SQLITECPP_3_3_3_MD5_Linux_Clang_21_Clang_21__x64_Release_address 4807e22422cf05879dd8ad9b2bd6faef)
+
+set(U3_EXTLIB_SQLITECPP_3_3_3_MD5_Android_Clang_21_Clang_21__aarch64_RelWithDebInfo_none 0)
+set(U3_EXTLIB_SQLITECPP_3_3_3_MD5_Android_Clang_21_Clang_21__aarch64_Debug_none 0)
+
+set(U3_EXTLIB_SQLITECPP_MD5 ${U3_EXTLIB_SQLITECPP${U3_VERSION_EXTLIB_SQLITECPP_CID}_MD5})

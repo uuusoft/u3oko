@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       ievents-runtime-interf-interfaces-syn.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       17.03.2026
 \project    u3_ievents_lib
 */

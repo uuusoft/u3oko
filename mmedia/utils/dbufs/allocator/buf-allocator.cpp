@@ -1,6 +1,6 @@
 /**
 \file       buf-allocator.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_dbufs
 */
@@ -43,7 +43,7 @@ BufAllocator::~BufAllocator ()
 
 
 utils::dbufs::video::IVideoBuf::ptr
-BufAllocator::create (IBufAllocator::size_type size)
+BufAllocator::create (IBufAllocator::size_buf_type size)
 {
   lock_type lock (mtx_);
 

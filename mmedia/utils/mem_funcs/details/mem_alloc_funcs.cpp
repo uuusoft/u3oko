@@ -1,7 +1,7 @@
 /**
 \file       mem_alloc_funcs.cpp
 \brief      функции работы с памятью
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_mem_funcs
 \brief      Файл реализации низкоуровных функций для работы с памятью
@@ -15,7 +15,6 @@ namespace utils::mem_funcs::details::consts
 constexpr std::uint32_t count_add_blocks = 3;    //< Расширение памяти на утроенный размер указателя платформы, чтобы гарантировать увеличение на размер указателя (реальный размер) + 1 байт на смещение настоящего указателя
 constexpr std::uint32_t size_align       = 64;   //< Требуемое выравнивание, должно быть больше или равно размеру указателя платформы
 }   // namespace utils::mem_funcs::details::consts
-
 
 namespace utils::mem_funcs::details
 {

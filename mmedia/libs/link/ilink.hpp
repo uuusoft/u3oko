@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       ilink.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_link
 */
@@ -15,8 +15,10 @@ class ILink
   // ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ILink)
 
-  ILink (const ILink& src)            = delete;
-  ILink& operator= (const ILink& src) = delete;
+  ILink (const ILink& src)                = delete;
+  ILink& operator= (const ILink& src)     = delete;
+  ILink (ILink&& src) noexcept            = delete;
+  ILink& operator= (ILink&& src) noexcept = delete;
 
   /// Функция подключения к удаленной точки-серверу
   bool connect (const CreateInfo& info);
@@ -53,13 +55,13 @@ class ILink
   virtual ~ILink () = default;
 
   //  ILink interface
-  virtual bool               connect_int (const CreateInfo&)                                                                                          = 0;
-  virtual bool               listen_int (const CreateInfo&)                                                                                           = 0;
-  virtual bool               destroy_int (const LinkDestroys&)                                                                                        = 0;
-  virtual bool               is_connected_int () const                                                                                                = 0;
-  virtual syn::IEvent::ptr   received_msg_int ()                                                                                                      = 0;
-  virtual void               complite_msg_int (const syn::IEvent::ptr&, const StateProcessEvent&)                                                     = 0;
-  virtual mem::IMem::raw_ptr get_imem_int ()                                                                                                          = 0;
-  virtual syn::IEvent::ptr   send_msg_int (const syn::IEvent::ptr&, const details::CallSyncs&, const details::Calls&, const syn::ISeqEvent::id_type&) = 0;
+  virtual auto connect_int (const CreateInfo&) -> bool                                                                                                      = 0;
+  virtual auto listen_int (const CreateInfo&) -> bool                                                                                                       = 0;
+  virtual auto destroy_int (const LinkDestroys&) -> bool                                                                                                    = 0;
+  virtual auto is_connected_int () const -> bool                                                                                                            = 0;
+  virtual auto received_msg_int () -> syn::IEvent::ptr                                                                                                      = 0;
+  virtual auto complite_msg_int (const syn::IEvent::ptr&, const StateProcessEvent&) -> void                                                                 = 0;
+  virtual auto get_imem_int () -> mem::IMem::raw_ptr                                                                                                        = 0;
+  virtual auto send_msg_int (const syn::IEvent::ptr&, const details::CallSyncs&, const details::Calls&, const syn::ISeqEvent::id_type&) -> syn::IEvent::ptr = 0;
 };
 }   // namespace libs::link

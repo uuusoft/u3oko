@@ -1,6 +1,6 @@
 /**
 \file       diff-impl.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_vgen_diff_lib
 */
@@ -26,7 +26,7 @@ DiffImpl::init ()
 
   cmp_get_const_ = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CCmpGTConstAlg::val_key));
   abs_diff_      = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CAbsDiffAlg::val_key));
-  pthreads_      = U3_CAST_PROP (::libs::iproperties::vers::system::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ())->get_mcalls_lockfree ();
+  pthreads_      = ::libs::iproperties::helpers::get_shared_prop_os ()->get_mcalls_lockfree ();
 }
 
 

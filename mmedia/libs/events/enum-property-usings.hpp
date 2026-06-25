@@ -2,7 +2,7 @@
 /**
 \file       enum-property-usings.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    mevents
 \brief      Объявление состояний "использование" свойства
 */

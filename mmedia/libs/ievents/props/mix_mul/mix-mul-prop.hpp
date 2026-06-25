@@ -1,14 +1,14 @@
 #pragma once
 /**
 \file       mix-mul-prop.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
 
 namespace libs::ievents::props::mix_mul
 {
-class MixMulProp final : public ievents::Event
+class MixMulProp final : virtual public ievents::Event
 {
   friend class boost::serialization::access;
   friend ::dlls::devents::impl::EventsImpl;
@@ -30,10 +30,11 @@ class MixMulProp final : public ievents::Event
   explicit MixMulProp (const Acessor& = Acessor (0));
   virtual ~MixMulProp () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ievents/props/mix_mul/mix-mul-prop";
+    static constexpr const char* chret = "libs/ievents/props/mix_mul/mix-mul-prop";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
@@ -41,10 +42,10 @@ class MixMulProp final : public ievents::Event
 
   protected:
   //  ievents::Event overrides
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void                        load_json_int (const ::boost::json::object& obj) override;
-  virtual void                        save_json_int (::boost::json::object& obj) const override;
-  virtual void                        copy_int (const IEvent::craw_ptr src) override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
+  virtual auto load_json_int (const ::boost::json::object&) -> void override;
+  virtual auto save_json_int (::boost::json::object&) const -> void override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 
   private:
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ievents::Event)

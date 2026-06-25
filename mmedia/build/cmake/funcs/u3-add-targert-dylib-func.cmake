@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        12.09.2024
 # copyright   Erashov A.I.
 # file        u3-add-targert-dylib-func.cmake
@@ -52,4 +52,7 @@ function(u3_add_target_dylib)
 
   set(U3_DEPENDENCY_TARGETS_LIST ${U3_DEPENDENCY_TARGETS_LIST} PARENT_SCOPE)
   set(U3_LIBS_OUR_VARIABLE_LIST ${U3_LIBS_OUR_VARIABLE_LIST} PARENT_SCOPE)
+
+  #message(NOTICE "U3_GVXX_ADD_TARGET_DYLIB_TARGET_NAME=${U3_GVXX_ADD_TARGET_DYLIB_TARGET_NAME}")
+  #essage(FATAL_ERROR "U3_SHARED_LINK_OPTIONS_CPP=${U3_SHARED_LINK_OPTIONS_CPP}")
 endfunction(u3_add_target_dylib)

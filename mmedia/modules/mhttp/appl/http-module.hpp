@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       http-module.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    mhttp
 */
@@ -28,36 +28,35 @@ class HttpModule final : public ::libs::ilink::appl::leaf::LeafModule
   using impl_server_type = std::shared_ptr< impl::beast::listener >;
 
   //  IApplication overrides
-  virtual void init_appl_data_int () override;
+  virtual auto init_appl_data_int () -> void override;
 
   //  BaseModule overrides
-  virtual void appl_init_int (const syn::InitApplication& info) override;
-  virtual void init_links_int (const syn::InitApplication& info) override;
-  virtual void init_proxys_int () override;
-  virtual bool appl_deinit_int () override;
-  virtual void update_catch_funcs_int () override;
+  virtual auto appl_init_int (const syn::InitApplication& info) -> void override;
+  virtual auto init_links_int (const syn::InitApplication& info) -> void override;
+  virtual auto init_proxys_int () -> void override;
+  virtual auto appl_deinit_int () -> bool override;
+  virtual auto update_catch_funcs_int () -> void override;
+  virtual auto get_recv_link_int () -> recv_links_type override;
 
   //  LeafModule overrides
-  virtual recv_links_type get_recv_link () override;
-  virtual bool            catch_event (syn::IEvent::ptr& evnt) override;
-  virtual bool            is_now_thread_to_sleep (bool now_recv_evnt) override;
+  virtual auto catch_event_int (syn::IEvent::ptr& evnt) -> bool override;
+  virtual auto is_now_thread_to_sleep_int (bool now_recv_evnt) -> bool override;
 
   // internal
-  void check_process ();
-  void run_http_server ();
-  void stop_http_server ();
-  void prepare_resources ();
-  void create_rw_copy ();
-  void delete_rw_copy ();
-  void load_def_resource2mem ();
-  void process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr);
-  void process_zip_data_event (syn::ZipDataEvent::raw_ptr);
-  void debug ();
-
-  process_res_type process_http_request (const std::string& req, const std::string& body);
-  process_res_type process_request_event (const std::string& req, const std::string& body);
-  process_res_type process_request_file (const std::string& req, const std::string& body);
-  bool             process_request_event_debug (const std::string&, const std::string&, const std::string&);
+  auto check_process () -> void;
+  auto start_http_server () -> void;
+  auto stop_http_server () -> void;
+  auto prepare_resources () -> void;
+  auto create_rw_copy () -> void;
+  auto delete_rw_copy () -> void;
+  auto load_def_resource2mem () -> void;
+  auto process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr) -> void;
+  auto process_zip_data_event (syn::ZipDataEvent::raw_ptr) -> void;
+  auto debug () -> void;
+  auto process_http_request (const std::string& req, const std::string& body) -> process_res_type;
+  auto process_request_event (const std::string& req, const std::string& body) -> process_res_type;
+  auto process_request_file (const std::string& req, const std::string& body) -> process_res_type;
+  auto process_request_event_debug (const std::string&, const std::string&, const std::string&) -> bool;
 
   impl_server_type                  impl_;               //< Реализация сервера
   std::thread                       impl_thread_;        //< Поток для сервера

@@ -1,7 +1,7 @@
 /**
 \file       update-home-folder-func.cpp
 \date       25.02.2026
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_helpers_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"

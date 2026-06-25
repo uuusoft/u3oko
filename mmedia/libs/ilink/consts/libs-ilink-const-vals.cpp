@@ -1,7 +1,7 @@
 /**
 \file       libs-ilink-const-vals.cpp
 \date       07.03.2026
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ilink
 */
 #include "mmedia/includes/control-defines-includes.hpp"

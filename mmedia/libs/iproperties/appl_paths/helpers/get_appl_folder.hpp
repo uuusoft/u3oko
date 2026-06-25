@@ -2,7 +2,7 @@
 /**
 \file       get_appl_folder.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_iproperties_lib
 */
 
@@ -45,7 +45,7 @@ get_data_folder (const std::string& name_appl, const std::string& name_service)
 #if defined(U3_OS_WIN32_DESKTOP) || defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_MACX_DESKTOP) || defined(U3_OS_ORANGE_PI)
   ret = get_appl_folder (name_appl);
 #elif defined(U3_OS_ANDROID)
-  auto                            orinfo = U3_CAST_PROP (vers::system::ISystemProperty::raw_ptr) (iproperties::helpers::get_shared_prop_os ());
+  auto*                           orinfo = iproperties::helpers::get_shared_prop_os ();
   syn::ISharedProperty::lock_type lock (orinfo->get_sync ());
   ret = orinfo->get_mdata_lockfree ();
 #else

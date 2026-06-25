@@ -1,7 +1,7 @@
 /**
 \file       morph-buf-info.cpp
 \date       08.03.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 
 \project    u3_ievents_lib
 */

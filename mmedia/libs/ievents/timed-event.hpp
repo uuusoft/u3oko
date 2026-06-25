@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       timed-event.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
@@ -9,7 +9,7 @@
 namespace libs::ievents
 {
 /// Базовый класс всех событий системы с временной меткой
-class TimedEvent : public ievents::Event
+class TimedEvent : virtual public ievents::Event
 {
   friend class boost::serialization::access;
   friend ::dlls::devents::impl::EventsImpl;
@@ -29,10 +29,11 @@ class TimedEvent : public ievents::Event
   explicit TimedEvent (const Acessor& = Acessor (0));
   virtual ~TimedEvent () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ievents/timed-event";
+    static constexpr const char* chret = "libs/ievents/timed-event";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
@@ -41,7 +42,7 @@ class TimedEvent : public ievents::Event
   protected:
   boost::posix_time::ptime time_;   //<
 
-  virtual void copy_int (const IEvent::craw_ptr src) override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 
   private:
   // internal types
@@ -52,7 +53,7 @@ class TimedEvent : public ievents::Event
   template< class Archive >
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
 };
 }   // namespace libs::ievents
 

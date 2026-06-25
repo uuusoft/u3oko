@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       boost-lib-includes.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.05.2018
 \project    u3_includes
 */
@@ -29,6 +29,11 @@
 #  pragma warning(disable : 6386)
 #endif
 
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_serialize.hpp>
+#include <boost/uuid/uuid_io.hpp>
+
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/utility/string_view.hpp>
 #include <boost/json.hpp>
@@ -41,14 +46,11 @@
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/archive/tmpdir.hpp>
 
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/uuid/uuid_serialize.hpp>
-#include <boost/uuid/uuid_io.hpp>
-
 #include <boost/serialization/binary_object.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/access.hpp>
+#include <boost/serialization/nvp.hpp>
+#include <boost/serialization/split_free.hpp>
 #include <boost/serialization/shared_ptr_132.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 #include <boost/serialization/string.hpp>
@@ -101,5 +103,7 @@
 #include <boost/lockfree/queue.hpp>
 #include <boost/lockfree/spsc_queue.hpp>
 #include <boost/lockfree/stack.hpp>
+
+#include <boost/align/is_aligned.hpp>
 
 // NOLINTEND

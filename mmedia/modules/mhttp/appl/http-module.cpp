@@ -1,6 +1,6 @@
 /**
 \file       http-module.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    mhttp
 */
@@ -13,19 +13,22 @@ namespace modules::mhttp::appl
 {
 HttpModule::HttpModule ()
 {
+  U3_XLOG_DBG ("HttpModule::HttpModule::---->");
   try
   {
-    isys_      = U3_CAST_PROP (syn::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ());
+    isys_ = ::libs::iproperties::helpers::get_shared_prop_os ();
+
     auto iappl = isys_->get_paths_lockfree ();
 
     resource_loader_ = std::make_shared< syn::Loader > (::libs::iproperties::xml::InitLoaderInfo (iappl));
     text_id_module_  = ::libs::ilink::consts::id_http;
     shared_state_    = std::make_shared< WebSharedState > ();
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_LOG_HTTP_EXCEPT (e.what ());
+    U3_LOG_HTTP_EXCEPT (excpt.what ());
   }
+  U3_XLOG_DBG ("HttpModule::HttpModule::<----");
 }
 
 
@@ -53,26 +56,28 @@ HttpModule::load_def_resource2mem ()
 void
 HttpModule::delete_rw_copy ()
 {
-  if (temp_folder_.empty ())
+  U3_XLOG_DBG ("HttpModule::delete_rw_copy::---->");
+  if (!temp_folder_.empty ())
   {
-    return;
+    //  Удаляем старые временные данные.
+    if (::libs::helpers::files::is_folder (temp_folder_))
+    {
+      ::libs::helpers::files::delete_folder (temp_folder_);
+    }
+    temp_folder_.clear ();
   }
-  //  Удаляем старые временные данные.
-  if (::libs::helpers::files::is_folder (temp_folder_))
-  {
-    ::libs::helpers::files::delete_folder (temp_folder_);
-  }
-
-  temp_folder_.clear ();
+  U3_XLOG_DBG ("HttpModule::delete_rw_copy::<----");
 }
 
 
 void
 HttpModule::prepare_resources ()
 {
+  U3_XLOG_DBG ("HttpModule::prepare_resources::---->");
   delete_rw_copy ();
   create_rw_copy ();
   load_def_resource2mem ();
+  U3_XLOG_DBG ("HttpModule::prepare_resources::<----");
 }
 
 
@@ -96,6 +101,7 @@ HttpModule::create_rw_copy ()
 void
 HttpModule::process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr props)
 {
+  U3_XLOG_DBG ("HttpModule::process_change_state_process::---->");
   try
   {
     if (!props->is_start ())
@@ -103,17 +109,19 @@ HttpModule::process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr 
       U3_LOG_HTTP_MARK ("stop http module");
       stop_module_ = true;
       stop_http_server ();
-      return;
     }
-
-    U3_LOG_HTTP_MARK ("start http module");
-    stop_http_server ();
-    run_http_server ();
+    else
+    {
+      U3_LOG_HTTP_MARK ("start http module");
+      stop_http_server ();
+      start_http_server ();
+    }
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_LOG_HTTP_EXCEPT (e.what ());
+    U3_LOG_HTTP_EXCEPT (excpt.what ());
   }
+  U3_XLOG_DBG ("HttpModule::process_change_state_process::<----");
 }
 
 
@@ -152,9 +160,9 @@ HttpModule::process_zip_data_event (syn::ZipDataEvent::raw_ptr props)
     std::copy (source_id.begin (), source_id.end (), tempbuf.data () + count_sizes);
     shared_state_->broadcast_send (std::move (tempbuf));
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_LOG_HTTP_EXCEPT (e.what ());
+    U3_LOG_HTTP_EXCEPT (excpt.what ());
   }
 }
 
@@ -184,13 +192,14 @@ HttpModule::debug ()
 HttpModule::process_res_type
 HttpModule::process_http_request (const std::string& req, const std::string& body)
 {
+  U3_XLOG_DBG ("HttpModule::process_http_request::---->" + TOLOG (req));
   // events
   if (std::regex_match (req, std::regex ("^/string$")))
   {
     U3_LOG_HTTP_DBG ("process_request_event for" + TOLOG (req) + TOLOG (body));
     return process_request_event (req, body);
   }
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   // runtime data
   if (std::regex_match (req, std::regex ("^/mem_resource.*")))
   {
@@ -209,32 +218,30 @@ HttpModule::process_request_event_debug (
   const std::string& content,
   const std::string& id_data)
 {
-#if 1
-  return false;
-#else
   if ("libs/ihttp_events/events/mem-resource-http-event" == id_event)
   {
     return false;
   }
-  if (::libs::imdata_events::events::ListDevicesDataEvent::gen_get_mid () == id_event)
+  // if (::libs::imdata_events::events::ListDevicesDataEvent::gen_get_mid () == id_event)
+  if (::libs::ievents_events::events::GetEventsFromBase::gen_get_mid () == id_event)
   {
-    U3_LOG_HTTP_DEV (TOLOG (id_event) + TOLOG (content) + TOLOG (id_data));
-    return true;
+    // U3_LOG_HTTP_DEV (TOLOG (id_event) + TOLOG (content) + TOLOG (id_data));
+    // return true;
   }
   return false;
-#endif
 }
 
 
 HttpModule::process_res_type
 HttpModule::process_request_event (const std::string&, const std::string& body)
 {
-  boost::beast::http::status bstatus = boost::beast::http::status::ok;
+  U3_XLOG_DBG ("HttpModule::process_request_event::---->");
+  syn::http::status bstatus = syn::http::status::ok;
 
+  std::string mime = "text/plain";
   std::string content;
   std::string id_event;
-  std::string recv_event_data;
-  std::string mime = "text/plain";
+  std::string event_data;
 
   try
   {
@@ -242,6 +249,7 @@ HttpModule::process_request_event (const std::string&, const std::string& body)
 
     std::stringstream           strcontent (content);
     boost::property_tree::ptree pt;
+
     boost::property_tree::read_json (strcontent, pt);
 
     const auto url_id_event   = pt.get< std::string > ("id_event", "/libs/events/event");
@@ -251,20 +259,23 @@ HttpModule::process_request_event (const std::string&, const std::string& body)
     const auto type_request   = ::libs::link::details::to_request (url_id_request);
     const auto xml_type_data  = "xml" == id_data ? true : false;
 
+    U3_CHECK_NT (!xml_type_data, "xml_type_data rised!")
     U3_CHECK (helpers::url_decode (url_id_event, id_event), "URL decode id event, " + url_id_event);
-    U3_CHECK (helpers::url_decode (url_xml_event, recv_event_data), "URL decode utrl, " + url_xml_event);
-    const auto enable_debug = process_request_event_debug (id_event, content, id_data);
-    if (enable_debug)
+    U3_CHECK (helpers::url_decode (url_xml_event, event_data), "URL decode utrl, " + url_xml_event);
+
+    const auto dbg_enable = process_request_event_debug (id_event, content, id_data);
+    if (dbg_enable)
     {
       U3_LOG_HTTP_DEV ("post " + ::libs::link::details::to_string (type_request) + TOLOG (url_id_event) + TOLOG (id_event));
-      U3_LOG_HTTP_DEV ("post" + TOLOG (recv_event_data) + VTOLOG (xml_type_data));
+      U3_LOG_HTTP_DEV ("post" + TOLOG (event_data) + VTOLOG (xml_type_data));
     }
 
     auto idemons    = ::libs::iproperties::helpers::cast_prop_demons ();
     auto ievents    = idemons->get_events_lockfree ();
     auto recv_event = ievents->impl ()->get (id_event);
-    U3_CHECK (recv_event, "null decode event" + TOLOG (id_event));
-    U3_CHECK (id_event == recv_event->get_mid (), id_event + "!=" + recv_event->get_mid ());
+
+    U3_CHECK (recv_event, "null decode event" + STOLOG (id_event));
+    U3_CHECK (id_event == recv_event->get_mid (), id_event + "!=" + STOLOG (recv_event->get_mid ()));
 
     if (syn::Calls::generate == type_request)
     {
@@ -273,27 +284,26 @@ HttpModule::process_request_event (const std::string&, const std::string& body)
     }
     else
     {
-      if (!recv_event_data.empty ())
+      if (!event_data.empty ())
       {
         if (xml_type_data)
         {
-          U3_CHECK (::libs::iproperties::helpers::xml2event (recv_event_data, recv_event), "convert to event" + TOLOG (recv_event_data));
+          U3_CHECK (::libs::iproperties::helpers::xml2event (event_data, recv_event), "convert to event" + TOLOG (event_data));
         }
         else
         {
-          recv_event->load_json (recv_event_data);
+          recv_event->load_json (event_data);
         }
       }
 
       syn::IEvent::ptr send_event;
       //  Если сообщение можно обработать внутри htpp сервера делаем это без пересылки в другие модули.
-      auto finger2intfunc = int_catch_funcs_.find (recv_event->get_mid ());
-      if (int_catch_funcs_.end () != finger2intfunc)
+      auto ffinger = int_catch_funcs_.find (recv_event->get_mid ());
+      if (int_catch_funcs_.end () != ffinger)
       {
-        send_event = finger2intfunc->second (recv_event, true, current_seq_);
+        send_event = ffinger->second (recv_event, true, current_seq_);
       }
-
-      //  аче пересылаем сообщение в основной модуль системы, запросы всегда синхронные
+      // Иначе пересылаем сообщение в основной модуль системы, запросы всегда синхронные
       if (!send_event)
       {
         const auto call_type = (type_request == syn::Calls::request) ? syn::CallSyncs::sync : syn::CallSyncs::async;
@@ -305,17 +315,18 @@ HttpModule::process_request_event (const std::string&, const std::string& body)
       {
         content = xml_type_data ? ::libs::iproperties::helpers::event2xml (send_event) : send_event->save_json ();
       }
-      if (enable_debug)
+      if (dbg_enable)
       {
         U3_LOG_HTTP_DEV (TOLOG (content));
       }
     }
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_LOG_HTTP_EXCEPT (e.what () + TOLOG (recv_event_data) + TOLOG (content));
+    U3_LOG_HTTP_EXCEPT (excpt.what () + TOLOG (id_event));
+    U3_LOG_HTTP_MARK (TOLOG (event_data));
     content.clear ();
-    bstatus = boost::beast::http::status::internal_server_error;
+    bstatus = syn::http::status::internal_server_error;
   }
   return { std::vector< char > (content.begin (), content.end ()), mime, bstatus };
 }
@@ -340,9 +351,11 @@ get_resource_id_from_query (const std::string& query)
 HttpModule::process_res_type
 HttpModule::process_request_file (const std::string& req, const std::string& body)
 {
-  lock_type                                  lock (mtx_);
+  U3_XLOG_DBG ("HttpModule::process_request_file::---->");
+  lock_type lock (mtx_);
+
   impl::beast::handler_data_type::value_type mem;
-  boost::beast::http::status                 bstatus = boost::beast::http::status::ok;
+  syn::http::status                          bstatus = syn::http::status::ok;
 
   std::string mime     = "text/html";
   auto        req_path = req.substr (0, req.find ('?'));
@@ -364,7 +377,7 @@ HttpModule::process_request_file (const std::string& req, const std::string& bod
     ::libs::helpers::files::load_file2mem (file_path, mem);
     if (mem.empty ())
     {
-      bstatus = boost::beast::http::status::not_found;
+      bstatus = syn::http::status::not_found;
     }
     else
     {
@@ -372,23 +385,25 @@ HttpModule::process_request_file (const std::string& req, const std::string& bod
       mime           = helpers::file_ext2mime (ext.string ());
     }
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_LOG_HTTP_EXCEPT (e.what ());
-    bstatus = boost::beast::http::status::bad_request;
+    U3_LOG_HTTP_EXCEPT (excpt.what ());
+    bstatus = syn::http::status::bad_request;
   }
   return { mem, mime, bstatus };
 }
 
 
 void
-HttpModule::run_http_server ()
+HttpModule::start_http_server ()
 {
+  U3_XLOG_DBG ("HttpModule::start_http_server::---->");
   prepare_resources ();
   debug ();
 
   impl_thread_ = std::thread (
     [this] () -> void {
+      U3_XLOG_DBG ("HttpModule::start_http_server::thread---->");
       try
       {
         const auto                address  = boost::asio::ip::make_address ("0.0.0.0");
@@ -409,21 +424,25 @@ HttpModule::run_http_server ()
         work_threads_.reserve (consts::count_work_threads);
 
         for (auto i = consts::count_work_threads; i > 0; --i)
+        {
           work_threads_.emplace_back (
             [&ioc] {
               ioc.run ();
             });
+        }
 
         ioc.run ();
       }
-      catch (const std::exception& e)
+      catch (const std::exception& excpt)
       {
-        U3_LOG_HTTP_EXCEPT (e.what ());
+        U3_LOG_HTTP_EXCEPT (excpt.what ());
       }
+      U3_XLOG_DBG ("HttpModule::start_http_server::thread<----");
     });
-#if 1
+#if 0
   ssl_impl_thread_ = std::thread (
     [this] () -> void {
+      U3_XLOG_DBG ("HttpModule::start_http_server::sslthread---->");
       try
       {
         const auto                address  = boost::asio::ip::make_address ("0.0.0.0");
@@ -447,19 +466,23 @@ HttpModule::run_http_server ()
         ssl_work_threads_.reserve (consts::count_work_threads);
 
         for (auto i = consts::count_work_threads; i > 0; --i)
+        {
           ssl_work_threads_.emplace_back (
             [&ioc] {
               ioc.run ();
             });
+        }
 
         ioc.run ();
       }
-      catch (const std::exception& e)
+      catch (const std::exception& excpt)
       {
-        U3_LOG_HTTP_EXCEPT (e.what ());
+        U3_LOG_HTTP_EXCEPT (excpt.what ());
       }
+      U3_XLOG_DBG ("HttpModule::start_http_server::sslthread<----");
     });
 #endif
+  U3_XLOG_DBG ("HttpModule::start_http_server::<----");
 }
 
 
@@ -467,7 +490,6 @@ void
 HttpModule::stop_http_server ()
 {
   skip_state_.reset ();
-
   // EAI-BOOST-BEAST
   // work_threads_???
   // impl_.stop ();

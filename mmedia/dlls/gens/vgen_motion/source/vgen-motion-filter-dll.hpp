@@ -3,7 +3,7 @@
 \file       vgen-motion-filter-dll.hpp
 \brief      Filter for corrected image
 \date       01.08.2016
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_vgd_motion
 */
 
@@ -28,7 +28,7 @@ class Filter final :
   virtual void call_int (::libs::icore::impl::var1::obj::dll::CallInterfInfo&) override;
 
   void init_pts (::libs::icore::impl::var1::obj::ConnectInfo*);
-  void itransform ();
+  auto itransform () -> void;
   void make_motion_est_buf (syn::EventBufsInfoMotionEst&, const syn::IVideoBuf&, const syn::IVideoBuf&, syn::IVideoBuf&);
 
   off_buf2buf_type           indx2prev_buf_;   //<

@@ -1,6 +1,6 @@
 /**
 \file       uids2bytes_funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_helpers_lib
 \brief      Функции для получения количества байт и размерности от формата данных
@@ -15,14 +15,19 @@ namespace libs::helpers::uids::helpers
 std::uint32_t
 idval2fourcc (const libs::helpers::uids::minor::id_val& par)
 {
+  // UNV12NV12 (0x3231564E)1 Plane of Y → 1 Interleaved Plane of U followed by
   static const std::unordered_map< libs::helpers::uids::minor::id_val, const std::uint32_t > ids2fourccs = {
     { libs::helpers::uids::minor::id_val::mjpg, consts::fourcc::mjpg },
     { libs::helpers::uids::minor::id_val::rgb32, consts::fourcc::RAW },
+    { libs::helpers::uids::minor::id_val::rgb24, consts::fourcc::RAW },
     { libs::helpers::uids::minor::id_val::y8, consts::fourcc::Y8 },
     { libs::helpers::uids::minor::id_val::i420, consts::fourcc::I420 },
     { libs::helpers::uids::minor::id_val::yuy2, consts::fourcc::YUY2 },
     { libs::helpers::uids::minor::id_val::iyuv, consts::fourcc::VYUY },
     { libs::helpers::uids::minor::id_val::yuyv, consts::fourcc::YUYV },
+    { libs::helpers::uids::minor::id_val::nv21, consts::fourcc::NV21 },
+    { libs::helpers::uids::minor::id_val::y16, consts::fourcc::Y16 },
+    //{ libs::helpers::uids::minor::id_val::ycb, consts::fourcc::YVYU },
     //{ libs::helpers::uids::minor::id_val::yvyu, consts::fourcc::YVYU },
     { libs::helpers::uids::minor::id_val::device_specific, consts::fourcc::RAW }
   };
@@ -30,7 +35,7 @@ idval2fourcc (const libs::helpers::uids::minor::id_val& par)
   auto finger = ids2fourccs.find (par);
   if (ids2fourccs.end () == finger)
   {
-    U3_XLOG_WARN ("idval2fourcc: minor::id_val not found, default value for" + VTOLOG (U3_CAST_UINT32_FORCE (par)) + " is consts::fourcc::YUY2");
+    U3_XLOG_WARN ("idval2fourcc:: id_val not found, default value for" + VTOLOG (U3_CAST_UINT32_FORCE (par)) + " is consts::fourcc::YUY2");
     return consts::fourcc::YUY2;
   }
   return finger->second;
@@ -70,42 +75,34 @@ fourcc2guid (std::uint32_t par)
 std::uint32_t
 get_count_bytes_from_format (const libs::helpers::uids::minor::id_val& format)
 {
-  if (format == minor::id_val::rgb32)
-  {
-    return 4;
-  }
-  if (format == minor::id_val::rgb24)
-  {
-    return 3;
-  }
-  if (format == minor::id_val::yuy2 ||
-      format == minor::id_val::ycb ||
-      format == minor::id_val::yuyv ||
-      format == minor::id_val::yuyv ||
-      format == minor::id_val::uyvy ||
-      format == minor::id_val::iyuv ||
-      format == minor::id_val::yv12 ||
-      format == minor::id_val::y16 ||
-      format == minor::id_val::rgb555 ||
-      format == minor::id_val::rgb565)
-  {
-    return 2;
-  }
-  if (format == minor::id_val::rgb8 ||
-      format == minor::id_val::y8 ||
-      format == minor::id_val::nv21 ||
-      format == minor::id_val::i420)
-  {
-    return 1;
-  }
-  if (format == minor::id_val::device_specific)
-  {
-    return 4;
-  }
+  const static std::unordered_map< libs::helpers::uids::minor::id_val, std::uint32_t > vals = {
+    { minor::id_val::device_specific, 4 },
+    { minor::id_val::rgb32, 4 },
+    { minor::id_val::rgb24, 3 },
+    { minor::id_val::yuy2, 2 },
+    { minor::id_val::ycb, 2 },
+    { minor::id_val::yuyv, 2 },
+    { minor::id_val::yuyv, 2 },
+    { minor::id_val::uyvy, 2 },
+    { minor::id_val::iyuv, 2 },
+    { minor::id_val::yv12, 2 },
+    { minor::id_val::y16, 2 },
+    { minor::id_val::rgb555, 2 },
+    { minor::id_val::rgb565, 2 },
+    { minor::id_val::rgb8, 1 },
+    { minor::id_val::y8, 1 },
+    { minor::id_val::nv21, 1 },
+    { minor::id_val::i420, 1 }
+  };
 
-  U3_XLOG_WARN ("get_count_bytes_from_format: unacceptable guid format name");
-  //  по умолчанию определяем максимальное количество байт на пиксель (т.е. std::int16_t RGBA = 4x2=8 байт).
-  return 8;
+  auto finger = vals.find (format);
+  if (vals.end () == finger)
+  {
+    U3_XLOG_WARN ("get_count_bytes_from_format: unknown id_val format" + TOLOG (to_string (format)));
+    // по умолчанию определяем максимальное количество байт на пиксель (т.е. std::int16_t RGBA = 4x2=8 байт)
+    return 8;
+  }
+  return finger->second;
 }
 
 

@@ -2,7 +2,7 @@
 /**
 \file       isync-event.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    mevents
 \brief      Объявление события синхронизации пересылки другого события
 */
@@ -31,16 +31,17 @@ class ISyncEvent : public IWrapBaseEvent
   explicit ISyncEvent (const Acessor& = Acessor (0), IEvent::ptr = IEvent::ptr ());
   virtual ~ISyncEvent () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/events/isync-event";
+    static constexpr const char* chret = "libs/events/isync-event";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
   protected:
-  virtual IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void        copy_int (const IEvent::craw_ptr src) override;
+  virtual auto clone_int (const ::libs::events::Deeps& deep) const -> IEvent::ptr override;
+  virtual void copy_int (const IEvent::craw_ptr src) override;
 
   private:
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (IWrapBaseEvent)

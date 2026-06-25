@@ -1,6 +1,6 @@
 /**
 \file       caller-impl-imcaller-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_optim_lib
 */
@@ -27,9 +27,9 @@ CallerImpl::mthreads_call (
     syn::AddOpTime exp_stat (expand_time_algs, ::libs::core::graph::get_ext_graph_node_id (id_node), funct.pfunc_->get_algoritm_name ());
     mthreads_call_int (funct, info, athreads);
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what ());
+    U3_LOG_DATA_EXCEPT (excpt.what ());
   }
   catch (...)
   {

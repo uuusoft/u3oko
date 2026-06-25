@@ -1,7 +1,7 @@
 /**
-\file       load_file2mem_funct.cpp
+\file       load_file2mem_func.cpp
 \date       23.02.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_lib_helpers
 */
 #include "mmedia/includes/control-defines-includes.hpp"

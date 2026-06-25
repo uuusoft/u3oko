@@ -1,8 +1,7 @@
 /**
 \file       mix-mul-prop.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
-
 \project    u3_ievents_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"

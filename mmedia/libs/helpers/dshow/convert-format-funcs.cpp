@@ -1,6 +1,6 @@
 /**
 \file       convert-format-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2018
 \project    u3_dshow_vgen
 */
@@ -58,7 +58,6 @@ convert2format (
   U3_ASSERT (vihead);
   U3_ASSERT (width > 0);
   U3_ASSERT (height > 0);
-  // U3_ASSERT (!format.empty ());
 
   vihead->dwCopyProtectFlags = 0;
   vihead->dwInterlaceFlags   = 0;
@@ -67,10 +66,9 @@ convert2format (
   vihead->dwReserved1        = 0;
   vihead->dwReserved2        = 0;
 
-  vihead->bmiHeader.biBitCount     = U3_CAST_INT16 (bits_count);
-  vihead->bmiHeader.biClrImportant = 0;
-  vihead->bmiHeader.biClrUsed      = 0;
-  // vihead->bmiHeader.biCompression   = guid2dword_compression (format);
+  vihead->bmiHeader.biBitCount      = U3_CAST_INT16 (bits_count);
+  vihead->bmiHeader.biClrImportant  = 0;
+  vihead->bmiHeader.biClrUsed       = 0;
   vihead->bmiHeader.biCompression   = 0;   // libs::helpers::uids::helpers::idval2fourcc (format);
   vihead->bmiHeader.biPlanes        = 1;
   vihead->bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
@@ -87,7 +85,7 @@ convert2format (
   SetRect (&vihead->rcTarget, 0, 0, width, height);
 }
 
-#  if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 unsigned long
 guid2dword_compression (const utils::cuuid& guid)
 {
@@ -112,7 +110,7 @@ guid2dword_compression (const utils::cuuid& guid)
   return find->second;
 }
 #  endif
-#  if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 utils::cuuid
 dword_compression2guid (const unsigned long val, const BITMAPINFOHEADER* bmp)
 {

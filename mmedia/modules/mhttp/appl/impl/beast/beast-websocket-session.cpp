@@ -1,10 +1,11 @@
 /**
 \file       beast-websocket-session.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       31.03.2026
 \project    mhttp
 \original   https://github.com/boostorg/beast/blob/develop/example/http/server/async/http_server_async.cpp
 */
+// #define U3_USE_DEB_LOG_LEVEL
 #include "../../../module-http-includes_int.hpp"
 #include "mmedia/dlls/terminals/video_sender/consts/video-sender-const-vals.hpp"
 #include "../../http-module-syn.hpp"
@@ -13,13 +14,9 @@ namespace modules::mhttp::impl::beast
 {
 websocket_session::websocket_session (
   boost::asio::ip::tcp::socket&& socket,
-  // const handler_func_type&       ws_handler,
-  const shared_state_ptr_type& shared_state) :
-
+  const shared_state_ptr_type&   shared_state) :
   ws_ (std::move (socket)),
-  // ws_handler_ (ws_handler),
-  shared_state_ (shared_state),
-  size_pending_send_ (0)
+  shared_state_ (shared_state)
 {
   U3_XLOG_DEV ("websocket_session::on_create" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
 }
@@ -39,7 +36,7 @@ websocket_session::on_accept (boost::beast::error_code ec)
   U3_XLOG_DEV ("websocket_session::on_accept" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
   if (ec)
   {
-    return fail (ec, "accept");
+    return u3beast_fail (ec, "websocket_session::accept");
   }
 
   shared_state_->join (this);
@@ -66,13 +63,13 @@ websocket_session::on_read (boost::beast::error_code ec, std::size_t bytes_trans
   // U3_XLOG_DEV ("websocket_session::on_read" + VTOLOG (bytes_transferred));
   boost::ignore_unused (bytes_transferred);
   // This indicates that the websocket_session was closed
-  if (ec == boost::beast::websocket::error::closed)
+  if (ec == appl::syn::websocket::error::closed)
   {
     return;
   }
   if (ec)
   {
-    return fail (ec, "read");
+    return u3beast_fail (ec, "websocket_session::read");
   }
   // Send to all connections
   // shared_state_->send(beast::bufs_to_string(buf_.data()));
@@ -137,7 +134,7 @@ websocket_session::on_write (
   //  boost::ignore_unused (bytes_transferred);
   if (ec)
   {
-    return fail (ec, "write");
+    return u3beast_fail (ec, "websocket_session::write");
   }
 
   // Remove from the queue

@@ -1,17 +1,10 @@
 #pragma once
 /**
 \file       codec-funcs-const-vals.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_codec_funcs
 */
-#ifndef U3_CAST_CODECS
-#  define U3_CAST_CODECS reinterpret_cast
-#endif
-
-#ifndef MPTR
-#  define MPTR qword ptr
-#endif
 
 namespace dlls::codecs::consts
 {

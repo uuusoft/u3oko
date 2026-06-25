@@ -1,7 +1,7 @@
 /**
 \file       expanded-time.cpp
 \date       10.04.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_helpers_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -11,11 +11,6 @@
 
 namespace libs::helpers::statistic
 {
-ExpandedTime::~ExpandedTime ()
-{
-}
-
-
 ExpandedTime&
 ExpandedTime::operator+= (const ExpandedTime& val)
 {
@@ -38,7 +33,7 @@ ExpandedTime::serialize (Archive& arh, const std::uint32_t /* file_version */)
 }
 
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 void
 tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const NodeID& src)
 {

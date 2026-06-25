@@ -1,6 +1,6 @@
 /**
 \file       morph-operator.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       16.07.2018
 \project    u3_vgen_mops_lib
 */
@@ -33,18 +33,18 @@ MorphOperator::applay_operation2buf (
   ::libs::bufs::Bufs*               pbuf,
   ::utils::dbufs::video::IVideoBuf* pdst)
 {
-  pthreads_ = U3_CAST_PROP (::libs::iproperties::vers::system::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ())->get_mcalls_lockfree ();
+  pthreads_ = ::libs::iproperties::helpers::get_shared_prop_os ()->get_mcalls_lockfree ();
 
   switch (op.morph_type_)
   {
-  case ::libs::ievents::props::videos::generic::morph::MorphOps::empty:
+  case syn::MorphOps::empty:
     break;
-  case ::libs::ievents::props::videos::generic::morph::MorphOps::binary:
+  case syn::MorphOps::binary:
     break;
-  case ::libs::ievents::props::videos::generic::morph::MorphOps::dilation:
+  case syn::MorphOps::dilation:
     dilation_buf (id_node, op, pbuf, pdst);
     break;
-  case ::libs::ievents::props::videos::generic::morph::MorphOps::erosion:
+  case syn::MorphOps::erosion:
     erosion_buf (id_node, op, pbuf, pdst);
     break;
   default:
@@ -68,49 +68,35 @@ get_mkoeff_for_erosion_operation (const std::int16_t size_spot)
 
   if (size_spot <= 3)
   {
-    std::int16_t       mval      = ::libs::optim::s16bit::conv::base::c3x3::cores::spot1.center_val ();
+    std::int16_t       mval      = syn::c3x3::cores::spot1.center_val ();
     const std::int32_t summ_spot = mval * size_spot * size_spot + 1;
-
-    ret = ::libs::optim::s16bit::conv::get_mkoeff_core< ::libs::optim::s16bit::conv::base::c3x3::cores::values_core_type > (::libs::optim::s16bit::conv::base::c3x3::cores::spot1, summ_spot);
-    return ret;
+    return ::libs::optim::s16bit::conv::get_mkoeff_core< syn::c3x3::cores::values_core_type > (syn::c3x3::cores::spot1, summ_spot);
   }
 
   if (size_spot <= 5)
   {
-    std::int16_t       mval      = ::libs::optim::s16bit::conv::base::c5x5::cores::spot1.center_val ();
+    std::int16_t       mval      = syn::c5x5::cores::spot1.center_val ();
     const std::int32_t summ_spot = mval * size_spot * size_spot + 1;
-
-    ret = ::libs::optim::s16bit::conv::get_mkoeff_core< ::libs::optim::s16bit::conv::base::c5x5::cores::values_core_type > (
-      ::libs::optim::s16bit::conv::base::c5x5::cores::spot1, summ_spot);
-    return ret;
+    return ::libs::optim::s16bit::conv::get_mkoeff_core< syn::c5x5::cores::values_core_type > (syn::c5x5::cores::spot1, summ_spot);
   }
 
   if (size_spot <= 7)
   {
-    std::int16_t       mval      = ::libs::optim::s16bit::conv::base::c7x7::cores::spot1.center_val ();
+    std::int16_t       mval      = syn::c7x7::cores::spot1.center_val ();
     const std::int32_t summ_spot = mval * size_spot * size_spot + 1;
-
-    ret = ::libs::optim::s16bit::conv::get_mkoeff_core< ::libs::optim::s16bit::conv::base::c7x7::cores::values_core_type > (
-      ::libs::optim::s16bit::conv::base::c7x7::cores::spot1, summ_spot);
-    return ret;
+    return ::libs::optim::s16bit::conv::get_mkoeff_core< syn::c7x7::cores::values_core_type > (syn::c7x7::cores::spot1, summ_spot);
   }
 
   if (size_spot <= 9)
   {
-    std::int16_t       mval      = ::libs::optim::s16bit::conv::base::c9x9::cores::spot1.center_val ();
+    std::int16_t       mval      = syn::c9x9::cores::spot1.center_val ();
     const std::int32_t summ_spot = mval * size_spot * size_spot + 1;
-
-    ret = ::libs::optim::s16bit::conv::get_mkoeff_core< ::libs::optim::s16bit::conv::base::c9x9::cores::values_core_type > (
-      ::libs::optim::s16bit::conv::base::c9x9::cores::spot1, summ_spot);
-    return ret;
+    return ::libs::optim::s16bit::conv::get_mkoeff_core< syn::c9x9::cores::values_core_type > (syn::c9x9::cores::spot1, summ_spot);
   }
 
-  std::int16_t       mval      = ::libs::optim::s16bit::conv::base::c11x11::cores::spot1.center_val ();
+  std::int16_t       mval      = syn::c11x11::cores::spot1.center_val ();
   const std::int32_t summ_spot = mval * size_spot * size_spot + 1;
-
-  ret = ::libs::optim::s16bit::conv::get_mkoeff_core< ::libs::optim::s16bit::conv::base::c11x11::cores::values_core_type > (
-    ::libs::optim::s16bit::conv::base::c11x11::cores::spot1, summ_spot);
-  return ret;
+  return ::libs::optim::s16bit::conv::get_mkoeff_core< syn::c11x11::cores::values_core_type > (syn::c11x11::cores::spot1, summ_spot);
 }
 
 
@@ -125,27 +111,27 @@ MorphOperator::fill_koeffs_for_erosion_operation (
   if (size_spot <= 1)
   {
     tfunc.pfunc_ = &conv_mod_3x3_;
-    cinfo.params_.evals_.emplace_back (boost::any (&::libs::optim::s16bit::conv::base::c3x3::cores::spot1));
+    cinfo.params_.evals_.emplace_back (boost::any (&syn::c3x3::cores::spot1));
   }
   else if (size_spot <= 3)
   {
     tfunc.pfunc_ = &conv_mod_5x5_;
-    cinfo.params_.evals_.emplace_back (boost::any (&::libs::optim::s16bit::conv::base::c5x5::cores::spot1));
+    cinfo.params_.evals_.emplace_back (boost::any (&syn::c5x5::cores::spot1));
   }
   else if (size_spot <= 5)
   {
     tfunc.pfunc_ = &conv_mod_7x7_;
-    cinfo.params_.evals_.emplace_back (boost::any (&::libs::optim::s16bit::conv::base::c7x7::cores::spot1));
+    cinfo.params_.evals_.emplace_back (boost::any (&syn::c7x7::cores::spot1));
   }
   else if (size_spot <= 7)
   {
     tfunc.pfunc_ = &conv_mod_9x9_;
-    cinfo.params_.evals_.emplace_back (boost::any (&::libs::optim::s16bit::conv::base::c9x9::cores::spot1));
+    cinfo.params_.evals_.emplace_back (boost::any (&syn::c9x9::cores::spot1));
   }
   else
   {
     tfunc.pfunc_ = &conv_mod_11x11_;
-    cinfo.params_.evals_.emplace_back (boost::any (&::libs::optim::s16bit::conv::base::c11x11::cores::spot1));
+    cinfo.params_.evals_.emplace_back (boost::any (&syn::c11x11::cores::spot1));
   }
 
   cinfo.params_.evals_.emplace_back (boost::any (mull_koeff));
@@ -165,7 +151,7 @@ MorphOperator::erosion_buf (
 
   utils::dbufs::video::helpers::fill_edges (tbuf);
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   U3_ASSERT (tbuf->check (
     [] (std::size_t x, std::size_t y, std::int16_t val) {
       if (val > 1)
@@ -199,37 +185,27 @@ MorphOperator::erosion_buf (
 short
 get_mkoeff_for_dilation_operation (const std::int16_t size_spot)
 {
-  std::int16_t ret = 1;
-
   if (size_spot <= 1)
   {
-    ret = ::libs::optim::s16bit::conv::get_mkoeff_core< ::libs::optim::s16bit::conv::base::c3x3::cores::values_core_type > (::libs::optim::s16bit::conv::base::c3x3::cores::all_1, 1);
-    return ret;
+    return ::libs::optim::s16bit::conv::get_mkoeff_core< syn::c3x3::cores::values_core_type > (syn::c3x3::cores::all_1, 1);
   }
 
   if (size_spot <= 3)
   {
-    ret = ::libs::optim::s16bit::conv::get_mkoeff_core< ::libs::optim::s16bit::conv::base::c5x5::cores::values_core_type > (::libs::optim::s16bit::conv::base::c5x5::cores::all_1, 1);
-    return ret;
+    return ::libs::optim::s16bit::conv::get_mkoeff_core< syn::c5x5::cores::values_core_type > (syn::c5x5::cores::all_1, 1);
   }
 
   if (size_spot <= 5)
   {
-    ret = ::libs::optim::s16bit::conv::get_mkoeff_core< ::libs::optim::s16bit::conv::base::c7x7::cores::values_core_type > (
-      ::libs::optim::s16bit::conv::base::c7x7::cores::all_1, 1);
-    return ret;
+    return ::libs::optim::s16bit::conv::get_mkoeff_core< syn::c7x7::cores::values_core_type > (syn::c7x7::cores::all_1, 1);
   }
 
   if (size_spot <= 7)
   {
-    ret = ::libs::optim::s16bit::conv::get_mkoeff_core< ::libs::optim::s16bit::conv::base::c9x9::cores::values_core_type > (
-      ::libs::optim::s16bit::conv::base::c9x9::cores::all_1, 1);
-    return ret;
+    return ::libs::optim::s16bit::conv::get_mkoeff_core< syn::c9x9::cores::values_core_type > (syn::c9x9::cores::all_1, 1);
   }
 
-  ret = ::libs::optim::s16bit::conv::get_mkoeff_core< ::libs::optim::s16bit::conv::base::c11x11::cores::values_core_type > (
-    ::libs::optim::s16bit::conv::base::c11x11::cores::all_1, 1);
-  return ret;
+  return ::libs::optim::s16bit::conv::get_mkoeff_core< syn::c11x11::cores::values_core_type > (syn::c11x11::cores::all_1, 1);
 }
 
 
@@ -244,27 +220,27 @@ MorphOperator::fill_koeffs_for_dilation_operation (
   if (size_spot <= 1)
   {
     tfunc.pfunc_ = &conv_mod_3x3_;
-    cinfo.params_.evals_.emplace_back (boost::any (&::libs::optim::s16bit::conv::base::c3x3::cores::all_1));
+    cinfo.params_.evals_.emplace_back (boost::any (&syn::c3x3::cores::all_1));
   }
   else if (size_spot <= 3)
   {
     tfunc.pfunc_ = &conv_mod_5x5_;
-    cinfo.params_.evals_.emplace_back (boost::any (&::libs::optim::s16bit::conv::base::c5x5::cores::all_1));
+    cinfo.params_.evals_.emplace_back (boost::any (&syn::c5x5::cores::all_1));
   }
   else if (size_spot <= 5)
   {
     tfunc.pfunc_ = &conv_mod_7x7_;
-    cinfo.params_.evals_.emplace_back (boost::any (&::libs::optim::s16bit::conv::base::c7x7::cores::all_1));
+    cinfo.params_.evals_.emplace_back (boost::any (&syn::c7x7::cores::all_1));
   }
   else if (size_spot <= 7)
   {
     tfunc.pfunc_ = &conv_mod_9x9_;
-    cinfo.params_.evals_.emplace_back (boost::any (&::libs::optim::s16bit::conv::base::c9x9::cores::all_1));
+    cinfo.params_.evals_.emplace_back (boost::any (&syn::c9x9::cores::all_1));
   }
   else
   {
     tfunc.pfunc_ = &conv_mod_11x11_;
-    cinfo.params_.evals_.emplace_back (boost::any (&::libs::optim::s16bit::conv::base::c11x11::cores::all_1));
+    cinfo.params_.evals_.emplace_back (boost::any (&syn::c11x11::cores::all_1));
   }
 
   cinfo.params_.evals_.emplace_back (boost::any (mull_koeff));

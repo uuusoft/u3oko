@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file   CVideoMatrixProp.hpp
-\author   Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author   Erashov Anton erashov2026@proton.me
 \date   01.01.2017
 
 \project  u3_ievents_lib
@@ -20,8 +20,8 @@ namespace generics
 {
 namespace matrix
 {
-#ifdef U3_FAKE_DISABLE
-class CVideoMatrixProp : public ievents::Event
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
+class CVideoMatrixProp : virtual public ievents::Event
 {
   friend class boost::serialization::access;
   friend ::dlls::devents::impl::EventsImpl;
@@ -47,9 +47,9 @@ class CVideoMatrixProp : public ievents::Event
 
 
   protected:
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void                        load_int (const ::pugi::xml_named_node_iterator& node) override;
-  virtual void                        copy_int (const IEvent::ptr& src) override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
+  virtual void load_int (const ::pugi::xml_named_node_iterator& node) override;
+  virtual void copy_int (const IEvent::ptr& src) override;
 
 
   private:

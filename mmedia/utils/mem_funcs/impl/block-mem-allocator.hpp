@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       block-mem-allocator.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_mem_funcs
 */
@@ -14,8 +14,8 @@ class BlockMemAllocator final : public IBlockMemAllocator
 {
   public:
   //  IBlockMemAllocator overrides
-  virtual ::libs::helpers::mem::IBlockMem::ptr alloc (const size_type& size) override;
-  virtual std::string                          dump_memory_status () override;
+  virtual auto alloc (const size_type& size) -> ::libs::helpers::mem::IBlockMem::ptr override;
+  virtual auto dump_memory_status () -> std::string override;
 
   private:
   //  friends
@@ -28,8 +28,8 @@ class BlockMemAllocator final : public IBlockMemAllocator
   BlockMemAllocator ();
   virtual ~BlockMemAllocator () = default;
 
-  ::libs::helpers::mem::IBlockMem::ptr find_exist_block (const size_type& size);
-  std::string                          dump_status_int ();
+  auto find_exist_block (const size_type& size) -> ::libs::helpers::mem::IBlockMem::ptr;
+  auto dump_status_int () -> std::string;
 
   sync_type   mtx_;      //< Поле для синхронизации доступа к объекту
   blocks_type blocks_;   //< Список выделенных блоков памяти

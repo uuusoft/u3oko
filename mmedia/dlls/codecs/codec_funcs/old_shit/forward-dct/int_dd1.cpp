@@ -30,7 +30,7 @@
 #include "../../codec-funcs-const-vals.hpp"
 
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 
 /*
  * The poop on this scaling stuff is as follows:

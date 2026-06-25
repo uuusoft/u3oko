@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        01.01.2017
 # copyright   Erashov A.I.
 # file        modules-events.cmake
@@ -22,8 +22,12 @@ u3_add_target_dylib(
   icore-lib
   iproperties-lib
   dbufs-dll
+  #u3-sqlitecpp-lib
+  #u3-sqlite-lib
   DEPEND_TARGETS
   ${U3_NAME_SQLITE_UTIL}
+  ${U3_NAME_SQLITECPP_UTIL}
   dbufs-dll)
 
-target_include_directories(module-mevents PUBLIC "${U3_INCLUDE_DIR_EXTERNAL_LIB_SQLITE}")
+#message(FATAL_ERROR "U3_INCLUDE_DIR_EXTLIB_SQLITECPP=${U3_INCLUDE_DIR_EXTLIB_SQLITECPP}")
+target_include_directories(module-mevents PUBLIC "${U3_INCLUDE_DIR_EXTLIB_SQLITE}" "${U3_INCLUDE_DIR_EXTLIB_SQLITECPP}")

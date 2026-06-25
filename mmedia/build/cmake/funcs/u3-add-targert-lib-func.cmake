@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        12.09.2024
 # copyright   Erashov A.I.
 # file        u3-add-targert-lib-func.cmake
@@ -20,4 +20,5 @@ function(u3_add_target_lib)
   target_compile_definitions(${U3_GVXX_ADD_TARGET_LIB_TARGET_NAME} PUBLIC ${U3_SHARED_COMPILE_DEF_CPP})
   target_compile_options(${U3_GVXX_ADD_TARGET_LIB_TARGET_NAME} PUBLIC ${U3_SHARED_COMPILE_OPTIONS_CPP} $<$<COMPILE_LANGUAGE:CXX>:${shared_cpp_compile_options}>)
   add_dependencies(${U3_GVXX_ADD_TARGET_LIB_TARGET_NAME} ${U3_LIBS_3RD_STATIC_LIST} ${U3_DEPENDENCY_TARGETS_LIST})
+  
 endfunction(u3_add_target_lib)

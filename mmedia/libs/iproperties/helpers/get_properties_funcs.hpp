@@ -1,54 +1,62 @@
 #pragma once
 /**
 \file       get_properties_funcs.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.11.2016
 \project    u3_iproperties_lib
 \brief      Набор вспомогательных функций доступа к конкретным свойствам для упрощения кода
 */
 
-#ifndef U3_CAST_PROP
-#  define U3_CAST_PROP(type) reinterpret_cast< type >
-#endif
-
 namespace libs::iproperties::helpers
 {
-inline ::libs::properties::ISharedPropertyStorage::raw_ptr
-get_storage ()
+inline auto
+get_storage () -> ::libs::properties::ISharedPropertyStorage::raw_ptr
 {
-  SharedPropertyStorageProxy::raw_ptr proxy = ::libs::iproperties::SharedPropertyStorageProxy::instance ();
+  auto proxy = ::libs::iproperties::SharedPropertyStorageProxy::instance ();
   U3_ASSERT (proxy);
-  ::libs::properties::ISharedPropertyStorage::raw_ptr impl = proxy->impl ();
+  auto impl = proxy->impl ();
   U3_ASSERT (impl);
   return impl;
 }
 
 
-inline ::libs::properties::ISharedProperty::raw_ptr
-get_prop (const std::string& id)
+inline auto
+check_prop (const std::string& id) -> bool
 {
-  ::libs::properties::ISharedPropertyStorage::raw_ptr storage = get_storage ();
+  auto storage = get_storage ();
+  if (id.empty () || !storage)
+  {
+    return false;
+  }
+  return storage->check (id.c_str ());
+}
+
+
+inline auto
+get_prop (const std::string& id) -> ::libs::properties::ISharedProperty::raw_ptr
+{
+  auto storage = get_storage ();
   U3_ASSERT (!id.empty ());
   U3_ASSERT (storage);
-  ::libs::properties::ISharedProperty::raw_ptr ret = storage->get (id.c_str ());
+  auto ret = storage->get (id.c_str ());
   U3_ASSERT (ret);
   return ret;
 }
 
 
-inline void*
-get_shared_prop_os ()
+inline auto
+get_shared_prop_os () -> vers::system::ISystemProperty::raw_ptr
 {
-  ::libs::properties::ISharedProperty::raw_ptr rprop = get_prop (::libs::properties::consts::keys::shared_os_property);
+  auto rprop = get_prop (::libs::properties::consts::keys::shared_os_property);
   U3_ASSERT (rprop);
   void* ret = rprop->cast2top ();
   U3_ASSERT (ret);
-  return ret;
+  return ::libs::helpers::casts::reinterpret_cast_helper< vers::system::ISystemProperty::raw_ptr > (ret);
 }
 
 
-inline void*
-get_spec_prop_os ()
+inline auto
+get_spec_prop_os () -> void*
 {
   ::libs::properties::ISharedProperty::raw_ptr rprop = get_prop (::libs::properties::consts::keys::specific_os_property);
   U3_ASSERT (rprop);
@@ -58,19 +66,33 @@ get_spec_prop_os ()
 }
 
 
-inline void*
-get_prop_links ()
+inline auto
+check_prop_links () -> bool
 {
+  if (!check_prop (::libs::properties::consts::keys::links_property))
+  {
+    return false;
+  }
   ::libs::properties::ISharedProperty::raw_ptr rprop = get_prop (::libs::properties::consts::keys::links_property);
   U3_ASSERT (rprop);
   void* ret = rprop->cast2top ();
-  U3_ASSERT (ret);
-  return ret;
+  return ret ? true : false;
 }
 
 
-inline void*
-get_prop_demons ()
+inline auto
+get_prop_links () -> ::libs::properties::vers::links::ILinksProperty::raw_ptr
+{
+  auto rprop = get_prop (::libs::properties::consts::keys::links_property);
+  U3_ASSERT (rprop);
+  void* ret = rprop->cast2top ();
+  U3_ASSERT (ret);
+  return ::libs::helpers::casts::reinterpret_cast_helper< ::libs::properties::vers::links::ILinksProperty::raw_ptr > (ret);
+}
+
+
+inline auto
+get_prop_demons () -> void*
 {
   ::libs::properties::ISharedProperty::raw_ptr rprop = get_prop (::libs::properties::consts::keys::demons_property);
   U3_ASSERT (rprop);
@@ -80,11 +102,11 @@ get_prop_demons ()
 }
 
 
-inline ::libs::iproperties::vers::demon::IDemonsProperty::raw_ptr
-cast_prop_demons ()
+inline auto
+cast_prop_demons () -> ::libs::iproperties::vers::demon::IDemonsProperty::raw_ptr
 {
-  auto demon_prop = ::libs::iproperties::helpers::get_prop_demons ();
-  auto ret        = U3_CAST_PROP (::libs::iproperties::vers::demon::IDemonsProperty::raw_ptr) (demon_prop);
+  auto  demon_prop = ::libs::iproperties::helpers::get_prop_demons ();
+  auto* ret        = ::libs::helpers::casts::reinterpret_cast_helper< ::libs::iproperties::vers::demon::IDemonsProperty::raw_ptr > (demon_prop);
   U3_ASSERT (demon_prop);
   U3_ASSERT (ret);
   return ret;

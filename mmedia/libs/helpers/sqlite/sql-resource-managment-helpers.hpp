@@ -1,11 +1,12 @@
 #pragma once
 /**
 \file       sql-resource-managment-helpers.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       06.06.2022
 \project    mevents
 */
 
+// old shit
 namespace libs::helpers::sqlite
 {
 class MemoryHandler final

@@ -1,7 +1,7 @@
 #pragma once
 /**
 file        includes.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       10.12.2016
 \project    mevents
 \brief      Файл, определяет набор интерфейсов и типов для ядра.

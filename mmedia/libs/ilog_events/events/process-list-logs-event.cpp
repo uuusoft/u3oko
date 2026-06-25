@@ -1,6 +1,6 @@
 /**
 \file       process-list-logs-event.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ilog_events
 */
@@ -66,7 +66,7 @@ ProcessListLogsEvent::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
 
-  action_  = ::boost::json::value_to< LogActions > (obj.at ("action"));
+  action_  = ::boost::json::value_to< LogActions > (obj.at ("log_actions"));
   folders_ = ::boost::json::value_to< ProcessListLogsEvent::list_folders_type > (obj.at ("folders"));
 }
 
@@ -76,8 +76,8 @@ ProcessListLogsEvent::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
 
-  obj["action"]  = ::boost::json::value_from (action_);
-  obj["folders"] = ::boost::json::value_from (folders_);
+  obj["log_actions"] = ::boost::json::value_from (action_);
+  obj["folders"]     = ::boost::json::value_from (folders_);
 }
 
 

@@ -1,6 +1,6 @@
 /**
 \file       log-module-basemodule-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    mlog
 */
@@ -31,23 +31,28 @@ LogModule::init_proxys_int ()
 void
 LogModule::init_done_int ()
 {
+  U3_XLOG_DBG ("LogModule::init_done_int::---->");
+  super::init_done_int ();
   make_dir_for_logs ();
   open_log_file ();
+  U3_XLOG_DBG ("LogModule::init_done_int::<----");
 }
 
 
 void
 LogModule::init_links_int (const ::libs::link::appl::InitApplication& info)
 {
+  U3_XLOG_DBG ("LogModule::init_links_int::---->");
   const std::string                        name_data = "";
   const ::libs::link::details::CodeRuns    type_run  = ::libs::link::details::CodeRuns::appl;
   ::libs::ilink::LinkCreatorProxy::raw_ptr lproxy    = ::libs::ilink::LinkCreatorProxy::instance ();
   volatile auto                            ipstorage = ::libs::iproperties::helpers::get_storage ();
   volatile auto                            imstorage = ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree ();
 
-  ipstorage;
-  imstorage;
+  U3_MARK_UNUSED_HERE (ipstorage);
+  U3_MARK_UNUSED_HERE (imstorage);
 
+  U3_XLOG_DBG ("LogModule::init_links_int:: pt1");
   auto temp_link = ::libs::helpers::check::ptr (lproxy->impl ()->get_listen (
     ::libs::link::CreateInfo (
       type_run,
@@ -57,25 +62,26 @@ LogModule::init_links_int (const ::libs::link::appl::InitApplication& info)
       info.appl_name_,
       "subsys_appl2log",
       ::libs::link::details::ModuleLinks::log,
-      ::libs::link::consts::size::buf_all2log)));
+      ::libs::link::consts::sizes::buf_all2log)));
 
+  U3_XLOG_DBG ("LogModule::init_links_int:: pt2");
   links_.set (libs::properties::vers::links::mids::log2appl, temp_link);
-
-  ::libs::helpers::check::must_valid_ptr (links_.get (libs::properties::vers::links::mids::log2appl));
 
   //  нужно установить свои связи в свойства разделяемые и спользовать их
   {
-    auto  proplinks = U3_CAST_PROP (::libs::properties::vers::links::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ());
+    auto* proplinks = ::libs::iproperties::helpers::get_prop_links ();
     auto& links     = proplinks->update_links_lockfree ();
     auto  log2appl  = links_.get (libs::properties::vers::links::mids::log2appl);
 
     links.set (libs::properties::vers::links::mids::log2appl, log2appl);
     logger_ = log2appl;
   }
-#ifdef U3_FAKE_DISABLE
+
+  U3_XLOG_DBG ("LogModule::init_links_int:: pt10");
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   {
     syn::IEvent::ptr rmsg;
-    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangDShowRunsSubSysLogEvent > (rmsg);
+    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
 
     props->change_appl_info (
       ::libs::ilog_events::AppllPartLogInfo (
@@ -88,20 +94,21 @@ LogModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     links_.get (libs::properties::vers::links::mids::mdata2appl)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
   }
 #endif
+  U3_XLOG_DBG ("LogModule::init_links_int::<----");
 }
 
 
 bool
 LogModule::appl_deinit_int ()
 {
-  U3_XLOG_MARK ("LogModule::deinit_int begin")
+  U3_XLOG_MARK ("LogModule::deinit_int::---->")
   flush_events ();
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   if (links_.get (libs::properties::vers::links::mids::mdata2appl))
   {
     syn::IEvent::ptr rmsg;
-    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangDShowRunsSubSysLogEvent > (rmsg);
+    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
 
     props->change_appl_info (
       ::libs::ilog_events::AppllPartLogInfo (
@@ -115,12 +122,13 @@ LogModule::appl_deinit_int ()
   }
 #endif
   {
-    auto links = U3_CAST_PROP (::libs::properties::vers::links::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ());
+    auto* links = ::libs::iproperties::helpers::get_prop_links ();
     links->update_links_lockfree ().reset_link (libs::properties::vers::links::mids::log2appl);
   }
 
   links_.get (libs::properties::vers::links::mids::log2appl)->destroy ();
   links_.reset_link (libs::properties::vers::links::mids::log2appl);
+  U3_XLOG_MARK ("LogModule::deinit_int::<----")
   return true;
 }
 
@@ -134,7 +142,7 @@ LogModule::update_catch_funcs_int ()
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
-      auto props = ::libs::iproperties::helpers::cast_event< syn::InfoLogEvent > (msg);
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::InfoLogEvent > (msg);
       U3_ASSERT (props);
       process_info_log (props, msg);
       return syn::IEvent::ptr ();
@@ -146,7 +154,7 @@ LogModule::update_catch_funcs_int ()
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
-      auto props = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (msg);
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (msg);
       U3_ASSERT (props);
       process_property_log_module (props);
       return syn::IEvent::ptr ();
@@ -158,7 +166,7 @@ LogModule::update_catch_funcs_int ()
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
-      auto props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
       U3_ASSERT (props);
       process_change_state_process (props);
       return syn::IEvent::ptr ();
@@ -170,7 +178,7 @@ LogModule::update_catch_funcs_int ()
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
-      auto props = ::libs::iproperties::helpers::cast_event< syn::ProcessListLogsEvent > (msg);
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::ProcessListLogsEvent > (msg);
       U3_ASSERT (props);
       process_list_logs (props);
       return syn::IEvent::ptr ();
@@ -182,7 +190,7 @@ LogModule::update_catch_funcs_int ()
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
-      auto props = ::libs::iproperties::helpers::cast_event< syn::ProcessLogEvent > (msg);
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::ProcessLogEvent > (msg);
       U3_ASSERT (props);
       process_log (props);
       return syn::IEvent::ptr ();

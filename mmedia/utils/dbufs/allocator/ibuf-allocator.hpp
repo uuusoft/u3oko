@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       ibuf-allocator.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2016
 \project    u3_dbufs
 */
@@ -14,20 +14,22 @@ class IBufAllocator
 {
   public:
   //  ext types
-  using size_type = std::uint64_t;
+  using size_buf_type = std::uint64_t;
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IBufAllocator)
 
-  IBufAllocator (const IBufAllocator& src)            = delete;
-  IBufAllocator& operator= (const IBufAllocator& src) = delete;
+  IBufAllocator (const IBufAllocator& src)                = delete;
+  IBufAllocator& operator= (const IBufAllocator& src)     = delete;
+  IBufAllocator (IBufAllocator&& src) noexcept            = delete;
+  IBufAllocator& operator= (IBufAllocator&& src) noexcept = delete;
 
   /// Функция получения (создание нового или возврает ранее созданного и свободного) буфера
   /// \param[in]  size опциональный предполагаемый размер данных для буфера или 0, если размер не известен
   /// \return     указатель на выделенный буфер
-  virtual utils::dbufs::video::IVideoBuf::ptr create (IBufAllocator::size_type size) = 0;
+  virtual auto create (size_buf_type size) -> utils::dbufs::video::IVideoBuf::ptr = 0;
 
   /// Функция трассировки состояния реализации интерфейса. Количество буферов, количество свободных буферов, используемая память и т.п
-  virtual std::string dump_bufs_state () = 0;
+  virtual auto dump_bufs_state () -> std::string = 0;
 
   protected:
   IBufAllocator ()          = default;

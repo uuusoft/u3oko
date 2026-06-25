@@ -1,10 +1,15 @@
 #pragma once
 /**
 \file       buf2module-info.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       14.09.2018
 \project    u3_ievents_lib
 */
+
+namespace libs::ievents::props::base_id::syn
+{
+using off_buf_type = ::utils::dbufs::video::consts::offs::off_buf_type;
+}
 
 namespace libs::ievents::props::base_id
 {
@@ -16,15 +21,15 @@ struct Buff2ModuleInfo final {
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (Buff2ModuleInfo)
 
   explicit Buff2ModuleInfo (
-    float                                                    fps            = 0.0F,
-    const ::utils::dbufs::video::consts::offs::off_buf_type& indx_buf       = ::utils::dbufs::video::consts::offs::invalid,
-    const id_link_type&                                      dest_module_id = "");
+    float                    fps            = 0.0F,
+    const syn::off_buf_type& indx_buf       = ::utils::dbufs::video::consts::offs::invalid,
+    const id_link_type&      dest_module_id = "");
 
   virtual ~Buff2ModuleInfo () = default;
 
-  float                                             fps_;              //<
-  ::utils::dbufs::video::consts::offs::off_buf_type indx_buf_;         //<
-  id_link_type                                      dest_module_id_;   //<
+  float             fps_ = 0.0F;       //<
+  syn::off_buf_type indx_buf_;         //<
+  id_link_type      dest_module_id_;   //<
 
   private:
   friend class boost::serialization::access;

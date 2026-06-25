@@ -1,6 +1,6 @@
 /**
 \file       gen-vgen-filter-dll-ifilter.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_gen_vgen
 */
@@ -34,7 +34,8 @@ Filter::load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& 
 
   finfo_.recv_thread_.reset (
     new std::thread (
-      ::libs::helpers::thread::generic_thread_funct< Filter, libs::properties::vers::links::mids::mdata2appl >,
+      ::libs::helpers::thread::generic_thread_funct< Filter >,
+      libs::properties::vers::links::mids::mdata2appl,
       this,
       0u));
 }
@@ -77,8 +78,7 @@ Filter::query_int (const ::libs::helpers::utils::cuuid& par)
 void
 Filter::run_int ()
 {
-  auto driver = finfo_.proxy2hardware_.get_source_impl ();
-  if (driver)
+  if (auto driver = finfo_.proxy2hardware_.get_source_impl ())
   {
     driver->start ();
   }
@@ -89,9 +89,7 @@ void
 Filter::stop_int ()
 {
   finfo_.capture_impl_ = finfo_.null_impl_;
-
-  auto driver = finfo_.proxy2hardware_.get_source_impl ();
-  if (driver)
+  if (auto driver = finfo_.proxy2hardware_.get_source_impl ())
   {
     driver->stop ();
   }

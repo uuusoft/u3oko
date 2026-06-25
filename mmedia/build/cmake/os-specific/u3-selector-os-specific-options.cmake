@@ -1,7 +1,9 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        12.09.2024
 # copyright   Erashov A.I.
 # file        u3-selector-os-specific-options.cmake
+
+#message(FATAL_ERROR "U3_SYSTEM_NAME=${U3_SYSTEM_NAME}")
 
 if(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ANDROID})
   if(U3_COMMERCIAL_PART EQUAL 1)

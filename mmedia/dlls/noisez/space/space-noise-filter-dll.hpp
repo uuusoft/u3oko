@@ -2,7 +2,7 @@
 /**
 \file       space-noise-filter-dll.hpp
 \date       01.01.2016
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_filter_space
 \brief      Файл интерфейса типа для фильтрации иозображения в пространственной области
 */
@@ -29,7 +29,7 @@ class Filter final :
 
   // internal
   void init_pts (syn::ConnectInfo*);
-  void itransform ();
+  auto itransform () -> void;
 
   /// Вспомогательная функция для обновления текущей реализации фильтрации
   /// Выбор делается на основе свойства, загруженного из xml

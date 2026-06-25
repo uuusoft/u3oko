@@ -1,6 +1,6 @@
 /**
 \file       info-cpu-event.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
@@ -12,9 +12,9 @@
 namespace libs::ievents::props::hardware
 {
 InfoCPUEvent::InfoCPUEvent (
-  const Acessor&                            ph,
-  const ::libs::helpers::sys::cpu::CpuExts& simd,
-  const std::uint32_t                       count_cpu) :
+  const Acessor&      ph,
+  const syn::CpuExts& simd,
+  const std::uint32_t count_cpu) :
   count_cpu_ (count_cpu),
   simd_ (simd)
 {
@@ -23,7 +23,7 @@ InfoCPUEvent::InfoCPUEvent (
 }
 
 
-::libs::helpers::sys::cpu::CpuExts
+syn::CpuExts
 InfoCPUEvent::get_cpu_type () const
 {
   return simd_;
@@ -31,7 +31,7 @@ InfoCPUEvent::get_cpu_type () const
 
 
 void
-InfoCPUEvent::set_cpu_type (const ::libs::helpers::sys::cpu::CpuExts& type)
+InfoCPUEvent::set_cpu_type (const syn::CpuExts& type)
 {
   simd_ = type;
   sync_val2txt ();
@@ -65,7 +65,7 @@ InfoCPUEvent::load_json_int (const ::boost::json::object& obj)
   super::load_json_int (obj);
 
   text_simd_ = obj.at ("text_simd").as_string ();
-  simd_      = ::libs::helpers::casts::static_cast_helper< ::libs::helpers::sys::cpu::CpuExts > (::libs::helpers::json::get_uint32 (obj.at ("simd")));
+  simd_      = ::libs::helpers::casts::static_cast_helper< syn::CpuExts > (::libs::helpers::json::get_uint32 (obj.at ("simd")));
   count_cpu_ = ::libs::helpers::json::get_uint32 (obj.at ("count_cpu"));
 }
 

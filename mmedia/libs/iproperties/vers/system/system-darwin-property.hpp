@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       system-darwin-property.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       16.10.2024
 \project    u3_iproperties_lib
 */

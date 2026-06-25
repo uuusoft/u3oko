@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       convert-vals2string-log-defines.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       25.02.2022
 \project    u3_defines
 */
@@ -20,6 +20,14 @@
 
 #ifndef FVTOLOG
 #  define FVTOLOG(u3def_param) std::string (#u3def_param) + "=" + std::to_string (u3def_param)
+#endif
+
+#ifndef STOLOG
+#  define STOLOG(u3def_param) std::string (" " #u3def_param) + "=" + std::string (u3def_param)
+#endif
+
+#ifndef FSTOLOG
+#  define FSTOLOG(u3def_param) std::string (#u3def_param) + "=" + std::string (u3def_param)
 #endif
 
 #ifndef PTR_TOLOG

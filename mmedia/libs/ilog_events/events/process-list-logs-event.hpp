@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       process-list-logs-event.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ilog_events
 */
@@ -32,18 +32,21 @@ class ProcessListLogsEvent final : public BaseLogEvent
 
   virtual ~ProcessListLogsEvent () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ilog_events/events/process-list-logs-event";
+    static constexpr const char* chret = "libs/ilog_events/events/process-list-logs-event";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
-  const list_folders_type& get_sessions () const;
-  void                     set_sessions (list_folders_type&& folders);
-  LogActions               get_action () const;
-  void                     set_action (const LogActions& action);
-  virtual std::string      text (const LogTexts& type) const override;
+  auto get_sessions () const -> const list_folders_type&;
+  auto set_sessions (list_folders_type&& folders) -> void;
+  auto get_action () const -> LogActions;
+  auto set_action (const LogActions& action) -> void;
+
+  // BaseLogEvent
+  virtual std::string text (const LogTexts& type) const override;
 
   protected:
   struct Acessor {
@@ -60,10 +63,10 @@ class ProcessListLogsEvent final : public BaseLogEvent
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   //  ievents::Event overrides
-  virtual void                        load_json_int (const ::boost::json::object& obj) override;
-  virtual void                        save_json_int (::boost::json::object& obj) const override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void                        copy_int (const IEvent::craw_ptr src) override;
+  virtual auto load_json_int (const ::boost::json::object&) -> void override;
+  virtual auto save_json_int (::boost::json::object&) const -> void override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 };
 }   // namespace libs::ilog_events::events
 

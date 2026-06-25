@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       get-data-graphs-from-event-base.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       05.06.2022
 \project    u3_ievents_lib
 */
@@ -31,15 +31,16 @@ class GetDataGraphsFromEventBase : public BaseEventsEvent
   GetDataGraphsFromEventBase (const Acessor& = Acessor (0));
   virtual ~GetDataGraphsFromEventBase ();
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ievents_events/events/get-data-graphs-from-event-base";
+    static constexpr const char* chret = "libs/ievents_events/events/get-data-graphs-from-event-base";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
-  void                          set_data_graphs (id_graphs_storage_type&& events);
-  const id_graphs_storage_type& get_data_graphs () const;
+  auto set_data_graphs (id_graphs_storage_type&& events) -> void;
+  auto get_data_graphs () const -> const id_graphs_storage_type&;
 
   private:
   //  internal typess
@@ -52,10 +53,10 @@ class GetDataGraphsFromEventBase : public BaseEventsEvent
   template< class Archive >
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
   //  ievents::Event overrides
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void                        load_json_int (const ::boost::json::object& obj) override;
-  virtual void                        save_json_int (::boost::json::object& obj) const override;
-  virtual void                        copy_int (const IEvent::craw_ptr src) override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
+  virtual auto load_json_int (const ::boost::json::object&) -> void override;
+  virtual auto save_json_int (::boost::json::object&) const -> void override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 };
 }   // namespace libs::ievents_events::events
 

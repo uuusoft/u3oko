@@ -1,6 +1,6 @@
 /**
 \file       rgb24_to_rgb32.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_optim_gen_convert
 */

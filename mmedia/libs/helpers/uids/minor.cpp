@@ -1,7 +1,7 @@
 /**
 \file       minor.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_helpers_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -334,6 +334,71 @@ get (const ::libs::helpers::utils::cuuid& par)
   if (vals.end () == finger)
   {
     return id_val::unknown;
+  }
+  return finger->second;
+}
+
+
+auto
+to_string (const id_val& val) -> const std::string&
+{
+  static const std::unordered_map< id_val, const std::string > vals = {
+    { id_val::device_specific, "device_specific" },
+    { id_val::compressed, "compressed" },
+    { id_val::y8, "y8" },
+    { id_val::y16, "y16" },
+    { id_val::i420, "i420" },
+    { id_val::yuy2, "yuy2" },
+    { id_val::ycb, "ycb" },
+    { id_val::uyvy, "uyvy" },
+    { id_val::rgb24, "rgb24" },
+    { id_val::rgb555, "rgb555" },
+    { id_val::rgb565, "rgb565" },
+    { id_val::rgb8, "rgb8" },
+    { id_val::rgb32, "rgb32" },
+    { id_val::iyuv, "iyuv" },
+    { id_val::yv12, "yv12" },
+    { id_val::yvu9, "yvu9" },
+    { id_val::yuyv, "yuyv" },
+    { id_val::y211, "y211" },
+    { id_val::if09, "if09" },
+    { id_val::nv21, "nv21" },
+    { id_val::mjpg, "mjpg" },
+    { id_val::video, "video" },
+    { id_val::any_codec, "any_codec" },
+    { id_val::mjpeg, "mjpeg" },
+    { id_val::mjpg1, "mjpg1" },
+    { id_val::mjpg2, "mjpg2" },
+    { id_val::mjpg4, "mjpg4" },
+    { id_val::x264, "x264" },
+    { id_val::x265, "x265" },
+    { id_val::test, "test" },
+    { id_val::vp7, "vp7" },
+    { id_val::av1, "av1" },
+    { id_val::vp9, "vp9" },
+    { id_val::audio, "audio" },
+    { id_val::mp3, "mp3" },
+    { id_val::aac, "aac" },
+    { id_val::ogg, "ogg" },
+    { id_val::ilbc, "ilbc" },
+    { id_val::g723_1, "g723_1" },
+    { id_val::ctrl_driver_dshow, "ctrl_driver_dshow" },
+    { id_val::idata_source, "idata_source" },
+    { id_val::cat_video_device, "cat_video_device" },
+    { id_val::audio_devices, "audio_devices" },
+    { id_val::audio_compressors, "audio_compressors" },
+    { id_val::audio_renderers, "audio_renderers" },
+    { id_val::legacy_am_filters, "legacy_am_filters" },
+    { id_val::midi_renders, "midi_renders" },
+    { id_val::video_compressors, "video_compressors" },
+    { id_val::unknown, "unknown" }
+  };
+
+  auto finger = vals.find (val);
+  if (finger == vals.end ())
+  {
+    U3_XLOG_WARN ("unknown type id_val" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+    finger = vals.find (id_val::unknown);
   }
   return finger->second;
 }

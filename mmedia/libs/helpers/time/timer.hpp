@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       timer.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       11.05.2022
 \project    u3_helpers_lib
 */

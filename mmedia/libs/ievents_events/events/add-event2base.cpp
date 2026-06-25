@@ -1,6 +1,6 @@
 /**
 \file       add-event2base.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       09.09.2018
 \project    u3_ievents_lib
 */
@@ -85,7 +85,7 @@ void
 AddEvent2Base::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-  U3_ASSERT_NT (0, "???");
+  U3_ASSERT_NT (0, "AddEvent2Base::load_json_int:: wtf???");
 }
 
 
@@ -93,7 +93,7 @@ void
 AddEvent2Base::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-  U3_ASSERT_NT (0, "???");
+  U3_ASSERT_NT (0, "AddEvent2Base::save_json_int:: wtf???");
 }
 
 

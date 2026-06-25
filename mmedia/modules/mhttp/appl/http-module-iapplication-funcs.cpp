@@ -1,9 +1,10 @@
 /**
 \file       http-module-iapplication-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       23.08.2018
 \project    mhttp
 */
+// #define U3_USE_DEB_LOG_LEVEL
 #include "../module-http-includes_int.hpp"
 #include "mmedia/dlls/terminals/video_sender/consts/video-sender-const-vals.hpp"
 #include "http-module-syn.hpp"

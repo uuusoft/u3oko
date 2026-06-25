@@ -1,6 +1,6 @@
 /**
 \file       video-buf-ivideobuf-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.11.2016
 \project    u3_dbufs
 */
@@ -22,9 +22,9 @@ check_dims (const VideoBuf::dim_type width, const VideoBuf::dim_type height)
 
 
 void
-VideoBuf::set_format_int (const libs::helpers::uids::minor::id_val& _id)
+VideoBuf::set_format_int (const libs::helpers::uids::minor::id_val& fid)
 {
-  params_.minor_ = _id;
+  params_.minor_ = fid;
 }
 
 
@@ -49,28 +49,25 @@ VideoBuf::flush_int ()
 
 
 void
-VideoBuf::set_dim_var_int (const Dims& _type, dim_type _val)
+VideoBuf::set_dim_var_int (const Dims& dtype, dim_type dval)
 {
-  switch (_type)
+  switch (dtype)
   {
   case Dims::stride:
-    U3_ASSERT (_val > 0);
-    U3_ASSERT (_val * get_dim_var_int (Dims::height) <= getraw_buf ()->get_buf_size ());
+    U3_ASSERT (dval > 0);
+    U3_ASSERT (dval * get_dim_var_int (Dims::height) <= getraw_buf ()->get_buf_size ());
     break;
   default:
     break;
   }
-
-  // dim_vars_.set (_type, _val);
-  params_.geom_dims_[_type] = _val;
+  params_.geom_dims_[dtype] = dval;
 }
 
 
 VideoBuf::dim_type
-VideoBuf::get_dim_var_int (const Dims& _type) const
+VideoBuf::get_dim_var_int (const Dims& dtype) const
 {
-  return params_.geom_dims_[_type];
-  // return dim_vars_.get (_type);
+  return params_.geom_dims_[dtype];
 }
 
 
@@ -82,7 +79,7 @@ VideoBuf::get_dim_vars_int () const
 
 
 bool
-VideoBuf::check_int (const check_func_type& _obj) const
+VideoBuf::check_int (const check_func_type& obj) const
 {
   if (get_flag_int (BufFlags::empty))
   {
@@ -91,10 +88,10 @@ VideoBuf::check_int (const check_func_type& _obj) const
 
   for (dim_type indxy = 0; indxy < get_dim_var_int (Dims::height); ++indxy)
   {
-    const std::int16_t* _bstr = helpers::get_line_const_data_as< const std::int16_t* > (this, indxy);
+    const std::int16_t* bstr = helpers::get_line_const_data_as< const std::int16_t* > (this, indxy);
     for (dim_type indxx = 0; indxx < get_dim_var_int (Dims::width); ++indxx)
     {
-      if (!_obj (indxx, indxy, _bstr[indxx]))
+      if (!obj (indxx, indxy, bstr[indxx]))
       {
         U3_ASSERT_SIGNAL_NT ("failed");
         return false;
@@ -106,14 +103,14 @@ VideoBuf::check_int (const check_func_type& _obj) const
 
 
 void
-VideoBuf::set_flag_int (const BufFlags& _type, bool _val)
+VideoBuf::set_flag_int (const BufFlags& ftype, bool fval)
 {
-  U3_ASSERT (_type < BufFlags::max_bound);
+  U3_ASSERT (ftype < BufFlags::max_bound);
 
-  switch (_type)
+  switch (ftype)
   {
   case BufFlags::empty: {
-    if (_val)
+    if (fval)
     {
       set_mem_var_int (MemVars::size_data, 0);
     }
@@ -127,72 +124,49 @@ VideoBuf::set_flag_int (const BufFlags& _type, bool _val)
     break;
   }
 
-  params_.flags_[_type] = _val;
+  params_.flags_[ftype] = fval;
 }
 
 
 bool
-VideoBuf::get_flag_int (const BufFlags& _type) const
+VideoBuf::get_flag_int (const BufFlags& ftype) const
 {
-  U3_ASSERT (_type < BufFlags::max_bound);
-
-  switch (_type)
+  U3_ASSERT (ftype < BufFlags::max_bound);
+  switch (ftype)
   {
   case BufFlags::null: {
-    if (!getraw_buf () || 0 == getraw_buf ()->get_buf_size ())
-    {
-      return true;
-    }
-
-    return false;
+    return !getraw_buf () || 0 == getraw_buf ()->get_buf_size () ? true : false;
   }
   case BufFlags::empty: {
-    if (get_flag_int (BufFlags::null))
-    {
-      return true;
-    }
-
-    if (0 == (*this)[MemVars::size_data])
-    {
-      return true;
-    }
-    if (::libs::helpers::uids::minor::id_val::unknown == params_.minor_)
-    {
-      return true;
-    }
-    return false;
+    return get_flag_int (BufFlags::null) || 0 == (*this)[MemVars::size_data] || ::libs::helpers::uids::minor::id_val::unknown == params_.minor_ ? true : false;
   }
   case BufFlags::convolution_data: {
     if (get_flag_int (BufFlags::empty))
     {
       return false;
     }
-
     if ((*this)[MemVars::size_data] < ::libs::optim::s16bit::conv::consts::bufs::max_size_core_conv * get_dim_var_int (Dims::stride))
     {
       return false;
     }
 
-    const dim_type _yoffset    = ::libs::optim::s16bit::conv::consts::bufs::half_max_size_core_conv * get_dim_var_int (Dims::stride);
-    const dim_type _min_offset = _yoffset + ::libs::optim::s16bit::conv::consts::bufs::x_off_edge_conv;
+    const dim_type yoffset    = ::libs::optim::s16bit::conv::consts::bufs::half_max_size_core_conv * get_dim_var_int (Dims::stride);
+    const dim_type min_offset = yoffset + ::libs::optim::s16bit::conv::consts::bufs::x_off_edge_conv;
 
-    if ((*this)[MemVars::offset_data] < _min_offset)
+    if ((*this)[MemVars::offset_data] < min_offset)
     {
       return false;
     }
-
-    if ((*this)[MemVars::size_buf] < 2 * _min_offset + get_dim_var_int (Dims::stride) * get_dim_var_int (Dims::height))
+    if ((*this)[MemVars::size_buf] < 2 * min_offset + get_dim_var_int (Dims::stride) * get_dim_var_int (Dims::height))
     {
       return false;
     }
-
     return true;
   }
   default:
     break;
   }
-
-  return params_.flags_[_type];
+  return params_.flags_[ftype];
 }
 
 
@@ -210,47 +184,45 @@ VideoBuf::buf_alloc_int (const AllocBufInfo& info)
 
   set_mem_var_int (MemVars::offset_data, 0);
 
-  dim_type _alloc_size = info.force_size_;
+  dim_type alloc_size  = info.force_size_;
   dim_type offset_data = 0;
   dim_type size_data   = 0;
-  dim_type _stride     = _alloc_size ? info.geom_dims_[Dims::width] : 0;   //  для явно заданного размера используем переданные параметры, в данном случае ширину.
+  dim_type stride      = alloc_size ? info.geom_dims_[Dims::width] : 0;   //  для явно заданного размера используем переданные параметры, в данном случае ширину.
 
-  const bool _conv_support = (0 == _alloc_size) && (info.flags_[BufFlags::convolution_support] || info.flags_[BufFlags::convolution_data]) ? true : false;
+  const bool conv_support = (0 == alloc_size) && (info.flags_[BufFlags::convolution_support] || info.flags_[BufFlags::convolution_data]) ? true : false;
 
-  if (0 == _alloc_size)
+  if (0 == alloc_size)
   {
-    const dim_type _px_byte  = ::libs::helpers::uids::helpers::get_count_bytes_from_format (params_.minor_);
-    const dim_type _khresize = ::libs::helpers::uids::helpers::get_hkoeff_from_format (params_.minor_);
+    const dim_type px_byte  = ::libs::helpers::uids::helpers::get_count_bytes_from_format (params_.minor_);
+    const dim_type khresize = ::libs::helpers::uids::helpers::get_hkoeff_from_format (params_.minor_);
 
-    if (_conv_support)
+    if (conv_support)
     {
-      _stride     = ::libs::helpers::mem::get_align64 (U3_CAST_UINT32 (info.geom_dims_[Dims::width] * sizeof (std::int16_t) + ::libs::optim::s16bit::conv::consts::bufs::x_add_conv));
-      offset_data = (::libs::optim::s16bit::conv::consts::bufs::half_max_size_core_conv + 1) * _stride + ::libs::optim::s16bit::conv::consts::bufs::x_off_edge_conv;
-      _alloc_size = offset_data * 2 + info.geom_dims_[Dims::height] * _khresize * _stride;
-      // dim_vars_.set (Dims::width, info.width_);
-      // dim_vars_.set (Dims::height, info.height_);
+      stride      = ::libs::helpers::mem::align_value (U3_CAST_UINT32 (info.geom_dims_[Dims::width] * sizeof (std::int16_t) + ::libs::optim::s16bit::conv::consts::bufs::x_add_conv), 64U, true);
+      offset_data = (::libs::optim::s16bit::conv::consts::bufs::half_max_size_core_conv + 1) * stride + ::libs::optim::s16bit::conv::consts::bufs::x_off_edge_conv;
+      alloc_size  = offset_data * 2 + info.geom_dims_[Dims::height] * khresize * stride;
     }
     else
     {
-      _stride     = ::libs::helpers::mem::get_align64 (info.geom_dims_[Dims::stride] ? info.geom_dims_[Dims::stride] : _px_byte * info.geom_dims_[Dims::width]);
+      stride      = ::libs::helpers::mem::align_value (info.geom_dims_[Dims::stride] ? info.geom_dims_[Dims::stride] : px_byte * info.geom_dims_[Dims::width], 64U, true);
       offset_data = 0;
-      _alloc_size = info.geom_dims_[Dims::height] * _stride * _khresize;
+      alloc_size  = info.geom_dims_[Dims::height] * stride * khresize;
     }
   }
 
   // дополнительно всегда выделяем снизу несколько строк, чтобы гарантировать нормальную работу деления буфера на рабочие потоки
-  _alloc_size += _stride * ::libs::optim::s16bit::conv::consts::bufs::max_align_block_by_y_for_algs;
+  alloc_size += stride * ::libs::optim::s16bit::conv::consts::bufs::max_align_block_by_y_for_algs;
 
-  U3_CHECK (_alloc_size > 0, "received zero size for alloc");
-  U3_CHECK (info.geom_dims_[Dims::stride] <= _stride, "calculated stride too small" + VTOLOG (info.geom_dims_[Dims::stride]) + VTOLOG (_stride) + VTOLOG (_conv_support));
+  U3_CHECK (alloc_size > 0, "received invalid size for alloc" + VTOLOG (alloc_size));
+  U3_CHECK (info.geom_dims_[Dims::stride] <= stride, "calculated stride too small" + VTOLOG (info.geom_dims_[Dims::stride]) + VTOLOG (stride) + VTOLOG (conv_support));
 
-  ialloc (_alloc_size);
+  ialloc (alloc_size);
   set_mem_var_int (MemVars::size_data, size_data);
-  // dim_vars_[Dims::stride] = _stride;
-  params_.geom_dims_[Dims::stride] = _stride;
+  // dim_vars_[Dims::stride] = stride;
+  params_.geom_dims_[Dims::stride] = stride;
   set_mem_var_int (MemVars::offset_data, offset_data);
 
-  params_.flags_[BufFlags::convolution_support] = _conv_support;
+  params_.flags_[BufFlags::convolution_support] = conv_support;
   params_.flags_[BufFlags::empty]               = true;
 }
 

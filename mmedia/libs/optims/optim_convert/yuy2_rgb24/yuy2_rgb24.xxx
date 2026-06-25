@@ -1,6 +1,6 @@
 /**
 \file		convert_yuy2_rgb24.cpp
-\author		Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author		Erashov Anton erashov2026@proton.me
 \date		01.11.2016
 \copyright	www.uuusoft.com
 */
@@ -9,10 +9,9 @@
 #include "yuy2_rgb24.hpp"
 #include "yuy2_rgb24_int.hpp"
 
-
 //old shit
 namespace libs { namespace optim { namespace convert { namespace yuy2_rgb24 {
-#if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 	/**
 	\brief
 	*/
@@ -93,10 +92,10 @@ namespace libs { namespace optim { namespace convert { namespace yuy2_rgb24 {
 
 		count = number_element >> 2;
 
-		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr ( array_y) );
-		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr ( array_u ) );
-		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr ( array_v) );
-		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr (output ) );
+		U3_ASSERT( ::libs::helpers::mem::check_align64_ptr ( array_y) );
+		U3_ASSERT( ::libs::helpers::mem::check_align64_ptr ( array_u ) );
+		U3_ASSERT( ::libs::helpers::mem::check_align64_ptr ( array_v) );
+		U3_ASSERT( ::libs::helpers::mem::check_align64_ptr (output ) );
 
 #define OUTPUT_DATA edx
 #define Y_DATA      eax
@@ -252,10 +251,10 @@ namespace libs { namespace optim { namespace convert { namespace yuy2_rgb24 {
 		__int64 const_w51 = 0x0033003300330033;
 		__int64 const_w26 = 0x001A001A001A001A;
 
-		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr ( array_y) );
-		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr ( array_u ) );
-		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr ( array_v) );
-		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr (output ) );
+		U3_ASSERT( ::libs::helpers::mem::check_align64_ptr ( array_y) );
+		U3_ASSERT( ::libs::helpers::mem::check_align64_ptr ( array_u ) );
+		U3_ASSERT( ::libs::helpers::mem::check_align64_ptr ( array_v) );
+		U3_ASSERT( ::libs::helpers::mem::check_align64_ptr (output ) );
 
 		count = number_element >> 2;
 
@@ -445,8 +444,8 @@ namespace libs { namespace optim { namespace convert { namespace yuy2_rgb24 {
 		__int64 const_4 = 0x000000000000FFFF;
 		int width_8 = width >> 2;
 
-		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr (input_yuy2 ) );
-		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr (output ) );
+		U3_ASSERT( ::libs::helpers::mem::check_align64_ptr (input_yuy2 ) );
+		U3_ASSERT( ::libs::helpers::mem::check_align64_ptr (output ) );
 
 		strude_input = strude_input - (width << 1 );
 		strude_output = strude_output - (width << 2 );
@@ -754,7 +753,7 @@ namespace libs { namespace optim { namespace convert { namespace yuy2_rgb24 {
 		__int64 temp_array2 = 0x002B002B002B002B;
 		std::uint8_t* temp_pointer2 = ::libs::helpers::casts::reinterpret_cast_helper<std::uint8_t*>( &temp_array2 );
 
-		U3_ASSERT( ::libs::helpers::mem::check_align16_ptr (input ) );
+		U3_ASSERT( ::libs::helpers::mem::check_align64_ptr (input ) );
 
 		i1 = (size_buf / 3) >> 3;
 
@@ -1898,7 +1897,7 @@ namespace libs { namespace optim { namespace convert { namespace yuy2_rgb24 {
 #endif
 } } } }
 
-#if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 HRESULT alu(
 	const std::uint8_t*	yuy2_buf,
 	uint32_t			width,

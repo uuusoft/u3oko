@@ -1,17 +1,11 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        29.08.2024
 # copyright   Erashov A.I.
 # file        u3-raspberry-specific.cmake
 
 set(U3_LIBS_SYSTEM_STATIC_LIST ${U3_LIBS_SYSTEM_STATIC_LIST} X11)
 set(U3_SHARED_COMPILE_OPTIONS_CPP ${U3_SHARED_COMPILE_OPTIONS_CPP} -std=${U3_CPP_STANDARD})
-set(U3_SHARED_LINK_OPTIONS_CPP
-    ${U3_SHARED_LINK_OPTIONS_CPP}
-    -Wl,--no-undefined
-    -Wl,-rpath='${ORIGIN}'
-    -lpthread
-    -ldl
-    -lrt)
+set(U3_SHARED_LINK_OPTIONS_CPP ${U3_SHARED_LINK_OPTIONS_CPP} -Wl,--no-undefined -Wl,-rpath='${ORIGIN}' -lpthread -ldl -lrt)
 set(U3_SHARED_COMPILE_DEF_CPP ${U3_SHARED_COMPILE_DEF_CPP} -DHAVE_NEON=1 -DENABLE_NEON=ON -DU3_OS_RASPBERRY=1)
 set(U3_SHARED_COMPILE_OPTIONS_CPP ${U3_SHARED_COMPILE_OPTIONS_CPP} -frtti -fexceptions -pthread)
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)

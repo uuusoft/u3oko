@@ -1,7 +1,7 @@
 /**
 \file       change-state-event.cpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 // #define U3_USE_DEB_LOG_LEVEL
@@ -37,7 +37,7 @@ void
 ChangeStateProcessEvent::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-  U3_ASSERT_NT (0, "???");
+  U3_ASSERT_NT (0, "ChangeStateProcessEvent::load_json_int:: wtf???");
 }
 
 
@@ -45,7 +45,7 @@ void
 ChangeStateProcessEvent::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-  U3_ASSERT_NT (0, "???");
+  U3_ASSERT_NT (0, "ChangeStateProcessEvent::save_json_int:: wtf???");
 }
 
 

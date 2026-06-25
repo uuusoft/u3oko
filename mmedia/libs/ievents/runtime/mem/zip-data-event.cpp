@@ -1,7 +1,7 @@
 /**
 \file       zip-data-event.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -17,7 +17,7 @@ ZipDataEvent::ZipDataEvent (const Acessor& pha) :
   property_name_ = gen_get_mid ();
 }
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 ZipDataEvent::ZipDataEvent (
   zip_buf_type&&         buf,
   std::size_t            size,
@@ -46,7 +46,7 @@ ZipDataEvent::ZipDataEvent (
   size_zip_buf_ = zip_buf_.size ();
 }
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 ZipDataEvent::ZipDataEvent (const ZipDataEvent& src) :
   size_ (0)
 {
@@ -61,7 +61,7 @@ ZipDataEvent::ZipDataEvent (const ZipDataEvent& src) :
   }
 }
 #endif
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 ZipDataEvent&
 ZipDataEvent::operator= (const ZipDataEvent& src)
 {

@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       video-est-motion-prop.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
@@ -14,7 +14,7 @@ const std::pair< std::int8_t, std::int8_t > inv_vec (U3_CAST_INT8 (127), U3_CAST
 
 namespace libs::ievents::props::videos::generic::motion_est
 {
-class VideoEstMotionProp final : public ievents::Event
+class VideoEstMotionProp final : virtual public ievents::Event
 {
   friend class boost::serialization::access;
   friend ::dlls::devents::impl::EventsImpl;
@@ -36,10 +36,11 @@ class VideoEstMotionProp final : public ievents::Event
   explicit VideoEstMotionProp (const Acessor& = Acessor (0));
   virtual ~VideoEstMotionProp () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ievents/props/videos/generic/motion_est/video-est-motion-prop";
+    static constexpr const char* chret = "libs/ievents/props/videos/generic/motion_est/video-est-motion-prop";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
@@ -53,10 +54,10 @@ class VideoEstMotionProp final : public ievents::Event
   template< class Archive >
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void                        load_json_int (const ::boost::json::object& obj) override;
-  virtual void                        save_json_int (::boost::json::object& obj) const override;
-  virtual void                        copy_int (const IEvent::craw_ptr src) override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
+  virtual auto load_json_int (const ::boost::json::object&) -> void override;
+  virtual auto save_json_int (::boost::json::object&) const -> void override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 };
 }   // namespace libs::ievents::props::videos::generic::motion_est
 

@@ -1,6 +1,6 @@
 # u3-applay-clang-format-cpp.py
 # generator   gemini google
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        01.01.2026
 # copyright   Erashov A.I.
 # Напиши на питоне функцию, которая принимает в качестве аргумента начальный путь к файлам. 

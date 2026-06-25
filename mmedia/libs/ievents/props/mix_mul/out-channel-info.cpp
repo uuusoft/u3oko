@@ -1,6 +1,6 @@
 /**
 \file       out-channel-info.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       17.06.2022
 \project    u3_ievents_lib
 */

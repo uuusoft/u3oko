@@ -1,7 +1,7 @@
 /**
 \file       capture-desk-impl-android.cpp
 \date       16.05.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 
 \project    u3_desk_vgen
 */
@@ -23,7 +23,7 @@ CaptureDeskImplAndroid::get_buf_int (const syn::SourceImplInfo& props_info, Capt
   // U3_CHECK (fd >= 0, "open /dev/graphics/fb0");
   // close (fd);
 
-#  if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   int   fd;
   void* bits;
 
@@ -73,7 +73,7 @@ CaptureDeskImplAndroid::get_buf_int (const syn::SourceImplInfo& props_info, Capt
 
 #  endif
 
-#  if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   // int       size_dest_data = 0;
   // int       width_dest     = ::libs::helpers::consts::iinvalid;
   // int       height_dest    = ::libs::helpers::consts::iinvalid;
@@ -89,8 +89,7 @@ CaptureDeskImplAndroid::get_buf_int (const syn::SourceImplInfo& props_info, Capt
 
     switch (props_info.capture_props_->type_capture_)
     {
-    case ::libs::ievents::props::videos::generic::driver::CatchRgns::cursor_area:
-    {
+    case ::libs::ievents::props::videos::generic::driver::CatchRgns::cursor_area: {
       width_dest  = props_info.capture_props_->width_;
       height_dest = props_info.capture_props_->height_;
 
@@ -105,7 +104,7 @@ CaptureDeskImplAndroid::get_buf_int (const syn::SourceImplInfo& props_info, Capt
       loc_y -= height_dest / 2;
 
       ::libs::helpers::utils::check_bound (loc_x, 0, (window_rect.right - window_rect.left) - width_dest);
-      ::libs::helpers::utils::check_bound(loc_y, 0, (window_rect.bottom - window_rect.top) - height_dest);
+      ::libs::helpers::utils::check_bound (loc_y, 0, (window_rect.bottom - window_rect.top) - height_dest);
 
       offset_pos.x = loc_x;
       offset_pos.y = loc_y;
@@ -114,8 +113,7 @@ CaptureDeskImplAndroid::get_buf_int (const syn::SourceImplInfo& props_info, Capt
     case ::libs::ievents::props::videos::generic::driver::CatchRgns::hwnd:
     case ::libs::ievents::props::videos::generic::driver::CatchRgns::desktop:
     case ::libs::ievents::props::videos::generic::driver::CatchRgns::selection:
-    default:
-    {
+    default: {
       width_dest  = props_info.capture_props_->width_;
       height_dest = props_info.capture_props_->height_;
       break;

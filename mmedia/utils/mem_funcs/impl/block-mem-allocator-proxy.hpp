@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       block-mem-allocator-proxy.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_mem_funcs
 */
@@ -16,12 +16,14 @@ class BlockMemAllocatorProxy final
   public:
   //  ext types
   using create_func_type  = IBlockMemAllocator::raw_ptr ();
-  using bcreate_func_type = boost::function< create_func_type >;
+  using bcreate_func_type = std::function< create_func_type >;
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (BlockMemAllocatorProxy)
 
-  BlockMemAllocatorProxy (const BlockMemAllocatorProxy& src)            = delete;
-  BlockMemAllocatorProxy& operator= (const BlockMemAllocatorProxy& src) = delete;
+  BlockMemAllocatorProxy (const BlockMemAllocatorProxy&)                = delete;
+  BlockMemAllocatorProxy& operator= (const BlockMemAllocatorProxy&)     = delete;
+  BlockMemAllocatorProxy (BlockMemAllocatorProxy&&) noexcept            = delete;
+  BlockMemAllocatorProxy& operator= (BlockMemAllocatorProxy&&) noexcept = delete;
 
   static BlockMemAllocatorProxy::raw_ptr
   instance (const std::string& dll_path = std::string (""))
@@ -59,7 +61,7 @@ class BlockMemAllocatorProxy final
     }
 
 #  ifdef U3_OS_ANDROID
-    creator_ = reinterpret_cast< create_func_type* > (dlsym (lib_.native (), "create_mem_impl"));
+    creator_ = ::libs::helpers::casts::reinterpret_cast_helper< create_func_type* > (dlsym (lib_.native (), "create_mem_impl"));
 #  else
     creator_ = ::boost::dll::import_symbol< create_func_type > (_cpath, "create_mem_impl");
 #  endif

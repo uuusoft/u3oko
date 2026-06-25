@@ -313,48 +313,48 @@ idct_mm32 (int16_t *block)
 
     rowloop:
 
-      movq mm0, MPTR[INP]; 0; x3 x2 x1 x0
+      movq mm0, qword ptr[INP]; 0; x3 x2 x1 x0
 
-      movq mm1, MPTR[INP + 8]; 1; x7 x6 x5 x4
+      movq mm1, qword ptr[INP + 8]; 1; x7 x6 x5 x4
       movq mm2, mm0; 2; x3 x2 x1 x0
 
-      movq mm3, MPTR[TABLE]; 3; w06 w04 w02 w00
+      movq mm3, qword ptr[TABLE]; 3; w06 w04 w02 w00
       punpcklwd mm0, mm1; x5 x1 x4 x0
 
       movq mm5, mm0; 5; x5 x1 x4 x0
       punpckldq mm0, mm0; x4 x0 x4 x0
 
-      movq mm4, MPTR[TABLE + 8]; 4; w07 w05 w03 w01
+      movq mm4, qword ptr[TABLE + 8]; 4; w07 w05 w03 w01
       punpckhwd mm2, mm1; 1; x7 x3 x6 x2
 
       pmaddwd mm3, mm0; x4*w06 + x0*w04 x4*w02 + x0*w00
       movq mm6, mm2; 6; x7 x3 x6 x2
 
-      movq mm1, MPTR[TABLE + 32]; 1; w22 w20 w18 w16
+      movq mm1, qword ptr[TABLE + 32]; 1; w22 w20 w18 w16
       punpckldq mm2, mm2; x6 x2 x6 x2
 
       pmaddwd mm4, mm2; x6*w07 + x2*w05 x6*w03 + x2*w01
       punpckhdq mm5, mm5; x5 x1 x5 x1
 
-      pmaddwd mm0, MPTR[TABLE + 16]; x4*w14 + x0*w12 x4*w10 + x0*w08
+      pmaddwd mm0, qword ptr[TABLE + 16]; x4*w14 + x0*w12 x4*w10 + x0*w08
       punpckhdq mm6, mm6; x7 x3 x7 x3
 
-      movq mm7, MPTR[TABLE + 40]; 7; w23 w21 w19 w17
+      movq mm7, qword ptr[TABLE + 40]; 7; w23 w21 w19 w17
       pmaddwd mm1, mm5; x5*w22 + x1*w20 x5*w18 + x1*w16
 
-      paddd mm3, MPTR[ROUNDER]; +rounder
+      paddd mm3, qword ptr[ROUNDER]; +rounder
       pmaddwd mm7, mm6; x7*w23 + x3*w21 x7*w19 + x3*w17
 
-      pmaddwd mm2, MPTR[TABLE + 24]; x6*w15 + x2*w13 x6*w11 + x2*w09
+      pmaddwd mm2, qword ptr[TABLE + 24]; x6*w15 + x2*w13 x6*w11 + x2*w09
       paddd mm3, mm4; 4; a1 = sum (even1 ) a0 = sum (even0)
 
-      pmaddwd mm5, MPTR[TABLE + 48]; x5*w30 + x1*w28 x5*w26 + x1*w24
+      pmaddwd mm5, qword ptr[TABLE + 48]; x5*w30 + x1*w28 x5*w26 + x1*w24
       movq mm4, mm3; 4; a1 a0
 
-      pmaddwd mm6, MPTR[TABLE + 56]; x7*w31 + x3*w29 x7*w27 + x3*w25
+      pmaddwd mm6, qword ptr[TABLE + 56]; x7*w31 + x3*w29 x7*w27 + x3*w25
       paddd mm1, mm7; 7; b1 = sum (odd1 ) b0 = sum (odd0)
 
-      paddd mm0, MPTR[ROUNDER]; +rounder
+      paddd mm0, qword ptr[ROUNDER]; +rounder
       psubd mm3, mm1; a1 - b1 a0 - b0
 
       psrad mm3, SHIFT_INV_ROW; y6 = a1 - b1 y7 = a0 - b0
@@ -379,10 +379,10 @@ idct_mm32 (int16_t *block)
       psrld mm4, 16; 0 y6 0 y4
 
       pslld mm7, 16; y7 0 y5 0
-      movq MPTR[OUTP], mm1; 1; save y3 y2 y1 y0
+      movq qword ptr[OUTP], mm1; 1; save y3 y2 y1 y0
 
       por mm7, mm4; 4; y7 y6 y5 y4
-      movq MPTR[OUTP + 8], mm7; 7; save y7 y6 y5 y4
+      movq qword ptr[OUTP + 8], mm7; 7; save y7 y6 y5 y4
 
 
       add INP, 16; add 1 row to input pointer
@@ -404,23 +404,23 @@ idct_mm32 (int16_t *block)
       align 16
     colloop:
 
-    //  movq  mm0, MPTR [tg_3_16]
+    //  movq  mm0, qword ptr [tg_3_16]
       movq  mm0, tg_3_16
 
-      movq  mm3, MPTR[INP + 16 * 3]
+      movq  mm3, qword ptr[INP + 16 * 3]
       movq  mm1, mm0; tg_3_16
 
-      movq  mm5, MPTR[INP + 16 * 5]
+      movq  mm5, qword ptr[INP + 16 * 5]
       pmulhw  mm0, mm3; x3*( tg_3_16 - 1 )
 
-      //  movq  mm4, MPTR [tg_1_16]
+      //  movq  mm4, qword ptr [tg_1_16]
       movq  mm4, tg_1_16
       pmulhw  mm1, mm5; x5*( tg_3_16 - 1 )
 
-      movq  mm7, MPTR[INP + 16 * 7]
+      movq  mm7, qword ptr[INP + 16 * 7]
       movq  mm2, mm4; tg_1_16
 
-      movq  mm6, MPTR[INP + 16 * 1]
+      movq  mm6, qword ptr[INP + 16 * 1]
       pmulhw  mm4, mm7; x7*tg_1_16
 
       paddsw  mm0, mm3; x3*tg_3_16
@@ -429,7 +429,7 @@ idct_mm32 (int16_t *block)
       paddsw  mm1, mm3; x3 + x5*( tg_3_16 - 1 )
       psubsw  mm0, mm5; x3*tg_3_16 - x5 = tm35
 
-      //  movq  mm3, MPTR [ocos_4_16]
+      //  movq  mm3, qword ptr [ocos_4_16]
       movq  mm3, ocos_4_16
       paddsw  mm1, mm5; x3 + x5*tg_3_16 = tp35
 
@@ -445,35 +445,35 @@ idct_mm32 (int16_t *block)
       psubsw  mm4, mm1; tp17 - tp35 = t1
       paddsw  mm2, mm0; tm17 + tm35 = t2
 
-      //  movq  mm7, MPTR [tg_2_16]
+      //  movq  mm7, qword ptr [tg_2_16]
       movq  mm7, tg_2_16
       movq  mm1, mm4; t1
 
-    ; movq  MPTR[SCRATCH + 0], mm5; save b0
-      movq  MPTR[OUTP + 3 * 16], mm5; save b0
+    ; movq  qword ptr[SCRATCH + 0], mm5; save b0
+      movq  qword ptr[OUTP + 3 * 16], mm5; save b0
       paddsw  mm1, mm2; t1 + t2
 
-    ; movq  MPTR[SCRATCH + 8], mm6; save b3
-      movq  MPTR[OUTP + 5 * 16], mm6; save b3
+    ; movq  qword ptr[SCRATCH + 8], mm6; save b3
+      movq  qword ptr[OUTP + 5 * 16], mm6; save b3
       psubsw  mm4, mm2; t1 - t2
 
-      movq  mm5, MPTR[INP + 2 * 16]
+      movq  mm5, qword ptr[INP + 2 * 16]
       movq  mm0, mm7; tg_2_16
 
-      movq  mm6, MPTR[INP + 6 * 16]
+      movq  mm6, qword ptr[INP + 6 * 16]
       pmulhw  mm0, mm5; x2*tg_2_16
 
       pmulhw  mm7, mm6; x6*tg_2_16
     ; slot
       pmulhw  mm1, mm3; ocos_4_16*( t1 + t2 ) = b1 / 2
     ; slot
-      movq  mm2, MPTR[INP + 0 * 16]
+      movq  mm2, qword ptr[INP + 0 * 16]
       pmulhw  mm4, mm3; ocos_4_16*( t1 - t2 ) = b2 / 2
 
       psubsw  mm0, mm6; t2*tg_2_16 - x6 = tm26
       movq  mm3, mm2; x0
 
-      movq  mm6, MPTR[INP + 4 * 16]
+      movq  mm6, qword ptr[INP + 4 * 16]
       paddsw  mm7, mm5; x2 + x6*tg_2_16 = tp26
 
       paddsw  mm2, mm6; x0 + x4 = tp04
@@ -503,41 +503,41 @@ idct_mm32 (int16_t *block)
       psraw mm6, SHIFT_INV_COL; dst2
       psubsw  mm0, mm4; a2 - b2
 
-    ; movq  mm1, MPTR[SCRATCH + 0]; load b0
-      movq  mm1, MPTR[OUTP + 3 * 16]; load b0
+    ; movq  mm1, qword ptr[SCRATCH + 0]; load b0
+      movq  mm1, qword ptr[OUTP + 3 * 16]; load b0
       psraw mm7, SHIFT_INV_COL; dst6
 
       movq  mm4, mm5; a0
       psraw mm0, SHIFT_INV_COL; dst5
 
-      movq  MPTR[OUTP + 1 * 16], mm3
+      movq  qword ptr[OUTP + 1 * 16], mm3
       paddsw  mm5, mm1; a0 + b0
 
-      movq  MPTR[OUTP + 2 * 16], mm6
+      movq  qword ptr[OUTP + 2 * 16], mm6
       psubsw  mm4, mm1; a0 - b0
 
-    ; movq  mm3, MPTR[SCRATCH + 8]; load b3
-      movq  mm3, MPTR[OUTP + 5 * 16]; load b3
+    ; movq  mm3, qword ptr[SCRATCH + 8]; load b3
+      movq  mm3, qword ptr[OUTP + 5 * 16]; load b3
       psraw mm5, SHIFT_INV_COL; dst0
 
       movq  mm6, mm2; a3
       psraw mm4, SHIFT_INV_COL; dst7
 
-      movq  MPTR[OUTP + 5 * 16], mm0
+      movq  qword ptr[OUTP + 5 * 16], mm0
       paddsw  mm2, mm3; a3 + b3
 
-      movq  MPTR[OUTP + 6 * 16], mm7
+      movq  qword ptr[OUTP + 6 * 16], mm7
       psubsw  mm6, mm3; a3 - b3
 
-      movq  MPTR[OUTP + 0 * 16], mm5
+      movq  qword ptr[OUTP + 0 * 16], mm5
       psraw mm2, SHIFT_INV_COL; dst3
 
-      movq  MPTR[OUTP + 7 * 16], mm4
+      movq  qword ptr[OUTP + 7 * 16], mm4
       psraw mm6, SHIFT_INV_COL; dst4
 
-      movq  MPTR[OUTP + 3 * 16], mm2
+      movq  qword ptr[OUTP + 3 * 16], mm2
 
-      movq  MPTR[OUTP + 4 * 16], mm6
+      movq  qword ptr[OUTP + 4 * 16], mm6
 
       lea INP, [tempMatrix]
       mov OUTP, block

@@ -1,7 +1,7 @@
 /**
 \file       load-save-file-event-funcs.cpp
 \date       04.06.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ilink
 */
 // #define U3_USE_DEB_LOG_LEVEL

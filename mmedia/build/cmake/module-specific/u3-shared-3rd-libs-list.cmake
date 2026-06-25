@@ -1,16 +1,18 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        12.09.2024
 # copyright   Erashov A.I.
 # file        u3-shared-3rd-libs-list.cmake
 
-if(U3_DBG_EXTERNAL_LIB_SKIP_SQLITE)
-  set(U3_SHARED_COMPILE_DEF_CPP ${U3_SHARED_COMPILE_DEF_CPP} -DU3_DBG_EXTERNAL_LIB_SKIP_SQLITE=1)
+if(U3_DBG_EXTLIB_SKIP_SQLITE)
+  set(U3_SHARED_COMPILE_DEF_CPP ${U3_SHARED_COMPILE_DEF_CPP} -DU3_DBG_EXTLIB_SKIP_SQLITE=1)
   set(U3_NAME_SQLITE_LIB)
   set(U3_NAME_SQLITE_UTIL)
 else()
   include("./build/cmake/libs/sqlite/u3-sqlite-lib.cmake")
   set(U3_NAME_SQLITE_LIB u3-sqlite-lib)
   set(U3_NAME_SQLITE_UTIL sqlite-util)
+
+  include("./build/cmake/libs/sqlitecpp/u3-sqlitecpp-lib.cmake")
 endif()
 
 # shared external libs
@@ -23,12 +25,12 @@ if(U3_BUILD_TESTING)
   include("./build/cmake/libs/googletest/u3-googletest-lib.cmake")
 endif()
 
-if(U3_DBG_FORCE_COMPILE_AT_BEGIN_ALL_EXT_LIBS)
+if(U3_DBG_COMPILE_AT_BEGIN_EXTLIBS)
   # debug - force first compile
   include("./build/cmake/libs/stb/u3-stb-lib.cmake")
   include("./build/cmake/libs/openh264/u3-openh264-lib.cmake")
 
-  if(NOT U3_DBG_EXTERNAL_LIB_SKIP_DLIB)
+  if(NOT U3_DBG_EXTLIB_SKIP_DLIB)
     include( "./build/cmake/libs/dlib/u3-dlib-lib.cmake" )
   endif()
 

@@ -1,6 +1,6 @@
 /**
 \file       video-sender-filter-dll.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_video_sender_dll
 */
@@ -82,7 +82,7 @@ Filter::process_events (syn::TransformInfo& info)
 
   for (const auto& event : *info.frame_events_)
   {
-    const auto devent = ::libs::iproperties::helpers::cast_event< ::libs::ievents::runtime::interf::InterfBaseIdEvent > (event);
+    auto* devent = ::libs::iproperties::helpers::cast_event< ::libs::ievents::runtime::interf::InterfBaseIdEvent > (event);
     if (devent)
     {
       finfo_.active_impl_ = devent->get_interface ();
@@ -99,10 +99,11 @@ Filter::default_send_funct (
   const syn::id_link_type&             id)
 {
   U3_ASSERT (minfo);
-  ::libs::link::ILink::ptr helper   = U3_CAST_PROP (::libs::properties::vers::links::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ())->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
-  auto&                    bufs     = (**info.ibuf_);
-  const auto&              indx_buf = minfo->indx_buf_;
-  syn::IVideoBuf::raw_ptr  send_buf = bufs[indx_buf];
+  auto*                   linkprops = ::libs::iproperties::helpers::get_prop_links ();
+  auto                    helper    = linkprops->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
+  auto&                   bufs      = (**info.ibuf_);
+  const auto&             indx_buf  = minfo->indx_buf_;
+  syn::IVideoBuf::raw_ptr send_buf  = bufs[indx_buf];
 
   if (!send_buf || (*send_buf)[::utils::dbufs::MemVars::size_data] <= 0)
   {
@@ -113,11 +114,11 @@ Filter::default_send_funct (
   auto impl = senders_.find (id);
   if (impl == senders_.end ())
   {
-    U3_LOG_DATA_ERROR ("unknown type senders, skip send for" + TOLOG (id));
+    U3_LOG_DATA_ERROR ("unknown type senders, skip send for" + STOLOG (id));
     return;
   }
 
-  U3_LOG_DATA_DBG ("send frame to client" + TOLOG (minfo->indx_buf_) + TOLOG (id));
+  U3_LOG_DATA_DBG ("send frame to client" + TOLOG (minfo->indx_buf_) + STOLOG (id));
   impl->second->send (finfo_, info, minfo, send_buf);
 }
 }   // namespace dlls::terminals::video_sender

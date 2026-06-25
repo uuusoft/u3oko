@@ -1,6 +1,6 @@
 /**
 \file       fake-vgen-source-impl.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.06.2016
 \project    u3_fake_vgen
 */
@@ -58,6 +58,7 @@ SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo >& sources)
 void
 SourceImpl::get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* events)
 {
+  U3_XLOG_DBG ("SourceImpl::get_raw_data_int::---->")
   auto& buf = (*bufs)[::utils::dbufs::video::consts::offs::raw];
   U3_ASSERT (buf);
 
@@ -89,6 +90,7 @@ SourceImpl::get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* eve
   ++indx_bcomp_;
   ++counter_frames_;
   time_last_frame_ = now_time;
+  U3_XLOG_DBG ("SourceImpl::get_raw_data_int::<----")
 }
 
 

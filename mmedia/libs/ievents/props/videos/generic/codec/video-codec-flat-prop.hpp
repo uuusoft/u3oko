@@ -2,7 +2,7 @@
 /**
 \file       video-codec-flat-prop.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 
@@ -36,8 +36,8 @@ struct VideoCodecFlatProp final {
   bool                               nocolor_            = false;                                         //< Флаг, отбрасывать цвет, даже если он есть в исходном изображении (сжатом/несжатом)
 };
 
-std::string        to_string (const VideoCodecFlatProp& info);
-std::uint32_t      to_bitrate_x264 (const VideoCodecFlatProp& info, std::uint32_t width, std::uint32_t height);
-void               tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const VideoCodecFlatProp& src);
-VideoCodecFlatProp tag_invoke (::boost::json::value_to_tag< VideoCodecFlatProp >, const ::boost::json::value& jvs);
+auto to_string (const VideoCodecFlatProp&) -> std::string;
+auto to_bitrate_x264 (const VideoCodecFlatProp&, std::uint32_t, std::uint32_t) -> std::uint32_t;
+auto tag_invoke (::boost::json::value_from_tag, ::boost::json::value&, const VideoCodecFlatProp&) -> void;
+auto tag_invoke (::boost::json::value_to_tag< VideoCodecFlatProp >, const ::boost::json::value&) -> VideoCodecFlatProp;
 }   // namespace libs::ievents::props::videos::generic::codec

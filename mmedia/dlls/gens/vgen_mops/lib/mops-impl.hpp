@@ -2,7 +2,7 @@
 /**
 \file       mops-impl.hpp
 \date       01.10.2016
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_vgen_mops_lib
 \brief      Объявление фильтра морфологических операций (МО)
 */
@@ -16,7 +16,7 @@ class MopsImpl final
   MopsImpl ()  = default;
   ~MopsImpl () = default;
 
-  void init ();
+  auto init () -> void;
   void set_props (syn::VideoMorphologyProp::craw_ptr info);
   void set_transform_info (syn::TransformInfo*);
   void itransform (const syn::NodeID& id_node, ::libs::bufs::Bufs& pbufs);
@@ -36,10 +36,10 @@ class MopsImpl final
     ::utils::dbufs::video::IVideoBuf* pdst);
 
   private:
-  syn::VideoMorphologyProp::craw_ptr                   props_ = nullptr;       //< Свойства морфологических операций, загруженных из xml
-  ::dlls::gens::vgen_mops::lib::helpers::MorphOperator morph_helper_;          //< Вспомогательный объект, для реализации функционала МО, т.к возможно он будет использован в ряде лругих фильтров
-  ::libs::optim::io::hioptim                           cmp_get_const_;         //< Функция сравнения для бинаризации изображения (подготовка буфера к МО через свертку)
-  ::libs::optim::mcalls::IMCaller::ptr                 pthreads_;              //< Пул потоков для обработки данных
-  syn::TransformInfo*                                  transinfo_ = nullptr;   //< Указатель на текущий параметр при вызове функции transform
+  syn::VideoMorphologyProp::craw_ptr   props_ = nullptr;       //< Свойства морфологических операций, загруженных из xml
+  helpers::MorphOperator               morph_helper_;          //< Вспомогательный объект, для реализации функционала МО, т.к возможно он будет использован в ряде лругих фильтров
+  ::libs::optim::io::hioptim           cmp_get_const_;         //< Функция сравнения для бинаризации изображения (подготовка буфера к МО через свертку)
+  ::libs::optim::mcalls::IMCaller::ptr pthreads_;              //< Пул потоков для обработки данных
+  syn::TransformInfo*                  transinfo_ = nullptr;   //< Указатель на текущий параметр при вызове функции transform
 };
 }   // namespace dlls::gens::vgen_mops::lib

@@ -1,10 +1,11 @@
 /**
 \file       beast-websocket-session.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       31.03.2026
 \project    mhttp
 \original   https://github.com/boostorg/beast/blob/develop/example/http/server/async/http_server_async.cpp
 */
+// #define U3_USE_DEB_LOG_LEVEL
 #include "../../../module-http-includes_int.hpp"
 #include "mmedia/dlls/terminals/video_sender/consts/video-sender-const-vals.hpp"
 #include "../../http-module-syn.hpp"
@@ -31,7 +32,7 @@ websocket_session_ssl::~websocket_session_ssl ()
   shared_state_->leave (this);
 }
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 void
 websocket_session_ssl::run ()
 {
@@ -67,7 +68,7 @@ websocket_session_ssl::on_handshake (boost::beast::error_code ec)
 {
   if (ec)
   {
-    return fail (ec, "handshake");
+    return u3beast_fail (ec, "websocket_session_ssl::handshake");
   }
 
   // Turn off the timeout on the tcp_stream, because
@@ -76,13 +77,13 @@ websocket_session_ssl::on_handshake (boost::beast::error_code ec)
 
   // Set suggested timeout settings for the websocket
   ws_.set_option (
-    boost::beast::websocket::stream_base::timeout::suggested (
+    appl::syn::websocket::stream_base::timeout::suggested (
       boost::beast::role_type::server));
 
   // Set a decorator to change the Server of the handshake
-  ws_.set_option (boost::beast::websocket::stream_base::decorator (
-    [] (boost::beast::websocket::response_type& res) {
-      res.set (boost::beast::http::field::server,
+  ws_.set_option (appl::syn::websocket::stream_base::decorator (
+    [] (appl::syn::websocket::response_type& res) {
+      res.set (appl::syn::http::field::server,
                std::string (BOOST_BEAST_VERSION_STRING) +
                  " websocket-server-async-ssl");
     }));
@@ -101,7 +102,7 @@ websocket_session_ssl::on_accept (boost::beast::error_code ec)
   U3_XLOG_DEV ("websocket_session_ssl::on_accept" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
   if (ec)
   {
-    return fail (ec, "accept");
+    return u3beast_fail (ec, "websocket_session_ssl::accept");
   }
 
   // Turn off the timeout on the tcp_stream, because
@@ -132,13 +133,13 @@ websocket_session_ssl::on_read (boost::beast::error_code ec, std::size_t bytes_t
   // U3_XLOG_DEV ("websocket_session_ssl::on_read" + VTOLOG (bytes_transferred));
   boost::ignore_unused (bytes_transferred);
   // This indicates that the websocket_session_ssl was closed
-  if (ec == boost::beast::websocket::error::closed)
+  if (ec == appl::syn::websocket::error::closed)
   {
     return;
   }
   if (ec)
   {
-    return fail (ec, "read");
+    return u3beast_fail (ec, "websocket_session_ssl::read");
   }
   // Send to all connections
   // shared_state_->send(beast::bufs_to_string(buf_.data()));
@@ -203,7 +204,7 @@ websocket_session_ssl::on_write (
   //  boost::ignore_unused (bytes_transferred);
   if (ec)
   {
-    return fail (ec, "write");
+    return u3beast_fail (ec, "websocket_session_ssl::write");
   }
 
   // Remove from the queue

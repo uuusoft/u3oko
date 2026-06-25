@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       create-info.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_link
 */
@@ -38,9 +38,9 @@ struct CreateInfo {
 
   virtual ~CreateInfo () = default;
 
-  void        check () const;
-  std::string make_arg (const std::string&, const std::string&);
-  std::string get_prefix () const;
+  auto check () const -> void;
+  auto make_arg (const std::string&, const std::string&) -> std::string;
+  auto get_prefix () const -> std::string;
 
   bool operator< (const CreateInfo&) const;
   bool operator== (const CreateInfo&) const;

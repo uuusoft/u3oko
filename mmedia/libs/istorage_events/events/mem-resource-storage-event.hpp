@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       mem-resource-http-event.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       21.07.2018
 \project    u3_istorage_events
 */
@@ -35,19 +35,20 @@ class MemResourceStorageEvent : public BaseStorageEvent
 
   virtual ~MemResourceStorageEvent () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/istorage_events/events/mem-resource-storage-event";
+    static constexpr const char* chret = "libs/istorage_events/events/mem-resource-storage-event";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
-  const id_mem_type&         get_id () const;
-  void                       set_id (const id_mem_type& id);
-  const number_mem_buf_type& get_numder () const;
-  void                       set_number (const number_mem_buf_type& number);
-  bool                       get_request () const;
-  void                       set_request (bool request);
+  auto get_id () const -> const id_mem_type&;
+  auto set_id (const id_mem_type& id) -> void;
+  auto get_numder () const -> const number_mem_buf_type&;
+  auto set_number (const number_mem_buf_type& number) -> void;
+  auto get_request () const -> bool;
+  auto set_request (bool request) -> void;
 
   protected:
   id_mem_type         id_;                     //< Идентификатор ресурса. Например см. ZipDataEvent::id_buf_type
@@ -63,8 +64,8 @@ class MemResourceStorageEvent : public BaseStorageEvent
   template< class Archive >
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
   //  ievents::Event overrides
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void                        copy_int (const IEvent::craw_ptr src) override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 };
 }   // namespace libs::istorage_events::events
 

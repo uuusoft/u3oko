@@ -1,6 +1,6 @@
 /**
 \file       impl2storage.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       14.08.2018
 \project    u3_video_sender_dll
 */
@@ -99,7 +99,7 @@ Impl2Storage::send_message (
   const syn::CallSyncs& sync,
   const syn::Calls&     req)
 {
-  auto                     ilink     = U3_CAST_PROP (syn::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ());
+  auto*                    ilink     = ::libs::iproperties::helpers::get_prop_links ();
   ::libs::link::ILink::ptr data2appl = ilink->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
   U3_ASSERT (data2appl);
   if (!data2appl)

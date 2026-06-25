@@ -1,6 +1,6 @@
 /**
 \file       end-point-prop.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
@@ -11,10 +11,9 @@
 
 namespace libs::ievents::props::terminals
 {
-EndPointProp::EndPointProp (const Acessor& pha) :
-  enable_send_ (true),
-  enable_notify_ (false)
+EndPointProp::EndPointProp (const Acessor& pha)
 {
+  state_         = events::PropertyUsings::enabled;
   property_name_ = gen_get_mid ();
 }
 

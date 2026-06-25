@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       image-dll-resource-holder.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       11.05.2022
 \project    u3_pict_vgen
 */
@@ -50,9 +50,9 @@ class ResourceHolder final
     {
       free_funct (resval_);
     }
-    catch (const std::exception& e)
+    catch (const std::exception& excpt)
     {
-      U3_LOG_DATA_EXCEPT (e.what ());
+      U3_LOG_DATA_EXCEPT (excpt.what ());
     }
     catch (...)
     {

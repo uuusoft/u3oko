@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       add-event2base.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       09.09.2018
 \project    u3_ievents_lib
 */
@@ -36,20 +36,21 @@ class AddEvent2Base : public BaseEventsEvent
 
   virtual ~AddEvent2Base () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ievents_events/events/add-event2base";
+    static constexpr const char* chret = "libs/ievents_events/events/add-event2base";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
-  void                        sync_event_props (const machine_id_type&, const object_id_type&);
-  void                        set_event (::libs::events::IEvent::ptr& obj);
-  ::libs::events::IEvent::ptr get_event () const;
-  void                        set_object_id (const object_id_type& id);
-  const object_id_type&       get_object_id () const;
-  void                        set_machine_id (const machine_id_type& id);
-  const machine_id_type&      get_machine_id () const;
+  auto sync_event_props (const machine_id_type&, const object_id_type&) -> void;
+  auto set_event (::libs::events::IEvent::ptr& obj) -> void;
+  auto get_event () const -> ::libs::events::IEvent::ptr;
+  auto set_object_id (const object_id_type& id) -> void;
+  auto get_object_id () const -> const object_id_type&;
+  auto set_machine_id (const machine_id_type& id) -> void;
+  auto get_machine_id () const -> const machine_id_type&;
 
   private:
   //  internal typess
@@ -64,10 +65,10 @@ class AddEvent2Base : public BaseEventsEvent
   template< class Archive >
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
   //  ievents::Event overrides
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void                        load_json_int (const ::boost::json::object& obj) override;
-  virtual void                        save_json_int (::boost::json::object& obj) const override;
-  virtual void                        copy_int (const IEvent::craw_ptr src) override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
+  virtual auto load_json_int (const ::boost::json::object&) -> void override;
+  virtual auto save_json_int (::boost::json::object&) const -> void override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 };
 }   // namespace libs::ievents_events::events
 

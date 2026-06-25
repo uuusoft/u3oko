@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       istorage-events-includes.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       22.07.2018
 \project    u3_istorage_events
 */

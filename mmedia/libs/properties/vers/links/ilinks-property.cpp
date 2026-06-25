@@ -1,6 +1,6 @@
 /**
 \file       ilinks-property.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       02.03.2022
 \project    u3_properties_libs
 */
@@ -18,7 +18,7 @@ namespace libs::properties::vers::links
 {
 ILinksProperty::ILinksProperty (const links_type& links)
 {
-  links_.copy_links (links);
+  links_.copy_links (links, true);
 }
 
 

@@ -2,7 +2,7 @@
 /**
 \file       rgb32_rgb24_alg.hpp
 \date       22.02.2026
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_doptim_dll
 */
 

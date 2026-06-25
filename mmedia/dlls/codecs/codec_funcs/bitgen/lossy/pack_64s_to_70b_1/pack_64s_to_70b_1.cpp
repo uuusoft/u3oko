@@ -1,7 +1,7 @@
 /**
 \file       pack_64s_to_70b_1.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_codec_funcs
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -19,8 +19,8 @@ CObj::forward_int (
   std::uint32_t&      count_byte_dst)
 {
   U3_CHECK (count_byte_src >= 4, "source too small");
-  const auto* ssrc = U3_CAST_CODECS< const std::int16_t* > (src);
-  auto*       udst = U3_CAST_CODECS< char* > (dst);
+  const auto* ssrc = ::libs::helpers::casts::reinterpret_cast_helper< const std::int16_t* > (src);
+  auto*       udst = ::libs::helpers::casts::reinterpret_cast_helper< char* > (dst);
 
   for (std::uint32_t bindx = 0; bindx < count_byte_src / consts::src_granularity; ++bindx)
   {
@@ -38,7 +38,7 @@ CObj::forward_int (
     res2 = ((res2 << 10) & 0x0007FC00) | ((res2 >> 12) & 0x00080000);
     res3 = (res3 & 0x000001FF) | ((res3 >> 22) & 0x00000200);
 
-    *U3_CAST_CODECS< int* > (udst) = res1 | res2 | res3;
+    *::libs::helpers::casts::reinterpret_cast_helper< int* > (udst) = res1 | res2 | res3;
 
     count_byte_dst += sizeof (int);
 
@@ -61,12 +61,12 @@ CObj::backward_int (
   void*               dst,
   std::uint32_t&      count_byte_dst)
 {
-  const auto* usrc = U3_CAST_CODECS< const char* > (src);
-  auto*       sdst = U3_CAST_CODECS< std::int16_t* > (dst);
+  const auto* usrc = ::libs::helpers::casts::reinterpret_cast_helper< const char* > (src);
+  auto*       sdst = ::libs::helpers::casts::reinterpret_cast_helper< std::int16_t* > (dst);
 
   for (std::uint32_t bindx = 0; bindx < count_byte_src / consts::dst_granularity; ++bindx)
   {
-    const auto first = *U3_CAST_CODECS< const std::int32_t* > (usrc);
+    const auto first = *::libs::helpers::casts::reinterpret_cast_helper< const std::int32_t* > (usrc);
 
     sdst[0] = ((first >> 20) & 0x000007FF);
     count_byte_dst += sizeof (std::int16_t);

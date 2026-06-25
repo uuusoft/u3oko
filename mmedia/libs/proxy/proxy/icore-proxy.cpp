@@ -1,7 +1,7 @@
 /**
 \file       icore-proxy.cpp
 \date       15.04.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_proxy_libs
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -52,7 +52,7 @@ extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* cre
 
 namespace libs::proxy
 {
-::boost::function< libs::icore::impl::var1::obj::dll::create_impl_func_type >
+std::function< libs::icore::impl::var1::obj::dll::create_impl_func_type >
 get_create_data_path_module_funct (const std::string& plib_id)
 {
   const auto lib_id = libs::helpers::dlls::undecorate_dll_name (plib_id);
@@ -157,7 +157,7 @@ get_create_data_path_module_funct (const std::string& plib_id)
     return create_impl_vdd_vgradient;
   }
 #endif
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   if (lib_id == "vdd_vhistogram")
   {
     return create_impl_vdd_vhistogram;

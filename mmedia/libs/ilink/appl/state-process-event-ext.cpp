@@ -1,7 +1,7 @@
 /**
 \file       state-process-event-ext.cpp
 \date       02.03.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ilink
 */
 #include "../libs-ilink-includes_int.hpp"
@@ -23,7 +23,7 @@ std::string
 to_string (const StateProcessEventExt& obj)
 {
   std::string ret = ::libs::link::to_string (obj);
-  ret += ", msg " + (obj.msg_ ? obj.msg_->get_mid () : "empty");
+  ret += ", msg " + (obj.msg_ ? std::string { obj.msg_->get_mid () } : "empty");
   return ret;
 }
 }   // namespace libs::ilink::appl

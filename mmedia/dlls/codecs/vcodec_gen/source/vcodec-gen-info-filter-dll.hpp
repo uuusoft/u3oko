@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       vcodec-gen-info-filter-dll.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_vcodec_gen
 */
@@ -20,7 +20,7 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
   InfoFilter (const InfoFilter& src)            = delete;
   InfoFilter& operator= (const InfoFilter& src) = delete;
 
-  void init ();
+  auto init () -> void;
 
   syn::VideoCodecProp::raw_ptr        rprops_         = nullptr;   //< Настроенный указатель на свойства (для удобства)
   codec_gen::CodecGeneric::raw_ptr    dll_codec_      = nullptr;   //< Указатель на кодек, полученный из библиотеки
@@ -31,6 +31,6 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
 
   protected:
   //  BaseInfoFilter overrides
-  virtual void sync_int (bool force) override;
+  virtual auto sync_int (bool force) -> void override;
 };
 }   // namespace dlls::codecs::vcodec_gen

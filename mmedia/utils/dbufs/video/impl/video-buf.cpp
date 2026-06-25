@@ -1,7 +1,7 @@
 /**
 \file         video-buf.cpp
 \date         26.07.2016
-\author       Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author       Erashov Anton erashov2026@proton.me
 \project      u3_dbufs
 \brief        Реализация буфера под видео
 */

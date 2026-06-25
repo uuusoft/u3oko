@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       enum-module-links.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_link
 */
@@ -29,4 +29,5 @@ enum class ModuleLinks : std::uint16_t
 };
 
 const std::string& to_string (const ModuleLinks& val);
+std::string        to_string (const std::pair< ModuleLinks, ModuleLinks >& val);
 }   // namespace libs::link::details

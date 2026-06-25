@@ -3,7 +3,7 @@
 \brief      Filter for corrected image
 \file       diff-impl.hpp
 \date       01.01.2016
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_vgen_diff_lib
 */
 
@@ -19,7 +19,7 @@ class DiffImpl final
 
   void set_props (syn::VideoDiffProp::craw_ptr props);
   void set_transform_info (syn::TransformInfo*);
-  void init ();
+  auto init () -> void;
   void itransform (const syn::NodeID& id_node, ::libs::bufs::Bufs& pbufs);
   void make_diff_buf (const syn::NodeID& id_node, const syn::IVideoBuf& csrc1, syn::IVideoBuf& csrc2res);
   void bin_buf (const syn::NodeID& id_node, const std::int16_t bound, const std::int16_t val, syn::IVideoBuf* pdst);

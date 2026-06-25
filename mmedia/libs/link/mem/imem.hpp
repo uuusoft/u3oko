@@ -2,7 +2,7 @@
 /**
 \file       imem.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_link
 */
 
@@ -16,8 +16,10 @@ class IMem
   //  ext types
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IMem)
 
-  IMem (const IMem&)            = delete;
-  IMem& operator= (const IMem&) = delete;
+  IMem (const IMem&)                = delete;
+  IMem& operator= (const IMem&)     = delete;
+  IMem (IMem&&) noexcept            = delete;
+  IMem& operator= (IMem&&) noexcept = delete;
 
   //  IMem interface
   virtual void* mem_alloc (int, IBlockFakeMem::ptr)                       = 0;

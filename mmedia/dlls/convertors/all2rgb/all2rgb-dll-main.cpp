@@ -1,6 +1,6 @@
 /**
 \file       all2rgb-dll-main.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.05.2017
 \project    u3_all2rgb
 \brief      Модуль преобразования всех форматов в RGB24

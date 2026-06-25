@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       cpu-type-detect-defines.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.05.2018
 \project    u3_defines
 \brief      Определения типа процессора, под который компилируется система

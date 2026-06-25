@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       type-object-id.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       20.08.2018
 \project    u3_istorage_events
 */

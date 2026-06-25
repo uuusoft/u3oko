@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       core-consts-vals.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       23.02.2022
 \project    u3_core_lib
 */

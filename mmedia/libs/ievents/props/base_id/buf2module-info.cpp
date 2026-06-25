@@ -1,6 +1,6 @@
 /**
 \file       buf2module-info.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.03.2022
 \project    u3_ievents_lib
 */
@@ -12,9 +12,9 @@
 namespace libs::ievents::props::base_id
 {
 Buff2ModuleInfo::Buff2ModuleInfo (
-  float                                                    fps,
-  const ::utils::dbufs::video::consts::offs::off_buf_type& indx_buf,
-  const id_link_type&                                      dest_module_id) :
+  float                    fps,
+  const syn::off_buf_type& indx_buf,
+  const id_link_type&      dest_module_id) :
   fps_ (fps),
   indx_buf_ (indx_buf),
   dest_module_id_ (dest_module_id)

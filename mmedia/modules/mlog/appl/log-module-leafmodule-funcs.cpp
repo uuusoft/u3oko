@@ -1,6 +1,6 @@
 /**
 \file       log-module-leafmodule-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    mlog
 */
@@ -13,29 +13,30 @@
 namespace modules::mlog::appl
 {
 ::libs::ilink::appl::base::BaseModule::recv_links_type
-LogModule::get_recv_link ()
+LogModule::get_recv_link_int ()
 {
-  return recv_links_type {
-    links_.get (libs::properties::vers::links::mids::log2appl)
-  };
+  return { links_.get (libs::properties::vers::links::mids::log2appl) };
 }
 
 
 bool
-LogModule::catch_event (syn::IEvent::ptr& evnt)
+LogModule::catch_event_int (syn::IEvent::ptr& evnt)
 {
   return true;
 }
 
 
 bool
-LogModule::is_now_thread_to_sleep (bool now_recv_evnt)
+LogModule::is_now_thread_to_sleep_int (bool now_recv_evnt)
 {
-  auto logprop = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
-  if (events_for_save_.size () > logprop->get_val (syn::LogVals::max_cache_events))
+  // EAI-MODULE-REFACT
+#if 0  
+  auto* logprop = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
+  if (logprop && events_for_save_.size () > logprop->get_val (syn::LogVals::max_cache_events))
   {
     flush_events ();
   }
+#endif
   return now_recv_evnt ? false : true;
 }
 }   // namespace modules::mlog::appl

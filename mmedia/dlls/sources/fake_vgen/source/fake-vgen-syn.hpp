@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       fake-vgen-syn.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       14.09.2018
 \project    u3_fake_vgen
 */
@@ -18,4 +18,5 @@ using CpuExts                 = ::libs::helpers::sys::cpu::CpuExts;
 using IEvent                  = ::libs::events::IEvent;
 using InterfCaptureImageEvent = ::libs::ievents::runtime::interf::InterfCaptureImageEvent;
 using IBlockMem               = ::libs::helpers::mem::IBlockMem;
+using id_val                  = ::libs::helpers::uids::minor::id_val;
 }   // namespace dlls::sources::fake_vgen::syn

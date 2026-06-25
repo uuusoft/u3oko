@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       caller-impl.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2016
 \project    u3_optim_lib
 */

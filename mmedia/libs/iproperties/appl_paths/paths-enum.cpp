@@ -1,6 +1,6 @@
 /**
 \file       paths-enum.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       17.02.2012
 \project    u3_iproperties_lib
 */

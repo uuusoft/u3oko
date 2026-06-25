@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file   CVideoSharperProp.hpp
-\author   Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author   Erashov Anton erashov2026@proton.me
 \date   01.01.2017
 
 \project  u3_ievents_lib
@@ -10,7 +10,7 @@
 // old shit
 namespace libs::ievents::props::videos::generics::sharper
 {
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 struct EventBufsInfo : public ::libs::events::buf::E - ventBufsInfo {
   friend class boost::serialization::access;
   friend ::dlls::devents::impl::EventsImpl;
@@ -26,8 +26,8 @@ struct EventBufsInfo : public ::libs::events::buf::E - ventBufsInfo {
 
 
   protected:
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void                        copy_int (const IEvent::ptr& src) override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
+  virtual void copy_int (const IEvent::ptr& src) override;
   virtual void
   load_int (const ::pugi::xml_named_node_iterator& node) override
   {
@@ -45,7 +45,7 @@ struct EventBufsInfo : public ::libs::events::buf::E - ventBufsInfo {
 };
 
 
-class CVideoSharperProp : public ievents::Event
+class CVideoSharperProp : virtual public ievents::Event
 {
   public:
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (CVideoSharperProp)

@@ -1,6 +1,6 @@
 /**
 \file       events-impl.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       21.07.2017
 \project    u3_devents_dlls
 */
@@ -12,34 +12,36 @@ namespace dlls::devents::impl
 {
 EventsImpl::EventsImpl ()
 {
+  U3_XLOG_DEV ("EventsImpl::EventsImpl::---->");
   lock_type lock (mtx_);
-  construct_func_event ();
+  make_event_funcs ();
 }
 
 
 syn::IEvent::ptr
-EventsImpl::get (const hid_type& id)
+EventsImpl::get (const hid_type& eid)
 {
+  U3_XLOG_DEV ("EventsImpl::get::---->" + STOLOG (eid));
   lock_type lock (mtx_);
-
-  auto itf = gen_func_events_.find (id);
+  auto      itf = gen_func_events_.find (id_event_type { eid });
   if (gen_func_events_.end () == itf)
   {
-    U3_XLOG_ERROR ("function for create id event not found" + TOLOG (id));
+    U3_XLOG_ERROR ("function for create event by id not found" + STOLOG (eid));
     return syn::IEvent::ptr ();
   }
 
   auto ret = itf->second ();
   U3_ASSERT (ret);
-  ++counter_create_events_[id];
+  ++counter_create_events_[id_event_type { eid }];
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   // debug
   if (counter_create_events_[id] >= 1024 && 0 == counter_create_events_[id] % 1024)
   {
-    U3_XLOG_MARK ("dllevents" + TOLOG (id) + VTOLOG (counter_create_events_[id]));
+    U3_XLOG_MARK ("dllevents" + STOLOG (id) + VTOLOG (counter_create_events_[id]));
   }
 #endif
+  U3_XLOG_DEV ("EventsImpl::get::<----" + STOLOG (eid) + PTR_TOLOG (ret.get ()));
   return ret;
 }
 
@@ -47,25 +49,44 @@ EventsImpl::get (const hid_type& id)
 syn::IEvent::ptr
 EventsImpl::clone (const syn::IEvent::craw_ptr src, const ::libs::events::Deeps& type)
 {
-  ++counter_clone_events_[src->gen_get_mid ()];
+  ++counter_clone_events_[id_event_type { src->gen_get_mid () }];
   return src->clone (type);
 }
 
-
+#if 0
 void*
-EventsImpl::dcast (syn::IEvent::craw_ptr src, const hid_type& id)
+EventsImpl::dcast (syn::IEvent::raw_ptr src, const hid_type& eid)
 {
   lock_type lock (mtx_);
-  auto      itf = cast_func_events_.find (id);
 
+  auto itf = cast_func_events_.find (id_event_type { eid });
   if (cast_func_events_.end () == itf)
   {
-    U3_LOG_DATA_ERROR ("function for cast id event not found" + TOLOG (id));
+    U3_LOG_DATA_ERROR ("function for cast id event not found" + STOLOG (eid) + PTR_TOLOG (this));
     return nullptr;
   }
 
   auto ret = itf->second (src);
-  return const_cast< libs::events::IEvent* > (ret);
+  return ret;
+  // return const_cast< libs::events::IEvent* > (ret);
+}
+#endif
+
+const void*
+EventsImpl::dcast (syn::IEvent::craw_ptr src, const hid_type& eid)
+{
+  lock_type lock (mtx_);
+
+  auto itf = cast_func_events_.find (id_event_type { eid });
+  if (cast_func_events_.end () == itf)
+  {
+    U3_LOG_DATA_ERROR ("function for cast id event not found" + STOLOG (eid) + PTR_TOLOG (this));
+    return nullptr;
+  }
+
+  auto ret = itf->second (src);
+  return ret;
+  // return const_cast< libs::events::IEvent* > (ret);
 }
 
 
@@ -73,7 +94,6 @@ bool
 EventsImpl::event2xml (syn::IEvent::ptr& src, std::string& xml)
 {
   U3_ASSERT (src);
-
   try
   {
     std::stringstream            istr;
@@ -82,9 +102,9 @@ EventsImpl::event2xml (syn::IEvent::ptr& src, std::string& xml)
     xmla& BOOST_SERIALIZATION_NVP (src);
     xml = istr.str ();
   }
-  catch (std::exception& e)
+  catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what () + TOLOG (src->get_mid ()));
+    U3_LOG_DATA_EXCEPT (excpt.what () + STOLOG (src->get_mid ()));
     return false;
   }
   return true;
@@ -103,9 +123,9 @@ EventsImpl::xml2event (const std::string& xml, syn::IEvent::ptr& dst)
     U3_ASSERT (dst);
     dst->sync_txt2val ();
   }
-  catch (std::exception& e)
+  catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what ());
+    U3_LOG_DATA_EXCEPT (excpt.what ());
     return false;
   }
   return true;
@@ -116,15 +136,14 @@ bool
 EventsImpl::event2bin (syn::IEvent::ptr& src, std::ostream& bin)
 {
   U3_ASSERT (src);
-
   try
   {
     boost::archive::binary_oarchive arc (bin);
     arc & src;
   }
-  catch (std::exception& e)
+  catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what () + TOLOG (src->get_mid ()));
+    U3_LOG_DATA_EXCEPT (excpt.what () + STOLOG (src->get_mid ()));
     return false;
   }
   return true;
@@ -135,24 +154,34 @@ bool
 EventsImpl::bin2event (std::istream& bin, syn::IEvent::ptr& dst)
 {
   boost::archive::binary_iarchive arc (bin);
-
   try
   {
     arc >> dst;
     U3_ASSERT (dst);
     dst->sync_txt2val ();
   }
-  catch (std::exception& e)
+  catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what ());
+    U3_LOG_DATA_EXCEPT (excpt.what ());
     return false;
   }
   return true;
 }
 
 
+auto
+EventsImpl::dbg_state_dump () -> void
+{
+  U3_XLOG_DEV ("EventsImpl::dbg_state_dump::---->");
+  for (const auto& [eid, efunc] : cast_func_events_)
+  {
+    U3_XLOG_DEV (FSTOLOG (eid));
+  }
+}
+
+
 void
-EventsImpl::construct_func_event ()
+EventsImpl::make_event_funcs ()
 {
   U3_ASSERT (gen_func_events_.empty ());
   U3_ASSERT (cast_func_events_.empty ());
@@ -164,10 +193,11 @@ EventsImpl::construct_func_event ()
   add_event< ::libs::events::ISeqEvent > ();
   add_event< ::libs::events::ISyncEvent > ();
 
-
   add_event< ::libs::ievents::Event > ();
   add_event< ::libs::ievents::TimedEvent > ();
+  add_event< ::libs::ievents::OpsStatusEvent > ();
   add_event< ::libs::ievents::props::application::ApplicationProp > ();
+
   add_event< ::libs::ievents::props::base_id::BaseIdProp > ();
   add_event< ::libs::ievents::props::hardware::InfoCPUEvent > ();
   add_event< ::libs::ievents::props::mix_mul::MixMulProp > ();
@@ -228,7 +258,7 @@ EventsImpl::construct_func_event ()
   add_event< ::libs::ilog_events::events::ProcessListLogsEvent > ();
   add_event< ::libs::ilog_events::events::ProcessLogEvent > ();
   add_event< ::libs::ilog_events::events::BaseLogEvent > ();
-  add_event< ::libs::ilog_events::events::ChangDShowRunsSubSysLogEvent > ();
+  add_event< ::libs::ilog_events::events::ChangeStateSubSysLogEvent > ();
   add_event< ::libs::ilog_events::events::ExceptLogEvent > ();
   add_event< ::libs::ilog_events::events::InfoLogEvent > ();
   add_event< ::libs::ilog_events::events::WrapperLogEvent > ();
@@ -264,5 +294,7 @@ EventsImpl::construct_func_event ()
   add_event< ::libs::igui_events::events::SizeChangedEvent > ();
   add_event< ::libs::igui_events::events::UpdateDrawEvent > ();
   add_event< ::libs::igui_events::events::VideoBufEvent > ();
+
+  // dbg_state_dump ();
 }
 }   // namespace dlls::devents::impl

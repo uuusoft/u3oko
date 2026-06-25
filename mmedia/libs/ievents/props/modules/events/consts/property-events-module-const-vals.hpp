@@ -2,7 +2,7 @@
 /**
 \file       property-events-module-const-vals.hpp
 \date       14.09.2018
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 

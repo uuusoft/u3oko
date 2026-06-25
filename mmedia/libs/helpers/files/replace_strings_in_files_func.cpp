@@ -1,6 +1,6 @@
 /**
-\file       replace_strings_in_files_funct.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\file       replace_strings_in_files_func.cpp
+\author     Erashov Anton erashov2026@proton.me
 \date       25.10.2024
 \project    u3_helpers_lib
 */
@@ -13,29 +13,30 @@
 
 namespace libs::helpers::files
 {
-void
+std::uint32_t
 replace_strings_in_files (
-  const std::string&                                     path2folder,
-  const ::libs::helpers::strings::syn::replace_val_type* vals,
-  const std::uint32_t                                    count_vals,
-  const std::string&                                     files_mask)
+  const std::string&                    path2folder,
+  const strings::syn::replace_val_type* vals,
+  const std::uint32_t                   count_vals,
+  const std::string&                    files_mask)
 {
-  ::libs::helpers::files::NodeEnumFiles enum_files;
+  std::uint32_t counter_ops = 0;
+  NodeEnumFiles enum_files;
 
-  ::libs::helpers::files::get_files (
+  get_files (
     path2folder,
     enum_files,
-    { ::libs::helpers::files::IncludeSubFolders::disabled, ::libs::helpers::files::IncludeFiles::enabled, ::libs::helpers::files::Recursives::disabled },
-    ::libs::helpers::files::DefaultFileMask (files_mask));
+    { IncludeSubFolders::disabled, IncludeFiles::enabled, Recursives::disabled },
+    DefaultFileMask (files_mask));
 
   U3_ASSERT (!enum_files.files_.empty ());
 
   for (const auto& file : enum_files.files_)
   {
-    const std::string                    full_path = ::libs::helpers::files::make_path (path2folder, file.name_);
+    const std::string                    full_path = make_path (path2folder, file.name_);
     ::libs::helpers::mem::IBlockMem::ptr file_data;
     // U3_XLOG_DBG ("change template" + TOLOG (file.name_));
-    if (!::libs::helpers::files::load_file2mem (full_path, file_data))
+    if (!load_file2mem (full_path, file_data))
     {
       U3_XLOG_ERROR ("open template" + TOLOG (full_path));
       continue;
@@ -46,15 +47,17 @@ replace_strings_in_files (
 
     if (::libs::helpers::strings::replace_substring (vals, count_vals, buf, dstbuf))
     {
+      ++counter_ops;
       file_data->resize (dstbuf.length () + 1);
       file_data->set_data_size (dstbuf.length ());
       memcpy (file_data->get (), dstbuf.c_str (), dstbuf.length ());
 
-      if (!::libs::helpers::files::save_mem2file (full_path, file_data))
+      if (!save_mem2file (full_path, file_data))
       {
         U3_XLOG_ERROR ("update file" + TOLOG (full_path));
       }
     }
   }
+  return counter_ops;
 }
 }   // namespace libs::helpers::files

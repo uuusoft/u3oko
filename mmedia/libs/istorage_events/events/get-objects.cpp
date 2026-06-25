@@ -1,6 +1,6 @@
 /**
 \file       get-objects.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       23.07.2018
 \project    u3_istorage_events
 */

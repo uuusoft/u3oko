@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       v4l2-vgen-cam-impl.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */
@@ -17,16 +17,16 @@ class CamImpl final
   explicit CamImpl (const gen_lib::SourceImplInfo& props_info);
   ~CamImpl () = default;
 
-  syn::IVideoBuf::ptr get_buf ();
-  void                sync_correct_props (syn::VideoCorrectProp::craw_ptr correctprops);
-  bool                is_init () const;
+  auto get_buf () -> syn::IVideoBuf::ptr;
+  auto sync_correct_props (syn::VideoCorrectProp::craw_ptr) -> void;
+  auto is_init () const -> bool;
 
   private:
   void sync_runtime_props (const syn::VideoDriverCaptureProp& capprops);
 
-  const gen_lib::SourceImplInfo&  srcparams_;     //<
-  std::mutex                      sync_;          //<
-  std::unique_ptr< V4l2Capture >  v4l2capture_;   //<
-  syn::VideoDriverCapturePropInfo capparams_;     //<
+  const gen_lib::SourceImplInfo&  srcparams_;               //<
+  std::mutex                      sync_;                    //<
+  std::unique_ptr< V4l2Capture >  v4l2capture_ = nullptr;   //<
+  syn::VideoDriverCapturePropInfo capparams_;               //<
 };
 }   // namespace dlls::sources::v4l2_vgen::camera

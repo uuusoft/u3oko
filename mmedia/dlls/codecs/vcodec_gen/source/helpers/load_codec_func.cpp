@@ -1,7 +1,7 @@
 /**
-\file       load_codec_funct.cpp
+\file       load_codec_func.cpp
 \date       14.04.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_vcodec_gen
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -36,10 +36,16 @@ load_codec_from_file (
   info.get_codec_info_ = ::libs::proxy::get_info_codec_func (file_name);
 #else
 #  ifdef U3_OS_ANDROID
-  const auto native    = info.lib_.native ();
-  info.create_codec_   = reinterpret_cast< funcs::get_codec_func_type* > (dlsym (native, make_name_function (file_name, consts::func_name_create_codec).c_str ()));
-  info.free_codec_     = reinterpret_cast< funcs::free_codec_func_type* > (dlsym (native, make_name_function (file_name, consts::func_name_delete_codec).c_str ()));
-  info.get_codec_info_ = reinterpret_cast< funcs::get_codec_info_func_type* > (dlsym (native, make_name_function (file_name, consts::func_name_get_info).c_str ()));
+  const auto native = info.lib_.native ();
+
+  info.create_codec_ = ::libs::helpers::casts::reinterpret_cast_helper< funcs::get_codec_func_type* > (
+    dlsym (native, make_name_function (file_name, consts::func_name_create_codec).c_str ()));
+
+  info.free_codec_ = ::libs::helpers::casts::reinterpret_cast_helper< funcs::free_codec_func_type* > (
+    dlsym (native, make_name_function (file_name, consts::func_name_delete_codec).c_str ()));
+
+  info.get_codec_info_ = ::libs::helpers::casts::reinterpret_cast_helper< funcs::get_codec_info_func_type* > (
+    dlsym (native, make_name_function (file_name, consts::func_name_get_info).c_str ()));
 #  else
   info.create_codec_   = ::boost::dll::import_symbol< funcs::get_codec_func_type > (info.lib_, make_name_function (file_name, consts::func_name_create_codec));
   info.free_codec_     = ::boost::dll::import_symbol< funcs::free_codec_func_type > (info.lib_, make_name_function (file_name, consts::func_name_delete_codec));

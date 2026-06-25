@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        06.09.2024
 # copyright   Erashov A.I.
 # file        u3-make-fake-file-func.cmake
@@ -10,5 +10,5 @@ function(u3_make_fake_file)
     string(TIMESTAMP U3_GVXX_MAKE_FAKE_FILE_CURRENT_TIME)
     file(CONFIGURE OUTPUT ${U3_GVXX_MAKE_FAKE_FILE_FILE_NAME} CONTENT "${U3_SYSTEM_NAME}-${U3_GVXX_MAKE_FAKE_FILE_CURRENT_TIME}-${U3_GVXX_MAKE_FAKE_FILE_CONTENT}")
     message(NOTICE "${U3_MARK_DEV}create fake file ${U3_GVXX_MAKE_FAKE_FILE_FILE_NAME}")
-  endif()
+  endif()  
 endfunction(u3_make_fake_file)

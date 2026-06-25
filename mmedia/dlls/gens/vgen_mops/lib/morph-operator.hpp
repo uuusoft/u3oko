@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       morph-operator.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       16.07.2018
 \project    u3_vgen_mops_lib
 */
@@ -18,7 +18,7 @@ class MorphOperator final
   MorphOperator (const MorphOperator& src)            = delete;
   MorphOperator& operator= (const MorphOperator& src) = delete;
 
-  void init ();
+  auto init () -> void;
   void set_transform_info (syn::TransformInfo*);
 
   void applay_operation2buf (

@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       detect-face-info-filter-dll.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_detect_face
 */
@@ -19,6 +19,6 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
 #endif
 
   private:
-  void init ();
+  auto init () -> void;
 };
 }   // namespace dlls::detectors::detect_face

@@ -1,6 +1,6 @@
 /**
 \file       nv21_rgb24_neon.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       14.11.2016
 \project    u3_optim_gen_convert
 */

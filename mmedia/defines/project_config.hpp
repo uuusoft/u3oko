@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file		project_config.hpp.develop
-\author		Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author		Erashov Anton erashov2026@proton.me
 \date       19.10.2024
 */
 

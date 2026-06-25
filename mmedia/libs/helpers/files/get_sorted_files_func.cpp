@@ -1,7 +1,7 @@
 /**
-\file       get_sorted_files_funct.cpp
+\file       get_sorted_files_func.cpp
 \date       05.05.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_lib_helpers
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -18,7 +18,6 @@ get_sort_by_time_folders (const std::string& path2sessions)
   U3_ASSERT (!path2sessions.empty ());
 
   ::libs::helpers::files::NodeEnumFiles enum_files;
-  std::vector< std::string >            folders;
 
   ::libs::helpers::files::get_files (
     path2sessions,
@@ -26,25 +25,29 @@ get_sort_by_time_folders (const std::string& path2sessions)
     { ::libs::helpers::files::IncludeSubFolders::enabled, ::libs::helpers::files::IncludeFiles::disabled, ::libs::helpers::files::Recursives::disabled },
     ::libs::helpers::files::DefaultFileMask (""));
 
-  std::map< std::size_t, std::string > sort_files;
+  std::multimap< std::size_t, std::string > sort_files;
+  std::vector< std::string >                folders;
+
+  folders.reserve (enum_files.folders_.size ());
 
   for (const auto& file : enum_files.folders_)
   {
     ::boost::filesystem::path   path (::libs::helpers::files::make_path (path2sessions, file.name_));
     ::boost::system::error_code error;
-    const std::size_t           time = ::boost::filesystem::last_write_time (path, error);
+    const std::size_t           time = ::boost::filesystem::creation_time (path, error);
+    // const std::size_t           time = ::boost::filesystem::last_write_time (path, error);
 
     U3_ASSERT_NT (!error, error.to_string ());
     U3_ASSERT_NT (time, VTOLOG (time));
 
-    sort_files[time] = file.name_;
+    sort_files.insert ({ time, file.name_ });
   }
 
   std::for_each (
     sort_files.begin (),
     sort_files.end (),
     [&folders] (const decltype (sort_files)::value_type& node) {
-      folders.push_back (node.second);
+      folders.emplace_back (node.second);
       return;
     });
 

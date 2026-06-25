@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       uyvy_rgb24_int.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       28.03.2026
 \project    u3_optim_gen_convert
 */

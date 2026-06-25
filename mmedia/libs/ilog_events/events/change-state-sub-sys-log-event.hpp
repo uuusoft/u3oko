@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       change-state-sub-sys-log-event.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ilog_events
 */
@@ -9,7 +9,7 @@
 namespace libs::ilog_events::events
 {
 /// Информационное сообщение о изменении состояния работы подсистемы (любой)
-class ChangDShowRunsSubSysLogEvent final : public InfoLogEvent
+class ChangeStateSubSysLogEvent final : public InfoLogEvent
 {
   friend class boost::serialization::access;
   friend ::dlls::devents::impl::EventsImpl;
@@ -20,27 +20,26 @@ class ChangDShowRunsSubSysLogEvent final : public InfoLogEvent
 
   public:
   // ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ChangDShowRunsSubSysLogEvent)
-  U3_HELPER_ADD_MAKE_SHARED_FUNCT2THIS_TYPE (ChangDShowRunsSubSysLogEvent)
-  U3_HELPER_DISABLE_ACOPY_TYPE (ChangDShowRunsSubSysLogEvent)
+  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ChangeStateSubSysLogEvent)
+  U3_HELPER_ADD_MAKE_SHARED_FUNCT2THIS_TYPE (ChangeStateSubSysLogEvent)
+  U3_HELPER_DISABLE_ACOPY_TYPE (ChangeStateSubSysLogEvent)
 
-  explicit ChangDShowRunsSubSysLogEvent (const Acessor& = Acessor (0));
+  explicit ChangeStateSubSysLogEvent (const Acessor& = Acessor (0));
+  ChangeStateSubSysLogEvent (const Acessor&, const AppllPartLogInfo& appl, bool start);
+  virtual ~ChangeStateSubSysLogEvent () = default;
 
-  ChangDShowRunsSubSysLogEvent (const Acessor&, const AppllPartLogInfo& appl, bool start);
-
-  virtual ~ChangDShowRunsSubSysLogEvent () = default;
-
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ilog_events/events/change-state-process-type-sub-sys-log-event";
+    static constexpr const char* chret = "libs/ilog_events/events/change-state-process-type-sub-sys-log-event";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
   bool is_start () const;
   void set_start (bool val);
 
-  //  InfoLogEvent overrides
+  // BaseLogEvent overrides
   virtual std::string text (const LogTexts& type) const override;
 
   protected:
@@ -57,9 +56,9 @@ class ChangDShowRunsSubSysLogEvent final : public InfoLogEvent
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
   //  ievents::Event overrides
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void                        copy_int (const IEvent::craw_ptr src) override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 };
 }   // namespace libs::ilog_events::events
 
-BOOST_CLASS_EXPORT_KEY (::libs::ilog_events::events::ChangDShowRunsSubSysLogEvent);
+BOOST_CLASS_EXPORT_KEY (::libs::ilog_events::events::ChangeStateSubSysLogEvent);

@@ -1,7 +1,7 @@
 /**
 \file       block-mem.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_mem_funcs
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -83,6 +83,7 @@ BlockMem::resize_int (const BlockMem::size_type size)
 
   size_      = 0;
   data_size_ = 0;
+
   details::arealloc (::libs::helpers::casts::reinterpret_cast_helper< void** > (&buf_), size);
   U3_CHECK (buf_, "failed alloc buf");
   size_ = size;

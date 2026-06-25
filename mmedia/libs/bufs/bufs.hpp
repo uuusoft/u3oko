@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       bufs.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       16.05.2016
 \project    u3_bufs
 \brief      Обявление структуры для группировки связанных буферов с данными
@@ -21,17 +21,17 @@ class Bufs final
   Bufs ();
   ~Bufs () = default;
 
-  void                     set_buf (const syn::off_buf_type& indx, ::utils::dbufs::video::IVideoBuf::ptr& buf);
-  syn::IVideoBuf::raw_ptr  operator[] (const syn::off_buf_type& indx);
-  syn::IVideoBuf::craw_ptr operator[] (const syn::off_buf_type& indx) const;
-  void                     set_base_index (const syn::off_buf_type& indx);
-  syn::off_buf_type        get_base_index () const;
-  void                     set_flag (const BufsFlags& key, bool val);
-  bool                     get_flag (const BufsFlags& key) const;
-  void                     swap (Bufs& obj);
-  void                     clone (const Bufs& src);
-  void                     reset (bool only_indxs);
-  void                     enum_bufs (enum_bufs_func_type funct) const;
+  auto set_buf (const syn::off_buf_type& indx, ::utils::dbufs::video::IVideoBuf::ptr& buf) -> void;
+  auto operator[] (const syn::off_buf_type& indx) -> syn::IVideoBuf::raw_ptr;
+  auto operator[] (const syn::off_buf_type& indx) const -> syn::IVideoBuf::craw_ptr;
+  auto set_base_index (const syn::off_buf_type& indx) -> void;
+  auto get_base_index () const -> syn::off_buf_type;
+  auto set_flag (const BufsFlags& key, bool val) -> void;
+  auto get_flag (const BufsFlags& key) const -> bool;
+  auto swap (Bufs& obj) -> void;
+  auto clone (const Bufs& src) -> void;
+  auto reset (bool only_indxs) -> void;
+  auto enum_bufs (enum_bufs_func_type funct) const -> void;
 
   private:
   //  internal typess

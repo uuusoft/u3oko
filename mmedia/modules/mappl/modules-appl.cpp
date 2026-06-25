@@ -1,6 +1,6 @@
 /**
 \file       modules-appl.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       10.05.2016
 \project    mappl
 */
@@ -11,17 +11,17 @@
 
 namespace modules::mappl
 {
-::libs::helpers::sys::cpu::CpuInfo         g_cpu_informer;
-::libs::helpers::sys::ISysInfo::raw_ptr    g_sys_info (nullptr);
-::libs::link::appl::InitApplication        g_init_appl;
-::libs::link::appl::IApplicationProxy::ptr g_module_appl;
+syn::CpuInfo                g_cpu_informer;
+syn::ISysInfo::raw_ptr      g_sys_info (nullptr);
+syn::InitApplication        g_init_appl;
+syn::IApplicationProxy::ptr g_module_appl;
 
 bool
 check_process ()
 {
   g_sys_info = ::libs::helpers::sys::get_impl ();
 
-  const ::libs::helpers::sys::cpu::CpuExts min_ext = ::libs::helpers::sys::cpu::CpuExts::sse2;
+  const syn::CpuExts min_ext = syn::CpuExts::sse2;
   if (g_cpu_informer.is_less (g_cpu_informer.get_max (), min_ext))
   {
     U3_LOG_APPL_WRN ("check_process failed: minimum SSE2 or NEON required");
@@ -34,7 +34,7 @@ check_process ()
 void
 process_cmd_line (std::int32_t argc, char* argv[])
 {
-  U3_XLOG_DEV ("process_cmd_line" + VTOLOG (argc));
+  U3_XLOG_TIME ("process_cmd_line::" + VTOLOG (argc));
   boost::program_options::options_description options ("allowed options");
 
   options.add_options () (::libs::link::consts::text::id_lib_name, boost::program_options::value< std::string > ());
@@ -64,8 +64,7 @@ process_cmd_line (std::int32_t argc, char* argv[])
     const auto         sdelay = mapvars.find (::libs::link::consts::text::id_delay_ms)->second.as< std::string > ();
     const std::int32_t rdelay = std::stoi (sdelay);
     const std::int32_t delay  = ::libs::helpers::utils::ret_check_bound< std::int32_t > (rdelay, 0, 60 * 1000);
-
-    U3_XLOG_DEV ("delay before start" + VTOLOG (delay) + "ms")
+    U3_XLOG_WARN ("debug delay before start" + VTOLOG (delay) + "ms")
     std::this_thread::sleep_for (std::chrono::milliseconds (delay));
   }
 
@@ -79,7 +78,7 @@ process_cmd_line (std::int32_t argc, char* argv[])
 
   for (const auto& cmd_val : cmd_vals)
   {
-    U3_XLOG_DEV ("process_cmd_line: check options:" + TOLOG (cmd_val.first) + TOLOG (cmd_val.second));
+    U3_XLOG_MARK ("process_cmd_line:: check option" + TOLOG (cmd_val.first) + TOLOG (cmd_val.second));
     if (mapvars.count (cmd_val.first) < 1)
     {
       continue;
@@ -99,12 +98,11 @@ find_default_appl_lib (const std::string& fullpath)
   boost::filesystem::path bpath (fullpath);
   std::string             ret = "find_default_appl_lib-module-appl-not-found";
 
-#if (U3_BUILD_MODULES_AS_LIBS == 1)
   // EAI-REFACT
+#if (U3_BUILD_MODULES_AS_LIBS == 1)
   ret = "appl_u3oko";
 #else
 #  ifdef U3_OS_ANDROID
-  // EAI-REFACT
   ret = "libappl_u3oko";
 #  endif
 

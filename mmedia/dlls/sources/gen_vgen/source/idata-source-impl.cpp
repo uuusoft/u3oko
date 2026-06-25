@@ -1,9 +1,10 @@
 /**
 \file       idata-source-impl.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       31.01.2022
 \project    u3_gen_vgen
 */
+// #define U3_USE_DEB_LOG_LEVEL
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "gen-vgen-includes_int.hpp"
@@ -16,7 +17,8 @@ void
 IDataSourceImpl::init ()
 {
   const auto path     = ::libs::iproperties::appl_paths::get_current_lib_folder ();
-  auto       apppaths = U3_CAST_PROP (::libs::iproperties::vers::system::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ())->get_paths_lockfree ();
+  auto*      osprops  = ::libs::iproperties::helpers::get_shared_prop_os ();
+  auto       apppaths = osprops->get_paths_lockfree ();
 
   ::libs::iproperties::xml::InitLoaderInfo loader_info (apppaths);
   ::libs::iproperties::xml::Loader         loader (loader_info);
@@ -32,14 +34,13 @@ IDataSourceImpl::init ()
 
   types_.reserve (files.files_.size ());
   sources_.reserve (files.files_.size ());
-  U3_LOG_DATA_DEV ("IDataSourceImpl::init" + VTOLOG (files.files_.size ()) + TOLOG (to_string (::libs::iproperties::appl_paths::Paths::emulate_bins)));
-
+  U3_LOG_DATA_MARK ("find dll sources" + VTOLOG (files.files_.size ()));   // + TOLOG (to_string (::libs::iproperties::appl_paths::Paths::emulate_bins)));
   for (const auto& ufile : files.files_)
   {
     try
     {
       const auto file = ::libs::helpers::dlls::undecorate_dll_name (ufile.name_);
-      U3_LOG_DATA_DEV ("find file" + TOLOG (file));
+      U3_LOG_DATA_DBG ("check dll file" + TOLOG (file));
       if ((file.length () <= 4) || (file.substr (0, 4) != "vss_"))
       {
         continue;
@@ -49,16 +50,13 @@ IDataSourceImpl::init ()
       sources_.emplace_back (std::vector< ::libs::imdata_events::events::DataSourceInfo > ());
 
       const std::string  path2file = path + "/" + ufile.name_;
-      ObjSourceImplProxy rdriver;
-
-      rdriver.init (ufile.name_);
-      auto isource = rdriver.get_source_impl ();
-      isource->get_sources (sources_.back ());
-      U3_LOG_DATA_DEV ("IDataSourceImpl::init" + TOLOG (ufile.name_) + VTOLOG (sources_.size ()));
+      ObjSourceImplProxy rdriver { ufile.name_ };
+      rdriver.get_source_impl ()->get_sources (sources_.back ());
+      U3_LOG_DATA_MARK ("add source from dll" + TOLOG (ufile.name_) + VTOLOG (sources_.size ()));
     }
-    catch (const std::exception& e)
+    catch (const std::exception& excpt)
     {
-      U3_LOG_DATA_EXCEPT ("IDataSourceImpl::init" + TOLOG (ufile.name_) + ", " + e.what ());
+      U3_LOG_DATA_EXCEPT (TOLOG (ufile.name_) + ", " + excpt.what ());
     }
   }
 }

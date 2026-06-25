@@ -2,7 +2,7 @@
 /**
 \file       save2jpeg-helper-funcs.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    mhttp
 */
 
@@ -12,7 +12,7 @@ inline std::int32_t
 get_offset_iframe (const std::uint8_t* buf)
 {
   U3_ASSERT (buf);
-  auto head = ::libs::helpers::casts::reinterpret_cast_helper< const ::dlls::codecs::codec_gen::HeaderIFrame* > (buf);
+  const auto* head = ::libs::helpers::casts::reinterpret_cast_helper< const ::dlls::codecs::codec_gen::HeaderIFrame* > (buf);
   U3_ASSERT (head->check ());
   return head->base_part_.size_;
 }
@@ -31,10 +31,11 @@ save_jpeg2file (
   U3_ASSERT (!name_file.empty ());
   U3_ASSERT (image);
 
-  auto       iappl       = U3_CAST_PROP (syn::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ())->get_paths_lockfree ();
-  const auto file_folder = root;
-  const auto file_path   = ::libs::helpers::files::make_path (file_folder, name_file);
-  auto       head        = ::libs::helpers::casts::reinterpret_cast_helper< const ::dlls::codecs::codec_gen::HeaderIFrame* > (&image->get_zip ()[0]);
+  auto*       osprops     = ::libs::iproperties::helpers::get_shared_prop_os ();
+  auto        iappl       = osprops->get_paths_lockfree ();
+  const auto  file_folder = root;
+  const auto  file_path   = ::libs::helpers::files::make_path (file_folder, name_file);
+  const auto* head        = ::libs::helpers::casts::reinterpret_cast_helper< const ::dlls::codecs::codec_gen::HeaderIFrame* > (&image->get_zip ()[0]);
 
   U3_ASSERT (head->check ());
 
@@ -49,9 +50,9 @@ save_jpeg2file (
     file.write (::libs::helpers::casts::reinterpret_cast_helper< const char* > (cdata), src_size_res);
     file.flush ();
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_LOG_HTTP_EXCEPT (std::string ("write image, ") + e.what ());
+    U3_LOG_HTTP_EXCEPT (std::string ("write image, ") + excpt.what ());
   }
 }
 }   // namespace modules::mhttp::appl::helpers

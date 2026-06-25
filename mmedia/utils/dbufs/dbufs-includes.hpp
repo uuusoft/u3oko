@@ -2,13 +2,13 @@
 /**
 \file       dbufs-includes.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_dbufs
 */
 #include "dbufs-video-syn.hpp"
 
 #include "buf-flags-enum.hpp"
-#include "mem-vars-enum.hpp"
+#include "enum-mem-vars.hpp"
 #include "ibuf.hpp"
 #include "imem-buf.hpp"
 

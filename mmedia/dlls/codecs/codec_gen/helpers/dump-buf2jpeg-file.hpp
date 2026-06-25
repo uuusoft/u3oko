@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       dump-buf2jpeg-file.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       29.07.2018
 \project    u3_codec_funcs
 */
@@ -26,7 +26,7 @@ dump_buf2file (const ::utils::dbufs::video::IVideoBuf::raw_ptr out_buf, const st
   }
 
   const char*   write_data   = ::utils::dbufs::video::helpers::get_const_buf_as< const char* > (out_buf);
-  const auto*   head         = U3_CAST_CODECS< const ::dlls::codecs::codec_gen::HeaderIFrame* > (write_data);
+  const auto*   head         = ::libs::helpers::casts::reinterpret_cast_helper< const ::dlls::codecs::codec_gen::HeaderIFrame* > (write_data);
   const char*   sdata        = write_data + head->base_part_.size_;
   const char*   cdata        = sdata + head->coff_;
   std::uint32_t src_size_res = head->csize_;

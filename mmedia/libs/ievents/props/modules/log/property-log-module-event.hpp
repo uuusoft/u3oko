@@ -2,14 +2,14 @@
 /**
 \file       property-log-module-event.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 
 namespace libs::ievents::props::modules::log
 {
 /// Хранимые свойства модуля логирования
-class PropertyLogModuleEvent final : public ievents::Event
+class PropertyLogModuleEvent final : virtual public ievents::Event
 {
   friend class boost::serialization::access;
   friend ::dlls::devents::impl::EventsImpl;
@@ -32,10 +32,11 @@ class PropertyLogModuleEvent final : public ievents::Event
   explicit PropertyLogModuleEvent (const Acessor& = Acessor (0));
   virtual ~PropertyLogModuleEvent () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ievents/props/modules/log/property-log-module-event";
+    static constexpr const char* chret = "libs/ievents/props/modules/log/property-log-module-event";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
@@ -48,10 +49,10 @@ class PropertyLogModuleEvent final : public ievents::Event
   using val_storage_type = ::libs::helpers::utils::ValuesStorage< LogVals, value_type, LogVals::max_val, 0u >;
 
   //  ievents::Event overrides
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void                        load_json_int (const ::boost::json::object& obj) override;
-  virtual void                        save_json_int (::boost::json::object& obj) const override;
-  virtual void                        copy_int (const IEvent::craw_ptr src) override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
+  virtual auto load_json_int (const ::boost::json::object&) -> void override;
+  virtual auto save_json_int (::boost::json::object&) const -> void override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 
   val_storage_type vals_;   //< Значения полей
 

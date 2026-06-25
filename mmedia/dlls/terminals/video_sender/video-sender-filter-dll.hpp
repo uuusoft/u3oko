@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       video-sender-filter-dll.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       06.03.2016
 \project    u3_video_sender_dll
 */
@@ -35,10 +35,10 @@ class Filter final :
 
   // IFilter overrides
   virtual void load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node) override;
-  virtual void transform_int (syn::TransformInfo& info) override;
-  virtual void call_int (syn::CallInterfInfo& info) override;
+  virtual auto transform_int (syn::TransformInfo&) -> void override;
+  virtual auto call_int (syn::CallInterfInfo&) -> void override;
   virtual void run_int () override;
-  virtual void stop_int () override;
+  virtual auto stop_int () -> void override;
 
   void init_pts (syn::ConnectInfo* info);
   void send_info_msg (syn::TransformInfo& info);

@@ -2,7 +2,7 @@
 /**
 \file       iwrap-base-event.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    mevents
 */
 
@@ -29,23 +29,24 @@ class IWrapBaseEvent : public IEvent
   explicit IWrapBaseEvent (const Acessor& = Acessor (0), IEvent::ptr = IEvent::ptr ());
   virtual ~IWrapBaseEvent () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/events/iwrap-base-event";
+    static constexpr const char* chret = "libs/events/iwrap-base-event";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
-  IEvent::ptr get_msg () const;
-  void        set_msg (IEvent::ptr&);
+  auto get_msg () const -> IEvent::ptr;
+  auto set_msg (IEvent::ptr&) -> void;
 
   protected:
   IEvent::ptr int_;   //< Событие, для которого производится синхронизация
 
-  virtual IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void        load_json_int (const ::boost::json::object& obj) override;
-  virtual void        save_json_int (::boost::json::object& obj) const override;
-  virtual void        copy_int (const IEvent::craw_ptr src) override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> IEvent::ptr override;
+  virtual auto load_json_int (const ::boost::json::object&) -> void override;
+  virtual auto save_json_int (::boost::json::object&) const -> void override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 
   private:
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (IEvent)

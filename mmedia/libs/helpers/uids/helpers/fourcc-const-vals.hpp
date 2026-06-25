@@ -2,11 +2,26 @@
 /**
 \file       fourcc-const-vals.hpp
 \brief      FOURCC constans
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.02.2026
 \project    u3_helpers_lib
 */
 
+namespace libs::helpers::uids::helpers
+{
+inline consteval auto
+make_fourcc (char ch1, char ch2, char ch3, char ch4) -> std::uint32_t
+{
+  return U3_CAST_UINT32_FORCE (ch1) | U3_CAST_UINT32_FORCE (ch2) << 8 | U3_CAST_UINT32_FORCE (ch3) << 16 | U3_CAST_UINT32_FORCE (ch4) << 24;
+}
+}   // namespace libs::helpers::uids::helpers
+
+// BI_RGB (0) : Uncompressed RGB.
+// BI_RLE8 (1) : Run - length encoded 8 - bpp.
+// BI_RLE4 (2) : Run - length encoded 4 - bpp.
+// BI_BITFIELDS (3) : Uncompressed RGB with color masks.
+// BI_JPEG (4) : JPEG image.
+// BI_PNG (5) : PNG image.
 namespace libs::helpers::uids::helpers::consts::fourcc
 {
 constexpr std::uint32_t mjpg      = 0x4D4A5047;
@@ -37,15 +52,12 @@ constexpr std::uint32_t Y211      = 0x31313259;
 constexpr std::uint32_t Y41T      = 0x54313459;
 constexpr std::uint32_t Y42T      = 0x54323459;
 constexpr std::uint32_t YUVP      = 0x50565559;
+constexpr std::uint32_t NV21      = 0x3132564E;
 constexpr std::uint32_t Y800      = 0x30303859;
 constexpr std::uint32_t Y8        = 0x20203859;
+constexpr std::uint32_t Y16       = make_fourcc ('Y', '1', '6', ' ');
 constexpr std::uint32_t bitfields = 0x3;    // BI_BITFIELDS
 constexpr std::uint32_t png       = 0x05;   // BI_PNG;
 constexpr std::uint32_t rle8      = 0x1;    // BI_RLE8
 constexpr std::uint32_t rle4      = 0x2;    // BI_RLE4
-
-#ifdef U3_FAKE_DISABLE
-BI_RGB (0) : Uncompressed RGB.BI_RLE8 (1) : Run - length encoded 8 - bpp.BI_RLE4 (2) : Run - length encoded 4 - bpp.BI_BITFIELDS (3) : Uncompressed RGB with color masks.BI_JPEG (4) : JPEG image.BI_PNG (5) : PNG image.constexpr unsigned long rgb = BI_RGB;
-constexpr unsigned long jpeg                                                                                                                                                                                                                         = BI_JPEG;
-#endif
 }   // namespace libs::helpers::uids::helpers::consts::fourcc

@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       load_funcs_atomic_value.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_iproperties_lib
 \brief      Набор свободных функций для загрузки примитивных типов из узла xml

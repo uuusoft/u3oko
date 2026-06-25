@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       ibuf.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_dbufs
 */
@@ -13,32 +13,33 @@ class IBuf
 {
   public:
   //  ext types
-  using mem_type = std::uint64_t;
+  using mem_var_type = std::uint64_t;
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IBuf)
 
   virtual ~IBuf () = default;
 
-  IBuf (const IBuf& _rsc)           = delete;
-  IBuf& operator= (const IBuf& src) = delete;
+  IBuf (const IBuf&)                = delete;
+  IBuf& operator= (const IBuf&)     = delete;
+  IBuf (IBuf&&) noexcept            = delete;
+  IBuf& operator= (IBuf&&) noexcept = delete;
 
-  // EAI-REFACT
   /// Функция установки значения переменной, для описания данные с точки зрения используемой памяти
-  /// \param[in]  _type тип переменной
-  /// \param[in]  _val  значение переменной
+  /// \param[in]  type тип переменной
+  /// \param[in]  val  значение переменной
   void
-  set_mem_var (const MemVars& _type, mem_type _val)
+  set_mem_var (const MemVars& type, const mem_var_type& val)
   {
-    set_mem_var_int (_type, _val);
+    set_mem_var_int (type, val);
   }
 
   /// Функция получения значения переменной для описания данные с точки зрения используемой памяти
-  /// \param[in]  _type тип переменной
+  /// \param[in]  type тип переменной
   /// \return     значение переменной
-  mem_type
-  operator[] (const MemVars& _type) const
+  mem_var_type
+  operator[] (const MemVars& type) const
   {
-    return get_mem_var_int (_type);
+    return get_mem_var_int (type);
   }
 
   /// Функция клонирования буфера
@@ -88,11 +89,11 @@ class IBuf
 
   private:
   //  IBuf interface
-  virtual void                set_mem_var_int (const MemVars& _type, mem_type _val) = 0;
-  virtual mem_type            get_mem_var_int (const MemVars& _type) const          = 0;
-  virtual std::uint8_t*       get_buf_int ()                                        = 0;
-  virtual const std::uint8_t* get_cbuf_int () const                                 = 0;
-  virtual void                clone_int (IBuf::craw_ptr source, float _perc_copy)   = 0;
-  virtual void                swap_int (IBuf& buf)                                  = 0;
+  virtual auto set_mem_var_int (const MemVars&, mem_var_type) -> void = 0;
+  virtual auto get_mem_var_int (const MemVars&) const -> mem_var_type = 0;
+  virtual auto get_buf_int () -> std::uint8_t*                        = 0;
+  virtual auto get_cbuf_int () const -> const std::uint8_t*           = 0;
+  virtual auto clone_int (IBuf::craw_ptr, float) -> void              = 0;
+  virtual auto swap_int (IBuf&) -> void                               = 0;
 };
 }   // namespace utils::dbufs

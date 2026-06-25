@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        29.08.2024
 # copyright   Erashov A.I.
 # file        u3-android-specific.cmake
@@ -11,7 +11,6 @@ message(NOTICE "ANDROID_ARM_MODE=${ANDROID_ARM_MODE}")
 message(NOTICE "ANDROID_PLATFORM=${ANDROID_PLATFORM}")
 message(NOTICE "ANDROID_STL=${ANDROID_STL}")
 message(NOTICE "ANDROID_NDK=${ANDROID_NDK}")
-#message(FATAL_ERROR "DEBUG STOP")
 
 set(U3_BUILD_MODULES_AS_LIBS 1 CACHE BOOL "force for Android" FORCE)
 set(U3_LIBS_SYSTEM_STATIC_LIST ${U3_LIBS_SYSTEM_STATIC_LIST} camera2ndk mediandk)

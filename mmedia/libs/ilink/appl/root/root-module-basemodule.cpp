@@ -1,7 +1,7 @@
 /**
 \file       root-module-basemodule.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ilink
 */
 // #define U3_USE_DEB_LOG_LEVEL
@@ -36,16 +36,6 @@ change_module_state (
 
   syn::IEvent::ptr rmsg;
   auto             dmsg = ::libs::iproperties::helpers::create_event< syn::ChangeStateProcessEvent > (rmsg);
-
-#ifdef U3_FAKE_DISABLE
-  dmsg->change_appl_info (
-    ::libs::ilog_events::AppllPartLogInfo (
-      ::libs::ievents::props::modules::log::LogLevels::info,
-      name_appl,
-      ::libs::helpers::log::get_module_version ()),
-    "");
-#endif
-
   dmsg->set_start (state);
   link->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
 }
@@ -94,7 +84,7 @@ RootModule::appl_work_int ()
             { ::libs::iproperties::helpers::cast_event< ievents::runtime::RuntimeEvent > (msg), ievents::runtime::RuntimeEvent::gen_get_mid () }
           };
 
-          auto ffinger = catch_funcs_.end ();
+          auto cffinger = catch_funcs_.end ();
           for (const auto& cmsg : cmsgs)
           {
             if (!cmsg.first)
@@ -102,47 +92,81 @@ RootModule::appl_work_int ()
               continue;
             }
 
-            ffinger = catch_funcs_.find (cmsg.second);
-            if (catch_funcs_.end () != ffinger)
+            cffinger = catch_funcs_.find (cmsg.second);
+            if (catch_funcs_.end () != cffinger)
             {
               break;
             }
           }
 
           catch_msg_func_type nfunc =
-            catch_funcs_.end () != ffinger ?
-              ffinger->second :
-              std::bind (&RootModule::default_catch_func, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+            catch_funcs_.end () != cffinger ?
+              cffinger->second :
+              [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) {
+                // U3_XLOG_DBG ("RootModule::appl_work_int::default catch" + TOLOG (msg->gen_get_mid ()) + VTOLOG (forward));
+                if (forward)
+                {
+                  // Если сообщение уже пришло с транзакцией, значит это ответ на нашу транзакцию
+                  if (current_seq_.recv_seq_)
+                  {
+                    U3_ASSERT (current_seq_.answer_);
+                    return syn::IEvent::ptr ();
+                  }
+
+                  U3_ASSERT (!current_seq_.dest_);
+                  // Ищем модуль будет обрабатывать данное сообщение и, если модуль существует, помечаем сообщение для транзакции
+                  current_seq_.dest_ = get_dest_link (msg);
+                  if (current_seq_.dest_ && (current_seq_.sync_event_ || current_seq_.request_))
+                  {
+                    //  инициируем новую транзакцию.
+                    current_seq_.make_seq_ = true;
+                    current_seq_.id_seq_   = boost::uuids::random_generator () ();
+                    U3_XLOG_DBG ("make new trans event" + TOLOG (to_string (current_seq_.id_seq_)));
+                  }
+                }
+                return syn::IEvent::ptr ();
+              };
 
           funcs.push_back (std::make_pair (nfunc, msg));
-          msg      = nfunc (msg, true, current_seq_);
+
+          try
+          {
+            msg = nfunc (msg, true, current_seq_);
+          }
+          catch (const std::exception& excpt)
+          {
+            U3_LOG_APPL_EXCEPT (excpt.what ());
+            msg = syn::IEvent::ptr ();
+          }
+
           last_msg = msg ? msg : last_msg;
         }
 
         const bool seqs_exist   = current_seq_.recv_seq_ || current_seq_.make_seq_;
         auto       src_complite = src;
-        // Если это не часть последовательности и ответ, то это ответ данному модулю на его же запрос - ничего никуда не пересылаем - запрос уже обработан.
+        // U3_XLOG_DBG (VTOLOG (current_seq_.answer_) + VTOLOG (seqs_exist) + VTOLOG (current_seq_.recv_seq_));
+        // Если это не часть последовательности и ответ, то это ответ данному модулю на его же запрос -
+        // ничего никуда не пересылаем - запрос уже обработан
         if (current_seq_.answer_ && !seqs_exist)
         {
-          // boo!
+          // U3_XLOG_DBG ("allready done...");
         }
         else
         {
           // Если данное сообщение является частью транзакции.
           if (seqs_exist)
           {
-            //  1. Смотрим на уже существующие транзакции, и если данная одна из них - завершаем.
+            //  1. Смотрим на уже существующие транзакции, и если данная одна из них - завершаем
             if (current_seq_.recv_seq_)
             {
               current_seq_.source_ = src;
 
-              auto finger = seqs_.find (current_seq_);
-              U3_ASSERT (finger != seqs_.end ());
-
-              src_complite = finger->source_;
-              seqs_.erase (finger);
+              auto seqfinger = seqs_.find (current_seq_);
+              U3_ASSERT (seqfinger != seqs_.end ());
+              src_complite = seqfinger->source_;
+              seqs_.erase (seqfinger);
             }
-            // 2. Иначе, добавляем данную транзакцию в список существующих и пересылаем сообщение дальше, соответствующему модулю.
+            // 2. Иначе, добавляем данную транзакцию в список существующих и пересылаем сообщение дальше, соответствующему модулю
             else
             // if (current_seq_.make_seq_)
             {
@@ -152,7 +176,7 @@ RootModule::appl_work_int ()
               src_complite.reset ();
             }
           }
-          // если это не ответное сообщение и не часть транзакции - просто пересылаем его дальше.
+          // если это не ответное сообщение и не часть транзакции - просто пересылаем его дальше
           else
           {
             if (current_seq_.dest_)   //< ДЛЯ ОТЛАДКИ, надо правильно перенаправлять FrameDone!!!
@@ -162,15 +186,16 @@ RootModule::appl_work_int ()
             }
           }
           // Если сообщение часть транзакции, но модуль-обработчик не определен, это выглядит как ошибка
-          // Пока просто обрабатваем такую ситуацию так.
+          // Пока просто обрабатваем такую ситуацию так
           if (!src_complite && !current_seq_.dest_)
           {
-            U3_ASSERT_SIGNAL ("[!src_complite && !current_seq_.dest_]");
+            U3_ASSERT_SIGNAL_NT ("[!src_complite && !current_seq_.dest_]");
             src_complite = src;
           }
-          // Если сообщение не часть транзакции - завершаем его через источник.
+          // Если сообщение не часть транзакции - завершаем его через источник
           if (src_complite)
           {
+            U3_XLOG_DBG ("complite event by source" + TOLOG (to_string (current_seq_.id_seq_)));
             U3_ASSERT (!funcs.empty ());
             src_complite->complite_msg (last_msg, current_seq_);
           }
@@ -183,20 +208,14 @@ RootModule::appl_work_int ()
             U3_ASSERT (current_seq_.dest_);
             if (seqs_exist)
             {
+              U3_XLOG_DBG ("send transaction msg to leaf" + VTOLOG (seqs_exist));
               auto seq_msg = ::libs::events::helpers::wrap_seq_msg (recv_msg, current_seq_.id_seq_);
-              current_seq_.dest_->send_msg (
-                seq_msg,
-                ::libs::link::details::CallSyncs::async,
-                ::libs::link::details::Calls::set);
+              current_seq_.dest_->send_msg (seq_msg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
             }
             else
             {
-              current_seq_.dest_->send_msg (
-                recv_msg,
-                ::libs::link::details::CallSyncs::async,
-                ::libs::link::details::Calls::set);
+              current_seq_.dest_->send_msg (recv_msg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
             }
-            // current_seq_.dest_->send_msg ( last_msg );
           }
         }
         // сброс внешних к циклу переменных
@@ -227,9 +246,9 @@ RootModule::appl_work_int ()
         }
       }
     }
-    catch (const std::exception& e)
+    catch (const std::exception& excpt)
     {
-      U3_LOG_APPL_EXCEPT (e.what ());
+      U3_LOG_APPL_EXCEPT (excpt.what ());
     }
   } while (true);
 }
@@ -238,6 +257,7 @@ RootModule::appl_work_int ()
 bool
 RootModule::appl_deinit_int ()
 {
+  U3_XLOG_DBG ("RootModule::appl_deinit_int::---->")
   bool ret = false;
 
   switch (deinit_stage_)
@@ -246,7 +266,7 @@ RootModule::appl_deinit_int ()
     if (links_.get (syn::mids::appl2log))
     {
       syn::IEvent::ptr rmsg;
-      auto             dmsg = ::libs::iproperties::helpers::create_event< syn::ChangDShowRunsSubSysLogEvent > (rmsg);
+      auto             dmsg = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
 
       dmsg->change_appl_info (
         ::libs::ilog_events::AppllPartLogInfo (
@@ -259,21 +279,17 @@ RootModule::appl_deinit_int ()
       links_.get (syn::mids::appl2log)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
     }
 
-    change_module_state (links_.get (syn::mids::appl2http), appl_info_.appl_name_, false);
-    change_module_state (links_.get (syn::mids::appl2mdata), appl_info_.appl_name_, false);
-
-#ifdef U3_GUI_ENABLE
-    change_module_state (links_.get (syn::mids::appl2gui), appl_name_, false);
     if (links_.get (syn::mids::appl2gui))
     {
       syn::IEvent::ptr rmsg;
       auto             dmsg = ::libs::iproperties::helpers::create_event< ::libs::igui_events::events::ExitApplEvent > (rmsg);
       links_.get (syn::mids::appl2gui)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
     }
-#endif
 
-    change_module_state (links_.get (syn::mids::appl2events), appl_info_.appl_name_, false);
-    change_module_state (links_.get (syn::mids::appl2storage), appl_info_.appl_name_, false);
+    change_module_state (links_.get (syn::mids::appl2http), appl_info_.appl_name_, false);
+    change_module_state (links_.get (syn::mids::appl2mdata), appl_info_.appl_name_, false);
+    change_module_state (links_.get (syn::mids::appl2gui), appl_info_.appl_name_, false);
+
     // std::this_thread::sleep_for (std::chrono::milliseconds (10 * 1000)); // debug
     deinit_stage_ = DeInitStages::wait_stop_data_module;
     U3_XLOG_MARK ("RootModule::deinit_int next stage" + VTOLOG (U3_CAST_UINT32_FORCE (deinit_stage_)) + " after" + VTOLOG (deinit_stage_counter_) + PTR_TOLOG (this));
@@ -283,29 +299,27 @@ RootModule::appl_deinit_int ()
   case DeInitStages::wait_stop_data_module: {
     if (!links_.get (syn::mids::appl2mdata) || !links_.get (syn::mids::appl2mdata)->is_connected ())
     {
+      change_module_state (links_.get (syn::mids::appl2events), appl_info_.appl_name_, false);
+      change_module_state (links_.get (syn::mids::appl2storage), appl_info_.appl_name_, false);
+
       links_.reset_link (syn::mids::appl2mdata);
-#ifdef U3_GUI_ENABLE
       deinit_stage_ = DeInitStages::wait_stop_gui_module;
-#else
-      deinit_stage_ = DeInitStages::wait_stop_storage_module;
-#endif
       U3_XLOG_MARK ("RootModule::deinit_int next stage" + VTOLOG (U3_CAST_UINT32_FORCE (deinit_stage_)) + " after" + VTOLOG (deinit_stage_counter_) + PTR_TOLOG (this));
       deinit_stage_counter_ = 0;
     }
     ++deinit_stage_counter_;
     break;
   }
-#ifdef U3_GUI_ENABLE
   case DeInitStages::wait_stop_gui_module: {
     if (!links_.get (syn::mids::appl2gui) || !links_.get (syn::mids::appl2gui)->is_connected ())
     {
       links_.reset_link (syn::mids::appl2gui);
-      deinit_stage_         = DeInitStages::wait_stop_storage_module;
+      deinit_stage_ = DeInitStages::wait_stop_storage_module;
+      U3_XLOG_MARK ("RootModule::deinit_int next stage" + VTOLOG (U3_CAST_UINT32_FORCE (deinit_stage_)) + " after" + VTOLOG (deinit_stage_counter_) + PTR_TOLOG (this));
       deinit_stage_counter_ = 0;
     }
     break;
   }
-#endif
   case DeInitStages::wait_stop_storage_module: {
     if (!links_.get (syn::mids::appl2storage) || !links_.get (syn::mids::appl2storage)->is_connected ())
     {
@@ -361,6 +375,7 @@ RootModule::appl_deinit_int ()
     U3_ASSERT_SIGNAL ("Unknown deinit stage" + VTOLOG (U3_CAST_UINT32_FORCE (deinit_stage_)));
     break;
   }
+  U3_XLOG_DBG ("RootModule::appl_deinit_int::<----")
   return ret;
 }
 
@@ -370,23 +385,78 @@ RootModule::update_catch_funcs_int ()
 {
   super::update_catch_funcs_int ();
 
-  catch_funcs_[::libs::events::ISeqEvent::gen_get_mid ()] = std::bind (
-    &RootModule::seq_msg_catch_func, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+  // Функция обработчик сообщения транзакции
+  catch_funcs_[::libs::events::ISeqEvent::gen_get_mid ()] =
+    [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      auto* seq_ret = ::libs::iproperties::helpers::cast_event< ::libs::events::ISeqEvent > (msg);
+      auto  ret     = seq_ret->get_msg ();
 
-  catch_funcs_[::libs::events::ISyncEvent::gen_get_mid ()] = std::bind (
-    &RootModule::sync_msg_catch_func, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+      U3_ASSERT (ret);
+      current_seq_.recv_seq_ = true;
+      current_seq_.id_seq_   = seq_ret->get_seq_id ();
+      return ret;
+    }
+    return syn::IEvent::ptr ();
+  };
 
-  catch_funcs_[::libs::events::IRequestEvent::gen_get_mid ()] = std::bind (
-    &RootModule::request_msg_catch_func, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+  // Функция обработчик сообщения признака синхронности
+  catch_funcs_[::libs::events::ISyncEvent::gen_get_mid ()] =
+    [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      current_seq_.sync_event_ = true;
 
-  catch_funcs_[::libs::events::IAnswerEvent::gen_get_mid ()] = std::bind (
-    &RootModule::answer_msg_catch_func, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+      auto ret = ::libs::iproperties::helpers::cast_event< ::libs::events::ISyncEvent > (msg)->get_msg ();
+      U3_ASSERT (ret);
+      return ret;
+    }
+
+    if (::libs::iproperties::helpers::cast_event< ::libs::events::IAnswerEvent > (msg))
+    {
+      return msg;
+    }
+    return syn::IEvent::ptr ();
+  };
+
+  // Функция обработчик сообщения признака запроса
+  catch_funcs_[::libs::events::IRequestEvent::gen_get_mid ()] =
+    [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      current_seq_.request_ = true;
+      auto ret              = ::libs::iproperties::helpers::cast_event< ::libs::events::IRequestEvent > (msg)->get_msg ();
+      U3_ASSERT (ret);
+      return ret;
+    }
+    //  инверсия, на запрос идет ответ.
+    syn::IEvent::ptr rmsg;
+    auto             dmsg = ::libs::iproperties::helpers::create_event< ::libs::events::IAnswerEvent > (rmsg);
+    dmsg->set_msg (msg);
+    return rmsg;
+  };
+
+  // Функция обработчик сообщения признака ответа на запрос
+  catch_funcs_[::libs::events::IAnswerEvent::gen_get_mid ()] =
+    [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      current_seq_.answer_ = true;
+      auto ret             = ::libs::iproperties::helpers::cast_event< ::libs::events::IAnswerEvent > (msg)->get_msg ();
+      U3_ASSERT (ret);
+      return ret;
+    }
+    //  инверсия, пришел ответ модулю
+    return msg;
+  };
 
   catch_funcs_[syn::ApplicationProp::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
-      auto main_appl = ::libs::iproperties::helpers::cast_event< syn::ApplicationProp > (appl_event_props_.main_appl_properties_);
+      auto* main_appl = ::libs::iproperties::helpers::cast_event< syn::ApplicationProp > (appl_event_props_.main_appl_properties_);
+      U3_XLOG_DEV ("copy::---->" + TOLOG (main_appl->get_messenger_impl ()) + PTR_TOLOG (main_appl));
       msg->copy (main_appl);
       return syn::IEvent::ptr ();
     }
@@ -397,7 +467,7 @@ RootModule::update_catch_funcs_int ()
     [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
-      auto info_cpu = ::libs::iproperties::helpers::cast_event< syn::InfoCPUEvent > (appl_event_props_.info_cpu_);
+      auto* info_cpu = ::libs::iproperties::helpers::cast_event< syn::InfoCPUEvent > (appl_event_props_.info_cpu_);
       if (process_state.request_)
       {
         msg->copy (info_cpu);
@@ -417,11 +487,11 @@ RootModule::update_catch_funcs_int ()
     return msg;
   };
 
-  catch_funcs_[::libs::ievents::props::modules::log::PropertyLogModuleEvent::gen_get_mid ()] =
+  catch_funcs_[syn::PropertyLogModuleEvent::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
-      auto info_log = ::libs::iproperties::helpers::cast_event< ::libs::ievents::props::modules::log::PropertyLogModuleEvent > (appl_event_props_.module_log_);
+      auto* info_log = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
       if (process_state.request_)
       {
         msg->copy (info_log);
@@ -440,7 +510,7 @@ RootModule::update_catch_funcs_int ()
     return msg;
   };
 
-  catch_funcs_[::libs::ievents_events::events::WrapperEventsEvent::gen_get_mid ()] =
+  catch_funcs_[syn::WrapperEventsEvent::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
@@ -455,7 +525,7 @@ RootModule::update_catch_funcs_int ()
     return msg;
   };
 
-  catch_funcs_[::libs::ievents::runtime::state::ExpandTimesEvent::gen_get_mid ()] =
+  catch_funcs_[syn::ExpandTimesEvent::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
@@ -464,5 +534,146 @@ RootModule::update_catch_funcs_int ()
     }
     return msg;
   };
+}
+
+
+void
+RootModule::init_proxys_int ()
+{
+  U3_XLOG_DBG ("RootModule::init_proxys_int::---->");
+  super::init_proxys_int ();
+#if 0
+  {
+    U3_XLOG_DBG ("BaseModule::init_proxys_int:: update shared propertyes");
+    auto orinfo = ::libs::iproperties::helpers::cast_prop_demons ();
+
+    syn::ISharedProperty::lock_type lock (orinfo->get_sync ());
+    orinfo->set_bufs_lockfree (all2buf_);
+    orinfo->set_mem_lockfree (all2mem_);
+    orinfo->set_optim_lockfree (all2optim_);
+    orinfo->set_events_lockfree (all2events_);
+  }
+
+  U3_XLOG_DBG ("RootModule::init_proxys_int:: update appl event props");
+  appl_event_props_.init ();
+  U3_CHECK (::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree (), "instance mem block allocator");
+#endif
+  U3_XLOG_DBG ("RootModule::init_proxys_int::<----");
+}
+
+
+void
+RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
+{
+  U3_XLOG_DBG ("RootModule::init_links_int::--->");
+  auto*      main_appl = ::libs::iproperties::helpers::cast_event< syn::ApplicationProp > (appl_event_props_.main_appl_properties_.get ());
+  const auto type_run  = main_appl->is_single_process () ? ::libs::link::details::CodeRuns::dll : ::libs::link::details::CodeRuns::appl;
+  auto       lproxy    = LinkCreatorProxy::instance ();
+  auto       iproxy    = lproxy->impl ();
+  auto       ipstorage = ::libs::iproperties::helpers::get_storage ();
+
+  const std::tuple< std::string, std::string, ::libs::link::details::ModuleLinks, std::uint32_t, syn::mids::key_storage_type > create_vals[] = {
+    { "mpl_mlog", "subsys_appl2log", ::libs::link::details::ModuleLinks::log, ::libs::link::consts::sizes::buf_all2log, syn::mids::appl2log },
+    { "mpl_mevents", "subsys_events", ::libs::link::details::ModuleLinks::events, ::libs::link::consts::sizes::buf_all2events, syn::mids::appl2events },
+    { "mpl_mstorage", "subsys_storage", ::libs::link::details::ModuleLinks::storage, ::libs::link::consts::sizes::buf_appl2storage, syn::mids::appl2storage },
+    { "mpl_mdata", "subsys_data", ::libs::link::details::ModuleLinks::mdata, ::libs::link::consts::sizes::buf_appl2data, syn::mids::appl2mdata },
+    { "mpl_mhttp", "subsys_http", ::libs::link::details::ModuleLinks::http, ::libs::link::consts::sizes::buf_appl2http, syn::mids::appl2http }
+#if (U3_MODULES_ENABLE_GUI == 1)
+    ,
+    { "mpl_mgui", "subsys_gui", ::libs::link::details::ModuleLinks::gui, ::libs::link::consts::sizes::buf_appl2gul, syn::mids::appl2gui }
+#endif
+  };
+
+  // Устанавливаем контейнер для получения связей от модулей
+  ipstorage->set_prop (
+    ::libs::properties::consts::keys::links_property,
+    std::make_shared< syn::ILinksProperty > (syn::ILinksProperty::links_type {}));
+
+  constexpr std::uint32_t dbg_delay_process = 3000;
+  std::uint32_t           create_counter    = 0;
+  for (const auto& [dll_name, subsys_name, subsys_id, buf_size, link_id] : create_vals)
+  {
+    // U3_XLOG_DEV ("debug sleep::---->" + VTOLOG (create_counter) + TOLOG (dll_name));
+    // std::this_thread::sleep_for (std::chrono::milliseconds (dbg_delay_process));
+    // U3_XLOG_DEV ("debug sleep::<----" + VTOLOG (create_counter) + TOLOG (dll_name));
+    auto temp_link = iproxy->get_connect (
+      ::libs::link::CreateInfo (
+        type_run,
+        "mappl.exe",
+        dll_name,
+        appl_info_.company_name_,
+        appl_info_.appl_name_,
+        subsys_name,
+        subsys_id,
+        buf_size));
+
+    links_.set (link_id, temp_link);
+    ++create_counter;
+  }
+
+  //  Разделяем созданные интерфейсы между всей системой через объект "свойства"
+  {
+    // std::this_thread::sleep_for (std::chrono::milliseconds (dbg_delay_process));
+    // U3_XLOG_DEV (PTR_TOLOG (links_.get (syn::mids::appl2log).get ()));
+    auto* ilinks = ::libs::iproperties::helpers::get_prop_links ();
+    auto& links  = ilinks->update_links_lockfree ();
+    for (const auto& [dll_name, subsys_name, subsys_id, buf_size, link_id] : create_vals)
+    {
+      links.set (link_id, links_.get (link_id));
+    }
+  }
+
+  {
+    syn::IEvent::ptr rmsg;
+    auto             dmsg = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
+
+    dmsg->change_appl_info (
+      ::libs::ilog_events::AppllPartLogInfo (
+        ::libs::ievents::props::modules::log::LogLevels::info,
+        appl_info_.appl_name_,
+        ::libs::helpers::log::get_module_version ()),
+      "");
+
+    dmsg->set_start (true);
+    links_.get (syn::mids::appl2log)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+  }
+
+  {
+    syn::IEvent::ptr rmsg;
+    auto             dmsg = ::libs::iproperties::helpers::create_event< syn::PropertyStorageModuleEvent > (rmsg);
+    links_.get (syn::mids::appl2storage)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+  }
+
+  {
+    syn::TextExtCpu helper;
+    auto*           info_cpu = ::libs::iproperties::helpers::cast_event< syn::InfoCPUEvent > (appl_event_props_.info_cpu_);
+
+    U3_LOG_APPL_MARK ("CPU ext       : " + helper.get_text (info_cpu->get_cpu_type ()));
+    U3_LOG_APPL_MARK ("Cores count   : " + std::to_string (info_cpu->get_cpu_count ()));
+    U3_LOG_APPL_MARK ("Threads count : " + std::to_string (::libs::optim::mcalls::get_count_work_threads_by_count_cpu (info_cpu->get_cpu_count ())));
+
+    links_.get (syn::mids::appl2mdata)->send_msg (appl_event_props_.info_cpu_, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+  }
+
+  const std::tuple< syn::mids::key_storage_type > start_vals[] = {
+    { syn::mids::appl2log },
+    { syn::mids::appl2events },
+    { syn::mids::appl2storage },
+    { syn::mids::appl2mdata },
+    { syn::mids::appl2http }
+#if (U3_MODULES_ENABLE_GUI == 1)
+    ,
+    { syn::mids::appl2gui }
+#endif
+  };
+
+  for (const auto& [link_id] : start_vals)
+  {
+    syn::IEvent::ptr rmsg;
+    auto             dmsg = ::libs::iproperties::helpers::create_event< syn::ChangeStateProcessEvent > (rmsg);
+    dmsg->set_start (true);
+    links_.get (link_id)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+  }
+  U3_XLOG_DBG ("RootModule::init_links_int::<----");
 }
 }   // namespace libs::ilink::appl::root

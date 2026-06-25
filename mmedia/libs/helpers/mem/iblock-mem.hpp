@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       iblock-mem.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_mem_funcs
 \brief      Файл интерфейса для выделения выровненных блоков памяти
@@ -15,7 +15,6 @@ namespace consts
 constexpr std::uint8_t filling = 0;   //< Значение для заполнения памяти по умолчанию
 }
 }   // namespace libs::helpers::mem
-
 
 namespace libs::helpers::mem
 {
@@ -87,11 +86,11 @@ class IBlockMem
 
   private:
   // IBlockMem itnterface
-  virtual std::uint8_t*        get_int ()                                    = 0;
-  virtual const std::uint8_t*  get_int () const                              = 0;
-  virtual IBlockMem::size_type get_buf_size_int () const                     = 0;
-  virtual IBlockMem::size_type get_data_size_int () const                    = 0;
-  virtual void                 set_data_size_int (IBlockMem::size_type size) = 0;
-  virtual void                 resize_int (IBlockMem::size_type size)        = 0;
+  virtual auto get_int () -> std::uint8_t*                           = 0;
+  virtual auto get_int () const -> const std::uint8_t*               = 0;
+  virtual auto get_buf_size_int () const -> IBlockMem::size_type     = 0;
+  virtual auto get_data_size_int () const -> IBlockMem::size_type    = 0;
+  virtual auto set_data_size_int (IBlockMem::size_type size) -> void = 0;
+  virtual auto resize_int (IBlockMem::size_type size) -> void        = 0;
 };
 }   // namespace libs::helpers::mem

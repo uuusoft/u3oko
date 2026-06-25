@@ -2,7 +2,7 @@
 /**
 \file       alloc-buf-info.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_dbufs
 */
 
@@ -23,51 +23,48 @@ struct AllocBufInfo {
   AllocBufInfo () = default;
 
   explicit AllocBufInfo (
-    const dim_type&    _width,
-    const dim_type&    _height,
-    const dim_type&    _stride,
-    const syn::id_val& _minor,
-    const DimChecks&   _check_dims = DimChecks::enable,
-    const Subs&        _subsample  = Subs::sub_444) :
-
-    minor_ (_minor),
-    check_dims_ (_check_dims),
-    subsample_ (_subsample)
+    const dim_type&    width,
+    const dim_type&    height,
+    const dim_type&    stride,
+    const syn::id_val& minor,
+    const DimChecks&   check_dims = DimChecks::enable,
+    const Subs&        subsample  = Subs::sub_444) :
+    minor_ (minor),
+    check_dims_ (check_dims),
+    subsample_ (subsample)
   {
-    geom_dims_[::utils::dbufs::video::Dims::width]  = _width;
-    geom_dims_[::utils::dbufs::video::Dims::height] = _height;
-    geom_dims_[::utils::dbufs::video::Dims::stride] = _stride;
+    geom_dims_[::utils::dbufs::video::Dims::width]  = width;
+    geom_dims_[::utils::dbufs::video::Dims::height] = height;
+    geom_dims_[::utils::dbufs::video::Dims::stride] = stride;
   }
 
   explicit AllocBufInfo (
-    const DimVars&     _geom_dims,
-    const syn::id_val& _minor,
-    const DimChecks&   _check_dims = DimChecks::enable,
-    const Subs&        _subsample  = Subs::sub_444) :
+    const DimVars&     geom_dims,
+    const syn::id_val& minor,
+    const DimChecks&   check_dims = DimChecks::enable,
+    const Subs&        subsample  = Subs::sub_444) :
 
-    geom_dims_ (_geom_dims),
-    minor_ (_minor),
-    check_dims_ (_check_dims),
-    subsample_ (_subsample)
+    geom_dims_ (geom_dims),
+    minor_ (minor),
+    check_dims_ (check_dims),
+    subsample_ (subsample)
   {
   }
 
   /// Конструктор для создания буфера под сжатые данные
-  /// EAI-REFACT: compressed buf
   explicit AllocBufInfo (
-    const dim_type&    _width,
-    const dim_type&    _height,
-    const syn::id_val& _minor,
+    const dim_type&    width,
+    const dim_type&    height,
+    const syn::id_val& minor,
     const dim_type&    size) :
-
-    minor_ (_minor),
+    minor_ (minor),
     force_size_ (size),
     check_dims_ (DimChecks::disable)
   {
     U3_ASSERT (size > 0);
-    geom_dims_[::utils::dbufs::video::Dims::width]  = _width;
-    geom_dims_[::utils::dbufs::video::Dims::height] = _height;
-    geom_dims_[::utils::dbufs::video::Dims::stride] = _width;   //  Это верное присваивание. Т.к. коструктор используется для конструрования буфера для сжатых данных, шаг не имеет смысла.
+    geom_dims_[::utils::dbufs::video::Dims::width]  = width;
+    geom_dims_[::utils::dbufs::video::Dims::height] = height;
+    geom_dims_[::utils::dbufs::video::Dims::stride] = width;   // Это верное присваивание, т.к. коструктор используется для конструрования буфера для сжатых данных, stride не имеет смысла
   }
 
   explicit AllocBufInfo (const dim_type& size) :
@@ -89,12 +86,12 @@ struct AllocBufInfo {
       return false;
     }
 
-    const auto _count_bytes = force_size_ ? 0 : ::libs::helpers::uids::helpers::get_count_bytes_from_format (minor_);
-    const auto _stride      = force_size_ ? geom_dims_[::utils::dbufs::video::Dims::stride] : geom_dims_[::utils::dbufs::video::Dims::width] * _count_bytes;
+    const auto count_bytes = force_size_ ? 0 : ::libs::helpers::uids::helpers::get_count_bytes_from_format (minor_);
+    const auto stride      = force_size_ ? geom_dims_[::utils::dbufs::video::Dims::stride] : geom_dims_[::utils::dbufs::video::Dims::width] * count_bytes;
 
     return geom_dims_[::utils::dbufs::video::Dims::width] > 0 &&
            geom_dims_[::utils::dbufs::video::Dims::height] > 0 &&
-           geom_dims_[::utils::dbufs::video::Dims::stride] >= _stride;
+           geom_dims_[::utils::dbufs::video::Dims::stride] >= stride;
   }
 
   /// Функция сброса параметров в начальное состояние,
@@ -118,7 +115,7 @@ struct AllocBufInfo {
   {
     if (this == &src)
     {
-      U3_XLOG_WARN (std::string ("try swap AllocBufInfo with self") + PTR_TOLOG (this));
+      U3_XLOG_WARN (std::string ("selfswap AllocBufInfo") + PTR_TOLOG (this));
       return;
     }
 
@@ -132,7 +129,7 @@ struct AllocBufInfo {
 
   DimVars     geom_dims_;                                             //< Размерности буфера
   flags_type  flags_;                                                 //< Признаки, общие для буфера в целом
-  syn::id_val minor_;                                                 //< Формат пикселей буфера
+  syn::id_val minor_      = syn::id_val::device_specific;             //< Формат пикселей буфера
   dim_type    force_size_ = 0;                                        //< Размер буфера в байтах, когда его нельзя вычислить от minor_ и прочего
   DimChecks   check_dims_ = utils::dbufs::video::DimChecks::enable;   //< Требование проверки размеров при выделении буфера. Т.к. в некоторых случаях (операция свертка), размеры могут превышать явно указанные
   Subs        subsample_  = Subs::sub_444;                            //<

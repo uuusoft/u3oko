@@ -1,6 +1,6 @@
 /**
 \file       path_funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_helpers_lib
 \brief      Функции для работы с файлами и директориями
@@ -18,7 +18,7 @@ void
 get_shared_dir (std::string& shared_dir)
 {
   shared_dir = "storage/emulated/0/Android/data/com.uuusoft.u3oko/files";
-  U3_XLOG_DEV ("porbably invalid shared directory! ---> fix" + TOLOG (shared_dir));
+  U3_XLOG_DEV ("get_shared_dir::probably invalid shared directory! fix" + TOLOG (shared_dir));
 }
 #endif
 }   // namespace boost::interprocess::ipcdetail
@@ -132,20 +132,17 @@ get_name_from_path (const std::string& path)
 
 
 std::string
-prepare_for_file_name (const std::string& src)
+prepare_for_file_name (const std::string_view& src)
 {
-  auto ret = src;
+  std::string ret { src.data (), src.size () };
 
   std::transform (
     ret.begin (),
     ret.end (),
     ret.begin (),
     [] (char val) -> char {
-      if ((val == '\\') || (val == '/'))
-        return consts::special_convert_path_symbol;
-      return val;
+      return (val == '\\') || (val == '/') ? consts::special_convert_path_symbol : val;
     });
-
   return ret;
 }
 }   // namespace libs::helpers::files

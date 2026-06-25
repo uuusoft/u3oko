@@ -1,7 +1,7 @@
 /**
 \file       change-node-data-event.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_imdata_events
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -91,7 +91,7 @@ ChangeNodeDataEvent::load_json_int (const ::boost::json::object& obj)
   events_.clear ();
 
   id_node_ = ::boost::json::value_to< id_node_graph_type > (obj.at ("id_node"));
-  action_  = ::libs::imdata_events::events::change_node_graph_action_from_raw_value (::libs::helpers::json::get_uint32 (obj.at ("action")));
+  action_  = ::libs::imdata_events::events::change_node_graph_action_from_raw_value (::libs::helpers::json::get_uint32 (obj.at ("graph_node_actions")));
   // events_  = ::boost::json::value_to< events_list_type > (obj.at ("events"));
 
   if (obj.at ("events").is_array ())
@@ -117,8 +117,8 @@ ChangeNodeDataEvent::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
 
-  obj["id_node"] = ::boost::json::value_from (id_node_);
-  obj["action"]  = U3_CAST_UINT32_FORCE (action_);
+  obj["id_node"]            = ::boost::json::value_from (id_node_);
+  obj["graph_node_actions"] = U3_CAST_UINT32_FORCE (action_);
 
   auto& events = obj["events"].emplace_array ();
   for (const auto& event : events_)

@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       detect-face-syn.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_detect_face
 */
@@ -16,4 +16,6 @@ using FilterInfo      = ::libs::icore::impl::var1::obj::FilterInfo;
 using ConnectInfo     = ::libs::icore::impl::var1::obj::ConnectInfo;
 using FaceDetect      = ::libs::ievents::runtime::video::FaceDetect;
 using ProxyBuf        = ::libs::optim::io::ProxyBuf;
+using IEvent          = ::libs::events::IEvent;
+using AddEvent2Base   = ::libs::ievents_events::events::AddEvent2Base;
 }   // namespace dlls::detectors::detect_face::syn

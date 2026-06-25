@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       iapplication-proxy.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       24.05.2017
 \project    u3_link
 */
@@ -17,8 +17,8 @@ class IApplicationProxy final
   // ext types
   using create_obj_type  = IApplication*();
   using delete_obj_type  = void (IApplication*);
-  using create_func_type = boost::function< create_obj_type >;
-  using delete_func_type = boost::function< delete_obj_type >;
+  using create_func_type = std::function< create_obj_type >;
+  using delete_func_type = std::function< delete_obj_type >;
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IApplicationProxy)
 

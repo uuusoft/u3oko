@@ -1,7 +1,7 @@
 /**
 \file       vcorrect-filter-dll.cpp
 \brief      Filter for correct image
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_vcorrect_vdd
 */
@@ -22,7 +22,7 @@ Filter::Filter ()
 
 
 void
-Filter::load_int (::libs::icore::impl::var1::obj::FilterInfo* info, const ::pugi::xml_named_node_iterator& node)
+Filter::load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node)
 {
   init_pts (&info->pts_);
   finfo_.load (node);
@@ -36,18 +36,19 @@ Filter::transform_int (syn::TransformInfo& info)
 {
   prepare_transform (info);
 
-  U3_LOG_DATA_DATA ("Filter::transform_int" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (info.frame_events_)));
+  U3_LOG_DATA_DATA ("Filter::transform_int" + PTR_TOLOG (info.frame_events_));
   if (info.frame_events_)
   {
     for (const auto& event : *info.frame_events_)
     {
-      auto devent = ::libs::iproperties::helpers::cast_event< syn::InterfCorrectImageEvent > (event);
+      auto* devent = ::libs::iproperties::helpers::cast_event< syn::InterfCorrectImageEvent > (event);
       if (devent)
       {
         U3_LOG_DATA_MARK ("recive syn::InterfCorrectImageEvent -> update properties" + VTOLOG (devent->is_active ()));
         const auto enable_hardware = devent->is_active () && finfo_.rprops_ && (::libs::ievents::SelectorImpls::software != finfo_.rprops_->hint_correct_impl_);
-        finfo_.hardware_impl_      = devent->get_interface ();
-        finfo_.active_impl_        = enable_hardware ? finfo_.hardware_impl_ : finfo_.soft_impl_;
+
+        finfo_.hardware_impl_ = devent->get_interface ();
+        finfo_.active_impl_   = enable_hardware ? finfo_.hardware_impl_ : finfo_.soft_impl_;
         U3_ASSERT (!finfo_.active_impl_.expired ());
         auto impl = finfo_.active_impl_.lock ();
         if (impl)
@@ -71,12 +72,7 @@ Filter::transform_int (syn::TransformInfo& info)
   auto impl = finfo_.active_impl_.lock ();
   if (impl)
   {
-    impl->process (
-      transinfo_,
-      id_obj_,
-      h16_buf,
-      s16_buf,
-      l16_buf);
+    impl->process (transinfo_, id_obj_, h16_buf, s16_buf, l16_buf);
   }
 }
 

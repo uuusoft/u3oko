@@ -1,7 +1,7 @@
 /**
-\file     hdc2rgb24_funct.cpp
+\file     hdc2rgb24_func.cpp
 \brief    function for convert anybody hdc to rgb24, if needed buf relloc from ::base_funcs::mem::arealloc
-\author   Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author   Erashov Anton erashov2026@proton.me
 \date     26.07.2016
 */
 #include "mmedia/includes/control-defines-includes.hpp"

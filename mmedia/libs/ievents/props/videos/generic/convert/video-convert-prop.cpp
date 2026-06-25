@@ -1,6 +1,6 @@
 /**
 \file       VideoConvertProp.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
@@ -16,7 +16,7 @@ str2size_type (const std::string& str)
 {
   using convert_type = std::unordered_map< std::string, Src2DstEqs >;
 
-  const convert_type conv = {
+  static const convert_type conv = {
     convert_type::value_type ("src_int_dst", Src2DstEqs::src_int_dst),
     convert_type::value_type ("src_int_dst2", Src2DstEqs::src_int_dst2),
     convert_type::value_type ("equal_dst", Src2DstEqs::equal_dst),
@@ -38,7 +38,7 @@ str2atype (const std::string& str)
 {
   using convert_type = std::unordered_map< std::string, Accuracys >;
 
-  const convert_type conv = {
+  static const convert_type conv = {
     convert_type::value_type ("default", Accuracys::usual),
     convert_type::value_type ("fast", Accuracys::fast),
     convert_type::value_type ("best", Accuracys::best)
@@ -54,17 +54,9 @@ str2atype (const std::string& str)
 }
 
 
-VideoConvertProp::VideoConvertProp (const Acessor& pha) :
-  rwidth_ (100),
-  rheight_ (100),
-  rtype_ (Src2DstEqs::src_int_dst),
-  duplicate_image_ (false),
-  strip_color_ (false),
-  debug_skip_transform_ (false),
-  flip_y_ (false),
-  atype_ (Accuracys::usual),
-  buf_ (::utils::dbufs::video::consts::offs::raw, ::utils::dbufs::video::consts::offs::invalid)
+VideoConvertProp::VideoConvertProp (const Acessor& pha)
 {
+  state_         = events::PropertyUsings::enabled;
   property_name_ = gen_get_mid ();
 }
 
@@ -81,7 +73,6 @@ VideoConvertProp::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
 
-  // buf_.load_json (obj);
   rtype_                = src2dst_from_raw_value (::libs::helpers::json::get_uint32 (obj.at ("rtype")));
   atype_                = ::libs::helpers::casts::static_cast_helper< Accuracys > (::libs::helpers::json::get_uint32 (obj.at ("atype")));
   rwidth_               = ::libs::helpers::json::get_uint32 (obj.at ("rwidth"));
@@ -90,7 +81,7 @@ VideoConvertProp::load_json_int (const ::boost::json::object& obj)
   strip_color_          = obj.at ("strip_color").as_bool ();
   debug_skip_transform_ = obj.at ("debug_skip_transform").as_bool ();
   flip_y_               = obj.at ("flip_y").as_bool ();
-  buf_                  = ::boost::json::value_to< ::libs::events::buf::EventBufsInfo > (obj.at ("evbufs"));
+  buf_                  = ::boost::json::value_to< syn::EventBufsInfo > (obj.at ("evbufs"));
 }
 
 
@@ -99,7 +90,6 @@ VideoConvertProp::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
 
-  // buf_.save_json (obj);
   obj["rtype"]                = U3_CAST_UINT32_FORCE (rtype_);
   obj["atype"]                = U3_CAST_UINT32_FORCE (atype_);
   obj["rwidth"]               = rwidth_;

@@ -1,6 +1,6 @@
 /**
 \file       ioptim-proxy.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       14.04.2022
 \project    u3_proxy_libs
 */
@@ -44,13 +44,13 @@ IOptimProxy::IOptimProxy (const std::string& dll_path)
   {
     lib_.load (cpath, boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
   }
-  catch (U3_MARK_UNUSED boost::exception& e)
+  catch (U3_MARK_UNUSED boost::exception& excpt)
   {
-    U3_XLOG_ERROR ("load lib " + std::string (boost::diagnostic_information_what (e, true)));
+    U3_XLOG_ERROR ("load lib " + std::string (boost::diagnostic_information_what (excpt, true)));
   }
 
 #  if defined(U3_OS_ANDROID)
-  creator_ = reinterpret_cast< create_ioptim_func_type* > (dlsym (lib_.native (), "create_impl_vdd_doptim"));
+  creator_ = ::libs::helpers::casts::reinterpret_cast_helper< create_ioptim_func_type* > (dlsym (lib_.native (), "create_impl_vdd_doptim"));
 #  else
   creator_ = ::boost::dll::import_symbol< create_ioptim_func_type > (cpath, "create_impl_vdd_doptim");
 #  endif

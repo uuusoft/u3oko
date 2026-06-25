@@ -1,6 +1,6 @@
 /**
 \file       funcs_for_optim.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.11.2016
 \project    mappl
 */
@@ -9,7 +9,7 @@
 #include "../module-appl-includes_int.hpp"
 
 // old shit
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 void
 debug_func_for_optim1 (const ::libs::properties::vers::links::links_type* plinks)
 {
@@ -19,7 +19,7 @@ debug_func_for_optim1 (const ::libs::properties::vers::links::links_type* plinks
   const std::size_t                         width        = 1280;
   const std::size_t                         height       = 720;
   const std::size_t                         stride_src   = width * 3;
-  const std::size_t                         stride_dst   = ::libs::helpers::mem::get_align32 (width * sizeof (std::int16_t));
+  const std::size_t                         stride_dst   = ::libs::helpers::mem::align_value (width * sizeof (std::int16_t), 64, true);
   ::libs::helpers::mem::IBlockMem::ptr      rgb24        = ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree ()->alloc (stride_src * 2 * height);
   ::libs::helpers::mem::IBlockMem::ptr      l1           = ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree ()->alloc (stride_dst * 2 * height);
   ::libs::helpers::mem::IBlockMem::ptr      l2           = ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree ()->alloc (stride_dst * 2 * height);

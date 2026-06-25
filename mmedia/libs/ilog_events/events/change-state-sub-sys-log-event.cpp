@@ -1,6 +1,6 @@
 /**
 \file       change-state-sub-sys-log-event.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ilog_events
 */
@@ -11,7 +11,7 @@
 
 namespace libs::ilog_events::events
 {
-ChangDShowRunsSubSysLogEvent::ChangDShowRunsSubSysLogEvent (const Acessor&) :
+ChangeStateSubSysLogEvent::ChangeStateSubSysLogEvent (const Acessor&) :
   InfoLogEvent (
     InfoLogEvent::Acessor (0),
     AppllPartLogInfo (
@@ -25,7 +25,7 @@ ChangDShowRunsSubSysLogEvent::ChangDShowRunsSubSysLogEvent (const Acessor&) :
 }
 
 
-ChangDShowRunsSubSysLogEvent::ChangDShowRunsSubSysLogEvent (
+ChangeStateSubSysLogEvent::ChangeStateSubSysLogEvent (
   const Acessor&,
   const AppllPartLogInfo& appl,
   bool                    start) :
@@ -37,7 +37,7 @@ ChangDShowRunsSubSysLogEvent::ChangDShowRunsSubSysLogEvent (
 
 
 std::string
-ChangDShowRunsSubSysLogEvent::text (const LogTexts& type) const
+ChangeStateSubSysLogEvent::text (const LogTexts& type) const
 {
   switch (type)
   {
@@ -61,30 +61,30 @@ ChangDShowRunsSubSysLogEvent::text (const LogTexts& type) const
 
 
 bool
-ChangDShowRunsSubSysLogEvent::is_start () const
+ChangeStateSubSysLogEvent::is_start () const
 {
   return start_;
 }
 
 
 void
-ChangDShowRunsSubSysLogEvent::set_start (bool val)
+ChangeStateSubSysLogEvent::set_start (bool val)
 {
   start_ = val;
 }
 
 
 ::libs::events::IEvent::ptr
-ChangDShowRunsSubSysLogEvent::clone_int (const ::libs::events::Deeps& deep) const
+ChangeStateSubSysLogEvent::clone_int (const ::libs::events::Deeps& deep) const
 {
-  return ::libs::events::deep_clone< ChangDShowRunsSubSysLogEvent > (this, deep);
+  return ::libs::events::deep_clone< ChangeStateSubSysLogEvent > (this, deep);
 }
 
 
 void
-ChangDShowRunsSubSysLogEvent::copy_int (const IEvent::craw_ptr src)
+ChangeStateSubSysLogEvent::copy_int (const IEvent::craw_ptr src)
 {
-  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< ChangDShowRunsSubSysLogEvent > (src);
+  const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< ChangeStateSubSysLogEvent > (src);
   super::copy_int (src);
   start_ = dsrc->start_;
 }
@@ -92,7 +92,7 @@ ChangDShowRunsSubSysLogEvent::copy_int (const IEvent::craw_ptr src)
 
 template< class Archive >
 void
-ChangDShowRunsSubSysLogEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
+ChangeStateSubSysLogEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
   arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("olibsoilog_eventsoeventsoInfoLogEvent", super);
   arh& BOOST_SERIALIZATION_NVP (start_);
@@ -101,5 +101,5 @@ ChangDShowRunsSubSysLogEvent::serialize (Archive& arh, const std::uint32_t /* fi
 }
 }   // namespace libs::ilog_events::events
 
-BOOST_CLASS_EXPORT_IMPLEMENT (::libs::ilog_events::events::ChangDShowRunsSubSysLogEvent);
-U3_BOOST_SERIALIZE_ALL_ARCHIVES (::libs::ilog_events::events::ChangDShowRunsSubSysLogEvent);
+BOOST_CLASS_EXPORT_IMPLEMENT (::libs::ilog_events::events::ChangeStateSubSysLogEvent);
+U3_BOOST_SERIALIZE_ALL_ARCHIVES (::libs::ilog_events::events::ChangeStateSubSysLogEvent);

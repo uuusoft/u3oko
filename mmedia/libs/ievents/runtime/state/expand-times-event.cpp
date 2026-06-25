@@ -1,7 +1,7 @@
 /**
 \file       expand-times-event.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -14,7 +14,6 @@ namespace libs::ievents::runtime::state
 ExpandTimesEvent::ExpandTimesEvent (
   const Acessor&            ph,
   const full_storages_type& infos) :
-  action_ (Actions::get),
   infos_ (infos)
 {
   property_name_ = gen_get_mid ();
@@ -41,7 +40,7 @@ ExpandTimesEvent::set_stat (const key_storage_type& key, const storages_type& in
   infos_[key] = infos;
 }
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 const ::libs::helpers::statistic::ExpandedTimes::infos_type&
 ExpandTimesEvent::get_stat () const
 {
@@ -97,7 +96,7 @@ ExpandTimesEvent::save_json_int (::boost::json::object& jsn) const
 {
   super::save_json_int (jsn);
 
-  jsn["action"]    = U3_CAST_INT32_FORCE (action_);
+  jsn["actions"]   = U3_CAST_INT32_FORCE (action_);
   jsn["source_id"] = source_id_;
 
   // graph paths

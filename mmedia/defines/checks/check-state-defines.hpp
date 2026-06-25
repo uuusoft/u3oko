@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       check-state-defines.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_defines
 \brief      Различные вспомогательные макросы для проверки состояний или результатов вызовов функций
@@ -17,7 +17,7 @@
 #  endif
 
 #  ifndef U3_ASSERT_CHECK_CALL_NT
-#    define U3_ASSERT_CHECK_CALL_NT(u3def_info) U3_ASSERT_SIGNAL_NT (std::string ("check failed: ") + u3def_info)
+#    define U3_ASSERT_CHECK_CALL_NT(u3def_info) U3_ASSERT_SIGNAL_NT (std::string ("check failed nt: ") + u3def_info)
 #  endif
 
 #  define U3_CHECK(u3def_cond, u3def_minfo) \

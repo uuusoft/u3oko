@@ -1,7 +1,7 @@
 /**
 \file       capture-desk-impl-linux-x11.cpp
 \date       16.05.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_desk_vgen
 */
 // #define U3_USE_DEB_LOG_LEVEL
@@ -10,7 +10,7 @@
 #include "../../../desk-vgen-includes_int.hpp"
 #include "capture-desk-impl-linux-x11.hpp"
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 // #if defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI)
 #  include <X11/Xlib.h>
 #  include <X11/Xutil.h>
@@ -45,32 +45,32 @@ CaptureDeskImplLinux::get_buf_int (
   U3_LOG_DATA_DBG (PTR_TOLOG (attrs.visual) + VTOLOG (attrs.c_class) + VTOLOG (attrs.bit_gravity) + VTOLOG (attrs.win_gravity) + VTOLOG (attrs.backing_store) + VTOLOG (attrs.map_state));
   // InputOnly
   // IsUnmapped
-#  if 0
- int x, y;			/* location of window */
-    int width, height;		/* width and height of window */
-    int border_width;		/* border width of window */
-    int depth;          	/* depth of window */
-    Visual *visual;		/* the associated visual structure */
-    Window root;        	/* root of screen containing window */
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
+  int     x, y;          /* location of window */
+  int     width, height; /* width and height of window */
+  int     border_width;  /* border width of window */
+  int     depth;         /* depth of window */
+  Visual* visual;        /* the associated visual structure */
+  Window  root;          /* root of screen containing window */
 #    if defined(__cplusplus) || defined(c_plusplus)
-    int c_class;		/* C++ InputOutput, InputOnly*/
+  int c_class; /* C++ InputOutput, InputOnly*/
 #    else
-    int class;			/* InputOutput, InputOnly*/
+  int class; /* InputOutput, InputOnly*/
 #    endif
-    int bit_gravity;		/* one of bit gravity values */
-    int win_gravity;		/* one of the window gravity values */
-    int backing_store;		/* NotUseful, WhenMapped, Always */
-    unsigned long backing_planes;/* planes to be preserved if possible */
-    unsigned long backing_pixel;/* value to be used when restoring planes */
-    Bool save_under;		/* boolean, should bits under be saved? */
-    Colormap colormap;		/* color map to be associated with window */
-    Bool map_installed;		/* boolean, is color map currently installed*/
-    int map_state;		/* IsUnmapped, IsUnviewable, IsViewable */
-    long all_event_masks;	/* set of events all people have interest in*/
-    long your_event_mask;	/* my event mask */
-    long do_not_propagate_mask; /* set of events that should not propagate */
-    Bool override_redirect;	/* boolean value for override-redirect */
-    Screen *screen;		/* back pointer to correct screen */
+  int           bit_gravity;           /* one of bit gravity values */
+  int           win_gravity;           /* one of the window gravity values */
+  int           backing_store;         /* NotUseful, WhenMapped, Always */
+  unsigned long backing_planes;        /* planes to be preserved if possible */
+  unsigned long backing_pixel;         /* value to be used when restoring planes */
+  Bool          save_under;            /* boolean, should bits under be saved? */
+  Colormap      colormap;              /* color map to be associated with window */
+  Bool          map_installed;         /* boolean, is color map currently installed*/
+  int           map_state;             /* IsUnmapped, IsUnviewable, IsViewable */
+  long          all_event_masks;       /* set of events all people have interest in*/
+  long          your_event_mask;       /* my event mask */
+  long          do_not_propagate_mask; /* set of events that should not propagate */
+  Bool          override_redirect;     /* boolean value for override-redirect */
+  Screen*       screen;                /* back pointer to correct screen */
 #  endif
   U3_CHECK (attrs.width >= 0 && attrs.height >= 0 && attrs.border_width >= 0, VTOLOG (attrs.width) + VTOLOG (attrs.height) + VTOLOG (attrs.border_width));
   // xlib_image_type img (XGetImage (*display, root, 0, 0, attrs.width, attrs.height, AllPlanes, XYPixmap));
@@ -80,8 +80,8 @@ CaptureDeskImplLinux::get_buf_int (
   U3_CHECK (img, "XGetImage");
   const auto bitspx         = (*img)->depth;
   const auto bytespx        = (bitspx >> 3);
-  const auto aligned_width  = ::libs::helpers::mem::get_align16 (attrs.width, true);
-  const auto aligned_stride = ::libs::helpers::mem::get_align16 (aligned_width * bytespx, true);
+  const auto aligned_width  = ::libs::helpers::mem::align_value (attrs.width, 64, true);
+  const auto aligned_stride = ::libs::helpers::mem::align_value (aligned_width * bytespx, 64, true);
 
   info.width_dest_     = aligned_width;
   info.height_dest_    = attrs.height;

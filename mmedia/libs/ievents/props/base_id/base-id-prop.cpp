@@ -1,6 +1,6 @@
 /**
 \file       base-id-prop.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       18.07.2018
 \project    u3_ievents_lib
 */
@@ -12,7 +12,11 @@
 namespace libs::ievents::props::base_id
 {
 BaseIdProp::BaseIdProp (const Acessor& pha)
+// buf2modules_ { { 0.0F, ::utils::dbufs::video::consts::offs::http, "u3m_http" }, { 0.0F, ::utils::dbufs::video::consts::offs::http, "u3m_store" } }
 {
+  buf2modules_.emplace_back (0.0F, ::utils::dbufs::video::consts::offs::http, "u3m_http");
+  buf2modules_.emplace_back (0.0F, ::utils::dbufs::video::consts::offs::http, "u3m_store");
+  state_         = events::PropertyUsings::enabled;
   property_name_ = gen_get_mid ();
 }
 

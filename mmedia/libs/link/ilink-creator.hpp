@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       ilink-creator.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_link
 */
@@ -17,15 +17,17 @@ class ILinkCreator
 
   virtual ~ILinkCreator () = default;
 
-  ILinkCreator (const ILinkCreator&)            = delete;
-  ILinkCreator& operator= (const ILinkCreator&) = delete;
+  ILinkCreator (const ILinkCreator&)                = delete;
+  ILinkCreator& operator= (const ILinkCreator&)     = delete;
+  ILinkCreator (ILinkCreator&&) noexcept            = delete;
+  ILinkCreator& operator= (ILinkCreator&&) noexcept = delete;
 
   //  ILinkCreator interface
-  virtual ILink::ptr get_connect (const CreateInfo&)           = 0;
-  virtual ILink::ptr get_listen (const CreateInfo&)            = 0;
-  virtual ILink::ptr get_connect (const details::ModuleLinks&) = 0;
-  virtual ILink::ptr get_listen (const details::ModuleLinks&)  = 0;
-  virtual bool       close_all ()                              = 0;
+  virtual auto get_connect (const CreateInfo&) -> ILink::ptr           = 0;
+  virtual auto get_listen (const CreateInfo&) -> ILink::ptr            = 0;
+  virtual auto get_connect (const details::ModuleLinks&) -> ILink::ptr = 0;
+  virtual auto get_listen (const details::ModuleLinks&) -> ILink::ptr  = 0;
+  virtual auto close_all () -> bool                                    = 0;
 
   protected:
   ILinkCreator () = default;

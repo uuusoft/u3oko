@@ -1,7 +1,7 @@
 /**
 \file       out-proc-loader-code.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ilink
 */
 #include "libs-ilink-loader-includes_int.hpp"
@@ -27,7 +27,7 @@ OutProcLoaderCode::load_int (
   info_ = info;
   U3_ASSERT_SIGNAL ("process");
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   if (!child_process_)
   {
     child_process_.reset (
@@ -43,7 +43,7 @@ OutProcLoaderCode::is_load_int () const
 {
   U3_ASSERT_SIGNAL ("process");
   return false;
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   // return child_process_ && *child_process_ ? true : false;
   return child_process_ && child_process_->get_id () ? true : false;
 #endif
@@ -54,7 +54,7 @@ bool
 OutProcLoaderCode::unload_int (bool force)
 {
   U3_ASSERT_SIGNAL ("process");
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   if (child_process_)
   {
     if (force)

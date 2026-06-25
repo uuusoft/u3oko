@@ -1,7 +1,7 @@
 /**
 \file       buf-video-space-noise-remover-prop.cpp
 \date       01.04.2026
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -35,7 +35,7 @@ BuffVideoSpaceNoiseRemoverProp::check_int ()
 void
 BuffVideoSpaceNoiseRemoverProp::correct_int ()
 {
-#if 0    
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   core_size_ = ::libs::helpers::utils::ret_check_bound< std::int16_t > (core_size_, 3, 11);
 
   const auto req_vsize = U3_CAST_SIZE_T (core_size_ * core_size_);
@@ -46,7 +46,7 @@ BuffVideoSpaceNoiseRemoverProp::correct_int ()
 #endif
 }
 
-#if 0
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 void
 BuffVideoSpaceNoiseRemoverProp::copy_int (const IEvent::craw_ptr src)
 {
@@ -89,7 +89,7 @@ tag_invoke (::boost::json::value_to_tag< BuffVideoSpaceNoiseRemoverProp >, const
   BuffVideoSpaceNoiseRemoverProp ret (::libs::events::buf::tag_invoke (::boost::json::value_to_tag< ::libs::events::buf::EventBufsInfo > (), pobj));
   const auto&                    obj              = jvs.as_object ();
   const std::string              raw_impl_info_id = obj.at ("impl_info-id").is_string () ? obj.at ("impl_info-id").as_string ().c_str () : "";
-  const std::string              impl_info_id     = raw_impl_info_id.empty () ? ext::MedianSpaceFilterProp::gen_get_mid () : raw_impl_info_id;
+  const auto                     impl_info_id     = raw_impl_info_id.empty () ? std::string { ext::MedianSpaceFilterProp::gen_get_mid () } : raw_impl_info_id;
 
   ret.impl_info_ = ::libs::iproperties::helpers::get_pure_event_int (impl_info_id.c_str ());
   if (ret.impl_info_)

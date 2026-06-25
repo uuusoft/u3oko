@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       desk-vgen-source-impl.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 */
 
@@ -17,7 +17,7 @@ class SourceImpl final : public ::dlls::sources::gen_lib::ISourceImpl
   //  ::dlls::sources::gen_lib::ISourceImpl
   virtual void init_int () override;
   virtual void start_int () override;
-  virtual void stop_int () override;
+  virtual auto stop_int () -> void override;
   virtual void get_sources_int (std::vector< syn::DataSourceInfo >& sources) override;
   virtual void get_raw_data_int (::dlls::sources::gen_lib::syn::pkeys2bufs_type& bufs, ::dlls::sources::gen_lib::syn::tevents_type* events) override;
   virtual void set_cpu_int (::libs::helpers::sys::cpu::CpuExts current_optim) override;

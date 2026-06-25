@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       xlog-trace-defines.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_defines
 */
@@ -10,7 +10,8 @@
 #  ifdef U3_OS_ANDROID
 #    define U3_XLOG_XXX_IMPL(u3def_mark, u3def_param) ::android::log::android_log_write_helper (ANDROID_LOG_INFO, U3_FILE_LOG_TAG, std::string (u3def_param).c_str ());
 #  else
-#    define U3_XLOG_XXX_IMPL(u3def_mark, u3def_param) std::cout << u3def_mark << "." << U3_FILE_LOG_TAG << "| " << (u3def_param) << '\n';
+// #    define U3_XLOG_XXX_IMPL(u3def_mark, u3def_param) std::cout << u3def_mark << "." << U3_FILE_LOG_TAG << "| " << (u3def_param) << '\n';
+#    define U3_XLOG_XXX_IMPL(u3def_mark, u3def_param) std::cout << u3def_mark << "." << U3_FILE_LOG_TAG << "| " << (u3def_param) << std::endl;
 #  endif
 #endif
 

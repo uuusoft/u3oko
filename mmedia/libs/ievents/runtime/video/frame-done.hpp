@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       frame-done.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.05.2018
 \project    u3_ievents_lib
 */
@@ -29,10 +29,11 @@ class FrameDone : public RuntimeEvent
   explicit FrameDone (const Acessor& = Acessor (0));
   virtual ~FrameDone () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ievents/runtime/video/frame-done";
+    static constexpr const char* chret = "libs/ievents/runtime/video/frame-done";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
@@ -44,9 +45,9 @@ class FrameDone : public RuntimeEvent
   template< class Archive >
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
   // virtual void load_int( const ::pugi::xml_named_node_iterator& node ) override;
-  virtual void copy_int (const IEvent::craw_ptr src) override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 };
 }   // namespace libs::ievents::runtime::video
 

@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       iblock-mem-allocator.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_mem_funcs
 */
@@ -17,16 +17,18 @@ class IBlockMemAllocator
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IBlockMemAllocator)
 
-  IBlockMemAllocator (const IBlockMemAllocator& src)            = delete;
-  IBlockMemAllocator& operator= (const IBlockMemAllocator& src) = delete;
+  IBlockMemAllocator (const IBlockMemAllocator& src)                = delete;
+  IBlockMemAllocator& operator= (const IBlockMemAllocator& src)     = delete;
+  IBlockMemAllocator (IBlockMemAllocator&& src) noexcept            = delete;
+  IBlockMemAllocator& operator= (IBlockMemAllocator&& src) noexcept = delete;
 
   /// Функция выделения блока памяти с выравниваем
   /// \param[in]  size размер памяти под данные
   /// \return     указатель на блок памяти
-  virtual ::libs::helpers::mem::IBlockMem::ptr alloc (const size_type& size) = 0;
+  virtual auto alloc (const size_type& size) -> ::libs::helpers::mem::IBlockMem::ptr = 0;
 
   /// Функция трассировки статуса памяти системы в данном процессе
-  virtual std::string dump_memory_status () = 0;
+  virtual auto dump_memory_status () -> std::string = 0;
 
   protected:
   IBlockMemAllocator ()          = default;

@@ -2,11 +2,11 @@
 /**
 \file       libs-link-size-vals.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_link
 */
 
-namespace libs::link::consts::size
+namespace libs::link::consts::sizes
 {
 constexpr std::uint32_t buf_all2log    = 1 * 1024 * 1024;
 constexpr std::uint32_t buf_all2events = 1 * 1024 * 1024;
@@ -66,4 +66,4 @@ constexpr std::uint32_t buf_appl2storage = 10 * 1024 * 1024;
 #else
 #  error select OS
 #endif
-}   // namespace libs::link::consts::size
+}   // namespace libs::link::consts::sizes

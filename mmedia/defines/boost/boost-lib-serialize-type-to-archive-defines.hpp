@@ -2,7 +2,7 @@
 /**
 \file       boost-lib-serialize-type-to-archive-defines.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    mevents
 \brief      Макрос для сериализации стандартных типов системы (события, свойства etc) в необходимые (возможно в будущем) архивы
 */

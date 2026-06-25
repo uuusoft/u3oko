@@ -1,16 +1,17 @@
 #pragma once
 /**
 file        includes.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       10.12.2016
 \project    u3_ievents_lib
 \brief      Файл, определяет набор интерфейсов и типов для ядра
 */
 #include "enum-selector-impls.hpp"
+#include "enum-ops-status.hpp"
 
 #include "event.hpp"
-
 #include "timed-event.hpp"
+#include "ops-status-event.hpp"
 
 #include "props/terminals/end-point-prop.hpp"
 
@@ -28,6 +29,7 @@ file        includes.hpp
 #include "props/videos/gens/diff/info-buf-video-diff-prop.hpp"
 #include "props/videos/gens/diff/video-diff-prop.hpp"
 
+#include "props/videos/noises/time/buf-video-time-noise-remover-prop.hpp"
 #include "props/videos/noises/time/video-time-noise-remover-prop.hpp"
 #include "props/videos/noises/time/ext/median-time-filter-prop.hpp"
 
@@ -52,7 +54,12 @@ file        includes.hpp
 #include "props/videos/generic/scaler/buf-event-info-video-scaler.hpp"
 #include "props/videos/generic/scaler/video-scaler-prop.hpp"
 
-#include "props/videos/generic/sharper/CVideoSharperProp.hpp"
+// #include "props/videos/generic/sharper/CVideoSharperProp.hpp"
+
+#include "props/videos/generic/morph/enum-morph-ops.hpp"
+#include "props/videos/generic/morph/morph-operation-params.hpp"
+#include "props/videos/generic/morph/morph-buf-info.hpp"
+#include "props/videos/generic/morph/video-morphology-prop.hpp"
 
 #include "props/videos/generic/detect/video-detect-prop.hpp"
 
@@ -83,11 +90,6 @@ file        includes.hpp
 #include "props/videos/generic/codec/type-codec-mode.hpp"
 #include "props/videos/generic/codec/video-codec-flat-prop.hpp"
 #include "props/videos/generic/codec/video-codec-prop.hpp"
-
-#include "props/videos/generic/morph/enum-morph-ops.hpp"
-#include "props/videos/generic/morph/morph-operation-params.hpp"
-#include "props/videos/generic/morph/morph-buf-info.hpp"
-#include "props/videos/generic/morph/video-morphology-prop.hpp"
 
 #include "props/modules/log/consts/ievents-modules-log-vals.hpp"
 #include "props/modules/log/log-levels-enum.hpp"

@@ -1,7 +1,7 @@
 /**
 \file       correct-image-impl.cpp
 \date       01.01.2018
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_vcorrect_vdd
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -12,12 +12,11 @@
 
 namespace dlls::uplifters::vcorrect::soft
 {
-CorrectImageImpl::CorrectImageImpl () :
-  props_ (nullptr)
+CorrectImageImpl::CorrectImageImpl ()
 {
   auto ioptim = ::libs::iproperties::helpers::cast_prop_demons ()->get_optim_lockfree ()->impl ();
 
-  pthreads_        = U3_CAST_PROP (::libs::iproperties::vers::system::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ())->get_mcalls_lockfree ();
+  pthreads_        = ::libs::iproperties::helpers::get_shared_prop_os ()->get_mcalls_lockfree ();
   mfunc_const_add_ = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CAddConstAlg::val_key));
   mfunc_sat2byte_  = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CSat2ByteAlg::val_key));
   mfunc_grad_func_ = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CGraduent1Alg::val_key));
@@ -51,7 +50,7 @@ CorrectImageImpl::change_state_int (bool enable)
 void
 CorrectImageImpl::update_correction_property_int (const syn::VideoCorrectProp::raw_ptr info)
 {
-  U3_LOG_DATA_DATA ("update correction properties:" + syn::VideoCorrectProp::gen_get_mid ());
+  U3_LOG_DATA_DATA ("update correction properties:" + STOLOG (syn::VideoCorrectProp::gen_get_mid ()));
   props_ = info;
 
   const float sval = ::libs::helpers::utils::ret_check_bound (props_->saturation_.first, -1.0F, 1.0F);
@@ -161,7 +160,7 @@ CorrectImageImpl::bright_correct (syn::IVideoBuf& y16s)
     return;
   }
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   if (finfo->int_uints_[consts::tivciAdaptiveCorrection])
   {
     float loc_diff_correction     = finfo->props_.adaptive_ - finfo->m_now_average_frame;

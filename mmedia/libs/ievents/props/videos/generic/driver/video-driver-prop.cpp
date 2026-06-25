@@ -1,6 +1,6 @@
 /**
 \file       video-driver-prop.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
@@ -11,8 +11,7 @@
 
 namespace libs::ievents::props::videos::generic::driver
 {
-VideoDriverProp::VideoDriverProp (const Acessor& pha) :
-  device_indx_ (0)
+VideoDriverProp::VideoDriverProp (const Acessor& pha)
 {
   cat_dshow_     = ::libs::helpers::uids::minor::get (::libs::helpers::uids::minor::id_val::cat_video_device);
   property_name_ = gen_get_mid ();

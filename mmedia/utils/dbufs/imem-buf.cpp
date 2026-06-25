@@ -1,6 +1,6 @@
 /**
 \file       imem-buf.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       11.08.2018
 \project    u3_dbufs
 */
@@ -12,7 +12,7 @@
 namespace utils::dbufs
 {
 void
-IMemBuf::ialloc (const mem_type& size)
+IMemBuf::ialloc (const mem_var_type& size)
 {
   if (!raw_)
   {
@@ -37,42 +37,42 @@ IMemBuf::flush ()
 
 
 void
-IMemBuf::set_mem_var_int (const MemVars& _type, mem_type _val)
+IMemBuf::set_mem_var_int (const MemVars& type, mem_var_type val)
 {
-  switch (_type)
+  switch (type)
   {
   case MemVars::size_data:
-    if (_val > 0)
+    if (val > 0)
     {
-      U3_CHECK (_val || raw_, "try set size_data to empty raw_");
-      U3_CHECK (_val <= raw_->get_buf_size (), VTOLOG (_val) + VTOLOG (raw_->get_buf_size ()));
+      U3_CHECK (val || raw_, "try set size_data to empty raw_");
+      U3_CHECK (val <= raw_->get_buf_size (), VTOLOG (val) + VTOLOG (raw_->get_buf_size ()));
     }
     break;
   case MemVars::offset_data:
-    U3_CHECK (_val < (*this)[MemVars::size_buf] || 0 == _val, "offset large size" + VTOLOG (_val) + VTOLOG ((*this)[MemVars::size_buf]));
+    U3_CHECK (val < (*this)[MemVars::size_buf] || 0 == val, "offset large size" + VTOLOG (val) + VTOLOG ((*this)[MemVars::size_buf]));
     break;
   case MemVars::size_buf:
-    U3_XLOG_ERROR ("try set size_buf" + VTOLOG (_val));
+    U3_XLOG_ERROR ("try set size_buf" + VTOLOG (val));
     return;
   default:
     break;
   }
 
-  mem_vars_[_type] = _val;
+  mem_vars_[type] = val;
 }
 
 
-IMemBuf::mem_type
-IMemBuf::get_mem_var_int (const ::utils::dbufs::MemVars& _type) const
+IMemBuf::mem_var_type
+IMemBuf::get_mem_var_int (const ::utils::dbufs::MemVars& type) const
 {
-  switch (_type)
+  switch (type)
   {
   case MemVars::size_buf:
     return raw_ ? raw_->get_buf_size () : 0;
   default:
     break;
   }
-  return mem_vars_[_type];
+  return mem_vars_[type];
 }
 
 

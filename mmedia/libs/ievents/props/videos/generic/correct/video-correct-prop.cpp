@@ -1,6 +1,6 @@
 /**
 \file       video-correct-prop.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
@@ -8,30 +8,9 @@
 #include "mmedia/includes/includes.hpp"
 #include "../../../../includes_int.hpp"
 
-namespace libs::ievents::props::videos::generic::correct::consts
-{
-constexpr std::int32_t min = -1;
-constexpr std::int32_t max = 1;
-constexpr std::int32_t def = 0;
-}   // namespace libs::ievents::props::videos::generic::correct::consts
-
-
 namespace libs::ievents::props::videos::generic::correct
 {
-VideoCorrectProp::VideoCorrectProp (const Acessor& pha) :
-  saturation_ { consts::def, false },
-  bright_ { consts::def, false },
-  contrast_ { consts::def, false },
-  sharp_ { consts::def, false },
-  hue_ { consts::def, false },
-  gamma_ { consts::def, false },
-  white_balance_ { consts::def, false },
-  backlight_compensation_ { consts::def, false },
-  gain_ { consts::def, false },
-  exposure_ { consts::def, false },
-  adaptive_ (false),
-  short2byte_ (true),
-  hint_correct_impl_ (::libs::ievents::SelectorImpls::automatic)
+VideoCorrectProp::VideoCorrectProp (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
 }

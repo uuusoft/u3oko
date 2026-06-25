@@ -1,9 +1,10 @@
 /**
 \file       benchmark-appl.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.05.2017
 \project    u3oko
 */
+// #define U3_USE_DEB_LOG_LEVEL
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "../appls-u3oko-includes_int.hpp"
@@ -28,12 +29,16 @@ U3OkoAppl::appl_init_int (const syn::InitApplication& info)
 void
 U3OkoAppl::init_links_int (const syn::InitApplication& info)
 {
+  U3_XLOG_DBG ("U3OkoAppl::init_links_int::---->");
   super::init_links_int (info);
 
-  //  Устанавливаем свойства логирования.
+  //  Устанавливаем свойства логирования
+  U3_XLOG_DBG ("U3OkoAppl::init_links_int:: pt1");
   links_.get (syn::mids::appl2log)->send_msg (appl_event_props_.module_log_, syn::CallSyncs::async, syn::Calls::set);
-  //  Устанавливаем свойства хранилища.
+  //  Устанавливаем свойства хранилища
+  U3_XLOG_DBG ("U3OkoAppl::init_links_int:: pt2");
   links_.get (syn::mids::appl2storage)->send_msg (appl_event_props_.storage_module_, syn::CallSyncs::async, syn::Calls::set);
+  U3_XLOG_DBG ("U3OkoAppl::init_links_int::<----");
 }
 
 
@@ -46,7 +51,7 @@ U3OkoAppl::update_catch_funcs_int ()
     [this] (::libs::events::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
-      auto rmsg = ::libs::iproperties::helpers::cast_event< syn::CommandCodeEvent > (msg);
+      auto* rmsg = ::libs::iproperties::helpers::cast_event< syn::CommandCodeEvent > (msg);
       U3_LOG_APPL_DEV ("catch ::libs::igui_events::events::CommandCodeEvent, " + rmsg->get_code ());
       stop_module_ = true;
       return ::libs::events::IEvent::ptr ();
@@ -76,10 +81,10 @@ U3OkoAppl::appl_deinit_int ()
 
 
 ::libs::ilink::appl::base::BaseModule::recv_links_type
-U3OkoAppl::get_recv_link ()
+U3OkoAppl::get_recv_link_int ()
 {
-  return recv_links_type {
-#ifdef U3_GUI_ENABLE
+  return {
+#if (U3_MODULES_ENABLE_GUI == 1)
     links_.get (syn::mids::appl2gui),
 #endif
     links_.get (syn::mids::appl2mdata),

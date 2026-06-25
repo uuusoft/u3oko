@@ -1,6 +1,6 @@
 /**
 \file       mem-resource-http-event.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       14.04.2018
 \project    u3_ihttp_events
 */

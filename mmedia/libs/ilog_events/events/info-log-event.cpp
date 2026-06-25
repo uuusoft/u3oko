@@ -1,6 +1,6 @@
 /**
 \file       info-log-event.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ilog_events
 */
@@ -15,7 +15,6 @@ InfoLogEvent::InfoLogEvent (
   const Acessor&,
   const AppllPartLogInfo& appl,
   const std::string&      info) :
-
   info_ (info),
   appl_ (appl)
 {
@@ -68,7 +67,7 @@ void
 InfoLogEvent::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-  U3_ASSERT_NT (0, "???");
+  U3_ASSERT_NT (0, "InfoLogEvent::load_json_int:: wtf???");
 }
 
 
@@ -76,7 +75,7 @@ void
 InfoLogEvent::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-  U3_ASSERT_NT (0, "???");
+  U3_ASSERT_NT (0, "InfoLogEvent::save_json_int:: wtf???");
 }
 
 

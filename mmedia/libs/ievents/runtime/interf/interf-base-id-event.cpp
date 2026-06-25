@@ -1,6 +1,6 @@
 /**
 \file       interf-base-id-event.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       19.07.2018
 \project    u3_ievents_lib
 */
@@ -48,7 +48,7 @@ InterfBaseIdEvent::copy_int (const IEvent::craw_ptr src)
   impl_ = dsrc->impl_;
 }
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 template< class Archive >
 void
 InterfBaseIdEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
@@ -61,7 +61,7 @@ InterfBaseIdEvent::serialize (Archive& arh, const std::uint32_t /* file_version 
 #endif
 }   // namespace libs::ievents::runtime::interf
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 BOOST_CLASS_EXPORT_IMPLEMENT (::libs::ievents::runtime::interf::InterfBaseIdEvent);
 U3_BOOST_SERIALIZE_ALL_ARCHIVES (::libs::ievents::runtime::interf::InterfBaseIdEvent);
 #endif

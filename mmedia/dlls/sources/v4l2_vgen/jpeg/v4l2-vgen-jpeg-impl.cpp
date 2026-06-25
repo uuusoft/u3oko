@@ -1,6 +1,6 @@
 /**
 \file       v4l2-vgen-jpeg-impl.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */
@@ -9,7 +9,7 @@
 #include "../v4l2-vgen-includes_int.hpp"
 #include "v4l2-vgen-jpeg-impl.hpp"
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 namespace dlls::sources::v4l2_openmax_vgen::jpeg
 {
 
@@ -157,7 +157,7 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
   lock_type     lock (mtx_);
   MMAL_STATUS_T status   = MMAL_SUCCESS;
   bool          complete = false;
-  DriverState*  devstate = reinterpret_cast< DriverState* > (port->userdata);
+  DriverState*  devstate = ::libs::helpers::casts::reinterpret_cast_helper< DriverState* > (port->userdata);
 
   U3_CHECK (devstate, "Received a camera still buf callback with no state");
 
@@ -192,7 +192,7 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
       jpeg_frame_size_ = sizeof (HeaderIFrame);
       ::utils::dbufs::video::helpers::override_data (*buf, 0, jpeg_frame_size_);
 
-      auto* head = U3_CAST_CODECS< HeaderIFrame* > (buf->get_buf ());
+      auto* head = ::libs::helpers::casts::reinterpret_cast_helper< HeaderIFrame* > (buf->get_buf ());
       head->reset ();
 
       head->base_part_.set_guid_codec (::libs::helpers::uids::codecs::mjpeg);
@@ -225,7 +225,7 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
       empty_jpeg_bufs_.pop_front ();
       ready_jpeg_bufs_.push_back (buf);
 
-      auto* head = U3_CAST_CODECS< HeaderIFrame* > (buf->get_buf ());
+      auto* head = ::libs::helpers::casts::reinterpret_cast_helper< HeaderIFrame* > (buf->get_buf ());
 
       head->base_part_.size_compress_ = jpeg_frame_size_ - sizeof (HeaderIFrame);
       head->csize_                    = jpeg_frame_size_ - sizeof (HeaderIFrame);
@@ -248,8 +248,6 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
       //   vcodec_mjpg::consts::guid_codec.get_vals().begin(),????
       // vcodec_mjpg::consts::guid_codec.get_vals().end(),
       // head->base_part_.guid_);
-
-      // U3_ASSERT(head->check());
     }
 
     complete         = true;
@@ -289,14 +287,14 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 
     // Enable the camera still output port and tell it its callback function
     // U3_CHECK(MMAL_SUCCESS == mmal_port_enable(camera_video_port, ::encoder_buf_callback), "Failed to setup camera output");
-#  if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
     // There is a possibility that shutter needs to be set each loop.
-    MMAL_STATUS_T port_status = mmal_port_parameter_set_uint32(
-        devstate_->cam_comp_->control,
-        MMAL_PARAMETER_SHUTTER_SPEED,
-        devstate_->cam_params_.shutter_speed);
+    MMAL_STATUS_T port_status = mmal_port_parameter_set_uint32 (
+      devstate_->cam_comp_->control,
+      MMAL_PARAMETER_SHUTTER_SPEED,
+      devstate_->cam_params_.shutter_speed);
 
-    U3_CHECK(MMAL_SUCCESS == helpers::mmal_status_to_int(port_status), "Unable to set shutter speed");
+    U3_CHECK (MMAL_SUCCESS == helpers::mmal_status_to_int (port_status), "Unable to set shutter speed");
 #  endif
     // Send all the bufs to the camera output port
     const std::int32_t num = mmal_queue_length (devstate_->encoder_pool_->queue);

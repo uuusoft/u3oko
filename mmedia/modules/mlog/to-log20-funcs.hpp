@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       to-log20-funcs.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.04.2026
 \project    mlog
 */
@@ -20,7 +20,6 @@ enum class LogControl : std::uint8_t
   enable  = 1,
   unknown = 0xFF
 };
-
 
 template< LogControl = LogControl::enable >
 class ToLog final
@@ -45,15 +44,20 @@ class ToLog final
       return;
     }
 
-    auto              props_links = ::libs::iproperties::helpers::get_prop_links ();
-    const auto        msglh_links = props_links ? U3_CAST_PROP (::libs::properties::vers::links::ILinksProperty::raw_ptr) (props_links) : nullptr;
-    auto              logger      = msglh_links ? msglh_links->get_links_lockfree ().get (key_).lock () : nullptr;
     std::stringstream buftemp;
-
     (buftemp << ... << args);
 
-    msg2logger (logger.get (), buftemp);
     msg2cout (buftemp);
+
+    if (::libs::iproperties::helpers::check_prop_links ())
+    {
+      auto* props_links = ::libs::iproperties::helpers::get_prop_links ();
+      auto  logger      = props_links ? props_links->get_links_lockfree ().get (key_).lock () : nullptr;
+      if (logger)
+      {
+        msg2logger (logger.get (), buftemp);
+      }
+    }
   }
 
   private:
@@ -72,10 +76,12 @@ class ToLog final
       return;
     }
 
-    const auto msglm_impl   = msglm_events->impl ();
-    const auto msglm_id     = ::libs::ilog_events::events::InfoLogEvent::gen_get_mid ();
-    const auto msglm_revent = msglm_impl->get (msglm_id);
-    auto       msglm_levent = ::libs::helpers::casts::reinterpret_cast_helper< ::libs::ilog_events::events::InfoLogEvent* > (msglm_impl->dcast (msglm_revent.get (), msglm_id));
+    const auto                  msglm_impl = msglm_events->impl ();
+    ::libs::events::IEvent::ptr msglm_revent;
+    auto*                       msglm_levent = ::libs::iproperties::helpers::create_event< ::libs::ilog_events::events::InfoLogEvent > (msglm_revent);
+    const auto                  msglm_id     = ::libs::ilog_events::events::InfoLogEvent::gen_get_mid ();
+    // const auto msglm_revent = msglm_impl->get (msglm_id);
+    // auto*      msglm_levent = ::libs::helpers::casts::reinterpret_cast_helper< ::libs::ilog_events::events::InfoLogEvent* > (msglm_impl->dcast (msglm_revent.get (), msglm_id));
 
     msglm_levent->change_appl_info (::libs::ilog_events::AppllPartLogInfo (level_, to_string (key_.first), "wtfversion", place_), buf.str ());
     logger->send_msg (msglm_revent, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);

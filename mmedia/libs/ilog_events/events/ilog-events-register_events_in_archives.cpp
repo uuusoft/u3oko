@@ -1,7 +1,7 @@
 /**
 \file       ilog-events-register_events_in_archives.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ilog_events
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -16,7 +16,7 @@ struct RegisterHelper {
   process () const
   {
     ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ilog_events::events::BaseLogEvent > ();
-    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ilog_events::events::ChangDShowRunsSubSysLogEvent > ();
+    ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ilog_events::events::ChangeStateSubSysLogEvent > ();
     ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ilog_events::events::ExceptLogEvent > ();
     ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ilog_events::events::InfoLogEvent > ();
     ::libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::ilog_events::events::ProcessListLogsEvent > ();

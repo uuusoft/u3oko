@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       dll-mock.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_helpers_lib
 */
@@ -20,6 +20,7 @@ struct DllMock final {
   void
   load (const std::string& path, int)
   {
+    path_ = path;
   }
 
   void
@@ -31,6 +32,15 @@ struct DllMock final {
   {
     return true;
   }
+
+  ::boost::filesystem::path
+  location () const
+  {
+    return ::boost::filesystem::path { path_ };
+  }
+
+  private:
+  std::string path_ = "DllMock::default_path";
 };
 
 #if (U3_BUILD_MODULES_AS_LIBS == 1)

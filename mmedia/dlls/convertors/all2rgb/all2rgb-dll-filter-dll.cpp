@@ -1,6 +1,6 @@
 /**
 \file       all2rgb-dll-filter-dll.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.05.2017
 \project    u3_all2rgb
 */
@@ -14,14 +14,14 @@ namespace dlls::convertors::all2rgb
 void
 Filter::alloc_temp_bufs ()
 {
-  const syn::IVideoBuf::raw_ptr sbuf          = (*pbuf_)[finfo_.rprops_->buf_.indx_sbuf_];
-  const auto                    source_format = sbuf->get_format ();
-  const auto                    px_format     = is_result_mono (source_format) ? ::libs::helpers::uids::minor::id_val::y16 : ::libs::helpers::uids::minor::id_val::rgb24;
-  const std::uint32_t           byte2px       = ::libs::helpers::uids::helpers::get_count_bytes_from_format (px_format);
-  const auto                    swidth        = sbuf->get_dim_var (::utils::dbufs::video::Dims::width);
-  const auto                    sheight       = sbuf->get_dim_var (::utils::dbufs::video::Dims::height);
-  const std::uint32_t           req_stride    = ::libs::helpers::mem::get_align64 (swidth * byte2px, true);
-  const std::uint32_t           req_size      = req_stride * sheight;
+  const auto          sbuf          = (*pbuf_)[finfo_.rprops_->buf_.indx_sbuf_];
+  const auto          source_format = sbuf->get_format ();
+  const auto          px_format     = is_result_mono (source_format) ? ::libs::helpers::uids::minor::id_val::y16 : ::libs::helpers::uids::minor::id_val::rgb24;
+  const std::uint32_t byte2px       = ::libs::helpers::uids::helpers::get_count_bytes_from_format (px_format);
+  const auto          swidth        = sbuf->get_dim_var (::utils::dbufs::video::Dims::width);
+  const auto          sheight       = sbuf->get_dim_var (::utils::dbufs::video::Dims::height);
+  const std::uint32_t req_stride    = ::libs::helpers::mem::align_value (swidth * byte2px, 64U, true);
+  const std::uint32_t req_size      = req_stride * sheight;
 
   const ::utils::dbufs::video::consts::offs::off_buf_type indx_bufs[] = {
     ::utils::dbufs::video::consts::offs::temp1

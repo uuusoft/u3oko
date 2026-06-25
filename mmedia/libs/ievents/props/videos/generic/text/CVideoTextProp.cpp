@@ -1,6 +1,6 @@
 /**
 \file     CVideoTextProp.cpp
-\author   Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author   Erashov Anton erashov2026@proton.me
 \date     01.01.2017
 \project  u3_ievents_lib
 */
@@ -21,7 +21,7 @@ namespace generics
 {
 namespace text
 {
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 CVideoTextProp::CVideoTextProp () : enable_ (false)
 {
   property_name_ = "libs/ievents/props/videos/generic/text/CVideoTextProp";

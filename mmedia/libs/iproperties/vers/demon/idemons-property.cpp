@@ -1,7 +1,7 @@
 /**
 \file       idemons-property.cpp
 \date       02.03.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_iproperties_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"

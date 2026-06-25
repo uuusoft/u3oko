@@ -2,7 +2,7 @@
 /**
 \file       change-state-event.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 
@@ -29,10 +29,11 @@ class ChangeStateProcessEvent final : public RuntimeEvent
   explicit ChangeStateProcessEvent (const Acessor& = Acessor (0), bool start = true);
   virtual ~ChangeStateProcessEvent () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ievents/runtime/state/change-state-process-type-event";
+    static constexpr const char* chret = "libs/ievents/runtime/state/change-state-process-type-event";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
@@ -49,11 +50,11 @@ class ChangeStateProcessEvent final : public RuntimeEvent
   template< class Archive >
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
-  virtual void                        load_json_int (const ::boost::json::object& obj) override;
-  virtual void                        save_json_int (::boost::json::object& obj) const override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
+  virtual auto load_json_int (const ::boost::json::object&) -> void override;
+  virtual auto save_json_int (::boost::json::object&) const -> void override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
   // virtual void load_int( const ::pugi::xml_named_node_iterator& node ) override;
-  virtual void copy_int (const IEvent::craw_ptr src) override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 };
 }   // namespace libs::ievents::runtime::state
 

@@ -2,7 +2,7 @@
 /**
 \file       file-ext2mime-func.hpp
 \date       15.02.2026
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    mhttp
 */
 

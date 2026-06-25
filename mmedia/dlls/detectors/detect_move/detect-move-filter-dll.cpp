@@ -1,6 +1,6 @@
 /**
 \file       detect-move-filter-dll.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.05.2017
 \project    u3_detect_move
 */
@@ -124,10 +124,9 @@ Filter::itransform (syn::TransformInfo& info)
       time_first_detect_ = boost::posix_time::microsec_clock::universal_time ();
 
       syn::IEvent::ptr irmsg;
-      auto             dmsg  = ::libs::iproperties::helpers::create_event< syn::AddEvent2Base > (rmsg, libs::helpers::utils::cuuid (), "???????");
-      auto             idmsg = ::libs::iproperties::helpers::create_event< syn::DetectViolation > (irmsg, ::libs::ievents::runtime::video::DetectViolations::start);
+      auto             dmsg = ::libs::iproperties::helpers::create_event< syn::AddEvent2Base > (rmsg, libs::helpers::utils::cuuid (), "???????");
+      ::libs::iproperties::helpers::create_event< syn::DetectViolation > (irmsg, ::libs::ievents::runtime::video::DetectViolations::start);
       dmsg->set_event (irmsg);
-      // idmsg->set_state (::libs::ievents::runtime::video::DetectViolations::start);
     }
     ++count_detects_;
   }
@@ -142,10 +141,9 @@ Filter::itransform (syn::TransformInfo& info)
         count_detects_ = 0;
 
         syn::IEvent::ptr irmsg;
-        auto             dmsg  = ::libs::iproperties::helpers::create_event< syn::AddEvent2Base > (rmsg, libs::helpers::utils::cuuid (), "???????");
-        auto             idmsg = ::libs::iproperties::helpers::create_event< syn::DetectViolation > (irmsg, ::libs::ievents::runtime::video::DetectViolations::stop);
+        auto             dmsg = ::libs::iproperties::helpers::create_event< syn::AddEvent2Base > (rmsg, libs::helpers::utils::cuuid (), "???????");
+        ::libs::iproperties::helpers::create_event< syn::DetectViolation > (irmsg, ::libs::ievents::runtime::video::DetectViolations::stop);
         dmsg->set_event (irmsg);
-        // idmsg->set_state (::libs::ievents::runtime::video::DetectViolations::stop);
       }
     }
   }

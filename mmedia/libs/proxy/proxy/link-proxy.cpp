@@ -1,7 +1,7 @@
 /**
 \file       link-proxy.cpp
 \date       17.04.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_proxy_libs
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -13,7 +13,7 @@ extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl
 extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_mevents (::libs::link::appl::IApplication* appl);
 #endif
 
-#ifdef U3_GUI_ENABLE
+#if (U3_MODULES_ENABLE_GUI == 1)
 extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_mgui ();
 extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_mgui (::libs::link::appl::IApplication* appl);
 #endif
@@ -50,7 +50,7 @@ get_create_module_funct (const std::string& plib_id)
     return create_impl_mpl_mevents;
   }
 #endif
-#ifdef U3_GUI_ENABLE
+#if (U3_MODULES_ENABLE_GUI == 1)
   if (lib_id == "mpl_mgui")
   {
     return create_impl_mpl_mgui;
@@ -95,7 +95,7 @@ get_delete_module_funct (const std::string& plib_id)
     return delete_impl_mpl_mevents;
   }
 #endif
-#ifdef U3_GUI_ENABLE
+#if (U3_MODULES_ENABLE_GUI == 1)
   if (lib_id == "mpl_mgui")
   {
     return delete_impl_mpl_mgui;

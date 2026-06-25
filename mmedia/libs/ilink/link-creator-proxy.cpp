@@ -1,6 +1,6 @@
 /**
 \file       link-creator-proxy.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.11.2016
 \project    u3_ilink
 */
@@ -20,13 +20,13 @@ LinkCreatorProxy::LinkCreatorProxy () :
     return;
   }
 
-  auto                            ipropos = U3_CAST_PROP (syn::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ());
+  auto*                           ipropos = ::libs::iproperties::helpers::get_shared_prop_os ();
   syn::ISharedProperty::lock_type lock (ipropos->get_sync ());
 
   auto       mainappl = ipropos->get_appl_lockfree ();
   const auto implname = mainappl->get_messenger_impl ();
   const auto issingle = mainappl->is_single_process ();
-  U3_XLOG_DEV (VTOLOG (issingle) + TOLOG (implname));
+  U3_XLOG_MARK ("init link proxy" + VTOLOG (issingle) + TOLOG (implname));
 
   if (issingle)
   {

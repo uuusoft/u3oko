@@ -1,6 +1,6 @@
 /**
 \file       isource-impl.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.06.2016
 \project    u3_vgen_lib
 */
@@ -19,9 +19,9 @@ ISourceImpl::init ()
   {
     init_int ();
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what ());
+    U3_LOG_DATA_EXCEPT (excpt.what ());
   }
 }
 
@@ -39,9 +39,9 @@ ISourceImpl::start ()
     started_ = true;
     start_int ();
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what ());
+    U3_LOG_DATA_EXCEPT (excpt.what ());
   }
 }
 
@@ -60,9 +60,9 @@ ISourceImpl::stop ()
     send_interfaces_ = false;
     stop_int ();
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what ());
+    U3_LOG_DATA_EXCEPT (excpt.what ());
   }
 }
 
@@ -75,9 +75,9 @@ ISourceImpl::get_sources (std::vector< syn::DataSourceInfo >& sources)
     sources.clear ();
     get_sources_int (sources);
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what ());
+    U3_LOG_DATA_EXCEPT (excpt.what ());
   }
 }
 
@@ -89,9 +89,9 @@ ISourceImpl::get_raw_data (syn::pkeys2bufs_type& bufs, syn::tevents_type* events
   {
     get_raw_data_int (bufs, events);
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what ());
+    U3_LOG_DATA_EXCEPT (excpt.what ());
   }
 }
 
@@ -104,9 +104,9 @@ ISourceImpl::set_cpu (syn::CpuExts cpu)
     simd_ = cpu;
     set_cpu_int (cpu);
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what ());
+    U3_LOG_DATA_EXCEPT (excpt.what ());
   }
 }
 
@@ -130,9 +130,9 @@ ISourceImpl::update_source_info (const SourceImplInfo& info)
       start ();
     }
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what ());
+    U3_LOG_DATA_EXCEPT (excpt.what ());
   }
 }
 

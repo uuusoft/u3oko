@@ -1,12 +1,12 @@
 #pragma once
 /**
 \file       range.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_codec_funcs
 */
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 #  ifndef rangecod_h
 #    define rangecod_h
 
@@ -73,7 +73,7 @@
 
 
 #    include "port.h"
-#    if 0 /* done in port.h */
+#    ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY /* done in port.h */
 #      include <limits.h>
 #      if INT_MAX > 0xffff
 typedef std::uint32_t uint4;

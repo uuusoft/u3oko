@@ -1,14 +1,14 @@
 #pragma once
 /**
 \file       lib-helpers-dshow-const-vals.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_dshow_vgen
 */
 
 namespace libs::helpers::dshow::consts::compression
 {
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 constexpr unsigned long rgb       = BI_RGB;
 constexpr unsigned long bitfields = BI_BITFIELDS;
 constexpr unsigned long rle8      = BI_RLE8;

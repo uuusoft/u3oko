@@ -2,7 +2,7 @@
 /**
 \file       generic_count_after_select.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_codec_funcs
 \brief      Объявление обобщенной реализации RLE (метод подсчет после выбора ключа)
 */
@@ -34,8 +34,8 @@ class CGenericObj
   {
     U3_ASSERT (0 == count_byte_dst);
 
-    const auto* usrc    = U3_CAST_CODECS< const value_type* > (src);
-    auto*       udst    = U3_CAST_CODECS< value_type* > (dst);
+    const auto* usrc    = ::libs::helpers::casts::reinterpret_cast_helper< const value_type* > (src);
+    auto*       udst    = ::libs::helpers::casts::reinterpret_cast_helper< value_type* > (dst);
     value_type  counter = 0;
 
     U3_ASSERT (count_byte_src / sizeof (value_type) * sizeof (value_type) == count_byte_src);
@@ -88,8 +88,8 @@ class CGenericObj
     void*          dst,
     std::uint32_t& count_byte_dst)
   {
-    const auto* usrc = U3_CAST_CODECS< const value_type* > (src);
-    auto*       udst = U3_CAST_CODECS< value_type* > (dst);
+    const auto* usrc = ::libs::helpers::casts::reinterpret_cast_helper< const value_type* > (src);
+    auto*       udst = ::libs::helpers::casts::reinterpret_cast_helper< value_type* > (dst);
 
     U3_ASSERT (count_byte_src / sizeof (value_type) * sizeof (value_type) == count_byte_src);
 

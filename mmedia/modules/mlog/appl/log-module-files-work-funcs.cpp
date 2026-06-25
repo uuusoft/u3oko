@@ -1,9 +1,10 @@
 /**
 \file       log-module-files-work-funcs.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    mlog
 */
+// #define U3_USE_DEB_LOG_LEVEL
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "../module-log-includes_int.hpp"
@@ -45,8 +46,10 @@ LogModule::open_log_file ()
 void
 LogModule::delete_folders (const syn::list_folders_type& folders)
 {
+  U3_XLOG_DBG ("LogModule::delete_folders::---->" + VTOLOG (folders.size ()) + TOLOG (active_session_folder_));
   for (const auto& folder : folders)
   {
+    U3_XLOG_DBG ("delete check" + TOLOG (folder.session_id_));
     if (folder.session_id_ == active_session_folder_)
     {
       // нельзя удалять директорию текущего сеанса логирования.
@@ -56,15 +59,16 @@ LogModule::delete_folders (const syn::list_folders_type& folders)
     const std::string path2logs = ::libs::helpers::files::make_path (path2sessions_, folder.session_id_);
     if (!::boost::filesystem::is_directory (path2logs) || !::boost::filesystem::exists (path2logs))
     {
+      U3_XLOG_WARN ("not exist or not folder" + TOLOG (path2logs));
       continue;
     }
 
     ::boost::system::error_code error;
-    ::boost::filesystem::remove_all (path2logs, error);
-
+    U3_MARK_UNUSED const auto   count_removed_items = ::boost::filesystem::remove_all (path2logs, error);
+    U3_XLOG_DBG ("remove all status for " + path2logs + " msg:" + error.message () + VTOLOG (count_removed_items));
     if (error)
     {
-      U3_XLOG_ERROR ("remove logs: " + path2logs + error.message ());
+      U3_XLOG_ERROR ("error remove logs: " + path2logs + " error:" + error.message ());
     }
   }
 }
@@ -98,7 +102,7 @@ LogModule::flush_events ()
   file_for_store_events_.flush ();
   events_for_save_.clear ();
 
-  auto       log_prop = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
+  auto*      log_prop = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
   const auto max_size = log_prop->get_val (syn::LogVals::max_size_one_log_file_byte);
 
   if (max_size && file_for_store_events_.tellg () >= max_size)
@@ -139,7 +143,7 @@ void
 LogModule::flush_event (syn::IEvent::ptr& evnt)
 {
   std::string   txt;
-  auto          cevnt = ::libs::iproperties::helpers::cast_event< syn::InfoLogEvent > (evnt);
+  auto*         cevnt = ::libs::iproperties::helpers::cast_event< syn::InfoLogEvent > (evnt);
   std::uint64_t len   = 0;
   std::uint64_t tabs  = 0;
 
@@ -209,7 +213,7 @@ LogModule::flush_event (syn::IEvent::ptr& evnt)
     tabs += fill_tab (size_last, consts::g_max_count_tabs_info, consts::g_size_tab);
   }
 
-  auto log_prop = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
+  auto* log_prop = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
   if (log_prop->get_val (syn::LogVals::enable_store_call_place))
   {
     len += flush_long_descr_event (file_for_store_events_, cevnt);

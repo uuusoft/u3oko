@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       skip-data-state.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       13.09.2018
 \project    mhttp
 */
@@ -14,8 +14,8 @@ struct SkipDataState final {
   SkipDataState ()  = default;
   ~SkipDataState () = default;
 
-  void
-  reset ()
+  auto
+  reset () -> void
   {
     SkipDataState temp;
     std::swap (skip_send_bytes_, temp.skip_send_bytes_);

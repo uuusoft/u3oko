@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        27.08.2024
 # copyright   Erashov A.I.
 # file        u3-sanity-functional.cmake
@@ -13,9 +13,10 @@ if(${U3_SANITY_BUILD_TYPE} STREQUAL "ub")
   #-lubsan
 elseif(${U3_SANITY_BUILD_TYPE} STREQUAL "address")
   set(U3_SHARED_COMPILE_OPTIONS_CPP ${U3_SHARED_COMPILE_OPTIONS_CPP} -fsanitize=address)
-  set(U3_SHARED_LINK_OPTIONS_CPP ${U3_SHARED_LINK_OPTIONS_CPP} -fsanitize=address)
+  set(U3_SHARED_LINK_OPTIONS_CPP ${U3_SHARED_LINK_OPTIONS_CPP} -fsanitize=address -static-libasan)
 elseif(${U3_SANITY_BUILD_TYPE} STREQUAL "hwaddress")
-
+  set(U3_SHARED_COMPILE_OPTIONS_CPP ${U3_SHARED_COMPILE_OPTIONS_CPP} -fsanitize=hwaddress)
+  set(U3_SHARED_LINK_OPTIONS_CPP ${U3_SHARED_LINK_OPTIONS_CPP} -fsanitize=hwaddress)
 elseif(${U3_SANITY_BUILD_TYPE} STREQUAL "memory")
   if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
     set(U3_SHARED_COMPILE_OPTIONS_CPP ${U3_SHARED_COMPILE_OPTIONS_CPP} -fsanitize=memory ASAN_OPTIONS=detect_odr_violation=0)

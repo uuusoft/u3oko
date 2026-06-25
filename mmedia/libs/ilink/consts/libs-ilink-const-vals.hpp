@@ -2,7 +2,7 @@
 /**
 \file       libs-ilink-const-vals.hpp
 \date       17.07.2018
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ilink
 */
 

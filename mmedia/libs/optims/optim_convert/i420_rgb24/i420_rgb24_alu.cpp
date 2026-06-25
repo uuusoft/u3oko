@@ -1,6 +1,6 @@
 /**
 \file       i420_rgb24_alu.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       05.04.2022
 \project    u3_optim_gen_convert
 */
@@ -21,10 +21,10 @@ alu (::libs::optim::io::MCallInfo& info)
 
   get_params (info, &y, &rgb24);
 
-  const std::uint32_t                off_beg_u          = y->stride_ * y->height_ * (info.count_threads_ - info.indx_thread_);
+  const std::uint32_t                off_beg_u          = y->stride_ * y->height_ * (info.count_threads_ - info.thread_indx_);
   const std::uint32_t                size_u_buf         = (y->stride_ * y->height_ * info.count_threads_ >> 1);
   const std::uint32_t                off_beg_v          = off_beg_u + size_u_buf;
-  const std::uint32_t                off_uv_thread_bufs = y->stride_ * y->height_ * info.indx_thread_ >> 1;
+  const std::uint32_t                off_uv_thread_bufs = y->stride_ * y->height_ * info.thread_indx_ >> 1;
   const ::libs::optim::io::ProxyBuf  temp_u (y->ubuf () + off_beg_u + off_uv_thread_bufs, y->stride_, y->width_, y->height_ >> 1, "temp_u convert::i420_rgb24");
   const ::libs::optim::io::ProxyBuf  temp_v (y->ubuf () + off_beg_v + off_uv_thread_bufs, y->stride_, y->width_, y->height_ >> 1, "temp_v convert::i420_rgb24");
   const ::libs::optim::io::ProxyBuf* pbu = &temp_u;
@@ -51,7 +51,7 @@ alu (::libs::optim::io::MCallInfo& info)
       const std::int32_t y1_premul = y1 * 4769;
       const std::int32_t y2_premul = y2 * 4769;
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
       // debug
       rgb24_buf[0] = y1;
       rgb24_buf[1] = y1;

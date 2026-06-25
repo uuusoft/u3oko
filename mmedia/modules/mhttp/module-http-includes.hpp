@@ -2,7 +2,7 @@
 /**
 \file       module-http-includes.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    mhttp
 */
 #define BOOST_SPIRIT_THREADSAFE

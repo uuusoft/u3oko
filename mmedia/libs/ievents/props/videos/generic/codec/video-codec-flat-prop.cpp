@@ -1,7 +1,7 @@
 /**
 \file       video-codec-flat-prop.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -19,7 +19,6 @@ VideoCodecFlatProp::VideoCodecFlatProp (
   std::uint32_t                             max_period_kframe,
   float                                     percent_block,
   bool                                      nocolor) :
-
   size_ (sizeof (VideoCodecFlatProp)),
   format_ (format),
   type_ (type),

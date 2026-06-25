@@ -2,7 +2,7 @@
 /**
 \file       helpers-lib-includes.hpp
 \date       10.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_helpers_lib
 */
 #include "consts/helpers-lib-const-vals.hpp"
@@ -40,7 +40,6 @@
 #include "mem/helpers-lib-move-mem-ptr-funcs.hpp"
 #include "mem/helpers-lib-u3copy-func.hpp"
 #include "mem/helpers-lib-buf-copy-func.hpp"
-#include "mem/helpers-lib-check-buf-funcs.hpp"
 #include "mem/helpers-lib-set-buf-funcs.hpp"
 #include "mem/iblock-mem.hpp"
 
@@ -91,7 +90,7 @@
 #include "log/suppressor-verbose-log-msg.hpp"
 #include "log/get-module-version-func.hpp"
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 // EAI-REFACT чтобы не тянуть зависимость от sqlite этот файл включается отдельно для каждого модуля, в котором есть потребность в sqlite.
 #  include "sqlite/sql-resource-managment-helpers.hpp"
 #  include "sqlite/sqlite-call-helper-funcs.hpp"

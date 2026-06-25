@@ -1,7 +1,7 @@
 /**
 \file       loader-file-impl.cpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_iproperties_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -34,7 +34,7 @@ LoaderFileImpl::get_enum_int (
   ::libs::helpers::files::NodeEnumFiles& enum_files,
   const std::string&                     mask)
 {
-  U3_XLOG_DEV ("LoaderFileImpl::get_enum_int" + VTOLOG (is_special_folder_for_libs (path_type)) + TOLOG (to_string (path_type)));
+  U3_XLOG_DBG ("LoaderFileImpl::get_enum_int" + VTOLOG (is_special_folder_for_libs (path_type)) + TOLOG (to_string (path_type)));
   enum_files.clear ();
 
   if (is_special_folder_for_libs (path_type))
@@ -71,7 +71,7 @@ LoaderFileImpl::is_exist_file_int (
     {
       if (file.name_ == file_name)
       {
-        U3_XLOG_DEV ("LoaderFileImpl::is_exist_file_int found" + TOLOG (file_name));
+        U3_XLOG_DBG ("LoaderFileImpl::is_exist_file_int file found" + TOLOG (file_name));
         return true;
       }
     }

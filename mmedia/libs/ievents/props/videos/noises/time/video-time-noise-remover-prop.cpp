@@ -1,9 +1,10 @@
 /**
 \file       video-time-noise-remover-prop.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
+// #define U3_USE_DEB_LOG_LEVEL
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "../../../../includes_int.hpp"
@@ -11,10 +12,14 @@
 
 namespace libs::ievents::props::videos::noises::time
 {
-VideoTimeNoiseRemoverProp::VideoTimeNoiseRemoverProp (const Acessor& pha) :
-  bufs_ ({ utils::dbufs::video::consts::offs::lit, utils::dbufs::video::consts::offs::sat, utils::dbufs::video::consts::offs::hue })
+VideoTimeNoiseRemoverProp::VideoTimeNoiseRemoverProp (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
+
+  bufs_.reserve (3);
+  bufs_.emplace_back (::utils::dbufs::video::consts::offs::lit, ::utils::dbufs::video::consts::offs::lit);
+  bufs_.emplace_back (::utils::dbufs::video::consts::offs::sat, ::utils::dbufs::video::consts::offs::sat);
+  bufs_.emplace_back (::utils::dbufs::video::consts::offs::hue, ::utils::dbufs::video::consts::offs::hue);
 }
 
 
@@ -32,16 +37,7 @@ VideoTimeNoiseRemoverProp::load_json_int (const ::boost::json::object& obj)
 
   name_impl_          = obj.at ("name_impl").as_string ();
   bufs_               = ::boost::json::value_to< source_bufs_type > (obj.at ("evbufs"));
-  indx_diff_buf_      = obj.at ("indx_diff_buf").as_string ();
   dump_counter_frame_ = ::libs::helpers::json::get_uint32 (obj.at ("dump_counter_frame"));
-
-  const std::string impl_info_id = obj.at ("impl_info-id").is_string () ? obj.at ("impl_info-id").as_string ().c_str () : "";
-
-  impl_info_ = ::libs::iproperties::helpers::get_pure_event_int (impl_info_id.c_str ());
-  if (impl_info_)
-  {
-    impl_info_->load_json (obj.at ("impl_info").as_string ().c_str ());
-  }
 }
 
 
@@ -52,14 +48,7 @@ VideoTimeNoiseRemoverProp::save_json_int (::boost::json::object& obj) const
 
   obj["name_impl"]          = name_impl_;
   obj["evbufs"]             = ::boost::json::value_from (bufs_);
-  obj["indx_diff_buf"]      = indx_diff_buf_;
   obj["dump_counter_frame"] = dump_counter_frame_;
-
-  if (impl_info_)
-  {
-    obj["impl_info-id"] = impl_info_->get_mid ();
-    obj["impl_info"]    = impl_info_->save_json ();
-  }
 }
 
 
@@ -72,8 +61,6 @@ VideoTimeNoiseRemoverProp::copy_int (const IEvent::craw_ptr src)
   name_impl_          = dsrc->name_impl_;
   bufs_               = dsrc->bufs_;
   dump_counter_frame_ = dsrc->dump_counter_frame_;
-  indx_diff_buf_      = dsrc->indx_diff_buf_;
-  impl_info_          = ::libs::iproperties::helpers::clone_event (dsrc->impl_info_.get ());
 }
 
 
@@ -92,8 +79,8 @@ VideoTimeNoiseRemoverProp::serialize (Archive& arh, const std::uint32_t /* file_
   arh& BOOST_SERIALIZATION_NVP (name_impl_);
   arh& BOOST_SERIALIZATION_NVP (bufs_);
   arh& BOOST_SERIALIZATION_NVP (dump_counter_frame_);
-  arh& BOOST_SERIALIZATION_NVP (indx_diff_buf_);
-  arh& BOOST_SERIALIZATION_NVP (impl_info_);
+  // arh& BOOST_SERIALIZATION_NVP (indx_diff_buf_);
+  // arh& BOOST_SERIALIZATION_NVP (impl_info_);
 
   self_correct ();
 }

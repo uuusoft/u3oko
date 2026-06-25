@@ -1,6 +1,6 @@
 /**
 \file       app-paths.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_iproperties_lib
 */
@@ -16,12 +16,13 @@ namespace libs::iproperties::appl_paths
 void
 AppPaths::load_paths (const ::libs::link::appl::InitApplication& appl_info)
 {
-  paths_.clear ();
-  U3_XLOG_DEV (TOLOG (appl_info.appl_name_) + TOLOG (appl_info.company_name_) + TOLOG (appl_info.service_name_))
+  U3_XLOG_MARK ("update paths" + TOLOG (appl_info.appl_name_) + TOLOG (appl_info.company_name_) + TOLOG (appl_info.service_name_))
   U3_CHECK (appl_info.check (), "failed appl_info.check")
 
   const auto appl_subfolder = ::libs::helpers::files::make_path (appl_info.company_name_, appl_info.appl_name_);
   const auto service_path   = ::libs::iproperties::appl_paths::helpers::get_data_folder (appl_subfolder, appl_info.service_name_);
+
+  paths_.clear ();
 
   paths_[Paths::generic_appl] = ::libs::iproperties::appl_paths::helpers::get_appl_folder (appl_subfolder);
   paths_[Paths::main_appl]    = ::libs::iproperties::appl_paths::get_current_folder ();
@@ -50,11 +51,12 @@ AppPaths::load_paths (const ::libs::link::appl::InitApplication& appl_info)
 
   for (const auto& path : paths_)
   {
+    U3_XLOG_DBG ("create path" + TOLOG (path.second));
     ::libs::helpers::files::create_folder (path.second);
   }
 }
 
-
+// EAI-REFACT
 std::string
 AppPaths::get_path_suffix (const Paths& type) const
 {

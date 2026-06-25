@@ -1,6 +1,6 @@
 /**
 \file       info-log-session-fragment.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       22.02.2022
 \project    u3_ilog_events
 */
@@ -37,8 +37,8 @@ tag_invoke (::boost::json::value_to_tag< InfoLogSessionFragment >, const ::boost
 {
   InfoLogSessionFragment ret;
   ret.data_ = jvs.at ("data").as_string ();
-  ret.off_  = ::libs::helpers::json::get_uint32 (jvs.at ("off"));
-  ret.size_ = ::libs::helpers::json::get_uint32 (jvs.at ("size"));
+  ret.off_  = ::libs::helpers::json::get_uint64 (jvs.at ("off"));
+  ret.size_ = ::libs::helpers::json::get_uint64 (jvs.at ("size"));
   return ret;
 }
 }   // namespace libs::ilog_events::events

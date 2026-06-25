@@ -1,7 +1,7 @@
 /**
 \file       get-current-folders-funcs.cpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_iproperties_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -15,7 +15,7 @@ namespace libs::iproperties::appl_paths
 std::string
 get_current_folder ()
 {
-  auto                            orinfo = U3_CAST_PROP (::libs::iproperties::vers::system::ISystemProperty::raw_ptr) (iproperties::helpers::get_shared_prop_os ());
+  auto*                           orinfo = iproperties::helpers::get_shared_prop_os ();
   syn::ISharedProperty::lock_type lock (orinfo->get_sync ());
   const std::string               ret = orinfo->get_appl_path_lockfree ();
   U3_ASSERT (!ret.empty ());

@@ -1,7 +1,7 @@
 /**
 \file       iproperties-proxy.hpp
 \date       17.04.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_proxy_libs
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -79,9 +79,9 @@ get_list_dlls_as_libs ()
   for (auto& file : ret)
   {
     file.name_ = ::libs::helpers::dlls::decorate_dll_name (file.name_);
-    U3_XLOG_DEV ("get_list_dlls_as_libs find file in libs" + TOLOG (file.name_));
+    U3_XLOG_DBG ("get_list_dlls_as_libs find file in libs" + TOLOG (file.name_));
   }
-  U3_XLOG_DEV ("get_list_dlls_as_libs" + VTOLOG (ret.size ()));
+  U3_XLOG_DBG ("get_list_dlls_as_libs" + VTOLOG (ret.size ()));
   return ret;
 }
 }   // namespace libs::proxy

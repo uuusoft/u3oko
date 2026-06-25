@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       interf-base-id-event.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       19.07.2018
 \project    u3_ievents_lib
 */
@@ -31,10 +31,11 @@ class InterfBaseIdEvent : public BaseInterfEvent
   explicit InterfBaseIdEvent (const Acessor& = Acessor (0), const impl_ptr_type& = impl_ptr_type ());
   virtual ~InterfBaseIdEvent () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ievents/runtime/interf/interf-base-id-event";
+    static constexpr const char* chret = "libs/ievents/runtime/interf/interf-base-id-event";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
@@ -46,12 +47,12 @@ class InterfBaseIdEvent : public BaseInterfEvent
 
   impl_ptr_type impl_;   //<
 
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
   // virtual void load_int( const ::pugi::xml_named_node_iterator& node ) override;
-  virtual void copy_int (const IEvent::craw_ptr src) override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 };
 }   // namespace libs::ievents::runtime::interf
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 BOOST_CLASS_EXPORT_KEY (::libs::ievents::runtime::interf::InterfBaseIdEvent);
 #endif

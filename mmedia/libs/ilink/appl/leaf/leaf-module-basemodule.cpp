@@ -1,7 +1,7 @@
 /**
-\file       leaf-module-basemodule-funcs.cpp
+\file       leaf-module-basemodule.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ilink
 */
 // #define U3_USE_DEB_LOG_LEVEL
@@ -16,52 +16,94 @@ LeafModule::update_catch_funcs_int ()
 {
   super::update_catch_funcs_int ();
 
-  catch_funcs_.insert (
-    std::make_pair (
-      ::libs::events::ISeqEvent::gen_get_mid (),
-      std::bind (&LeafModule::seq_msg_catch_func, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)));
+  catch_funcs_[::libs::events::ISeqEvent::gen_get_mid ()] =
+    [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      auto* seq_ret = ::libs::iproperties::helpers::cast_event< ::libs::events::ISeqEvent > (msg);
+      auto  ret     = seq_ret->get_msg ();
 
-  catch_funcs_.insert (
-    std::make_pair (
-      ::libs::events::ISyncEvent::gen_get_mid (),
-      std::bind (&LeafModule::sync_msg_catch_func, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)));
+      U3_ASSERT (ret);
+      U3_ASSERT (!seq_ret->get_seq_id ().empty ());
 
-  catch_funcs_.insert (
-    std::make_pair (
-      ::libs::events::IRequestEvent::gen_get_mid (),
-      std::bind (&LeafModule::request_msg_catch_func, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)));
+      current_seq_.recv_seq_ = true;
+      current_seq_.id_seq_   = seq_ret->get_seq_id ();
+      return ret;
+    }
 
-  catch_funcs_.insert (
-    std::make_pair (
-      ::libs::events::IAnswerEvent::gen_get_mid (),
-      std::bind (&LeafModule::answer_msg_catch_func, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)));
+    U3_ASSERT (current_seq_.request_);   //  это должен быть запрос, иначе быссмысленно.
+    syn::IEvent::ptr rmsg;
+    auto             dmsg = ::libs::iproperties::helpers::create_event< ::libs::events::ISeqEvent > (rmsg);
+    // для конечного модуля, если пришло сообщение  с идентификатором, используем его для ответа
+    // И изначальное сообщение должно быть запросом
+    dmsg->set_msg (msg);
+    dmsg->set_seq_id (current_seq_.id_seq_);
+    return rmsg;
+  };
 
-  catch_funcs_.insert (
-    std::make_pair (
-      syn::ChangeStateProcessEvent::gen_get_mid (),
-      [this] (::libs::events::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> ::libs::events::IEvent::ptr {
-        try
-        {
-          if (forward)
-          {
-            auto state_cmd = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
-            if (!state_cmd->is_start ())
-            {
-              stop_module_ = true;
-            }
-            return ::libs::events::IEvent::ptr ();
-          }
-          return msg;
-        }
-        catch (const std::exception& e)
-        {
-          U3_LOG_APPL_EXCEPT (e.what ());
-        }
-        return ::libs::events::IEvent::ptr ();
-      }));
+  // Функция обработчик сообщения признака синхронности
+  catch_funcs_[::libs::events::ISyncEvent::gen_get_mid ()] =
+    [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      auto ret = ::libs::iproperties::helpers::cast_event< ::libs::events::ISyncEvent > (msg)->get_msg ();
+      U3_ASSERT (ret);
+      return ret;
+    }
+    if (::libs::iproperties::helpers::cast_event< ::libs::events::IAnswerEvent > (msg))
+    {
+      return msg;
+    }
+    return syn::IEvent::ptr ();
+  };
+
+  catch_funcs_[::libs::events::IRequestEvent::gen_get_mid ()] =
+    [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      current_seq_.request_ = true;
+      auto ret              = ::libs::iproperties::helpers::cast_event< ::libs::events::IRequestEvent > (msg)->get_msg ();
+      U3_ASSERT (ret);
+      return ret;
+    }
+
+    //  инверсия, на запрос идет ответ.
+    syn::IEvent::ptr rmsg;
+    auto             dmsg = ::libs::iproperties::helpers::create_event< ::libs::events::IAnswerEvent > (rmsg);
+
+    dmsg->set_msg (msg);
+    return rmsg;
+  };
+
+  catch_funcs_[::libs::events::IAnswerEvent::gen_get_mid ()] =
+    [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      current_seq_.answer_ = true;
+      auto ret             = ::libs::iproperties::helpers::cast_event< ::libs::events::IAnswerEvent > (msg)->get_msg ();
+      U3_ASSERT (ret);
+      return ret;
+    }
+    //  инверсия, пришел ответ модулю
+    return msg;
+  };
+
+  catch_funcs_[syn::ChangeStateProcessEvent::gen_get_mid ()] =
+    [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      auto* state_cmd = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
+      if (!state_cmd->is_start ())
+      {
+        stop_module_ = true;
+      }
+      return syn::IEvent::ptr ();
+    }
+    return msg;
+  };
 }
 
-// EAI-REFACT function
+// EAI-REFACT
 void
 LeafModule::appl_work_int ()
 {
@@ -75,11 +117,18 @@ LeafModule::appl_work_int ()
 
       for (auto& src : srss)
       {
-        auto msg     = src ? src->received_msg () : ::libs::events::IEvent::ptr ();
-        auto deb_msg = msg;   // debug
+        if (!src)
+        {
+          continue;
+        }
+        auto msg = src->received_msg ();
         if (!msg)
         {
           continue;
+        }
+        if (dbg_event_cycle_)
+        {
+          U3_XLOG_DEV ("debug event cycle");
         }
 
         recv_msg      = true;
@@ -89,13 +138,13 @@ LeafModule::appl_work_int ()
         //  Формируем описание запроса (все флаги, транзакцию и прочее).
         while (msg)
         {
-          std::pair< ::libs::events::IEvent::raw_ptr, ::libs::events::IEvent::hid_type > cmsgs[] = {
+          std::pair< syn::IEvent::raw_ptr, syn::IEvent::hid_type > cmsgs[] = {
             { msg.get (), msg->get_mid () },
             { ::libs::iproperties::helpers::cast_event< ievents::runtime::RuntimeEvent > (msg), ievents::runtime::RuntimeEvent::gen_get_mid () },
             { ::libs::iproperties::helpers::cast_event< ::libs::ilog_events::events::InfoLogEvent > (msg), ::libs::ilog_events::events::InfoLogEvent::gen_get_mid () }
           };
 
-          auto find = catch_funcs_.end ();
+          auto ffinger = catch_funcs_.end ();
           for (const auto& cmsg : cmsgs)
           {
             if (!cmsg.first)
@@ -103,41 +152,39 @@ LeafModule::appl_work_int ()
               continue;
             }
 
-            find = catch_funcs_.find (cmsg.second);
-            if (catch_funcs_.end () != find)
+            ffinger = catch_funcs_.find (cmsg.second);
+            if (catch_funcs_.end () != ffinger)
             {
               break;
             }
           }
 
-          catch_msg_func_type funct = std::bind (
-            &LeafModule::default_catch_func,
-            this,
-            std::placeholders::_1,
-            std::placeholders::_2,
-            std::placeholders::_3);
+          catch_msg_func_type nfunc =
+            catch_funcs_.end () != ffinger ?
+              ffinger->second :
+              [] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) {
+                U3_XLOG_DBG ("LeafModule::appl_work_int::default catch" + TOLOG (msg->gen_get_mid ()));
+                return syn::IEvent::ptr ();
+              };
 
-          if (catch_funcs_.end () != find)
-          {
-            funct = find->second;
-          }
-
-          funcs.push_back (std::make_pair (funct, msg));
+          funcs.push_back (std::make_pair (nfunc, msg));
 
           try
           {
-            msg = funct (msg, true, current_seq_);
+            msg = nfunc (msg, true, current_seq_);
           }
-          catch (const std::exception& e)
+          catch (const std::exception& excpt)
           {
-            U3_LOG_APPL_EXCEPT (e.what ());
-            msg = ::libs::events::IEvent::ptr ();
+            U3_XLOG_ERROR (excpt.what ());
+            // U3_LOG_APPL_EXCEPT (excpt.what());
+            msg = syn::IEvent::ptr ();
           }
 
           last_msg = msg ? msg : last_msg;
         }
 
 
+        U3_XLOG_DBG ("before catch_event");
         if (!catch_event (last_msg))
         {
         }
@@ -161,9 +208,10 @@ LeafModule::appl_work_int ()
             src_complite->complite_msg (last_msg, current_seq_);
           }
         }
-        catch (const std::exception& e)
+        catch (const std::exception& excpt)
         {
-          U3_LOG_APPL_EXCEPT (e.what ());
+          U3_XLOG_ERROR (excpt.what ());
+          // U3_LOG_APPL_EXCEPT (excpt.what());
         }
 
         // сброс переменных вне цикла.
@@ -189,9 +237,10 @@ LeafModule::appl_work_int ()
         break;
       }
     }
-    catch (const std::exception& e)
+    catch (const std::exception& excpt)
     {
-      U3_LOG_APPL_EXCEPT (e.what ());
+      // U3_LOG_APPL_EXCEPT (excpt.what());
+      U3_XLOG_ERROR (excpt.what ());
     }
   } while (true);
 

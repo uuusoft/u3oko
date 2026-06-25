@@ -1,9 +1,10 @@
 /**
 \file       median-time-filter-prop.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
+// #define U3_USE_DEB_LOG_LEVEL
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "../../../../../includes_int.hpp"
@@ -59,12 +60,15 @@ MedianTimeFilterProp::self_correct_int ()
 void
 MedianTimeFilterProp::load_json_int (const ::boost::json::object& obj)
 {
+  U3_XLOG_DBG (TOLOG (::boost::json::serialize (obj)));
   super::load_json_int (obj);
 
   count_bufs_    = ::libs::helpers::json::get_uint32 (obj.at ("count_bufs"));
   rang_          = ::libs::helpers::json::get_uint32 (obj.at ("rang"));
   sort_type_     = ::boost::json::value_to< Sortings > (obj.at ("sort_type"));
   motion_detect_ = obj.at ("motion_detect").as_bool ();
+  indx_diff_buf_ = obj.at ("indx_diff_buf").as_string ();
+  use_diff_buf_  = obj.at ("use_diff_buf").as_bool ();
 }
 
 
@@ -77,6 +81,8 @@ MedianTimeFilterProp::save_json_int (::boost::json::object& obj) const
   obj["rang"]          = rang_;
   obj["sort_type"]     = ::boost::json::value_from (sort_type_);
   obj["motion_detect"] = motion_detect_;
+  obj["indx_diff_buf"] = indx_diff_buf_;
+  obj["use_diff_buf"]  = use_diff_buf_;
 }
 
 
@@ -90,6 +96,8 @@ MedianTimeFilterProp::copy_int (const IEvent::craw_ptr src)
   motion_detect_ = dsrc->motion_detect_;
   sort_type_     = dsrc->sort_type_;
   rang_          = dsrc->rang_;
+  indx_diff_buf_ = dsrc->indx_diff_buf_;
+  use_diff_buf_  = dsrc->use_diff_buf_;
 }
 
 
@@ -102,6 +110,8 @@ MedianTimeFilterProp::serialize (Archive& arh, const std::uint32_t /* file_versi
   arh& BOOST_SERIALIZATION_NVP (motion_detect_);
   arh& BOOST_SERIALIZATION_NVP (sort_type_);
   arh& BOOST_SERIALIZATION_NVP (rang_);
+  arh& BOOST_SERIALIZATION_NVP (indx_diff_buf_);
+  arh& BOOST_SERIALIZATION_NVP (use_diff_buf_);
 
   self_correct ();
 }

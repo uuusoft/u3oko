@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       system-android-property.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_iproperties_lib
 */
@@ -23,7 +23,7 @@ class SystemAndroidProperty final : public ::libs::properties::ISharedProperty
 {
   public:
   //  ext types
-  using gui_functor_type = boost::function< gui_func_type >;
+  using gui_functor_type = std::function< gui_func_type >;
   using IVideoBuf        = ::utils::dbufs::video::IVideoBuf;
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (SystemAndroidProperty)
@@ -71,14 +71,14 @@ class SystemAndroidProperty final : public ::libs::properties::ISharedProperty
     buf_java2cpp_ = buf;
   }
 
-  boost::function< gui_func_type >
+  std::function< gui_func_type >
   get_func_gui_lockfree ()
   {
     return pfunc_gui_;
   }
 
   void
-  set_func_gui_lockfree (boost::function< gui_func_type > funct)
+  set_func_gui_lockfree (std::function< gui_func_type > funct)
   {
     pfunc_gui_ = funct;
   }

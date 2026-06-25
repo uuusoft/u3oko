@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       log-module.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    mlog
 */
@@ -21,35 +21,35 @@ class LogModule final : public ::libs::ilink::appl::leaf::LeafModule
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ilink::appl::leaf::LeafModule)
 
   //  IApplication overrides
-  virtual void init_appl_data_int () override;
+  virtual auto init_appl_data_int () -> void override;
 
   //  BaseModule overrides
-  virtual void appl_init_int (const ::libs::link::appl::InitApplication& info) override;
-  virtual void init_links_int (const ::libs::link::appl::InitApplication&) override;
-  virtual void init_proxys_int () override;
-  virtual void init_done_int () override;
-  virtual bool appl_deinit_int () override;
-  virtual void update_catch_funcs_int () override;
+  virtual auto appl_init_int (const ::libs::link::appl::InitApplication& info) -> void override;
+  virtual auto init_links_int (const ::libs::link::appl::InitApplication&) -> void override;
+  virtual auto init_proxys_int () -> void override;
+  virtual auto init_done_int () -> void override;
+  virtual auto appl_deinit_int () -> bool override;
+  virtual auto update_catch_funcs_int () -> void override;
+  virtual auto get_recv_link_int () -> recv_links_type override;
 
   //  LeafModule overrides
-  virtual recv_links_type get_recv_link () override;
-  virtual bool            catch_event (syn::IEvent::ptr& evnt) override;
-  virtual bool            is_now_thread_to_sleep (bool now_recv_evnt) override;
+  virtual auto catch_event_int (syn::IEvent::ptr& evnt) -> bool override;
+  virtual auto is_now_thread_to_sleep_int (bool now_recv_evnt) -> bool override;
 
-  void          make_dir_for_logs ();
-  void          open_log_file ();
-  void          flush_events ();
-  void          flush_event (syn::IEvent::ptr&);
-  void          delete_folders (const syn::list_folders_type&);
-  void          prepare_start ();
-  void          check_process ();
-  void          add_msg_from_self (const std::string&);
-  void          process_info_log (syn::InfoLogEvent::raw_ptr, syn::IEvent::ptr);
-  void          process_property_log_module (syn::PropertyLogModuleEvent::raw_ptr);
-  void          process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr);
-  void          process_list_logs (syn::ProcessListLogsEvent::raw_ptr);
-  void          process_log (syn::ProcessLogEvent::raw_ptr);
-  std::uint64_t fill_tab (const std::uint64_t len, const std::uint64_t max_count_tabs, const std::uint64_t size_tab);
+  auto make_dir_for_logs () -> void;
+  auto open_log_file () -> void;
+  auto flush_events () -> void;
+  auto flush_event (syn::IEvent::ptr&) -> void;
+  auto delete_folders (const syn::list_folders_type&) -> void;
+  auto prepare_start () -> void;
+  auto check_process () -> void;
+  auto add_msg_from_self (const std::string&) -> void;
+  auto process_info_log (syn::InfoLogEvent::raw_ptr, syn::IEvent::ptr) -> void;
+  auto process_property_log_module (syn::PropertyLogModuleEvent::raw_ptr) -> void;
+  auto process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr) -> void;
+  auto process_list_logs (syn::ProcessListLogsEvent::raw_ptr) -> void;
+  auto process_log (syn::ProcessLogEvent::raw_ptr) -> void;
+  auto fill_tab (const std::uint64_t len, const std::uint64_t max_count_tabs, const std::uint64_t size_tab) -> std::uint64_t;
 
   syn::events_list_type                events_for_save_;         //< Временно кешированные события для сброса в лог (по таймауту или по достижению предельного размера списка)
   std::string                          path2sessions_;           //< Директория с всеми существующими сеансами

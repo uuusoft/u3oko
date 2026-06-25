@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       get-runtime-info.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       24.07.2018
 \project    u3_istorage_events
 */
@@ -63,10 +63,11 @@ class GetRuntimeInfo : public BaseStorageEvent
   explicit GetRuntimeInfo (const Acessor& = Acessor (0));
   virtual ~GetRuntimeInfo () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/istorage_events/events/get-runtime-info";
+    static constexpr const char* chret = "libs/istorage_events/events/get-runtime-info";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
@@ -75,7 +76,7 @@ class GetRuntimeInfo : public BaseStorageEvent
 
   protected:
   //  ievents::Event overrides
-  virtual void copy_int (const IEvent::craw_ptr src) override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 
   private:
   // internal types
@@ -86,7 +87,7 @@ class GetRuntimeInfo : public BaseStorageEvent
   template< class Archive >
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
   //  ievents::Event overrides
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
 };
 }   // namespace libs::istorage_events::events
 

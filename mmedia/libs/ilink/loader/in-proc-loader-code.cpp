@@ -1,9 +1,10 @@
 /**
 \file       in-proc-loader-code.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ilink
 */
+// #define U3_USE_DEB_LOG_LEVEL
 #include "libs-ilink-loader-includes_int.hpp"
 #include "in-proc-loader-code.hpp"
 #include "mmedia/libs/helpers/thread/generic-thread-func.hpp"
@@ -32,6 +33,7 @@ InProcLoaderCode::load_int (
   const std::string&              name_lib,
   const args_type&                args)
 {
+  U3_XLOG_DBG ("InProcLoaderCode::load_int::---->" + TOLOG (name_proc) + TOLOG (name_lib));
   info_ = info;
   if (is_load_int ())
   {
@@ -42,7 +44,8 @@ InProcLoaderCode::load_int (
   set_name_lib (name_lib);
 
   child_thread_ = std::thread (
-    ::libs::helpers::thread::generic_thread_funct< InProcLoaderCode, libs::properties::vers::links::mids::appl2log >,
+    ::libs::helpers::thread::generic_thread_funct< InProcLoaderCode >,
+    libs::properties::vers::links::mids::appl2log,
     this,
     0u);
 }
@@ -78,6 +81,7 @@ InProcLoaderCode::unload_int (bool force)
 void
 InProcLoaderCode::thread_func_impl (std::uint32_t indx_thread)
 {
+  U3_XLOG_DBG ("InProcLoaderCode::thread_func_imp::---->" + VTOLOG (indx_thread) + TOLOG (lib_name_));
   ::libs::helpers::thread::set_thread_priority (std::this_thread::get_id (), ::libs::helpers::thread::Priorities::high);
 
   boost::filesystem::path fullpath (::libs::iproperties::appl_paths::get_current_folder ());
@@ -94,8 +98,7 @@ InProcLoaderCode::thread_func_impl (std::uint32_t indx_thread)
   info.lib_name_     = info_->id_arg2val_[link::consts::text::id_lib_name].empty () ? info.lib_name_ : info_->id_arg2val_[link::consts::text::id_lib_name];
   info.subsys_name_  = info_->id_arg2val_[link::consts::text::id_subsys_name].empty () ? info.subsys_name_ : info_->id_arg2val_[link::consts::text::id_subsys_name];
   info.service_name_ = info_->id_arg2val_[link::consts::text::id_service_name].empty () ? info.service_name_ : info_->id_arg2val_[link::consts::text::id_service_name];
-
-  U3_XLOG_MARK (TOLOG (info.company_name_) + TOLOG (info.appl_name_) + TOLOG (info.lib_name_) + TOLOG (info.subsys_name_) + TOLOG (info.service_name_))
+  U3_XLOG_DBG ("init appl::---->" + TOLOG (info.company_name_) + TOLOG (info.appl_name_) + TOLOG (info.lib_name_) + TOLOG (info.subsys_name_) + TOLOG (info.service_name_))
 
   impl->appl_init (info);
   impl->appl_work ();

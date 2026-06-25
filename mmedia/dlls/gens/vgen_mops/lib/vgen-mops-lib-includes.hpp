@@ -2,7 +2,7 @@
 /**
 \file       vgen-mops-lib-includes.hpp
 \date       16.07.2018
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_vgen_mops_lib
 */
 #include "vgen-mops-lib-syn.hpp"

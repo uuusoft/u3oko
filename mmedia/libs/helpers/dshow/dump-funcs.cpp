@@ -1,6 +1,6 @@
 /**
 \file       dump-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2018
 \project    u3_dshow_vgen
 */
@@ -15,7 +15,7 @@
 
 namespace libs::helpers::dshow
 {
-#  if 0  
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 std::string
 to_str_dword (const DWORD val)
 {
@@ -114,7 +114,7 @@ dump (const AM_MEDIA_TYPE* minfo)
   U3_XLOG_WARN ("unknow guid formattype AM_MEDIA_TYPE");
 }
 #  endif
-#  if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 void
 dump (const IPinPtr& ipin)
 {
@@ -134,8 +134,8 @@ dump (const IPinPtr& ipin)
     //
   }
 
-  int           capcount = 0;
-  int           capsize  = 0;
+  int          capcount = 0;
+  int          capsize  = 0;
   std::uint8_t raw_buf[(sizeof (VIDEO_STREAM_CONFIG_CAPS) + sizeof (AUDIO_STREAM_CONFIG_CAPS)) * 2];
 
   //  check final format
@@ -171,5 +171,4 @@ dump (const IPinPtr& ipin)
 }
 #  endif
 }   // namespace libs::helpers::dshow
-
 #endif

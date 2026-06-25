@@ -1,13 +1,13 @@
 #pragma once
 /**
 \file       v4l2-vgen-correct-image-interf.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */
 
 // old shit
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 namespace dlls::sources::v4l2_vgen::camera
 {
 class CorrectImageInterf : public ::libs::ievents::runtime::interf::interfaces::ICorrectImage

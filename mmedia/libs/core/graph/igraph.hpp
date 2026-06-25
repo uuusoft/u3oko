@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       igraph.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_core_lib
 \brief      Объявление интерфейса графа обработки данных
@@ -64,9 +64,9 @@ class IGraph
   virtual ~IGraph () = default;
 
   //  IGraph interface
-  virtual void                load_int (const std::string& file)                                   = 0;
-  virtual const obj_ids_type& get_objs_int ()                                                      = 0;
-  virtual void                send_event2obj_int (const NodeID& id_obj, events::IEvent::ptr& evnt) = 0;
-  virtual void                set_logger_int (::libs::link::ILink::weak_ptr ptr)                   = 0;
+  virtual auto load_int (const std::string& file) -> void                                   = 0;
+  virtual auto get_objs_int () -> const obj_ids_type&                                       = 0;
+  virtual auto send_event2obj_int (const NodeID& id_obj, events::IEvent::ptr& evnt) -> void = 0;
+  virtual auto set_logger_int (::libs::link::ILink::weak_ptr ptr) -> void                   = 0;
 };
 }   // namespace libs::core::graph

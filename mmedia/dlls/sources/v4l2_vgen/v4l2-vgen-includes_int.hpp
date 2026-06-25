@@ -2,7 +2,7 @@
 /**
 \file       v4l2-vgen-includes_int.hpp
 \date       20.02.2026
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_v4l2_vgen
 */
 #include "../../dlls-includes_int.hpp"
@@ -14,6 +14,7 @@
 #include <fcntl.h>
 
 #include "V4l2Capture.h"
+#include "logger.h"
 
 #include "mmedia/dlls/codecs/codec_funcs/codec-funcs-includes.hpp"
 #include "mmedia/dlls/codecs/codec_funcs/bitgen/codec-funcs-bitgen-includes.hpp"

@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        01.01.2017
 # copyright   Erashov A.I.
 # file        module-appl.cmake
@@ -33,11 +33,11 @@ if(NOT U3_BUILD_LOCAL_MODULE_APPL_AS_LIB EQUAL 1)
     target_link_libraries(module-mappl ${log-lib})
   endif()
 
-  set(U3_LOCAL_MODULE_APPL_EXT_LIBS)
+  set(U3_LOCAL_MODULE_APPL_EXTLIBS)
 
   if(U3_BUILD_MODULES_AS_LIBS)
-    set(U3_LOCAL_MODULE_APPL_EXT_LIBS
-        ${U3_LOCAL_MODULE_APPL_EXT_LIBS}
+    set(U3_LOCAL_MODULE_APPL_EXTLIBS
+        ${U3_LOCAL_MODULE_APPL_EXTLIBS}
         optim_scale-lib
         codec_gen-lib
         codec_funcs-lib
@@ -49,13 +49,13 @@ if(NOT U3_BUILD_LOCAL_MODULE_APPL_AS_LIB EQUAL 1)
   endif()
 
   # ulimit env ARG_MAX
-  #list( REMOVE_DUPLICATES U3_LOCAL_MODULE_APPL_EXT_LIBS )
+  #list( REMOVE_DUPLICATES U3_LOCAL_MODULE_APPL_EXTLIBS )
 
   u3_link_libs_to_target(
     PAR_TARGET
     module-mappl
     PAR_GROUP_LIBS
-    ${U3_LOCAL_MODULE_APPL_EXT_LIBS}
+    ${U3_LOCAL_MODULE_APPL_EXTLIBS}
     ${U3_LINK_ALL_IGENERIC_LIBS}
     ${U3_LINK_ALL_GENERIC_LIBS}
     devents-dll
@@ -68,7 +68,7 @@ if(NOT U3_BUILD_LOCAL_MODULE_APPL_AS_LIB EQUAL 1)
     ${U3_LIBS_3RD_STATIC_LIST}
     ${U3_SHARED_LINK_OPTIONS_CPP}
     proxy-lib
-    ${U3_LOCAL_MODULE_APPL_EXT_LIBS}
+    ${U3_LOCAL_MODULE_APPL_EXTLIBS}
     helpers-lib
   )
 

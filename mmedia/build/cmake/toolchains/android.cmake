@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        02.09.2024
 # file        android.cmake
 # U3_COMMERCIAL_PART

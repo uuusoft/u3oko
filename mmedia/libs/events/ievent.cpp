@@ -1,6 +1,6 @@
 /**
 \file       ievent.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    mevents
 */
@@ -33,7 +33,7 @@ IEvent::copy (const IEvent::craw_ptr src)
 }
 
 
-const IEvent::hid_type&
+IEvent::hid_type
 IEvent::get_mid () const
 {
   U3_ASSERT (!property_name_.empty ());
@@ -51,6 +51,7 @@ IEvent::get_using_state () const
 void
 IEvent::load_json (const std::string& prop)
 {
+  U3_XLOG_DBG ("IEvent::load_json::---->")
   ::boost::json::parse_options opt;
 
   opt.allow_comments        = true;
@@ -61,7 +62,6 @@ IEvent::load_json (const std::string& prop)
 
   auto pr   = ::boost::json::parse (prop, {}, opt);
   auto kind = pr.kind ();
-
   if (::boost::json::kind::object != kind)
   {
     U3_XLOG_ERROR ("::boost::json::kind::object != kind");
@@ -71,7 +71,7 @@ IEvent::load_json (const std::string& prop)
   const ::boost::json::object& obj = pr.get_object ();
   if (obj.empty ())
   {
-    U3_XLOG_ERROR ("obj.empty ()");
+    U3_XLOG_ERROR ("кусшму obj.empty from prop");
     return;
   }
 
@@ -80,6 +80,7 @@ IEvent::load_json (const std::string& prop)
 
   load_json_int (obj);
   self_correct ();
+  U3_XLOG_DBG ("IEvent::load_json::<----")
 }
 
 

@@ -1,7 +1,7 @@
 /**
 \file       sync-objs-group.cpp
 \date       17.03.2026
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -24,11 +24,11 @@ SyncObjsGroup::serialize (Archive& arh, const std::uint32_t /* file_version */)
 void
 tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const SyncObjsGroup& src)
 {
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   jvs = {
     { "time", src.time_ },
     { "time_point", src.time_point_ },
-    { "action", src.action_ }
+    { "sync_actions", src.action_ }
   };
 #endif
 }
@@ -38,10 +38,10 @@ SyncObjsGroup
 tag_invoke (::boost::json::value_to_tag< SyncObjsGroup >, const ::boost::json::value& jvs)
 {
   SyncObjsGroup ret;
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   ret.time_       = jvs.at ("time").as_string ();
   ret.time_point_ = ::libs::helpers::json::get_uint32 (jvs.at ("time_point"));
-  ret.action_     = ::libs::helpers::json::get_uint32 (jvs.at ("action"));
+  ret.action_     = ::libs::helpers::json::get_uint32 (jvs.at ("sync_actions"));
 #endif
   return ret;
 }

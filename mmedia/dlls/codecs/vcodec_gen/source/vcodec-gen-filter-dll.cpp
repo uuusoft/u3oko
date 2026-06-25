@@ -1,6 +1,6 @@
 /**
 \file       vcodec-gen-filter-dll.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_vcodec_gen
 */
@@ -18,7 +18,7 @@ browser::CodecBrower               Filter::codec_browser_;
 
 Filter::Filter ()
 {
-  pthreads_ = U3_CAST_PROP (syn::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ())->get_mcalls_lockfree ();
+  pthreads_ = ::libs::iproperties::helpers::get_shared_prop_os ()->get_mcalls_lockfree ();
 }
 
 
@@ -62,13 +62,13 @@ Filter::transform_int (syn::TransformInfo& info)
       flip_y ((*pbuf_)[finfo_.rprops_->bufs_.indx_dbuf_]);
     }
   }
-  catch (U3_MARK_UNUSED boost::exception& e)
+  catch (U3_MARK_UNUSED boost::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (boost::diagnostic_information (e));
+    U3_LOG_DATA_EXCEPT (boost::diagnostic_information (excpt));
   }
-  catch (std::exception& e)
+  catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what ());
+    U3_LOG_DATA_EXCEPT (excpt.what ());
   }
 }
 
@@ -106,7 +106,7 @@ Filter::process_events (syn::TransformInfo& info)
 
   for (const auto& event : *info.frame_events_)
   {
-    const auto devent = ::libs::iproperties::helpers::cast_event< syn::InterfCodecImageEvent > (event);
+    auto* devent = ::libs::iproperties::helpers::cast_event< syn::InterfCodecImageEvent > (event);
     if (devent)
     {
       finfo_.active_codec_impl_ = devent->is_active () ? devent->get_interface () : devent->get_interface ();   // debug
@@ -192,7 +192,7 @@ Filter::prepare_process_frame (syn::TransformInfo& info)
 
   if (decode)
   {
-    const syn::HeaderIFrame* head = U3_CAST_CODECS< const syn::HeaderIFrame* > (utils::dbufs::video::helpers::get_const_data (sbuf));
+    const syn::HeaderIFrame* head = ::libs::helpers::casts::reinterpret_cast_helper< const syn::HeaderIFrame* > (utils::dbufs::video::helpers::get_const_data (sbuf));
     if (!head || !head->check ())
     {
       U3_LOG_DATA_WRN ("invalid source buf for decode, skip");
@@ -234,7 +234,7 @@ Filter::process_frame (syn::TransformInfo& info)
   else
   {
     finfo_.dll_codec_->code (pbuf_, pbuf_, info.frame_events_);
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
     // EAI-DEBUG
     {
       U3_LOG_DATA_DBG ("debug->copy frame for send to storage");

@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        15.08.2024
 # copyright   Erashov A.I.
 # file        u3-link-libs-to-target-func.cmake
@@ -23,11 +23,11 @@ function(u3_link_libs_to_target)
       ${U3_GVXX_LINK_LIBS_TO_TARGET_PAR_GROUP_LIBS}
       ${U3_GVXX_LINK_LIBS_TO_TARGET_PAR_LIBS})
   else()
-    #message(FATAL_ERROR "CMAKE_LINK_GROUP_USING_RESCAN_SUPPORTED=${CMAKE_LINK_GROUP_USING_RESCAN_SUPPORTED}")
     if(CMAKE_LINK_GROUP_USING_RESCAN_SUPPORTED)
       target_link_libraries(${U3_GVXX_LINK_LIBS_TO_TARGET_PAR_TARGET} $<LINK_GROUP:RESCAN, ${U3_GVXX_LINK_LIBS_TO_TARGET_PAR_GROUP_LIBS} > ${U3_GVXX_LINK_LIBS_TO_TARGET_PAR_LIBS})
     else()
       target_link_libraries(${U3_GVXX_LINK_LIBS_TO_TARGET_PAR_TARGET} ${U3_GVXX_LINK_LIBS_TO_TARGET_PAR_GROUP_LIBS} ${U3_GVXX_LINK_LIBS_TO_TARGET_PAR_LIBS})
     endif()
   endif()
+
 endfunction(u3_link_libs_to_target)

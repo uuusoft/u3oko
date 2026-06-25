@@ -2,7 +2,7 @@
 /**
 \file       iseq-event.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    mevents
 */
 
@@ -32,10 +32,11 @@ class ISeqEvent : public IWrapBaseEvent
   explicit ISeqEvent (const Acessor& = Acessor (0), IEvent::ptr = IEvent::ptr (), const id_type& id = id_type ());
   virtual ~ISeqEvent () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/events/iseq-event";
+    static constexpr const char* chret = "libs/events/iseq-event";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
@@ -44,8 +45,8 @@ class ISeqEvent : public IWrapBaseEvent
   bool           empty () const;
 
   protected:
-  virtual IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void        copy_int (const IEvent::craw_ptr src) override;
+  virtual auto clone_int (const ::libs::events::Deeps& deep) const -> IEvent::ptr override;
+  virtual void copy_int (const IEvent::craw_ptr src) override;
 
   private:
   // internal types

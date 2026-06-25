@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       helpers-lib-aligned-mem-funcs.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_helpers_lib
 */
@@ -14,11 +14,10 @@ constexpr std::size_t align_ptr32 = ~U3_CAST_SIZE_T_FORCE (0x1F);
 constexpr std::size_t align_ptr64 = ~U3_CAST_SIZE_T_FORCE (0x3F);
 }   // namespace libs::helpers::mem::consts
 
-
 namespace libs::helpers::mem
 {
-template< typename TTVal >
-bool
+template< typename TTVal, std::enable_if_t< std::is_integral_v< TTVal >, bool > = true >
+constexpr bool
 check_align (const TTVal& val, const TTVal& align)
 {
   TTVal aval = (val / align) * align;
@@ -27,7 +26,7 @@ check_align (const TTVal& val, const TTVal& align)
 
 
 template< typename TTVal >
-bool
+constexpr bool
 check_align2 (TTVal val)
 {
   return U3_CAST_SIZE_T (val) & 0x01 ? false : true;
@@ -35,7 +34,7 @@ check_align2 (TTVal val)
 
 
 template< typename TVal >
-void
+constexpr void
 align2 (TVal& val, bool expand = true)
 {
   U3_ASSERT (sizeof (TVal) <= sizeof (std::size_t));
@@ -48,8 +47,9 @@ align2 (TVal& val, bool expand = true)
 
 
 template< typename TTVal >
-TTVal
-get_align2 (const TTVal& val, bool expand = true)
+constexpr
+  TTVal
+  get_align2 (const TTVal& val, bool expand = true)
 {
   TTVal ret = val;
   align2< TTVal > (ret, expand);
@@ -58,14 +58,14 @@ get_align2 (const TTVal& val, bool expand = true)
 
 
 template< typename TTVal >
-bool
+constexpr bool
 check_align8 (TTVal val)
 {
   return U3_CAST_SIZE_T (val) & 0x07 ? false : true;
 }
 
 
-inline bool
+inline constexpr bool
 check_align8_ptr (const void* buf)
 {
   return ::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (buf) & 0x07 ? false : true;
@@ -73,7 +73,7 @@ check_align8_ptr (const void* buf)
 
 
 template< typename TVal >
-void
+constexpr void
 align8 (TVal& val, bool expand = true)
 {
   U3_ASSERT (sizeof (TVal) <= sizeof (std::size_t));
@@ -86,7 +86,7 @@ align8 (TVal& val, bool expand = true)
 
 
 template< typename TTVal >
-TTVal
+constexpr TTVal
 get_align8 (const TTVal& val, bool expand = true)
 {
   TTVal ret = val;
@@ -96,14 +96,14 @@ get_align8 (const TTVal& val, bool expand = true)
 
 
 template< typename TTVal >
-bool
+constexpr bool
 check_align16 (TTVal val)
 {
   return U3_CAST_SIZE_T (val) & 0x0F ? false : true;
 }
 
 
-inline bool
+inline constexpr bool
 check_align16_ptr (const void* buf)
 {
   return ::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (buf) & 0x0F ? false : true;
@@ -111,7 +111,7 @@ check_align16_ptr (const void* buf)
 
 
 template< typename TTVal >
-void
+constexpr void
 align16 (TTVal& val, bool expand = true)
 {
   U3_ASSERT (sizeof (TTVal) <= sizeof (std::size_t));
@@ -124,7 +124,7 @@ align16 (TTVal& val, bool expand = true)
 
 
 template< typename TTVal >
-TTVal
+constexpr TTVal
 get_align16 (const TTVal& val, bool expand = true)
 {
   TTVal ret = val;
@@ -134,14 +134,14 @@ get_align16 (const TTVal& val, bool expand = true)
 
 
 template< typename TTVal >
-bool
+constexpr bool
 check_align32 (TTVal val)
 {
   return U3_CAST_SIZE_T (val) & 0x1F ? false : true;
 }
 
 
-inline bool
+inline constexpr bool
 check_align32_ptr (const void* buf)
 {
   return ::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (buf) & 0x1F ? false : true;
@@ -149,7 +149,7 @@ check_align32_ptr (const void* buf)
 
 
 template< typename TTVal >
-void
+constexpr void
 align32 (TTVal& val, bool expand = true)
 {
   U3_ASSERT (sizeof (TTVal) <= sizeof (std::size_t));
@@ -162,7 +162,7 @@ align32 (TTVal& val, bool expand = true)
 
 
 template< typename TTVal >
-TTVal
+constexpr TTVal
 get_align32 (const TTVal& val, bool expand = true)
 {
   TTVal ret = val;
@@ -172,14 +172,14 @@ get_align32 (const TTVal& val, bool expand = true)
 
 
 template< typename TTVal >
-bool
+constexpr bool
 check_align64 (TTVal val)
 {
   return U3_CAST_SIZE_T (val) & 0x3F ? false : true;
 }
 
 
-inline bool
+inline constexpr bool
 check_align64_ptr (const void* buf)
 {
   return ::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (buf) & 0x3F ? false : true;
@@ -187,7 +187,7 @@ check_align64_ptr (const void* buf)
 
 
 template< typename TTVal >
-void
+constexpr void
 align64 (TTVal& val, bool expand = true)
 {
   U3_ASSERT (sizeof (TTVal) <= sizeof (std::size_t));
@@ -200,7 +200,7 @@ align64 (TTVal& val, bool expand = true)
 
 
 template< typename TTVal >
-TTVal
+constexpr TTVal
 get_align64 (const TTVal& val, bool expand = true)
 {
   TTVal ret = val;
@@ -209,9 +209,9 @@ get_align64 (const TTVal& val, bool expand = true)
 }
 
 
-template< typename TTVal >
-TTVal
-get_align (const TTVal& val, const TTVal& align, const bool expand = true)
+template< typename TTVal, std::enable_if_t< std::is_integral_v< TTVal >, bool > = true >
+constexpr TTVal
+align_value (const TTVal& val, const TTVal& align, const bool expand = true)
 {
   TTVal ret = val;
   switch (align)

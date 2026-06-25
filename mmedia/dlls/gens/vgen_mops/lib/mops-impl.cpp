@@ -1,6 +1,6 @@
 /**
 \file       mops-impl.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       16.07.2018
 \project    u3_vgen_mops_lib
 */
@@ -19,7 +19,7 @@ MopsImpl::init ()
   auto ioptim = ::libs::iproperties::helpers::cast_prop_demons ()->get_optim_lockfree ()->impl ();
 
   cmp_get_const_ = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CCmpGTConstAlg::val_key));
-  pthreads_      = U3_CAST_PROP (::libs::iproperties::vers::system::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ())->get_mcalls_lockfree ();
+  pthreads_      = ::libs::iproperties::helpers::get_shared_prop_os ()->get_mcalls_lockfree ();
 
   morph_helper_.init ();
 }
@@ -66,16 +66,16 @@ MopsImpl::itransform (const syn::NodeID& id_node, ::libs::bufs::Bufs& bufs)
 
     for (const auto& op : b2b.morph_operations_)
     {
-      if (::libs::ievents::props::videos::generic::morph::MorphOps::empty == op.morph_type_ ||
-          ::libs::ievents::props::videos::generic::morph::MorphOps::unknown == op.morph_type_)
+      if (syn::MorphOps::empty == op.morph_type_ ||
+          syn::MorphOps::unknown == op.morph_type_)
       {
         continue;
       }
 
       U3_LOG_DATA_DBG (FTOLOG (b2b.sindx_diff_) + TOLOG (b2b.bindx_diff_) + to_string (op.morph_type_) + VTOLOG (op.bound_filling_) + VTOLOG (op.val_filling_));
-      //  бинаризация в 0..1 как подготовка буфера для выполнения морфологической операции.
+      //  бинаризация в 0..1 как подготовка буфера для выполнения морфологической операции
       bin_buf (id_node, b2b, op.bound_filling_, 1, pdst);
-      //  собственно производим МО над подготовленным буфером.
+      //  собственно производим МО над подготовленным буфером
       morph_helper_.applay_operation2buf (id_node, op, &bufs, pdst);
       //  Вспомогательная бинаризация для дальнейшей обработки буфера в последующих узлах графа обработки данных
       bin_buf (id_node, b2b, 0, op.val_filling_, pdst);

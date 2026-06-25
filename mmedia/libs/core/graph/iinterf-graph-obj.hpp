@@ -2,7 +2,7 @@
 /**
 \file       iinterf-graph-obj.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_core_lib
 */
 
@@ -22,7 +22,7 @@ class IInterfGraphObj
   IInterfGraphObj& operator= (const IInterfGraphObj& src) = delete;
 
   protected:
-  /// Конструктор, защищенный, т.к. создание объектов данного типа не предусмотренно
+  /// Конструктор, закрываем, т.к. создание объектов данного типа не предусмотренно
   IInterfGraphObj () = default;
   /// Деструктор. Закрываем, удалить данный объект можно только через удаления производного
   virtual ~IInterfGraphObj () = default;

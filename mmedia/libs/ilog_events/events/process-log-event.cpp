@@ -1,6 +1,6 @@
 /**
 \file       process-log-event.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ilog_events
 */
@@ -22,7 +22,7 @@ std::string
 ProcessLogEvent::text (const LogTexts& type) const
 {
   U3_ASSERT_SIGNAL ("failed");
-  return "???";
+  return "ProcessLogEvent::text:: wtf???";
 }
 
 
@@ -72,7 +72,7 @@ void
 ProcessLogEvent::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-  action_  = ::boost::json::value_to< LogProcessActions > (obj.at ("action"));
+  action_  = ::boost::json::value_to< LogProcessActions > (obj.at ("log_process_actions"));
   info_    = ::boost::json::value_to< InfoLogSessionFragment > (obj.at ("info"));
   session_ = obj.at ("session").as_string ();
 }
@@ -82,9 +82,9 @@ void
 ProcessLogEvent::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-  obj["action"]  = ::boost::json::value_from (action_);
-  obj["info"]    = ::boost::json::value_from (info_);
-  obj["session"] = session_;
+  obj["log_process_actions"] = ::boost::json::value_from (action_);
+  obj["info"]                = ::boost::json::value_from (info_);
+  obj["session"]             = session_;
 }
 
 

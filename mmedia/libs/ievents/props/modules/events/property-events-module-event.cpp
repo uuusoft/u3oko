@@ -1,7 +1,7 @@
 /**
 \file       property-events-module-event.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -44,7 +44,7 @@ void
 PropertyEventsModuleEvent::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-  U3_ASSERT_NT (0, "???");
+  U3_ASSERT_NT (0, "PropertyEventsModuleEvent::load_json_int:: wtf???");
 }
 
 
@@ -52,10 +52,10 @@ void
 PropertyEventsModuleEvent::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-  U3_ASSERT_NT (0, "???");
+  U3_ASSERT_NT (0, "PropertyEventsModuleEvent::save_json_int:: wtf???");
 }
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 void
 PropertyEventsModuleEvent::correct ()
 {

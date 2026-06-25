@@ -1,6 +1,6 @@
 /**
 \file       expanded-times-helpers.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_helpers_lib
 */
@@ -47,7 +47,7 @@ AddOpTime::set_skip ()
 }
 
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 void
 change_last_name (const std::string& name)
 {
@@ -58,7 +58,7 @@ change_last_name (const std::string& name)
 void
 dump (ExpandedTimes& obj, ::libs::link::ILink::ptr& logger)
 {
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   ExpandedTimes::infos_type infos;
   obj.get (infos);
   for (const std::string& info : infos)

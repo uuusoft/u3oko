@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       http-module.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    mhttp
 */
@@ -27,12 +27,12 @@ class WebSharedState final
   explicit WebSharedState () = default;
   ~WebSharedState ()         = default;
 
-  void         join (session_ssl_type* session);
-  void         leave (session_ssl_type* session);
-  void         join (session_type* session);
-  void         leave (session_type* session);
-  void         broadcast_send (send_data_type&&);
-  std::int64_t get_size_pending_send () const;
+  auto join (session_ssl_type* session) -> void;
+  auto leave (session_ssl_type* session) -> void;
+  auto join (session_type* session) -> void;
+  auto leave (session_type* session) -> void;
+  auto broadcast_send (send_data_type&&) -> void;
+  auto get_size_pending_send () const -> std::int64_t;
 
   private:
   mutable std::mutex       mutex_;          //<

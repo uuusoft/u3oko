@@ -1,6 +1,6 @@
 /**
-\file       video-sender-transform-funct.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\file       video-sender-transform-func.cpp
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_video_sender_dll
 */
@@ -36,7 +36,8 @@ Filter::transform_int (syn::TransformInfo& info)
     send_info_msg (info);
   }
 
-  ::libs::link::ILink::ptr helper = U3_CAST_PROP (syn::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ())->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
+  auto* linkprops = ::libs::iproperties::helpers::get_prop_links ();
+  auto  helper    = linkprops->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
   if (!helper)
   {
     U3_LOG_DATA_ERROR ("empty sender helper, skip send msg");
@@ -92,7 +93,8 @@ Filter::transform_int (syn::TransformInfo& info)
 void
 Filter::send_info_msg (syn::TransformInfo& info)
 {
-  auto             idata = U3_CAST_PROP (syn::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ())->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
+  auto*            linkprops = ::libs::iproperties::helpers::get_prop_links ();
+  auto             idata     = linkprops->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
   syn::IEvent::ptr rmsg;
 
   U3_CHECK (::libs::iproperties::helpers::create_event< syn::FrameDone > (rmsg), "syn::FrameDone");

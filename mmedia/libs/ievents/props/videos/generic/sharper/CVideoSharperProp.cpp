@@ -1,6 +1,6 @@
 /**
 \file   CVideoSharperProp.cpp
-\author   Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author   Erashov Anton erashov2026@proton.me
 \date   01.01.2017
 \project  u3_ievents_lib
 */
@@ -11,7 +11,7 @@
 
 namespace libs::ievents::props::videos::generics::sharper
 {
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 template< class Archive >
 void
 EventBufsInfo::serialize (Archive& arh, const std::uint32_t /* file_version */)

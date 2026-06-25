@@ -1,9 +1,10 @@
 /**
 \file       http-module-basemodule-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       23.08.2018
 \project    mhttp
 */
+// #define U3_USE_DEB_LOG_LEVEL
 #include "../module-http-includes_int.hpp"
 #include "mmedia/dlls/terminals/video_sender/consts/video-sender-const-vals.hpp"
 #include "http-module-syn.hpp"
@@ -22,6 +23,7 @@ HttpModule::appl_init_int (const syn::InitApplication& appinfo)
 void
 HttpModule::init_links_int (const syn::InitApplication& appinfo)
 {
+  U3_XLOG_DBG ("HttpModule::init_links_int::---->");
   const std::string name_data = "";
   auto              type_run  = ::libs::link::details::CodeRuns::appl;
   auto              lproxy    = ::libs::ilink::LinkCreatorProxy::instance ();
@@ -35,13 +37,13 @@ HttpModule::init_links_int (const syn::InitApplication& appinfo)
       appinfo.appl_name_,
       "subsys_http",
       ::libs::link::details::ModuleLinks::http,
-      ::libs::link::consts::size::buf_appl2http));
+      ::libs::link::consts::sizes::buf_appl2http));
 
   links_.set (syn::mids::http2appl, temp_link);
 
   //  Нужно установить свои связи в свойства разделяемые и спользовать их.
   {
-    auto  proplinks = U3_CAST_PROP (syn::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ());
+    auto* proplinks = ::libs::iproperties::helpers::get_prop_links ();
     auto& links     = proplinks->update_links_lockfree ();
 
     links.set (syn::mids::http2appl, links_.get (syn::mids::http2appl));
@@ -50,7 +52,7 @@ HttpModule::init_links_int (const syn::InitApplication& appinfo)
 
   {
     syn::IEvent::ptr rmsg;
-    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangDShowRunsSubSysLogEvent > (rmsg);
+    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
 
     props->change_appl_info (
       ::libs::ilog_events::AppllPartLogInfo (
@@ -62,7 +64,8 @@ HttpModule::init_links_int (const syn::InitApplication& appinfo)
     props->set_start (true);
     links_.get (syn::mids::http2appl)->send_msg (rmsg, syn::CallSyncs::async, syn::Calls::set);
   }
-}   // namespace modules::mhttp::appl
+  U3_XLOG_DBG ("HttpModule::init_links_int::<----");
+}
 
 
 void
@@ -76,11 +79,11 @@ HttpModule::init_proxys_int ()
 bool
 HttpModule::appl_deinit_int ()
 {
-  U3_XLOG_MARK ("HttpModule::deinit_int begin")
+  U3_XLOG_MARK ("HttpModule::deinit_int::---->")
   if (links_.get (syn::mids::http2appl))
   {
     syn::IEvent::ptr rmsg;
-    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangDShowRunsSubSysLogEvent > (rmsg);
+    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
 
     props->change_appl_info (
       ::libs::ilog_events::AppllPartLogInfo (
@@ -94,12 +97,13 @@ HttpModule::appl_deinit_int ()
   }
 
   {
-    auto links = U3_CAST_PROP (syn::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ());
+    auto* links = ::libs::iproperties::helpers::get_prop_links ();
     links->update_links_lockfree ().reset_link (syn::mids::http2appl);
   }
 
   links_.get (syn::mids::http2appl)->destroy ();
   links_.reset_link (syn::mids::http2appl);
+  U3_XLOG_MARK ("HttpModule::deinit_int::<----")
   return true;
 }
 
@@ -113,8 +117,8 @@ HttpModule::update_catch_funcs_int ()
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
       if (forward)
       {
-        U3_LOG_HTTP_DBG ("received " + syn::ChangeStateProcessEvent::gen_get_mid ());
-        auto props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
+        U3_LOG_HTTP_DBG ("int received " + syn::ChangeStateProcessEvent::gen_get_mid ());
+        auto* props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
         U3_ASSERT (props);
         process_change_state_process (props);
         return syn::IEvent::ptr ();
@@ -126,7 +130,7 @@ HttpModule::update_catch_funcs_int ()
     [] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
       if (forward)
       {
-        U3_LOG_HTTP_DBG ("received " + syn::WrapperHttpEvent::gen_get_mid ());
+        U3_LOG_HTTP_DBG ("int received " + syn::WrapperHttpEvent::gen_get_mid ());
         return ::libs::iproperties::helpers::cast_event< syn::WrapperHttpEvent > (msg)->get_msg ();
       }
       return msg;
@@ -136,21 +140,21 @@ HttpModule::update_catch_funcs_int ()
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
       if (forward)
       {
-        U3_LOG_HTTP_DBG ("received " + syn::ZipDataEvent::gen_get_mid ());
-        auto props = ::libs::iproperties::helpers::cast_event< syn::ZipDataEvent > (msg);
+        U3_LOG_HTTP_DBG ("int received " + syn::ZipDataEvent::gen_get_mid ());
+        auto* props = ::libs::iproperties::helpers::cast_event< syn::ZipDataEvent > (msg);
         U3_ASSERT (props);
         process_zip_data_event (props);
         return syn::IEvent::ptr ();
       }
       return msg;
     };
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   catch_funcs_[syn::RuntimeEvent::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
       if (forward)
       {
-        U3_LOG_HTTP_DBG ("received " + syn::RuntimeEvent::gen_get_mid ());
-        auto props = ::libs::iproperties::helpers::cast_event< syn::RuntimeEvent > (msg);
+        U3_LOG_HTTP_DBG ("int received " + syn::RuntimeEvent::gen_get_mid ());
+        auto* props = ::libs::iproperties::helpers::cast_event< syn::RuntimeEvent > (msg);
         U3_ASSERT (props);
         process_runtime (props);
         return syn::IEvent::ptr ();
@@ -160,8 +164,8 @@ HttpModule::update_catch_funcs_int ()
 
   int_catch_funcs_[syn::MemResourceHttpEvent::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
-      U3_LOG_HTTP_DBG ("received internal " + syn::MemResourceHttpEvent::gen_get_mid ());
-      auto props = ::libs::iproperties::helpers::cast_event< syn::MemResourceHttpEvent > (msg);
+      U3_LOG_HTTP_DBG ("int received " + syn::MemResourceHttpEvent::gen_get_mid ());
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::MemResourceHttpEvent > (msg);
       U3_ASSERT (props);
       process_mem_resource (props);
       return msg;

@@ -1,6 +1,6 @@
 /**
 \file       expanded-times.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.11.2016
 \project    u3_helpers_lib
 */
@@ -106,7 +106,7 @@ ExpandedTimes::end_skip ()
   times_.pop_back ();
 }
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 void
 ExpandedTimes::change_last_name (
   const key_storage_type& id_set,
@@ -122,7 +122,7 @@ ExpandedTimes::change_last_name (
   }
 }
 #endif
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 void
 ExpandedTimes::get (std::list< std::string >& info)
 {

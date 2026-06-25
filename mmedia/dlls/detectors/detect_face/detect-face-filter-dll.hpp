@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       detect-face-filter-dll.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_detect_face
 */
@@ -21,12 +21,12 @@ class Filter final :
   // internal types
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
   // IFilter overrides
-  virtual void load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node) override;
-  virtual void transform_int (syn::TransformInfo& info) override;
-  virtual void call_int (syn::CallInterfInfo& info) override;
+  virtual auto load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node) -> void override;
+  virtual auto transform_int (syn::TransformInfo& info) -> void override;
+  virtual auto call_int (syn::CallInterfInfo& info) -> void override;
 
-  void init_pts (syn::ConnectInfo* info);
-  void itransform (syn::TransformInfo& info);
+  auto init_pts (syn::ConnectInfo* info) -> void;
+  auto itransform (syn::TransformInfo& info) -> void;
   // void save_buf2file (const std::string& file_name, int counter, int quality, syn::IVideoBuf::raw_ptr psrc);
   // void convert_buf2rgb24 (syn::IVideoBuf::craw_ptr psrc, syn::IVideoBuf::raw_ptr pdst);
 

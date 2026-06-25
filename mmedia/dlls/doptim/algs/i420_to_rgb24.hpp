@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       i420_to_rgb24.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_doptim_dll
 */
@@ -27,7 +27,7 @@ class I420ToRgb24Alg final : public IOptimAlg
   virtual void
   sync_impl_int (const ::libs::optim::io::TInit& iinfo) override
   {
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
     switch (iinfo.ext_)
     {
 #  if defined(U3_CPU_X86)

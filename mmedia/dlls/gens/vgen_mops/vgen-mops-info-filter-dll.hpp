@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       vgen-mops-info-filter-dll.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2017
 \project    u3_vgen_mops
 \brief      Включаемый файл для морфологических операций
@@ -17,7 +17,7 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
   InfoFilter (const InfoFilter& src)            = delete;
   InfoFilter& operator= (const InfoFilter& src) = delete;
 
-  void init ();
+  auto init () -> void;
 
   syn::VideoMorphologyProp::raw_ptr rprops_ = nullptr;   //< Настроенный указатель на свойства (для удобства)
 };

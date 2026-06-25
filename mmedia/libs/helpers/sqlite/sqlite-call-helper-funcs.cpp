@@ -1,6 +1,6 @@
 /**
 \file       sqlite-call-helper-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       06.06.2022
 \project    mevents
 */
@@ -11,6 +11,7 @@
 #include "sql-resource-managment-helpers.hpp"
 #include "sqlite-call-helper-funcs.hpp"
 
+// old shit
 namespace libs::helpers::sqlite
 {
 void
@@ -32,12 +33,5 @@ call_exec (
     sql_error.update_as< char* > ());
 
   U3_CHECK (SQLITE_OK == res, "sql " + info + ", " + cmd + std::string (":") + (sql_error.get_as< char* > () ? sql_error.get_as< char* > () : "?errsql?"));
-}
-
-
-std::string
-to_sql_str (const std::string& val)
-{
-  return "'" + val + "'";
 }
 }   // namespace libs::helpers::sqlite

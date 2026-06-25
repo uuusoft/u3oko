@@ -1,7 +1,7 @@
 /**
 \file       info-buf-freq-noise-remover.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -12,12 +12,11 @@
 namespace libs::ievents::props::videos::noises::freq
 {
 InfoBuffFreqNoiseRemover::InfoBuffFreqNoiseRemover (
-  const ::utils::dbufs::video::consts::offs::off_buf_type& src,
-  const ::utils::dbufs::video::consts::offs::off_buf_type& dst,
-  const ::utils::dbufs::video::consts::offs::off_buf_type& bindx_diff,
-  std::int16_t                                             bound_x_plus_y,
-  float                                                    dwt_koeff2) :
-
+  const syn::off_buf_type& src,
+  const syn::off_buf_type& dst,
+  const syn::off_buf_type& bindx_diff,
+  std::int16_t             bound_x_plus_y,
+  float                    dwt_koeff2) :
   ::libs::events::buf::EventBufsInfo (src, dst),
   bindx_diff_ (bindx_diff),
   bound_x_plus_y_ (bound_x_plus_y),
@@ -27,10 +26,7 @@ InfoBuffFreqNoiseRemover::InfoBuffFreqNoiseRemover (
 
 
 InfoBuffFreqNoiseRemover::InfoBuffFreqNoiseRemover (const ::libs::events::buf::EventBufsInfo& buf) :
-  ::libs::events::buf::EventBufsInfo (buf),
-  bindx_diff_ (utils::dbufs::video::consts::offs::invalid),
-  bound_x_plus_y_ (1),
-  dwt_koeff2_ (1.0F)
+  ::libs::events::buf::EventBufsInfo (buf)
 {
 }
 

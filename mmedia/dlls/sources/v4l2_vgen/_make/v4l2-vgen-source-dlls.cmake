@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        20.02.2026
 # copyright   Erashov A.I.
 # file        v4l2-vgen-source-dlls.cmake
@@ -9,7 +9,7 @@ if(NOT ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_LINUX} AND NOT ${U3_SYSTEM_NA
   return()
 endif()
 
-if(NOT U3_DBG_FORCE_COMPILE_AT_BEGIN_ALL_EXT_LIBS)
+if(NOT U3_DBG_COMPILE_AT_BEGIN_EXTLIBS)
   include("./build/cmake/libs/libv4l2cpp/u3-libv4l2cpp-lib.cmake")
 endif()
 
@@ -33,4 +33,4 @@ u3_add_target_dylib(
   DEPEND_TARGETS
   dbufs-dll)
 
-target_include_directories(v4l2_vgen-vss PUBLIC "${U3_INCLUDE_DIR_EXTERNAL_LIB_V4L2CPP}")
+target_include_directories(v4l2_vgen-vss PUBLIC "${U3_INCLUDE_DIR_EXTLIB_V4L2CPP}")

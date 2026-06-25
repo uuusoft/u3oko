@@ -1,10 +1,11 @@
 /**
 \file       beast-http-session.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       31.03.2026
 \project    mhttp
 \original   https://github.com/boostorg/beast/blob/develop/example/http/server/async/http_server_async.cpp
 */
+// #define U3_USE_DEB_LOG_LEVEL
 #include "../../../module-http-includes_int.hpp"
 #include "mmedia/dlls/terminals/video_sender/consts/video-sender-const-vals.hpp"
 #include "../../http-module-syn.hpp"
@@ -14,15 +15,13 @@ namespace modules::mhttp::impl::beast::adv
 http_session::http_session (
   boost::asio::ip::tcp::socket&& socket,
   const handler_func_type&       http_handler,
-  // const handler_func_type&       ws_handler,
-  const shared_state_ptr_type& shared_state) :
+  const shared_state_ptr_type&   shared_state) :
   stream_ (std::move (socket)),
   http_handler_ (http_handler),
-  // ws_handler_ (ws_handler),
   shared_state_ (shared_state)
 {
   U3_XLOG_DEV ("http_session::http_session::on_create" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
-  static_assert (modules::mhttp::appl::consts::queue_limit > 0, "queue limit must be positive");
+  static_assert (modules::mhttp::appl::consts::requests_queue_limit > 0, "queue limit must be positive");
 }
 
 
@@ -55,7 +54,7 @@ http_session::do_read ()
   stream_.expires_after (std::chrono::seconds (modules::mhttp::appl::consts::expires_after));
 
   // Read a request using the parser-oriented interface
-  boost::beast::http::async_read (
+  appl::syn::http::async_read (
     stream_,
     buf_,
     *parser_,
@@ -72,18 +71,18 @@ http_session::on_read (boost::beast::error_code ec, std::size_t bytes_transferre
   boost::ignore_unused (bytes_transferred);
 
   // This means they closed the connection
-  if (ec == boost::beast::http::error::end_of_stream)
+  if (ec == appl::syn::http::error::end_of_stream)
   {
     return do_close ();
   }
 
   if (ec)
   {
-    return fail (ec, "read");
+    return u3beast_fail (ec, "http_session::read");
   }
 
   // See if it is a WebSocket Upgrade
-  if (boost::beast::websocket::is_upgrade (parser_->get ()))
+  if (appl::syn::websocket::is_upgrade (parser_->get ()))
   {
     U3_XLOG_DEV ("http_session::on_read UPGRADE to websocket" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
     // Create a websocket session, transferring ownership
@@ -100,7 +99,7 @@ http_session::on_read (boost::beast::error_code ec, std::size_t bytes_transferre
   queue_write (handle_request (http_handler_, parser_->release ()));
 
   // If we aren't at the queue limit, try to pipeline another request
-  if (response_queue_.size () < modules::mhttp::appl::consts::queue_limit)
+  if (response_queue_.size () < modules::mhttp::appl::consts::requests_queue_limit)
   {
     do_read ();
   }
@@ -108,7 +107,7 @@ http_session::on_read (boost::beast::error_code ec, std::size_t bytes_transferre
 
 
 void
-http_session::queue_write (boost::beast::http::message_generator response)
+http_session::queue_write (appl::syn::http::message_generator response)
 {
   // Allocate and store the work
   response_queue_.push (std::move (response));
@@ -150,7 +149,7 @@ http_session::on_write (
 
   if (ec)
   {
-    return fail (ec, "write");
+    return u3beast_fail (ec, "http_session::write");
   }
 
   if (!keep_alive)
@@ -161,7 +160,7 @@ http_session::on_write (
   }
 
   // Resume the read if it has been paused
-  if (response_queue_.size () == modules::mhttp::appl::consts::queue_limit)
+  if (response_queue_.size () == modules::mhttp::appl::consts::requests_queue_limit)
   {
     do_read ();
   }

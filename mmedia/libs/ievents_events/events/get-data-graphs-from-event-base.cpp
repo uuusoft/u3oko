@@ -1,6 +1,6 @@
 /**
 \file       get-data-graphs-from-event-base.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       05.06.2022
 \project    u3_ievents_lib
 */
@@ -47,7 +47,7 @@ void
 GetDataGraphsFromEventBase::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-  U3_ASSERT_NT (0, "???");
+  U3_ASSERT_NT (0, "GetDataGraphsFromEventBase::load_json_int:: wtf???");
 }
 
 
@@ -55,7 +55,6 @@ void
 GetDataGraphsFromEventBase::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-
   obj["data_graph_ids"] = ::boost::json::value_from (data_graph_ids_);
 }
 

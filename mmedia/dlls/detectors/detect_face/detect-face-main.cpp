@@ -1,6 +1,6 @@
 /**
 \file       detect-face-main.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.05.2017
 \project    u3_detect_face
 \brief      Модуль детекции лица на основе dlib

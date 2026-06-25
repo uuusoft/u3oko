@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        03.04.2026
 # copyright   Erashov A.I.
 # file        orangepi-arm64-clang.cmake

@@ -1,6 +1,6 @@
 /**
 \file       isystem-property.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       02.03.2022
 \project    u3_iproperties_lib
 */
@@ -28,6 +28,7 @@ ISystemProperty::get_appl_lockfree () -> syn::ApplicationProp::craw_ptr const
 void
 ISystemProperty::set_appl_lockfree (syn::ApplicationProp::raw_ptr ptr)
 {
+  U3_XLOG_DBG (TOLOG (ptr->get_messenger_impl ()) + PTR_TOLOG (ptr));
   main_appl_properties_ = ptr;
 }
 

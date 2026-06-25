@@ -1,7 +1,7 @@
 /**
 \file       ievents-register_events_in_archives.cpp
 \date       10.02.2018
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"

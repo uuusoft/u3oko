@@ -1,6 +1,6 @@
 /**
 \file       detect-face-filter-dll.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.05.2017
 \project    u3_detect_face
 */
@@ -76,7 +76,7 @@ Filter::transform_int (syn::TransformInfo& info)
   itransform (info);
 }
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 void
 Filter::convert_buf2rgb24 (syn::IVideoBuf::craw_ptr psrc, syn::IVideoBuf::raw_ptr pdst)
 {
@@ -101,7 +101,7 @@ Filter::convert_buf2rgb24 (syn::IVideoBuf::craw_ptr psrc, syn::IVideoBuf::raw_pt
     transinfo_->exptimes_);
 }
 #endif
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 void
 Filter::save_buf2file (
   const std::string&      file_name,
@@ -177,7 +177,7 @@ Filter::itransform (syn::TransformInfo& info)
 #ifndef U3_SKIP_DLIB
   dlib::array2d< std::uint8_t > img;
 
-#  if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   static std::int32_t counter   = 20;
   const std::string   file_path = "c:/imgs/dump_" + std::to_string (counter) + ".jpg";
   dlib::load_image (img, file_path);
@@ -215,8 +215,11 @@ Filter::itransform (syn::TransformInfo& info)
     U3_LOG_DATA_DEV ("Face" + VTOLOG (i) + " from" + VTOLOG (faces.size ()) + VTOLOG (face.left ()) + VTOLOG (face.top ()) + VTOLOG (face.width ()) + VTOLOG (face.height ()));
   }
 
-  ::libs::events::IEvent::ptr rmsg;
-  U3_CHECK (::libs::iproperties::helpers::create_event< syn::FaceDetect > (rmsg), "FaceDetect");
+  syn::IEvent::ptr rmsg;
+  syn::IEvent::ptr irmsg;
+  auto             dmsg = ::libs::iproperties::helpers::create_event< syn::AddEvent2Base > (rmsg, libs::helpers::utils::cuuid (), "???????");
+  ::libs::iproperties::helpers::create_event< syn::FaceDetect > (irmsg);
+  dmsg->set_event (irmsg);
   info.frame_events_->push_back (rmsg);
 #endif
 }

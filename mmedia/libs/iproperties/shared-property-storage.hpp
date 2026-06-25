@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       shared-property-storage.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_iproperties_lib
 */
@@ -25,12 +25,13 @@ class SharedPropertyStorage : public ::libs::properties::ISharedPropertyStorage
   virtual ~SharedPropertyStorage ();
 
   //  ::libs::properties::ISharedPropertyStorage overrides
-  virtual syn::ISharedProperty::raw_ptr get (const syn::key_property_type&) override;
-  virtual void                          set_prop (const syn::key_property_type&, const syn::ISharedProperty::ptr&) override;
-  virtual void                          reset_prop (const syn::key_property_type&) override;
+  virtual auto check (const syn::key_property_type&) const -> bool override;
+  virtual auto get (const syn::key_property_type&) -> syn::ISharedProperty::raw_ptr override;
+  virtual auto set_prop (const syn::key_property_type&, const syn::ISharedProperty::ptr&) -> void override;
+  virtual auto reset_prop (const syn::key_property_type&) -> void override;
 
   private:
-  sync_type    mtx_;     //< Для синхронизации доступа к хранилищу
-  storage_type props_;   //< Собственно множество свойств системы
+  mutable sync_type mtx_;     //< Для синхронизации доступа к хранилищу
+  storage_type      props_;   //< Собственно множество свойств системы
 };
 }   // namespace libs::iproperties

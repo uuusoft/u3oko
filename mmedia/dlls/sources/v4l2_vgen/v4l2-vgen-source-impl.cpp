@@ -1,6 +1,6 @@
 /**
 \file       v4l2-vgen-source-impl.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */
@@ -56,21 +56,21 @@ SourceImpl::stop_int ()
 void
 SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo > &sources)
 {
-  static const std::array< ::libs::helpers::uids::minor::id_val, 14 > support_formats = {
-    ::libs::helpers::uids::minor::id_val::yuy2,
-    ::libs::helpers::uids::minor::id_val::rgb24,
-    ::libs::helpers::uids::minor::id_val::rgb32,
-    ::libs::helpers::uids::minor::id_val::i420,
-    ::libs::helpers::uids::minor::id_val::yuyv,
-    ::libs::helpers::uids::minor::id_val::device_specific,
-    ::libs::helpers::uids::minor::id_val::y8,
-    ::libs::helpers::uids::minor::id_val::y16,
-    ::libs::helpers::uids::minor::id_val::ycb,
-    ::libs::helpers::uids::minor::id_val::uyvy,
+  static const std::array< ::libs::helpers::uids::minor::id_val, 10 > support_formats = {
+    ::libs::helpers::uids::minor::id_val::rgb24,            // 0
+    ::libs::helpers::uids::minor::id_val::rgb32,            // 1
+    ::libs::helpers::uids::minor::id_val::yuy2,             // 2
+    ::libs::helpers::uids::minor::id_val::yuyv,             // 3
+    ::libs::helpers::uids::minor::id_val::uyvy,             // 4
+    ::libs::helpers::uids::minor::id_val::i420,             // 5
+    ::libs::helpers::uids::minor::id_val::nv21,             // 6
+    ::libs::helpers::uids::minor::id_val::y16,              // 7
+    ::libs::helpers::uids::minor::id_val::y8,               // 8
+    ::libs::helpers::uids::minor::id_val::device_specific   // 9
+    //::libs::helpers::uids::minor::id_val::ycb,
     //::libs::helpers::uids::minor::id_val::iyuv,
     //::libs::helpers::uids::minor::id_val::yv12,
     //::libs::helpers::uids::minor::id_val::yvu9,
-    ::libs::helpers::uids::minor::id_val::nv21
   };
 
   syn::VideoDriverProp        props;
@@ -106,13 +106,13 @@ SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo > &sources)
           break;
         }
       }
-      catch (boost::exception &e)
+      catch (boost::exception &excpt)
       {
-        // U3_LOG_DATA_EXCEPT (boost::diagnostic_information (e));
+        // U3_LOG_DATA_EXCEPT (boost::diagnostic_information (excpt));
       }
-      catch (std::exception &e)
+      catch (std::exception &excpt)
       {
-        // U3_LOG_DATA_EXCEPT (e.what ());
+        // U3_LOG_DATA_EXCEPT (excpt.what());
       }
       catch (...)
       {
@@ -131,7 +131,7 @@ SourceImpl::get_raw_data_int (
     const auto now = std::chrono::high_resolution_clock::now ();
     if (icapture_->is_capture_property_update ())
     {
-      U3_LOG_DATA_MARK ("update capture property begin" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (srcimpinfo_.capture_props_)));
+      U3_LOG_DATA_MARK ("update capture property::---->" + PTR_TOLOG (srcimpinfo_.capture_props_));
       srcimpinfo_.capture_props_ = icapture_->get_capture_property ();
       last_time_restart_         = now - consts::ms_timeout_recreate_device;
       camera_error_              = 0xFF;
@@ -251,9 +251,9 @@ SourceImpl::init_device (const ::dlls::sources::gen_lib::SourceImplInfo &info)
     v4l2_impl_ = std::make_unique< camera::CamImpl > (srcimpinfo_);
     v4l2_init_ = true;
   }
-  catch (const std::exception &e)
+  catch (const std::exception &excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what ());
+    U3_LOG_DATA_EXCEPT (excpt.what ());
     return false;
   }
   return v4l2_init_;

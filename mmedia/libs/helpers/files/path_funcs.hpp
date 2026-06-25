@@ -2,7 +2,7 @@
 /**
 \file       path_funcs.hpp
 \brief      Функции для работы с файлами и директориями
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2016
 \project    u3_helpers_lib
 */
@@ -120,5 +120,5 @@ void delete_folder (const std::string& path);
 bool is_folder (const std::string& path);
 
 std::string get_name_from_path (const std::string& path);
-std::string prepare_for_file_name (const std::string& src);
+std::string prepare_for_file_name (const std::string_view& src);
 }   // namespace libs::helpers::files

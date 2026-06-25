@@ -1,9 +1,10 @@
 /**
 \file       base-module.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.11.2016
 \project    u3_ilink
 */
+// #define U3_USE_DEB_LOG_LEVEL
 #include "../../libs-ilink-includes_int.hpp"
 #include "../libs-ilink-appl-includes_int.hpp"
 #include "base-module.hpp"
@@ -41,16 +42,15 @@ update_template_for_application (const std::string& path2folder, const std::stri
     { "UUU_XML_ID__________MACHINE__________GUID__________ID__________PLACEHOLDER", ::boost::lexical_cast< std::string > (machine_cid.get_raw_uuid_vals ()) }
   };
 
-  ::libs::helpers::files::replace_strings_in_files (
-    path2folder,
-    tmps2vals,
-    std::size (tmps2vals));
+  const auto counter_ops = ::libs::helpers::files::replace_strings_in_files (path2folder, tmps2vals, std::size (tmps2vals));
+  U3_CHECK_NT (counter_ops > 0U, "failed, zero replace in templates" + VTOLOG (counter_ops) + TOLOG (path2folder));
 }
 
 
 void
 BaseModule::load_events_props ()
 {
+  U3_XLOG_DBG ("BaseModule::load_events_props::---->" + TOLOG (text_id_module_));
   const std::string                        name ("sign-ready-init-appl.xml");
   ::libs::iproperties::xml::InitLoaderInfo helper_info (paths_);
   ::libs::iproperties::xml::Loader         helper_xml (helper_info);
@@ -73,14 +73,14 @@ BaseModule::load_events_props ()
     ::libs::ilink::appl::helpers::load_event_from_json_file (active_paths, appl_event_props_.module_log_);
     ::libs::ilink::appl::helpers::load_event_from_json_file (active_paths, appl_event_props_.storage_module_);
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_XLOG_ERROR (e.what ());
+    U3_XLOG_ERROR (excpt.what ());
   }
 
   {
-    auto log_appl                                     = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
-    ::libs::ievents::props::modules::log::g_log_level = ::libs::ievents::props::modules::log::from_raw_val (log_appl->get_val (syn::LogVals::log_level));
+    auto* log_appl        = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
+    syn::log::g_log_level = ::libs::ievents::props::modules::log::from_raw_val (log_appl->get_val (syn::LogVals::log_level));
   }
 }
 
@@ -88,21 +88,23 @@ BaseModule::load_events_props ()
 void
 BaseModule::update_events_props ()
 {
-  auto                            orinfo = U3_CAST_PROP (syn::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ());
+  U3_XLOG_DBG ("BaseModule::update_events_props::---->" + TOLOG (text_id_module_));
+  auto*                           orinfo = ::libs::iproperties::helpers::get_shared_prop_os ();
   syn::ISharedProperty::lock_type lock (orinfo->get_sync ());
-
   if (orinfo->get_appl_lockfree ())
   {
     return;
   }
 
-  auto main_appl = ::libs::iproperties::helpers::cast_event< syn::ApplicationProp > (appl_event_props_.main_appl_properties_);
-  auto log_appl  = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
-  auto info_cpu  = ::libs::iproperties::helpers::cast_event< syn::InfoCPUEvent > (appl_event_props_.info_cpu_);
-  // auto storage_appl = ::libs::iproperties::helpers::cast_event< ::libs::ievents::props::modules::storage::PropertyStorageModuleEvent > (appl_event_props_.storage_module_);
+  U3_XLOG_DBG ("BaseModule::update_events_props:: real work" + TOLOG (text_id_module_));
+  auto* main_appl = ::libs::iproperties::helpers::cast_event< syn::ApplicationProp > (appl_event_props_.main_appl_properties_);
+  auto* log_appl  = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
+  auto* info_cpu  = ::libs::iproperties::helpers::cast_event< syn::InfoCPUEvent > (appl_event_props_.info_cpu_);
+  // auto* storage_appl = ::libs::iproperties::helpers::cast_event< ::libs::ievents::props::modules::storage::PropertyStorageModuleEvent > (appl_event_props_.storage_module_);
 
   orinfo->set_appl_lockfree (main_appl);
   orinfo->set_log_lockfree (log_appl);
+  orinfo->set_paths_lockfree (paths_);
 
   if (::libs::helpers::sys::cpu::CpuExts::max == info_cpu->get_cpu_type ())
   {
@@ -120,7 +122,14 @@ BaseModule::update_events_props ()
     mthreads_->set_count_threads (::libs::optim::mcalls::get_count_work_threads_by_count_cpu (info_cpu->get_cpu_count ()));
     orinfo->set_mcalls_lockfree (mthreads_);
   }
+}
 
-  orinfo->set_paths_lockfree (paths_);
+
+auto
+BaseModule::get_recv_link () -> recv_links_type
+{
+  auto ret = get_recv_link_int ();
+  U3_CHECK_NT (!ret.empty (), "BaseModule::get_recv_link empty ret");
+  return ret;
 }
 }   // namespace libs::ilink::appl::base

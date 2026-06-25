@@ -1,7 +1,7 @@
 /**
 \file       cuuid.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_helpers_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -126,7 +126,8 @@ cuuid::serialize (Archive& arh, const std::uint32_t /* file_version */)
 std::string
 to_string (const cuuid& val)
 {
-  return ::boost::lexical_cast< std::string > (val.get_raw_uuid_vals ());
+  return boost::uuids::to_string (val.get_raw_uuid_vals ());
+  //  return ::boost::lexical_cast< std::string > (val.get_raw_uuid_vals ());
 }
 
 

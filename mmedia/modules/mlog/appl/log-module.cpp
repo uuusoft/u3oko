@@ -1,6 +1,6 @@
 /**
 \file       log_module.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    mlog
 */
@@ -58,9 +58,9 @@ LogModule::process_property_log_module (syn::PropertyLogModuleEvent::raw_ptr pro
   {
     appl_event_props_.module_log_->copy (props);
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    add_msg_from_self (e.what ());
+    add_msg_from_self (excpt.what ());
   }
 }
 
@@ -75,9 +75,9 @@ LogModule::process_info_log (syn::InfoLogEvent::raw_ptr props, syn::IEvent::ptr 
       events_for_save_.push_back (msg);
     }
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    add_msg_from_self (e.what ());
+    add_msg_from_self (excpt.what ());
   }
 }
 
@@ -85,7 +85,7 @@ LogModule::process_info_log (syn::InfoLogEvent::raw_ptr props, syn::IEvent::ptr 
 void
 LogModule::process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr props)
 {
-  U3_XLOG_MARK ("LogModule::process_change_state_process" + VTOLOG (props->is_start ()));
+  U3_XLOG_MARK ("LogModule::process_change_state_process::---->" + VTOLOG (props->is_start ()));
   try
   {
     if (!props->is_start ())
@@ -98,9 +98,9 @@ LogModule::process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr p
 
     add_msg_from_self (std::string ("start log module"));
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    add_msg_from_self (e.what ());
+    add_msg_from_self (excpt.what ());
   }
 }
 
@@ -111,7 +111,7 @@ LogModule::process_list_logs (syn::ProcessListLogsEvent::raw_ptr props)
   try
   {
     const auto action = props->get_action ();
-    U3_XLOG_DBG ("LogModule::process_list_logs: " + to_string (action));
+    U3_XLOG_DBG ("LogModule::process_list_logs::---->" + TOLOG (to_string (action)));
     switch (action)
     {
     case ::libs::ilog_events::events::LogActions::delete_sessions: {
@@ -123,13 +123,12 @@ LogModule::process_list_logs (syn::ProcessListLogsEvent::raw_ptr props)
       syn::list_folders_type sessions;
 
       sessions.reserve (folders.size ());
-      U3_XLOG_DBG ("LogModule::process_list_logs" + VTOLOG (folders.size ()));
+      U3_XLOG_DBG ("refresh sessions list" + VTOLOG (folders.size ()));
 
       for (const auto& folder : folders)
       {
         const std::string                     path2files = ::libs::helpers::files::make_path (path2sessions_, folder);
         ::libs::helpers::files::NodeEnumFiles enum_files;
-        U3_XLOG_DBG ("LogModule::process_list_logs" + TOLOG (path2files));
 
         ::libs::helpers::files::get_files (
           path2files,
@@ -143,7 +142,9 @@ LogModule::process_list_logs (syn::ProcessListLogsEvent::raw_ptr props)
           size_files += file.size_;
         }
 
-        sessions.emplace_back (syn::InfoLogSession (folder, size_files));
+        U3_XLOG_DBG ("session" + TOLOG (path2files) + VTOLOG (enum_files.files_.size ()) + VTOLOG (size_files));
+        sessions.emplace_back (folder, size_files);
+        // sessions.emplace_back (syn::InfoLogSession (folder, size_files));
       }
       props->set_sessions (std::move (sessions));
       break;
@@ -153,9 +154,9 @@ LogModule::process_list_logs (syn::ProcessListLogsEvent::raw_ptr props)
       break;
     }
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    add_msg_from_self (e.what ());
+    add_msg_from_self (excpt.what ());
   }
 }
 
@@ -213,9 +214,9 @@ LogModule::process_log (syn::ProcessLogEvent::raw_ptr props)
     }
     }
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    add_msg_from_self (std::string ("exception:") + e.what ());
+    add_msg_from_self (std::string ("exception:") + excpt.what ());
   }
 }
 }   // namespace modules::mlog::appl

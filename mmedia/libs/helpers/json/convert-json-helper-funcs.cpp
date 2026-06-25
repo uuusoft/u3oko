@@ -1,6 +1,6 @@
 /**
 \file       convert-json-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       10.06.2022
 \project    u3_helpers_lib
 */

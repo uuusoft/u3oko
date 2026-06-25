@@ -1,5 +1,5 @@
 REM u3oko-win-dbg-dll-none-msv.cmd
-REM author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+REM author      Erashov Anton erashov2026@proton.me
 REM date        01.01.2026
 REM copyright   Erashov A.I.
 

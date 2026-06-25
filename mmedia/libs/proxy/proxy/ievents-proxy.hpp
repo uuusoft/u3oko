@@ -2,7 +2,7 @@
 /**
 \file       ievents-proxy.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_proxy_libs
 */
 
@@ -15,7 +15,7 @@ class IEventsProxy final
   public:
   //  ext types
   using create_func_type       = ::libs::events::io::IEvents::raw_ptr ();
-  using boost_create_func_type = boost::function< create_func_type >;
+  using boost_create_func_type = std::function< create_func_type >;
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IEventsProxy)
 

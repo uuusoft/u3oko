@@ -2,18 +2,18 @@
 /**
 \file       capture-desk-impl-linux-wl.hpp
 \date       16.05.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_desk_vgen
 */
 #if defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI)
 
 // #  include "PipeWireModule/PipeWireStream.hpp"
-#  if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 #    include "PortalModule/xdg-desktop-portal.hpp"
 #  endif
 // #include "FFMPEGModule/FFmpegOutput.hpp"
 // #include "GStreamerModule/GstOutput.hpp"
-#  if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 #    include "c_common.h"
 #  endif
 #  include <cstdio>
@@ -36,7 +36,7 @@ class CaptureDeskImplLinux : public ::dlls::sources::desk_vgen::ICaptureDeskImpl
 
   void thread_func ();
 
-#  if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   std::optional< portal::SharedScreen > share_info_;   //<
 #  endif
 

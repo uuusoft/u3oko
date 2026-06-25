@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        12.09.2024
 # copyright   Erashov A.I.
 # file        u3-dump-vars-func.cmake
@@ -16,11 +16,11 @@ function(u3_dump_vars)
   u3_dump_var(CMAKE_VERSION)
   u3_dump_var(CMAKE_SYSTEM_VERSION)
   u3_dump_var(U3_SANITY_BUILD_TYPE)
-  u3_dump_var(U3_URL_TO_EXTERNAL_LIBS_SRC)
-  u3_dump_var(U3_URL_TO_EXTERNAL_LIBS_BIN)
-  u3_dump_var(U3_FORCE_COMPILE_ALL_EXT_LIBS)
-  u3_dump_var(U3_FORCE_USE_EXT_SOURCE_FOR_EXT_LIBS)
-  u3_dump_var(U3_DBG_EXTERNAL_LIB_SKIP_SQLITE)
+  u3_dump_var(U3_URL_TO_EXTLIBS_SRC)
+  u3_dump_var(U3_URL_TO_EXTLIBS_BIN)
+  u3_dump_var(U3_FORCE_COMPILE_ALL_EXTLIBS)
+  u3_dump_var(U3_FORCE_USE_EXT_SOURCE_FOR_EXTLIBS)
+  u3_dump_var(U3_DBG_EXTLIB_SKIP_SQLITE)
   u3_dump_var(U3_TARGET_PROPERTY_MSVC_RUNTIME_LIBRARY)
   u3_dump_var(U3_BUILD_MODULES_AS_LIBS)
   u3_dump_var(CMAKE_MESSAGE_LOG_LEVEL)
@@ -55,11 +55,12 @@ function(u3_dump_vars)
     u3_dump_var(ANDROID_PLATFORM)
     u3_dump_var(ANDROID_TOOLCHAIN)
     u3_dump_var(ANDROID_STL)
-    u3_dump_var(ANDROID_CPP_FEATURES)
+    #u3_dump_var(ANDROID_CPP_FEATURES)
   endif()
 
   message(NOTICE "****** end dump ${U3_GVXX_DUMP_VARS_STATUS_INFO}")
   if(U3_GVXX_DUMP_VARS_DEBUG_STOP)
     message(FATAL_ERROR "${U3_MARK_DEBUG}stop")
   endif()
+  
 endfunction(u3_dump_vars)

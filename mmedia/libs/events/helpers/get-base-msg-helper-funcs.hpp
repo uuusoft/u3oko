@@ -2,7 +2,7 @@
 /**
 \file       get-base-msg-helper-funcs.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    mevents
 */
 
@@ -15,19 +15,19 @@ inline IEvent::ptr
 get_base_msg (IEvent::ptr msg)
 {
   IEvent::ptr ret = msg;
-  if (auto seq_msg = ::libs::iproperties::helpers::cast_event< ISeqEvent > (ret))
+  if (auto* seq_msg = ::libs::iproperties::helpers::cast_event< ISeqEvent > (ret))
   {
     ret = seq_msg->get_msg ();
   }
-  if (auto sync_msg = ::libs::iproperties::helpers::cast_event< ISyncEvent > (ret))
+  if (auto* sync_msg = ::libs::iproperties::helpers::cast_event< ISyncEvent > (ret))
   {
     ret = sync_msg->get_msg ();
   }
-  if (auto req_msg = ::libs::iproperties::helpers::cast_event< IRequestEvent > (ret))
+  if (auto* req_msg = ::libs::iproperties::helpers::cast_event< IRequestEvent > (ret))
   {
     ret = req_msg->get_msg ();
   }
-  if (auto req_msg = ::libs::iproperties::helpers::cast_event< IAnswerEvent > (ret))
+  if (auto* req_msg = ::libs::iproperties::helpers::cast_event< IAnswerEvent > (ret))
   {
     ret = req_msg->get_msg ();
   }

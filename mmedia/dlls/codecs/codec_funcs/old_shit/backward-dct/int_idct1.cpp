@@ -25,7 +25,7 @@
  * scaled fixed-point arithmetic, with a minimal number of shifts.
  */
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 #  define JPEG_INTERNALS
 #  include "mmedia/includes/control-defines-includes.hpp"
 #  include "mmedia/includes/includes.hpp"

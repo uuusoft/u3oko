@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       ievent.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    mevents
 */
@@ -27,15 +27,16 @@ class IEvent
 
   public:
   //  ext types
-  using hid_type = std::string;
+  using hid_type = std::string_view;
 
   U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IEvent)
   U3_HELPER_DISABLE_ACOPY_TYPE (IEvent)
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/events/ievent";
+    static constexpr const char* chret = "libs/events/ievent";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
@@ -66,7 +67,7 @@ class IEvent
   /// Функция возращает текстовый идентификатор типа для использоваения в файлах, которые могут формироваться в том числе и пользователем системы
   /// Обычно это просто путь к файлу с реализацией, что гарантирует его уникальность по определению
   /// \return   идентификатор типа события
-  const hid_type& get_mid () const;
+  hid_type get_mid () const;
 
   /// Вспомогательная функция для синронизации текстового поля и значения используемого расширения CPU
   //// Нужна для работы с HTTP сервером, который работает только с текстовым полем
@@ -99,17 +100,17 @@ class IEvent
   IEvent ();
 
   //  IEvent interface
-  virtual IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const = 0;
-  virtual void        load_json_int (const ::boost::json::object& obj)    = 0;
-  virtual void        save_json_int (::boost::json::object& obj) const    = 0;
-  virtual void        copy_int (const IEvent::craw_ptr src);
-  virtual void        self_correct_int ();
-  virtual void        sync_txt2val_int ();
-  virtual void        sync_val2txt_int ();
-  virtual bool        is_failed_int () const;
+  virtual auto clone_int (const ::libs::events::Deeps& deep) const -> IEvent::ptr = 0;
+  virtual auto load_json_int (const ::boost::json::object& obj) -> void           = 0;
+  virtual auto save_json_int (::boost::json::object& obj) const -> void           = 0;
+  virtual auto copy_int (const IEvent::craw_ptr src) -> void;
+  virtual auto self_correct_int () -> void;
+  virtual auto sync_txt2val_int () -> void;
+  virtual auto sync_val2txt_int () -> void;
+  virtual auto is_failed_int () const -> bool;
 
-  hid_type       property_name_ = {};                         //< Имя свойства (события), переопределяется классом-потомком. Используется при загрузке из xml
-  PropertyUsings state_         = PropertyUsings::disabled;   //< Общее состояние свойства (события). Отключено, включено и прочее
+  std::string    property_name_ = {};                         //< Имя свойства (события), переопределяется классом-потомком, используется при сериализации
+  PropertyUsings state_         = PropertyUsings::disabled;   //< Общее состояние свойства (события) [отключено, включено и прочее]
 
   private:
   friend class boost::serialization::access;
@@ -137,3 +138,4 @@ deep_clone (typename EventType::craw_ptr src, const Deeps& deep)
 }   // namespace libs::events
 
 BOOST_CLASS_EXPORT_KEY (::libs::events::IEvent);
+BOOST_CLASS_TRACKING (::libs::events::IEvent, boost::serialization::track_always);

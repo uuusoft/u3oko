@@ -1,6 +1,6 @@
 /**
 \file       video-codec-prop.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
@@ -46,6 +46,7 @@ str2write_strategy (const std::string& str)
 
 VideoCodecProp::VideoCodecProp (const Acessor& pha)
 {
+  state_         = events::PropertyUsings::enabled;
   property_name_ = gen_get_mid ();
 }
 
@@ -81,7 +82,7 @@ VideoCodecProp::load_json_int (const ::boost::json::object& obj)
   fps_coder_            = ::libs::helpers::json::get_uint32 (obj.at ("fps_coder"));
   plane_                = ::boost::json::value_to< VideoCodecFlatProp > (obj.at ("plane"));
   dll_name_             = obj.at ("name_idll").as_string ();
-  bufs_                 = ::boost::json::value_to< ::libs::events::buf::EventBufsInfo > (obj.at ("evbufs"));
+  bufs_                 = ::boost::json::value_to< syn::EventBufsInfo > (obj.at ("evbufs"));
   dump_counter_frame_   = ::libs::helpers::json::get_uint64 (obj.at ("dump_counter_frame"));
   dump_result2file_     = obj.at ("dump_compressed_to_file").as_bool ();
   write_codec_strategy_ = ::boost::json::value_to< Writes > (obj.at ("write_codec_strategy"));

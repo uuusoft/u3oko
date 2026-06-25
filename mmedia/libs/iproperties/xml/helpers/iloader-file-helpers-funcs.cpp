@@ -1,6 +1,6 @@
 /**
 \file       load_funcs_atomic_value.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       17.02.2022
 \project    u3_helpers_lib
 */

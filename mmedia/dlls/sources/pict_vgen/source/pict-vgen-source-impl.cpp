@@ -1,6 +1,6 @@
 /**
 \file       pict-vgen-source-impl.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_pict_vgen
 */
@@ -14,13 +14,13 @@ namespace dlls::sources::pict_vgen
 Image2Frames
 image2frame (const std::string& val)
 {
-  static const std::unordered_map< std::string, const Image2Frames > str2image2frame_vals = {
+  static const std::unordered_map< std::string, const Image2Frames > vals = {
     { "one", Image2Frames ::one },
     { "scroll", Image2Frames::scroll }
   };
 
-  const auto finger = str2image2frame_vals.find (val);
-  if (str2image2frame_vals.end () == finger)
+  const auto finger = vals.find (val);
+  if (vals.end () == finger)
   {
     return Image2Frames ::one;
   }
@@ -47,7 +47,7 @@ SourceImpl::print_images2buf (utils::dbufs::video::IVideoBuf::ptr& genimage)
 {
   const auto capwidth  = U3_CAST_INT32 (source_impl_info_.capture_props_->capi_.width_);
   const auto capheight = U3_CAST_INT32 (source_impl_info_.capture_props_->capi_.height_);
-  const auto capstride = ::libs::helpers::mem::get_align64 (capwidth * 3);
+  const auto capstride = ::libs::helpers::mem::align_value (capwidth * 3, 64, true);
   const auto size_copy = capheight * capstride;
 
   std::ranges::for_each (loaded_images_, [] (auto& val) { val.second.first += 1; });

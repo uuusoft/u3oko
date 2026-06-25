@@ -1,7 +1,7 @@
 /**
 \file       sync-objs.cpp
 \date       17.03.2026
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -16,7 +16,7 @@ SyncObjs::SyncObjs (const Acessor& pha)
   property_name_ = gen_get_mid ();
 }
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 SyncObjs::SyncObjs (
   zip_buf_type&&         buf,
   std::size_t            size,
@@ -31,7 +31,7 @@ SyncObjs::SyncObjs (
   property_name_ = gen_get_mid ();
 }
 #endif
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 SyncObjs::SyncObjs (
   ::utils::dbufs::video::IVideoBuf::raw_ptr buf,
   const number_buf_type&                    number_buf,
@@ -45,7 +45,7 @@ SyncObjs::SyncObjs (
   size_zip_buf_ = zip_buf_.size ();
 }
 #endif
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 SyncObjs::SyncObjs (const SyncObjs& src) :
   size_ (0)
 {
@@ -60,7 +60,7 @@ SyncObjs::SyncObjs (const SyncObjs& src) :
   }
 }
 #endif
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 SyncObjs&
 SyncObjs::operator= (const SyncObjs& src)
 {
@@ -104,10 +104,10 @@ void
 SyncObjs::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-#ifdef U3_FAKE_DISABLE
-  action_  = ::boost::json::value_to< LogProcessActions > (obj.at ("action"));
-  info_    = ::boost::json::value_to< InfoLogSessionFragment > (obj.at ("info"));
-  session_ = obj.at ("session").as_string ();
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
+  action_ ? ? ? = ::boost::json::value_to< LogProcessActions > (obj.at ("action???"));
+  info_         = ::boost::json::value_to< InfoLogSessionFragment > (obj.at ("info"));
+  session_      = obj.at ("session").as_string ();
 #endif
 }
 
@@ -116,10 +116,10 @@ void
 SyncObjs::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-#ifdef U3_FAKE_DISABLE
-  obj["action"]  = ::boost::json::value_from (action_);
-  obj["info"]    = ::boost::json::value_from (info_);
-  obj["session"] = session_;
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
+  obj["action???"]  = ::boost::json::value_from (action_???);
+  obj["info"]       = ::boost::json::value_from (info_);
+  obj["session"]    = session_;
 #endif
 }
 

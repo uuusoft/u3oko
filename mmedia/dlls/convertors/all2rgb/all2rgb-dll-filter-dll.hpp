@@ -2,7 +2,7 @@
 /**
 \brief      Filter for corrected image
 \date       01.01.2016
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_all2rgb
 */
 
@@ -21,18 +21,18 @@ class Filter final :
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
 
   // IFilter overrides
-  virtual void load_int (::libs::icore::impl::var1::obj::FilterInfo* info, const ::pugi::xml_named_node_iterator& node) override;
-  virtual void transform_int (::libs::icore::impl::var1::obj::dll::TransformInfo& info) override;
-  virtual void call_int (::libs::icore::impl::var1::obj::dll::CallInterfInfo& info) override;
+  virtual auto load_int (syn::FilterInfo*, const ::pugi::xml_named_node_iterator&) -> void override;
+  virtual auto transform_int (syn::TransformInfo& info) -> void override;
+  virtual auto call_int (syn::CallInterfInfo&) -> void override;
 
-  void init_pts (::libs::icore::impl::var1::obj::ConnectInfo* info);
-  void itransform ();
-  void alloc_temp_bufs ();
-  void convert_bufs ();
+  auto init_pts (syn::ConnectInfo*) -> void;
+  auto itransform () -> void;
+  auto alloc_temp_bufs () -> void;
+  auto convert_bufs () -> void;
 
-  ::libs::optim::io::hioptim*          get_func_for_format (const ::libs::helpers::uids::minor::id_val& format);
-  ::libs::helpers::uids::minor::id_val get_out_format_from_format (const ::libs::helpers::uids::minor::id_val& format);
-  bool                                 is_result_mono (const ::libs::helpers::uids::minor::id_val& format) const;
+  auto get_func_for_format (const ::libs::helpers::uids::minor::id_val& format) -> ::libs::optim::io::hioptim*;
+  auto get_out_format_from_format (const ::libs::helpers::uids::minor::id_val& format) -> ::libs::helpers::uids::minor::id_val;
+  auto is_result_mono (const ::libs::helpers::uids::minor::id_val& format) const -> bool;
 
   ::libs::optim::io::hioptim rgb32_to_rgb24_;   //<
   ::libs::optim::io::hioptim yuy2_to_rgb24_;    //<

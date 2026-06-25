@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       i420_rgb24_int.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       30.07.2018
 \project    u3_optim_gen_convert
 */
@@ -21,9 +21,9 @@ void get_params (
                                                                                                                                      \
     get_params (info, &y, &rgb24);                                                                                                   \
                                                                                                                                      \
-    const std::uint32_t                off_beg_u          = y->stride_ * y->height_ * (info.count_threads_ - info.indx_thread_);     \
+    const std::uint32_t                off_beg_u          = y->stride_ * y->height_ * (info.count_threads_ - info.thread_indx_);     \
     const std::uint32_t                off_beg_v          = off_beg_u + (y->stride_ * y->height_ * info.count_threads_ >> 1);        \
-    const std::uint32_t                off_uv_thread_bufs = y->stride_ * y->height_ * info.indx_thread_ >> 1;                        \
+    const std::uint32_t                off_uv_thread_bufs = y->stride_ * y->height_ * info.thread_indx_ >> 1;                        \
     const ::libs::optim::io::ProxyBuf  temp_u (y->ubuf () + off_beg_u + off_uv_thread_bufs, y->stride_, y->width_, y->height_ >> 1); \
     const ::libs::optim::io::ProxyBuf  temp_v (y->ubuf () + off_beg_v + off_uv_thread_bufs, y->stride_, y->width_, y->height_ >> 1); \
     const ::libs::optim::io::ProxyBuf* u = &temp_u;                                                                                  \

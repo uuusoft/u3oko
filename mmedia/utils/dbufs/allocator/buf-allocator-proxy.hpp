@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       buf-allocator-proxy.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2016
 \project    u3_dbufs
 */
@@ -19,8 +19,10 @@ class BufAllocatorProxy final
 
   using create_func_type = IBufAllocator::raw_ptr ();
 
-  BufAllocatorProxy (const BufAllocatorProxy& src)            = delete;
-  BufAllocatorProxy& operator= (const BufAllocatorProxy& src) = delete;
+  BufAllocatorProxy (const BufAllocatorProxy& src)                = delete;
+  BufAllocatorProxy& operator= (const BufAllocatorProxy& src)     = delete;
+  BufAllocatorProxy (BufAllocatorProxy&& src) noexcept            = delete;
+  BufAllocatorProxy& operator= (BufAllocatorProxy&& src) noexcept = delete;
 
   /// Функция получения экземпляра заместителя
   /// \param[in]  dll_path путь к загружаемому коду системы
@@ -55,7 +57,7 @@ class BufAllocatorProxy final
     lib_.load (_cpath.string (), boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
 
 #  ifdef U3_OS_ANDROID
-    creator_ = reinterpret_cast< create_func_type* > (dlsym (lib_.native (), "create_dbufs_impl"));
+    creator_ = ::libs::helpers::casts::reinterpret_cast_helper< create_func_type* > (dlsym (lib_.native (), "create_dbufs_impl"));
 #  else
     creator_ = boost::dll::import_symbol< create_func_type > (lib_, "create_dbufs_impl");
 #  endif
@@ -65,7 +67,7 @@ class BufAllocatorProxy final
 
   ~BufAllocatorProxy () = default;
 
-  ::libs::helpers::dlls::dll_type     lib_;       //< Разделяемый код (dll/so), который содержит в себе реализацию некого интерфейса
-  boost::function< create_func_type > creator_;   //< Собственно полученная из dll реализация
+  ::libs::helpers::dlls::dll_type   lib_;       //< Разделяемый код (dll/so), который содержит в себе реализацию некого интерфейса
+  std::function< create_func_type > creator_;   //< Собственно полученная из dll реализация
 };
 }   // namespace utils::dbufs::allocator

@@ -1,5 +1,5 @@
 REM u3-build.cmd
-REM author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+REM author      Erashov Anton erashov2026@proton.me
 REM date        01.01.2026
 REM copyright   Erashov A.I.
 
@@ -55,7 +55,7 @@ REM set "U3_FILE_TOOLCHAIN=(Get-Item "%U3_TOOLCHAIN%").BaseName"
 set "U3_FILE_TOOLCHAIN=%U3_TOOLCHAIN%"
 set "U3_FILE_TOOLCHAIN=windows-x64-msv"
 set "U3_BIN=./../builds-%U3_LIBS_PREFIX%-%U3_BUILD_PREFIX%-%U3_SANITY%-%U3_FILE_TOOLCHAIN%-%U3_GENERATOR%"
-set "U3_EXT_PARAMS=-DU3_FORCE_COMPILE_ALL_EXT_LIBS=0"
+set "U3_EXT_PARAMS=-DU3_FORCE_COMPILE_ALL_EXTLIBS=0"
 REM set "U3_ABSOULT_TOOLCHAIN=%realpath %U3_TOOLCHAIN%%"
 REM set "U3_ABSOULT_TOOLCHAIN=%U3_TOOLCHAIN%"
 REM set "U3_ABSOULT_TOOLCHAIN=C:/Users/ARleap/Documents/u3media/mmedia/build/cmake/toolchains/windows-x64-msv.cmake"

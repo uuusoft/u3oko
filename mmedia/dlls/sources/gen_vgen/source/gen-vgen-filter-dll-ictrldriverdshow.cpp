@@ -1,6 +1,6 @@
 /**
 \file       gen-vgen-filter-dll-ictrldriverdshow.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_gen_vgen
 */
@@ -15,20 +15,23 @@
 namespace dlls::sources::gen_vgen
 {
 void
-Filter::update_source_driver_exactly (InfoFilter* finfo, const std::string& name_impl)
+Filter::update_source_driver_exactly (InfoFilter* finfo, const std::string& impl_name)
 {
-  U3_ASSERT (!name_impl.empty ());
+  U3_ASSERT (!impl_name.empty ());
 
   std::unique_lock< InfoFilter::sync_type > lock (finfo->wdmtx_, consts::ms_wait_capture_device);
-  U3_CHECK (lock.owns_lock (), "update source driver" + TOLOG (name_impl));
+  U3_CHECK (lock.owns_lock (), "update source driver" + TOLOG (impl_name));
 
-  finfo->proxy2hardware_.init (name_impl);
+  finfo->proxy2hardware_.init (impl_name);
 
   auto driver = finfo->proxy2hardware_.get_source_impl ();
-  U3_CHECK (driver, "empty source driver");
+  if (!driver)
+  {
+    U3_XLOG_ERROR ("failed get source impl for freeze");
+    return;
+  }
 
-  frozen_dlls_.add (name_impl, finfo->proxy2hardware_.get_source_impl_lib ());
-
+  frozen_dlls_.add (impl_name, finfo->proxy2hardware_.get_source_impl_lib ());
   driver->init ();
 
   auto pdemons = ::libs::iproperties::helpers::cast_prop_demons ();
@@ -58,9 +61,9 @@ Filter::update_source_driver (InfoFilter* finfo)
     update_source_driver_exactly (finfo, finfo->rprops_->name_impl_dll_);
     return;
   }
-  catch (std::exception& e)
+  catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what ());
+    U3_LOG_DATA_EXCEPT (excpt.what ());
   }
 
   //  у фальшивого драйвера все всегда должно быть нормально.

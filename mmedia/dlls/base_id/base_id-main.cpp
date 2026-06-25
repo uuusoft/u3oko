@@ -1,6 +1,6 @@
 /**
 \file       base_id-main.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.05.2017
 \project    u3_base_id_dll
 \brief      Модуль идентификации камеры и контроля частоты потоков фреймов в ней

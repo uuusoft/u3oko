@@ -1,7 +1,7 @@
 /**
 \file       links-video-driver-prop.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -11,9 +11,7 @@
 
 namespace libs::ievents::props::videos::generic::driver
 {
-LinksVideoDriverProp::LinksVideoDriverProp (const Acessor& pha) :
-  pdriver2buf_ (nullptr),
-  pdriver2mem_ (nullptr)
+LinksVideoDriverProp::LinksVideoDriverProp (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
 }
@@ -30,7 +28,7 @@ void
 LinksVideoDriverProp::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-  U3_ASSERT_NT (0, "???");
+  U3_ASSERT_NT (0, "LinksVideoDriverProp::load_json_int:: wtf???");
 }
 
 
@@ -38,7 +36,7 @@ void
 LinksVideoDriverProp::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-  U3_ASSERT_NT (0, "???");
+  U3_ASSERT_NT (0, "LinksVideoDriverProp::save_json_int:: wtf???");
 }
 
 

@@ -1,6 +1,6 @@
 /**
 \file       caller-impl.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_optim_lib
 */
@@ -217,14 +217,15 @@ CallerImpl::mthreads_call_int (
 
   info.count_threads_ = thread_per_height;
 
-  std::uint32_t indx_thread = 0;
+  std::uint32_t thread_indx = 0;
+
   for (std::uint32_t indxy = 0; indxy < thread_per_height; ++indxy)
   {
     for (std::uint32_t indxx = 0; indxx < width_macro; ++indxx)
     {
-      io::MCallInfo& ccall = calls_[indx_thread];
+      io::MCallInfo& ccall = calls_[thread_indx];
 
-      ccall.indx_thread_     = indx_thread;
+      ccall.thread_indx_     = thread_indx;
       ccall.count_threads_   = thread_per_height;
       ccall.full_height_src_ = selected_src_height;
       ccall.full_height_dst_ = selected_dst_height;
@@ -232,7 +233,7 @@ CallerImpl::mthreads_call_int (
       ccall.srcs_.clear ();
       ccall.dsts_.clear ();
 
-      if (indx_thread >= athreads)
+      if (thread_indx >= athreads)
       {
         continue;
       }
@@ -242,7 +243,6 @@ CallerImpl::mthreads_call_int (
         io::ProxyBuf new_add = cbuf;
         new_add.reset_const ();
 
-        // U3_ASSERT ( new_add.buf () ); // допустимо, буфер источник может быть пустым, если он опциональный
         if (new_add.buf ())
         {
           const std::uint32_t macro_height      = new_add.height_ / funct.src_align_.px_y_;
@@ -301,8 +301,8 @@ CallerImpl::mthreads_call_int (
         ccall.dsts_.push_back (new_add);
       }
 
-      thread_funcs_[indx_thread] = funct.pfunc_->get ();
-      ++indx_thread;
+      thread_funcs_[thread_indx] = funct.pfunc_->get ();
+      ++thread_indx;
     }
   }
 
@@ -316,7 +316,7 @@ CallerImpl::mthreads_call_int (
 void
 CallerImpl::stop_and_wait_threads ()
 {
-  U3_XLOG_MARK ("CallerImpl::stop_and_wait_threads->");
+  U3_XLOG_MARK ("CallerImpl::stop_and_wait_threads::---->");
   try
   {
     MTFuncInfo    fake_funct;
@@ -341,9 +341,9 @@ CallerImpl::stop_and_wait_threads ()
       }
     }
   }
-  catch (const std::exception& e)
+  catch (const std::exception& excpt)
   {
-    U3_XLOG_ERROR (e.what ());
+    U3_XLOG_ERROR (excpt.what ());
   }
   catch (...)
   {
@@ -351,35 +351,37 @@ CallerImpl::stop_and_wait_threads ()
   }
 
   max_threads_ = 0;
-  U3_XLOG_MARK ("CallerImpl::stop_and_wait_threads<-");
+  U3_XLOG_MARK ("CallerImpl::stop_and_wait_threads::<----");
 }
 
 
 void
 CallerImpl::create_threads ()
 {
-  U3_XLOG_DEV ("CallerImpl::create_threads START" + VTOLOG (max_threads_));
+  U3_XLOG_DBG ("CallerImpl::create_threads::---->");
   sinfo_.bstart_       = std::make_unique< MTFuncSharedInfo::barier_type > (max_threads_ + 1);
   sinfo_.exit_request_ = false;
 
   threads_.clear ();
   threads_.reserve (max_threads_);
 
-  for (std::uint16_t indx_thread = 0; indx_thread < max_threads_; ++indx_thread)
+  U3_XLOG_DBG ("CallerImpl::create_threads::" + VTOLOG (max_threads_));
+  for (std::uint16_t thread_indx = 0; thread_indx < max_threads_; ++thread_indx)
   {
     threads_.emplace_back (
-      ::libs::helpers::thread::generic_thread_funct< CallerImpl, libs::properties::vers::links::mids::mdata2appl >,
+      ::libs::helpers::thread::generic_thread_funct< CallerImpl >,
+      libs::properties::vers::links::mids::mdata2appl,
       this,
-      indx_thread);
+      thread_indx);
   }
 
   U3_ASSERT (threads_.size () == max_threads_);
-  U3_XLOG_DEV ("CallerImpl::create_threads STOP" + VTOLOG (max_threads_));
+  U3_XLOG_DBG ("CallerImpl::create_threads::<----");
 }
 
 
 void
-CallerImpl::thread_func_impl (const std::uint32_t indx_thread)
+CallerImpl::thread_func_impl (const std::uint32_t thread_indx)
 {
   ::libs::helpers::thread::set_thread_priority (std::this_thread::get_id (), ::libs::helpers::thread::Priorities::below_normal);
 
@@ -393,7 +395,7 @@ CallerImpl::thread_func_impl (const std::uint32_t indx_thread)
       sinfo_.bstart_->arrive_and_wait ();
       break;
     }
-    if (!thread_funcs_[indx_thread])
+    if (!thread_funcs_[thread_indx])
     {
       // release main thread
       sinfo_.bstart_->arrive_and_wait ();
@@ -402,18 +404,18 @@ CallerImpl::thread_func_impl (const std::uint32_t indx_thread)
 
     try
     {
-      U3_ASSERT (calls_.size () > indx_thread);
-      U3_ASSERT (src_heights_.size () > indx_thread);
-      thread_funcs_[indx_thread](calls_[indx_thread]);
+      U3_ASSERT (calls_.size () > thread_indx);
+      U3_ASSERT (src_heights_.size () > thread_indx);
+      thread_funcs_[thread_indx](calls_[thread_indx]);
     }
-    catch (boost::exception& e)
+    catch (boost::exception& excpt)
     {
-      U3_XLOG_ERROR ("CallerImpl::thread_func_impl: exception " + std::string (boost::diagnostic_information_what (e)));
+      U3_XLOG_ERROR ("CallerImpl::thread_func_impl: exception " + std::string (boost::diagnostic_information_what (excpt)));
       U3_ASSERT_SIGNAL_NT ("failed");
     }
-    catch (std::exception& e)
+    catch (std::exception& excpt)
     {
-      U3_XLOG_ERROR ("CallerImpl::thread_func_impl: exception " + std::string (e.what ()));
+      U3_XLOG_ERROR ("CallerImpl::thread_func_impl: exception " + std::string (excpt.what ()) + TOLOG (calls_[thread_indx].func_id_) + VTOLOG (thread_indx));
       U3_ASSERT_SIGNAL_NT ("failed");
     }
     catch (...)
@@ -429,7 +431,7 @@ CallerImpl::thread_func_impl (const std::uint32_t indx_thread)
 
 
 void
-CallerImpl::thread_postfunc_impl (std::uint32_t indx_thread)
+CallerImpl::thread_postfunc_impl (std::uint32_t thread_indx)
 {
 }
 }   // namespace libs::optim::mcalls

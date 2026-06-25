@@ -2,7 +2,7 @@
 /**
 \file       base-nodes-data-event.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_imdata_events
 */
 
@@ -33,10 +33,11 @@ class BaseNodesDataEvent : public BaseDataEvent
   explicit BaseNodesDataEvent (const Acessor& = Acessor (0), const id_graph_type& id_graph = id_graph_type ());
   virtual ~BaseNodesDataEvent () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/imdata_events/events/base-nodes-data-event";
+    static constexpr const char* chret = "libs/imdata_events/events/base-nodes-data-event";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
@@ -46,9 +47,9 @@ class BaseNodesDataEvent : public BaseDataEvent
 
   protected:
   // virtual void load_int (const ::pugi::xml_named_node_iterator& prop) override;
-  virtual void load_json_int (const ::boost::json::object& obj) override;
-  virtual void save_json_int (::boost::json::object& obj) const override;
-  virtual void copy_int (const IEvent::craw_ptr src) override;
+  virtual auto load_json_int (const ::boost::json::object&) -> void override;
+  virtual auto save_json_int (::boost::json::object&) const -> void override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 
   private:
   // internal types
@@ -61,7 +62,7 @@ class BaseNodesDataEvent : public BaseDataEvent
   template< class Archive >
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
 };
 }   // namespace libs::imdata_events::events
 

@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       v4l2-const-vals.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */

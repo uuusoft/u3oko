@@ -2,7 +2,7 @@
 /**
 \file       expanded-time.hpp
 \date       01.05.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_helpers_lib
 */
 
@@ -12,8 +12,8 @@ namespace libs::helpers::statistic
 class ExpandedTime final
 {
   public:
-  ExpandedTime () = default;
-  virtual ~ExpandedTime ();
+  ExpandedTime ()          = default;
+  virtual ~ExpandedTime () = default;
 
   duration_type min_   = count_time_type (0);   //< минимальное время
   duration_type max_   = count_time_type (0);   //< максимальное время

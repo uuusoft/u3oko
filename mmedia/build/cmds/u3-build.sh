@@ -1,6 +1,6 @@
 #!/bin/bash
 # u3-build.sh
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        01.01.2026
 # copyright   Erashov A.I.
 
@@ -58,7 +58,7 @@ fi
 
 U3_FILE_TOOLCHAIN=$(basename ${U3_TOOLCHAIN} .cmake)
 U3_BIN=./../builds-${U3_LIBS_PREFIX}-${U3_BUILD_PREFIX}-${U3_SANITY}-${U3_FILE_TOOLCHAIN}-${U3_GENERATOR}
-#U3_EXT_PARAMS="-DU3_FORCE_COMPILE_ALL_EXT_LIBS=0"
+#U3_EXT_PARAMS="-DU3_FORCE_COMPILE_ALL_EXTLIBS=0"
 U3_ABSOULT_TOOLCHAIN=$(realpath ${U3_TOOLCHAIN})
 
 echo U3_APPL_NAME=${U3_APPL_NAME}
@@ -77,6 +77,7 @@ echo U3_USE_GIT_HASH_FOR_MARK_BUILD=${U3_USE_GIT_HASH_FOR_MARK_BUILD}
 
 cd ./../../
 
+# EAI-REFACT clang-tidy to optional
 #echo "start clang-tidy, results at ${U3_BIN}/clang-tidy-fixes.log"
 #run-clang-tidy -p ${U3_BIN} -config-file ./../.clang-tidy > ${U3_BIN}/clang-tidy-fixes.log 2>&1
 

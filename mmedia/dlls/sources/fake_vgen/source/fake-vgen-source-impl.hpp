@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       fake-vgen-source-impl.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_fake_vgen
 */
@@ -17,25 +17,25 @@ class SourceImpl final : public ::dlls::sources::gen_lib::ISourceImpl
 
   private:
   //  internal typess
-  using gen_func_type    = std::function< void (std::uint32_t width, std::uint32_t height, std::uint32_t stride, std::uint8_t* beg_buf) >;   //<
-  using gen_funcs_type   = std::unordered_map< ::libs::helpers::uids::minor::id_val, gen_func_type >;                                        //< Тип соответствия между индентификатором пикселей выходного формата и функции генерации
-  using rvals_array_type = std::array< std::uint8_t, 255 >;                                                                                  //< Тип для хранения случайно сгенерированных чисел
+  using gen_func_type          = std::function< void (std::uint32_t, std::uint32_t, std::uint32_t, std::uint8_t*) >;   //<
+  using gen_funcs_type         = std::unordered_map< syn::id_val, gen_func_type >;                                     //< Тип соответствия между индентификатором пикселей выходного формата и функции генерации
+  using random_vals_array_type = std::array< std::uint8_t, 255 >;                                                      //< Тип для хранения случайно сгенерированных чисел
 
   //  ::dlls::sources::gen_lib::ISourceImpl
-  virtual void init_int () override;
-  virtual void start_int () override;
-  virtual void stop_int () override;
-  virtual void get_sources_int (std::vector< syn::DataSourceInfo >& sources) override;
-  virtual void get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* events) override;
-  virtual void set_cpu_int (::libs::helpers::sys::cpu::CpuExts current_optim) override;
-  virtual void update_source_info_int (const syn::SourceImplInfo& info) override;
+  virtual auto init_int () -> void override;
+  virtual auto start_int () -> void override;
+  virtual auto stop_int () -> void override;
+  virtual auto get_sources_int (std::vector< syn::DataSourceInfo >& sources) -> void override;
+  virtual auto get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* events) -> void override;
+  virtual auto set_cpu_int (::libs::helpers::sys::cpu::CpuExts current_optim) -> void override;
+  virtual auto update_source_info_int (const syn::SourceImplInfo& info) -> void override;
 
   //  internals
-  bool free_int ();
-  void init_gen_funcs ();
-  void fill_rand_vals ();
+  auto free_int () -> bool;
+  auto init_gen_funcs () -> void;
+  auto fill_rand_vals () -> void;
 
-  rvals_array_type         rand_bcomp_;           //< Случайные числа для генерации шума
+  random_vals_array_type   rand_bcomp_;           //< Случайные числа для генерации шума
   std::uint64_t            indx_bcomp_ = 0;       //< Индекс в массиве случайных чисел
   boost::posix_time::ptime time_last_frame_;      //< Время последнег выданного кадра
   std::uint64_t            counter_frames_ = 0;   //< Счетчик выданных кадров

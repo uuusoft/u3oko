@@ -1,6 +1,6 @@
 /**
 \file       mjpeg-impl.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.05.2017
 \project    u3_vcodec_mjpg
 */
@@ -15,7 +15,7 @@ namespace dlls::codecs::vcodec_mjpg
 {
 MjpegImpl::MjpegImpl ()
 {
-  pthreads_ = U3_CAST_PROP (::libs::iproperties::vers::system::ISystemProperty::raw_ptr) (::libs::iproperties::helpers::get_shared_prop_os ())->get_mcalls_lockfree ();
+  pthreads_ = ::libs::iproperties::helpers::get_shared_prop_os ()->get_mcalls_lockfree ();
   simd_     = ::libs::helpers::sys::cpu::CpuExts::usual;
 }
 
@@ -81,7 +81,7 @@ MjpegImpl::comp_iframe (
   dst.check ("dst dlls::codecs::vcodec_mjpg");
 
   std::uint8_t*                     dbuf        = dst.ubuf ();
-  auto*                             head        = U3_CAST_CODECS< syn::HeaderIFrame* > (dbuf);
+  auto*                             head        = ::libs::helpers::casts::reinterpret_cast_helper< syn::HeaderIFrame* > (dbuf);
   std::int32_t                      from_header = 0;
   const ::libs::optim::io::ProxyBuf lsrc (temp_buf_.get (), "temp_buf dlls::codecs::vcodec_mjpg");
   const std::uint8_t*               cur_buf = temp_buf_->get_cbuf ();
@@ -224,9 +224,9 @@ MjpegImpl::decomp_iframe (
     temp_buf_->set_mem_var (::utils::dbufs::MemVars::size_data, size_res);
     temp_buf_->set_dim_var (utils::dbufs::video::Dims::stride, stride_res);
   }
-  catch (std::exception& e)
+  catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (std::string (e.what ()) + ", " + tjGetErrorStr () + VTOLOG (codec_error));
+    U3_LOG_DATA_EXCEPT (std::string (excpt.what ()) + ", " + tjGetErrorStr () + VTOLOG (codec_error));
     return false;
   }
   return true;

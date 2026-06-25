@@ -1,6 +1,6 @@
 #!/bin/bash
 # u3oko-linux-dbg-dll-thread-gcc.sh
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        01.01.2026
 # copyright   Erashov A.I.
 

@@ -1,6 +1,6 @@
 /**
 \file       gen-vgen-info-filter-dll.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       20.05.2017
 \project    u3_gen_vgen
 */
@@ -49,17 +49,16 @@ InfoFilter::~InfoFilter ()
       recv_thread_->join ();
       recv_thread_.reset ();
     }
-    //  останавливаем процесс приема данных по сети, удаляем объект для приема данных
-    //  удаляем все буфера с данными
+    //  останавливаем процесс приема данных по сети, удаляем объект для приема данных, удаляем все буфера с данными
     proxy2hardware_.clear ();
   }
-  catch (boost::exception& e)
+  catch (boost::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (boost::diagnostic_information (e));
+    U3_LOG_DATA_EXCEPT (boost::diagnostic_information (excpt));
   }
-  catch (std::exception& e)
+  catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what ());
+    U3_LOG_DATA_EXCEPT (excpt.what ());
   }
   catch (...)
   {
@@ -92,7 +91,7 @@ bool
 InfoFilter::load_int (const ::pugi::xml_named_node_iterator& node)
 {
   synced_ = false;
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   // U3-REFACT
   if (auto impl = capture_impl_.lock ())
   {

@@ -1,6 +1,6 @@
 /**
 \file       video-detect-prop.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_ievents_lib
 */
@@ -12,8 +12,7 @@
 
 namespace libs::ievents::props::videos::generic::detect
 {
-VideoDetectProp::VideoDetectProp (const Acessor& pha) :
-  id_morph_op_ (to_string (libs::ievents::props::videos::generic::morph::MorphOps::erosion))
+VideoDetectProp::VideoDetectProp (const Acessor& pha)
 {
   property_name_ = gen_get_mid ();
 }

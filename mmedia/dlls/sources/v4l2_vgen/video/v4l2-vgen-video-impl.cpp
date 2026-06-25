@@ -1,6 +1,6 @@
 /**
 \file       v4l2-vgen-video-impl.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */
@@ -10,7 +10,7 @@
 #include "v4l2-vgen-video-impl.hpp"
 
 // old shit
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 namespace dlls::sources::v4l2_vgen::video
 {
 MMAL_STATUS_T
@@ -82,51 +82,51 @@ create_video_component (DriverState* state)
   CHECK_STATUS (mmal_port_format_commit (video_output), "Unable to set format on video output port");
   CHECK_STATUS (mmal_port_parameter_set_boolean (video_input, MMAL_PARAMETER_VIDEO_IMMUTABLE_INPUT, state->immutable_video_input_), "set immutable_video_input_");
 
-#  if 0
-   //set INLINE HEADER flag to generate SPS and PPS for every IDR if requested
-   if (mmal_port_parameter_set_boolean(encoder_output, MMAL_PARAMETER_VIDEO_ENCODE_INLINE_HEADER, state->bInlineHeaders) != MMAL_SUCCESS)
-   {
-      vcos_log_error("to set INLINE HEADER FLAG parameters");
-      // Continue rather than abort..
-   }
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
+  // set INLINE HEADER flag to generate SPS and PPS for every IDR if requested
+  if (mmal_port_parameter_set_boolean (encoder_output, MMAL_PARAMETER_VIDEO_ENCODE_INLINE_HEADER, state->bInlineHeaders) != MMAL_SUCCESS)
+  {
+    vcos_log_error ("to set INLINE HEADER FLAG parameters");
+    // Continue rather than abort..
+  }
 
-   //set INLINE VECTORS flag to request motion vector estimates
-   if (state->encoding == MMAL_ENCODING_H264 &&
-       mmal_port_parameter_set_boolean(encoder_output, MMAL_PARAMETER_VIDEO_ENCODE_INLINE_VECTORS, state->inlineMotionVectors) != MMAL_SUCCESS)
-   {
-      vcos_log_error("to set INLINE VECTORS parameters");
-      // Continue rather than abort..
-   }
+  // set INLINE VECTORS flag to request motion vector estimates
+  if (state->encoding == MMAL_ENCODING_H264 &&
+      mmal_port_parameter_set_boolean (encoder_output, MMAL_PARAMETER_VIDEO_ENCODE_INLINE_VECTORS, state->inlineMotionVectors) != MMAL_SUCCESS)
+  {
+    vcos_log_error ("to set INLINE VECTORS parameters");
+    // Continue rather than abort..
+  }
 
-   // Adaptive intra refresh settings
-   if (state->encoding == MMAL_ENCODING_H264 &&
-       state->intra_refresh_type != -1)
-   {
-      MMAL_PARAMETER_VIDEO_INTRA_REFRESH_T  param;
-      param.hdr.id = MMAL_PARAMETER_VIDEO_INTRA_REFRESH;
-      param.hdr.size = sizeof(param);
+  // Adaptive intra refresh settings
+  if (state->encoding == MMAL_ENCODING_H264 &&
+      state->intra_refresh_type != -1)
+  {
+    MMAL_PARAMETER_VIDEO_INTRA_REFRESH_T param;
+    param.hdr.id   = MMAL_PARAMETER_VIDEO_INTRA_REFRESH;
+    param.hdr.size = sizeof (param);
 
-      // Get first so we don't overwrite anything unexpectedly
-      status = mmal_port_parameter_get(encoder_output, &param.hdr);
-      if (status != MMAL_SUCCESS)
-      {
-         vcos_log_warn("Unable to get existing H264 intra-refresh values. Please update your firmware");
-         // Set some defaults, don't just pass random stack data
-         param.air_mbs = param.air_ref = param.cir_mbs = param.pir_mbs = 0;
-      }
+    // Get first so we don't overwrite anything unexpectedly
+    status = mmal_port_parameter_get (encoder_output, &param.hdr);
+    if (status != MMAL_SUCCESS)
+    {
+      vcos_log_warn ("Unable to get existing H264 intra-refresh values. Please update your firmware");
+      // Set some defaults, don't just pass random stack data
+      param.air_mbs = param.air_ref = param.cir_mbs = param.pir_mbs = 0;
+    }
 
-      param.refresh_mode = state->intra_refresh_type;
+    param.refresh_mode = state->intra_refresh_type;
 
-      //if (state->intra_refresh_type == MMAL_VIDEO_INTRA_REFRESH_CYCLIC_MROWS)
-      //   param.cir_mbs = 10;
+    // if (state->intra_refresh_type == MMAL_VIDEO_INTRA_REFRESH_CYCLIC_MROWS)
+    //    param.cir_mbs = 10;
 
-      status = mmal_port_parameter_set(encoder_output, &param.hdr);
-      if (status != MMAL_SUCCESS)
-      {
-         vcos_log_error("Unable to set H264 intra-refresh values");
-         goto error;
-      }
-   }
+    status = mmal_port_parameter_set (encoder_output, &param.hdr);
+    if (status != MMAL_SUCCESS)
+    {
+      vcos_log_error ("Unable to set H264 intra-refresh values");
+      goto error;
+    }
+  }
 
 #  endif
   //  Enable component
@@ -317,7 +317,7 @@ VideoImpl::buf_callback_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
   lock_type     lock (mtx_);
   MMAL_STATUS_T status   = MMAL_SUCCESS;
   bool          complete = false;
-  DriverState*  devstate = reinterpret_cast< DriverState* > (port->userdata);
+  DriverState*  devstate = ::libs::helpers::casts::reinterpret_cast_helper< DriverState* > (port->userdata);
 
   U3_CHECK (devstate, "Received a camera still buf callback with no state");
 
@@ -345,7 +345,7 @@ VideoImpl::buf_callback_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 
       video_frame_size_ = sizeof (HeaderIFrame);
       //::utils::dbufs::video::helpers::override_data (*buf, 0, video_frame_size_);
-      HeaderIFrame* head = U3_CAST_CODECS< HeaderIFrame* > (buf->get_buf ());
+      HeaderIFrame* head = ::libs::helpers::casts::reinterpret_cast_helper< HeaderIFrame* > (buf->get_buf ());
 
       head->reset ();
 
@@ -379,7 +379,7 @@ VideoImpl::buf_callback_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
       empty_video_bufs_.pop_front ();
       ready_video_bufs_.push_back (buf);
 
-      HeaderIFrame* head = U3_CAST_CODECS< HeaderIFrame* > (buf->get_buf ());
+      HeaderIFrame* head = ::libs::helpers::casts::reinterpret_cast_helper< HeaderIFrame* > (buf->get_buf ());
 
       head->base_part_.size_compress_ = video_frame_size_ - sizeof (HeaderIFrame);
       head->csize_                    = video_frame_size_ - sizeof (HeaderIFrame);
@@ -404,8 +404,6 @@ VideoImpl::buf_callback_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
       //  vcodec_mjpg::consts::guid_codec.get_vals().begin(),???
       // vcodec_mjpg::consts::guid_codec.get_vals().end(),
       // head->base_part_.guid_);
-
-      // U3_ASSERT(head->check());
     }
 
     complete          = true;

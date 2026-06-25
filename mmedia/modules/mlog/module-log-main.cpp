@@ -1,6 +1,6 @@
 /**
 \file       module-log-main.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    mlog
 \brief      Модуль логирования

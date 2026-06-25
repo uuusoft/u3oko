@@ -1,6 +1,6 @@
 /**
 \file       cast_events_funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       04.08.2018
 \project    u3_iproperties_lib
 */
@@ -14,7 +14,7 @@ namespace libs::iproperties::helpers
 ::libs::events::io::IEvents::raw_ptr
 get_events_impl ()
 {
-  auto events = U3_CAST_PROP (vers::demon::IDemonsProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_demons ())->get_events_lockfree ();
+  auto* events = ::libs::iproperties::helpers::cast_prop_demons ()->get_events_lockfree ();
   U3_CHECK (events, "empty events");
   auto* impl = events->impl ();
   U3_CHECK (impl, "empty events impl");
@@ -23,47 +23,63 @@ get_events_impl ()
 
 
 ::libs::events::IEvent::ptr
-get_pure_event_int (const ::libs::events::IEvent::hid_type& id)
+get_pure_event_int (const ::libs::events::IEvent::hid_type& eid)
 {
   auto* impl = get_events_impl ();
-  auto  res  = impl->get (id);
-  U3_CHECK (res, "get_pure_event_int:" + id);
+  auto  res  = impl->get (eid);
+  U3_CHECK (res, "get_pure_event_int:" + STOLOG (eid));
   return res;
 }
 
-
+#if 1
 void*
-cast_event_int (const ::libs::events::IEvent::ptr& event, const ::libs::events::IEvent::hid_type& id)
+cast_event_int (const ::libs::events::IEvent::ptr& event, const ::libs::events::IEvent::hid_type& eid)
 {
+  if (!event)
+  {
+    return nullptr;
+  }
   auto* impl = get_events_impl ();
-  auto* res  = impl->dcast (event.get (), id);
+  auto* res  = impl->dcast (event.get (), eid);
+  return const_cast< void* > (res);
+}
+#endif
+
+const void*
+cast_event_int (const ::libs::events::IEvent::cptr& event, const ::libs::events::IEvent::hid_type& eid)
+{
+  if (!event)
+  {
+    return nullptr;
+  }
+  auto* impl = get_events_impl ();
+  auto* res  = impl->dcast (event.get (), eid);
   return res;
 }
 
-
+#if 1
 void*
-cast_event_int (const ::libs::events::IEvent::cptr& event, const ::libs::events::IEvent::hid_type& id)
+cast_event_int (::libs::events::IEvent::raw_ptr event, const ::libs::events::IEvent::hid_type& eid)
 {
+  if (!event)
+  {
+    return nullptr;
+  }
   auto* impl = get_events_impl ();
-  auto* res  = impl->dcast (event.get (), id);
-  return res;
+  auto* res  = impl->dcast (event, eid);
+  return const_cast< void* > (res);
 }
+#endif
 
-
-void*
-cast_event_int (::libs::events::IEvent::raw_ptr event, const ::libs::events::IEvent::hid_type& id)
+const void*
+cast_event_int (::libs::events::IEvent::craw_ptr event, const ::libs::events::IEvent::hid_type& eid)
 {
+  if (!event)
+  {
+    return nullptr;
+  }
   auto* impl = get_events_impl ();
-  auto* res  = impl->dcast (event, id);
-  return res;
-}
-
-
-void*
-cast_event_int (::libs::events::IEvent::craw_ptr event, const ::libs::events::IEvent::hid_type& id)
-{
-  auto* impl = get_events_impl ();
-  auto* res  = impl->dcast (event, id);
+  auto* res  = impl->dcast (event, eid);
   return res;
 }
 
@@ -86,7 +102,7 @@ event2xml (::libs::events::IEvent::ptr& src)
 
   auto*       impl = get_events_impl ();
   std::string xml;
-  U3_CHECK (impl->event2xml (src, xml), "event2xml - " + TOLOG (src->get_mid ()));
+  U3_CHECK (impl->event2xml (src, xml), "event2xml - " + STOLOG (src->get_mid ()));
   return xml;
 }
 
@@ -111,7 +127,7 @@ void
 event2bin (::libs::events::IEvent::ptr& src, std::ostream& bin)
 {
   auto* impl = get_events_impl ();
-  U3_CHECK (impl->event2bin (src, bin), "event2bin - " + TOLOG (src->get_mid ()));
+  U3_CHECK (impl->event2bin (src, bin), "event2bin - " + STOLOG (src->get_mid ()));
 }
 
 

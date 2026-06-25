@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       ishared-property-storage.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_properties_libs
 */
@@ -19,9 +19,10 @@ class ISharedPropertyStorage
   ISharedPropertyStorage& operator= (const ISharedPropertyStorage&) = delete;
 
   //  ISharedPropertyStorage interface
-  virtual ISharedProperty::raw_ptr get (const consts::keys::key_property_type&)                                   = 0;
-  virtual void                     set_prop (const consts::keys::key_property_type&, const ISharedProperty::ptr&) = 0;
-  virtual void                     reset_prop (const consts::keys::key_property_type&)                            = 0;
+  virtual auto check (const consts::keys::key_property_type&) const -> bool                           = 0;
+  virtual auto get (const consts::keys::key_property_type&) -> ISharedProperty::raw_ptr               = 0;
+  virtual auto set_prop (const consts::keys::key_property_type&, const ISharedProperty::ptr&) -> void = 0;
+  virtual auto reset_prop (const consts::keys::key_property_type&) -> void                            = 0;
 
   protected:
   ISharedPropertyStorage ()          = default;

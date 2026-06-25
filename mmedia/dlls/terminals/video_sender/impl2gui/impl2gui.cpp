@@ -1,6 +1,6 @@
 /**
 \file       impl2gui.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       14.08.2018
 \project    u3_video_sender_dll
 */
@@ -20,7 +20,7 @@ Impl2Gui::send_int (
   const syn::Buff2ModuleInfo::craw_ptr minfo,
   syn::IVideoBuf::raw_ptr              send_buf)
 {
-  ::libs::link::ILink::ptr helper = U3_CAST_PROP (::libs::properties::vers::links::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ())->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
+  ::libs::link::ILink::ptr helper = ::libs::iproperties::helpers::get_prop_links ()->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
   if (!helper)
   {
     U3_LOG_DATA_WRN ("skip send msg to gui" + VTOLOG (finfo.count_frames_) + VTOLOG (send_buf->get_dim_var (utils::dbufs::video::Dims::height)));
@@ -39,7 +39,7 @@ Impl2Gui::fill_frame (const syn::TransformInfo& info, void* pmem)
 
   try
   {
-    auto       header = ::libs::helpers::casts::reinterpret_cast_helper< ::modules::mgui::appl::io::VideoIO* > (pmem);
+    auto*      header = ::libs::helpers::casts::reinterpret_cast_helper< ::modules::mgui::appl::io::VideoIO* > (pmem);
     const auto bbuf   = (**info.ibuf_)[utils::dbufs::video::consts::offs::lit];
 
     U3_CHECK (header, "empty header video frame");
@@ -82,14 +82,14 @@ Impl2Gui::fill_frame (const syn::TransformInfo& info, void* pmem)
       off_buf += (*buf)[::utils::dbufs::MemVars::size_data];
     }
   }
-  catch (boost::exception& e)
+  catch (boost::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (boost::diagnostic_information (e));
+    U3_LOG_DATA_EXCEPT (boost::diagnostic_information (excpt));
     ret = false;
   }
-  catch (std::exception& e)
+  catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (e.what ());
+    U3_LOG_DATA_EXCEPT (excpt.what ());
     ret = false;
   }
   return ret;
@@ -100,7 +100,7 @@ bool
 Impl2Gui::is_empty_frame (const void* pmem) const
 {
   U3_ASSERT (pmem);
-  auto header = ::libs::helpers::casts::reinterpret_cast_helper< const ::modules::mgui::appl::io::VideoIO* > (pmem);
+  const auto* header = ::libs::helpers::casts::reinterpret_cast_helper< const ::modules::mgui::appl::io::VideoIO* > (pmem);
   return header->in_.is_valid () ? false : true;
 }
 
@@ -114,7 +114,7 @@ Impl2Gui::send_frame (
   if (U3_MARK_UNUSED auto imem = helper->get_imem ())
   {
     U3_ASSERT_SIGNAL ("failed");
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
     if (finfo_.last_hmem_.check ())
     {
       if (!helper->mem_atomic_call (finfo_.last_hmem_, IsEmptyFrameHelper (this)))

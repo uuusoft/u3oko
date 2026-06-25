@@ -1,6 +1,6 @@
 /**
 \file       ycb_rgb24_neon.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       30.07.2018
 \project    u3_optim_gen_convert
 */

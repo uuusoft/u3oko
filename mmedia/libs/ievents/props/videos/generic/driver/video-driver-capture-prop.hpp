@@ -2,7 +2,7 @@
 /**
 \file       video-driver-capture-prop.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_ievents_lib
 */
 
@@ -30,7 +30,7 @@ struct VideoDriverCapturePropInfo {
 };
 
 /// Свойства для устройства захвата видео
-class VideoDriverCaptureProp final : public ievents::Event
+class VideoDriverCaptureProp final : virtual public ievents::Event
 {
   friend class boost::serialization::access;
   friend ::dlls::devents::impl::EventsImpl;
@@ -50,10 +50,11 @@ class VideoDriverCaptureProp final : public ievents::Event
   explicit VideoDriverCaptureProp (const Acessor& = Acessor (0));
   virtual ~VideoDriverCaptureProp () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/ievents/props/videos/generic/driver/video-driver-capture-prop";
+    static constexpr const char* chret = "libs/ievents/props/videos/generic/driver/video-driver-capture-prop";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
@@ -67,10 +68,10 @@ class VideoDriverCaptureProp final : public ievents::Event
   template< class Archive >
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void                        load_json_int (const ::boost::json::object& obj) override;
-  virtual void                        save_json_int (::boost::json::object& obj) const override;
-  virtual void                        copy_int (const IEvent::craw_ptr src) override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
+  virtual auto load_json_int (const ::boost::json::object&) -> void override;
+  virtual auto save_json_int (::boost::json::object&) const -> void override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 };
 }   // namespace libs::ievents::props::videos::generic::driver
 

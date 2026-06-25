@@ -2,7 +2,7 @@
 /**
 \file     window2rgb.hpp
 \brief    Функция сохраняет образ указанного окна в указанном BMP файле
-\author   Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author   Erashov Anton erashov2026@proton.me
 \date     26.05.2016
 */
 #ifdef U3_OS_WIN32_DESKTOP

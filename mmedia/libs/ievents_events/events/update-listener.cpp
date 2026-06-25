@@ -1,6 +1,6 @@
 /**
 \file       update-listener.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       17.09.2018
 \project    u3_ievents_lib
 */
@@ -15,7 +15,7 @@ void
 tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const SubscribeActions& src)
 {
   jvs = {
-    { "action", U3_CAST_UINT64_FORCE (src) }
+    { "subscribe_actions", U3_CAST_UINT64_FORCE (src) }
   };
 }
 
@@ -24,7 +24,7 @@ SubscribeActions
 tag_invoke (::boost::json::value_to_tag< SubscribeActions >, const ::boost::json::value& jvs)
 {
   const ::boost::json::object& obj = jvs.as_object ();
-  return ::libs::helpers::casts::static_cast_helper< SubscribeActions > (::libs::helpers::json::get_uint64 (obj.at ("action")));
+  return ::libs::helpers::casts::static_cast_helper< SubscribeActions > (::libs::helpers::json::get_uint64 (obj.at ("subscribe_actions")));
 }
 
 
@@ -63,8 +63,8 @@ UpdateListener::set_event_types (const hids_storage_type& event_types)
 }
 
 
-const std::vector< ::libs::events::IEvent::hid_type >&
-UpdateListener::get_event_types () const
+auto
+UpdateListener::get_event_types () const -> const hids_storage_type&
 {
   return event_types_;
 }
@@ -98,10 +98,10 @@ UpdateListener::load_json_int (const ::boost::json::object& obj)
 
   // listener_id_ = ::boost::json::value_to< std::string > (obj.at ("listener_id"));
   listener_id_ = obj.at ("listener_id").as_string ();
-  action_      = ::boost::json::value_to< SubscribeActions > (obj.at ("action"));
+  action_      = ::boost::json::value_to< SubscribeActions > (obj.at ("subscribe_actions"));
   event_types_ = ::boost::json::value_to< hids_storage_type > (obj.at ("event_types"));
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   id_                   = obj.at ("id").as_string ();
   number_               = ::libs::helpers::json::get_int64 (obj.at ("number"));
   request_for_transmit_ = obj.at ("request_for_transmit").as_bool ();
@@ -116,9 +116,9 @@ UpdateListener::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
 
-  obj["listener_id"] = ::boost::json::value_from (listener_id_);
-  obj["action"]      = ::boost::json::value_from (action_);
-  obj["event_types"] = ::boost::json::value_from (event_types_);
+  obj["listener_id"]       = ::boost::json::value_from (listener_id_);
+  obj["subscribe_actions"] = ::boost::json::value_from (action_);
+  obj["event_types"]       = ::boost::json::value_from (event_types_);
 }
 
 

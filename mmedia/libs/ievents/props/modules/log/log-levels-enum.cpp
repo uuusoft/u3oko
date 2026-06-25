@@ -1,6 +1,6 @@
 /**
 \file       log-levels-enum.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       02.03.2022
 \project    u3_ilog_events
 */

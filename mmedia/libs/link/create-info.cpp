@@ -1,6 +1,6 @@
 /**
 \file       create-info.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_link
 */
@@ -52,9 +52,9 @@ CreateInfo::CreateInfo (
   const std::string msg2dest        = get_prefix () + ".msgs";
   const std::string name_shared_mem = get_prefix () + ".shared_mem";
 
-  U3_XLOG_DEV (TOLOG (msg2dest));
-  U3_ASSERT (!msg2dest.empty ());
-  U3_ASSERT (!name_shared_mem.empty ());
+  U3_XLOG_DBG ("id link" + TOLOG (msg2dest));
+  U3_CHECK (!msg2dest.empty (), TOLOG (msg2dest));
+  U3_CHECK (!name_shared_mem.empty (), "!name_shared_mem.empty" + TOLOG (msg2dest));
 
   args_.reserve (64);
 
@@ -117,7 +117,7 @@ CreateInfo::get_prefix () const
 bool
 CreateInfo::operator< (const CreateInfo& op) const
 {
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   if (create_side_ < op.create_side_)
   {
     return true;

@@ -1,17 +1,19 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        27.08.2024
 # copyright   Erashov A.I.
 # file        u3-url-validate-func.cmake
 
 function(u3_validate_url)
-  if(NOT DEFINED U3_ENV_GEN_FOLDER_EXT_LIBS)
-    message(FATAL_ERROR "U3_ENV_GEN_FOLDER_EXT_LIBS=${U3_ENV_GEN_FOLDER_EXT_LIBS} not defined")
+  unset(U3_FUNCT_RESULT PARENT_SCOPE)
+
+  if(NOT DEFINED U3_ENV_GEN_FOLDER_EXTLIBS)
+    message(FATAL_ERROR "U3_ENV_GEN_FOLDER_EXTLIBS=${U3_ENV_GEN_FOLDER_EXTLIBS} not defined")
   endif()
 
   cmake_parse_arguments(U3_GVXX_VALIDATE_URL "" "URL" "" ${ARGN})
 
-  set(U3_GVXX_VALIDATE_URL_OUTPUT_FILE "${U3_ENV_GEN_FOLDER_EXT_LIBS}/temp-output-validate_url.bin")
-  set(U3_GVXX_VALIDATE_URL_ERROR_FILE "${U3_ENV_GEN_FOLDER_EXT_LIBS}/temp-error-validate_url.bin")
+  set(U3_GVXX_VALIDATE_URL_OUTPUT_FILE "${U3_ENV_GEN_FOLDER_EXTLIBS}/temp-output-validate_url.bin")
+  set(U3_GVXX_VALIDATE_URL_ERROR_FILE "${U3_ENV_GEN_FOLDER_EXTLIBS}/temp-error-validate_url.bin")
   set(U3_GVXX_VALIDATE_URL_RESULT -1)
 
   message(VERBOSE "WGET_EXECUTABLE=${WGET_EXECUTABLE}")

@@ -1,7 +1,7 @@
 /**
 \file       ievents-proxy.cpp
 \date       14.04.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_proxy_libs
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -44,13 +44,13 @@ IEventsProxy::IEventsProxy (const std::string& dll_path)
   {
     lib_.load (cpath, boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
   }
-  catch (boost::exception& e)
+  catch (boost::exception& excpt)
   {
-    U3_XLOG_ERROR ("load lib " + std::string (boost::diagnostic_information_what (e, true)));
+    U3_XLOG_ERROR ("load lib " + std::string (boost::diagnostic_information_what (excpt, true)));
   }
 
 #  ifdef U3_OS_ANDROID
-  creator_ = reinterpret_cast< create_func_type* > (dlsym (lib_.native (), "create_impl_vdd_devents"));
+  creator_ = ::libs::helpers::casts::reinterpret_cast_helper< create_func_type* > (dlsym (lib_.native (), "create_impl_vdd_devents"));
 #  else
   creator_ = ::boost::dll::import_symbol< create_func_type > (lib_, "create_impl_vdd_devents");
 #  endif

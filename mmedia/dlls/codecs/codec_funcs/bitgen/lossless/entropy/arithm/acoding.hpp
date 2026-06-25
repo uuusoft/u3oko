@@ -1,12 +1,12 @@
 #pragma once
 /**
 \file       acoding.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_codec_funcs
 */
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 /// Функция арифмтического кодирования
 HRESULT
 MainCodecObject1::CompressWithACoding (
@@ -83,16 +83,16 @@ MainCodecObject1::CompressWithACoding (
       len_prev_escape++;
       prev_null_escape = true;
 
-#  if 0
-      //специально обрабатываем случай, когда последоватльность стала равна 255 - это максимально возможная длина
-      //полседовальности - делим ее
-      if( len_prev_escape == 255 )
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
+      // специально обрабатываем случай, когда последоватльность стала равна 255 - это максимально возможная длина
+      // полседовальности - делим ее
+      if (len_prev_escape == 255)
       {
-        output[ (*size_compress_output )++ ] = 0;
-        output[ (*size_compress_output )++ ] = len_prev_escape;
+        output[(*size_compress_output)++] = 0;
+        output[(*size_compress_output)++] = len_prev_escape;
 
         prev_null_escape = false;
-        len_prev_escape = 0;
+        len_prev_escape  = 0;
       };
 #  endif
     };
@@ -108,24 +108,24 @@ MainCodecObject1::CompressWithACoding (
   };
 
 
-#  if 0
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 
-  //проходим по блокам и выводим текущие буфера сжатия и расжатия
-  char deb_buf1[ 128 ];
-  MSG( "Uncompress buf" );
+  // проходим по блокам и выводим текущие буфера сжатия и расжатия
+  char deb_buf1[128];
+  MSG ("Uncompress buf");
 
-  for( i1 = 0; i1 < size_input; i1++ )
+  for (i1 = 0; i1 < size_input; i1++)
   {
-    sprintf( deb_buf1, "%i", input[ i1 ] );
-    MSG( deb_buf1 );
+    sprintf (deb_buf1, "%i", input[i1]);
+    MSG (deb_buf1);
   };
 
-  MSG( "Compress buf with RLE" );
+  MSG ("Compress buf with RLE");
 
-  for( i1 = 0; i1 < *size_compress_output; i1++ )
+  for (i1 = 0; i1 < *size_compress_output; i1++)
   {
-    sprintf( deb_buf1, "%i", (*output )[ i1 ] );
-    MSG( deb_buf1 );
+    sprintf (deb_buf1, "%i", (*output)[i1]);
+    MSG (deb_buf1);
   };
 
 #  endif

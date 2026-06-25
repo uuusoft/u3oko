@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       vcodec-gen-filter-dll.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.07.2016
 \project    u3_vcodec_gen
 */
@@ -23,12 +23,12 @@ class Filter final :
   // internal types
   U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
   // IFilter overrides
-  virtual void load_int (::libs::icore::impl::var1::obj::FilterInfo* info, const ::pugi::xml_named_node_iterator& node) override;
-  virtual void transform_int (syn::TransformInfo& info) override;
-  virtual void call_int (::libs::icore::impl::var1::obj::dll::CallInterfInfo& info) override;
+  virtual auto load_int (syn::FilterInfo*, const ::pugi::xml_named_node_iterator&) -> void override;
+  virtual auto transform_int (syn::TransformInfo&) -> void override;
+  virtual auto call_int (syn::CallInterfInfo&) -> void override;
 
   // internals
-  void init_pts (::libs::icore::impl::var1::obj::ConnectInfo* info);
+  auto init_pts (syn::ConnectInfo*) -> void;
   void log_statistic ();
   void process_frame (syn::TransformInfo& info);
   bool prepare_process_frame (syn::TransformInfo& info);

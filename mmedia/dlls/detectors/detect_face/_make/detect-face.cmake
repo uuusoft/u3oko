@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        01.01.2017
 # copyright   Erashov A.I.
 # file        detect-face.cmake
@@ -12,10 +12,10 @@ set(U3_LOCAL_DETECT_FACE_LIB_EXTENDED_LIBS turbo_jpeg-lib dbufs-dll)
 #set(U3_LOCAL_DETECT_FACE_LIB_EXTENDED_LIBS optim-lib turbo_jpeg-lib dbufs-dll)
 set(U3_LOCAL_DETECT_FACE_LIB_DEPEND_TARGETS turbo_jpeg-util dbufs-dll)
 
-if(U3_DBG_EXTERNAL_LIB_SKIP_DLIB)
+if(U3_DBG_EXTLIB_SKIP_DLIB)
   set(U3_SHARED_COMPILE_DEF_CPP ${U3_SHARED_COMPILE_DEF_CPP} -DU3_SKIP_DLIB=1)
 else()
-  if(NOT U3_DBG_FORCE_COMPILE_AT_BEGIN_ALL_EXT_LIBS)
+  if(NOT U3_DBG_COMPILE_AT_BEGIN_EXTLIBS)
     include("./build/cmake/libs/dlib/u3-dlib-lib.cmake")
   endif()
   set(U3_LOCAL_DETECT_FACE_LIB_DEPEND_TARGETS ${U3_LOCAL_DETECT_FACE_LIB_DEPEND_TARGETS} dlib-util)
@@ -43,5 +43,5 @@ u3_add_target_dylib(
   dbufs-dll
   ${U3_LOCAL_DETECT_FACE_LIB_DEPEND_TARGETS})
 
-target_include_directories(detect-face-vdd SYSTEM PRIVATE "${U3_INCLUDE_DIR_EXTERNAL_LIB_DLIB}")
-target_include_directories(detect-face-vdd SYSTEM PRIVATE "${U3_INCLUDE_DIR_EXTERNAL_LIB_TURBO_JPEG}")
+target_include_directories(detect-face-vdd SYSTEM PRIVATE "${U3_INCLUDE_DIR_EXTLIB_DLIB}")
+target_include_directories(detect-face-vdd SYSTEM PRIVATE "${U3_INCLUDE_DIR_EXTLIB_TURBO_JPEG}")

@@ -3,7 +3,7 @@
 /**
 \file       list-devices-data-event.hpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_imdata_events
 \brief      Объявление интерфейса события для обработки списка устройств системы
 */
@@ -70,19 +70,20 @@ class ListDevicesDataEvent : public BaseDataEvent
     const src_names_type&    group   = src_names_type (),
     const src_devinfos_type& devices = src_devinfos_type ());
 
-  virtual ~ListDevicesDataEvent ();
+  virtual ~ListDevicesDataEvent () = default;
 
-  static const IEvent::hid_type&
-  gen_get_mid ()
+  static constexpr auto
+  gen_get_mid () -> const IEvent::hid_type&
   {
-    static const IEvent::hid_type ret = "libs/imdata_events/events/list-devices-data-event";
+    static constexpr const char* chret = "libs/imdata_events/events/list-devices-data-event";
+    static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }
 
-  const ListDevicesDataEvent::src_names_type& get_source_dll_names () const;
-  void                                        set_source_dll_names (ListDevicesDataEvent::src_names_type&& src);
-  const ListDevicesDataEvent::src_infos_type& get_devices_for_dll (std::size_t indx) const;
-  void                                        set_devices_for_dll (std::size_t indx, ListDevicesDataEvent::src_infos_type&& src);
+  auto get_source_dll_names () const -> const ListDevicesDataEvent::src_names_type&;
+  auto set_source_dll_names (ListDevicesDataEvent::src_names_type&&) -> void;
+  auto get_devices_for_dll (std::size_t) const -> const ListDevicesDataEvent::src_infos_type&;
+  auto set_devices_for_dll (std::size_t, ListDevicesDataEvent::src_infos_type&& src) -> void;
 
   private:
   // internal types
@@ -96,10 +97,10 @@ class ListDevicesDataEvent : public BaseDataEvent
   template< class Archive >
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
 
-  virtual void                        load_json_int (const ::boost::json::object& obj) override;
-  virtual void                        save_json_int (::boost::json::object& obj) const override;
-  virtual ::libs::events::IEvent::ptr clone_int (const ::libs::events::Deeps& deep) const override;
-  virtual void                        copy_int (const IEvent::craw_ptr src) override;
+  virtual auto load_json_int (const ::boost::json::object&) -> void override;
+  virtual auto save_json_int (::boost::json::object&) const -> void override;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 };
 }   // namespace libs::imdata_events::events
 

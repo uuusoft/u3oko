@@ -1,6 +1,6 @@
 /**
 \file       all2hsl-dll-filter-dll.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.05.2017
 \project    u3_all2hsl
 */
@@ -29,7 +29,7 @@ Filter::alloc_fake_frame (::libs::icore::impl::var1::obj::dll::TransformInfo& in
   const std::int16_t bits_per_pixel = 24;
   const std::int32_t req_width      = 640;
   const std::int32_t req_height     = 480;
-  const std::int32_t req_stride     = ::libs::helpers::mem::get_align64 (req_width * bits_per_pixel / 8, true);
+  const std::int32_t req_stride     = ::libs::helpers::mem::align_value (req_width * bits_per_pixel / 8, 64, true);
   const std::int32_t req_size       = req_stride * req_height;
   auto               base_buf       = (**info.ibuf_)[(*info.ibuf_)->get_base_index ()];
 
@@ -57,7 +57,6 @@ Filter::alloc_bufs ()
   auto                    base_buf = (*pbuf_)[pbuf_->get_base_index ()];
   const auto              width    = base_buf->get_dim_var (::utils::dbufs::video::Dims::width);
   const auto              height   = base_buf->get_dim_var (::utils::dbufs::video::Dims::height);
-  // const auto              format    = base_buf->get_format ();
 
   finfo_.strip_color_ = finfo_.rprops_->strip_color_ || (::libs::helpers::uids::minor::id_val::rgb24 != braw->get_format ());
 
@@ -91,7 +90,7 @@ void
 Filter::alloc_temp_bufs ()
 {
   //  Резервируем память под второстепенные буфера, связанные с основным.
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   const syn::IVideoBuf::raw_ptr                           l16_buf     = (*pbuf_)[::utils::dbufs::video::consts::offs::lit];
   const ::utils::dbufs::video::consts::offs::off_buf_type indx_bufs[] = { ::utils::dbufs::video::consts::offs::temp1, ::utils::dbufs::video::consts::offs::temp2 };
 
@@ -201,7 +200,7 @@ Filter::convert_bufs_from_y16 ()
     ::utils::dbufs::MemVars::size_data,
     l->get_dim_var (::utils::dbufs::video::Dims::height) * l->get_dim_var (::utils::dbufs::video::Dims::stride));
 
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   // debug
   l->fill (rand () % 255);
 #endif

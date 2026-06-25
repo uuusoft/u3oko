@@ -1,6 +1,6 @@
 /**
 \file       adaptive_huffman.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.11.2016
 \project    u3_codec_funcs
 */
@@ -20,9 +20,8 @@ CObj::forward_int (
   std::uint32_t&      count_byte_dst)
 {
   U3_ASSERT (0 == count_byte_dst);
-
-  const std::uint8_t* usrc    = U3_CAST_CODECS< const std::uint8_t* > (src);
-  std::uint8_t*       udst    = U3_CAST_CODECS< std::uint8_t* > (dst);
+  const std::uint8_t* usrc    = ::libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (src);
+  std::uint8_t*       udst    = ::libs::helpers::casts::reinterpret_cast_helper< std::uint8_t* > (dst);
   std::uint8_t        counter = 0;
 
   for (std::uint32_t indx = 0; indx < count_byte_src; ++indx)
@@ -78,8 +77,8 @@ CObj::backward_int (
   void*               dst,
   std::uint32_t&      count_byte_dst)
 {
-  const std::uint8_t* usrc = U3_CAST_CODECS< const std::uint8_t* > (src);
-  std::uint8_t*       udst = U3_CAST_CODECS< std::uint8_t* > (dst);
+  const std::uint8_t* usrc = ::libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (src);
+  std::uint8_t*       udst = ::libs::helpers::casts::reinterpret_cast_helper< std::uint8_t* > (dst);
 
   for (std::uint32_t indx = 0; indx < count_byte_src; ++indx)
   {

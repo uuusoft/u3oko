@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        01.01.2017
 # copyright   Erashov A.I.
 # file        CMakeLists.txt
@@ -44,6 +44,7 @@ include("./build/cmake/funcs/u3-url-validate-func.cmake")
 include("./build/cmake/funcs/u3-project-add-func.cmake")
 include("./build/cmake/funcs/u3-dump-vars-func.cmake")
 include("./build/cmake/funcs/u3-get-major-version-func.cmake")
+include("./build/cmake/funcs/u3-is-target-os-linux-func.cmake")
 
 include("./build/cmake/vals/env-command-line-vals.cmake")
 include("./build/cmake/vals/env-generate-vals.cmake")

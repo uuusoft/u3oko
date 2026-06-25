@@ -1,6 +1,6 @@
 /**
 \file       events-module-leafmodule-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    mevents
 */
@@ -14,24 +14,21 @@
 namespace modules::mevents::appl
 {
 ::libs::ilink::appl::base::BaseModule::recv_links_type
-EventsModule::get_recv_link ()
+EventsModule::get_recv_link_int ()
 {
   return { links_.get (libs::properties::vers::links::mids::events2appl) };
-  // recv_links_type ret;
-  // ret.push_back (links_.get (libs::properties::vers::links::mids::events2appl));
-  // return ret;
 }
 
 
 bool
-EventsModule::catch_event (syn::IEvent::ptr& evnt)
+EventsModule::catch_event_int (syn::IEvent::ptr& evnt)
 {
   return true;
 }
 
 
 bool
-EventsModule::is_now_thread_to_sleep (bool now_recv_evnt)
+EventsModule::is_now_thread_to_sleep_int (bool now_recv_evnt)
 {
   return now_recv_evnt ? false : true;
 }

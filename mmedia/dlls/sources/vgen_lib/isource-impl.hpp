@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       isource-impl.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       26.06.2016
 \project    u3_vgen_lib
 */
@@ -21,7 +21,7 @@ class ISourceImpl
   ISourceImpl (const ISourceImpl& src)            = delete;
   ISourceImpl& operator= (const ISourceImpl& src) = delete;
 
-  void init ();
+  auto init () -> void;
   void start ();
   void stop ();
   void get_sources (std::vector< syn::DataSourceInfo >& sources);

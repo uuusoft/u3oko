@@ -1,6 +1,6 @@
 /**
 \file       ycb_rgb24_alu.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       30.07.2018
 \project    u3_optim_gen_convert
 */
@@ -17,7 +17,7 @@ void
 alu (::libs::optim::io::MCallInfo& info)
 {
   YCB2RGB24_PREFIX;
-#ifdef U3_FAKE_DISABLE
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   const int           size_block = height * width;
   const std::uint8_t* y          = yuy2_buf;
   const std::uint8_t* rc         = y + size_block;

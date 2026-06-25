@@ -1,7 +1,7 @@
 #pragma once
 /**
 \file       ishared-property.hpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_properties_libs
 */
@@ -20,17 +20,19 @@ class ISharedProperty
   ISharedProperty ()          = default;
   virtual ~ISharedProperty () = default;
 
-  ISharedProperty (const ISharedProperty& src)            = delete;
-  ISharedProperty& operator= (const ISharedProperty& src) = delete;
+  ISharedProperty (const ISharedProperty&)                = delete;
+  ISharedProperty& operator= (const ISharedProperty&)     = delete;
+  ISharedProperty (ISharedProperty&&) noexcept            = delete;
+  ISharedProperty& operator= (ISharedProperty&&) noexcept = delete;
 
-  bool       self_test () const;
-  void*      cast2top ();
-  sync_type& get_sync ();
+  auto self_test () const -> bool;
+  auto cast2top () -> void*;
+  auto get_sync () -> sync_type&;
 
   protected:
   //  ISharedProperty interface
-  virtual bool  self_test_int () const = 0;
-  virtual void* cast2top_int ()        = 0;
+  virtual auto self_test_int () const -> bool = 0;
+  virtual auto cast2top_int () -> void*       = 0;
 
   private:
   mutable sync_type mtx_;   //<

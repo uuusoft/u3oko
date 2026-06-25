@@ -1,6 +1,6 @@
 #!/bin/bash
 # u3oko-android-rel-lib-none-clang-ninja.sh
-# author      Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+# author      Erashov Anton erashov2026@proton.me
 # date        01.01.2026
 # copyright   Erashov A.I.
 
@@ -22,7 +22,7 @@ export JAVA_HOME=/home/erashov/Documents/android-studio/jbr
 cd ./../../appls/u3oko/android
 chmod +x ./gradlew
 #./gradlew clean build
-./gradlew assembleRelease
-./gradlew tasks
+#./gradlew assembleRelease
+#./gradlew tasks
 ./gradlew installRelease
 #adb pair 192.168.88.216:41325 <code from device>

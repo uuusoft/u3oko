@@ -1,9 +1,10 @@
 /**
 \file       events-module-basemodule-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    mevents
 */
+// #define U3_USE_DEB_LOG_LEVEL
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "../module-events-includes_int.hpp"
@@ -16,6 +17,7 @@ namespace modules::mevents::appl
 void
 EventsModule::appl_init_int (const ::libs::link::appl::InitApplication& info)
 {
+  U3_XLOG_DBG ("EventsModule::appl_init_int::---->");
   super::appl_init_int (info);
   check_process ();
 }
@@ -24,6 +26,7 @@ EventsModule::appl_init_int (const ::libs::link::appl::InitApplication& info)
 void
 EventsModule::init_proxys_int ()
 {
+  U3_XLOG_DBG ("EventsModule::init_proxys_int::---->");
   super::init_proxys_int ();
   U3_CHECK (::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree (), "create block mem allocator");
 }
@@ -32,11 +35,11 @@ EventsModule::init_proxys_int ()
 bool
 EventsModule::appl_deinit_int ()
 {
-  U3_XLOG_MARK ("EventsModule::deinit_int begin");
+  U3_XLOG_MARK ("EventsModule::deinit_int::---->");
   if (links_.get (libs::properties::vers::links::mids::events2appl))
   {
     syn::IEvent::ptr rmsg;
-    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangDShowRunsSubSysLogEvent > (rmsg);
+    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
 
     props->change_appl_info (
       ::libs::ilog_events::AppllPartLogInfo (
@@ -50,12 +53,13 @@ EventsModule::appl_deinit_int ()
   }
 
   {
-    auto links = U3_CAST_PROP (syn::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ());
+    auto* links = ::libs::iproperties::helpers::get_prop_links ();
     links->update_links_lockfree ().reset_link (libs::properties::vers::links::mids::events2appl);
   }
 
   links_.get (libs::properties::vers::links::mids::events2appl)->destroy ();
   links_.reset_link (libs::properties::vers::links::mids::events2appl);
+  U3_XLOG_MARK ("EventsModule::deinit_int::<----");
   return true;
 }
 
@@ -63,9 +67,10 @@ EventsModule::appl_deinit_int ()
 void
 EventsModule::init_links_int (const ::libs::link::appl::InitApplication& info)
 {
-  const std::string                        name_data = "";
-  ::libs::link::details::CodeRuns          type_run  = ::libs::link::details::CodeRuns::appl;
-  ::libs::ilink::LinkCreatorProxy::raw_ptr lproxy    = ::libs::ilink::LinkCreatorProxy::instance ();
+  U3_XLOG_DBG ("EventsModule::init_links_int::---->");
+  const std::string name_data = "";
+  auto              type_run  = ::libs::link::details::CodeRuns::appl;
+  auto              lproxy    = ::libs::ilink::LinkCreatorProxy::instance ();
 
   auto temp_link = lproxy->impl ()->get_listen (
     ::libs::link::CreateInfo (
@@ -76,12 +81,12 @@ EventsModule::init_links_int (const ::libs::link::appl::InitApplication& info)
       info.appl_name_,
       "subsys_events",
       ::libs::link::details::ModuleLinks::events,
-      ::libs::link::consts::size::buf_all2events));
+      ::libs::link::consts::sizes::buf_all2events));
 
   links_.set (libs::properties::vers::links::mids::events2appl, temp_link);
 
   {
-    auto  proplinks = U3_CAST_PROP (syn::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ());
+    auto* proplinks = ::libs::iproperties::helpers::get_prop_links ();
     auto& links     = proplinks->update_links_lockfree ();
 
     links.set (libs::properties::vers::links::mids::events2appl, links_.get (libs::properties::vers::links::mids::events2appl));
@@ -90,7 +95,7 @@ EventsModule::init_links_int (const ::libs::link::appl::InitApplication& info)
 
   {
     syn::IEvent::ptr rmsg;
-    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangDShowRunsSubSysLogEvent > (rmsg);
+    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
 
     props->change_appl_info (
       ::libs::ilog_events::AppllPartLogInfo (
@@ -102,19 +107,31 @@ EventsModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     props->set_start (true);
     links_.get (libs::properties::vers::links::mids::events2appl)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
   }
+  U3_XLOG_DBG ("EventsModule::init_links_int::<----");
 }   // namespace modules::mevents::appl
+
+
+void
+EventsModule::init_done_int ()
+{
+  U3_XLOG_DBG ("EventsModule::init_done_int::---->");
+  super::init_done_int ();
+  prepare_base ();
+  U3_XLOG_DBG ("EventsModule::init_done_int::<----");
+}
 
 
 void
 EventsModule::update_catch_funcs_int ()
 {
+  U3_XLOG_DBG ("EventsModule::update_catch_funcs_int::---->");
   super::update_catch_funcs_int ();
 
   catch_funcs_[syn::ChangeStateProcessEvent::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
-      auto props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
       U3_ASSERT (props);
       process_change_state_process (msg, props);
       return syn::IEvent::ptr ();
@@ -126,7 +143,7 @@ EventsModule::update_catch_funcs_int ()
     [] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
-      auto wrap_msg = ::libs::iproperties::helpers::cast_event< syn::WrapperEventsEvent > (msg);
+      auto* wrap_msg = ::libs::iproperties::helpers::cast_event< syn::WrapperEventsEvent > (msg);
       return wrap_msg->get_msg ();
     }
     return msg;
@@ -134,10 +151,10 @@ EventsModule::update_catch_funcs_int ()
 
   catch_funcs_[syn::AddEvent2Base::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
-    U3_LOG_EVENTS_DEV ("received syn::AddEvent2Base:" + TOLOG (msg->get_mid ()));
+    U3_LOG_EVENTS_DEV ("received syn::AddEvent2Base:" + STOLOG (msg->get_mid ()));
     if (forward)
     {
-      auto props = ::libs::iproperties::helpers::cast_event< syn::AddEvent2Base > (msg);
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::AddEvent2Base > (msg);
       U3_ASSERT (props);
       process_add_event2base (msg, props);
       return syn::IEvent::ptr ();
@@ -147,10 +164,10 @@ EventsModule::update_catch_funcs_int ()
 
   catch_funcs_[syn::GetDataGraphsFromEventBase::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
-    U3_LOG_EVENTS_DEV ("received syn::GetDataGraphsFromEventBase:" + TOLOG (msg->get_mid ()));
+    U3_LOG_EVENTS_DEV ("received syn::GetDataGraphsFromEventBase:" + STOLOG (msg->get_mid ()));
     if (forward)
     {
-      auto props = ::libs::iproperties::helpers::cast_event< syn::GetDataGraphsFromEventBase > (msg);
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::GetDataGraphsFromEventBase > (msg);
       U3_ASSERT (props);
       process_get_data_graphs (msg, props);
       return syn::IEvent::ptr ();
@@ -160,37 +177,28 @@ EventsModule::update_catch_funcs_int ()
 
   catch_funcs_[syn::UpdateListener::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
-    U3_LOG_EVENTS_DEV ("received syn::UpdateListener:" + TOLOG (msg->get_mid ()));
+    U3_LOG_EVENTS_DEV ("received syn::UpdateListener:" + STOLOG (msg->get_mid ()));
     if (forward)
     {
-      auto props = ::libs::iproperties::helpers::cast_event< syn::UpdateListener > (msg);
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::UpdateListener > (msg);
       U3_ASSERT (props);
       process_update_listener (msg, props);
       return syn::IEvent::ptr ();
     }
     return msg;
   };
-}
 
-
-void
-EventsModule::process_change_state_process (
-  syn::IEvent::ptr&                     msg,
-  syn::ChangeStateProcessEvent::raw_ptr props)
-{
-  try
-  {
-    if (!props->is_start ())
+  catch_funcs_[syn::GetEventsFromBase::gen_get_mid ()] =
+    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    U3_LOG_EVENTS_DBG ("received syn::GetEventsFromBase:" + STOLOG (msg->get_mid ()));
+    if (forward)
     {
-      U3_LOG_EVENTS_INFO ("stop events module");
-      stop_module_ = true;
-      return;
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::GetEventsFromBase > (msg);
+      U3_ASSERT (props);
+      process_get_events_from_base (msg, props);
+      return syn::IEvent::ptr ();
     }
-    U3_LOG_EVENTS_INFO ("start events module");
-  }
-  catch (const std::exception& e)
-  {
-    U3_LOG_EVENTS_EXCEPT (e.what ());
-  }
+    return msg;
+  };
 }
 }   // namespace modules::mevents::appl

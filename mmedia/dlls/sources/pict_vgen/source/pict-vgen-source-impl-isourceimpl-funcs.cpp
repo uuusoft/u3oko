@@ -1,6 +1,6 @@
 /**
 \file       pict-vgen-source-impl-isourceimpl-funcs.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 \project    u3_pict_vgen
 */
@@ -104,7 +104,7 @@ SourceImpl::set_cpu_int (syn::CpuExts current_optim)
 void
 SourceImpl::update_source_info_int (const syn::SourceImplInfo& info)
 {
-  U3_LOG_DATA_DBG ("sync picter source begin" + VTOLOG (info.capture_props_->capi_.width_) + VTOLOG (info.capture_props_->capi_.height_));
+  U3_LOG_DATA_DBG ("sync picter source::---->" + VTOLOG (info.capture_props_->capi_.width_) + VTOLOG (info.capture_props_->capi_.height_));
   source_impl_info_ = info;
   sync_internal_structures ();
 }

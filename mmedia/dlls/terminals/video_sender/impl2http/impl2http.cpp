@@ -1,6 +1,6 @@
 /**
 \file       impl2http.cpp
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \date       06.03.2022
 \project    u3_video_sender_dll
 */
@@ -19,8 +19,8 @@ Impl2Http::send_int (
   syn::IVideoBuf::raw_ptr              send_buf)
 {
   U3_ASSERT (minfo);
-  auto ilink     = U3_CAST_PROP (syn::ILinksProperty::raw_ptr) (::libs::iproperties::helpers::get_prop_links ());
-  auto data2appl = ilink->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
+  auto* ilink     = ::libs::iproperties::helpers::get_prop_links ();
+  auto  data2appl = ilink->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
 
   if (!data2appl)
   {

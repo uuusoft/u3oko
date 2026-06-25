@@ -1,7 +1,7 @@
 /**
 \file       imdata-events-events2archives.cpp
 \date       01.08.2017
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_imdata_events
 */
 #include "mmedia/includes/control-defines-includes.hpp"

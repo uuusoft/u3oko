@@ -1,7 +1,7 @@
 /**
 \file       gen-vgen-proxy.cpp
 \date       17.04.2022
-\author     Erashov Anton erashov2026@proton.me erashov2004@yandex.ru
+\author     Erashov Anton erashov2026@proton.me
 \project    u3_proxy_libs
 */
 #include "mmedia/includes/control-defines-includes.hpp"
@@ -41,7 +41,7 @@ extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_dshow_vgen (::dlls::sources:
 #endif
 
 
-#if defined(U3_OS_WIN32_DESKTOP) || defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI)
+#if defined(U3_OS_WIN32_DESKTOP) || defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI) || defined(U3_OS_ANDROID)
 #  if (U3_LIBS_ENABLE_PICT_VGEN_VSS == 1)
 extern "C" BOOST_SYMBOL_EXPORT bool get_source_vss_pict_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
 extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_pict_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
@@ -104,7 +104,7 @@ get_create_source_funct (const std::string& plib_id)
 #  endif
 #endif
 
-#if defined(U3_OS_WIN32_DESKTOP) || defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI)
+#if defined(U3_OS_WIN32_DESKTOP) || defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI) || defined(U3_OS_ANDROID)
 #  if (U3_LIBS_ENABLE_PICT_VGEN_VSS == 1)
   if (lib_id == "vss_pict_vgen")
   {
@@ -173,7 +173,7 @@ get_free_source_funct (const std::string& plib_id)
 #  endif
 #endif
 
-#if defined(U3_OS_WIN32_DESKTOP) || defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI)
+#if defined(U3_OS_WIN32_DESKTOP) || defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI) || defined(U3_OS_ANDROID)
 #  if (U3_LIBS_ENABLE_PICT_VGEN_VSS == 1)
   if (lib_id == "vss_pict_vgen")
   {
