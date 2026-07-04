@@ -4,29 +4,33 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    mevents
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../includes_int.hpp"
 #include "iwrap-base-event.hpp"
 
 namespace libs::events
 {
 IWrapBaseEvent::IWrapBaseEvent (const Acessor& pha, IEvent::ptr val) :
-  int_ (val)
+  int_ (std::move (val))
 {
-  property_name_ = gen_get_mid ();
 }
 
 
-IEvent::ptr
-IWrapBaseEvent::clone_int (const ::libs::events::Deeps& deep) const
+auto
+IWrapBaseEvent::get_mid_int () const -> const ::libs::events::IEvent::hid_type&
+{
+  return IWrapBaseEvent::gen_get_mid ();
+}
+
+
+auto
+IWrapBaseEvent::clone_int (const ::libs::events::Deeps& deep) const -> IEvent::ptr
 {
   return ::libs::events::deep_clone< IWrapBaseEvent > (this, deep);
 }
 
 
-IEvent::ptr
-IWrapBaseEvent::get_msg () const
+auto
+IWrapBaseEvent::get_msg () const -> IEvent::ptr
 {
   return int_;
 }
@@ -66,10 +70,10 @@ template< class Archive >
 void
 IWrapBaseEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("IEvent", super);
+  arh& U3_BOOST_SERIALIZE_MAKE_NVP ("IEvent", super);
   arh& BOOST_SERIALIZATION_NVP (int_);
 }
 }   // namespace libs::events
 
 BOOST_CLASS_EXPORT_IMPLEMENT (::libs::events::IWrapBaseEvent);
-U3_BOOST_SERIALIZE_ALL_ARCHIVES (::libs::events::IWrapBaseEvent);
+U3_BOOST_ADD_SERIALIZE_ARCH (::libs::events::IWrapBaseEvent);

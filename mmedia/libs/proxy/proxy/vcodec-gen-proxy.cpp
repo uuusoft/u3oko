@@ -11,33 +11,33 @@
 #if (U3_LIBS_ENABLE_VCODEC_MJPG_VVD == 1)
 extern "C" BOOST_SYMBOL_EXPORT void create_codec_vvd_vcodec_mjpg (::dlls::codecs::codec_gen::CodecGeneric** pobj);
 extern "C" BOOST_SYMBOL_EXPORT void delete_codec_vvd_vcodec_mjpg (::dlls::codecs::codec_gen::CodecGeneric* obj);
-extern "C" BOOST_SYMBOL_EXPORT void get_codec_info_vvd_vcodec_mjpg (libs::helpers::uids::minor::id_val guids[4]);
+extern "C" BOOST_SYMBOL_EXPORT void get_codec_info_vvd_vcodec_mjpg (libs::utility::uids::minor::id_val guids[4]);
 #endif
 
 #if (U3_LIBS_ENABLE_VCODEC_TEST_VVD == 1)
 extern "C" BOOST_SYMBOL_EXPORT void create_codec_vvd_vcodec_test (::dlls::codecs::codec_gen::CodecGeneric** pobj);
 extern "C" BOOST_SYMBOL_EXPORT void delete_codec_vvd_vcodec_test (::dlls::codecs::codec_gen::CodecGeneric* obj);
-extern "C" BOOST_SYMBOL_EXPORT void get_codec_info_vvd_vcodec_test (libs::helpers::uids::minor::id_val guids[4]);
+extern "C" BOOST_SYMBOL_EXPORT void get_codec_info_vvd_vcodec_test (libs::utility::uids::minor::id_val guids[4]);
 #endif
 
 #if (U3_LIBS_ENABLE_VCODEC_X264_VVD == 1)
 extern "C" BOOST_SYMBOL_EXPORT void create_codec_vvd_vcodec_x264 (::dlls::codecs::codec_gen::CodecGeneric** pobj);
 extern "C" BOOST_SYMBOL_EXPORT void delete_codec_vvd_vcodec_x264 (::dlls::codecs::codec_gen::CodecGeneric* obj);
-extern "C" BOOST_SYMBOL_EXPORT void get_codec_info_vvd_vcodec_x264 (libs::helpers::uids::minor::id_val guids[4]);
+extern "C" BOOST_SYMBOL_EXPORT void get_codec_info_vvd_vcodec_x264 (libs::utility::uids::minor::id_val guids[4]);
 #endif
 
 #if (U3_LIBS_ENABLE_VCODEC_VA_VVD1 == 1)
 extern "C" BOOST_SYMBOL_EXPORT void create_codec_vvd_vcodec_va (::dlls::codecs::codec_gen::CodecGeneric** pobj);
 extern "C" BOOST_SYMBOL_EXPORT void delete_codec_vvd_vcodec_va (::dlls::codecs::codec_gen::CodecGeneric* obj);
-extern "C" BOOST_SYMBOL_EXPORT void get_codec_info_vvd_vcodec_va (libs::helpers::uids::minor::id_val guids[4]);
+extern "C" BOOST_SYMBOL_EXPORT void get_codec_info_vvd_vcodec_va (libs::utility::uids::minor::id_val guids[4]);
 #endif
 
 namespace libs::proxy
 {
-dlls::codecs::vcodec_gen::funcs::func_get_codec_type
-get_create_codec_func (const std::string& plib_id)
+auto
+get_create_codec_func (const std::string& plib_id) -> dlls::codecs::vcodec_gen::funcs::func_get_codec_type
 {
-  const auto lib_id = libs::helpers::dlls::undecorate_dll_name (plib_id);
+  const auto lib_id = libs::utility::dlls::undecorate_dll_name (plib_id);
 
 #if (U3_LIBS_ENABLE_VCODEC_MJPG_VVD == 1)
   if (lib_id == "vvd_vcodec_mjpg")
@@ -63,15 +63,14 @@ get_create_codec_func (const std::string& plib_id)
     return create_codec_vvd_vcodec_va;
   }
 #endif
-
-  U3_THROW_EXCEPTION ("find create codec funct" + TOLOG (lib_id));
+  U3_THROW_EXCEPT ("find create codec funct" + TOLOG (lib_id));
 }
 
 
-dlls::codecs::vcodec_gen::funcs::func_free_codec_type
-get_free_codec_func (const std::string& plib_id)
+auto
+get_free_codec_func (const std::string& plib_id) -> dlls::codecs::vcodec_gen::funcs::func_free_codec_type
 {
-  const auto lib_id = libs::helpers::dlls::undecorate_dll_name (plib_id);
+  const auto lib_id = libs::utility::dlls::undecorate_dll_name (plib_id);
 
 #if (U3_LIBS_ENABLE_VCODEC_MJPG_VVD == 1)
   if (lib_id == "vvd_vcodec_mjpg")
@@ -98,14 +97,14 @@ get_free_codec_func (const std::string& plib_id)
   }
 #endif
 
-  U3_THROW_EXCEPTION ("find free codec funct" + TOLOG (lib_id));
+  U3_THROW_EXCEPT ("find free codec funct" + TOLOG (lib_id));
 }
 
 
-dlls::codecs::vcodec_gen::funcs::func_codec_info_type
-get_info_codec_func (const std::string& plib_id)
+auto
+get_info_codec_func (const std::string& plib_id) -> dlls::codecs::vcodec_gen::funcs::func_codec_info_type
 {
-  const auto lib_id = libs::helpers::dlls::undecorate_dll_name (plib_id);
+  const auto lib_id = libs::utility::dlls::undecorate_dll_name (plib_id);
 
 #if (U3_LIBS_ENABLE_VCODEC_MJPG_VVD == 1)
   if (lib_id == "vvd_vcodec_mjpg")
@@ -132,6 +131,6 @@ get_info_codec_func (const std::string& plib_id)
   }
 #endif
 
-  U3_THROW_EXCEPTION ("find get info codec funct" + TOLOG (lib_id));
+  U3_THROW_EXCEPT ("find get info codec funct" + TOLOG (lib_id));
 }
 }   // namespace libs::proxy

@@ -4,8 +4,6 @@
 \date       01.11.2016
 \project    u3_dbufs
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../../dbufs-includes_int.hpp"
 #include "video-buf.hpp"
 
@@ -22,14 +20,14 @@ check_dims (const VideoBuf::dim_type width, const VideoBuf::dim_type height)
 
 
 void
-VideoBuf::set_format_int (const libs::helpers::uids::minor::id_val& fid)
+VideoBuf::set_format_int (const libs::utility::uids::minor::id_val& fid)
 {
   params_.minor_ = fid;
 }
 
 
-libs::helpers::uids::minor::id_val
-VideoBuf::get_format_int () const
+auto
+VideoBuf::get_format_int () const -> libs::utility::uids::minor::id_val
 {
   return params_.minor_;
 }
@@ -41,7 +39,7 @@ VideoBuf::flush_int ()
   IMemBuf::flush ();
 
   params_.reset ();
-  params_.minor_ = ::libs::helpers::uids::minor::id_val::unknown;
+  params_.minor_ = ::libs::utility::uids::minor::id_val::unknown;
   params_.flags_.fill (false);
   params_.geom_dims_[Dims::stride] = 0;
   set_flag_int (BufFlags::empty, true);
@@ -55,7 +53,7 @@ VideoBuf::set_dim_var_int (const Dims& dtype, dim_type dval)
   {
   case Dims::stride:
     U3_ASSERT (dval > 0);
-    U3_ASSERT (dval * get_dim_var_int (Dims::height) <= getraw_buf ()->get_buf_size ());
+    U3_ASSERT (static_cast< syn::IBlockMem::size_type > (dval * get_dim_var_int (Dims::height)) <= getraw_buf ()->get_capacity ());
     break;
   default:
     break;
@@ -64,22 +62,22 @@ VideoBuf::set_dim_var_int (const Dims& dtype, dim_type dval)
 }
 
 
-VideoBuf::dim_type
-VideoBuf::get_dim_var_int (const Dims& dtype) const
+auto
+VideoBuf::get_dim_var_int (const Dims& dtype) const -> VideoBuf::dim_type
 {
   return params_.geom_dims_[dtype];
 }
 
 
-const ::utils::dbufs::video::DimVars&
-VideoBuf::get_dim_vars_int () const
+auto
+VideoBuf::get_dim_vars_int () const -> const ::utils::dbufs::video::DimVars&
 {
   return params_.geom_dims_;
 }
 
 
-bool
-VideoBuf::check_int (const check_func_type& obj) const
+auto
+VideoBuf::check_int (const check_func_type& obj) const -> bool
 {
   if (get_flag_int (BufFlags::empty))
   {
@@ -88,7 +86,7 @@ VideoBuf::check_int (const check_func_type& obj) const
 
   for (dim_type indxy = 0; indxy < get_dim_var_int (Dims::height); ++indxy)
   {
-    const std::int16_t* bstr = helpers::get_line_const_data_as< const std::int16_t* > (this, indxy);
+    const auto* bstr = helpers::get_line_const_data_as< const std::int16_t* > (this, indxy);
     for (dim_type indxx = 0; indxx < get_dim_var_int (Dims::width); ++indxx)
     {
       if (!obj (indxx, indxy, bstr[indxx]))
@@ -128,24 +126,24 @@ VideoBuf::set_flag_int (const BufFlags& ftype, bool fval)
 }
 
 
-bool
-VideoBuf::get_flag_int (const BufFlags& ftype) const
+auto
+VideoBuf::get_flag_int (const BufFlags& ftype) const -> bool
 {
   U3_ASSERT (ftype < BufFlags::max_bound);
   switch (ftype)
   {
   case BufFlags::null: {
-    return !getraw_buf () || 0 == getraw_buf ()->get_buf_size () ? true : false;
+    return !getraw_buf () || 0 == getraw_buf ()->get_capacity () ? true : false;
   }
   case BufFlags::empty: {
-    return get_flag_int (BufFlags::null) || 0 == (*this)[MemVars::size_data] || ::libs::helpers::uids::minor::id_val::unknown == params_.minor_ ? true : false;
+    return get_flag_int (BufFlags::null) || 0 == (*this)[MemVars::size_data] || ::libs::utility::uids::minor::id_val::unknown == params_.minor_ ? true : false;
   }
   case BufFlags::convolution_data: {
     if (get_flag_int (BufFlags::empty))
     {
       return false;
     }
-    if ((*this)[MemVars::size_data] < ::libs::optim::s16bit::conv::consts::bufs::max_size_core_conv * get_dim_var_int (Dims::stride))
+    if ((*this)[MemVars::size_data] < static_cast< mem_var_type > (::libs::optim::s16bit::conv::consts::bufs::max_size_core_conv * get_dim_var_int (Dims::stride)))
     {
       return false;
     }
@@ -171,14 +169,14 @@ VideoBuf::get_flag_int (const BufFlags& ftype) const
 
 
 void
-VideoBuf::buf_alloc_int (const AllocBufInfo& info)
+VideoBuf::buf_alloc_int (const AllocParams& info)
 {
   if (DimChecks::enable == info.check_dims_)
   {
     check_dims (info.geom_dims_[Dims::width], info.geom_dims_[Dims::height]);
   }
 
-  params_.minor_     = info.minor_ != ::libs::helpers::uids::minor::id_val::unknown ? info.minor_ : params_.minor_;
+  params_.minor_     = info.minor_ != ::libs::utility::uids::minor::id_val::unknown ? info.minor_ : params_.minor_;
   params_.geom_dims_ = info.geom_dims_;
   params_.flags_     = info.flags_;
 
@@ -193,18 +191,18 @@ VideoBuf::buf_alloc_int (const AllocBufInfo& info)
 
   if (0 == alloc_size)
   {
-    const dim_type px_byte  = ::libs::helpers::uids::helpers::get_count_bytes_from_format (params_.minor_);
-    const dim_type khresize = ::libs::helpers::uids::helpers::get_hkoeff_from_format (params_.minor_);
+    const dim_type px_byte  = ::libs::utility::uids::helpers::get_count_bytes_from_format (params_.minor_);
+    const dim_type khresize = ::libs::utility::uids::helpers::get_hkoeff_from_format (params_.minor_);
 
     if (conv_support)
     {
-      stride      = ::libs::helpers::mem::align_value (U3_CAST_UINT32 (info.geom_dims_[Dims::width] * sizeof (std::int16_t) + ::libs::optim::s16bit::conv::consts::bufs::x_add_conv), 64U, true);
+      stride      = ::libs::utility::mem::align_value (U3_CAST_UINT32 (info.geom_dims_[Dims::width] * sizeof (std::int16_t) + ::libs::optim::s16bit::conv::consts::bufs::x_add_conv), 64U, true);
       offset_data = (::libs::optim::s16bit::conv::consts::bufs::half_max_size_core_conv + 1) * stride + ::libs::optim::s16bit::conv::consts::bufs::x_off_edge_conv;
       alloc_size  = offset_data * 2 + info.geom_dims_[Dims::height] * khresize * stride;
     }
     else
     {
-      stride      = ::libs::helpers::mem::align_value (info.geom_dims_[Dims::stride] ? info.geom_dims_[Dims::stride] : px_byte * info.geom_dims_[Dims::width], 64U, true);
+      stride      = ::libs::utility::mem::align_value (info.geom_dims_[Dims::stride] ? info.geom_dims_[Dims::stride] : px_byte * info.geom_dims_[Dims::width], 64U, true);
       offset_data = 0;
       alloc_size  = info.geom_dims_[Dims::height] * stride * khresize;
     }
@@ -245,7 +243,7 @@ VideoBuf::clone_int (IBuf::craw_ptr isrc, float percent)
 
   if (!src->get_flag (BufFlags::empty) && (percent > 0.0F) && src->get_flag (BufFlags::convolution_data))
   {
-    ::libs::helpers::mem::u3copy (src->get_cbuf (), get_buf (), (*src)[MemVars::size_buf]);
+    ::libs::utility::mem::u3copy (src->get_cbuf (), get_buf (), (*src)[MemVars::size_buf]);
   }
 }
 
@@ -253,7 +251,7 @@ VideoBuf::clone_int (IBuf::craw_ptr isrc, float percent)
 void
 VideoBuf::swap_int (IBuf& isrc)
 {
-  VideoBuf& src = dynamic_cast< VideoBuf& > (isrc);
+  auto& src = dynamic_cast< VideoBuf& > (isrc);
   if (this == &src)
   {
     U3_XLOG_WARN ("try swap itself" + PTR_TOLOG (this));

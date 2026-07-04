@@ -8,7 +8,7 @@
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "../../dlls-includes_int.hpp"
-#include "mmedia/libs/helpers/statistic/helpers/expanded-times-helpers.hpp"
+#include "mmedia/libs/utility/statistic/helpers/expanded-times-helpers.hpp"
 #include "space-noise-syn.hpp"
 #include "space-noise-info-filter-dll.hpp"
 #include "space-noise-ifilter-impl.hpp"

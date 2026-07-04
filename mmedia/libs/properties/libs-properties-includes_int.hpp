@@ -5,8 +5,11 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_properties_libs
 */
-#include "mmedia/libs/link/libs-link-includes.hpp"
-#include "libs-properties-includes.hpp"
+#include "mmedia/includes/control-defines-includes.hpp"
+#include "mmedia/includes/includes.hpp"
+
+// #include "mmedia/libs/link/libs-link-includes.hpp"
+// #include "libs-properties-includes.hpp"
 
 #undef U3_FILE_LOG_TAG
 #define U3_FILE_LOG_TAG "u3properties          "

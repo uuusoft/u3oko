@@ -12,12 +12,12 @@ class IMCaller
 {
   public:
   //  ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IMCaller)
+  U3_ADD_POINTERS_TO_SELF (IMCaller)
 
   virtual ~IMCaller () = default;
 
-  IMCaller (const IMCaller& src)            = delete;
-  IMCaller& operator= (const IMCaller& src) = delete;
+  IMCaller (const IMCaller&)            = delete;
+  IMCaller& operator= (const IMCaller&) = delete;
 
   /// Функция установки количества рабочих потоков
   /// \param[in]  count  количество рабочих потоков

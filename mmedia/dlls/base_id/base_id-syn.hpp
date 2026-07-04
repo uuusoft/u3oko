@@ -9,9 +9,9 @@
 namespace dlls::base_id::syn
 {
 using IEvent            = ::libs::events::IEvent;
-using BaseIdProp        = ::libs::ievents::props::base_id::BaseIdProp;
-using InterfBaseIdEvent = ::libs::ievents::runtime::interf::InterfBaseIdEvent;
-using source_name_type  = ::libs::ievents::props::base_id::source_name_type;
+using BaseIdProp        = ::libs::events_base::props::base_id::BaseIdProp;
+using InterfBaseIdEvent = ::libs::events_base::runtime::interf::InterfBaseIdEvent;
+using source_name_type  = ::libs::events_base::props::base_id::source_name_type;
 using off_buf_type      = ::utils::dbufs::video::consts::offs::off_buf_type;
 using TransformInfo     = ::libs::icore::impl::var1::obj::dll::TransformInfo;
 using CallInterfInfo    = ::libs::icore::impl::var1::obj::dll::CallInterfInfo;

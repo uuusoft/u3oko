@@ -36,17 +36,17 @@ class InsertSortAlg
       std::int32_t        off_core = 0;
       const std::int16_t* beg_spx  = spx;
 
-      beg_spx = ::libs::helpers::mem::move_cptr_back (beg_spx, beg_cond_core);
+      beg_spx = ::libs::utility::mem::move_cptr_back (beg_spx, beg_cond_core);
 
       for (int indxyc = 0; indxyc < size_core; ++indxyc)
       {
         std::copy (beg_spx, beg_spx + size_core, sort_vals_ + off_core);
         off_core += size_core;
-        beg_spx = ::libs::helpers::mem::move_cptr (beg_spx, sstride);
+        beg_spx = ::libs::utility::mem::move_cptr (beg_spx, sstride);
       }
 
       //  сортируем временный буфер.
-      ::libs::helpers::sorting::sorting_inplace_insert< std::int16_t* > (sort_vals_ + 0, sort_vals_ + count_core_vals);
+      ::libs::utility::sorting::sorting_inplace_insert< std::int16_t* > (sort_vals_ + 0, sort_vals_ + count_core_vals);
       // сохраняем результат в входном/выходном буфере.
       *ipx = sort_vals_[rang];
     }

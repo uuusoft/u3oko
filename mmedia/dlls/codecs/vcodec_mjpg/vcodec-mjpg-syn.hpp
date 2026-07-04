@@ -8,11 +8,12 @@
 
 namespace dlls::codecs::vcodec_mjpg::syn
 {
-using VideoCodecProp = ::libs::ievents::props::videos::generic::codec::VideoCodecProp;
+using VideoCodecProp = ::libs::events_base::props::videos::generic::codec::VideoCodecProp;
 using TransformInfo  = ::libs::icore::impl::var1::obj::dll::TransformInfo;
-using VideoCodecProp = ::libs::ievents::props::videos::generic::codec::VideoCodecProp;
+using VideoCodecProp = ::libs::events_base::props::videos::generic::codec::VideoCodecProp;
 using IVideoBuf      = ::utils::dbufs::video::IVideoBuf;
 using StatisticInfo  = ::dlls::codecs::codec_gen::StatisticInfo;
-using AllocBufInfo   = ::utils::dbufs::video::AllocBufInfo;
+using AllocParams    = ::utils::dbufs::video::AllocParams;
 using HeaderIFrame   = ::dlls::codecs::codec_gen::HeaderIFrame;
+using IMCaller       = ::libs::optim::mcalls::IMCaller;
 }   // namespace dlls::codecs::vcodec_mjpg::syn

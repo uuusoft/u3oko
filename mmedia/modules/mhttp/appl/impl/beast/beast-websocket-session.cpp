@@ -14,17 +14,17 @@ namespace modules::mhttp::impl::beast
 {
 websocket_session::websocket_session (
   boost::asio::ip::tcp::socket&& socket,
-  const shared_state_ptr_type&   shared_state) :
+  shared_state_ptr_type          shared_state) :
   ws_ (std::move (socket)),
-  shared_state_ (shared_state)
+  shared_state_ (std::move (shared_state))
 {
-  U3_XLOG_DEV ("websocket_session::on_create" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
+  U3_XLOG_DEV ("websocket_session::on_create" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)));
 }
 
 
 websocket_session::~websocket_session ()
 {
-  U3_XLOG_DEV ("websocket_session::o_destroy" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
+  U3_XLOG_DEV ("websocket_session::o_destroy" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)));
   // Remove this session from the list of active sessions
   shared_state_->leave (this);
 }
@@ -33,7 +33,7 @@ websocket_session::~websocket_session ()
 void
 websocket_session::on_accept (boost::beast::error_code ec)
 {
-  U3_XLOG_DEV ("websocket_session::on_accept" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
+  U3_XLOG_DEV ("websocket_session::on_accept" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)));
   if (ec)
   {
     return u3beast_fail (ec, "websocket_session::accept");
@@ -158,8 +158,8 @@ websocket_session::on_write (
 }
 
 
-std::int64_t
-websocket_session::get_size_pending_send () const
+auto
+websocket_session::get_size_pending_send () const -> std::int64_t
 {
   return size_pending_send_;
 }

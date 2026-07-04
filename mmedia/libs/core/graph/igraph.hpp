@@ -19,12 +19,10 @@ class IGraph
 
   public:
   //  ext types
-  using obj_ids_type = std::set< NodeID >;   //< REFACT unordered_set
+  using node_ids_type = std::set< NodeID >;   //< EAI-REFACT unordered_set
 
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IGraph)
-
-  IGraph (const IGraph& src)            = delete;
-  IGraph& operator= (const IGraph& src) = delete;
+  U3_ADD_POINTERS_TO_SELF (IGraph)
+  U3_ADD_DELETE_MOVE_COPY (IGraph)
 
   /// Функция конструирования графа из xml файла
   void
@@ -34,7 +32,7 @@ class IGraph
   }
 
   /// Функция получения идентификаторов всех объектов в графе
-  const obj_ids_type&
+  const node_ids_type&
   get_objs ()
   {
     return get_objs_int ();
@@ -64,9 +62,9 @@ class IGraph
   virtual ~IGraph () = default;
 
   //  IGraph interface
-  virtual auto load_int (const std::string& file) -> void                                   = 0;
-  virtual auto get_objs_int () -> const obj_ids_type&                                       = 0;
-  virtual auto send_event2obj_int (const NodeID& id_obj, events::IEvent::ptr& evnt) -> void = 0;
-  virtual auto set_logger_int (::libs::link::ILink::weak_ptr ptr) -> void                   = 0;
+  virtual auto load_int (const std::string&) -> void                            = 0;
+  virtual auto get_objs_int () -> const node_ids_type&                          = 0;
+  virtual auto send_event2obj_int (const NodeID&, events::IEvent::ptr&) -> void = 0;
+  virtual auto set_logger_int (::libs::link::ILink::weak_ptr) -> void           = 0;
 };
 }   // namespace libs::core::graph

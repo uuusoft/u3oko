@@ -11,16 +11,16 @@ namespace utils::mem_funcs::helpers
 {
 template< typename TTOut >
 TTOut*
-get_as (::libs::helpers::mem::IBlockMem::raw_ptr obj)
+get_as (::libs::utility::mem::IBlockMem::raw_ptr obj)
 {
-  return ::libs::helpers::casts::reinterpret_cast_helper< TTOut* > (obj->get ());
+  return ::libs::utility::casts::reinterpret_cast_helper< TTOut* > (obj->get ());
 }
 
 
 template< typename TTOut >
 const TTOut*
-get_as (::libs::helpers::mem::IBlockMem::craw_ptr obj)
+get_as (::libs::utility::mem::IBlockMem::craw_ptr obj)
 {
-  return ::libs::helpers::casts::reinterpret_cast_helper< const TTOut* > (obj->get ());
+  return ::libs::utility::casts::reinterpret_cast_helper< const TTOut* > (obj->get ());
 }
 }   // namespace utils::mem_funcs::helpers

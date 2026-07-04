@@ -26,7 +26,7 @@ class SystemAndroidProperty final : public ::libs::properties::ISharedProperty
   using gui_functor_type = std::function< gui_func_type >;
   using IVideoBuf        = ::utils::dbufs::video::IVideoBuf;
 
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (SystemAndroidProperty)
+  U3_ADD_POINTERS_TO_SELF (SystemAndroidProperty)
 
   SystemAndroidProperty ()
   {

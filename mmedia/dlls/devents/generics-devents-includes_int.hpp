@@ -8,8 +8,8 @@
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "../dlls-includes_int.hpp"
-#include "mmedia/libs/imdata_events/includes.hpp"
-#include "mmedia/libs/igui_events/includes.hpp"
+#include "mmedia/libs/events_media/includes.hpp"
+#include "mmedia/libs/events_gui/includes.hpp"
 
 #include "mmedia/libs/ilink/libs-ilink-includes.hpp"
 #include "mmedia/libs/ilink/appl/libs-ilink-appl-includes.hpp"

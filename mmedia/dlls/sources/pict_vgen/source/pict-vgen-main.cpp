@@ -4,9 +4,6 @@
 \date       26.06.2016
 \project    u3_pict_vgen
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
-
 #define STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_RESIZE_IMPLEMENTATION
 
@@ -28,8 +25,8 @@
 
 #include "pict-vgen-source-impl.hpp"
 
-extern "C" BOOST_SYMBOL_EXPORT bool
-get_source_vss_pict_vgen (::dlls::sources::gen_lib::ISourceImpl** ret)
+extern "C" BOOST_SYMBOL_EXPORT auto
+get_source_vss_pict_vgen (::dlls::sources::gen_lib::ISourceImpl** ret) -> bool
 {
   U3_ASSERT (ret);
   U3_ASSERT (!*ret);
@@ -37,8 +34,8 @@ get_source_vss_pict_vgen (::dlls::sources::gen_lib::ISourceImpl** ret)
   return true;
 }
 
-extern "C" BOOST_SYMBOL_EXPORT bool
-free_source_vss_pict_vgen (::dlls::sources::gen_lib::ISourceImpl** ret)
+extern "C" BOOST_SYMBOL_EXPORT auto
+free_source_vss_pict_vgen (::dlls::sources::gen_lib::ISourceImpl** ret) -> bool
 {
   U3_ASSERT (ret);
   U3_ASSERT (*ret);

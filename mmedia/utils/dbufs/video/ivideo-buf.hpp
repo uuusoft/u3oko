@@ -13,11 +13,12 @@ class IVideoBuf : public IMemBuf
 {
   public:
   //  ext types
-  using dim_type = AllocBufInfo::dim_type;
+  using dim_type = AllocParams::dim_type;
 
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IVideoBuf)
+  U3_ADD_POINTERS_TO_SELF (IVideoBuf)
 
-  /// Тип функции проверки буфера Сама функция задается пользователем и в общем случае не определена
+  /// Тип функции проверки буфера
+  /// Сама функция задается пользователем и в общем случае не определена
   /// \param[in]  x    позиция пикселя по горизонтали
   /// \param[in]  y    позиция пикселя по вертикали
   /// \param[in]  val  значение пикселя
@@ -29,7 +30,7 @@ class IVideoBuf : public IMemBuf
   /// Функция установки формата пикселя в буфере
   /// \param[in]  idv формат пикселей
   void
-  set_format (const libs::helpers::uids::minor::id_val& idv)
+  set_format (const libs::utility::uids::minor::id_val& idv)
   {
     std::scoped_lock lock (threadsan_mtx_);
     set_format_int (idv);
@@ -37,7 +38,7 @@ class IVideoBuf : public IMemBuf
 
   /// Функция получения  формата пикселя в буфере
   /// \return   формат пикселей
-  libs::helpers::uids::minor::id_val
+  libs::utility::uids::minor::id_val
   get_format () const
   {
     std::scoped_lock lock (threadsan_mtx_);
@@ -96,7 +97,7 @@ class IVideoBuf : public IMemBuf
   /// Функция выделения памяти под буфер
   /// \param[in]  info параметры выделения памяти
   void
-  buf_alloc (const AllocBufInfo& info)
+  buf_alloc (const AllocParams& info)
   {
     std::scoped_lock lock (threadsan_mtx_);
     buf_alloc_int (info);
@@ -129,18 +130,18 @@ class IVideoBuf : public IMemBuf
 #ifdef U3_FORCE_SYNC_FOR_THREAD_SANITIZER
   using sync_type = std::mutex;
 #else
-  using sync_type = ::libs::helpers::thread::EmptyMutex;
+  using sync_type = ::libs::utility::thread::EmptyMutex;
 #endif
 
   //  IVideoBuf interface
-  virtual auto set_format_int (const libs::helpers::uids::minor::id_val&) -> void = 0;
-  virtual auto get_format_int () const -> libs::helpers::uids::minor::id_val      = 0;
+  virtual auto set_format_int (const libs::utility::uids::minor::id_val&) -> void = 0;
+  virtual auto get_format_int () const -> libs::utility::uids::minor::id_val      = 0;
   virtual auto set_dim_var_int (const Dims&, dim_type) -> void                    = 0;
   virtual auto get_dim_var_int (const Dims&) const -> dim_type                    = 0;
   virtual auto get_dim_vars_int () const -> const DimVars&                        = 0;
   virtual auto set_flag_int (const BufFlags&, bool) -> void                       = 0;
   virtual auto get_flag_int (const BufFlags&) const -> bool                       = 0;
-  virtual auto buf_alloc_int (const AllocBufInfo&) -> void                        = 0;
+  virtual auto buf_alloc_int (const AllocParams&) -> void                         = 0;
   virtual auto flush_int () -> void                                               = 0;
   virtual auto check_int (const check_func_type&) const -> bool                   = 0;
 

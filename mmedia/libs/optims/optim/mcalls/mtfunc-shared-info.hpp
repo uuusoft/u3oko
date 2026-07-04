@@ -19,8 +19,8 @@ class MTFuncSharedInfo final
   MTFuncSharedInfo ()  = default;
   ~MTFuncSharedInfo () = default;
 
-  MTFuncSharedInfo (const MTFuncSharedInfo& src)            = delete;
-  MTFuncSharedInfo& operator= (const MTFuncSharedInfo& src) = delete;
+  MTFuncSharedInfo (const MTFuncSharedInfo&)            = delete;
+  MTFuncSharedInfo& operator= (const MTFuncSharedInfo&) = delete;
 
   std::atomic_bool exit_request_ = false;   //< Флаг запроса на выход
   barier_ptr_type  bstart_;                 //< Барьер старта

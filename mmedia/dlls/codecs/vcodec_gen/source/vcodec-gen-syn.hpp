@@ -8,21 +8,22 @@
 
 namespace dlls::codecs::vcodec_gen::syn
 {
-using InterfCodecImageEvent = ::libs::ievents::runtime::interf::InterfCodecImageEvent;
-using ICodecImage           = ::libs::ievents::runtime::interf::interfaces::ICodecImage;
-using VideoCodecProp        = ::libs::ievents::props::videos::generic::codec::VideoCodecProp;
-using Writes                = ::libs::ievents::props::videos::generic::codec::Writes;
+using InterfCodecImageEvent = ::libs::events_base::runtime::interf::InterfCodecImageEvent;
+using ICodecImage           = ::libs::events_base::runtime::interf::interfaces::ICodecImage;
+using VideoCodecProp        = ::libs::events_base::props::videos::generic::codec::VideoCodecProp;
+using Writes                = ::libs::events_base::props::videos::generic::codec::Writes;
 using ISystemProperty       = ::libs::iproperties::vers::system::ISystemProperty;
 using IVideoBuf             = ::utils::dbufs::video::IVideoBuf;
 using HeaderIFrame          = ::dlls::codecs::codec_gen::HeaderIFrame;
-using IncludeSubFolders     = ::libs::helpers::files::IncludeSubFolders;
-using IncludeFiles          = ::libs::helpers::files::IncludeFiles;
-using Recursives            = ::libs::helpers::files::Recursives;
+using IncludeSubFolders     = ::libs::utility::files::IncludeSubFolders;
+using IncludeFiles          = ::libs::utility::files::IncludeFiles;
+using Recursives            = ::libs::utility::files::Recursives;
 using TransformInfo         = ::libs::icore::impl::var1::obj::dll::TransformInfo;
 using CallInterfInfo        = ::libs::icore::impl::var1::obj::dll::CallInterfInfo;
 using FilterInfo            = ::libs::icore::impl::var1::obj::FilterInfo;
 using ConnectInfo           = ::libs::icore::impl::var1::obj::ConnectInfo;
 using ProxyBuf              = ::libs::optim::io::ProxyBuf;
 using IEvent                = ::libs::events::IEvent;
-using AddEvent2Base         = ::libs::ievents_events::events::AddEvent2Base;
+using AddEvent2EventsMsg    = ::libs::events_msg::events::AddEvent2EventsMsg;
+using IMCaller              = ::libs::optim::mcalls::IMCaller;
 }   // namespace dlls::codecs::vcodec_gen::syn

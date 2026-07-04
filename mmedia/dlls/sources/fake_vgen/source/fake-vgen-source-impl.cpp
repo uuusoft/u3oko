@@ -5,8 +5,6 @@
 \project    u3_fake_vgen
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "includes_int.hpp"
 #include "fake-vgen-source-impl.hpp"
 
@@ -49,7 +47,7 @@ SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo >& sources)
 {
   sources.emplace_back (
     "fake-camera",
-    libs::imdata_events::events::DataSources::video,
+    libs::events_media::events::DataSources::video,
     0,
     1);
 }
@@ -66,10 +64,10 @@ SourceImpl::get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* eve
 
   boost::posix_time::ptime now_time  = boost::posix_time::microsec_clock::universal_time ();
   const auto&              props     = srcimpinfo_.capture_props_;
-  const auto               px_format = ::libs::helpers::uids::minor::id_val::device_specific == props->capi_.px_format_ ? ::libs::helpers::uids::minor::id_val::yuy2 : props->capi_.px_format_;
+  const auto               px_format = ::libs::utility::uids::minor::id_val::device_specific == props->capi_.px_format_ ? ::libs::utility::uids::minor::id_val::yuy2 : props->capi_.px_format_;
 
   buf->buf_alloc (
-    ::utils::dbufs::video::AllocBufInfo (
+    ::utils::dbufs::video::AllocParams (
       props->capi_.width_, props->capi_.height_, 0, px_format));
 
   auto it_make_func = gen_funcs_.find (px_format);
@@ -85,7 +83,7 @@ SourceImpl::get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* eve
 
   buf->set_mem_var (
     ::utils::dbufs::MemVars::size_data,
-    buf->get_dim_var (::utils::dbufs::video::Dims::stride) * props->capi_.height_);
+    static_cast< const syn::mem_var_type > (buf->get_dim_var (syn::Dims::stride) * props->capi_.height_));
 
   ++indx_bcomp_;
   ++counter_frames_;
@@ -95,13 +93,13 @@ SourceImpl::get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* eve
 
 
 void
-SourceImpl::set_cpu_int (::libs::helpers::sys::cpu::CpuExts current_optim)
+SourceImpl::set_cpu_int (::libs::utility::sys::cpu::CpuExts current_optim)
 {
 }
 
 
-bool
-SourceImpl::free_int ()
+auto
+SourceImpl::free_int () -> bool
 {
   stop ();
   return true;
@@ -114,8 +112,8 @@ SourceImpl::update_source_info_int (const syn::SourceImplInfo& info)
   const auto& px_format = srcimpinfo_.capture_props_->capi_.px_format_;
   if (!gen_funcs_[px_format])
   {
-    U3_LOG_DATA_WRN ("try use unsupported format fake came " + ::libs::helpers::uids::helpers::get_readable_name (px_format));
-    // px_format = ::libs::helpers::uids::minor::id_val::rgb24;
+    U3_LOG_DATA_WRN ("try use unsupported format fake came " + ::libs::utility::uids::helpers::get_readable_name (px_format));
+    // px_format = ::libs::utility::uids::minor::id_val::rgb24;
   }
 }
 
@@ -154,110 +152,110 @@ SourceImpl::init_gen_funcs ()
     return colpos >= 20 && colpos <= 29 ? bcomp : 0; };
 
   //  yuy2
-  gen_funcs_[::libs::helpers::uids::minor::id_val::yuy2] =
-    [col2r, col2g, col2b] (std::uint32_t width, std::uint32_t height, std::uint32_t stride, std::uint8_t* beg_buf) {
-      for (std::uint32_t iy = 0; iy < height; ++iy)
+  gen_funcs_[::libs::utility::uids::minor::id_val::yuy2] =
+    [col2r, col2g, col2b] (std::uint32_t width, std::uint32_t height, std::uint32_t stride, std::uint8_t* beg_buf) -> void {
+    for (std::uint32_t iy = 0; iy < height; ++iy)
+    {
+      std::uint8_t* prow = beg_buf + static_cast< size_t > (iy * stride);
+      for (std::uint32_t ix = 0; ix < width; ix += 2)
       {
-        std::uint8_t* prow = beg_buf + iy * stride;
-        for (std::uint32_t ix = 0; ix < width; ix += 2)
-        {
-          const std::uint32_t colpos = ix % col_width;
-          const auto          r      = col2r (colpos);
-          const auto          g      = col2g (colpos);
-          const auto          b      = col2b (colpos);
+        const std::uint32_t colpos = ix % col_width;
+        const auto          r      = col2r (colpos);
+        const auto          g      = col2g (colpos);
+        const auto          b      = col2b (colpos);
 
-          prow[2 * ix + 0] = ::libs::optim::convert::gen::rgb2y (r, g, b);   // y
-          prow[2 * ix + 1] = ::libs::optim::convert::gen::rgb2u (r, g, b);   // u
-          prow[2 * ix + 2] = ::libs::optim::convert::gen::rgb2y (r, g, b);   // y
-          prow[2 * ix + 3] = ::libs::optim::convert::gen::rgb2v (r, g, b);   // v
-        }
+        prow[2 * ix + 0] = ::libs::optim::convert::gen::rgb2y (r, g, b);   // y
+        prow[2 * ix + 1] = ::libs::optim::convert::gen::rgb2u (r, g, b);   // u
+        prow[2 * ix + 2] = ::libs::optim::convert::gen::rgb2y (r, g, b);   // y
+        prow[2 * ix + 3] = ::libs::optim::convert::gen::rgb2v (r, g, b);   // v
       }
-    };
+    }
+  };
 
   // yuyv
-  gen_funcs_[::libs::helpers::uids::minor::id_val::yuyv] = gen_funcs_[::libs::helpers::uids::minor::id_val::yuy2];
+  gen_funcs_[::libs::utility::uids::minor::id_val::yuyv] = gen_funcs_[::libs::utility::uids::minor::id_val::yuy2];
 
   //  uyvy
-  gen_funcs_[::libs::helpers::uids::minor::id_val::uyvy] =
-    [col2r, col2g, col2b] (std::uint32_t width, std::uint32_t height, std::uint32_t stride, std::uint8_t* beg_buf) {
-      for (std::uint32_t iy = 0; iy < height; ++iy)
+  gen_funcs_[::libs::utility::uids::minor::id_val::uyvy] =
+    [col2r, col2g, col2b] (std::uint32_t width, std::uint32_t height, std::uint32_t stride, std::uint8_t* beg_buf) -> void {
+    for (std::uint32_t iy = 0; iy < height; ++iy)
+    {
+      std::uint8_t* prow = beg_buf + static_cast< size_t > (iy * stride);
+      for (std::uint32_t ix = 0; ix < width; ix += 2)
       {
-        std::uint8_t* prow = beg_buf + iy * stride;
-        for (std::uint32_t ix = 0; ix < width; ix += 2)
-        {
-          const std::uint32_t colpos = ix % col_width;
-          const auto          r      = col2r (colpos);
-          const auto          g      = col2g (colpos);
-          const auto          b      = col2b (colpos);
+        const std::uint32_t colpos = ix % col_width;
+        const auto          r      = col2r (colpos);
+        const auto          g      = col2g (colpos);
+        const auto          b      = col2b (colpos);
 
-          prow[2 * ix + 0] = ::libs::optim::convert::gen::rgb2u (r, g, b);   // u
-          prow[2 * ix + 1] = ::libs::optim::convert::gen::rgb2y (r, g, b);   // y
-          prow[2 * ix + 2] = ::libs::optim::convert::gen::rgb2v (r, g, b);   // v
-          prow[2 * ix + 3] = ::libs::optim::convert::gen::rgb2y (r, g, b);   // y
-        }
+        prow[2 * ix + 0] = ::libs::optim::convert::gen::rgb2u (r, g, b);   // u
+        prow[2 * ix + 1] = ::libs::optim::convert::gen::rgb2y (r, g, b);   // y
+        prow[2 * ix + 2] = ::libs::optim::convert::gen::rgb2v (r, g, b);   // v
+        prow[2 * ix + 3] = ::libs::optim::convert::gen::rgb2y (r, g, b);   // y
       }
-    };
+    }
+  };
 
   // rgb24
-  gen_funcs_[::libs::helpers::uids::minor::id_val::rgb24] =
-    [col2r, col2g, col2b] (std::uint32_t width, std::uint32_t height, std::uint32_t stride, std::uint8_t* beg_buf) {
-      for (std::uint32_t iy = 0; iy < height; ++iy)
+  gen_funcs_[::libs::utility::uids::minor::id_val::rgb24] =
+    [col2r, col2g, col2b] (std::uint32_t width, std::uint32_t height, std::uint32_t stride, std::uint8_t* beg_buf) -> void {
+    for (std::uint32_t iy = 0; iy < height; ++iy)
+    {
+      std::uint8_t* prow = beg_buf + static_cast< size_t > (iy * stride);
+      for (std::uint32_t ix = 0; ix < width; ++ix)
       {
-        std::uint8_t* prow = beg_buf + iy * stride;
-        for (std::uint32_t ix = 0; ix < width; ++ix)
-        {
-          const std::uint32_t colpos = ix % col_width;
+        const std::uint32_t colpos = ix % col_width;
 
-          prow[3 * ix + 0] = col2r (colpos);
-          prow[3 * ix + 1] = col2g (colpos);
-          prow[3 * ix + 2] = col2b (colpos);
-        }
+        prow[3 * ix + 0] = col2r (colpos);
+        prow[3 * ix + 1] = col2g (colpos);
+        prow[3 * ix + 2] = col2b (colpos);
       }
-    };
+    }
+  };
 
   // rgb32
-  gen_funcs_[::libs::helpers::uids::minor::id_val::rgb32] =
-    [col2r, col2g, col2b] (std::uint32_t width, std::uint32_t height, std::uint32_t stride, std::uint8_t* beg_buf) {
-      for (std::uint32_t iy = 0; iy < height; ++iy)
+  gen_funcs_[::libs::utility::uids::minor::id_val::rgb32] =
+    [col2r, col2g, col2b] (std::uint32_t width, std::uint32_t height, std::uint32_t stride, std::uint8_t* beg_buf) -> void {
+    for (std::uint32_t iy = 0; iy < height; ++iy)
+    {
+      std::uint8_t* prow = beg_buf + static_cast< size_t > (iy * stride);
+      for (std::uint32_t ix = 0; ix < width; ++ix)
       {
-        std::uint8_t* prow = beg_buf + iy * stride;
-        for (std::uint32_t ix = 0; ix < width; ++ix)
-        {
-          const std::uint32_t colpos = ix % col_width;
+        const std::uint32_t colpos = ix % col_width;
 
-          prow[4 * ix + 0] = col2r (colpos);
-          prow[4 * ix + 1] = col2g (colpos);
-          prow[4 * ix + 2] = col2b (colpos);
-          prow[4 * ix + 3] = 0;
-        }
+        prow[4 * ix + 0] = col2r (colpos);
+        prow[4 * ix + 1] = col2g (colpos);
+        prow[4 * ix + 2] = col2b (colpos);
+        prow[4 * ix + 3] = 0;
       }
-    };
+    }
+  };
 
   // i420
-  gen_funcs_[::libs::helpers::uids::minor::id_val::i420] =
-    [col2r, col2g, col2b] (std::uint32_t width, std::uint32_t height, std::uint32_t stride, std::uint8_t* beg_buf) {
-      std::uint8_t* beg_ubuf = beg_buf + stride * height;
-      std::uint8_t* beg_vbuf = beg_buf + stride * height + stride * (height >> 1);
+  gen_funcs_[::libs::utility::uids::minor::id_val::i420] =
+    [col2r, col2g, col2b] (std::uint32_t width, std::uint32_t height, std::uint32_t stride, std::uint8_t* beg_buf) -> void {
+    std::uint8_t* beg_ubuf = beg_buf + static_cast< size_t > (stride * height);
+    std::uint8_t* beg_vbuf = beg_buf + stride * height + static_cast< size_t > (stride * (height >> 1));
 
-      for (std::uint32_t iy = 0; iy < height; ++iy)
+    for (std::uint32_t iy = 0; iy < height; ++iy)
+    {
+      std::uint8_t* prow  = beg_buf + static_cast< std::size_t > (iy * stride);
+      std::uint8_t* purow = beg_ubuf + static_cast< std::size_t > ((iy >> 1) * stride);
+      std::uint8_t* pvrow = beg_vbuf + static_cast< std::size_t > ((iy >> 1) * stride);
+      for (std::uint32_t ix = 0; ix < width; ix += 2)
       {
-        std::uint8_t* prow  = beg_buf + iy * stride;
-        std::uint8_t* purow = beg_ubuf + (iy >> 1) * stride;
-        std::uint8_t* pvrow = beg_vbuf + (iy >> 1) * stride;
-        for (std::uint32_t ix = 0; ix < width; ix += 2)
-        {
-          const std::uint32_t colpos = ix % col_width;
-          const auto          r      = col2r (colpos);
-          const auto          g      = col2g (colpos);
-          const auto          b      = col2b (colpos);
+        const std::uint32_t colpos = ix % col_width;
+        const auto          r      = col2r (colpos);
+        const auto          g      = col2g (colpos);
+        const auto          b      = col2b (colpos);
 
-          prow[ix + 0] = ::libs::optim::convert::gen::rgb2y (r, g, b);
-          prow[ix + 1] = ::libs::optim::convert::gen::rgb2y (r, g, b);
+        prow[ix + 0] = ::libs::optim::convert::gen::rgb2y (r, g, b);
+        prow[ix + 1] = ::libs::optim::convert::gen::rgb2y (r, g, b);
 
-          purow[ix >> 1] = ::libs::optim::convert::gen::rgb2u (r, g, b);
-          pvrow[ix >> 1] = ::libs::optim::convert::gen::rgb2v (r, g, b);
-        }
+        purow[ix >> 1] = ::libs::optim::convert::gen::rgb2u (r, g, b);
+        pvrow[ix >> 1] = ::libs::optim::convert::gen::rgb2v (r, g, b);
       }
-    };
+    }
+  };
 }
 }   // namespace dlls::sources::fake_vgen

@@ -13,8 +13,7 @@ class CodecGeneric;
 
 namespace dlls::codecs::vcodec_gen::funcs
 {
-// using get_codec_info_func_type = void (libs::helpers::uids::minor::id_val* guid);
-using get_codec_info_func_type = void (libs::helpers::uids::minor::id_val guids[4]);
+using get_codec_info_func_type = void (libs::utility::uids::minor::id_val guids[4]);
 using func_codec_info_type     = std::function< get_codec_info_func_type >;
 
 using get_codec_func_type = void (::dlls::codecs::codec_gen::CodecGeneric** pobj);

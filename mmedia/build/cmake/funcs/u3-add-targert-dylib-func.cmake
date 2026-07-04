@@ -44,7 +44,7 @@ function(u3_add_target_dylib)
       ${U3_LINK_ALL_IGENERIC_LIBS}
       ${U3_LINK_ALL_GENERIC_LIBS}
       proxy-lib
-      helpers-lib
+      utility-lib
       ${U3_LIBS_3RD_STATIC_LIST}
       PAR_LIBS
       ${U3_SHARED_LINK_OPTIONS_CPP})

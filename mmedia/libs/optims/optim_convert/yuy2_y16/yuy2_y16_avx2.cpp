@@ -29,16 +29,16 @@ avx2 (::libs::optim::io::MCallInfo& info)
   {
     for (std::uint32_t indx_x = 0; indx_x < width; indx_x += ppc)
     {
-      __m256i data = _mm256_load_si256 (::libs::helpers::casts::reinterpret_cast_helper< const __m256i* > (yuy2_buf));
+      __m256i data = _mm256_load_si256 (::libs::utility::casts::reinterpret_cast_helper< const __m256i* > (yuy2_buf));
       data         = _mm256_and_si256 (data, mask);
-      _mm256_store_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (y16_buf), data);
+      _mm256_store_si256 (::libs::utility::casts::reinterpret_cast_helper< __m256i* > (y16_buf), data);
 
       yuy2_buf += dppc;
       y16_buf += ppc;
     }
 
-    yuy2_buf = ::libs::helpers::mem::move_cptr (yuy2_buf, leak_yuy2);
-    y16_buf  = ::libs::helpers::mem::move_ptr (y16_buf, leak_y16);
+    yuy2_buf = ::libs::utility::mem::move_cptr (yuy2_buf, leak_yuy2);
+    y16_buf  = ::libs::utility::mem::move_ptr (y16_buf, leak_y16);
   }
 
   _mm256_zeroupper ();

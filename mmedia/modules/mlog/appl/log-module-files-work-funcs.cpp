@@ -5,8 +5,6 @@
 \project    mlog
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../module-log-includes_int.hpp"
 #include "log-module.hpp"
 
@@ -22,9 +20,9 @@ LogModule::make_dir_for_logs ()
 
   active_session_folder_ = boost::posix_time::to_iso_string (sys_time);
   path2sessions_         = paths_->get_path (::libs::iproperties::appl_paths::Paths::logs);
-  path2logs_             = ::libs::helpers::files::make_path (path2sessions_, active_session_folder_);
+  path2logs_             = ::libs::utility::files::make_path (path2sessions_, active_session_folder_);
 
-  ::libs::helpers::files::create_folder (path2logs_);
+  ::libs::utility::files::create_folder (path2logs_);
   U3_ASSERT (!path2logs_.empty ());
   U3_ASSERT (!path2sessions_.empty ());
 }
@@ -36,7 +34,7 @@ LogModule::open_log_file ()
   U3_ASSERT (!file_for_store_events_.is_open ());
   U3_ASSERT (!path2logs_.empty ());
 
-  const std::string file_log_path = ::libs::helpers::files::make_path (path2logs_, std::to_string (indx_file_) + std::string (".log"));
+  const std::string file_log_path = ::libs::utility::files::make_path (path2logs_, std::to_string (indx_file_) + std::string (".log"));
   file_for_store_events_.open (file_log_path.c_str (), std::ios_base::out | std::ios_base::app);
 
   U3_CHECK (file_for_store_events_.is_open (), ("open log file" + file_log_path).c_str ());
@@ -56,7 +54,7 @@ LogModule::delete_folders (const syn::list_folders_type& folders)
       continue;
     }
 
-    const std::string path2logs = ::libs::helpers::files::make_path (path2sessions_, folder.session_id_);
+    const std::string path2logs = ::libs::utility::files::make_path (path2sessions_, folder.session_id_);
     if (!::boost::filesystem::is_directory (path2logs) || !::boost::filesystem::exists (path2logs))
     {
       U3_XLOG_WARN ("not exist or not folder" + TOLOG (path2logs));
@@ -74,11 +72,11 @@ LogModule::delete_folders (const syn::list_folders_type& folders)
 }
 
 
-std::uint64_t
+auto
 LogModule::fill_tab (
   const std::uint64_t len,
   const std::uint64_t max_count_tabs,
-  const std::uint64_t uint64_tab)
+  const std::uint64_t uint64_tab) -> std::uint64_t
 {
   const std::uint64_t diff_tabs  = std::min< std::uint64_t > (len / uint64_tab, max_count_tabs);
   const std::uint64_t count_tabs = max_count_tabs - diff_tabs;
@@ -105,7 +103,7 @@ LogModule::flush_events ()
   auto*      log_prop = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
   const auto max_size = log_prop->get_val (syn::LogVals::max_size_one_log_file_byte);
 
-  if (max_size && file_for_store_events_.tellg () >= max_size)
+  if (max_size && std::cmp_greater_equal (static_cast< std::streamoff > (file_for_store_events_.tellg ()), max_size))
   {
     ++indx_file_;
     file_for_store_events_.close ();
@@ -114,25 +112,25 @@ LogModule::flush_events ()
 }
 
 
-std::uint64_t
+auto
 flush_long_descr_event (
   std::fstream&                    file,
-  const syn::InfoLogEvent::raw_ptr cevnt)
+  const syn::InfoLogEvent::raw_ptr cevnt) -> std::uint64_t
 {
   std::uint64_t ret = 0;
   std::string   txt;
 
-  txt = cevnt->text (libs::ilog_events::LogTexts::file);
+  txt = cevnt->text (libs::events_log::LogTexts::file);
   ret += txt.length ();
   file << txt;
 
   file << ":";
-  txt = cevnt->text (libs::ilog_events::LogTexts::line);
+  txt = cevnt->text (libs::events_log::LogTexts::line);
   ret += txt.length ();
   file << txt;
 
   // file << "  ";
-  // txt = cevnt->text (libs::ilog_events::LogTexts::function);
+  // txt = cevnt->text (libs::events_log::LogTexts::function);
   // ret += txt.length ();
   // file << txt;
   return ret;
@@ -153,23 +151,23 @@ LogModule::flush_event (syn::IEvent::ptr& evnt)
 
   tabs += fill_tab (len, consts::g_max_count_tabs_date, consts::g_size_tab);
 
-  txt = cevnt->text (::libs::ilog_events::LogTexts::subsys);
+  txt = cevnt->text (::libs::events_log::LogTexts::subsys);
   len += txt.length ();
   file_for_store_events_ << txt;
 
   tabs += fill_tab (txt.length (), consts::g_max_count_tabs_subsys, consts::g_size_tab);
 
-  txt = cevnt->text (::libs::ilog_events::LogTexts::level);
+  txt = cevnt->text (::libs::events_log::LogTexts::level);
   len += txt.length ();
   file_for_store_events_ << txt;
 
   tabs += fill_tab (txt.length (), consts::g_max_count_tabs_level, consts::g_size_tab);
 
   {
-    txt = cevnt->text (::libs::ilog_events::LogTexts::text);
+    txt = cevnt->text (::libs::events_log::LogTexts::text);
 
-    std::replace_if (
-      txt.begin (), txt.end (), [] (const char& val) -> bool { return '\t' == val ? true : false; }, ' ');
+    std::ranges::replace_if (
+      txt, [] (const char& val) -> bool { return '\t' == val ? true : false; }, ' ');
 
     const std::uint64_t length_txt = txt.length ();
     const std::uint64_t max_symbol = consts::g_size_tab * (consts::g_max_count_tabs_info - 1);

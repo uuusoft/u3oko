@@ -5,22 +5,20 @@
 \project    u3_base_id_dll
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "base_id-includes_int.hpp"
 #include "base-id-interf.hpp"
 
 namespace dlls::base_id
 {
-bool
-BaseIdInterf::is_correction_property_update () const
+auto
+BaseIdInterf::is_correction_property_update () const -> bool
 {
   return update_;
 }
 
 
-syn::BaseIdProp::craw_ptr
-BaseIdInterf::get_base_property () const
+auto
+BaseIdInterf::get_base_property () const -> syn::BaseIdProp::craw_ptr
 {
   update_ = false;
   return &props_;
@@ -41,8 +39,8 @@ BaseIdInterf::update_property_int (const syn::IEvent::craw_ptr info)
 }
 
 
-BaseIdInterf::buf2module_infos_type
-BaseIdInterf::get_module_infos_int (const syn::off_buf_type& indx_buf) const
+auto
+BaseIdInterf::get_module_infos_int (const syn::off_buf_type& indx_buf) const -> BaseIdInterf::buf2module_infos_type
 {
   buf2module_infos_type ret;
 
@@ -57,8 +55,8 @@ BaseIdInterf::get_module_infos_int (const syn::off_buf_type& indx_buf) const
 }
 
 
-const syn::source_name_type&
-BaseIdInterf::get_source_name_int () const
+auto
+BaseIdInterf::get_source_name_int () const -> const syn::source_name_type&
 {
   return props_.source_name_;
 }

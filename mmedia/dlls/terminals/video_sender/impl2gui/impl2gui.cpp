@@ -4,8 +4,6 @@
 \date       14.08.2018
 \project    u3_video_sender_dll
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../video-sender-includes_int.hpp"
 #include "impl2gui.hpp"
 #include "is-empty-frame-helper.hpp"
@@ -31,15 +29,15 @@ Impl2Gui::send_int (
 }
 
 
-bool
-Impl2Gui::fill_frame (const syn::TransformInfo& info, void* pmem)
+auto
+Impl2Gui::fill_frame (const syn::TransformInfo& info, void* pmem) -> bool
 {
   U3_ASSERT (pmem);
   bool ret = true;
 
   try
   {
-    auto*      header = ::libs::helpers::casts::reinterpret_cast_helper< ::modules::mgui::appl::io::VideoIO* > (pmem);
+    auto*      header = ::libs::utility::casts::reinterpret_cast_helper< ::modules::mgui::appl::io::VideoIO* > (pmem);
     const auto bbuf   = (**info.ibuf_)[utils::dbufs::video::consts::offs::lit];
 
     U3_CHECK (header, "empty header video frame");
@@ -73,12 +71,12 @@ Impl2Gui::fill_frame (const syn::TransformInfo& info, void* pmem)
         continue;
       }
 
-      void* dest_buf = ::libs::helpers::mem::move_ptr< void* > (pmem, off_buf);
+      void* dest_buf = ::libs::utility::mem::move_ptr< void* > (pmem, off_buf);
 
       header->in_.stride_ = buf->get_dim_var (::utils::dbufs::video::Dims::stride);
       *buf_offs[bindx]    = off_buf;
 
-      ::libs::helpers::mem::u3copy (utils::dbufs::video::helpers::get_const_data (buf), dest_buf, (*buf)[::utils::dbufs::MemVars::size_data]);
+      ::libs::utility::mem::u3copy (utils::dbufs::video::helpers::get_const_data (buf), dest_buf, (*buf)[::utils::dbufs::MemVars::size_data]);
       off_buf += (*buf)[::utils::dbufs::MemVars::size_data];
     }
   }
@@ -96,20 +94,20 @@ Impl2Gui::fill_frame (const syn::TransformInfo& info, void* pmem)
 }
 
 
-bool
-Impl2Gui::is_empty_frame (const void* pmem) const
+auto
+Impl2Gui::is_empty_frame (const void* pmem) const -> bool
 {
   U3_ASSERT (pmem);
-  const auto* header = ::libs::helpers::casts::reinterpret_cast_helper< const ::modules::mgui::appl::io::VideoIO* > (pmem);
+  const auto* header = ::libs::utility::casts::reinterpret_cast_helper< const ::modules::mgui::appl::io::VideoIO* > (pmem);
   return header->in_.is_valid () ? false : true;
 }
 
 
 void
 Impl2Gui::send_frame (
-  const InfoFilter&         finfo,
-  const syn::TransformInfo& info,
-  ::libs::link::ILink::ptr  helper)
+  const InfoFilter&               finfo,
+  const syn::TransformInfo&       info,
+  const ::libs::link::ILink::ptr& helper)
 {
   if (U3_MARK_UNUSED auto imem = helper->get_imem ())
   {
@@ -170,7 +168,7 @@ Impl2Gui::send_frame (
     U3_CHECK (helper->mem_atomic_call (finfo_.last_hmem_, FillFrameHelper (this, info)), "call mem_atomic_call");
 
     helper->s1end_msg (BaseGUIEvent::ptr (
-      new ::libs::igui_events::events::MemBlockEvent (finfo_.last_hmem_, finfo_.rprops_->get_id ())));
+      new ::libs::events_gui::events::MemBlockEvent (finfo_.last_hmem_, finfo_.rprops_->get_id ())));
 #endif
   }
   else
@@ -185,7 +183,7 @@ Impl2Gui::send_frame (
       fast_buf2gui_->swap (**info.ibuf_);
 
       syn::IEvent::ptr rmsg;
-      auto             dmsg = ::libs::iproperties::helpers::create_event< ::libs::igui_events::events::VideoBufEvent > (rmsg);
+      auto             dmsg = ::libs::iproperties::helpers::create_event< ::libs::events_gui::events::VideoBufEvent > (rmsg);
 
       dmsg->set_buf (fast_buf2gui_);
       // dmsg->set_id (finfo.rprops_->get_id ());

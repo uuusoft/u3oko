@@ -8,5 +8,5 @@
 
 namespace dlls::codecs::codec_gen::consts
 {
-constexpr std::uint64_t id_frame = 0x5555555F534F4654LL;   //< Идентификатор структуры, которая предворяет каждый сжатый кадр aka UUU_SOFT
+inline constexpr std::uint64_t id_frame = 0x5555555F534F4654LL;   //< Идентификатор структуры, которая предворяет каждый сжатый кадр aka UUU_SOFT
 }

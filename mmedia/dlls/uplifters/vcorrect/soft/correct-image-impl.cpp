@@ -4,8 +4,6 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_vcorrect_vdd
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../vcorrect-includes_int.hpp"
 #include "correct-image-impl.hpp"
 #include "mmedia/dlls/doptim/algs/all_algs.hpp"
@@ -22,22 +20,22 @@ CorrectImageImpl::CorrectImageImpl ()
   mfunc_grad_func_ = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CGraduent1Alg::val_key));
 
   std::int32_t cindx = 0;
-  std::generate (
-    contrasts_.begin (),
-    contrasts_.end (),
-    [&cindx] () { return cindx++; });
+  std::ranges::generate (
+    contrasts_,
+
+    [&cindx] () -> std::int32_t { return cindx++; });
 
   cindx = 0;
-  std::generate (
-    saturations_.begin (),
-    saturations_.end (),
-    [&cindx] () { return cindx++; });
+  std::ranges::generate (
+    saturations_,
+
+    [&cindx] () -> std::int32_t { return cindx++; });
 
   cindx = 0;
-  std::generate (
-    hues_.begin (),
-    hues_.end (),
-    [&cindx] () { return cindx++; });
+  std::ranges::generate (
+    hues_,
+
+    [&cindx] () -> std::int32_t { return cindx++; });
 }
 
 
@@ -53,13 +51,13 @@ CorrectImageImpl::update_correction_property_int (const syn::VideoCorrectProp::r
   U3_LOG_DATA_DATA ("update correction properties:" + STOLOG (syn::VideoCorrectProp::gen_get_mid ()));
   props_ = info;
 
-  const float sval = ::libs::helpers::utils::ret_check_bound (props_->saturation_.first, -1.0F, 1.0F);
+  const float sval = ::libs::utility::utils::ret_check_bound (props_->saturation_.first, -1.0F, 1.0F);
   if (0.0F != sval)
   {
     auto updatefunc = [sval] (std::int32_t i) -> std::int16_t {
       auto val = sval > 0.0F ? U3_CAST_INT16 (i + (consts::bound_gradient_val * sval) * ((consts::bound_gradient_val - i) / consts::bound_gradient_val)) :
                                U3_CAST_INT16 (i + (consts::bound_gradient_val * sval) * (i / consts::bound_gradient_val));
-      ::libs::helpers::utils::check_bound< std::int16_t > (val, 0, consts::max_graduent_val);
+      ::libs::utility::utils::check_bound< std::int16_t > (val, 0, consts::max_graduent_val);
       return val;
     };
 
@@ -69,18 +67,18 @@ CorrectImageImpl::update_correction_property_int (const syn::VideoCorrectProp::r
     }
   }
 
-  const auto cval = ::libs::helpers::utils::ret_check_bound (props_->contrast_.first, -1.0F, 1.0F);
+  const auto cval = ::libs::utility::utils::ret_check_bound (props_->contrast_.first, -1.0F, 1.0F);
   if (0.0F != cval)
   {
     for (std::int32_t i = 0; i < U3_CAST_INT32 (contrasts_.size ()); ++i)
     {
       auto val = U3_CAST_INT16 (i * std::pow (U3_CAST_FLOAT (i), props_->contrast_.first / 30.0F));
-      ::libs::helpers::utils::check_bound< std::int16_t > (val, 0, consts::max_graduent_val);
+      ::libs::utility::utils::check_bound< std::int16_t > (val, 0, consts::max_graduent_val);
       contrasts_[i] = val;
     }
   }
 
-  const auto hval = ::libs::helpers::utils::ret_check_bound (props_->hue_.first, -1.0F, 1.0F);
+  const auto hval = ::libs::utility::utils::ret_check_bound (props_->hue_.first, -1.0F, 1.0F);
   if (0.0F != hval)
   {
     const std::int16_t off_val = props_->hue_.first * 127;
@@ -88,18 +86,18 @@ CorrectImageImpl::update_correction_property_int (const syn::VideoCorrectProp::r
     {
       std::int16_t val = i + off_val;
       val              = val < 0 ? 255 + val : (val > 255 ? val - 255 : val);
-      ::libs::helpers::utils::check_bound< std::int16_t > (val, 0, consts::max_graduent_val);
+      ::libs::utility::utils::check_bound< std::int16_t > (val, 0, consts::max_graduent_val);
       hues_[i] = val;
     }
   }
 }
 
 
-bool
+auto
 CorrectImageImpl::process_int (
   syn::IVideoBuf::raw_ptr h16s,
   syn::IVideoBuf::raw_ptr s16s,
-  syn::IVideoBuf::raw_ptr l16s)
+  syn::IVideoBuf::raw_ptr l16s) -> bool
 {
   if (!l16s || l16s->get_flag (::utils::dbufs::BufFlags::empty))
   {
@@ -171,7 +169,7 @@ CorrectImageImpl::bright_correct (syn::IVideoBuf& y16s)
       // 21.09.2016 - add speed koeff
       const float loc_speed_change = 1.0F;
 
-      finfo->m_add_brights_now = ::libs::helpers::utils::ret_check_bound (finfo->m_add_brights_now + (loc_speed_change * loc_diff_correction) / loc_abs_diff_correction, -255, 255);
+      finfo->m_add_brights_now = ::libs::utility::utils::ret_check_bound (finfo->m_add_brights_now + (loc_speed_change * loc_diff_correction) / loc_abs_diff_correction, -255, 255);
     }
 
     if (!finfo->m_temp_disabled_adaptive_correction)

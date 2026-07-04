@@ -6,8 +6,8 @@
 */
 #include "space-noise-includes_int.hpp"
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter::raw_ptr
-create_impl_vfn_space ()
+extern "C" BOOST_SYMBOL_EXPORT auto
+create_impl_vfn_space () -> ::libs::icore::impl::var1::obj::dll::IFilter::raw_ptr
 {
   ::libs::icore::impl::var1::obj::dll::IFilter::raw_ptr ret (new ::dlls::noisez::space::Filter);
   return ret;

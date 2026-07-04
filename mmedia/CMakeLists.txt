@@ -68,8 +68,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${U3_SYSTEM_NAME}/${CMAKE
 
 include("./build/cmake/compiler-specific/u3-selector-compiler-specific-options.cmake")
 
-set(U3_LINK_ALL_EVENTS_LIBS igui_events-lib imdata_events-lib istorage_events-lib ihttp_events-lib ievents_events-lib ilog_events-lib ievents-lib events-lib)
-set(U3_LINK_ALL_GENERIC_LIBS properties-lib bufs-lib core-lib link-lib helpers-lib)
+set(U3_LINK_ALL_EVENTS_LIBS
+    events_user-lib
+    events_gui-lib
+    events_media-lib
+    events_storage-lib
+    events_http-lib
+    events_msg-lib
+    events_log-lib
+    events_base-lib
+    events-lib)
+set(U3_LINK_ALL_GENERIC_LIBS properties-lib bufs-lib core-lib link-lib utility-lib)
 set(U3_LINK_ALL_IGENERIC_LIBS icore-lib ilink-lib iproperties-lib)
 
 include("./build/cmake/utils/u3-update-config-project.cmake")

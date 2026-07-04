@@ -1,0 +1,13 @@
+#pragma once
+/**
+\file       process_funcs.hpp
+\author     Erashov Anton erashov2026@proton.me
+\date       01.11.2016
+\project    u3_helpers_lib
+*/
+
+namespace libs::utility::process
+{
+std::int32_t get_id ();
+std::int64_t get_start_time ();
+}   // namespace libs::utility::process

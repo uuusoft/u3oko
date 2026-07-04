@@ -6,9 +6,9 @@
 \project    u3_video_sender_dll
 */
 #include "../../dlls-includes_int.hpp"
-#include "mmedia/libs/igui_events/includes.hpp"
-#include "mmedia/libs/istorage_events/istorage-events-includes.hpp"
-#include "mmedia/libs/ihttp_events/includes.hpp"
+#include "mmedia/libs/events_gui/includes.hpp"
+#include "mmedia/libs/events_storage/events-storage-includes.hpp"
+#include "mmedia/libs/events_http/includes.hpp"
 #include "mmedia/modules/mgui/io/includes.hpp"
 #include "mmedia/modules/mlog/module-log-includes.hpp"
 #include "mmedia/libs/ilink/libs-ilink-includes.hpp"

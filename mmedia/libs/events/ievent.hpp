@@ -19,8 +19,6 @@ namespace libs::events
 class IEvent
 {
   friend class boost::serialization::access;
-  friend ::dlls::devents::impl::EventsImpl;
-  friend struct RegisterHelper;
 
   protected:
   struct Acessor;
@@ -29,8 +27,8 @@ class IEvent
   //  ext types
   using hid_type = std::string_view;
 
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IEvent)
-  U3_HELPER_DISABLE_ACOPY_TYPE (IEvent)
+  U3_ADD_POINTERS_TO_SELF (IEvent)
+  U3_ADD_DELETE_MOVE_COPY (IEvent)
 
   static constexpr auto
   gen_get_mid () -> const IEvent::hid_type&
@@ -42,19 +40,21 @@ class IEvent
 
   virtual ~IEvent () = default;
 
-  void
-  sync_event_props ()
+  auto
+  sync_event_props () -> void
   {
     // empty ok
   }
 
+  auto get_mid () const -> const IEvent::hid_type&;
+
   /// Виртуальное копирование объекта через указатель на базовый класс
   /// \param[in]  src  указатель на объект-источник, должен быть того же типа, что и назначение
-  void copy (const IEvent::craw_ptr src);
+  void copy (const IEvent::craw_ptr);
 
   /// Функция загрузки объекта из json
   /// \param[in]  prop узел
-  void load_json (const std::string& prop);
+  void load_json (const std::string&);
 
   /// Функция загрузки объекта из json
   /// \param[in]  prop узел
@@ -63,12 +63,12 @@ class IEvent
   /// Функция возращает состояние объекта класса, с точки зрения возможности использования его свойств на данный момент
   /// \return   состояние события
   const PropertyUsings& get_using_state () const;
-
+#if 0
   /// Функция возращает текстовый идентификатор типа для использоваения в файлах, которые могут формироваться в том числе и пользователем системы
   /// Обычно это просто путь к файлу с реализацией, что гарантирует его уникальность по определению
   /// \return   идентификатор типа события
   hid_type get_mid () const;
-
+#endif
   /// Вспомогательная функция для синронизации текстового поля и значения используемого расширения CPU
   //// Нужна для работы с HTTP сервером, который работает только с текстовым полем
   void sync_txt2val ();
@@ -100,17 +100,17 @@ class IEvent
   IEvent ();
 
   //  IEvent interface
-  virtual auto clone_int (const ::libs::events::Deeps& deep) const -> IEvent::ptr = 0;
-  virtual auto load_json_int (const ::boost::json::object& obj) -> void           = 0;
-  virtual auto save_json_int (::boost::json::object& obj) const -> void           = 0;
-  virtual auto copy_int (const IEvent::craw_ptr src) -> void;
+  virtual auto get_mid_int () const -> const IEvent::hid_type&               = 0;
+  virtual auto clone_int (const ::libs::events::Deeps&) const -> IEvent::ptr = 0;
+  virtual auto load_json_int (const ::boost::json::object&) -> void          = 0;
+  virtual auto save_json_int (::boost::json::object&) const -> void          = 0;
+  virtual auto copy_int (const IEvent::craw_ptr) -> void;
   virtual auto self_correct_int () -> void;
   virtual auto sync_txt2val_int () -> void;
   virtual auto sync_val2txt_int () -> void;
   virtual auto is_failed_int () const -> bool;
 
-  std::string    property_name_ = {};                         //< Имя свойства (события), переопределяется классом-потомком, используется при сериализации
-  PropertyUsings state_         = PropertyUsings::disabled;   //< Общее состояние свойства (события) [отключено, включено и прочее]
+  PropertyUsings state_ = PropertyUsings::disabled;   //< Общее состояние свойства (события) [отключено, включено и прочее]
 
   private:
   friend class boost::serialization::access;

@@ -4,8 +4,6 @@
 \date       26.07.2016
 \project    u3_vgd_motion
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "vgen-motion-includes_int.hpp"
 #include "vgen-motion-info-filter-dll.hpp"
 #include "vgen-motion-filter-dll.hpp"
@@ -62,10 +60,10 @@ Filter::init_pts (::libs::icore::impl::var1::obj::ConnectInfo* info)
 
 void
 Filter::make_motion_est_buf (
-  syn::EventBufsInfoMotionEst& b2b,
-  const syn::IVideoBuf&        cur_src,
-  const syn::IVideoBuf&        prev_src,
-  syn::IVideoBuf&              dst_vecs)
+  syn::EventBufsMotionEst& b2b,
+  const syn::IVideoBuf&    cur_src,
+  const syn::IVideoBuf&    prev_src,
+  syn::IVideoBuf&          dst_vecs)
 {
   ::libs::optim::io::MCallInfo cinfo;
 
@@ -73,7 +71,7 @@ Filter::make_motion_est_buf (
   cinfo.srcs_.emplace_back (const_cast< syn::IVideoBuf::raw_ptr > (&prev_src), "prev_src dlls::gens::vgen_motion");
   cinfo.dsts_.emplace_back (&dst_vecs, "dst_vecs dlls::gens::vgen_motion");
 
-  cinfo.params_.evals_.emplace_back (boost::any (&b2b));
+  cinfo.params_.evals_.emplace_back (&b2b);
 
   ::libs::optim::mcalls::MTFuncInfo tfunc (&motion_est1_);
 
@@ -94,9 +92,9 @@ Filter::make_motion_est_buf (
 
 
 void
-fill_search_vecs (syn::EventBufsInfoMotionEst& b2b)
+fill_search_vecs (syn::EventBufsMotionEst& b2b)
 {
-  b2b.search_vecs_.reserve (4 * b2b.size_search_ * b2b.size_search_);
+  b2b.search_vecs_.reserve (static_cast< std::size_t > (4 * b2b.size_search_ * b2b.size_search_));
   b2b.search_vecs_.clear ();
 
   for (std::int32_t indxy = 0; indxy < 2 * b2b.size_search_; ++indxy)
@@ -106,26 +104,26 @@ fill_search_vecs (syn::EventBufsInfoMotionEst& b2b)
       const auto aindxx = U3_CAST_INT8 (indxx - b2b.size_search_);
       const auto aindxy = U3_CAST_INT8 (indxy - b2b.size_search_);
 
-      b2b.search_vecs_.push_back (std::pair< std::int8_t, std::int8_t > (aindxx, aindxy));
+      b2b.search_vecs_.emplace_back (aindxx, aindxy);
     }
   }
 
   //  переупорядочиваем вектора по дистанции от центра.
   {
-    syn::EventBufsInfoMotionEst::vectors_type temp;
+    syn::EventBufsMotionEst::vectors_type temp;
 
     temp.swap (b2b.search_vecs_);
 
-    b2b.search_vecs_.reserve (4 * b2b.size_search_ * b2b.size_search_);
+    b2b.search_vecs_.reserve (static_cast< std::size_t > (4 * b2b.size_search_ * b2b.size_search_));
     b2b.search_vecs_.clear ();
 
     for (std::uint32_t rad = 0; rad <= U3_CAST_UINT32 (b2b.size_search_ * b2b.size_search_); ++rad)
     {
-      std::copy_if (
-        temp.begin (),
-        temp.end (),
+      std::ranges::copy_if (
+        temp,
+
         std::back_inserter (b2b.search_vecs_),
-        [rad] (std::pair< std::int8_t, std::int8_t >& val) { return rad == U3_CAST_UINT32 (std::abs (val.first) + std::abs (val.second)); });
+        [rad] (std::pair< std::int8_t, std::int8_t >& val) -> bool { return rad == U3_CAST_UINT32 (std::abs (val.first) + std::abs (val.second)); });
     }
   }
 }
@@ -134,7 +132,7 @@ fill_search_vecs (syn::EventBufsInfoMotionEst& b2b)
 void
 Filter::itransform ()
 {
-  for (syn::EventBufsInfoMotionEst& b2b : finfo_.rprops_->bufs_)
+  for (syn::EventBufsMotionEst& b2b : finfo_.rprops_->bufs_)
   {
     b2b.check ();
 
@@ -156,11 +154,11 @@ Filter::itransform ()
     std::uint32_t           dheight = pcur_src->get_dim_var (::utils::dbufs::video::Dims::height) / b2b.size_block_;
 
     pdst->buf_alloc (
-      ::utils::dbufs::video::AllocBufInfo (
+      ::utils::dbufs::video::AllocParams (
         dwidth,
         dheight,
         0,
-        ::libs::helpers::uids::minor::id_val::y16,
+        ::libs::utility::uids::minor::id_val::y16,
         utils::dbufs::video::DimChecks::disable));
 
     pdst->set_flag (utils::dbufs::BufFlags::special, false);
@@ -178,7 +176,7 @@ Filter::itransform ()
     }
 
     // bool req_copy2prev = true;
-    if (prevbuf->get_flag (::utils::dbufs::BufFlags::empty) || !utils::dbufs::video::helpers::is_equal_dim (*prevbuf, *pcur_src))
+    if (prevbuf->get_flag (::utils::dbufs::BufFlags::empty) || !utils::dbufs::video::helpers::buf_dimension_equal (*prevbuf, *pcur_src))
     {
       prevbuf->clone (pcur_src, 100.0F);
       // req_copy2prev = false;
@@ -190,7 +188,7 @@ Filter::itransform ()
 
     pdst->set_mem_var (
       ::utils::dbufs::MemVars::size_data,
-      pdst->get_dim_var (::utils::dbufs::video::Dims::stride) * pdst->get_dim_var (::utils::dbufs::video::Dims::height));
+      static_cast< const syn::mem_var_type > (pdst->get_dim_var (syn::Dims::stride) * pdst->get_dim_var (syn::Dims::height)));
   }
 }
 }   // namespace dlls::gens::vgen_motion

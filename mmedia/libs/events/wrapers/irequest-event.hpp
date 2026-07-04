@@ -13,8 +13,6 @@ namespace libs::events
 class IRequestEvent : public IWrapBaseEvent
 {
   friend class boost::serialization::access;
-  friend ::dlls::devents::impl::EventsImpl;
-  friend struct RegisterHelper;
 
   protected:
   struct Acessor {
@@ -23,9 +21,9 @@ class IRequestEvent : public IWrapBaseEvent
 
   public:
   // ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IRequestEvent)
-  U3_HELPER_ADD_MAKE_SHARED_FUNCT2THIS_TYPE (IRequestEvent)
-  U3_HELPER_DISABLE_ACOPY_TYPE (IRequestEvent)
+  U3_ADD_POINTERS_TO_SELF (IRequestEvent)
+  U3_ADD_MAKE_SHARED_THIS (IRequestEvent)
+  U3_ADD_DELETE_MOVE_COPY (IRequestEvent)
 
   explicit IRequestEvent (const Acessor& = Acessor (0), IEvent::ptr = IEvent::ptr ());
   virtual ~IRequestEvent () = default;
@@ -39,11 +37,13 @@ class IRequestEvent : public IWrapBaseEvent
   }
 
   protected:
+  // IEvent overrides
+  virtual auto get_mid_int () const -> const ::libs::events::IEvent::hid_type& override;
   virtual auto clone_int (const ::libs::events::Deeps& deep) const -> IEvent::ptr override;
-  virtual void copy_int (const IEvent::craw_ptr src) override;
+  virtual void copy_int (const IEvent::craw_ptr) override;
 
   private:
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (IWrapBaseEvent)
+  U3_ADD_SUPER_CLASS (IWrapBaseEvent)
 
   friend class boost::serialization::access;
 

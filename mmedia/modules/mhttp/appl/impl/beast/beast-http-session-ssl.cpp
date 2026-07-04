@@ -16,13 +16,13 @@ http_session_ssl::http_session_ssl (
   boost::asio::ip::tcp::socket&& socket,
   boost::asio::ssl::context&     ctx,
   const handler_func_type&       http_handler,
-  const shared_state_ptr_type&   shared_state) :
+  shared_state_ptr_type          shared_state) :
   stream_ (std::move (socket), ctx),
   ctx_ (ctx),
   http_handler_ (http_handler),
-  shared_state_ (shared_state)
+  shared_state_ (std::move (shared_state))
 {
-  U3_XLOG_DEV ("http_session_ssl::http_session_ssl::on_create" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
+  U3_XLOG_DEV ("http_session_ssl::http_session_ssl::on_create" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)));
   static_assert (modules::mhttp::appl::consts::requests_queue_limit > 0, "queue limit must be positive");
 }
 
@@ -132,7 +132,7 @@ http_session_ssl::on_read (boost::beast::error_code ecode, std::size_t bytes_tra
   // See if it is a WebSocket Upgrade
   if (appl::syn::websocket::is_upgrade (parser_->get ()))
   {
-    U3_XLOG_DEV ("http_session_ssl::on_read UPGRADE to websocket" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
+    U3_XLOG_DEV ("http_session_ssl::on_read UPGRADE to websocket" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)));
     // Create a websocket session, transferring ownership
     // of both the socket and the HTTP request.
     std::make_shared< websocket_session_ssl > (
@@ -226,7 +226,7 @@ http_session_ssl::on_write (
 void
 http_session_ssl::do_close ()
 {
-  U3_XLOG_DEV ("http_session_ssl::http_session_ssl::do_close" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
+  U3_XLOG_DEV ("http_session_ssl::http_session_ssl::do_close" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)));
 
   // Set the timeout.
   boost::beast::get_lowest_layer (stream_).expires_after (std::chrono::seconds (30));

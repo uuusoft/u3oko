@@ -12,22 +12,22 @@
 
 namespace modules::mhttp::appl
 {
-::libs::ilink::appl::base::BaseModule::recv_links_type
-HttpModule::get_recv_link_int ()
+auto
+HttpModule::get_recv_link_int () -> ::libs::ilink::appl::base::BaseModule::recv_links_type
 {
   return { links_.get (syn::mids::http2appl) };
 }
 
 
-bool
-HttpModule::catch_event_int (syn::IEvent::ptr& evnt)
+auto
+HttpModule::catch_event_int (syn::IEvent::ptr& evnt) -> bool
 {
   return true;
 }
 
 
-bool
-HttpModule::is_now_thread_to_sleep_int (bool now_recv_evnt)
+auto
+HttpModule::is_now_thread_to_sleep_int (bool now_recv_evnt) -> bool
 {
   return now_recv_evnt ? false : true;
 }

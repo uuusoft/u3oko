@@ -5,8 +5,6 @@
 \project    u3_gen_vgen
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "gen-vgen-includes_int.hpp"
 #include "gen-vgen-info-filter-dll.hpp"
 #include "idata-source-impl.hpp"
@@ -22,7 +20,7 @@ IDataSourceImpl::init ()
 
   ::libs::iproperties::xml::InitLoaderInfo loader_info (apppaths);
   ::libs::iproperties::xml::Loader         loader (loader_info);
-  ::libs::helpers::files::NodeEnumFiles    files;
+  ::libs::utility::files::NodeEnumFiles    files;
 
   types_.clear ();
   sources_.clear ();
@@ -30,7 +28,7 @@ IDataSourceImpl::init ()
   loader.get_enum (
     ::libs::iproperties::appl_paths::Paths::emulate_bins,
     files,
-    std::string ("?") + libs::helpers::dlls::get_dll_suffix () + "?");
+    std::string ("?") + libs::utility::dlls::get_dll_suffix () + "?");
 
   types_.reserve (files.files_.size ());
   sources_.reserve (files.files_.size ());
@@ -39,15 +37,15 @@ IDataSourceImpl::init ()
   {
     try
     {
-      const auto file = ::libs::helpers::dlls::undecorate_dll_name (ufile.name_);
+      const auto file = ::libs::utility::dlls::undecorate_dll_name (ufile.name_);
       U3_LOG_DATA_DBG ("check dll file" + TOLOG (file));
-      if ((file.length () <= 4) || (file.substr (0, 4) != "vss_"))
+      if ((file.length () <= 4) || (!file.starts_with ("vss_")))
       {
         continue;
       }
 
       types_.emplace_back (file);
-      sources_.emplace_back (std::vector< ::libs::imdata_events::events::DataSourceInfo > ());
+      sources_.emplace_back ();
 
       const std::string  path2file = path + "/" + ufile.name_;
       ObjSourceImplProxy rdriver { ufile.name_ };

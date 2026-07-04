@@ -62,13 +62,13 @@ prepare_process ()
 
   istorage->set_prop (::libs::properties::consts::keys::demons_property, std::make_shared< ::modules::mappl::syn::IDemonsProperty > ());
 
-  ::libs::helpers::thread::set_thread_priority (
+  ::libs::utility::thread::set_thread_priority (
     std::this_thread::get_id (),
-    ::libs::helpers::thread::Priorities::time_critical);
+    ::libs::utility::thread::Priorities::time_critical);
 
 #ifdef U3_OS_WIN32_DESKTOP
   SetProcessDpiAwareness (PROCESS_SYSTEM_DPI_AWARE);   // windows 8.1 or above
-  ::libs::helpers::platforms::win32::add_process_privilage ();
+  ::libs::utility::platforms::win32::add_process_privilage ();
 
 #  if defined(U3_CNTRL_DEBUG)
   SetErrorMode (0);
@@ -168,8 +168,8 @@ setup_signals_catch ()
 }
 
 
-extern "C" BOOST_SYMBOL_EXPORT int
-main_impl (int argc, char* argv[])
+extern "C" BOOST_SYMBOL_EXPORT auto
+main_impl (int argc, char* argv[]) -> int
 {
   U3_XLOG_MARK ("main_impl::---->");
   try
@@ -202,8 +202,8 @@ main_impl (int argc, char* argv[])
 }
 
 
-int
-main (int argc, char* argv[])
+auto
+main (int argc, char* argv[]) -> int
 {
   return main_impl (argc, argv);
 }

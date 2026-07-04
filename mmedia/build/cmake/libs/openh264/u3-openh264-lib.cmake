@@ -66,11 +66,7 @@ else()
       endif()
     endif()
 
-    add_custom_command(
-      TARGET 
-      ${U3_NAME_EXTLIB_OPENH264_UTIL} 
-      POST_BUILD 
-      COMMAND cd ${install_dir}/src/openh264-util/build/ && AutoBuildForWindows.bat ${U3_LOCAL_CALL_PARAM})
+    add_custom_command(TARGET ${U3_NAME_EXTLIB_OPENH264_UTIL} POST_BUILD COMMAND cd ${install_dir}/src/openh264-util/build/ && AutoBuildForWindows.bat ${U3_LOCAL_CALL_PARAM})
   elseif(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_LINUX})
 
     if(U3_ENV_PTR_BITS_COUNT EQUAL 32)
@@ -80,10 +76,7 @@ else()
     endif()
 
     add_custom_command(
-      TARGET 
-      ${U3_NAME_EXTLIB_OPENH264_UTIL} 
-      POST_BUILD 
-      COMMAND cd ${install_dir}/src/openh264-util/ && make clean && make libraries OS=linux ARCH=${U3_LOCAL_CALL_PARAM})
+      TARGET ${U3_NAME_EXTLIB_OPENH264_UTIL} POST_BUILD COMMAND cd ${install_dir}/src/openh264-util/ && make clean && make libraries OS=linux ARCH=${U3_LOCAL_CALL_PARAM})
 
     set(U3_INSTALL_DIR_EXTLIB_OPENH264 "${install_dir}/src/openh264-util/libopenh264.a")
   elseif(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_RASPBERRY} OR ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ORANGE_PI})
@@ -108,7 +101,7 @@ else()
       TARGET ${U3_NAME_EXTLIB_OPENH264_UTIL}
       POST_BUILD
       COMMAND
-      cd ${install_dir}/src/openh264-util/ && make clean && make libraries OS=android ARCH=${U3_LOCAL_CALL_PARAM_ARCH} NDKROOT=${ANDROID_NDK} TARGET=${U3_CMAKE_SYSTEM_VERSION})
+        cd ${install_dir}/src/openh264-util/ && make clean && make libraries OS=android ARCH=${U3_LOCAL_CALL_PARAM_ARCH} NDKROOT=${ANDROID_NDK} TARGET=${U3_CMAKE_SYSTEM_VERSION})
 
     set(U3_INSTALL_DIR_EXTLIB_OPENH264 "${install_dir}/src/openh264-util/libopenh264.a")
 

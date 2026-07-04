@@ -12,7 +12,7 @@ class IHardwareCapture final : public syn::ICaptureImage
 {
   public:
   //  ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IHardwareCapture)
+  U3_ADD_POINTERS_TO_SELF (IHardwareCapture)
 
   IHardwareCapture ()          = default;
   virtual ~IHardwareCapture () = default;

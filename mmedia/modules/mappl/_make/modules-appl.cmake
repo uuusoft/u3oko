@@ -44,8 +44,7 @@ if(NOT U3_BUILD_LOCAL_MODULE_APPL_AS_LIB EQUAL 1)
         ${U3_LIBS_OUR_VARIABLE_LIST}
         ${U3_LIBS_OUR_STATIC_LIST}
         turbo_jpeg-lib
-        ${U3_LIBS_3RD_STATIC_LIST}
-    )
+        ${U3_LIBS_3RD_STATIC_LIST})
   endif()
 
   # ulimit env ARG_MAX
@@ -69,7 +68,6 @@ if(NOT U3_BUILD_LOCAL_MODULE_APPL_AS_LIB EQUAL 1)
     ${U3_SHARED_LINK_OPTIONS_CPP}
     proxy-lib
     ${U3_LOCAL_MODULE_APPL_EXTLIBS}
-    helpers-lib
-  )
+    utility-lib)
 
 endif()

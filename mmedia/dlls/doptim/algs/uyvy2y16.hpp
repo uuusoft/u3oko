@@ -27,10 +27,10 @@ class CUYVY2Y16Alg final : public IOptimAlg
   {
     switch (iinfo.ext_)
     {
-    case ::libs::helpers::sys::cpu::CpuExts::alu:
+    case ::libs::utility::sys::cpu::CpuExts::alu:
       sel_.set (::libs::optim::convert::uyvy_y16::alu);
       break;
-    case ::libs::helpers::sys::cpu::CpuExts::usual:
+    case ::libs::utility::sys::cpu::CpuExts::usual:
       sel_.set (::libs::optim::convert::uyvy_y16::alu);
       break;
     default:

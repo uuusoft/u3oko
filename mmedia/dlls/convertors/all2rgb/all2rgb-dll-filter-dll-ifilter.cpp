@@ -35,16 +35,16 @@ Filter::load_int (
 }
 
 
-bool
-is_valid_format (const ::libs::helpers::uids::minor::id_val& buf_format)
+auto
+is_valid_format (const syn::id_val& buf_format) -> bool
 {
-  if (::libs::helpers::uids::minor::id_val::yuy2 != buf_format &&
-      ::libs::helpers::uids::minor::id_val::yuyv != buf_format &&
-      ::libs::helpers::uids::minor::id_val::uyvy != buf_format &&
-      ::libs::helpers::uids::minor::id_val::nv21 != buf_format &&
-      ::libs::helpers::uids::minor::id_val::ycb != buf_format &&
-      ::libs::helpers::uids::minor::id_val::i420 != buf_format &&
-      ::libs::helpers::uids::minor::id_val::rgb32 != buf_format)
+  if (syn::id_val::yuy2 != buf_format &&
+      syn::id_val::yuyv != buf_format &&
+      syn::id_val::uyvy != buf_format &&
+      syn::id_val::nv21 != buf_format &&
+      syn::id_val::ycb != buf_format &&
+      syn::id_val::i420 != buf_format &&
+      syn::id_val::rgb32 != buf_format)
   {
     U3_LOG_DATA_ERROR ("only {rgb24, rgb32, yuy2, yuyv, ycb, nv21, i420} formats accepted");
     return false;
@@ -77,7 +77,7 @@ Filter::transform_int (::libs::icore::impl::var1::obj::dll::TransformInfo& info)
   }
 
   pbuf_->set_flag (::libs::bufs::BufsFlags::request2hsl, true);
-  if (::libs::helpers::uids::minor::id_val::rgb24 == sbuf->get_format ())
+  if (syn::id_val::rgb24 == sbuf->get_format ())
   {
     // U3-TODO: restride allready
     return;
@@ -91,7 +91,7 @@ Filter::transform_int (::libs::icore::impl::var1::obj::dll::TransformInfo& info)
   const auto buf_format = sbuf->get_format ();
   if (!is_valid_format (buf_format))
   {
-    U3_LOG_DATA_ERROR ("invalid format recive " + ::libs::helpers::uids::helpers::get_readable_name (buf_format));
+    U3_LOG_DATA_ERROR ("invalid format recive " + ::libs::utility::uids::helpers::get_readable_name (buf_format));
     return;
   }
 

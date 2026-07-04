@@ -4,8 +4,6 @@
 \date       02.03.2022
 \project    u3_iproperties_lib
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../../libs-iproperties-includes_int.hpp"
 #include "isystem-property.hpp"
 
@@ -103,8 +101,8 @@ ISystemProperty::set_mcalls_lockfree (::libs::optim::mcalls::IMCaller::ptr& ptr)
 }
 
 
-bool
-ISystemProperty::self_test_int () const
+auto
+ISystemProperty::self_test_int () const -> bool
 {
   U3_ASSERT (!appl_path_.empty ());
   U3_ASSERT (!data_path_.empty ());
@@ -114,8 +112,8 @@ ISystemProperty::self_test_int () const
 }
 
 
-void*
-ISystemProperty::cast2top_int ()
+auto
+ISystemProperty::cast2top_int () -> void*
 {
   return this;
 }

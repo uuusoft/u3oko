@@ -5,13 +5,11 @@
 \project    u3_fake_vgen
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "includes_int.hpp"
 #include "fake-vgen-source-impl.hpp"
 
-extern "C" BOOST_SYMBOL_EXPORT bool
-get_source_vss_fake_vgen (::dlls::sources::gen_lib::ISourceImpl** ret)
+extern "C" BOOST_SYMBOL_EXPORT auto
+get_source_vss_fake_vgen (::dlls::sources::gen_lib::ISourceImpl** ret) -> bool
 {
   U3_ASSERT (ret);
   U3_ASSERT (!*ret);
@@ -20,8 +18,8 @@ get_source_vss_fake_vgen (::dlls::sources::gen_lib::ISourceImpl** ret)
 }
 
 
-extern "C" BOOST_SYMBOL_EXPORT bool
-free_source_vss_fake_vgen (::dlls::sources::gen_lib::ISourceImpl** ret)
+extern "C" BOOST_SYMBOL_EXPORT auto
+free_source_vss_fake_vgen (::dlls::sources::gen_lib::ISourceImpl** ret) -> bool
 {
   U3_ASSERT (ret);
   U3_ASSERT (*ret);

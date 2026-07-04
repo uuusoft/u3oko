@@ -9,7 +9,7 @@
 #include "mmedia/includes/includes.hpp"
 #include "libs-optims-optim-mcalls-includes_int.hpp"
 #include "caller-impl.hpp"
-#include "mmedia/libs/helpers/statistic/helpers/expanded-times-helpers.hpp"
+#include "mmedia/libs/utility/statistic/helpers/expanded-times-helpers.hpp"
 
 namespace libs::optim::mcalls
 {
@@ -43,15 +43,15 @@ CallerImpl::set_count_threads (std::uint16_t count)
 {
   U3_XLOG_MARK ("update the number of work threads" + VTOLOG (count))
   lock_type lock (mtx_);
-  ::libs::helpers::utils::check_bound< std::uint16_t > (count, 1, consts::max_threads);
+  ::libs::utility::utils::check_bound< std::uint16_t > (count, 1, consts::max_threads);
   stop_and_wait_threads ();
   max_threads_ = count;
   create_threads ();
 }
 
 
-std::uint16_t
-CallerImpl::get_count_threads () const
+auto
+CallerImpl::get_count_threads () const -> std::uint16_t
 {
   lock_type lock (mtx_);
   return max_threads_;

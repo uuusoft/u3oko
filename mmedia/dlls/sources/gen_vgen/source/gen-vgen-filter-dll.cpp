@@ -5,16 +5,16 @@
 \project    u3_gen_vgen
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "gen-vgen-includes_int.hpp"
 #include "gen-vgen-info-filter-dll.hpp"
 #include "gen-vgen-filter-dll.hpp"
+
+#include <algorithm>
 #include "mmedia/dlls/doptim/algs/all_algs.hpp"
 
 namespace dlls::sources::gen_vgen
 {
-::libs::helpers::dlls::FreezerDlls Filter::frozen_dlls_;
+::libs::utility::dlls::FreezerDlls Filter::frozen_dlls_;
 
 Filter::Filter ()
 {
@@ -50,7 +50,7 @@ Filter::Filter ()
     // Чистим от расширений, чтобы передавать далее кроссплатформенный вид
     for (auto& type : types)
     {
-      type = type.substr (0, type.find (::libs::helpers::dlls::get_dll_suffix ()));
+      type = type.substr (0, type.find (::libs::utility::dlls::get_dll_suffix ()));
     }
 
     U3_LOG_DATA_DBG ("after clear" + VTOLOG (types.size ()));
@@ -176,7 +176,7 @@ Filter::thread_func_impl (std::uint32_t indx_thread)
           finfo_.impl_frames_.push_back (new_bufs);
         }
 
-        std::copy (impl_events.begin (), impl_events.end (), std::back_inserter (events_from_impl_));
+        std::ranges::copy (impl_events, std::back_inserter (events_from_impl_));
         impl_events.clear ();
       }
     }

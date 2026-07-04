@@ -13,44 +13,36 @@
 namespace modules::mhttp::impl::beast
 {
 listener::listener (
-  boost::asio::io_context&       ioc,
-  boost::asio::ssl::context&     ctx,
-  boost::asio::ip::tcp::endpoint endpoint,
-  handler_func_type              http_handler,
-  const shared_state_ptr_type&   shared_state) :
+  boost::asio::io_context&              ioc,
+  boost::asio::ssl::context&            ctx,
+  const boost::asio::ip::tcp::endpoint& endpoint,
+  handler_func_type                     http_handler,
+  shared_state_ptr_type                 shared_state) :
   ioc_ (ioc),
   ctx_ (ctx),
   acceptor_ (boost::asio::make_strand (ioc)),
-  http_handler_ (http_handler),
-  shared_state_ (shared_state),
+  http_handler_ (std::move (http_handler)),
+  shared_state_ (std::move (shared_state)),
   ssl_enable_ (endpoint.port () == appl::consts::ssl_port)
 {
   U3_XLOG_DBG ("listener::listener");
   boost::beast::error_code ec;
-
-  acceptor_.open (endpoint.protocol (), ec);
-  if (ec)
+  if (acceptor_.open (endpoint.protocol (), ec), ec)
   {
     u3beast_fail (ec, "listener::open");
     return;
   }
-
-  acceptor_.set_option (boost::asio::socket_base::reuse_address (true), ec);
-  if (ec)
+  if (acceptor_.set_option (boost::asio::socket_base::reuse_address (true), ec), ec)
   {
     u3beast_fail (ec, "listener::set_option");
     return;
   }
-
-  acceptor_.bind (endpoint, ec);
-  if (ec)
+  if (acceptor_.bind (endpoint, ec), ec)
   {
     u3beast_fail (ec, "listener::bind");
     return;
   }
-
-  acceptor_.listen (boost::asio::socket_base::max_listen_connections, ec);
-  if (ec)
+  if (acceptor_.listen (boost::asio::socket_base::max_listen_connections, ec), ec)
   {
     u3beast_fail (ec, "listener::listen");
     return;
@@ -58,10 +50,16 @@ listener::listener (
 }
 
 
-void
-listener::run ()
+auto
+listener::run () -> void
 {
   do_accept ();
+}
+
+
+auto
+listener::stop () -> void
+{
 }
 
 

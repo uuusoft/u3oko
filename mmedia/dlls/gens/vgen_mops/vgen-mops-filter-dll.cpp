@@ -4,8 +4,6 @@
 \date       26.07.2017
 \project    u3_vgen_mops
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "vgen-mops-includes_int.hpp"
 #include "vgen-mops-info-filter-dll.hpp"
 #include "vgen-mops-filter-dll.hpp"

@@ -4,8 +4,6 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    mevents
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "includes_int.hpp"
 #include "events-register_events_in_archives.hpp"
 
@@ -14,11 +12,10 @@ namespace libs::events
 void
 register_events_in_archives ()
 {
-  // libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::events::IEvent > ();
-  libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::events::IAnswerEvent > ();
-  libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::events::IRequestEvent > ();
-  libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::events::ISeqEvent > ();
-  libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::events::ISyncEvent > ();
-  libs::iproperties::helpers::make_fake_obj_this_event_type< ::libs::events::IWrapBaseEvent > ();
+  libs::iproperties::helpers::make_stub_obj< ::libs::events::IAnswerEvent > ();
+  libs::iproperties::helpers::make_stub_obj< ::libs::events::IRequestEvent > ();
+  libs::iproperties::helpers::make_stub_obj< ::libs::events::ISeqEvent > ();
+  libs::iproperties::helpers::make_stub_obj< ::libs::events::ISyncEvent > ();
+  libs::iproperties::helpers::make_stub_obj< ::libs::events::IWrapBaseEvent > ();
 }
 }   // namespace libs::events

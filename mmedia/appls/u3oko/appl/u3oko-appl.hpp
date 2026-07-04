@@ -17,13 +17,13 @@ class U3OkoAppl final : public ::libs::ilink::appl::root::RootModule
 
   private:
   //  internal types
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ilink::appl::root::RootModule)
+  U3_ADD_SUPER_CLASS (::libs::ilink::appl::root::RootModule)
 
   // RootModule override
-  virtual void appl_init_int (const syn::InitApplication& info) override;
-  virtual void init_links_int (const syn::InitApplication& info) override;
-  virtual void update_catch_funcs_int () override;
-  virtual bool appl_deinit_int () override;
+  virtual auto appl_init_int (const syn::InitApplication&) -> void override;
+  virtual auto init_links_int (const syn::InitApplication&) -> void override;
+  virtual auto update_catch_funcs_int () -> void override;
+  virtual auto appl_deinit_int () -> bool override;
 
   // BaseModule overrides
   virtual auto get_recv_link_int () -> recv_links_type override;

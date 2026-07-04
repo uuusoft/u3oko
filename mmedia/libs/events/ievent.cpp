@@ -5,8 +5,6 @@
 \project    mevents
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "includes_int.hpp"
 #include "ievent.hpp"
 
@@ -14,12 +12,18 @@ namespace libs::events
 {
 IEvent::IEvent ()
 {
-  property_name_ = gen_get_mid ();
 }
 
 
-IEvent::ptr
-IEvent::clone (const ::libs::events::Deeps& deep) const
+auto
+IEvent::get_mid () const -> const IEvent::hid_type&
+{
+  return get_mid_int ();
+}
+
+
+auto
+IEvent::clone (const ::libs::events::Deeps& deep) const -> IEvent::ptr
 {
   return clone_int (deep);
 }
@@ -32,17 +36,17 @@ IEvent::copy (const IEvent::craw_ptr src)
   self_correct ();
 }
 
-
-IEvent::hid_type
-IEvent::get_mid () const
+#if 0
+auto
+IEvent::get_mid () const -> IEvent::hid_type
 {
   U3_ASSERT (!property_name_.empty ());
   return property_name_;
 }
+#endif
 
-
-const PropertyUsings&
-IEvent::get_using_state () const
+auto
+IEvent::get_using_state () const -> const PropertyUsings&
 {
   return state_;
 }
@@ -75,8 +79,8 @@ IEvent::load_json (const std::string& prop)
     return;
   }
 
-  state_         = ::libs::helpers::casts::static_cast_helper< PropertyUsings > (::libs::helpers::json::get_uint32 (obj.at ("libs_events_ievent_state")));
-  property_name_ = obj.at ("libs_events_property_name").as_string ();
+  state_ = ::libs::utility::casts::static_cast_helper< PropertyUsings > (::libs::utility::json::get_uint32 (obj.at ("libs_events_ievent_state")));
+  // property_name_ = obj.at ("libs_events_property_name").as_string ();
 
   load_json_int (obj);
   self_correct ();
@@ -84,13 +88,14 @@ IEvent::load_json (const std::string& prop)
 }
 
 
-std::string
-IEvent::save_json () const
+auto
+IEvent::save_json () const -> std::string
 {
   ::boost::json::object val;
 
   val["libs_events_ievent_state"]  = U3_CAST_UINT32_FORCE (state_);
-  val["libs_events_property_name"] = property_name_;
+  val["libs_events_property_name"] = gen_get_mid ();
+  // val["libs_events_property_name"] = property_name_;
 
   save_json_int (val);
   const auto ret = ::boost::json::serialize (val);
@@ -102,8 +107,8 @@ void
 IEvent::copy_int (const IEvent::craw_ptr src)
 {
   // IEvent::operator= (*src);
-  property_name_ = src->property_name_;
-  state_         = src->state_;
+  // property_name_ = src->property_name_;
+  state_ = src->state_;
 }
 
 
@@ -146,8 +151,8 @@ IEvent::sync_val2txt_int ()
 }
 
 
-bool
-IEvent::is_failed_int () const
+auto
+IEvent::is_failed_int () const -> bool
 {
   return false;
 }
@@ -157,10 +162,10 @@ template< class Archive >
 void
 IEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  arh& BOOST_SERIALIZATION_NVP (property_name_);
+  // arh& BOOST_SERIALIZATION_NVP (property_name_);
   arh& BOOST_SERIALIZATION_NVP (state_);
 }
 }   // namespace libs::events
 
 BOOST_CLASS_EXPORT_IMPLEMENT (::libs::events::IEvent);
-U3_BOOST_SERIALIZE_ALL_ARCHIVES (::libs::events::IEvent);
+U3_BOOST_ADD_SERIALIZE_ARCH (::libs::events::IEvent);

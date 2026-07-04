@@ -5,8 +5,6 @@
 \project    u3_v4l2_vgen
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "v4l2-vgen-includes_int.hpp"
 #include "v4l2-vgen-source-impl.hpp"
 
@@ -56,21 +54,21 @@ SourceImpl::stop_int ()
 void
 SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo > &sources)
 {
-  static const std::array< ::libs::helpers::uids::minor::id_val, 10 > support_formats = {
-    ::libs::helpers::uids::minor::id_val::rgb24,            // 0
-    ::libs::helpers::uids::minor::id_val::rgb32,            // 1
-    ::libs::helpers::uids::minor::id_val::yuy2,             // 2
-    ::libs::helpers::uids::minor::id_val::yuyv,             // 3
-    ::libs::helpers::uids::minor::id_val::uyvy,             // 4
-    ::libs::helpers::uids::minor::id_val::i420,             // 5
-    ::libs::helpers::uids::minor::id_val::nv21,             // 6
-    ::libs::helpers::uids::minor::id_val::y16,              // 7
-    ::libs::helpers::uids::minor::id_val::y8,               // 8
-    ::libs::helpers::uids::minor::id_val::device_specific   // 9
-    //::libs::helpers::uids::minor::id_val::ycb,
-    //::libs::helpers::uids::minor::id_val::iyuv,
-    //::libs::helpers::uids::minor::id_val::yv12,
-    //::libs::helpers::uids::minor::id_val::yvu9,
+  static const std::array< ::libs::utility::uids::minor::id_val, 10 > support_formats = {
+    ::libs::utility::uids::minor::id_val::rgb24,            // 0
+    ::libs::utility::uids::minor::id_val::rgb32,            // 1
+    ::libs::utility::uids::minor::id_val::yuy2,             // 2
+    ::libs::utility::uids::minor::id_val::yuyv,             // 3
+    ::libs::utility::uids::minor::id_val::uyvy,             // 4
+    ::libs::utility::uids::minor::id_val::i420,             // 5
+    ::libs::utility::uids::minor::id_val::nv21,             // 6
+    ::libs::utility::uids::minor::id_val::y16,              // 7
+    ::libs::utility::uids::minor::id_val::y8,               // 8
+    ::libs::utility::uids::minor::id_val::device_specific   // 9
+    //::libs::utility::uids::minor::id_val::ycb, // 10
+    //::libs::utility::uids::minor::id_val::iyuv, // 11
+    //::libs::utility::uids::minor::id_val::yv12, // 12
+    //::libs::utility::uids::minor::id_val::yvu9 //13
   };
 
   syn::VideoDriverProp        props;
@@ -99,7 +97,7 @@ SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo > &sources)
         {
           sources.emplace_back (
             props.device_name_,
-            libs::imdata_events::events::DataSources::video,
+            libs::events_media::events::DataSources::video,
             1,
             1);
           U3_LOG_DATA_DEV ("add v4l2 device" + TOLOG (props.device_name_));
@@ -121,6 +119,7 @@ SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo > &sources)
     }
   }
 }
+
 
 void
 SourceImpl::get_raw_data_int (
@@ -218,7 +217,7 @@ SourceImpl::get_raw_data_int (
 
 
 void
-SourceImpl::set_cpu_int (::libs::helpers::sys::cpu::CpuExts simd)
+SourceImpl::set_cpu_int (::libs::utility::sys::cpu::CpuExts simd)
 {
 }
 
@@ -238,8 +237,8 @@ SourceImpl::update_source_info_int (const ::dlls::sources::gen_lib::SourceImplIn
 }
 
 
-bool
-SourceImpl::init_device (const ::dlls::sources::gen_lib::SourceImplInfo &info)
+auto
+SourceImpl::init_device (const ::dlls::sources::gen_lib::SourceImplInfo &info) -> bool
 {
   if (v4l2_init_)
   {

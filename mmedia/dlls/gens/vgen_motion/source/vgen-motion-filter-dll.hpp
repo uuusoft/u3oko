@@ -19,8 +19,8 @@ class Filter final :
 
   private:
   //  internal typess
-  using off_buf2buf_type = std::unordered_map< ::utils::dbufs::video::consts::offs::off_buf_type, syn::IVideoBuf::ptr >;
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
+  using off_buf2buf_type = boost::unordered_flat_map< ::utils::dbufs::video::consts::offs::off_buf_type, syn::IVideoBuf::ptr >;
+  U3_ADD_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
 
   // IFilter overrides
   virtual void load_int (::libs::icore::impl::var1::obj::FilterInfo*, const ::pugi::xml_named_node_iterator&) override;
@@ -29,7 +29,7 @@ class Filter final :
 
   void init_pts (::libs::icore::impl::var1::obj::ConnectInfo*);
   auto itransform () -> void;
-  void make_motion_est_buf (syn::EventBufsInfoMotionEst&, const syn::IVideoBuf&, const syn::IVideoBuf&, syn::IVideoBuf&);
+  void make_motion_est_buf (syn::EventBufsMotionEst&, const syn::IVideoBuf&, const syn::IVideoBuf&, syn::IVideoBuf&);
 
   off_buf2buf_type           indx2prev_buf_;   //<
   ::libs::optim::io::hioptim cmp_get_const_;   //<

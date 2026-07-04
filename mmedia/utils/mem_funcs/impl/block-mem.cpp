@@ -4,8 +4,6 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_mem_funcs
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../mem-funcs-includes_int.hpp"
 #include "block-mem.hpp"
 
@@ -14,7 +12,7 @@ namespace utils::mem_funcs::impl
 BlockMem::BlockMem (const size_type size)
 {
   U3_CHECK (size > 0, "BlockMem, zero size for alloc");
-  details::aalloc (::libs::helpers::casts::reinterpret_cast_helper< void** > (&buf_), size);
+  details::aalloc (::libs::utility::casts::reinterpret_cast_helper< void** > (&buf_), size);
   U3_CHECK (buf_, "failed alloc buf");
   size_ = size;
   reset_memory ();
@@ -25,45 +23,45 @@ BlockMem::~BlockMem ()
 {
   if (buf_)
   {
-    details::afree (::libs::helpers::casts::reinterpret_cast_helper< void** > (&buf_));
+    details::afree (::libs::utility::casts::reinterpret_cast_helper< void** > (&buf_));
     buf_  = nullptr;
     size_ = 0;
   }
 }
 
 
-std::uint8_t*
-BlockMem::get_int ()
+auto
+BlockMem::get_int () -> std::uint8_t*
 {
   U3_ASSERT (buf_);
   return buf_;
 }
 
 
-const std::uint8_t*
-BlockMem::get_int () const
+auto
+BlockMem::get_int () const -> const std::uint8_t*
 {
   U3_ASSERT (buf_);
   return buf_;
 }
 
 
-BlockMem::size_type
-BlockMem::get_buf_size_int () const
+auto
+BlockMem::get_capacity_int () const -> BlockMem::size_type
 {
   return size_;
 }
 
 
-BlockMem::size_type
-BlockMem::get_data_size_int () const
+auto
+BlockMem::get_size_int () const -> BlockMem::size_type
 {
   return data_size_;
 }
 
 
 void
-BlockMem::set_data_size_int (BlockMem::size_type data_size)
+BlockMem::set_size_int (BlockMem::size_type data_size)
 {
   U3_ASSERT (buf_);
   U3_ASSERT (data_size_ <= size_);
@@ -84,7 +82,7 @@ BlockMem::resize_int (const BlockMem::size_type size)
   size_      = 0;
   data_size_ = 0;
 
-  details::arealloc (::libs::helpers::casts::reinterpret_cast_helper< void** > (&buf_), size);
+  details::arealloc (::libs::utility::casts::reinterpret_cast_helper< void** > (&buf_), size);
   U3_CHECK (buf_, "failed alloc buf");
   size_ = size;
 }

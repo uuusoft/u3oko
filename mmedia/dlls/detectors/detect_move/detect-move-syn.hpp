@@ -8,16 +8,16 @@
 
 namespace dlls::detectors::detect_move::syn
 {
-using VideoDetectProp       = ::libs::ievents::props::videos::generic::detect::VideoDetectProp;
-using VideoMorphologyProp   = ::libs::ievents::props::videos::generic::morph::VideoMorphologyProp;
-using VideoDiffProp         = ::libs::ievents::props::videos::gens::diff::VideoDiffProp;
-using MorphOperationParams  = ::libs::ievents::props::videos::generic::morph::MorphOperationParams;
-using MorphBuffInfo         = ::libs::ievents::props::videos::generic::morph::MorphBuffInfo;
+using VideoDetectProp       = ::libs::events_base::props::videos::generic::detect::VideoDetectProp;
+using VideoMorphologyProp   = ::libs::events_base::props::videos::generic::morph::VideoMorphologyProp;
+using VideoDiffProp         = ::libs::events_base::props::videos::gens::diff::VideoDiffProp;
+using MorphOperationParams  = ::libs::events_base::props::videos::generic::morph::MorphOperationParams;
+using MorphBuffInfo         = ::libs::events_base::props::videos::generic::morph::MorphBuffInfo;
 using IEvent                = ::libs::events::IEvent;
-using InfoBuffVideoDiffProp = ::libs::ievents::props::videos::gens::diff::InfoBuffVideoDiffProp;
+using InfoBuffVideoDiffProp = ::libs::events_base::props::videos::gens::diff::InfoBuffVideoDiffProp;
 using IVideoBuf             = ::utils::dbufs::video::IVideoBuf;
-using AddEvent2Base         = ::libs::ievents_events::events::AddEvent2Base;
-using DetectViolation       = ::libs::ievents::runtime::video::DetectViolation;
+using AddEvent2EventsMsg    = ::libs::events_msg::events::AddEvent2EventsMsg;
+using DetectViolation       = ::libs::events_base::runtime::video::DetectViolation;
 using TransformInfo         = ::libs::icore::impl::var1::obj::dll::TransformInfo;
 using CallInterfInfo        = ::libs::icore::impl::var1::obj::dll::CallInterfInfo;
 using FilterInfo            = ::libs::icore::impl::var1::obj::FilterInfo;

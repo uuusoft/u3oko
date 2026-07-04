@@ -4,17 +4,15 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    mevents
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "includes_int.hpp"
 #include "enum-deeps.hpp"
 
 namespace libs::events
 {
-const std::string&
-to_string (const Deeps& val)
+auto
+to_string (const Deeps& val) -> const std::string&
 {
-  static const std::unordered_map< Deeps, const std::string > valmap = {
+  static const boost::unordered_flat_map< Deeps, const std::string > valmap = {
     { Deeps::empty, "empty" },
     { Deeps::full, "full" },
     { Deeps::unknown, "unknown" }

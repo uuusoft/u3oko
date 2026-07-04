@@ -5,7 +5,9 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_mem_funcs
 */
-#include "mmedia/libs/helpers/helpers-lib-includes.hpp"
+#include "mmedia/includes/control-defines-includes.hpp"
+#include "mmedia/includes/includes.hpp"
+#include "mmedia/libs/utility/utility-lib-includes.hpp"
 #include "mem-funcs-includes.hpp"
 #include "impl/block-mem.hpp"
 

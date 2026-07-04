@@ -9,11 +9,11 @@
 namespace dlls::base_id
 {
 /// Реализация интерфейса фильтра "базовый идентификатор" для взаимодействия с другими фильтрами в графе
-class BaseIdInterf final : public ::libs::ievents::runtime::interf::interfaces::IBaseId
+class BaseIdInterf final : public ::libs::events_base::runtime::interf::interfaces::IBaseId
 {
   public:
   //  ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (BaseIdInterf)
+  U3_ADD_POINTERS_TO_SELF (BaseIdInterf)
 
   BaseIdInterf ()          = default;
   virtual ~BaseIdInterf () = default;

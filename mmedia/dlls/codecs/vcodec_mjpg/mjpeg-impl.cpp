@@ -5,8 +5,6 @@
 \project    u3_vcodec_mjpg
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "vcodec-mjpg-includes_int.hpp"
 #include "mjpeg-impl.hpp"
 #include "mmedia/dlls/doptim/algs/all_algs.hpp"
@@ -16,7 +14,7 @@ namespace dlls::codecs::vcodec_mjpg
 MjpegImpl::MjpegImpl ()
 {
   pthreads_ = ::libs::iproperties::helpers::get_shared_prop_os ()->get_mcalls_lockfree ();
-  simd_     = ::libs::helpers::sys::cpu::CpuExts::usual;
+  simd_     = ::libs::utility::sys::cpu::CpuExts::usual;
 }
 
 
@@ -72,16 +70,16 @@ MjpegImpl::update_decoder ()
 }
 
 
-bool
+auto
 MjpegImpl::comp_iframe (
   bool                         colored,
   ::libs::optim::io::ProxyBuf& dst,
-  std::int32_t&                out_size)
+  std::int32_t&                out_size) -> bool
 {
   dst.check ("dst dlls::codecs::vcodec_mjpg");
 
   std::uint8_t*                     dbuf        = dst.ubuf ();
-  auto*                             head        = ::libs::helpers::casts::reinterpret_cast_helper< syn::HeaderIFrame* > (dbuf);
+  auto*                             head        = ::libs::utility::casts::reinterpret_cast_helper< syn::HeaderIFrame* > (dbuf);
   std::int32_t                      from_header = 0;
   const ::libs::optim::io::ProxyBuf lsrc (temp_buf_.get (), "temp_buf dlls::codecs::vcodec_mjpg");
   const std::uint8_t*               cur_buf = temp_buf_->get_cbuf ();
@@ -104,7 +102,7 @@ MjpegImpl::comp_iframe (
 
   const std::int32_t res_jpeg = tjCompress2 (
     hjpeg_,
-    libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (cur_buf),
+    libs::utility::casts::reinterpret_cast_helper< const std::uint8_t* > (cur_buf),
     lsrc.width_,
     lsrc.stride_,
     lsrc.height_,
@@ -116,7 +114,7 @@ MjpegImpl::comp_iframe (
     TJFLAG_NOREALLOC | TJFLAG_FASTDCT | TJFLAG_BOTTOMUP);
 
   U3_CHECK_TURBO_JPEG_RET (-1 != res_jpeg, "tjCompress2", false);
-  ::libs::helpers::mem::u3copy (jpeg_buf_, dbuf + out_size, jpeg_size);
+  ::libs::utility::mem::u3copy (jpeg_buf_, dbuf + out_size, jpeg_size);
 
   head->csize_ = jpeg_size;
   head->coff_  = from_header;
@@ -135,8 +133,8 @@ MjpegImpl::comp_iframe (
   head->cinfo_          = cinfo_.plane_;
   head->cinfo_.nocolor_ = colored ? false : true;   // переопределяем по факту, т.к. у пользователя может быть установлено сжатие с цветом при его фактическом отсутствии и наоборот.
 
-  // libs::helpers::utils::cuuid_to_buf (::libs::helpers::uids::codecs::mjpeg, head->base_part_.guid_);
-  head->base_part_.guid_ = ::libs::helpers::uids::minor::id_val::mjpeg;
+  // libs::utility::utils::cuuid_to_buf (::libs::utility::uids::codecs::mjpeg, head->base_part_.guid_);
+  head->base_part_.guid_ = ::libs::utility::uids::minor::id_val::mjpeg;
 
   U3_ASSERT (head->check ());
   statistic_.update ("iframe", jpeg_size);
@@ -144,21 +142,21 @@ MjpegImpl::comp_iframe (
 }
 
 
-::libs::helpers::uids::minor::id_val
-convert_jpeg2guid_px_format (const std::int32_t jpeg_px)
+auto
+convert_jpeg2guid_px_format (const std::int32_t jpeg_px) -> ::libs::utility::uids::minor::id_val
 {
-  auto ret = ::libs::helpers::uids::minor::id_val::rgb24;
+  auto ret = ::libs::utility::uids::minor::id_val::rgb24;
 
   switch (jpeg_px)
   {
   case TJCS_RGB:
-    ret = ::libs::helpers::uids::minor::id_val::rgb24;
+    ret = ::libs::utility::uids::minor::id_val::rgb24;
     break;
   case TJCS_YCbCr:
-    ret = ::libs::helpers::uids::minor::id_val::ycb;
+    ret = ::libs::utility::uids::minor::id_val::ycb;
     break;
   case TJCS_GRAY:
-    ret = ::libs::helpers::uids::minor::id_val::y8;
+    ret = ::libs::utility::uids::minor::id_val::y8;
     break;
   case TJCS_CMYK:
   case TJCS_YCCK:
@@ -172,11 +170,11 @@ convert_jpeg2guid_px_format (const std::int32_t jpeg_px)
 }
 
 
-bool
+auto
 MjpegImpl::decomp_iframe (
   const syn::HeaderIFrame*           head,
   const ::libs::optim::io::ProxyBuf& src,
-  const std::int32_t                 src_size)
+  const std::int32_t                 src_size) -> bool
 {
   const auto&         base_head    = head->base_part_;
   const auto&         info_head    = base_head.sinfo_;
@@ -217,7 +215,7 @@ MjpegImpl::decomp_iframe (
     U3_CHECK_TURBO_JPEG (0 == codec_error, "tjDecompress2");
 
     const auto px_format  = temp_buf_->get_format ();
-    const auto stride_res = info_head.width_ * ::libs::helpers::uids::helpers::get_count_bytes_from_format (px_format);
+    const auto stride_res = info_head.width_ * ::libs::utility::uids::helpers::get_count_bytes_from_format (px_format);
     const auto size_res   = info_head.height_ * stride_res;
 
     temp_buf_->set_flag (utils::dbufs::BufFlags::empty, false);

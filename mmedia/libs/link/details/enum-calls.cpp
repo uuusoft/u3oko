@@ -4,17 +4,15 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_link
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../libs-link-includes_int.hpp"
 #include "enum-calls.hpp"
 
 namespace libs::link::details
 {
-const std::string&
-to_string (const Calls& val)
+auto
+to_string (const Calls& val) -> const std::string&
 {
-  static const std::unordered_map< Calls, const std::string > vals = {
+  static const boost::unordered_flat_map< Calls, const std::string > vals = {
     { Calls::set, "set" },
     { Calls::request, "request" },
     { Calls::answer, "answer" },
@@ -31,8 +29,8 @@ to_string (const Calls& val)
 }
 
 
-Calls
-to_request (const std::string& str)
+auto
+to_request (const std::string& str) -> Calls
 {
   if ("set" == str)
   {

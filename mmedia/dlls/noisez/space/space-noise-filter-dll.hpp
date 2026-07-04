@@ -20,7 +20,7 @@ class Filter final :
 
   private:
   // internal types
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
+  U3_ADD_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
 
   // IFilter overrides
   virtual void load_int (::libs::icore::impl::var1::obj::FilterInfo*, const ::pugi::xml_named_node_iterator&) override;

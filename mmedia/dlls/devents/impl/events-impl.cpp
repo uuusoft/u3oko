@@ -12,22 +12,22 @@ namespace dlls::devents::impl
 {
 EventsImpl::EventsImpl ()
 {
-  U3_XLOG_DEV ("EventsImpl::EventsImpl::---->");
+  U3_XLOG_DBG ("EventsImpl::EventsImpl::---->");
   lock_type lock (mtx_);
   make_event_funcs ();
 }
 
 
-syn::IEvent::ptr
-EventsImpl::get (const hid_type& eid)
+auto
+EventsImpl::get (const hid_type& eid) -> syn::IEvent::ptr
 {
-  U3_XLOG_DEV ("EventsImpl::get::---->" + STOLOG (eid));
+  U3_XLOG_DBG ("EventsImpl::get::---->" + STOLOG (eid));
   lock_type lock (mtx_);
   auto      itf = gen_func_events_.find (id_event_type { eid });
   if (gen_func_events_.end () == itf)
   {
     U3_XLOG_ERROR ("function for create event by id not found" + STOLOG (eid));
-    return syn::IEvent::ptr ();
+    return {};
   }
 
   auto ret = itf->second ();
@@ -41,13 +41,13 @@ EventsImpl::get (const hid_type& eid)
     U3_XLOG_MARK ("dllevents" + STOLOG (id) + VTOLOG (counter_create_events_[id]));
   }
 #endif
-  U3_XLOG_DEV ("EventsImpl::get::<----" + STOLOG (eid) + PTR_TOLOG (ret.get ()));
+  U3_XLOG_DBG ("EventsImpl::get::<----" + STOLOG (eid) + PTR_TOLOG (ret.get ()));
   return ret;
 }
 
 
-syn::IEvent::ptr
-EventsImpl::clone (const syn::IEvent::craw_ptr src, const ::libs::events::Deeps& type)
+auto
+EventsImpl::clone (const syn::IEvent::craw_ptr src, const ::libs::events::Deeps& type) -> syn::IEvent::ptr
 {
   ++counter_clone_events_[id_event_type { src->gen_get_mid () }];
   return src->clone (type);
@@ -72,8 +72,8 @@ EventsImpl::dcast (syn::IEvent::raw_ptr src, const hid_type& eid)
 }
 #endif
 
-const void*
-EventsImpl::dcast (syn::IEvent::craw_ptr src, const hid_type& eid)
+auto
+EventsImpl::dcast (syn::IEvent::craw_ptr src, const hid_type& eid) -> const void*
 {
   lock_type lock (mtx_);
 
@@ -90,8 +90,8 @@ EventsImpl::dcast (syn::IEvent::craw_ptr src, const hid_type& eid)
 }
 
 
-bool
-EventsImpl::event2xml (syn::IEvent::ptr& src, std::string& xml)
+auto
+EventsImpl::event2xml (syn::IEvent::ptr& src, std::string& xml) -> bool
 {
   U3_ASSERT (src);
   try
@@ -111,8 +111,8 @@ EventsImpl::event2xml (syn::IEvent::ptr& src, std::string& xml)
 }
 
 
-bool
-EventsImpl::xml2event (const std::string& xml, syn::IEvent::ptr& dst)
+auto
+EventsImpl::xml2event (const std::string& xml, syn::IEvent::ptr& dst) -> bool
 {
   std::stringstream            istr (xml);
   boost::archive::xml_iarchive xmla (istr, boost::archive::no_header);
@@ -132,8 +132,8 @@ EventsImpl::xml2event (const std::string& xml, syn::IEvent::ptr& dst)
 }
 
 
-bool
-EventsImpl::event2bin (syn::IEvent::ptr& src, std::ostream& bin)
+auto
+EventsImpl::event2bin (syn::IEvent::ptr& src, std::ostream& bin) -> bool
 {
   U3_ASSERT (src);
   try
@@ -150,8 +150,8 @@ EventsImpl::event2bin (syn::IEvent::ptr& src, std::ostream& bin)
 }
 
 
-bool
-EventsImpl::bin2event (std::istream& bin, syn::IEvent::ptr& dst)
+auto
+EventsImpl::bin2event (std::istream& bin, syn::IEvent::ptr& dst) -> bool
 {
   boost::archive::binary_iarchive arc (bin);
   try
@@ -193,107 +193,108 @@ EventsImpl::make_event_funcs ()
   add_event< ::libs::events::ISeqEvent > ();
   add_event< ::libs::events::ISyncEvent > ();
 
-  add_event< ::libs::ievents::Event > ();
-  add_event< ::libs::ievents::TimedEvent > ();
-  add_event< ::libs::ievents::OpsStatusEvent > ();
-  add_event< ::libs::ievents::props::application::ApplicationProp > ();
+  add_event< ::libs::events_base::Event > ();
+  add_event< ::libs::events_base::TimedEvent > ();
+  add_event< ::libs::events_base::OpsStatusEvent > ();
+  add_event< ::libs::events_base::UserIdEvent > ();
+  add_event< ::libs::events_base::props::application::ApplicationProp > ();
 
-  add_event< ::libs::ievents::props::base_id::BaseIdProp > ();
-  add_event< ::libs::ievents::props::hardware::InfoCPUEvent > ();
-  add_event< ::libs::ievents::props::mix_mul::MixMulProp > ();
-  add_event< ::libs::ievents::props::modules::log::PropertyLogModuleEvent > ();
-  add_event< ::libs::ievents::props::modules::events::PropertyEventsModuleEvent > ();
-  add_event< ::libs::ievents::props::modules::storage::PropertyStorageModuleEvent > ();
-  add_event< ::libs::ievents::props::terminals::EndPointProp > ();
-  add_event< ::libs::ievents::props::videos::generic::morph::VideoMorphologyProp > ();
-  add_event< ::libs::ievents::props::videos::generic::codec::VideoCodecProp > ();
-  add_event< ::libs::ievents::props::videos::generic::convert::VideoConvertProp > ();
-  add_event< ::libs::ievents::props::videos::generic::convolution::VideoConvolutionProp > ();
-  add_event< ::libs::ievents::props::videos::generic::correct::VideoCorrectProp > ();
-  add_event< ::libs::ievents::props::videos::generic::detect::VideoDetectProp > ();
-  add_event< ::libs::ievents::props::videos::generic::driver::LinksVideoDriverProp > ();
-  add_event< ::libs::ievents::props::videos::generic::driver::VideoDriverCaptureProp > ();
-  add_event< ::libs::ievents::props::videos::generic::driver::VideoDriverProp > ();
-  add_event< ::libs::ievents::props::videos::generic::gradient::GradientProp > ();
-  add_event< ::libs::ievents::props::videos::generic::histogram::VideoHistogramProp > ();
-  add_event< ::libs::ievents::props::videos::generic::motion_est::VideoEstMotionProp > ();
-  add_event< ::libs::ievents::props::videos::generic::scaler::VideoScalerProp > ();
-  add_event< ::libs::ievents::props::videos::generic::vec2image::Vec2ImageProp > ();
-  add_event< ::libs::ievents::props::videos::gens::diff::VideoDiffProp > ();
-  add_event< ::libs::ievents::props::videos::noises::freq::FreqVideoNoiseRemoverProp > ();
-  add_event< ::libs::ievents::props::videos::noises::space::VideoSpaceNoiseRemoverProp > ();
-  add_event< ::libs::ievents::props::videos::noises::space::ext::MedianSpaceFilterProp > ();
-  add_event< ::libs::ievents::props::videos::noises::time::VideoTimeNoiseRemoverProp > ();
-  add_event< ::libs::ievents::props::videos::noises::time::ext::MedianTimeFilterProp > ();
+  add_event< ::libs::events_base::props::base_id::BaseIdProp > ();
+  add_event< ::libs::events_base::props::hardware::InfoCPUEvent > ();
+  add_event< ::libs::events_base::props::mix_mul::MixMulProp > ();
+  add_event< ::libs::events_base::props::modules::log::PropertyLogModuleEvent > ();
+  add_event< ::libs::events_base::props::modules::events::PropertyEventsModuleEvent > ();
+  add_event< ::libs::events_base::props::modules::storage::PropertyStorageModuleEvent > ();
+  add_event< ::libs::events_base::props::terminals::EndPointProp > ();
+  add_event< ::libs::events_base::props::videos::generic::morph::VideoMorphologyProp > ();
+  add_event< ::libs::events_base::props::videos::generic::codec::VideoCodecProp > ();
+  add_event< ::libs::events_base::props::videos::generic::convert::VideoConvertProp > ();
+  add_event< ::libs::events_base::props::videos::generic::convolution::VideoConvolutionProp > ();
+  add_event< ::libs::events_base::props::videos::generic::correct::VideoCorrectProp > ();
+  add_event< ::libs::events_base::props::videos::generic::detect::VideoDetectProp > ();
+  add_event< ::libs::events_base::props::videos::generic::driver::LinksVideoDriverProp > ();
+  add_event< ::libs::events_base::props::videos::generic::driver::VideoDriverCaptureProp > ();
+  add_event< ::libs::events_base::props::videos::generic::driver::VideoDriverProp > ();
+  add_event< ::libs::events_base::props::videos::generic::gradient::GradientProp > ();
+  add_event< ::libs::events_base::props::videos::generic::histogram::VideoHistogramProp > ();
+  add_event< ::libs::events_base::props::videos::generic::motion_est::VideoEstMotionProp > ();
+  add_event< ::libs::events_base::props::videos::generic::scaler::VideoScalerProp > ();
+  add_event< ::libs::events_base::props::videos::generic::vec2image::Vec2ImageProp > ();
+  add_event< ::libs::events_base::props::videos::gens::diff::VideoDiffProp > ();
+  add_event< ::libs::events_base::props::videos::noises::freq::FreqVideoNoiseRemoverProp > ();
+  add_event< ::libs::events_base::props::videos::noises::space::VideoSpaceNoiseRemoverProp > ();
+  add_event< ::libs::events_base::props::videos::noises::space::ext::MedianSpaceFilterProp > ();
+  add_event< ::libs::events_base::props::videos::noises::time::VideoTimeNoiseRemoverProp > ();
+  add_event< ::libs::events_base::props::videos::noises::time::ext::MedianTimeFilterProp > ();
 
-  add_event< ::libs::ievents::runtime::RuntimeEvent > ();
+  add_event< ::libs::events_base::runtime::RuntimeEvent > ();
 
-  add_event< ::libs::ievents::runtime::error::BaseErrorEvent > ();
+  add_event< ::libs::events_base::runtime::error::BaseErrorEvent > ();
 
-  add_event< ::libs::ievents::runtime::interf::BaseInterfEvent > ();
-  add_event< ::libs::ievents::runtime::interf::InterfBaseIdEvent > ();
-  add_event< ::libs::ievents::runtime::interf::InterfCodecImageEvent > ();
-  add_event< ::libs::ievents::runtime::interf::InterfCorrectImageEvent > ();
-  add_event< ::libs::ievents::runtime::interf::InterfCaptureImageEvent > ();
+  add_event< ::libs::events_base::runtime::interf::BaseInterfEvent > ();
+  add_event< ::libs::events_base::runtime::interf::InterfBaseIdEvent > ();
+  add_event< ::libs::events_base::runtime::interf::InterfCodecImageEvent > ();
+  add_event< ::libs::events_base::runtime::interf::InterfCorrectImageEvent > ();
+  add_event< ::libs::events_base::runtime::interf::InterfCaptureImageEvent > ();
 
-  add_event< ::libs::ievents::runtime::mem::BuffEvent > ();
-  add_event< ::libs::ievents::runtime::mem::BufsEvent > ();
-  add_event< ::libs::ievents::runtime::mem::ZipDataEvent > ();
+  add_event< ::libs::events_base::runtime::mem::BuffEvent > ();
+  add_event< ::libs::events_base::runtime::mem::BufsEvent > ();
+  add_event< ::libs::events_base::runtime::mem::ZipDataEvent > ();
 
-  add_event< ::libs::ievents::runtime::state::ChangeStateProcessEvent > ();
-  add_event< ::libs::ievents::runtime::state::ExpandTimesEvent > ();
+  add_event< ::libs::events_base::runtime::state::ChangeStateProcessEvent > ();
+  add_event< ::libs::events_base::runtime::state::ExpandTimesEvent > ();
 
-  add_event< ::libs::ievents::runtime::video::DetectViolation > ();
-  add_event< ::libs::ievents::runtime::video::FaceDetect > ();
-  add_event< ::libs::ievents::runtime::video::FrameDone > ();
-  add_event< ::libs::ievents::runtime::video::SystemSpecificDriverProp > ();
+  add_event< ::libs::events_base::runtime::video::DetectViolation > ();
+  add_event< ::libs::events_base::runtime::video::FaceDetect > ();
+  add_event< ::libs::events_base::runtime::video::FrameDone > ();
+  add_event< ::libs::events_base::runtime::video::SystemSpecificDriverProp > ();
 
-  add_event< ::libs::ievents_events::events::BaseEventsEvent > ();
-  add_event< ::libs::ievents_events::events::WrapperEventsEvent > ();
-  add_event< ::libs::ievents_events::events::AddEvent2Base > ();
-  add_event< ::libs::ievents_events::events::GetEventsFromBase > ();
-  add_event< ::libs::ievents_events::events::GetDataGraphsFromEventBase > ();
-  add_event< ::libs::ievents_events::events::UpdateListener > ();
+  add_event< ::libs::events_msg::events::BaseEventsMsg > ();
+  add_event< ::libs::events_msg::events::WrapperEventsEvent > ();
+  add_event< ::libs::events_msg::events::AddEvent2EventsMsg > ();
+  add_event< ::libs::events_msg::events::GetEventsFromBase > ();
+  add_event< ::libs::events_msg::events::GetDataGraphsEventsMsg > ();
+  add_event< ::libs::events_msg::events::UpdateListenerEventsMsg > ();
 
-  add_event< ::libs::ilog_events::events::ProcessListLogsEvent > ();
-  add_event< ::libs::ilog_events::events::ProcessLogEvent > ();
-  add_event< ::libs::ilog_events::events::BaseLogEvent > ();
-  add_event< ::libs::ilog_events::events::ChangeStateSubSysLogEvent > ();
-  add_event< ::libs::ilog_events::events::ExceptLogEvent > ();
-  add_event< ::libs::ilog_events::events::InfoLogEvent > ();
-  add_event< ::libs::ilog_events::events::WrapperLogEvent > ();
+  add_event< ::libs::events_log::events::ProcessListLogsEvent > ();
+  add_event< ::libs::events_log::events::ProcessLogEvent > ();
+  add_event< ::libs::events_log::events::BaseLogEvent > ();
+  add_event< ::libs::events_log::events::ChangeStateSubSysLogEvent > ();
+  add_event< ::libs::events_log::events::ExceptLogEvent > ();
+  add_event< ::libs::events_log::events::InfoLogEvent > ();
+  add_event< ::libs::events_log::events::WrapperLogEvent > ();
 
-  add_event< ::libs::imdata_events::events::ListXmlFilesDataEvent > ();
-  add_event< ::libs::imdata_events::events::ChangeGraphsDataEvent > ();
-  add_event< ::libs::imdata_events::events::GetNodesDataEvent > ();
-  add_event< ::libs::imdata_events::events::ListDevicesDataEvent > ();
-  add_event< ::libs::imdata_events::events::ChangeNodeDataEvent > ();
-  add_event< ::libs::imdata_events::events::BaseNodesDataEvent > ();
-  add_event< ::libs::imdata_events::events::BaseDataEvent > ();
+  add_event< ::libs::events_media::events::ListXmlFilesDataEvent > ();
+  add_event< ::libs::events_media::events::ChangeGraphsDataEvent > ();
+  add_event< ::libs::events_media::events::GetNodesDataEvent > ();
+  add_event< ::libs::events_media::events::ListDevicesDataEvent > ();
+  add_event< ::libs::events_media::events::ChangeNodeDataEvent > ();
+  add_event< ::libs::events_media::events::BaseNodesDataEvent > ();
+  add_event< ::libs::events_media::events::BaseDataEvent > ();
 
-  add_event< ::libs::ihttp_events::events::MemResourceHttpEvent > ();
-  add_event< ::libs::ihttp_events::events::BaseHttpEvent > ();
-  add_event< ::libs::ihttp_events::events::WrapperHttpEvent > ();
+  add_event< ::libs::events_http::events::MemResourceHttpEvent > ();
+  add_event< ::libs::events_http::events::BaseHttpEvent > ();
+  add_event< ::libs::events_http::events::WrapperHttpEvent > ();
 
-  add_event< ::libs::istorage_events::events::BaseStorageEvent > ();
-  add_event< ::libs::istorage_events::events::GetObjects > ();
-  add_event< ::libs::istorage_events::events::GetRuntimeInfo > ();
-  add_event< ::libs::istorage_events::events::GetStatisticInfo > ();
-  add_event< ::libs::istorage_events::events::ReadData > ();
-  add_event< ::libs::istorage_events::events::WriteData > ();
-  add_event< ::libs::istorage_events::events::UpdateStream > ();
-  add_event< ::libs::istorage_events::events::WrapperStorageEvent > ();
-  add_event< ::libs::istorage_events::events::MemResourceStorageEvent > ();
+  add_event< ::libs::events_storage::events::BaseStorageEvent > ();
+  add_event< ::libs::events_storage::events::GetObjects > ();
+  add_event< ::libs::events_storage::events::GetRuntimeInfo > ();
+  add_event< ::libs::events_storage::events::GetStatisticInfo > ();
+  add_event< ::libs::events_storage::events::ReadData > ();
+  add_event< ::libs::events_storage::events::WriteData > ();
+  add_event< ::libs::events_storage::events::UpdateStream > ();
+  add_event< ::libs::events_storage::events::WrapperStorageEvent > ();
+  add_event< ::libs::events_storage::events::MemResourceStorageEvent > ();
 
-  add_event< ::libs::igui_events::events::BaseGUIEvent > ();
-  add_event< ::libs::igui_events::events::CommandCodeEvent > ();
-  add_event< ::libs::igui_events::events::ExitApplEvent > ();
-  add_event< ::libs::igui_events::events::MemBlockEvent > ();
-  add_event< ::libs::igui_events::events::MouseButtonDownEvent > ();
-  add_event< ::libs::igui_events::events::MouseButtonUpEvent > ();
-  add_event< ::libs::igui_events::events::SizeChangedEvent > ();
-  add_event< ::libs::igui_events::events::UpdateDrawEvent > ();
-  add_event< ::libs::igui_events::events::VideoBufEvent > ();
+  add_event< ::libs::events_gui::events::BaseGUIEvent > ();
+  add_event< ::libs::events_gui::events::CommandCodeEvent > ();
+  add_event< ::libs::events_gui::events::ExitApplEvent > ();
+  add_event< ::libs::events_gui::events::MemBlockEvent > ();
+  add_event< ::libs::events_gui::events::MouseButtonDownEvent > ();
+  add_event< ::libs::events_gui::events::MouseButtonUpEvent > ();
+  add_event< ::libs::events_gui::events::SizeChangedEvent > ();
+  add_event< ::libs::events_gui::events::UpdateDrawEvent > ();
+  add_event< ::libs::events_gui::events::VideoBufEvent > ();
 
   // dbg_state_dump ();
 }

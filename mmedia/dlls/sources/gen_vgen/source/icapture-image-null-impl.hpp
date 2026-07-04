@@ -8,11 +8,11 @@
 
 namespace dlls::sources::gen_vgen
 {
-class ICaptureImageNullImpl final : public ::libs::ievents::runtime::interf::interfaces::ICaptureImage
+class ICaptureImageNullImpl final : public ::libs::events_base::runtime::interf::interfaces::ICaptureImage
 {
   public:
   //  ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ICaptureImageNullImpl)
+  U3_ADD_POINTERS_TO_SELF (ICaptureImageNullImpl)
 
   ICaptureImageNullImpl ()          = default;
   virtual ~ICaptureImageNullImpl () = default;

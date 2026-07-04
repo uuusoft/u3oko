@@ -4,8 +4,7 @@
 \date       11.08.2024
 \project    u3_desk_vgen
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
+#include "../desk-vgen-includes_int.hpp"
 #include "desk-vgen-const-vals.hpp"
 
 namespace dlls::sources::desk_vgen::consts::param_keys

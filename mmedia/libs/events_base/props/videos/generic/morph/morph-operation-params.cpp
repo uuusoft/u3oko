@@ -1,0 +1,75 @@
+/**
+\file       morph-operation-params.cpp
+\date       08.03.2022
+\author     Erashov Anton erashov2026@proton.me
+\project    u3_events_base_lib
+*/
+#include "../../../../events-base-includes_int.hpp"
+#include "morph-operation-params.hpp"
+
+namespace libs::events_base::props::videos::generic::morph
+{
+MorphOperationParams::MorphOperationParams (
+  const MorphOps&    type,
+  const std::int32_t size_spot,
+  const std::int32_t bound_filling,
+  const std::int32_t val_filling) :
+
+  size_spot_ (size_spot),
+  bound_filling_ (bound_filling),
+  morph_type_ (type),
+  val_filling_ (val_filling)
+{
+}
+
+
+auto
+MorphOperationParams::self_test () const -> bool
+{
+  if (size_spot_ > 11)
+  {
+    U3_XLOG_ERROR ("invalid size spot" + VTOLOG (size_spot_));
+    return false;
+  }
+  return true;
+}
+
+
+template< class Archive >
+void
+MorphOperationParams::serialize (Archive& arh, const std::uint32_t /* file_version */)
+{
+  arh& BOOST_SERIALIZATION_NVP (morph_type_);
+  arh& BOOST_SERIALIZATION_NVP (size_spot_);
+  arh& BOOST_SERIALIZATION_NVP (bound_filling_);
+  arh& BOOST_SERIALIZATION_NVP (val_filling_);
+}
+
+
+void
+tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const MorphOperationParams& src)
+{
+  jvs = {
+    { "morph_type", U3_CAST_UINT32_FORCE (src.morph_type_) },
+    { "size_spot", src.size_spot_ },
+    { "bound_filling", src.bound_filling_ },
+    { "val_filling", src.val_filling_ }
+  };
+}
+
+
+auto
+tag_invoke (::boost::json::value_to_tag< MorphOperationParams >, const ::boost::json::value& jvs) -> MorphOperationParams
+{
+  MorphOperationParams ret;
+
+  ret.morph_type_    = ::boost::json::value_to< MorphOps > (jvs.at ("morph_type"));
+  ret.size_spot_     = ::libs::utility::json::get_uint32 (jvs.at ("size_spot"));
+  ret.bound_filling_ = ::libs::utility::json::get_uint32 (jvs.at ("bound_filling"));
+  ret.val_filling_   = ::libs::utility::json::get_uint32 (jvs.at ("val_filling"));
+  return ret;
+}
+}   // namespace libs::events_base::props::videos::generic::morph
+
+BOOST_CLASS_EXPORT_IMPLEMENT (::libs::events_base::props::videos::generic::morph::MorphOperationParams);
+U3_BOOST_ADD_SERIALIZE_ARCH (::libs::events_base::props::videos::generic::morph::MorphOperationParams);

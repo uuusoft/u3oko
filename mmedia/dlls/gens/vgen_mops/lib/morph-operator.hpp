@@ -15,8 +15,8 @@ class MorphOperator final
   MorphOperator ()  = default;
   ~MorphOperator () = default;
 
-  MorphOperator (const MorphOperator& src)            = delete;
-  MorphOperator& operator= (const MorphOperator& src) = delete;
+  MorphOperator (const MorphOperator&)            = delete;
+  MorphOperator& operator= (const MorphOperator&) = delete;
 
   auto init () -> void;
   void set_transform_info (syn::TransformInfo*);

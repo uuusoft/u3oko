@@ -5,8 +5,6 @@
 \project    u3_gen_vgen
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "gen-vgen-includes_int.hpp"
 #include "gen-vgen-info-filter-dll.hpp"
 #include "gen-vgen-filter-dll.hpp"
@@ -65,15 +63,15 @@ Filter::fill_buf (
   {
     auto events = pbufevent->get_events ();
 
-    std::copy (events_from_impl_.begin (), events_from_impl_.end (), std::back_inserter (*events));
+    std::ranges::copy (events_from_impl_, std::back_inserter (*events));
     events_from_impl_.clear ();
 
     for (const auto& event : *events)
     {
-      auto* devent = ::libs::iproperties::helpers::cast_event< ::libs::ievents::runtime::interf::InterfCaptureImageEvent > (event);
+      auto* devent = ::libs::iproperties::helpers::cast_event< ::libs::events_base::runtime::interf::InterfCaptureImageEvent > (event);
       if (devent)
       {
-        U3_LOG_DATA_MARK ("recive ::libs::ievents::runtime::interf::InterfCaptureImageEvent -> update properties" + VTOLOG (devent->is_active ()));
+        U3_LOG_DATA_MARK ("recive ::libs::events_base::runtime::interf::InterfCaptureImageEvent -> update properties" + VTOLOG (devent->is_active ()));
         finfo_.capture_impl_ = devent->is_active () ? devent->get_interface () : finfo->null_impl_;
         U3_ASSERT (!finfo_.capture_impl_.expired ());
         if (auto impl = finfo_.capture_impl_.lock ())

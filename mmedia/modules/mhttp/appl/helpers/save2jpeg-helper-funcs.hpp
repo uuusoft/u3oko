@@ -12,7 +12,7 @@ inline std::int32_t
 get_offset_iframe (const std::uint8_t* buf)
 {
   U3_ASSERT (buf);
-  const auto* head = ::libs::helpers::casts::reinterpret_cast_helper< const ::dlls::codecs::codec_gen::HeaderIFrame* > (buf);
+  const auto* head = ::libs::utility::casts::reinterpret_cast_helper< const ::dlls::codecs::codec_gen::HeaderIFrame* > (buf);
   U3_ASSERT (head->check ());
   return head->base_part_.size_;
 }
@@ -34,8 +34,8 @@ save_jpeg2file (
   auto*       osprops     = ::libs::iproperties::helpers::get_shared_prop_os ();
   auto        iappl       = osprops->get_paths_lockfree ();
   const auto  file_folder = root;
-  const auto  file_path   = ::libs::helpers::files::make_path (file_folder, name_file);
-  const auto* head        = ::libs::helpers::casts::reinterpret_cast_helper< const ::dlls::codecs::codec_gen::HeaderIFrame* > (&image->get_zip ()[0]);
+  const auto  file_path   = ::libs::utility::files::make_path (file_folder, name_file);
+  const auto* head        = ::libs::utility::casts::reinterpret_cast_helper< const ::dlls::codecs::codec_gen::HeaderIFrame* > (&image->get_zip ()[0]);
 
   U3_ASSERT (head->check ());
 
@@ -47,7 +47,7 @@ save_jpeg2file (
   try
   {
     std::fstream file (file_path, std::ios_base::binary | std::ios_base::out | std::ios_base::trunc);
-    file.write (::libs::helpers::casts::reinterpret_cast_helper< const char* > (cdata), src_size_res);
+    file.write (::libs::utility::casts::reinterpret_cast_helper< const char* > (cdata), src_size_res);
     file.flush ();
   }
   catch (const std::exception& excpt)

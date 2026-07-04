@@ -8,5 +8,5 @@
 
 namespace dlls::detectors::detect_move::consts
 {
-constexpr std::int32_t val_filling = 255;   //<
+inline constexpr std::int32_t val_filling = 255;   //<
 }   // namespace dlls::detectors::detect_move::consts

@@ -5,6 +5,8 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_bufs
 */
+#include "mmedia/includes/control-defines-includes.hpp"
+#include "mmedia/includes/includes.hpp"
 #include "mmedia/libs/ilink/consts/libs-ilink-const-vals.hpp"
 #include "mmedia/libs/events/includes.hpp"
 #include "mmedia/libs/link/libs-link-includes.hpp"
@@ -12,8 +14,8 @@
 #include "mmedia/libs/properties/libs-properties-includes.hpp"
 #include "mmedia/libs/optims/optim/io/libs-optims-optim-io-includes.hpp"
 #include "mmedia/libs/optims/optim/mcalls/libs-optims-optim-mcalls-includes.hpp"
-#include "mmedia/libs/ievents/includes.hpp"
-#include "mmedia/libs/ilog_events/includes.hpp"
+#include "mmedia/libs/events_base/events-base-includes.hpp"
+#include "mmedia/libs/events_log/includes.hpp"
 #include "mmedia/libs/iproperties/libs-iproperties-includes.hpp"
 
 #undef U3_FILE_LOG_TAG

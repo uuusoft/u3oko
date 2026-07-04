@@ -4,17 +4,15 @@
 \date       17.02.2012
 \project    u3_iproperties_lib
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../libs-iproperties-includes_int.hpp"
 #include "libs-iproperties-appl-paths-includes.hpp"
 
 namespace libs::iproperties::appl_paths
 {
-const std::string&
-to_string (const Paths& val)
+auto
+to_string (const Paths& val) -> const std::string&
 {
-  static const std::unordered_map< Paths, const std::string > tts2ss = {
+  static const boost::unordered_flat_map< Paths, const std::string > tts2ss = {
     { Paths::generic_appl, "generic_appl" },
     { Paths::main_appl, "main_appl" },
     { Paths::bins, "bins" },

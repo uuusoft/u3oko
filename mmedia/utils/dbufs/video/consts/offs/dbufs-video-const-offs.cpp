@@ -5,8 +5,7 @@
 \project    u3_dbufs
 \brief      Объявление зарезервированных констант типов-индексов буфера данных
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
+#include "../../../dbufs-includes_int.hpp"
 
 namespace utils::dbufs::video::consts::offs
 {

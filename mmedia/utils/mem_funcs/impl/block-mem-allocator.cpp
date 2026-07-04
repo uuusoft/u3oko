@@ -4,22 +4,19 @@
 \date       01.01.2017
 \project    u3_mem_funcs
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../mem-funcs-includes_int.hpp"
 #include "block-mem-allocator.hpp"
 
-extern "C" BOOST_SYMBOL_EXPORT
-  utils::mem_funcs::IBlockMemAllocator::raw_ptr
-  create_mem_impl ()
+extern "C" BOOST_SYMBOL_EXPORT auto
+create_mem_impl () -> utils::mem_funcs::IBlockMemAllocator::raw_ptr
 {
   return utils::mem_funcs::impl::instance ();
 }
 
 namespace utils::mem_funcs::impl
 {
-IBlockMemAllocator::raw_ptr
-instance ()
+auto
+instance () -> IBlockMemAllocator::raw_ptr
 {
   static BlockMemAllocator g_inst;
   return &g_inst;
@@ -32,18 +29,18 @@ BlockMemAllocator::BlockMemAllocator ()
 }
 
 
-inline std::size_t
-get_diff (const std::size_t& size1, const std::size_t& size2)
+inline auto
+get_abs_diff (const std::size_t& size1, const std::size_t& size2) -> std::size_t
 {
   return size1 > size2 ? size1 - size2 : size2 - size1;
 }
 
 
-::libs::helpers::mem::IBlockMem::ptr
-BlockMemAllocator::find_exist_block (const size_type& size)
+auto
+BlockMemAllocator::find_exist_block (const size_type& size) -> syn::IBlockMem::ptr
 {
-  ::libs::helpers::mem::IBlockMem::ptr candidate;
-  std::size_t                          cand_diff = 0;
+  syn::IBlockMem::ptr candidate;
+  std::size_t         cand_diff = 0;
 
   for (BlockMem::ptr& _block : blocks_)
   {
@@ -52,7 +49,7 @@ BlockMemAllocator::find_exist_block (const size_type& size)
       continue;
     }
 
-    const auto _block_size = _block->get_buf_size ();
+    const auto _block_size = _block->get_capacity ();
     if (_block_size < size)
     {
       continue;
@@ -61,11 +58,11 @@ BlockMemAllocator::find_exist_block (const size_type& size)
     if (!candidate)
     {
       candidate = _block;
-      cand_diff = get_diff (_block_size, size);
+      cand_diff = get_abs_diff (_block_size, size);
     }
     else
     {
-      auto cur_diff = get_diff (_block_size, size);
+      auto cur_diff = get_abs_diff (_block_size, size);
       if (cur_diff < cand_diff)
       {
         candidate = _block;
@@ -82,8 +79,8 @@ BlockMemAllocator::find_exist_block (const size_type& size)
 }
 
 
-std::string
-BlockMemAllocator::dump_status_int ()
+auto
+BlockMemAllocator::dump_status_int () -> std::string
 {
   const auto   _count_all_blocks = blocks_.size ();
   auto         _count_use_blocks = 0;
@@ -92,7 +89,7 @@ BlockMemAllocator::dump_status_int ()
 
   for (auto& _block : blocks_)
   {
-    const auto _mem_block = _block->get_buf_size ();
+    const auto _mem_block = _block->get_capacity ();
     if (_block.use_count () > 1)
     {
       size_use_mem += _mem_block;
@@ -107,11 +104,11 @@ BlockMemAllocator::dump_status_int ()
 }
 
 
-::libs::helpers::mem::IBlockMem::ptr
-BlockMemAllocator::alloc (const size_type& size)
+auto
+BlockMemAllocator::alloc (const size_type& size) -> syn::IBlockMem::ptr
 {
-  lock_type                            lock (mtx_);
-  ::libs::helpers::mem::IBlockMem::ptr exist = find_exist_block (size);
+  lock_type           lock (mtx_);
+  syn::IBlockMem::ptr exist = find_exist_block (size);
 
   if (exist)
   {
@@ -119,17 +116,17 @@ BlockMemAllocator::alloc (const size_type& size)
     return exist;
   }
 
-  const std::size_t _real_size = std::max< size_type > (size, consts::min_size_block);
-  BlockMem::ptr     _ret (new BlockMem (_real_size));
+  const std::size_t real_size = std::max< size_type > (size, consts::min_size_block);
+  BlockMem::ptr     ret (new BlockMem (real_size));
 
-  blocks_.push_back (_ret);
+  blocks_.push_back (ret);
   U3_ASSERT (blocks_.size () < consts::max_count_block);
-  return _ret;
+  return ret;
 }
 
 
-std::string
-BlockMemAllocator::dump_memory_status ()
+auto
+BlockMemAllocator::dump_memory_status () -> std::string
 {
   lock_type lock (mtx_);
   return dump_status_int ();

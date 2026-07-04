@@ -17,48 +17,49 @@ class IEvents
   // ext types
   using hid_type = IEvent::hid_type;
 
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IEvents)
+  U3_ADD_POINTERS_TO_SELF (IEvents)
+  U3_ADD_DELETE_MOVE_COPY (IEvents)
 
   /// Функция возвращает событие по идентификатору
   /// \param[in]  id идентификатор события
   /// \return     событие
-  virtual IEvent::ptr get (const hid_type&) = 0;
+  virtual auto get (const hid_type&) -> IEvent::ptr = 0;
 
   /// Функция клонирует событие, гарантируя ему базовый модуль
   /// \param[in]  src  входное событие
   /// \param[in]  type тип клонирования
   /// \return     копия события
-  virtual IEvent::ptr clone (const IEvent::craw_ptr, const Deeps&) = 0;
+  virtual auto clone (const IEvent::craw_ptr, const Deeps&) -> IEvent::ptr = 0;
 
   /// Функция преобразования типа события, внтури базового модуля
   /// \param[in]  src  входное событие
   /// \param[in]  id   идентификатор типа выходного события
   /// \return     выходное событие или null, если преобразование невозможно
-  virtual const void* dcast (IEvent::craw_ptr, const hid_type&) = 0;
+  virtual auto dcast (IEvent::craw_ptr, const hid_type&) -> const void* = 0;
 
   /// Функция преобразования события в xml, внтури базового модуля
   /// \param[in]  src  входное событие
   /// \param[in]  xml   строка xml в формате boost::serialization
   /// \return     true, при успехе
-  virtual bool event2xml (IEvent::ptr&, std::string&) = 0;
+  virtual auto event2xml (IEvent::ptr&, std::string&) -> bool = 0;
 
   /// Функция преобразования xml в событие, внтури базового модуля
   /// \param[in]  xml  строка xml в формате boost::serialization
   /// \param[in]  dst  восстановленное выходное событие
   /// \return     true, при успехе
-  virtual bool xml2event (const std::string&, IEvent::ptr&) = 0;
+  virtual auto xml2event (const std::string&, IEvent::ptr&) -> bool = 0;
 
   /// Функция преобразования события в xml, внтури базового модуля
   /// \param[in]  src  входное событие
   /// \param[in]  xml   строка xml в формате boost::serialization
   /// \return     true, при успехе
-  virtual bool event2bin (IEvent::ptr&, std::ostream&) = 0;
+  virtual auto event2bin (IEvent::ptr&, std::ostream&) -> bool = 0;
 
   /// Функция преобразования xml в событие, внтури базового модуля
   /// \param[in]  xml  строка xml в формате boost::serialization
   /// \param[in]  dst  восстановленное выходное событие
   /// \return     true, при успехе
-  virtual bool bin2event (std::istream&, IEvent::ptr&) = 0;
+  virtual auto bin2event (std::istream&, IEvent::ptr&) -> bool = 0;
 
   protected:
   IEvents ()          = default;

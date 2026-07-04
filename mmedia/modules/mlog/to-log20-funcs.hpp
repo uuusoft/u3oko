@@ -9,7 +9,7 @@
 namespace modules::mlog::syn
 {
 using key_storage_type = libs::properties::vers::links::mids::key_storage_type;
-using LogLevels        = libs::ievents::props::modules::log::LogLevels;
+using LogLevels        = libs::events_base::props::modules::log::LogLevels;
 }   // namespace modules::mlog::syn
 
 namespace modules::mlog
@@ -39,7 +39,7 @@ class ToLog final
   void
   operator() (Args... args)
   {
-    if (level_ > ::libs::ievents::props::modules::log::g_log_level)
+    if (level_ > ::libs::events_base::props::modules::log::g_log_level)
     {
       return;
     }
@@ -78,12 +78,12 @@ class ToLog final
 
     const auto                  msglm_impl = msglm_events->impl ();
     ::libs::events::IEvent::ptr msglm_revent;
-    auto*                       msglm_levent = ::libs::iproperties::helpers::create_event< ::libs::ilog_events::events::InfoLogEvent > (msglm_revent);
-    const auto                  msglm_id     = ::libs::ilog_events::events::InfoLogEvent::gen_get_mid ();
+    auto*                       msglm_levent = ::libs::iproperties::helpers::create_event< ::libs::events_log::events::InfoLogEvent > (msglm_revent);
+    const auto                  msglm_id     = ::libs::events_log::events::InfoLogEvent::gen_get_mid ();
     // const auto msglm_revent = msglm_impl->get (msglm_id);
-    // auto*      msglm_levent = ::libs::helpers::casts::reinterpret_cast_helper< ::libs::ilog_events::events::InfoLogEvent* > (msglm_impl->dcast (msglm_revent.get (), msglm_id));
+    // auto*      msglm_levent = ::libs::utility::casts::reinterpret_cast_helper< ::libs::events_log::events::InfoLogEvent* > (msglm_impl->dcast (msglm_revent.get (), msglm_id));
 
-    msglm_levent->change_appl_info (::libs::ilog_events::AppllPartLogInfo (level_, to_string (key_.first), "wtfversion", place_), buf.str ());
+    msglm_levent->change_appl_info (::libs::events_log::AppllPartLogInfo (level_, to_string (key_.first), "wtfversion", place_), buf.str ());
     logger->send_msg (msglm_revent, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
   }
 
@@ -95,7 +95,7 @@ class ToLog final
       return;
     }
 
-    const auto place_info = ::libs::helpers::log::get_text_source_place (place_);
+    const auto place_info = ::libs::utility::log::get_text_source_place (place_);
     const auto buf        = streambuf.str () + "......" + place_info;
 
     switch (level_)

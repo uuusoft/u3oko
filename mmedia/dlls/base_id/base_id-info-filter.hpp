@@ -12,9 +12,6 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
   InfoFilter ();
   virtual ~InfoFilter () = default;
 
-  InfoFilter (const InfoFilter& src)            = delete;
-  InfoFilter& operator= (const InfoFilter& src) = delete;
-
   syn::BaseIdProp::raw_ptr rprops_ = nullptr;   //<
 };
 }   // namespace dlls::base_id

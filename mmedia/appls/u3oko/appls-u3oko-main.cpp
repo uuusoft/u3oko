@@ -5,8 +5,6 @@
 \project    u3oko
 \brief      Центральный модуль системы видеонаблюдения u3oko
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "appls-u3oko-includes_int.hpp"
 #include "appl/u3oko-appl.hpp"
 
@@ -14,8 +12,8 @@ static std::mutex                                g_sinc;
 static volatile std::int32_t                     counter_refs_ = 0;
 static ::libs::link::appl::IApplication::raw_ptr g_appl        = nullptr;
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication::raw_ptr
-create_impl_appl_u3oko ()
+extern "C" BOOST_SYMBOL_EXPORT auto
+create_impl_appl_u3oko () -> ::libs::link::appl::IApplication::raw_ptr
 {
   std::scoped_lock lock (g_sinc);
 

@@ -36,7 +36,7 @@ get_event_int (const ::libs::events::IEvent::hid_type& id, Args... args) -> ::li
   auto impl = get_events_impl ();
   auto res  = impl->get (id);
   U3_CHECK (res, " get_event_int:: failed" + std::string { id });
-  auto* upres = ::libs::helpers::casts::reinterpret_cast_helper< T* > (cast_event_int (res, id));
+  auto* upres = ::libs::utility::casts::reinterpret_cast_helper< T* > (cast_event_int (res, id));
   upres->sync_event_props (args...);
   return res;
 }
@@ -50,7 +50,7 @@ create_event (::libs::events::IEvent::ptr& event, Args... args) -> T*
   constexpr const auto id = T::gen_get_mid ();
 
   event = get_event_int< T, Args... > (id, args...);
-  return ::libs::helpers::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id));
+  return ::libs::utility::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id));
 }
 
 
@@ -60,7 +60,7 @@ create_event_in_list (std::list< ::libs::events::IEvent::ptr >& events, Args... 
 {
   constexpr const auto id = T::gen_get_mid ();
   events.push_back (get_event_int< T, Args... > (id, args...));
-  return ::libs::helpers::casts::reinterpret_cast_helper< T* > (cast_event_int (events.back (), id));
+  return ::libs::utility::casts::reinterpret_cast_helper< T* > (cast_event_int (events.back (), id));
 }
 
 
@@ -69,63 +69,55 @@ auto
 check_cast_event (const ::libs::events::IEvent::cptr& event) -> bool
 {
   constexpr const auto id = T::gen_get_mid ();
-  return event && ::libs::helpers::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id)) ? true : false;
+  return event && ::libs::utility::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id)) ? true : false;
 }
 
-#if 1
+
 template< typename T >
 auto
 cast_event (const ::libs::events::IEvent::ptr& event) -> T*
 {
   constexpr const auto id = T::gen_get_mid ();
   U3_ASSERT_NT (event, "try cast null event to" + STOLOG (id));
-  return ::libs::helpers::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id));
+  return ::libs::utility::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id));
 }
-#endif
-#if 1
+
+
 template< typename T >
 auto
 cast_event (const ::libs::events::IEvent::cptr& event) -> const T*
 {
   constexpr const auto id = T::gen_get_mid ();
   U3_ASSERT_NT (event, "try cast null event to" + STOLOG (id));
-  return ::libs::helpers::casts::reinterpret_cast_helper< const T* > (cast_event_int (event, id));
+  return ::libs::utility::casts::reinterpret_cast_helper< const T* > (cast_event_int (event, id));
 }
-#endif
-#if 1
+
+
 template< typename T >
 auto
 cast_event (const ::libs::events::IEvent::raw_ptr event) -> T*
 {
   constexpr const auto id = T::gen_get_mid ();
   U3_ASSERT_NT (event, "try cast null event to" + STOLOG (id));
-  return ::libs::helpers::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id));
+  return ::libs::utility::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id));
 }
-#endif
-#if 1
+
+
 template< typename T >
 auto
 cast_event (const ::libs::events::IEvent::craw_ptr event) -> const T*
 {
   constexpr const auto eid = T::gen_get_mid ();
   U3_ASSERT_NT (event, "try cast null event to" + STOLOG (eid));
-  return ::libs::helpers::casts::reinterpret_cast_helper< const T* > (cast_event_int (event, eid));
-}
-#endif
-
-template< typename TTEvent >
-auto
-make_fake_obj_this_type () -> void
-{
-  volatile const typename TTEvent::ptr temp = std::make_shared< TTEvent > ();
+  return ::libs::utility::casts::reinterpret_cast_helper< const T* > (cast_event_int (event, eid));
 }
 
-
+// проверка овзможности создания указанного объекта
 template< typename TTEvent >
 auto
-make_fake_obj_this_event_type () -> void
+make_stub_obj () -> void
 {
-  volatile typename TTEvent::ptr temp = TTEvent::make_shared_this ();
+  volatile const auto temp = std::make_unique< TTEvent > ();
 }
 
 

@@ -41,8 +41,8 @@ class FinderNthElementByCount final
 
   ~FinderNthElementByCount () = default;
 
-  FinderNthElementByCount (const FinderNthElementByCount& src)            = delete;
-  FinderNthElementByCount& operator= (const FinderNthElementByCount& src) = delete;
+  FinderNthElementByCount (const FinderNthElementByCount&)            = delete;
+  FinderNthElementByCount& operator= (const FinderNthElementByCount&) = delete;
 
   /// Функция для получения n-элемента по распределенному массиву
   /// \param[in]  beg_core   начало области фильтрации
@@ -129,7 +129,7 @@ class FinderNthElementByCount final
       // глобальный min+max для всего ядра
       min_      = std::min< source_value_type > (*minmax.first, min_);
       max_      = std::max< source_value_type > (*minmax.second, max_);
-      minmaxbeg = ::libs::helpers::mem::move_cptr (minmaxbeg, sstride);
+      minmaxbeg = ::libs::utility::mem::move_cptr (minmaxbeg, sstride);
     }
   }
 
@@ -159,7 +159,7 @@ class FinderNthElementByCount final
         auto val = del_val[0];
         U3_ASSERT_NT (get_counter (val) > 0, VTOLOG (val));
         --update_counter (val);
-        del_val = ::libs::helpers::mem::move_cptr (del_val, sstride);
+        del_val = ::libs::utility::mem::move_cptr (del_val, sstride);
       }
     }
 
@@ -177,7 +177,7 @@ class FinderNthElementByCount final
         add_max  = std::max< source_value_type > (val, add_max);
 
         ++update_counter (val);
-        add_val = ::libs::helpers::mem::move_cptr (add_val, sstride);
+        add_val = ::libs::utility::mem::move_cptr (add_val, sstride);
       }
     }
 
@@ -245,7 +245,7 @@ class FinderNthElementByCount final
         ++update_counter (val);
       }
 
-      cur_val = ::libs::helpers::mem::move_cptr (cur_val, sstride);
+      cur_val = ::libs::utility::mem::move_cptr (cur_val, sstride);
     }
   }
 

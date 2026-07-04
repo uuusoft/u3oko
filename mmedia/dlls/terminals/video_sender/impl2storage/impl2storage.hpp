@@ -30,6 +30,6 @@ class Impl2Storage final : public IImplSender
     const syn::CallSyncs& sync,
     const syn::Calls&     req);
 
-  ::libs::istorage_events::stream_id_type active_stream_;   //<
+  ::libs::events_storage::stream_id_type active_stream_;   //<
 };
 }   // namespace dlls::terminals::video_sender::impl2storage

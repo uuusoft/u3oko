@@ -18,5 +18,4 @@ u3_add_target_dylib(
   ""
   EXTENDED_LIBS
   DEPEND_TARGETS
-  ${U3_NAME_EXTLIB_BOOST_UTIL}
-)
+  ${U3_NAME_EXTLIB_BOOST_UTIL})

@@ -5,29 +5,27 @@
 \project    mlog
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../module-log-includes_int.hpp"
 #include "log-module.hpp"
 
 namespace modules::mlog::appl
 {
-::libs::ilink::appl::base::BaseModule::recv_links_type
-LogModule::get_recv_link_int ()
+auto
+LogModule::get_recv_link_int () -> ::libs::ilink::appl::base::BaseModule::recv_links_type
 {
   return { links_.get (libs::properties::vers::links::mids::log2appl) };
 }
 
 
-bool
-LogModule::catch_event_int (syn::IEvent::ptr& evnt)
+auto
+LogModule::catch_event_int (syn::IEvent::ptr& evnt) -> bool
 {
   return true;
 }
 
 
-bool
-LogModule::is_now_thread_to_sleep_int (bool now_recv_evnt)
+auto
+LogModule::is_now_thread_to_sleep_int (bool now_recv_evnt) -> bool
 {
   // EAI-MODULE-REFACT
 #if 0  

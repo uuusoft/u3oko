@@ -13,13 +13,11 @@ class IApplication
 {
   public:
   // ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IApplication)
+  U3_ADD_POINTERS_TO_SELF (IApplication)
+  U3_ADD_DELETE_MOVE_COPY (IApplication)
 
   IApplication ()          = default;
   virtual ~IApplication () = default;
-
-  IApplication (const IApplication&)            = delete;
-  IApplication& operator= (const IApplication&) = delete;
 
   /// Функция конструирования объекта модуля
   /// По завершению вызова модуль считается готовым к работе
@@ -39,16 +37,16 @@ class IApplication
 
   protected:
   // IApplication interface
-  virtual void appl_init_int (const InitApplication&)  = 0;
-  virtual void init_links_int (const InitApplication&) = 0;
-  virtual void init_appl_folders_int ()                = 0;
-  virtual void init_proxys_int ()                      = 0;
-  virtual void init_appl_data_int ()                   = 0;
-  virtual void init_done_int ()                        = 0;
-  virtual void appl_work_int ()                        = 0;
-  virtual bool appl_deinit_int ()                      = 0;
-  virtual void update_catch_funcs_int ()               = 0;
-  virtual void appl_force_stop_int ()                  = 0;
+  virtual auto appl_init_int (const InitApplication&) -> void  = 0;
+  virtual auto init_links_int (const InitApplication&) -> void = 0;
+  virtual auto init_appl_folders_int () -> void                = 0;
+  virtual auto init_proxys_int () -> void                      = 0;
+  virtual auto init_appl_data_int () -> void                   = 0;
+  virtual auto init_done_int () -> void                        = 0;
+  virtual auto appl_work_int () -> void                        = 0;
+  virtual auto update_catch_funcs_int () -> void               = 0;
+  virtual auto appl_force_stop_int () -> void                  = 0;
+  virtual auto appl_deinit_int () -> bool                      = 0;
 
   ::libs::link::appl::InitApplication appl_info_;   //<
 

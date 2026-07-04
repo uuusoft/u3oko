@@ -14,7 +14,7 @@ class BlockMemAllocator final : public IBlockMemAllocator
 {
   public:
   //  IBlockMemAllocator overrides
-  virtual auto alloc (const size_type& size) -> ::libs::helpers::mem::IBlockMem::ptr override;
+  virtual auto alloc (const size_type& size) -> syn::IBlockMem::ptr override;
   virtual auto dump_memory_status () -> std::string override;
 
   private:
@@ -28,7 +28,7 @@ class BlockMemAllocator final : public IBlockMemAllocator
   BlockMemAllocator ();
   virtual ~BlockMemAllocator () = default;
 
-  auto find_exist_block (const size_type& size) -> ::libs::helpers::mem::IBlockMem::ptr;
+  auto find_exist_block (const size_type& size) -> syn::IBlockMem::ptr;
   auto dump_status_int () -> std::string;
 
   sync_type   mtx_;      //< Поле для синхронизации доступа к объекту

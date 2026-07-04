@@ -19,14 +19,15 @@ class Filter final :
 
   private:
   // internal types
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
+  U3_ADD_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
+
   // IFilter overrides
   virtual auto load_int (syn::FilterInfo*, const ::pugi::xml_named_node_iterator&) -> void override;
   virtual auto transform_int (syn::TransformInfo&) -> void override;
   virtual auto call_int (syn::CallInterfInfo&) -> void override;
 
-  auto init_pts (::libs::icore::impl::var1::obj::ConnectInfo*) -> void;
-  auto alloc_fake_frame (::libs::icore::impl::var1::obj::dll::TransformInfo&) -> void;
+  auto init_pts (syn::ConnectInfo*) -> void;
+  auto alloc_fake_frame (syn::TransformInfo&) -> void;
   auto itransform () -> void;
   auto alloc_bufs () -> void;
   auto alloc_temp_bufs () -> void;

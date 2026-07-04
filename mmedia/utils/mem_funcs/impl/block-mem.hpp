@@ -6,24 +6,29 @@
 \project    u3_mem_funcs
 */
 
+namespace utils::mem_funcs::impl::syn
+{
+using IBlockMem = ::libs::utility::mem::IBlockMem;
+}
+
 namespace utils::mem_funcs::impl
 {
 ///  Реализация работы с блоком памяти
-class BlockMem final : public ::libs::helpers::mem::IBlockMem
+class BlockMem final : public syn::IBlockMem
 {
   public:
-  using size_type = ::libs::helpers::mem::IBlockMem::size_type;
+  using size_type = syn::IBlockMem::size_type;
 
   BlockMem (const BlockMem::size_type);
   virtual ~BlockMem ();
 
   private:
-  // ::libs::helpers::mem:: IBlockMem overrides
+  // syn::IBlockMem overrides
   virtual auto get_int () -> std::uint8_t* override;
   virtual auto get_int () const -> const std::uint8_t* override;
-  virtual auto get_buf_size_int () const -> BlockMem::size_type override;
-  virtual auto get_data_size_int () const -> BlockMem::size_type override;
-  virtual auto set_data_size_int (size_type) -> void override;
+  virtual auto get_capacity_int () const -> BlockMem::size_type override;
+  virtual auto get_size_int () const -> BlockMem::size_type override;
+  virtual auto set_size_int (size_type) -> void override;
   virtual auto resize_int (size_type) -> void override;
 
   auto reset_memory () -> void;

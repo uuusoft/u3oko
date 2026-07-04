@@ -12,7 +12,7 @@ class IImplSender
 {
   public:
   // ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IImplSender)
+  U3_ADD_POINTERS_TO_SELF (IImplSender)
 
   virtual ~IImplSender () = default;
 

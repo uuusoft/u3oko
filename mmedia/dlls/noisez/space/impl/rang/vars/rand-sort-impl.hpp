@@ -35,8 +35,8 @@ class RandSortAlg final
       const std::int32_t  randy   = rand () % size_core;
       const std::int16_t* beg_spx = spx;
 
-      beg_spx = ::libs::helpers::mem::move_cptr_back (beg_spx, beg_cond_core);
-      beg_spx = ::libs::helpers::mem::move_cptr (beg_spx, sstride * randy + randx * sizeof (std::int16_t));
+      beg_spx = ::libs::utility::mem::move_cptr_back (beg_spx, beg_cond_core);
+      beg_spx = ::libs::utility::mem::move_cptr (beg_spx, sstride * randy + randx * sizeof (std::int16_t));
 
       *ipx = *beg_spx;
     }

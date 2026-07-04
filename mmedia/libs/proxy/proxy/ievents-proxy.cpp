@@ -11,18 +11,18 @@
 
 namespace libs::proxy
 {
-extern "C" BOOST_SYMBOL_EXPORT ::libs::events::io::IEvents::raw_ptr create_impl_vdd_devents ();
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vdd_devents () -> ::libs::events::io::IEvents::raw_ptr;
 
-IEventsProxy::raw_ptr
-IEventsProxy::instance (const std::string& dll_path)
+auto
+IEventsProxy::instance (const std::string& dll_path) -> IEventsProxy::raw_ptr
 {
   static IEventsProxy g_inst (dll_path);
   return &g_inst;
 }
 
 
-::libs::events::io::IEvents::raw_ptr
-IEventsProxy::impl ()
+auto
+IEventsProxy::impl () -> ::libs::events::io::IEvents::raw_ptr
 {
   U3_ASSERT (creator_);
   ::libs::events::io::IEvents::raw_ptr ret = creator_ ();
@@ -38,7 +38,7 @@ IEventsProxy::IEventsProxy (const std::string& dll_path)
   creator_ = create_impl_vdd_devents;
 #else
   boost::filesystem::path cpath (dll_path);
-  cpath /= ::libs::helpers::dlls::decorate_dll_name ("vdd_devents");
+  cpath /= ::libs::utility::dlls::decorate_dll_name ("vdd_devents");
 
   try
   {
@@ -50,7 +50,7 @@ IEventsProxy::IEventsProxy (const std::string& dll_path)
   }
 
 #  ifdef U3_OS_ANDROID
-  creator_ = ::libs::helpers::casts::reinterpret_cast_helper< create_func_type* > (dlsym (lib_.native (), "create_impl_vdd_devents"));
+  creator_ = ::libs::utility::casts::reinterpret_cast_helper< create_func_type* > (dlsym (lib_.native (), "create_impl_vdd_devents"));
 #  else
   creator_ = ::boost::dll::import_symbol< create_func_type > (lib_, "create_impl_vdd_devents");
 #  endif

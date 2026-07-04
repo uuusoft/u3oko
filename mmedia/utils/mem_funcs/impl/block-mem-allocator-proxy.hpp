@@ -18,7 +18,7 @@ class BlockMemAllocatorProxy final
   using create_func_type  = IBlockMemAllocator::raw_ptr ();
   using bcreate_func_type = std::function< create_func_type >;
 
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (BlockMemAllocatorProxy)
+  U3_ADD_POINTERS_TO_SELF (BlockMemAllocatorProxy)
 
   BlockMemAllocatorProxy (const BlockMemAllocatorProxy&)                = delete;
   BlockMemAllocatorProxy& operator= (const BlockMemAllocatorProxy&)     = delete;
@@ -49,7 +49,7 @@ class BlockMemAllocatorProxy final
     creator_ = create_mem_impl;
 #else
     boost::filesystem::path _cpath (dll_path);
-    _cpath /= ::libs::helpers::dlls::decorate_dll_name ("mem_funcs");
+    _cpath /= ::libs::utility::dlls::decorate_dll_name ("mem_funcs");
 
     try
     {
@@ -61,7 +61,7 @@ class BlockMemAllocatorProxy final
     }
 
 #  ifdef U3_OS_ANDROID
-    creator_ = ::libs::helpers::casts::reinterpret_cast_helper< create_func_type* > (dlsym (lib_.native (), "create_mem_impl"));
+    creator_ = ::libs::utility::casts::reinterpret_cast_helper< create_func_type* > (dlsym (lib_.native (), "create_mem_impl"));
 #  else
     creator_ = ::boost::dll::import_symbol< create_func_type > (_cpath, "create_mem_impl");
 #  endif
@@ -71,7 +71,7 @@ class BlockMemAllocatorProxy final
 
   ~BlockMemAllocatorProxy () = default;
 
-  ::libs::helpers::dlls::dll_type lib_;       //< Загруженная библиотека по работе с памятью
+  ::libs::utility::dlls::dll_type lib_;       //< Загруженная библиотека по работе с памятью
   bcreate_func_type               creator_;   //< Функция создания реализации функционала в dll/so
 };
 }   // namespace utils::mem_funcs::impl

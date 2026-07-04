@@ -57,7 +57,7 @@ if [[ ! -v U3_COMMERCIAL_PART ]]; then
 fi
 
 U3_FILE_TOOLCHAIN=$(basename ${U3_TOOLCHAIN} .cmake)
-U3_BIN=./../builds-${U3_LIBS_PREFIX}-${U3_BUILD_PREFIX}-${U3_SANITY}-${U3_FILE_TOOLCHAIN}-${U3_GENERATOR}
+U3_BIN=./../../u3builds-${U3_LIBS_PREFIX}-${U3_BUILD_PREFIX}-${U3_SANITY}-${U3_FILE_TOOLCHAIN}-${U3_GENERATOR}
 #U3_EXT_PARAMS="-DU3_FORCE_COMPILE_ALL_EXTLIBS=0"
 U3_ABSOULT_TOOLCHAIN=$(realpath ${U3_TOOLCHAIN})
 
@@ -77,9 +77,19 @@ echo U3_USE_GIT_HASH_FOR_MARK_BUILD=${U3_USE_GIT_HASH_FOR_MARK_BUILD}
 
 cd ./../../
 
-# EAI-REFACT clang-tidy to optional
+# EAI-REFACT optinal clang-tidy
 #echo "start clang-tidy, results at ${U3_BIN}/clang-tidy-fixes.log"
 #run-clang-tidy -p ${U3_BIN} -config-file ./../.clang-tidy > ${U3_BIN}/clang-tidy-fixes.log 2>&1
+#run-clang-tidy -fix -p ${U3_BIN} -config-file ./../.clang-tidy > ${U3_BIN}/clang-tidy-fixes.log 2>&1
+#run-clang-tidy -p ${U3_BIN} -checks='-*,modernize-*' -fix > ${U3_BIN}/clang-tidy-fixes.log 2>&1
+#run-clang-tidy -p ${U3_BIN} -checks='-*,bugprone-*' -fix > ${U3_BIN}/clang-tidy-fixes.log 2>&1
+#run-clang-tidy -p ${U3_BIN} -checks='-*,cppcoreguidelines-*' -fix > ${U3_BIN}/clang-tidy-fixes.log 2>&1
+#run-clang-tidy -p ${U3_BIN} -checks='-*,clang-analyzer-*' -fix > ${U3_BIN}/clang-tidy-fixes.log 2>&1
+#run-clang-tidy -p ${U3_BIN} -checks='-*,performance-*' -fix > ${U3_BIN}/clang-tidy-fixes.log 2>&1
+#objc-*,
+#performance-*,
+#readability-*,
+#-modernize-use-trailing-return-type
 
 # config
 cmake -G "${U3_GENERATOR}" -S . -B ${U3_BIN} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${U3_ABSOULT_TOOLCHAIN} -DCMAKE_BUILD_TYPE=${U3_BUILD} -DU3_APPL_NAME=${U3_APPL_NAME} -DU3_USE_GIT_HASH_FOR_MARK_BUILD=${U3_USE_GIT_HASH_FOR_MARK_BUILD} -DU3_COMMERCIAL_PART=${U3_COMMERCIAL_PART} -DU3_BUILD_MODULES_AS_LIBS=${U3_AS_LIBS} -DU3_SANITY_BUILD_TYPE=${U3_SANITY} -DU3_BUILD_TESTING=${U3_BUILD_TESTING} ${U3_EXT_PARAMS}

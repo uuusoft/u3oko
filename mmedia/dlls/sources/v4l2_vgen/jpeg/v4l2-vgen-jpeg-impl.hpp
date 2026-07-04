@@ -13,7 +13,7 @@ class JpegImpl final
 {
   public:
   //  ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (JpegImpl)
+  U3_ADD_POINTERS_TO_SELF (JpegImpl)
 
   explicit JpegImpl (DriverState *device_state);
   ~JpegImpl ();

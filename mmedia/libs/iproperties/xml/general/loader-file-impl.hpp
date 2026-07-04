@@ -15,17 +15,17 @@ class LoaderFileImpl final : public ILoaderImpl
   public:
   using lfi_path_type = ::libs::iproperties::appl_paths::Paths;
 
-  explicit LoaderFileImpl (const InitLoaderInfo& info);
+  explicit LoaderFileImpl (InitLoaderInfo info);
   virtual ~LoaderFileImpl () = default;
 
   private:
   //  ILoaderImpl overrides
   virtual bool is_exist_file_int (const std::string&, const lfi_path_type&) const override;
   virtual bool is_exist_folder_int (const std::string&, const lfi_path_type&) const override;
-  virtual void get_enum_int (const lfi_path_type&, ::libs::helpers::files::NodeEnumFiles&, const std::string&) override;
-  virtual bool get_int (const std::string&, const lfi_path_type&, ::libs::helpers::mem::IBlockMem::ptr&) override;
+  virtual void get_enum_int (const lfi_path_type&, ::libs::utility::files::NodeEnumFiles&, const std::string&) override;
+  virtual bool get_int (const std::string&, const lfi_path_type&, ::libs::utility::mem::IBlockMem::ptr&) override;
 
   InitLoaderInfo                        iinfo_;   //< нформация, переданная при создании экзепляра
-  ::libs::helpers::files::NodeEnumFiles enums_;   //< Список файлов и директорий
+  ::libs::utility::files::NodeEnumFiles enums_;   //< Список файлов и директорий
 };
 }   // namespace libs::iproperties::xml::general

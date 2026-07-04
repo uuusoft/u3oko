@@ -9,11 +9,11 @@
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 namespace dlls::sources::v4l2_vgen::video
 {
-class VideoCodecInterf : public ::libs::ievents::runtime::interf::interfaces::ICodecImage
+class VideoCodecInterf : public ::libs::events_base::runtime::interf::interfaces::ICodecImage
 {
   public:
   //  ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (VideoCodecInterf)
+  U3_ADD_POINTERS_TO_SELF (VideoCodecInterf)
 
   VideoCodecInterf () :
     update_ (false),

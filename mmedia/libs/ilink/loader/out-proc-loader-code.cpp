@@ -38,8 +38,8 @@ OutProcLoaderCode::load_int (
 }
 
 
-bool
-OutProcLoaderCode::is_load_int () const
+auto
+OutProcLoaderCode::is_load_int () const -> bool
 {
   U3_ASSERT_SIGNAL ("process");
   return false;
@@ -50,8 +50,8 @@ OutProcLoaderCode::is_load_int () const
 }
 
 
-bool
-OutProcLoaderCode::unload_int (bool force)
+auto
+OutProcLoaderCode::unload_int (bool force) -> bool
 {
   U3_ASSERT_SIGNAL ("process");
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY

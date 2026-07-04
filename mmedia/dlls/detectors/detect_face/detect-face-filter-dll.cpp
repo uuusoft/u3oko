@@ -84,9 +84,9 @@ Filter::convert_buf2rgb24 (syn::IVideoBuf::craw_ptr psrc, syn::IVideoBuf::raw_pt
   // utils::dbufs::video::helpers::fill<short>( psrc, []( int indxx, int indxy, std::int16_t& val ) { val = counter % 100 + 100;  return; } );
 
   pdst->buf_alloc (
-    ::utils::dbufs::video::AllocBufInfo (
+    ::utils::dbufs::video::AllocParams (
       psrc->get_dim_vars (),
-      ::libs::helpers::uids::minor::id_val::y8));
+      ::libs::utility::uids::minor::id_val::y8));
 
   ::libs::optim::io::MCallInfo cinfo;
 
@@ -139,7 +139,7 @@ Filter::save_buf2file (
 
   const std::int32_t res_jpeg = tjCompress2 (
     hjpeg_,
-    ::libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (cur_buf),
+    ::libs::utility::casts::reinterpret_cast_helper< const std::uint8_t* > (cur_buf),
     lsrc.width_,
     lsrc.stride_,
     lsrc.height_,
@@ -153,12 +153,12 @@ Filter::save_buf2file (
   if (-1 == res_jpeg)
   {
     char* jerr = tjGetErrorStr ();
-    U3_THROW_EXCEPTION ((std::string ("jpeg coder, ") + std::string (jerr ? jerr : "unknow")).c_str ());
+    U3_THROW_EXCEPT ((std::string ("jpeg coder, ") + std::string (jerr ? jerr : "unknow")).c_str ());
   }
 
   std::ofstream file (file_name.c_str (), std::ios_base::ate | std::ios_base::binary);
 
-  file.write (::libs::helpers::casts::reinterpret_cast_helper< const char* > (jpeg_buf_), jpeg_size);
+  file.write (::libs::utility::casts::reinterpret_cast_helper< const char* > (jpeg_buf_), jpeg_size);
   file.flush ();
 }
 #endif
@@ -174,18 +174,17 @@ Filter::itransform (syn::TransformInfo& info)
   }
 
 
-#ifndef U3_SKIP_DLIB
   dlib::array2d< std::uint8_t > img;
 
-#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   static std::int32_t counter   = 20;
   const std::string   file_path = "c:/imgs/dump_" + std::to_string (counter) + ".jpg";
   dlib::load_image (img, file_path);
   ++counter;
-#  endif
+#endif
 
   temp_buf_->clone (psrc, 100.0F);
-  utils::dbufs::video::helpers::invert_rows (temp_buf_.get ());
+  utils::dbufs::video::helpers::swap_buf_data_by_rows (temp_buf_.get ());
   helpers::copy2dlib (temp_buf_.get (), img);
 
   // Make the image bigger by a factor of two.  This is useful since
@@ -217,10 +216,9 @@ Filter::itransform (syn::TransformInfo& info)
 
   syn::IEvent::ptr rmsg;
   syn::IEvent::ptr irmsg;
-  auto             dmsg = ::libs::iproperties::helpers::create_event< syn::AddEvent2Base > (rmsg, libs::helpers::utils::cuuid (), "???????");
+  auto             dmsg = ::libs::iproperties::helpers::create_event< syn::AddEvent2EventsMsg > (rmsg, libs::utility::utils::cuuid (), "???????");
   ::libs::iproperties::helpers::create_event< syn::FaceDetect > (irmsg);
   dmsg->set_event (irmsg);
   info.frame_events_->push_back (rmsg);
-#endif
 }
 }   // namespace dlls::detectors::detect_face

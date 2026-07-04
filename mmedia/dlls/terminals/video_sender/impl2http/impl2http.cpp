@@ -4,8 +4,6 @@
 \date       06.03.2022
 \project    u3_video_sender_dll
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../video-sender-includes_int.hpp"
 #include "impl2http.hpp"
 
@@ -19,6 +17,8 @@ Impl2Http::send_int (
   syn::IVideoBuf::raw_ptr              send_buf)
 {
   U3_ASSERT (minfo);
+#if 1
+  // #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   auto* ilink     = ::libs::iproperties::helpers::get_prop_links ();
   auto  data2appl = ilink->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
 
@@ -44,5 +44,6 @@ Impl2Http::send_int (
 
   dmsg->set_msg (irmsg);
   data2appl->send_msg (rmsg, syn::CallSyncs::async, syn::Calls::set);
+#endif
 }
 }   // namespace dlls::terminals::video_sender::impl2http

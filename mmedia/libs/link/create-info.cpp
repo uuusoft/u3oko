@@ -84,8 +84,8 @@ CreateInfo::check () const
 }
 
 
-std::string
-CreateInfo::make_arg (const std::string& id, const std::string& val)
+auto
+CreateInfo::make_arg (const std::string& id, const std::string& val) -> std::string
 {
   U3_ASSERT (!id.empty ());
   U3_ASSERT (!val.empty ());
@@ -94,8 +94,8 @@ CreateInfo::make_arg (const std::string& id, const std::string& val)
 }
 
 
-std::string
-CreateInfo::get_prefix () const
+auto
+CreateInfo::get_prefix () const -> std::string
 {
   std::string ret;
   ret.reserve (256);
@@ -114,8 +114,8 @@ CreateInfo::get_prefix () const
 }
 
 
-bool
-CreateInfo::operator< (const CreateInfo& op) const
+auto
+CreateInfo::operator< (const CreateInfo& op) const -> bool
 {
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   if (create_side_ < op.create_side_)
@@ -131,8 +131,8 @@ CreateInfo::operator< (const CreateInfo& op) const
 }
 
 
-bool
-CreateInfo::operator== (const CreateInfo& op) const
+auto
+CreateInfo::operator== (const CreateInfo& op) const -> bool
 {
   const bool part1 = args_ == op.args_;
   const bool part2 = id_arg2val_ == op.id_arg2val_;
@@ -141,8 +141,8 @@ CreateInfo::operator== (const CreateInfo& op) const
 }
 
 
-std::string
-to_string (const CreateInfo& val)
+auto
+to_string (const CreateInfo& val) -> std::string
 {
   std::string res;
   res += "CreateInfo[" + to_string (val.run_as_) + " " + to_string (val.pt2pt_) + " " + std::to_string (val.size_shared_mem_bytes_) + "]";

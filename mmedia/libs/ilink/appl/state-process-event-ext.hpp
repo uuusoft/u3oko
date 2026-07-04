@@ -23,7 +23,7 @@ class StateProcessEventExt final : public ::libs::link::StateProcessEvent
 
   private:
   // internal types
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::link::StateProcessEvent)
+  U3_ADD_SUPER_CLASS (::libs::link::StateProcessEvent)
 };
 
 /// Вспомогательная функция для преобразования структуры в строку

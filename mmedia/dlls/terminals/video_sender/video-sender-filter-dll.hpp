@@ -27,11 +27,12 @@ class Filter final :
 
   private:
   // internal types
+  U3_ADD_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
+
   using send_func_type       = std::function< void (syn::TransformInfo&, const syn::Buff2ModuleInfo::craw_ptr) >;
-  using send_funcs_type      = std::unordered_map< syn::id_link_type, send_func_type >;
+  using send_funcs_type      = boost::unordered_flat_map< syn::id_link_type, send_func_type >;
   using send_impl_func_type  = std::function< void (syn::TransformInfo&, const syn::Buff2ModuleInfo::craw_ptr) >;
-  using send_impl_funcs_type = std::unordered_map< syn::id_link_type, IImplSender::ptr >;
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
+  using send_impl_funcs_type = boost::unordered_flat_map< syn::id_link_type, IImplSender::ptr >;
 
   // IFilter overrides
   virtual void load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node) override;
@@ -44,7 +45,7 @@ class Filter final :
   void send_info_msg (syn::TransformInfo& info);
   void process_events (syn::TransformInfo& info);
   void init_send_funcs ();
-  void default_send_funct (syn::TransformInfo&, const syn::Buff2ModuleInfo::craw_ptr, const syn::id_link_type&);
+  void default_send_func (syn::TransformInfo&, const syn::Buff2ModuleInfo::craw_ptr, const syn::id_link_type&);
 
   send_funcs_type      funcs_;     //< Функции передачи буферов по модулю-назачения
   send_impl_funcs_type senders_;   //<

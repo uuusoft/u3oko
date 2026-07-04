@@ -5,8 +5,6 @@
 \project    u3oko
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../appls-u3oko-includes_int.hpp"
 #include "u3oko-appl.hpp"
 
@@ -52,9 +50,9 @@ U3OkoAppl::update_catch_funcs_int ()
     if (forward)
     {
       auto* rmsg = ::libs::iproperties::helpers::cast_event< syn::CommandCodeEvent > (msg);
-      U3_LOG_APPL_DEV ("catch ::libs::igui_events::events::CommandCodeEvent, " + rmsg->get_code ());
+      U3_LOG_APPL_DEV ("catch ::libs::events_gui::events::CommandCodeEvent, " + rmsg->get_code ());
       stop_module_ = true;
-      return ::libs::events::IEvent::ptr ();
+      return {};
     }
 
     return msg;
@@ -65,7 +63,7 @@ U3OkoAppl::update_catch_funcs_int ()
     if (forward)
     {
       // U3_LOG_APPL( "received syn::FrameDone" );
-      return ::libs::events::IEvent::ptr ();
+      return {};
     }
 
     return msg;
@@ -73,15 +71,15 @@ U3OkoAppl::update_catch_funcs_int ()
 }
 
 
-bool
-U3OkoAppl::appl_deinit_int ()
+auto
+U3OkoAppl::appl_deinit_int () -> bool
 {
   return super::appl_deinit_int ();
 }
 
 
-::libs::ilink::appl::base::BaseModule::recv_links_type
-U3OkoAppl::get_recv_link_int ()
+auto
+U3OkoAppl::get_recv_link_int () -> ::libs::ilink::appl::base::BaseModule::recv_links_type
 {
   return {
 #if (U3_MODULES_ENABLE_GUI == 1)

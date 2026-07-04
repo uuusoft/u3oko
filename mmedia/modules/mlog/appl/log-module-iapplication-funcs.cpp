@@ -5,8 +5,6 @@
 \project    mlog
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../module-log-includes_int.hpp"
 #include "log-module.hpp"
 

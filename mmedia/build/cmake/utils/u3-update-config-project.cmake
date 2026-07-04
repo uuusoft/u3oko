@@ -16,6 +16,4 @@ add_custom_target(
   COMMAND
     ${CMAKE_COMMAND} -DRUN_CHECK_GIT_VERSION=1 -Dpre_configure_dir=${pre_configure_dir} -Dpost_configure_file=${post_configure_dir} -DGIT_HASH_CACHE=${GIT_HASH_CACHE} -P
     ${CURRENT_LIST_DIR}/CheckGit.cmake
-  BYPRODUCTS 
-    ${post_configure_file}
-)
+  BYPRODUCTS ${post_configure_file})

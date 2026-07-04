@@ -8,7 +8,7 @@
 
 namespace utils::mem_funcs::details
 {
-extern "C" BOOST_SYMBOL_EXPORT void afree (void** pptr);
-extern "C" BOOST_SYMBOL_EXPORT void aalloc (void** pptr, const std::size_t size);
-extern "C" BOOST_SYMBOL_EXPORT void arealloc (void** pptr, const std::size_t size);
+extern "C" BOOST_SYMBOL_EXPORT auto afree (void**) -> void;
+extern "C" BOOST_SYMBOL_EXPORT auto aalloc (void**, const std::size_t) -> void;
+extern "C" BOOST_SYMBOL_EXPORT auto arealloc (void**, const std::size_t) -> void;
 }   // namespace utils::mem_funcs::details

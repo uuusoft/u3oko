@@ -10,7 +10,7 @@
 
 namespace libs::proxy
 {
-::dlls::codecs::vcodec_gen::funcs::func_get_codec_type  get_create_codec_func (const std::string& plib_id);
-::dlls::codecs::vcodec_gen::funcs::func_free_codec_type get_free_codec_func (const std::string& plib_id);
-::dlls::codecs::vcodec_gen::funcs::func_codec_info_type get_info_codec_func (const std::string& plib_id);
+auto get_create_codec_func (const std::string&) -> ::dlls::codecs::vcodec_gen::funcs::func_get_codec_type;
+auto get_free_codec_func (const std::string&) -> ::dlls::codecs::vcodec_gen::funcs::func_free_codec_type;
+auto get_info_codec_func (const std::string&) -> ::dlls::codecs::vcodec_gen::funcs::func_codec_info_type;
 }   // namespace libs::proxy

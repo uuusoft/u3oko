@@ -9,8 +9,8 @@
 
 namespace modules::mhttp::appl
 {
-::libs::link::appl::IApplication::raw_ptr
-factory_impl_mpl_mhttp (::libs::link::appl::IApplication::raw_ptr impl, bool create)
+auto
+factory_impl_mpl_mhttp (::libs::link::appl::IApplication::raw_ptr impl, bool create) -> ::libs::link::appl::IApplication::raw_ptr
 {
   static std::int64_t               count_httprefs = 0;
   static syn::IApplication::raw_ptr httpappl       = nullptr;
@@ -44,8 +44,8 @@ factory_impl_mpl_mhttp (::libs::link::appl::IApplication::raw_ptr impl, bool cre
 }   // namespace modules::mhttp::appl
 
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication::raw_ptr
-create_impl_mpl_mhttp ()
+extern "C" BOOST_SYMBOL_EXPORT auto
+create_impl_mpl_mhttp () -> ::libs::link::appl::IApplication::raw_ptr
 {
   return modules::mhttp::appl::factory_impl_mpl_mhttp (nullptr, true);
 }

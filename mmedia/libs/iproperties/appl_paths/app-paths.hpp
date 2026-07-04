@@ -16,17 +16,14 @@ class AppPaths : public IAppPaths
   AppPaths ()          = default;
   virtual ~AppPaths () = default;
 
-  AppPaths (const AppPaths& obj)            = delete;
-  AppPaths& operator= (const AppPaths& obj) = delete;
-
-  //  IAppPaths implementation
-  virtual std::string get_path (const Paths& type) const override;
-  virtual std::string get_path_suffix (const Paths& type) const override;
-  virtual void        load_paths (const ::libs::link::appl::InitApplication& appl_info) override;
+  //  IAppPaths overrides
+  virtual auto get_path (const Paths&) const -> std::string override;
+  virtual auto get_path_suffix (const Paths&) const -> std::string override;
+  virtual auto load_paths (const ::libs::link::appl::InitApplication&) -> void override;
 
   private:
   //  internal typess
-  using path2string_type = std::unordered_map< Paths, std::string >;
+  using path2string_type = boost::unordered_flat_map< Paths, std::string >;
 
   mutable path2string_type paths_;   //< Поле для быстрого преобразования типа пути в строку
 };

@@ -18,11 +18,11 @@ class Filter final :
 
   private:
   // internal types
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
+  U3_ADD_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
 
   // IFilter overrides
   virtual auto load_int (syn::FilterInfo*, const ::pugi::xml_named_node_iterator&) -> void override;
-  virtual auto transform_int (syn::TransformInfo& info) -> void override;
+  virtual auto transform_int (syn::TransformInfo&) -> void override;
   virtual auto call_int (syn::CallInterfInfo&) -> void override;
 
   auto init_pts (syn::ConnectInfo*) -> void;
@@ -30,9 +30,9 @@ class Filter final :
   auto alloc_temp_bufs () -> void;
   auto convert_bufs () -> void;
 
-  auto get_func_for_format (const ::libs::helpers::uids::minor::id_val& format) -> ::libs::optim::io::hioptim*;
-  auto get_out_format_from_format (const ::libs::helpers::uids::minor::id_val& format) -> ::libs::helpers::uids::minor::id_val;
-  auto is_result_mono (const ::libs::helpers::uids::minor::id_val& format) const -> bool;
+  auto get_func_for_format (const syn::id_val&) -> ::libs::optim::io::hioptim*;
+  auto get_out_format_from_format (const syn::id_val&) -> syn::id_val;
+  auto is_result_mono (const syn::id_val&) const -> bool;
 
   ::libs::optim::io::hioptim rgb32_to_rgb24_;   //<
   ::libs::optim::io::hioptim yuy2_to_rgb24_;    //<

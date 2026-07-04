@@ -4,8 +4,6 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_desk_vgen
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../../desk-vgen-includes_int.hpp"
 #include "helpers/hdc2rgb24_func.hpp"
 #include "helpers/window2rgb.hpp"
@@ -26,7 +24,7 @@ CaptureDeskImplWin32::get_buf_int (
     RECT                                                    window_rect  = { 0, 0, 0, 0 };
     POINT                                                   offset_pos   = { 0, 0 };
     const auto                                              display_name = props_info.props_->ext_vals_.at (consts::param_keys::display_name);
-    ::libs::helpers::platforms::win32::HandlerGdiObj< HDC > hdc (CreateDCA ("DISPLAY", display_name.c_str (), nullptr, nullptr));
+    ::libs::utility::platforms::win32::HandlerGdiObj< HDC > hdc (CreateDCA ("DISPLAY", display_name.c_str (), nullptr, nullptr));
 
     window_rect.right  = GetDeviceCaps (*hdc, HORZRES);
     window_rect.bottom = GetDeviceCaps (*hdc, VERTRES);
@@ -64,7 +62,7 @@ CaptureDeskImplWin32::get_buf_int (
 
     switch (props_info.capture_props_->capi_.type_capture_)
     {
-    case ::libs::ievents::props::videos::generic::driver::CatchRgns::cursor_area: {
+    case ::libs::events_base::props::videos::generic::driver::CatchRgns::cursor_area: {
       info.width_dest_  = props_info.capture_props_->capi_.width_;
       info.height_dest_ = props_info.capture_props_->capi_.height_;
 
@@ -75,16 +73,16 @@ CaptureDeskImplWin32::get_buf_int (
       std::int32_t loc_x = offset_pos.x - info.width_dest_ / 2;
       std::int32_t loc_y = offset_pos.y - info.height_dest_ / 2;
 
-      ::libs::helpers::utils::check_bound (loc_x, 0, U3_CAST_INT32 ((window_rect.right - window_rect.left) - info.width_dest_));
-      ::libs::helpers::utils::check_bound (loc_y, 0, U3_CAST_INT32 ((window_rect.bottom - window_rect.top) - info.height_dest_));
+      ::libs::utility::utils::check_bound (loc_x, 0, U3_CAST_INT32 ((window_rect.right - window_rect.left) - info.width_dest_));
+      ::libs::utility::utils::check_bound (loc_y, 0, U3_CAST_INT32 ((window_rect.bottom - window_rect.top) - info.height_dest_));
 
       offset_pos.x = loc_x;
       offset_pos.y = loc_y;
       break;
     }
-    case ::libs::ievents::props::videos::generic::driver::CatchRgns::hwnd:
-    case ::libs::ievents::props::videos::generic::driver::CatchRgns::desktop:
-    case ::libs::ievents::props::videos::generic::driver::CatchRgns::selection:
+    case ::libs::events_base::props::videos::generic::driver::CatchRgns::hwnd:
+    case ::libs::events_base::props::videos::generic::driver::CatchRgns::desktop:
+    case ::libs::events_base::props::videos::generic::driver::CatchRgns::selection:
     default: {
       info.width_dest_  = props_info.capture_props_->capi_.width_;
       info.height_dest_ = props_info.capture_props_->capi_.height_;

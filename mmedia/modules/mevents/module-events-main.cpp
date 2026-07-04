@@ -6,16 +6,14 @@
 \brief      Модуль сервера событий
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "module-events-includes_int.hpp"
 #include "appl/events-module-syn.hpp"
 #include "appl/events-module.hpp"
 
 namespace modules::mevents::appl
 {
-::libs::link::appl::IApplication::raw_ptr
-factory_impl_mpl_mevents (::libs::link::appl::IApplication::raw_ptr impl, bool create)
+auto
+factory_impl_mpl_mevents (::libs::link::appl::IApplication::raw_ptr impl, bool create) -> ::libs::link::appl::IApplication::raw_ptr
 {
   static std::int64_t               count_eventsrefs = 0;
   static syn::IApplication::raw_ptr eventsappl       = nullptr;
@@ -49,8 +47,8 @@ factory_impl_mpl_mevents (::libs::link::appl::IApplication::raw_ptr impl, bool c
 }   // namespace modules::mevents::appl
 
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication::raw_ptr
-create_impl_mpl_mevents ()
+extern "C" BOOST_SYMBOL_EXPORT auto
+create_impl_mpl_mevents () -> ::libs::link::appl::IApplication::raw_ptr
 {
   U3_XLOG_DBG ("create_impl_mpl_mevents::---->");
   return modules::mevents::appl::factory_impl_mpl_mevents (nullptr, true);

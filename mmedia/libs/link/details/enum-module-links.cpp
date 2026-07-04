@@ -9,10 +9,10 @@
 
 namespace libs::link::details
 {
-const std::string&
-to_string (const ModuleLinks& val)
+auto
+to_string (const ModuleLinks& val) -> const std::string&
 {
-  static const std::unordered_map< ModuleLinks, const std::string > vals = {
+  static const boost::unordered_flat_map< ModuleLinks, const std::string > vals = {
     { ModuleLinks::appl, "appl" },
     { ModuleLinks::gui, "gui" },
     { ModuleLinks::http, "http" },
@@ -39,8 +39,8 @@ to_string (const ModuleLinks& val)
 }
 
 
-std::string
-to_string (const std::pair< ModuleLinks, ModuleLinks >& val)
+auto
+to_string (const std::pair< ModuleLinks, ModuleLinks >& val) -> std::string
 {
   return to_string (val.first) + "<->" + to_string (val.second);
 }

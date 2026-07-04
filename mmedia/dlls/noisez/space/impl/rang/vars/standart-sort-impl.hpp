@@ -35,13 +35,13 @@ class StandartSortAlg final
       int                 off_core     = 0;
       const std::int16_t* temp_beg_spx = spx;
 
-      temp_beg_spx = ::libs::helpers::mem::move_cptr_back (temp_beg_spx, beg_cond_core);
+      temp_beg_spx = ::libs::utility::mem::move_cptr_back (temp_beg_spx, beg_cond_core);
 
       for (int indxyc = 0; indxyc < size_core; ++indxyc)
       {
         std::copy (temp_beg_spx, temp_beg_spx + size_core, sort_vals_ + off_core);
         off_core += size_core;
-        temp_beg_spx = ::libs::helpers::mem::move_cptr (temp_beg_spx, sstride);
+        temp_beg_spx = ::libs::utility::mem::move_cptr (temp_beg_spx, sstride);
       }
       //  сортируем временный буфер.
       //  На данный момент без разницы, т.к. практически все реализации stl сортируют последовательность короче 32 целиком. Т.к. скорость совпадает с std::sort

@@ -6,11 +6,11 @@
 \project    u3_includes
 \brief      Базовые определения для включения во все файлы сборки
 */
-#include "../defines/detectors/compiler-type-detect-defines.hpp"
-#include "../defines/compiler-warnings-suppress-defines.hpp"
-#include "../defines/control-compile-defines.hpp"
-#include "../defines/detectors/os-type-detect-defines.hpp"
-#include "../defines/detectors/cpu-type-detect-defines.hpp"
-#include "../defines/helpers/set-target-cpu-for-func-defines.hpp"
-#include "../defines/boost/boost-lib-defines.hpp"
-#include "../defines/os-win32-specific-defines.hpp"
+#include "../defines/detectors/defines-detect-compiler-type.hpp"
+#include "../defines/defines-compiler-warnings-suppress.hpp"
+#include "../defines/defines-control-compile.hpp"
+#include "../defines/detectors/defines-detect-target-os-type.hpp"
+#include "../defines/detectors/defines-detect-target-cpu-type.hpp"
+#include "../defines/helpers/defines-set-target-cpu-attr.hpp"
+#include "../defines/boost/defines-boost-lib.hpp"
+#include "../defines/os/defines-win32-specific.hpp"

@@ -11,7 +11,7 @@ namespace libs::link
 /// Структура для группировки информации для создания реализации "связь" между модулями
 struct CreateInfo {
   //  ext types
-  using ids2vals_type = std::unordered_map< std::string, std::string >;
+  using ids2vals_type = boost::unordered_flat_map< std::string, std::string >;
 
   /// Конструктор по умолчанию для контейнеров и композиции в другом типе
   CreateInfo ();

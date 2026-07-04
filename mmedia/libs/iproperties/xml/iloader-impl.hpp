@@ -13,7 +13,7 @@ class ILoaderImpl
 {
   public:
   // ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ILoaderImpl)
+  U3_ADD_POINTERS_TO_SELF (ILoaderImpl)
 
   virtual ~ILoaderImpl () = default;
 
@@ -28,11 +28,11 @@ class ILoaderImpl
   bool get (
     const std::string&                    file_name,
     const appl_paths::Paths&              storage_type,
-    ::libs::helpers::mem::IBlockMem::ptr& ret);
+    ::libs::utility::mem::IBlockMem::ptr& ret);
 
   void get_enum (
     const appl_paths::Paths&               storage_type,
-    ::libs::helpers::files::NodeEnumFiles& fenum,
+    ::libs::utility::files::NodeEnumFiles& fenum,
     const std::string&                     mask);
 
   protected:
@@ -42,7 +42,7 @@ class ILoaderImpl
   //  ILoaderImpl interface
   virtual bool is_exist_file_int (const std::string&, const appl_paths::Paths&) const                              = 0;
   virtual bool is_exist_folder_int (const std::string&, const appl_paths::Paths&) const                            = 0;
-  virtual bool get_int (const std::string&, const appl_paths::Paths&, ::libs::helpers::mem::IBlockMem::ptr&)       = 0;
-  virtual void get_enum_int (const appl_paths::Paths&, ::libs::helpers::files::NodeEnumFiles&, const std::string&) = 0;
+  virtual bool get_int (const std::string&, const appl_paths::Paths&, ::libs::utility::mem::IBlockMem::ptr&)       = 0;
+  virtual void get_enum_int (const appl_paths::Paths&, ::libs::utility::files::NodeEnumFiles&, const std::string&) = 0;
 };
 }   // namespace libs::iproperties::xml

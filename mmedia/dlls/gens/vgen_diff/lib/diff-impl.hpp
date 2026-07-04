@@ -26,7 +26,7 @@ class DiffImpl final
 
   private:
   //  internal typess
-  using off2bufs_type = std::unordered_map< ::utils::dbufs::video::consts::offs::off_buf_type, syn::IVideoBuf::ptr >;
+  using off2bufs_type = boost::unordered_flat_map< ::utils::dbufs::video::consts::offs::off_buf_type, syn::IVideoBuf::ptr >;
 
   syn::VideoDiffProp::craw_ptr props_ = nullptr;       //< Свойства вычисления разности
   off2bufs_type                indx2prev_buf_;         //< Поле поиска предыдущего буфера (если он существует) по его индексу

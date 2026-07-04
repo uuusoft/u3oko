@@ -8,6 +8,6 @@
 
 namespace modules::mevents::appl::consts
 {
-extern const char* module_name;                          //<
-constexpr std::uint32_t max_return_count_events = 128;   //<
+extern const char* module_name;                                 //<
+inline constexpr std::uint32_t max_return_count_events = 128;   //<
 }   // namespace modules::mevents::appl::consts

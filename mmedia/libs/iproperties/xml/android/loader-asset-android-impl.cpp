@@ -4,8 +4,6 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_iproperties_lib
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../libs-iproperties-xml-includes_int.hpp"
 #include "loader-asset-android-impl.hpp"
 
@@ -19,7 +17,7 @@ LoaderAssetAndroidImpl::LoaderAssetAndroidImpl (const InitLoaderInfo& info) :
   aroot_ (nullptr),
   common_impl_ (std::make_unique< xml::general::LoaderFileImpl > (info))
 {
-  auto*                           osinfo = ::libs::helpers::casts::reinterpret_cast_helper< vers::system::SystemAndroidProperty* > (::libs::iproperties::helpers::get_spec_prop_os ());
+  auto*                           osinfo = ::libs::utility::casts::reinterpret_cast_helper< vers::system::SystemAndroidProperty* > (::libs::iproperties::helpers::get_spec_prop_os ());
   syn::ISharedProperty::lock_type lock (osinfo->get_sync ());
 
   asset_manager_ = osinfo->get_aappl_lockfree ()->activity->assetManager;
@@ -40,12 +38,12 @@ void
 LoaderAssetAndroidImpl::enum_items_struct (
   const std::string&                     root,
   const std::string&                     name,
-  ::libs::helpers::files::NodeEnumFiles& enum_files)
+  ::libs::utility::files::NodeEnumFiles& enum_files)
 {
   enum_files.clear ();
   enum_files.name_ = name;
 
-  const std::string cur_root   = ::libs::helpers::files::make_path (root, name);
+  const std::string cur_root   = ::libs::utility::files::make_path (root, name);
   AAssetDir*        cur_folder = AAssetManager_openDir (asset_manager_, cur_root.c_str ());
 
   U3_XLOG_MARK ("LoaderAssetAndroidImpl::enum_items_struct enum asset struct from" + TOLOG (cur_root))
@@ -72,7 +70,7 @@ LoaderAssetAndroidImpl::enum_items_struct (
     }
 
 
-    const std::string path_item = ::libs::helpers::files::make_path (cur_root, name_item);
+    const std::string path_item = ::libs::utility::files::make_path (cur_root, name_item);
     U3_XLOG_MARK ("find item in asset struct" + TOLOG (raw_name_item) + TOLOG (name_item) + VTOLOG (it_folder) + TOLOG (path_item))
     U3_ASSERT (!name_item.empty ());
 
@@ -84,13 +82,13 @@ LoaderAssetAndroidImpl::enum_items_struct (
       {
         AAssetDir_close (check_folder);
         check_folder = nullptr;
-        enum_files.folders_.push_back (::libs::helpers::files::NodeEnumFiles ());
+        enum_files.folders_.push_back (::libs::utility::files::NodeEnumFiles ());
         enum_items_struct (cur_root, name_item, enum_files.folders_.back ());
       }
     }
     else if (AAsset* check_file = AAssetManager_open (asset_manager_, path_item.c_str (), AASSET_MODE_UNKNOWN))
     {
-      enum_files.files_.push_back (libs::helpers::files::FileNode { name_item, 0, 0, U3_CAST_UINT64 (AAsset_getLength64 (check_file)) });
+      enum_files.files_.push_back (libs::utility::files::FileNode { name_item, 0, 0, U3_CAST_UINT64 (AAsset_getLength64 (check_file)) });
       AAsset_close (check_file);
       check_file = nullptr;
     }
@@ -107,7 +105,7 @@ LoaderAssetAndroidImpl::enum_items_struct (
 void
 LoaderAssetAndroidImpl::get_enum_int (
   const appl_paths::Paths&               path_type,
-  ::libs::helpers::files::NodeEnumFiles& enum_files,
+  ::libs::utility::files::NodeEnumFiles& enum_files,
   const std::string&                     mask)
 {
   U3_XLOG_MARK ("LoaderAssetAndroidImpl::get_enum_int" + TOLOG (to_string (path_type)) + VTOLOG (storage_not_in_asset (path_type)));
@@ -135,7 +133,7 @@ LoaderAssetAndroidImpl::is_exist_file_int (
   U3_ASSERT (!file_name.empty ());
 
   const std::string root      = iinfo_.paths_->get_path (path_type);
-  const std::string file_path = ::libs::helpers::files::make_path (root, file_name);
+  const std::string file_path = ::libs::utility::files::make_path (root, file_name);
   AAsset*           dbuf      = AAssetManager_open (asset_manager_, file_path.c_str (), AASSET_MODE_UNKNOWN);
   const bool        ret       = dbuf ? true : false;
 
@@ -164,7 +162,7 @@ LoaderAssetAndroidImpl::is_exist_folder_int (
   U3_ASSERT (!file_name.empty ());
   const std::string folder_name = file_name;   // + ".dir";
   const std::string root        = iinfo_.paths_->get_path (path_type);
-  const std::string file_path   = ::libs::helpers::files::make_path (root, folder_name);
+  const std::string file_path   = ::libs::utility::files::make_path (root, folder_name);
   AAssetDir*        dbuf        = AAssetManager_openDir (asset_manager_, file_path.c_str ());
 
   const bool ret = dbuf ? true : false;
@@ -181,7 +179,7 @@ bool
 LoaderAssetAndroidImpl::get_int (
   const std::string&                    file_name,
   const appl_paths::Paths&              path_type,
-  ::libs::helpers::mem::IBlockMem::ptr& ret)
+  ::libs::utility::mem::IBlockMem::ptr& ret)
 {
   if (storage_not_in_asset (path_type))
   {
@@ -194,7 +192,7 @@ LoaderAssetAndroidImpl::get_int (
   ret.reset ();
 
   const std::string root      = iinfo_.paths_->get_path (path_type);
-  const std::string file_path = ::libs::helpers::files::make_path (root, file_name);
+  const std::string file_path = ::libs::utility::files::make_path (root, file_name);
   AAsset*           dbuf      = AAssetManager_open (asset_manager_, file_path.c_str (), AASSET_MODE_UNKNOWN);
 
   if (!dbuf)
@@ -217,7 +215,7 @@ LoaderAssetAndroidImpl::get_int (
   }
 
   ::utils::mem_funcs::helpers::get_as< char > (ret.get ())[size] = '\0';
-  ret->set_data_size (size);
+  ret->set_size (size);
   AAsset_close (dbuf);
   return true;
 }

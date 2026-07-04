@@ -60,13 +60,14 @@ Filter::transform_int (syn::TransformInfo& info)
 }
 
 
-std::int32_t
-Filter::get_move_count (syn::IVideoBuf::raw_ptr pdst)
+auto
+Filter::get_move_count (syn::IVideoBuf::raw_ptr pdst) -> std::int32_t
 {
   ::libs::optim::io::MCallInfo cinfo;
-  std::vector< int >           counters (pthreads_->get_count_threads (), 0);
-  const std::int16_t           bound    = 1;   // finfo_.rprops_->bound_;
-  std::int32_t                 sum_vals = 0;
+
+  std::vector< int > counters (pthreads_->get_count_threads (), 0);
+  const std::int16_t bound    = 1;   // finfo_.rprops_->bound_;
+  std::int32_t       sum_vals = 0;
 
   cinfo.srcs_.emplace_back (pdst, "pdst dlls::detectors::detect_move");
   cinfo.params_.evals_.emplace_back (boost::any_cast< std::vector< int >* > (&counters));
@@ -124,8 +125,8 @@ Filter::itransform (syn::TransformInfo& info)
       time_first_detect_ = boost::posix_time::microsec_clock::universal_time ();
 
       syn::IEvent::ptr irmsg;
-      auto             dmsg = ::libs::iproperties::helpers::create_event< syn::AddEvent2Base > (rmsg, libs::helpers::utils::cuuid (), "???????");
-      ::libs::iproperties::helpers::create_event< syn::DetectViolation > (irmsg, ::libs::ievents::runtime::video::DetectViolations::start);
+      auto             dmsg = ::libs::iproperties::helpers::create_event< syn::AddEvent2EventsMsg > (rmsg, libs::utility::utils::cuuid (), "???????");
+      ::libs::iproperties::helpers::create_event< syn::DetectViolation > (irmsg, ::libs::events_base::runtime::video::DetectViolations::start);
       dmsg->set_event (irmsg);
     }
     ++count_detects_;
@@ -141,8 +142,8 @@ Filter::itransform (syn::TransformInfo& info)
         count_detects_ = 0;
 
         syn::IEvent::ptr irmsg;
-        auto             dmsg = ::libs::iproperties::helpers::create_event< syn::AddEvent2Base > (rmsg, libs::helpers::utils::cuuid (), "???????");
-        ::libs::iproperties::helpers::create_event< syn::DetectViolation > (irmsg, ::libs::ievents::runtime::video::DetectViolations::stop);
+        auto             dmsg = ::libs::iproperties::helpers::create_event< syn::AddEvent2EventsMsg > (rmsg, libs::utility::utils::cuuid (), "???????");
+        ::libs::iproperties::helpers::create_event< syn::DetectViolation > (irmsg, ::libs::events_base::runtime::video::DetectViolations::stop);
         dmsg->set_event (irmsg);
       }
     }

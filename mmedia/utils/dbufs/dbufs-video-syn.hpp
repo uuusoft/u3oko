@@ -6,6 +6,9 @@
 \project    u3_dbufs
 */
 
-namespace utils::dbufs::video::syn
+namespace utils::dbufs::syn
 {
-}
+using IBlockMem = ::libs::utility::mem::IBlockMem;
+using cuuid     = ::libs::utility::utils::cuuid;
+using id_val    = ::libs::utility::uids::minor::id_val;
+}   // namespace utils::dbufs::syn

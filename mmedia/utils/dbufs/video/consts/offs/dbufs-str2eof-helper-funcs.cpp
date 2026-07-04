@@ -4,17 +4,15 @@
 \date       09.03.2022
 \project    u3_dbufs
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../../../dbufs-includes_int.hpp"
 #include "dbufs-str2eof-helper-funcs.hpp"
 
 namespace utils::dbufs::video::consts::offs
 {
-const off_buf_type&
-str2eoffbuf (const std::string& key)
+auto
+str2eoffbuf (const std::string& key) -> const off_buf_type&
 {
-  static const std::unordered_map< std::string, const off_buf_type > valmap = {
+  static const boost::unordered_flat_map< std::string, const off_buf_type > valmap = {
     { "", invalid },
     { "-", invalid },
     { "?", invalid },

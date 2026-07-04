@@ -14,12 +14,8 @@ class IMem
 {
   public:
   //  ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IMem)
-
-  IMem (const IMem&)                = delete;
-  IMem& operator= (const IMem&)     = delete;
-  IMem (IMem&&) noexcept            = delete;
-  IMem& operator= (IMem&&) noexcept = delete;
+  U3_ADD_POINTERS_TO_SELF (IMem)
+  U3_ADD_DELETE_MOVE_COPY (IMem)
 
   //  IMem interface
   virtual void* mem_alloc (int, IBlockFakeMem::ptr)                       = 0;

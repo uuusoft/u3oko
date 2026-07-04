@@ -14,9 +14,9 @@ class RangFilter final : public IFilterImpl
 {
   public:
   //  ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (RangFilter)
+  U3_ADD_POINTERS_TO_SELF (RangFilter)
 
-  using algs_storage_type = std::unordered_map< syn::Sortings, std::vector< IAlgImpl::ptr > >;
+  using algs_storage_type = boost::unordered_flat_map< syn::Sortings, std::vector< IAlgImpl::ptr > >;
 
   RangFilter ();
   virtual ~RangFilter () = default;

@@ -4,8 +4,6 @@
 \date       10.05.2016
 \project    mappl
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "module-appl-includes_int.hpp"
 #include "modules-appl.hpp"
 
@@ -16,10 +14,10 @@ syn::ISysInfo::raw_ptr      g_sys_info (nullptr);
 syn::InitApplication        g_init_appl;
 syn::IApplicationProxy::ptr g_module_appl;
 
-bool
-check_process ()
+auto
+check_process () -> bool
 {
-  g_sys_info = ::libs::helpers::sys::get_impl ();
+  g_sys_info = ::libs::utility::sys::get_impl ();
 
   const syn::CpuExts min_ext = syn::CpuExts::sse2;
   if (g_cpu_informer.is_less (g_cpu_informer.get_max (), min_ext))
@@ -63,7 +61,7 @@ process_cmd_line (std::int32_t argc, char* argv[])
   {
     const auto         sdelay = mapvars.find (::libs::link::consts::text::id_delay_ms)->second.as< std::string > ();
     const std::int32_t rdelay = std::stoi (sdelay);
-    const std::int32_t delay  = ::libs::helpers::utils::ret_check_bound< std::int32_t > (rdelay, 0, 60 * 1000);
+    const auto         delay  = ::libs::utility::utils::ret_check_bound< std::int32_t > (rdelay, 0, 60 * 1000);
     U3_XLOG_WARN ("debug delay before start" + VTOLOG (delay) + "ms")
     std::this_thread::sleep_for (std::chrono::milliseconds (delay));
   }
@@ -92,8 +90,8 @@ process_cmd_line (std::int32_t argc, char* argv[])
 }
 
 
-std::string
-find_default_appl_lib (const std::string& fullpath)
+auto
+find_default_appl_lib (const std::string& fullpath) -> std::string
 {
   boost::filesystem::path bpath (fullpath);
   std::string             ret = "find_default_appl_lib-module-appl-not-found";

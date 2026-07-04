@@ -17,8 +17,8 @@ class CallerImpl final : public IMCaller
 
   CallerImpl ();
   virtual ~CallerImpl ();
-  CallerImpl (const CallerImpl& src)            = delete;
-  CallerImpl& operator= (const CallerImpl& src) = delete;
+  CallerImpl (const CallerImpl&)            = delete;
+  CallerImpl& operator= (const CallerImpl&) = delete;
 
   // IMCaller
   virtual void          set_count_threads (std::uint16_t) override;

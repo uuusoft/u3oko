@@ -11,18 +11,18 @@
 
 namespace libs::proxy
 {
-extern "C" BOOST_SYMBOL_EXPORT ::libs::optim::io::IOptim::raw_ptr create_impl_vdd_doptim ();
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vdd_doptim () -> ::libs::optim::io::IOptim::raw_ptr;
 
-IOptimProxy::raw_ptr
-IOptimProxy::instance (const std::string& dll_path)
+auto
+IOptimProxy::instance (const std::string& dll_path) -> IOptimProxy::raw_ptr
 {
   static IOptimProxy g_inst (dll_path);
   return &g_inst;
 }
 
 
-::libs::optim::io::IOptim::raw_ptr
-IOptimProxy::impl ()
+auto
+IOptimProxy::impl () -> ::libs::optim::io::IOptim::raw_ptr
 {
   U3_ASSERT (creator_);
   ::libs::optim::io::IOptim::raw_ptr ret = creator_ ();
@@ -38,7 +38,7 @@ IOptimProxy::IOptimProxy (const std::string& dll_path)
   creator_ = create_impl_vdd_doptim;
 #else
   boost::filesystem::path cpath (dll_path);
-  cpath /= ::libs::helpers::dlls::decorate_dll_name ("vdd_doptim");
+  cpath /= ::libs::utility::dlls::decorate_dll_name ("vdd_doptim");
 
   try
   {
@@ -50,7 +50,7 @@ IOptimProxy::IOptimProxy (const std::string& dll_path)
   }
 
 #  if defined(U3_OS_ANDROID)
-  creator_ = ::libs::helpers::casts::reinterpret_cast_helper< create_ioptim_func_type* > (dlsym (lib_.native (), "create_impl_vdd_doptim"));
+  creator_ = ::libs::utility::casts::reinterpret_cast_helper< create_ioptim_func_type* > (dlsym (lib_.native (), "create_impl_vdd_doptim"));
 #  else
   creator_ = ::boost::dll::import_symbol< create_ioptim_func_type > (cpath, "create_impl_vdd_doptim");
 #  endif

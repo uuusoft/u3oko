@@ -21,7 +21,7 @@ enum class ApplEventProps : std::uint32_t
 /// Структура для группировки стандартных свойств любого приложения
 /// Хранит именно указатели, чтобы использовать непосредственно их во время работы с другими модулями, через стандартный интерфейс
 struct EventPropsForApplication final {
-  U3_HELPER_DISABLE_ACOPY_TYPE (EventPropsForApplication)
+  U3_ADD_DELETE_MOVE_COPY (EventPropsForApplication)
 
   EventPropsForApplication ()  = default;
   ~EventPropsForApplication () = default;

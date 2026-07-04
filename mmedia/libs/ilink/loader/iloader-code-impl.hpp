@@ -16,7 +16,7 @@ class ILoaderCodeImpl
   // ext types
   using args_type = std::vector< std::string >;
 
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ILoaderCodeImpl)
+  U3_ADD_POINTERS_TO_SELF (ILoaderCodeImpl)
 
   virtual ~ILoaderCodeImpl () = default;
 

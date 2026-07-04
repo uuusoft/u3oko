@@ -9,47 +9,47 @@
 
 namespace libs::link
 {
-bool
-ILink::connect (const CreateInfo& info)
+auto
+ILink::connect (const CreateInfo& info) -> bool
 {
   return connect_int (info);
 }
 
 
-bool
-ILink::listen (const CreateInfo& info)
+auto
+ILink::listen (const CreateInfo& info) -> bool
 {
   return listen_int (info);
 }
 
 
-bool
-ILink::destroy (const LinkDestroys& type)
+auto
+ILink::destroy (const LinkDestroys& type) -> bool
 {
   return destroy_int (type);
 }
 
 
-bool
-ILink::is_connected () const
+auto
+ILink::is_connected () const -> bool
 {
   return is_connected_int ();
 }
 
 
-::libs::events::IEvent::ptr
-ILink::received_msg ()
+auto
+ILink::received_msg () -> ::libs::events::IEvent::ptr
 {
   return received_msg_int ();
 }
 
 
-::libs::events::IEvent::ptr
+auto
 ILink::send_msg (
   const syn::IEvent::ptr&        msg,
   const details::CallSyncs&      sync,
   const details::Calls&          req,
-  const syn::ISeqEvent::id_type& id)
+  const syn::ISeqEvent::id_type& id) -> ::libs::events::IEvent::ptr
 {
   return send_msg_int (msg, sync, req, id);
 }
@@ -62,8 +62,8 @@ ILink::complite_msg (const syn::IEvent::ptr& msg, const StateProcessEvent& state
 }
 
 
-mem::IMem::raw_ptr
-ILink::get_imem ()
+auto
+ILink::get_imem () -> mem::IMem::raw_ptr
 {
   return get_imem_int ();
 }

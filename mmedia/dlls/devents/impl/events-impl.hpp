@@ -31,8 +31,10 @@ struct string_hash {
 };
 
 // EAI-REFACT
+// template< typename TTVal >
+// using strings_unordered_map = std::unordered_map< std::string, TTVal, string_hash, std::equal_to<> >;
 template< typename TTVal >
-using strings_unordered_map = std::unordered_map< std::string, TTVal, string_hash, std::equal_to<> >;
+using strings_unordered_map = boost::unordered_flat_map< std::string, TTVal >;
 
 /// Реализация управлением событиями в системе
 class EventsImpl final : public ::libs::events::io::IEvents
@@ -51,17 +53,14 @@ class EventsImpl final : public ::libs::events::io::IEvents
   EventsImpl ();
   virtual ~EventsImpl () = default;
 
-  EventsImpl (const EventsImpl&)            = delete;
-  EventsImpl& operator= (const EventsImpl&) = delete;
-
   //  IEvents overrides
-  virtual auto get (const hid_type& id) -> syn::IEvent::ptr override;
-  virtual auto clone (const syn::IEvent::craw_ptr src, const ::libs::events::Deeps& type) -> syn::IEvent::ptr override;
-  virtual auto dcast (syn::IEvent::craw_ptr src, const hid_type& id) -> const void* override;
-  virtual auto event2xml (syn::IEvent::ptr& src, std::string& xml) -> bool override;
-  virtual auto xml2event (const std::string& xml, syn::IEvent::ptr& dst) -> bool override;
-  virtual auto event2bin (syn::IEvent::ptr& src, std::ostream& bin) -> bool override;
-  virtual auto bin2event (std::istream& bin, syn::IEvent::ptr& dst) -> bool override;
+  virtual auto get (const hid_type&) -> syn::IEvent::ptr override;
+  virtual auto clone (const syn::IEvent::craw_ptr, const ::libs::events::Deeps&) -> syn::IEvent::ptr override;
+  virtual auto dcast (syn::IEvent::craw_ptr, const hid_type&) -> const void* override;
+  virtual auto event2xml (syn::IEvent::ptr&, std::string&) -> bool override;
+  virtual auto xml2event (const std::string&, syn::IEvent::ptr&) -> bool override;
+  virtual auto event2bin (syn::IEvent::ptr&, std::ostream&) -> bool override;
+  virtual auto bin2event (std::istream&, syn::IEvent::ptr&) -> bool override;
 
   private:
   auto make_event_funcs () -> void;
@@ -81,9 +80,9 @@ class EventsImpl final : public ::libs::events::io::IEvents
   add_event_cast ()
   {
     U3_XLOG_DBG ("add create func event to gloabl table" + STOLOG (TTEvent::gen_get_mid ()));
-    cast_func_events_[id_event_type { TTEvent::gen_get_mid () }] = [] (::libs::events::IEvent::craw_ptr src) -> const void* {
+    cast_func_events_[id_event_type { TTEvent::gen_get_mid () }] = [] (syn::IEvent::craw_ptr src) -> const void* {
       auto* res = dynamic_cast< typename TTEvent::craw_ptr > (src);
-      U3_XLOG_DEV ("cast to::---->" + STOLOG (TTEvent::gen_get_mid ()) + PTR_TOLOG (src) + PTR_TOLOG (res));
+      U3_XLOG_DBG ("cast to::---->" + STOLOG (TTEvent::gen_get_mid ()) + PTR_TOLOG (src) + PTR_TOLOG (res));
       return res;
     };
   }

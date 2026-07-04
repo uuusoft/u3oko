@@ -27,7 +27,7 @@ struct BaseHeaderFrame final {
     size_          = sizeof (BaseHeaderFrame);
     size_compress_ = 0;
     style_         = Frames::unknown;
-    guid_          = libs::helpers::uids::minor::id_val::unknown;
+    guid_          = libs::utility::uids::minor::id_val::unknown;
   }
 
   bool
@@ -55,7 +55,7 @@ struct BaseHeaderFrame final {
   Frames                             style_         = Frames::unknown;                               //< Тип сжатого кадра (I/P/B/etc), лежит в узком диапазоне значений
   std::uint32_t                      size_          = 0;                                             //< Общий размер заголовка сжатого кадра, лежит в узком диапазоне значений
   std::uint32_t                      size_compress_ = 0;                                             //< Размер сжатых данных, которые идут после данного заголовка
-  libs::helpers::uids::minor::id_val guid_          = libs::helpers::uids::minor::id_val::unknown;   //< Идентификатор кодека, переменный. Идет последним, чтобы точнее разбирать битые архивы
+  libs::utility::uids::minor::id_val guid_          = libs::utility::uids::minor::id_val::unknown;   //< Идентификатор кодека, переменный. Идет последним, чтобы точнее разбирать битые архивы
   FrameDims                          sinfo_;                                                         //< Геометрические размеры кадра, лежит в узком диапазоне значений
 };
 

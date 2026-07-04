@@ -10,75 +10,75 @@
 
 namespace libs::proxy
 {
-std::vector< ::libs::helpers::files::FileNode >
-get_list_dlls_as_libs ()
+auto
+get_list_dlls_as_libs () -> std::vector< ::libs::utility::files::FileNode >
 {
-  std::vector< ::libs::helpers::files::FileNode > ret;
+  std::vector< ::libs::utility::files::FileNode > ret;
   ret.reserve (128);
 
-  ret.emplace_back (::libs::helpers::files::FileNode { "vdd_vcodec_gen", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vcd_all2hsl", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vcd_all2rgb", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vdd_vcodec_gen", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vcd_all2hsl", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vcd_all2rgb", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
 
 #if (U3_LIBS_ENABLE_DETECT_FACE_VDD == 1)
-  ret.emplace_back (::libs::helpers::files::FileNode { "vdd_detect_face", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vdd_detect_face", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
 #endif
 
-  ret.emplace_back (::libs::helpers::files::FileNode { "vdd_detect_move", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vdd_detect_move", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
 
-  ret.emplace_back (::libs::helpers::files::FileNode { "vfn_freq_domain", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vfn_space", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vfn_time", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vfn_freq_domain", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vfn_space", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vfn_time", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
 
-  ret.emplace_back (::libs::helpers::files::FileNode { "vdd_base_id", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vgd_vgen_conv3_11", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vgd_vgen_diff", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vgd_vgen_mops", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vdd_base_id", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vgd_vgen_conv3_11", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vgd_vgen_diff", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vgd_vgen_mops", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
 
-  ret.emplace_back (::libs::helpers::files::FileNode { "vsa_fixed", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vsa_flow", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vsa_fixed", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vsa_flow", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
 
-  ret.emplace_back (::libs::helpers::files::FileNode { "vsd_gen_vgen", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vsd_gen_vgen", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
 
-  ret.emplace_back (::libs::helpers::files::FileNode { "vdd_vcorrect", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vdd_vgradient", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vdd_vhistogram", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vdd_vmatrix", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vdd_vsharper", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vdd_vtexter", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vdd_vcorrect", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vdd_vgradient", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vdd_vhistogram", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vdd_vmatrix", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vdd_vsharper", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vdd_vtexter", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
 
-  ret.emplace_back (::libs::helpers::files::FileNode { "vut_vec2image", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vut_vec2image", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
 
-  ret.emplace_back (::libs::helpers::files::FileNode { "vvd_vcodec_test", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vvd_vcodec_mjpg", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vvd_vcodec_test", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vvd_vcodec_mjpg", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
 
-  ret.emplace_back (::libs::helpers::files::FileNode { "vss_desk_vgen", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vss_fake_vgen", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vss_pict_vgen", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vss_desk_vgen", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vss_fake_vgen", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vss_pict_vgen", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
 
 #ifdef U3_OS_ANDROID
 #  if defined(U3_USE_SOURCE_VSS_ANDROID_JAVA_VGEN)
-  ret.emplace_back (::libs::helpers::files::FileNode { "vss_android_java_vgen", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { "vss_android_java_vgen", 0, 0, 0 });
 #  endif
-  ret.emplace_back (::libs::helpers::files::FileNode { "vss_android_vgen", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { "vss_android_vgen", 0, 0, 0 });
 #endif
 
 #ifdef U3_OS_RASPBERRY
-  // ret.emplace_back (::libs::helpers::files::FileNode { "vss_rasp_vgen", 0, 0, 0 });
-  ret.emplace_back (::libs::helpers::files::FileNode { "vss_v4l2_vgen", 0, 0, 0 });
+  // ret.emplace_back (::libs::utility::files::FileNode { "vss_rasp_vgen", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { "vss_v4l2_vgen", 0, 0, 0 });
 #endif
 
 #ifdef U3_OS_WIN32_DESKTOP
-  ret.emplace_back (::libs::helpers::files::FileNode { "vss_dshow_vgen", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { "vss_dshow_vgen", 0, 0, 0 });
 #endif
 
 #if defined(U3_OS_GNU_LINUX) || defined(U3_OS_ORANGE_PI)
-  ret.emplace_back (::libs::helpers::files::FileNode { "vss_v4l2_vgen", 0, 0, 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vss_v4l2_vgen", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
 #endif
 
   for (auto& file : ret)
   {
-    file.name_ = ::libs::helpers::dlls::decorate_dll_name (file.name_);
+    file.name_ = ::libs::utility::dlls::decorate_dll_name (file.name_);
     U3_XLOG_DBG ("get_list_dlls_as_libs find file in libs" + TOLOG (file.name_));
   }
   U3_XLOG_DBG ("get_list_dlls_as_libs" + VTOLOG (ret.size ()));

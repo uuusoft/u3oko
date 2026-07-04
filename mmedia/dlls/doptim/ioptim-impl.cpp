@@ -18,8 +18,8 @@ IOptimImpl::IOptimImpl ()
 }
 
 
-syn::hioptim
-IOptimImpl::get (const ::libs::optim::io::qoptim& query)
+auto
+IOptimImpl::get (const ::libs::optim::io::qoptim& query) -> syn::hioptim
 {
   lock_type lock (mtx_);
   auto      find = algs_.find (query.id_);
@@ -40,7 +40,7 @@ IOptimImpl::get (const ::libs::optim::io::qoptim& query)
 void
 IOptimImpl::sync_impl (const ::libs::optim::io::TInit& iinfo)
 {
-  ::libs::helpers::sys::cpu::TextExtCpu cpu_helper;
+  ::libs::utility::sys::cpu::TextExtCpu cpu_helper;
   lock_type                             lock (mtx_);
   for (str2funcs_type::value_type& val : algs_)
   {

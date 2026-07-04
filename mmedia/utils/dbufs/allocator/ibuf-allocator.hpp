@@ -16,17 +16,13 @@ class IBufAllocator
   //  ext types
   using size_buf_type = std::uint64_t;
 
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IBufAllocator)
-
-  IBufAllocator (const IBufAllocator& src)                = delete;
-  IBufAllocator& operator= (const IBufAllocator& src)     = delete;
-  IBufAllocator (IBufAllocator&& src) noexcept            = delete;
-  IBufAllocator& operator= (IBufAllocator&& src) noexcept = delete;
+  U3_ADD_POINTERS_TO_SELF (IBufAllocator)
+  U3_ADD_DELETE_MOVE_COPY (IBufAllocator)
 
   /// Функция получения (создание нового или возврает ранее созданного и свободного) буфера
   /// \param[in]  size опциональный предполагаемый размер данных для буфера или 0, если размер не известен
   /// \return     указатель на выделенный буфер
-  virtual auto create (size_buf_type size) -> utils::dbufs::video::IVideoBuf::ptr = 0;
+  virtual auto create (size_buf_type) -> utils::dbufs::video::IVideoBuf::ptr = 0;
 
   /// Функция трассировки состояния реализации интерфейса. Количество буферов, количество свободных буферов, используемая память и т.п
   virtual auto dump_bufs_state () -> std::string = 0;

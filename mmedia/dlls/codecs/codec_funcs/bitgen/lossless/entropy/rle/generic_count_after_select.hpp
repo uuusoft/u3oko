@@ -34,8 +34,8 @@ class CGenericObj
   {
     U3_ASSERT (0 == count_byte_dst);
 
-    const auto* usrc    = ::libs::helpers::casts::reinterpret_cast_helper< const value_type* > (src);
-    auto*       udst    = ::libs::helpers::casts::reinterpret_cast_helper< value_type* > (dst);
+    const auto* usrc    = ::libs::utility::casts::reinterpret_cast_helper< const value_type* > (src);
+    auto*       udst    = ::libs::utility::casts::reinterpret_cast_helper< value_type* > (dst);
     value_type  counter = 0;
 
     U3_ASSERT (count_byte_src / sizeof (value_type) * sizeof (value_type) == count_byte_src);
@@ -88,8 +88,8 @@ class CGenericObj
     void*          dst,
     std::uint32_t& count_byte_dst)
   {
-    const auto* usrc = ::libs::helpers::casts::reinterpret_cast_helper< const value_type* > (src);
-    auto*       udst = ::libs::helpers::casts::reinterpret_cast_helper< value_type* > (dst);
+    const auto* usrc = ::libs::utility::casts::reinterpret_cast_helper< const value_type* > (src);
+    auto*       udst = ::libs::utility::casts::reinterpret_cast_helper< value_type* > (dst);
 
     U3_ASSERT (count_byte_src / sizeof (value_type) * sizeof (value_type) == count_byte_src);
 

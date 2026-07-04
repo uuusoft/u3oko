@@ -11,7 +11,7 @@ namespace dlls::codecs::codec_gen
 struct StatisticInfo final {
   public:
   //  ext types
-  using stages_type = std::unordered_map< std::string, StatisticStage >;
+  using stages_type = boost::unordered_flat_map< std::string, StatisticStage >;
 
   StatisticInfo ()  = default;
   ~StatisticInfo () = default;

@@ -9,13 +9,13 @@
 namespace modules::mhttp::appl::syn
 {
 using IEvent                    = ::libs::events::IEvent;
-using ChangeStateSubSysLogEvent = ::libs::ilog_events::events::ChangeStateSubSysLogEvent;
-using ChangeStateProcessEvent   = ::libs::ievents::runtime::state::ChangeStateProcessEvent;
-using WrapperHttpEvent          = ::libs::ihttp_events::events::WrapperHttpEvent;
-using ZipDataEvent              = ::libs::ievents::runtime::mem::ZipDataEvent;
-using RuntimeEvent              = ::libs::ievents::runtime::RuntimeEvent;
-using MemResourceHttpEvent      = ::libs::ihttp_events::events::MemResourceHttpEvent;
-using IBlockMem                 = ::libs::helpers::mem::IBlockMem;
+using ChangeStateSubSysLogEvent = ::libs::events_log::events::ChangeStateSubSysLogEvent;
+using ChangeStateProcessEvent   = ::libs::events_base::runtime::state::ChangeStateProcessEvent;
+using WrapperHttpEvent          = ::libs::events_http::events::WrapperHttpEvent;
+using ZipDataEvent              = ::libs::events_base::runtime::mem::ZipDataEvent;
+using RuntimeEvent              = ::libs::events_base::runtime::RuntimeEvent;
+using MemResourceHttpEvent      = ::libs::events_http::events::MemResourceHttpEvent;
+using IBlockMem                 = ::libs::utility::mem::IBlockMem;
 using Loader                    = ::libs::iproperties::xml::Loader;
 using StateProcessEventExt      = ::libs::ilink::appl::StateProcessEventExt;
 using ISystemProperty           = ::libs::iproperties::vers::system::ISystemProperty;

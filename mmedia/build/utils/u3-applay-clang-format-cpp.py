@@ -11,7 +11,7 @@ import subprocess
 
 def format_files_recursive(start_path):
     """
-    Рекурсивно ищет файлы C/C++/ObjC и форматирует их с помощью clang-format.
+    Рекурсивно ищет файлы C/C++/ObjC и форматирует их c помощью clang-format.
     """
     # Расширения файлов, которые обычно форматирует clang-format
     extensions = ('.cpp', '.c', '.h', '.hpp', '.cc', '.cxx', '.m', '.mm')

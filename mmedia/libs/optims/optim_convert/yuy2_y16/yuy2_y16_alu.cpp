@@ -28,8 +28,8 @@ alu (::libs::optim::io::MCallInfo& info)
       y16_buf += ppc;
     }
 
-    yuy2_buf = ::libs::helpers::mem::move_cptr (yuy2_buf, leak_yuy2);
-    y16_buf  = ::libs::helpers::mem::move_ptr (y16_buf, leak_y16);
+    yuy2_buf = ::libs::utility::mem::move_cptr (yuy2_buf, leak_yuy2);
+    y16_buf  = ::libs::utility::mem::move_ptr (y16_buf, leak_y16);
   }
 }
 }   // namespace libs::optim::convert::yuy2_y16

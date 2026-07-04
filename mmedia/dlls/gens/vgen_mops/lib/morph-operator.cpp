@@ -4,11 +4,8 @@
 \date       16.07.2018
 \project    u3_vgen_mops_lib
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "vgen-mops-lib-includes_int.hpp"
 #include "morph-operator.hpp"
-
 #include "mmedia/dlls/doptim/algs/all_algs.hpp"
 
 namespace dlls::gens::vgen_mops::lib::helpers
@@ -61,8 +58,8 @@ MorphOperator::set_transform_info (syn::TransformInfo* tranform_info)
 }
 
 
-short
-get_mkoeff_for_erosion_operation (const std::int16_t size_spot)
+auto
+get_mkoeff_for_erosion_operation (const std::int16_t size_spot) -> short
 {
   std::int16_t ret = 1;
 
@@ -111,30 +108,30 @@ MorphOperator::fill_koeffs_for_erosion_operation (
   if (size_spot <= 1)
   {
     tfunc.pfunc_ = &conv_mod_3x3_;
-    cinfo.params_.evals_.emplace_back (boost::any (&syn::c3x3::cores::spot1));
+    cinfo.params_.evals_.emplace_back (&syn::c3x3::cores::spot1);
   }
   else if (size_spot <= 3)
   {
     tfunc.pfunc_ = &conv_mod_5x5_;
-    cinfo.params_.evals_.emplace_back (boost::any (&syn::c5x5::cores::spot1));
+    cinfo.params_.evals_.emplace_back (&syn::c5x5::cores::spot1);
   }
   else if (size_spot <= 5)
   {
     tfunc.pfunc_ = &conv_mod_7x7_;
-    cinfo.params_.evals_.emplace_back (boost::any (&syn::c7x7::cores::spot1));
+    cinfo.params_.evals_.emplace_back (&syn::c7x7::cores::spot1);
   }
   else if (size_spot <= 7)
   {
     tfunc.pfunc_ = &conv_mod_9x9_;
-    cinfo.params_.evals_.emplace_back (boost::any (&syn::c9x9::cores::spot1));
+    cinfo.params_.evals_.emplace_back (&syn::c9x9::cores::spot1);
   }
   else
   {
     tfunc.pfunc_ = &conv_mod_11x11_;
-    cinfo.params_.evals_.emplace_back (boost::any (&syn::c11x11::cores::spot1));
+    cinfo.params_.evals_.emplace_back (&syn::c11x11::cores::spot1);
   }
 
-  cinfo.params_.evals_.emplace_back (boost::any (mull_koeff));
+  cinfo.params_.evals_.emplace_back (mull_koeff);
 }
 
 
@@ -163,7 +160,7 @@ MorphOperator::erosion_buf (
     }));
 #endif
 
-  U3_ASSERT (utils::dbufs::video::helpers::is_equal_dim (*tbuf, *pdst));
+  U3_ASSERT (utils::dbufs::video::helpers::buf_dimension_equal (*tbuf, *pdst));
 
   ::libs::optim::io::MCallInfo cinfo;
 
@@ -182,8 +179,8 @@ MorphOperator::erosion_buf (
 }
 
 
-short
-get_mkoeff_for_dilation_operation (const std::int16_t size_spot)
+auto
+get_mkoeff_for_dilation_operation (const std::int16_t size_spot) -> short
 {
   if (size_spot <= 1)
   {
@@ -220,30 +217,30 @@ MorphOperator::fill_koeffs_for_dilation_operation (
   if (size_spot <= 1)
   {
     tfunc.pfunc_ = &conv_mod_3x3_;
-    cinfo.params_.evals_.emplace_back (boost::any (&syn::c3x3::cores::all_1));
+    cinfo.params_.evals_.emplace_back (&syn::c3x3::cores::all_1);
   }
   else if (size_spot <= 3)
   {
     tfunc.pfunc_ = &conv_mod_5x5_;
-    cinfo.params_.evals_.emplace_back (boost::any (&syn::c5x5::cores::all_1));
+    cinfo.params_.evals_.emplace_back (&syn::c5x5::cores::all_1);
   }
   else if (size_spot <= 5)
   {
     tfunc.pfunc_ = &conv_mod_7x7_;
-    cinfo.params_.evals_.emplace_back (boost::any (&syn::c7x7::cores::all_1));
+    cinfo.params_.evals_.emplace_back (&syn::c7x7::cores::all_1);
   }
   else if (size_spot <= 7)
   {
     tfunc.pfunc_ = &conv_mod_9x9_;
-    cinfo.params_.evals_.emplace_back (boost::any (&syn::c9x9::cores::all_1));
+    cinfo.params_.evals_.emplace_back (&syn::c9x9::cores::all_1);
   }
   else
   {
     tfunc.pfunc_ = &conv_mod_11x11_;
-    cinfo.params_.evals_.emplace_back (boost::any (&syn::c11x11::cores::all_1));
+    cinfo.params_.evals_.emplace_back (&syn::c11x11::cores::all_1);
   }
 
-  cinfo.params_.evals_.emplace_back (boost::any (mull_koeff));
+  cinfo.params_.evals_.emplace_back (mull_koeff);
 }
 
 
@@ -259,7 +256,7 @@ MorphOperator::dilation_buf (
   tbuf->clone (pdst, 100.0F);
 
   utils::dbufs::video::helpers::fill_edges (tbuf);
-  U3_ASSERT (utils::dbufs::video::helpers::is_equal_dim (*tbuf, *pdst));
+  U3_ASSERT (utils::dbufs::video::helpers::buf_dimension_equal (*tbuf, *pdst));
 
   ::libs::optim::io::MCallInfo cinfo;
 

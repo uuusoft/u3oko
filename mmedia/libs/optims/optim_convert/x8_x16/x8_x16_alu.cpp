@@ -26,8 +26,8 @@ alu (::libs::optim::io::MCallInfo& info)
       x8_buf += ppc;
     }
 
-    x8_buf  = ::libs::helpers::mem::move_cptr (x8_buf, leak_x8);
-    x16_buf = ::libs::helpers::mem::move_ptr (x16_buf, leak_x16);
+    x8_buf  = ::libs::utility::mem::move_cptr (x8_buf, leak_x8);
+    x16_buf = ::libs::utility::mem::move_ptr (x16_buf, leak_x16);
   }
 }
 }   // namespace libs::optim::convert::x8_x16

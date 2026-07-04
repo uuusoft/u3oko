@@ -135,7 +135,6 @@ macro(u3_project_add_cmake)
   endif()
 endmacro(u3_project_add_cmake)
 
-
 macro(u3_project_add_not_cmake)
   set(U3_FUNCT_RESULT FALSE)
 
@@ -175,7 +174,7 @@ macro(u3_project_add_not_cmake)
 
   if(NOT U3_FUNCT_RESULT AND NOT U3_FORCE_USE_LOCAL_SOURCE_FOR_EXTLIBS)
     #message(AUTHOR_WARNING "u3_project_add_not_cmake::---->U3_GVXX_PROJECT_ADD_URL_TO_SRC=${U3_GVXX_PROJECT_ADD_URL_TO_SRC} U3_GVXX_PROJECT_ADD_USE_HTTP_FOR_EXT_SRC=${U3_GVXX_PROJECT_ADD_USE_HTTP_FOR_EXT_SRC}")
-    #message(AUTHOR_WARNING "u3_project_add_not_cmake::---->U3_GVXX_PROJECT_ADD_URL_TO_SRC=${U3_GVXX_PROJECT_ADD_URL_TO_SRC} U3_GVXX_PROJECT_ADD_URL_TO_SRC_EXT=${U3_GVXX_PROJECT_ADD_URL_TO_SRC_EXT}")    
+    #message(AUTHOR_WARNING "u3_project_add_not_cmake::---->U3_GVXX_PROJECT_ADD_URL_TO_SRC=${U3_GVXX_PROJECT_ADD_URL_TO_SRC} U3_GVXX_PROJECT_ADD_URL_TO_SRC_EXT=${U3_GVXX_PROJECT_ADD_URL_TO_SRC_EXT}")
     if(U3_GVXX_PROJECT_ADD_USE_HTTP_FOR_EXT_SRC)
       ExternalProject_Add(
         ${U3_GVXX_PROJECT_ADD_PROJECT_NAME}
@@ -210,7 +209,6 @@ macro(u3_project_add_not_cmake)
     endif()
   endif()
 endmacro(u3_project_add_not_cmake)
-
 
 function(u3_project_add)
   cmake_parse_arguments(

@@ -14,14 +14,14 @@ class Filter final :
 {
   public:
   Filter ();
-  virtual ~Filter () = default;
+  virtual ~Filter ();
 
   protected:
   virtual void sync_by_events (bool update) override;
 
   private:
   // internal types
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
+  U3_ADD_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
   // IFilter overrides
   virtual auto load_int (syn::FilterInfo*, const ::pugi::xml_named_node_iterator&) -> void override;
   virtual auto transform_int (syn::TransformInfo&) -> void override;
@@ -34,15 +34,16 @@ class Filter final :
   bool prepare_process_frame (syn::TransformInfo& info);
   void process_events (syn::TransformInfo& info);
   void update_int ();
-  void free_impl_lib ();
+  void free_impl_lib () noexcept;
   void sync_props2int ();
   void flip_y (syn::IVideoBuf::raw_ptr buf);
 
-  static browser::CodecBrower               codec_browser_;            //< Для инфомации о доступных видеокодеках
-  static ::libs::helpers::dlls::FreezerDlls frozen_dlls_;              //< Удерживаем в памяти все загруженные библиотеки, чтобы избегать сбоев при работе с событиями, которые были в них сгенерированы
-  bool                                      external_codec_ = false;   //<
-  ::libs::optim::io::hioptim                flip_y_;                   //<
-  ::libs::optim::mcalls::IMCaller::ptr      pthreads_;                 //< Пул рабочих потоков
-  std::string                               active_dll_name_;          //< U3-REFACT
+  static browser::CodecBrower               codec_browser_;   //< Для инфомации о доступных видеокодеках
+  static ::libs::utility::dlls::FreezerDlls frozen_dlls_;     //< Удерживаем в памяти все загруженные библиотеки, чтобы избегать сбоев при работе с событиями, которые были в них сгенерированы
+
+  bool                       external_codec_ = false;   //<
+  ::libs::optim::io::hioptim flip_y_;                   //<
+  syn::IMCaller::ptr         pthreads_;                 //< Пул рабочих потоков
+  std::string                active_dll_name_;          //< U3-REFACT
 };
 }   // namespace dlls::codecs::vcodec_gen

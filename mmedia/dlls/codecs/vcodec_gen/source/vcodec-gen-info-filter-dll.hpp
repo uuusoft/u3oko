@@ -17,9 +17,6 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
   InfoFilter ();
   virtual ~InfoFilter () = default;
 
-  InfoFilter (const InfoFilter& src)            = delete;
-  InfoFilter& operator= (const InfoFilter& src) = delete;
-
   auto init () -> void;
 
   syn::VideoCodecProp::raw_ptr        rprops_         = nullptr;   //< Настроенный указатель на свойства (для удобства)
@@ -27,7 +24,7 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
   std::uint64_t                       counter_frames_ = 0;         //< Счетчик кадров
   CodecImplInfo                       file_info_;                  //< Информация из файла с кодеком
   syn::ICodecImage::weak_ptr          active_codec_impl_;          //< Выбранная на данный момент реализация кодека Может например прийти вместе с сообщением syn::InterfCodecImageEvent
-  ::libs::helpers::fps::FpsController fps_;                        //< Поле для контроля fps
+  ::libs::utility::fps::FpsController fps_;                        //< Поле для контроля fps
 
   protected:
   //  BaseInfoFilter overrides

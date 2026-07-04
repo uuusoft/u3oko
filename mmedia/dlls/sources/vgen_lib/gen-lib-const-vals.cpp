@@ -4,8 +4,6 @@
 \date       01.01.2017
 \project    u3_vgen_lib
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "gen-lib-includes_int.hpp"
 #include "gen-lib-const-vals.hpp"
 

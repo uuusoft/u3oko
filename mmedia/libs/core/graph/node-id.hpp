@@ -13,35 +13,30 @@ class NodeID final
 {
   public:
   //  ext types
-  using name_id_type  = std::string;
-  using name_dll_type = std::string;
+  using id_name_type  = std::string;
+  using dll_name_type = std::string;
 
   /// Конструктор
   /// \param[in]  name   идентификатор узла
   /// \param[in]  name_dll имя библиотеки, использованной для создания узла
-  explicit NodeID (const name_id_type& name = "", const name_dll_type& name_dll = "");
+  explicit NodeID (id_name_type = "", dll_name_type = "");
   virtual ~NodeID () = default;
 
-  /// Функция возвращает имя идентификатора
-  const name_id_type get_name () const;
-  name_id_type&      update_name ();
+  auto get_name () const -> const id_name_type;
+  auto update_name () -> id_name_type&;
 
-  /// Функция возвращает имя идентификатора
-  const name_dll_type& get_name_dll () const;
-  name_dll_type&       update_name_dll ();
+  auto get_name_dll () const -> const dll_name_type&;
+  auto update_name_dll () -> dll_name_type&;
 
-  /// Функция сравнения меньше для использования в а контейнерах
   bool operator< (const NodeID& obj) const;
-
-  /// Функция сравнениядля использования в а контейнерах
   bool operator== (const NodeID& obj) const;
 
   /// Функция проверки корректности построения экземпляра класса
   bool check () const;
 
   private:
-  name_id_type  id_node_name_;       //< Идентификатор объекта. Гарантирутся уникальность в графе и совпадение с идентификатором из xml узла, на основе которого создан данный объект
-  name_dll_type id_node_name_dll_;   //< Имя библиотеки, которая использовалась для создания экземляра узла
+  id_name_type  id_node_name_;       //< Идентификатор объекта. Гарантирутся уникальность в графе и совпадение с идентификатором из xml узла, на основе которого создан данный объект
+  dll_name_type id_node_name_dll_;   //< Имя библиотеки, которая использовалась для создания экземляра узла
 
   friend class boost::serialization::access;
 
@@ -56,14 +51,14 @@ std::string get_ext_graph_node_id (const NodeID&);
 
 BOOST_CLASS_EXPORT_KEY (::libs::core::graph::NodeID);
 
-namespace std
+namespace boost
 {
 template<>
 struct hash< ::libs::core::graph::NodeID > {
   std::size_t
   operator() (const ::libs::core::graph::NodeID& val) const
   {
-    return std::hash< ::libs::core::graph::NodeID::name_id_type > () (val.get_name ());
+    return std::hash< ::libs::core::graph::NodeID::id_name_type > () (val.get_name ());
   }
 };
-}   // namespace std
+}   // namespace boost

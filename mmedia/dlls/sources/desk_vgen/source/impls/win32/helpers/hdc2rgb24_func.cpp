@@ -4,8 +4,6 @@
 \author   Erashov Anton erashov2026@proton.me
 \date     26.07.2016
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../../../desk-vgen-includes_int.hpp"
 #include "hdc2rgb24_func.hpp"
 
@@ -26,7 +24,7 @@ hdc2buf_alu (Hdc2BmpCallInfo& info)
 
   // получаем информацию от источника
   {
-    auto loc_bitmap = ::libs::helpers::casts::static_cast_helper< HBITMAP > (GetCurrentObject (info.source_hdc_, OBJ_BITMAP));
+    auto loc_bitmap = ::libs::utility::casts::static_cast_helper< HBITMAP > (GetCurrentObject (info.source_hdc_, OBJ_BITMAP));
     U3_CHECK_WIN32_STATE (loc_bitmap, "GetCurrentObject");
     memset (&bitmap_info, 0, sizeof (bitmap_info));
     U3_CHECK_WIN32_CALL (GetObject (loc_bitmap, sizeof (bitmap_info), &bitmap_info), "GetObject");
@@ -41,9 +39,9 @@ hdc2buf_alu (Hdc2BmpCallInfo& info)
   U3_CHECK_WIN32_STATE (loc_support_hdc & (RC_BITBLT | RC_DI_BITMAP), "raster caps RC_BITBLT | RC_DI_BITMAP not support");
 
   // create temporarely hdc for system convert to RGB24
-  ::libs::helpers::platforms::win32::HandlerGdiObj< HBITMAP > temp_hbitmap;   // должен быть до temp_hdc
-  ::libs::helpers::platforms::win32::HandlerCompatibleDC      temp_hdc (info.source_hdc_);
-  U3_CHECK_WIN32_STATE (temp_hdc, "create dc" + ::libs::helpers::platforms::win32::last_error2string (GetLastError ()));
+  ::libs::utility::platforms::win32::HandlerGdiObj< HBITMAP > temp_hbitmap;   // должен быть до temp_hdc
+  ::libs::utility::platforms::win32::HandlerCompatibleDC      temp_hdc (info.source_hdc_);
+  U3_CHECK_WIN32_STATE (temp_hdc, "create dc" + ::libs::utility::platforms::win32::last_error2string (GetLastError ()));
 
   min_mem_size = U3_CAST_UINT32 ((loc_width * (info.dest_count_bits_ / 8)) * loc_height);
 
@@ -74,7 +72,7 @@ hdc2buf_alu (Hdc2BmpCallInfo& info)
       info.source_hdc_,
       &temp_bitmapinfo,
       DIB_RGB_COLORS,
-      ::libs::helpers::casts::reinterpret_cast_helper< void** > (&tbuf),
+      ::libs::utility::casts::reinterpret_cast_helper< void** > (&tbuf),
       0,
       0));
 
@@ -92,8 +90,8 @@ hdc2buf_alu (Hdc2BmpCallInfo& info)
     *info.height_dest_ = loc_height;
   }
 
-  ::libs::helpers::mem::u3copy (tbuf, info.dest_buf_->get (), min_mem_size);
-  info.dest_buf_->set_data_size (min_mem_size);
+  ::libs::utility::mem::u3copy (tbuf, info.dest_buf_->get (), min_mem_size);
+  info.dest_buf_->set_size (min_mem_size);
 
   *info.active_dest_buf_ = min_mem_size;
   *info.stride_dest_     = loc_width * (info.dest_count_bits_ / 8);

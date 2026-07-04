@@ -10,15 +10,8 @@
 
 #include "../../dlls-includes_int.hpp"
 
-#ifndef U3_SKIP_DLIB
-// debug
-// #  define U3_SKIP_DLIB
-#endif
-
-#ifndef U3_SKIP_DLIB
-#  include "dlib/image_processing/frontal_face_detector.h"
-#  include "dlib/image_io.h"
-#endif
+#include "dlib/image_processing/frontal_face_detector.h"
+#include "dlib/image_io.h"
 
 #include "turbojpeg.h"   // debug
 #include "mmedia/utils/dbufs/dbufs-includes.hpp"

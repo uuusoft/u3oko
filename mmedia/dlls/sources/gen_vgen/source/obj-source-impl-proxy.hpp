@@ -15,17 +15,16 @@ class ObjSourceImplProxy final
   ObjSourceImplProxy (const std::string& = "");
   ~ObjSourceImplProxy ();
 
-  ObjSourceImplProxy (const ObjSourceImplProxy& src)            = delete;
-  ObjSourceImplProxy& operator= (const ObjSourceImplProxy& src) = delete;
+  U3_ADD_DELETE_MOVE_COPY (ObjSourceImplProxy)
 
   auto init (const std::string&) -> void;
   auto clear () -> void;
   auto get_source_impl () -> gen_lib::ISourceImpl::raw_ptr;
-  auto get_source_impl_lib () -> ::libs::helpers::dlls::dll_type;
+  auto get_source_impl_lib () -> ::libs::utility::dlls::dll_type;
 
   private:
   //  internal typess
-  ::libs::helpers::dlls::dll_type   impl_dll_;              //< Библиотека с выбранной реализацией захвата данных из устройства
+  ::libs::utility::dlls::dll_type   impl_dll_;              //< Библиотека с выбранной реализацией захвата данных из устройства
   gen_lib::ISourceImpl::raw_ptr     impl_      = nullptr;   //< Реализация захвата, полученная из библиотеки
   gen_lib::bcreate_source_func_type func_get_  = 0;         //< Функция создания реализации из библиотеки
   gen_lib::bfree_source_func_type   func_free_ = 0;         //< Функция удаления реализации из библиотеки

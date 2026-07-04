@@ -16,29 +16,27 @@ class ICore
 {
   public:
   // ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ICore)
+  U3_ADD_POINTERS_TO_SELF (ICore)
+  U3_ADD_DELETE_MOVE_COPY (ICore)
 
   virtual ~ICore () = default;
 
-  /// Функция создания графа обработки данных
-  /// Созданный граф требует явного удаления через функцию delete_graph
-  graph::IGraph::weak_ptr
-  create_graph ()
+  auto
+  create_graph () -> graph::IGraph::weak_ptr
   {
     return create_graph_int ();
   }
 
-  /// Функция получения существующих графов обработки данных ядра
-  void
-  get_graphs (std::list< graph::IGraph::weak_ptr >& graphs)
-  {
-    return get_graphs_int (graphs);
-  }
-
-  bool
-  delete_graph (graph::IGraph::weak_ptr obj)
+  auto
+  delete_graph (graph::IGraph::weak_ptr obj) -> bool
   {
     return delete_graph_int (obj);
+  }
+
+  auto
+  get_graphs (std::list< graph::IGraph::weak_ptr >& graphs) -> void
+  {
+    return get_graphs_int (graphs);
   }
 
   protected:
@@ -47,8 +45,8 @@ class ICore
 
   private:
   //  ICore interface
-  virtual graph::IGraph::weak_ptr create_graph_int ()                                           = 0;
-  virtual void                    get_graphs_int (std::list< graph::IGraph::weak_ptr >& graphs) = 0;
-  virtual bool                    delete_graph_int (graph::IGraph::weak_ptr obj)                = 0;
+  virtual auto create_graph_int () -> graph::IGraph::weak_ptr                 = 0;
+  virtual auto get_graphs_int (std::list< graph::IGraph::weak_ptr >&) -> void = 0;
+  virtual auto delete_graph_int (graph::IGraph::weak_ptr) -> bool             = 0;
 };
 }   // namespace libs::core

@@ -15,12 +15,12 @@ namespace modules::mhttp::impl::beast::adv
 http_session::http_session (
   boost::asio::ip::tcp::socket&& socket,
   const handler_func_type&       http_handler,
-  const shared_state_ptr_type&   shared_state) :
+  shared_state_ptr_type          shared_state) :
   stream_ (std::move (socket)),
   http_handler_ (http_handler),
-  shared_state_ (shared_state)
+  shared_state_ (std::move (shared_state))
 {
-  U3_XLOG_DEV ("http_session::http_session::on_create" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
+  U3_XLOG_DEV ("http_session::http_session::on_create" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)));
   static_assert (modules::mhttp::appl::consts::requests_queue_limit > 0, "queue limit must be positive");
 }
 
@@ -84,7 +84,7 @@ http_session::on_read (boost::beast::error_code ec, std::size_t bytes_transferre
   // See if it is a WebSocket Upgrade
   if (appl::syn::websocket::is_upgrade (parser_->get ()))
   {
-    U3_XLOG_DEV ("http_session::on_read UPGRADE to websocket" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
+    U3_XLOG_DEV ("http_session::on_read UPGRADE to websocket" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)));
     // Create a websocket session, transferring ownership
     // of both the socket and the HTTP request.
     std::make_shared< websocket_session > (
@@ -174,7 +174,7 @@ http_session::on_write (
 void
 http_session::do_close ()
 {
-  U3_XLOG_DEV ("http_session::http_session::do_close" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
+  U3_XLOG_DEV ("http_session::http_session::do_close" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)));
   // Send a TCP shutdown
   boost::beast::error_code ec;
   stream_.socket ().shutdown (boost::asio::ip::tcp::socket::shutdown_send, ec);

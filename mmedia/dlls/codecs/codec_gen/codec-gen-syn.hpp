@@ -8,9 +8,9 @@
 
 namespace dlls::codecs::codec_gen::syn
 {
-using VideoCodecFlatProp = ::libs::ievents::props::videos::generic::codec::VideoCodecFlatProp;
+using VideoCodecFlatProp = ::libs::events_base::props::videos::generic::codec::VideoCodecFlatProp;
 using TransformInfo      = ::libs::icore::impl::var1::obj::dll::TransformInfo;
-using VideoCodecProp     = ::libs::ievents::props::videos::generic::codec::VideoCodecProp;
+using VideoCodecProp     = ::libs::events_base::props::videos::generic::codec::VideoCodecProp;
 using NodeID             = ::libs::core::graph::NodeID;
-using CpuExts            = ::libs::helpers::sys::cpu::CpuExts;
+using CpuExts            = ::libs::utility::sys::cpu::CpuExts;
 }   // namespace dlls::codecs::codec_gen::syn

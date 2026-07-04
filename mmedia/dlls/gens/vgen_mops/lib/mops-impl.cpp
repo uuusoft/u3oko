@@ -4,8 +4,6 @@
 \date       16.07.2018
 \project    u3_vgen_mops_lib
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "vgen-mops-lib-includes_int.hpp"
 #include "morph-operator.hpp"
 #include "mops-impl.hpp"
@@ -98,9 +96,9 @@ MopsImpl::bin_buf (
 
   cinfo.dsts_.emplace_back (pdst, "dst dlls::gens::vgen_mops::lib");
 
-  cinfo.params_.evals_.emplace_back (boost::any (::libs::optim::s16bit::consts::us_all_xffff));
-  cinfo.params_.evals_.emplace_back (boost::any (bound));
-  cinfo.params_.evals_.emplace_back (boost::any (val));
+  cinfo.params_.evals_.emplace_back (::libs::optim::s16bit::consts::us_all_xffff);
+  cinfo.params_.evals_.emplace_back (bound);
+  cinfo.params_.evals_.emplace_back (val);
 
   ::libs::optim::mcalls::MTFuncInfo tfunc (&cmp_get_const_);
 

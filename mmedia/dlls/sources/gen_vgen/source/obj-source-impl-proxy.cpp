@@ -4,22 +4,9 @@
 \date       20.05.2017
 \project    u3_gen_vgen
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
-#include "mmedia/libs/proxy/proxy/gen-vgen-proxy.hpp"
 #include "gen-vgen-includes_int.hpp"
+#include "mmedia/libs/proxy/proxy/gen-vgen-proxy.hpp"
 #include "obj-source-impl-proxy.hpp"
-
-namespace dlls::sources::gen_vgen::internal
-{
-std::string
-make_name_function_for_source_library (
-  const std::string& lib_name,
-  const std::string& prefix_funct)
-{
-  return prefix_funct + "_" + libs::helpers::dlls::undecorate_dll_name (lib_name);
-}
-}   // namespace dlls::sources::gen_vgen::internal
 
 namespace dlls::sources::gen_vgen
 {
@@ -44,23 +31,26 @@ ObjSourceImplProxy::init (const std::string& impl_name)
   clear ();
   U3_CHECK (!impl_name.empty (), "empty impl name for capture");
   const std::string path      = ::libs::iproperties::appl_paths::get_current_lib_folder ();
-  const std::string full_path = ::libs::helpers::files::make_path (path, ::libs::helpers::dlls::decorate_dll_name (impl_name));
+  const std::string full_path = ::libs::utility::files::make_path (path, ::libs::utility::dlls::decorate_dll_name (impl_name));
 
   impl_dll_.load (full_path.c_str (), boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
 
 #if (U3_BUILD_MODULES_AS_LIBS == 1)
-  func_get_  = ::libs::proxy::get_create_source_funct (impl_name);
-  func_free_ = ::libs::proxy::get_free_source_funct (impl_name);
+  func_get_  = ::libs::proxy::get_create_source_func (impl_name);
+  func_free_ = ::libs::proxy::get_free_source_func (impl_name);
 #else
 #  ifdef U3_OS_ANDROID
-  func_get_ = ::libs::helpers::casts::reinterpret_cast_helper< gen_lib::get_source_func_type* > (
-    dlsym (impl_dll_.native (), internal::make_name_function_for_source_library (impl_name, gen_lib::consts::name_get_funct).c_str ()));
+  func_get_ = ::libs::utility::casts::reinterpret_cast_helper< gen_lib::get_source_func_type* > (
+    dlsym (impl_dll_.native (), ::libs::utility::dlls::make_func_name_lib (impl_name, gen_lib::consts::name_get_funct).c_str ()));
 
-  func_free_ = ::libs::helpers::casts::reinterpret_cast_helper< gen_lib::free_source_func_type* > (
-    dlsym (impl_dll_.native (), internal::make_name_function_for_source_library (impl_name, gen_lib::consts::name_free_funct).c_str ()));
+  func_free_ = ::libs::utility::casts::reinterpret_cast_helper< gen_lib::free_source_func_type* > (
+    dlsym (impl_dll_.native (), ::libs::utility::dlls::make_func_name_lib (impl_name, gen_lib::consts::name_free_funct).c_str ()));
 #  else
-  func_get_  = ::boost::dll::import_symbol< gen_lib::get_source_func_type > (impl_dll_, internal::make_name_function_for_source_library (impl_name, gen_lib::consts::name_get_funct));
-  func_free_ = ::boost::dll::import_symbol< gen_lib::free_source_func_type > (impl_dll_, internal::make_name_function_for_source_library (impl_name, gen_lib::consts::name_free_funct));
+  func_get_ = ::boost::dll::import_symbol< gen_lib::get_source_func_type > (
+    impl_dll_, ::libs::utility::dlls::make_func_name_lib (impl_name, gen_lib::consts::name_get_funct));
+
+  func_free_ = ::boost::dll::import_symbol< gen_lib::free_source_func_type > (
+    impl_dll_, ::libs::utility::dlls::make_func_name_lib (impl_name, gen_lib::consts::name_free_funct));
 #  endif
 #endif
 
@@ -80,22 +70,22 @@ ObjSourceImplProxy::clear ()
     func_free_ (&impl_);
   }
 
-  func_get_  = 0;
-  func_free_ = 0;
+  func_get_  = nullptr;
+  func_free_ = nullptr;
   impl_      = nullptr;
 }
 
 
-gen_lib::ISourceImpl::raw_ptr
-ObjSourceImplProxy::get_source_impl ()
+auto
+ObjSourceImplProxy::get_source_impl () -> gen_lib::ISourceImpl::raw_ptr
 {
   // U3_CHECK_NT (impl_, "return empty source impl" + TOLOG (impl_dll_.location ().string ()));
   return impl_;
 }
 
 
-::libs::helpers::dlls::dll_type
-ObjSourceImplProxy::get_source_impl_lib ()
+auto
+ObjSourceImplProxy::get_source_impl_lib () -> ::libs::utility::dlls::dll_type
 {
   return impl_dll_;
 }

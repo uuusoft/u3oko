@@ -8,7 +8,7 @@
 
 namespace libs::ilink::appl::root::consts
 {
-constexpr std::uint32_t minute_period_dump_state = 1;
+inline constexpr std::uint32_t minute_period_dump_state = 1;
 }
 
 namespace libs::ilink::appl::root
@@ -39,7 +39,7 @@ class RootModule : public base::BaseModule
   using time_type     = boost::posix_time::ptime;
   using duration_type = boost::posix_time::time_duration;
 
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ilink::appl::base::BaseModule)
+  U3_ADD_SUPER_CLASS (::libs::ilink::appl::base::BaseModule)
 
   /// Функция возвращает по сообщению связь к модулю, который будет его обрабатывать
   /// Или пусто, если обработка должа производится в текущем модуле

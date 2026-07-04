@@ -5,8 +5,6 @@
 \project    u3_desk_vgen
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../../desk-vgen-includes_int.hpp"
 #include "capture-desk-impl-mac.hpp"
 

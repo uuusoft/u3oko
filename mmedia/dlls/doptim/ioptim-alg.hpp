@@ -18,7 +18,7 @@ class IOptimAlg
 {
   public:
   // ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IOptimAlg)
+  U3_ADD_POINTERS_TO_SELF (IOptimAlg)
 
   IOptimAlg ()          = default;
   virtual ~IOptimAlg () = default;

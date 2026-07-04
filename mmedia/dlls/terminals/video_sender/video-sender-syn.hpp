@@ -8,16 +8,16 @@
 
 namespace dlls::terminals::video_sender::syn
 {
-using Buff2ModuleInfo  = ::libs::ievents::props::base_id::Buff2ModuleInfo;
-using id_link_type     = ::libs::ievents::props::base_id::id_link_type;
-using EndPointProp     = ::libs::ievents::props::terminals::EndPointProp;
-using IBaseId          = ::libs::ievents::runtime::interf::interfaces::IBaseId;
+using Buff2ModuleInfo  = ::libs::events_base::props::base_id::Buff2ModuleInfo;
+using id_link_type     = ::libs::events_base::props::base_id::id_link_type;
+using EndPointProp     = ::libs::events_base::props::terminals::EndPointProp;
+using IBaseId          = ::libs::events_base::runtime::interf::interfaces::IBaseId;
 using IEvent           = ::libs::events::IEvent;
-using WrapperHttpEvent = ::libs::ihttp_events::events::WrapperHttpEvent;
-using ZipDataEvent     = ::libs::ievents::runtime::mem::ZipDataEvent;
-using FrameDone        = ::libs::ievents::runtime::video::FrameDone;
-using WriteData        = ::libs::istorage_events::events::WriteData;
-using UpdateStream     = ::libs::istorage_events::events::UpdateStream;
+using WrapperHttpEvent = ::libs::events_http::events::WrapperHttpEvent;
+using ZipDataEvent     = ::libs::events_base::runtime::mem::ZipDataEvent;
+using FrameDone        = ::libs::events_base::runtime::video::FrameDone;
+using WriteData        = ::libs::events_storage::events::WriteData;
+using UpdateStream     = ::libs::events_storage::events::UpdateStream;
 using IVideoBuf        = ::utils::dbufs::video::IVideoBuf;
 using TransformInfo    = ::libs::icore::impl::var1::obj::dll::TransformInfo;
 using CallInterfInfo   = ::libs::icore::impl::var1::obj::dll::CallInterfInfo;

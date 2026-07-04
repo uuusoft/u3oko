@@ -20,6 +20,6 @@ enum class BufsFlags : std::uint32_t
 inline std::uint32_t
 enum_to_raw (const BufsFlags& val)
 {
-  return ::libs::helpers::casts::static_cast_helper< std::uint32_t > (val);
+  return ::libs::utility::casts::static_cast_helper< std::uint32_t > (val);
 }
 }   // namespace libs::bufs

@@ -4,8 +4,6 @@
 \date       26.07.2016
 \project    u3_vgen_diff
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "vgen-diff-includes_int.hpp"
 #include "vgen-diff-info-filter-dll.hpp"
 #include "vgen-diff-filter-dll.hpp"

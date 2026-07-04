@@ -8,9 +8,9 @@
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "libs-optims-optim-mcalls-includes_int.hpp"
-#include "mmedia/libs/helpers/thread/generic-thread-func.hpp"
+#include "mmedia/libs/utility/thread/generic-thread-func.hpp"
 #include "caller-impl.hpp"
-#include "mmedia/libs/helpers/statistic/helpers/expanded-times-helpers.hpp"
+#include "mmedia/libs/utility/statistic/helpers/expanded-times-helpers.hpp"
 
 namespace libs::optim::mcalls
 {
@@ -28,14 +28,16 @@ CallerImpl::CallerImpl ()
 
 CallerImpl::~CallerImpl ()
 {
+  U3_XLOG_DBG ("CallerImpl::~CallerImpl::---->");
   lock_type lock (mtx_);
   --impl_counter_;
   stop_and_wait_threads ();
+  U3_XLOG_DBG ("CallerImpl::~CallerImpl::<----");
 }
 
 
-unsigned long
-get_count_work_threads_by_count_cpu (unsigned long val)
+auto
+get_count_work_threads_by_count_cpu (unsigned long val) -> unsigned long
 {
   return val <= 1 ? 1 : (val <= 4 ? val - 1 : (val <= 8 ? val - 2 : val - 4));
 }
@@ -150,9 +152,9 @@ get_count_threads_funct (
     }
   }
 
-  athreads = U3_CAST_UINT16 (::libs::helpers::utils::ret_check_bound< std::uint32_t > (athreads, 1, min_src_height / funct.src_align_.px_y_));
-  athreads = U3_CAST_UINT16 (::libs::helpers::utils::ret_check_bound< std::uint32_t > (athreads, 1, min_dst_height / funct.dst_align_.px_y_));
-  athreads = U3_CAST_UINT16 (::libs::helpers::utils::ret_check_bound< std::uint32_t > (athreads, 1, max_threads));
+  athreads = U3_CAST_UINT16 (::libs::utility::utils::ret_check_bound< std::uint32_t > (athreads, 1, min_src_height / funct.src_align_.px_y_));
+  athreads = U3_CAST_UINT16 (::libs::utility::utils::ret_check_bound< std::uint32_t > (athreads, 1, min_dst_height / funct.dst_align_.px_y_));
+  athreads = U3_CAST_UINT16 (::libs::utility::utils::ret_check_bound< std::uint32_t > (athreads, 1, max_threads));
 }
 
 // EAI-REFACT
@@ -261,7 +263,7 @@ CallerImpl::mthreads_call_int (
           new_add.height_ = height_cur_block * funct.src_align_.px_y_;
 
           std::uint32_t off_rows = indxy * height_prev_block * funct.src_align_.px_y_;
-          std::uint32_t off_cols = indxx * new_add.width_ * sizeof (std::int16_t);
+          std::uint32_t off_cols = static_cast< unsigned long > (indxx * new_add.width_) * sizeof (std::int16_t);
           std::uint32_t off_src  = off_rows * new_add.stride_ + off_cols;
 
           new_add.set_ubuf (new_add.ubuf () + off_src);
@@ -292,7 +294,7 @@ CallerImpl::mthreads_call_int (
           new_add.height_ = height_cur_block * funct.dst_align_.px_y_;
 
           std::uint32_t off_rows = indxy * height_prev_block * funct.dst_align_.px_y_ * funct.dest_mul_koeffy_ / funct.dest_div_koeffy_;
-          std::uint32_t off_cols = indxx * new_add.width_ * sizeof (std::int16_t);
+          std::uint32_t off_cols = static_cast< unsigned long > (indxx * new_add.width_) * sizeof (std::int16_t);
           std::uint32_t off_src  = off_rows * new_add.stride_ + off_cols;
 
           new_add.set_ubuf (new_add.ubuf () + off_src);
@@ -369,7 +371,7 @@ CallerImpl::create_threads ()
   for (std::uint16_t thread_indx = 0; thread_indx < max_threads_; ++thread_indx)
   {
     threads_.emplace_back (
-      ::libs::helpers::thread::generic_thread_funct< CallerImpl >,
+      ::libs::utility::thread::generic_thread_funct< CallerImpl >,
       libs::properties::vers::links::mids::mdata2appl,
       this,
       thread_indx);
@@ -383,7 +385,7 @@ CallerImpl::create_threads ()
 void
 CallerImpl::thread_func_impl (const std::uint32_t thread_indx)
 {
-  ::libs::helpers::thread::set_thread_priority (std::this_thread::get_id (), ::libs::helpers::thread::Priorities::below_normal);
+  ::libs::utility::thread::set_thread_priority (std::this_thread::get_id (), ::libs::utility::thread::Priorities::below_normal);
 
   do
   {

@@ -4,8 +4,6 @@
 \date       16.07.2018
 \project    u3_base_id_dll
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "base_id-includes_int.hpp"
 #include "base_id-filter-dll.hpp"
 

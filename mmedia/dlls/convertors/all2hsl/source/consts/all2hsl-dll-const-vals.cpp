@@ -4,8 +4,7 @@
 \date       01.01.2017
 \project    u3_all2hsl
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
+#include "../all2hsl-dll-includes_int.hpp"
 #include "all2hsl-dll-const-vals.hpp"
 
 namespace dlls::convertors::all2hsl::consts

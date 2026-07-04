@@ -5,8 +5,6 @@
 \project    u3_v4l2_vgen
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "v4l2-vgen-includes_int.hpp"
 #include "v4l2-vgen-source-impl.hpp"
 // old shit

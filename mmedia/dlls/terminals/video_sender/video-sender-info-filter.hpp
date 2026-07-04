@@ -12,9 +12,6 @@ struct InfoFilter : public ::libs::icore::impl::var1::obj::dll::BaseInfoFilter {
   InfoFilter ();
   virtual ~InfoFilter () = default;
 
-  InfoFilter (const InfoFilter& src)            = delete;
-  InfoFilter& operator= (const InfoFilter& src) = delete;
-
   syn::EndPointProp::raw_ptr rprops_       = nullptr;   //< Настроенный указатель на свойства (для удобства)
   std::uint64_t              count_frames_ = 0;         //< Счетчик обработанных кадров
   syn::IBaseId::weak_ptr     active_impl_;              //< Интерфейс для маршрутизации данных

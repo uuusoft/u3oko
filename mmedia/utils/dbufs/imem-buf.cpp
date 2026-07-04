@@ -4,8 +4,6 @@
 \date       11.08.2018
 \project    u3_dbufs
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "dbufs-includes_int.hpp"
 #include "imem-buf.hpp"
 
@@ -14,16 +12,16 @@ namespace utils::dbufs
 void
 IMemBuf::ialloc (const mem_var_type& size)
 {
-  if (!raw_)
+  if (!raw_block_)
   {
     auto _imem = ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree ()->impl ();
-    raw_       = _imem->alloc (size);
+    raw_block_ = _imem->alloc (size);
   }
 
-  U3_CHECK (raw_, "get empty raw_");
-  if (raw_->get_buf_size () < size)
+  U3_CHECK (raw_block_, "get empty raw_block_");
+  if (raw_block_->get_capacity () < size)
   {
-    raw_->resize (size);
+    raw_block_->resize (size);
   }
 }
 
@@ -44,8 +42,8 @@ IMemBuf::set_mem_var_int (const MemVars& type, mem_var_type val)
   case MemVars::size_data:
     if (val > 0)
     {
-      U3_CHECK (val || raw_, "try set size_data to empty raw_");
-      U3_CHECK (val <= raw_->get_buf_size (), VTOLOG (val) + VTOLOG (raw_->get_buf_size ()));
+      U3_CHECK (val || raw_block_, "try set size_data to empty raw_block_");
+      U3_CHECK (val <= raw_block_->get_capacity (), VTOLOG (val) + VTOLOG (raw_block_->get_capacity ()));
     }
     break;
   case MemVars::offset_data:
@@ -62,13 +60,13 @@ IMemBuf::set_mem_var_int (const MemVars& type, mem_var_type val)
 }
 
 
-IMemBuf::mem_var_type
-IMemBuf::get_mem_var_int (const ::utils::dbufs::MemVars& type) const
+auto
+IMemBuf::get_mem_var_int (const ::utils::dbufs::MemVars& type) const -> IMemBuf::mem_var_type
 {
   switch (type)
   {
   case MemVars::size_buf:
-    return raw_ ? raw_->get_buf_size () : 0;
+    return raw_block_ ? raw_block_->get_capacity () : 0;
   default:
     break;
   }
@@ -76,19 +74,19 @@ IMemBuf::get_mem_var_int (const ::utils::dbufs::MemVars& type) const
 }
 
 
-std::uint8_t*
-IMemBuf::get_buf_int ()
+auto
+IMemBuf::get_buf_int () -> std::uint8_t*
 {
-  U3_ASSERT (raw_);
-  return raw_->get ();
+  U3_ASSERT (raw_block_);
+  return raw_block_->get ();
 }
 
 
-const std::uint8_t*
-IMemBuf::get_cbuf_int () const
+auto
+IMemBuf::get_cbuf_int () const -> const std::uint8_t*
 {
-  U3_ASSERT (raw_);
-  return raw_->get ();
+  U3_ASSERT (raw_block_);
+  return raw_block_->get ();
 }
 
 
@@ -115,13 +113,13 @@ IMemBuf::clone_int (IBuf::craw_ptr isrc, float percent)
     return;
   }
 
-  if (!src->raw_)
+  if (!src->raw_block_)
   {
     U3_XLOG_WARN ("try empty clone" + PTR_TOLOG (this));
     return;
   }
 
-  ::libs::helpers::mem::u3copy (src->get_cbuf (), get_buf (), (*src)[MemVars::size_buf]);
+  ::libs::utility::mem::u3copy (src->get_cbuf (), get_buf (), (*src)[MemVars::size_buf]);
   fragments_ = src->fragments_;
 }
 
@@ -129,14 +127,14 @@ IMemBuf::clone_int (IBuf::craw_ptr isrc, float percent)
 void
 IMemBuf::swap_int (IBuf& isrc)
 {
-  IMemBuf& src = dynamic_cast< IMemBuf& > (isrc);
+  auto& src = dynamic_cast< IMemBuf& > (isrc);
   if (this == &src)
   {
     U3_XLOG_WARN ("try swap itself" + PTR_TOLOG (this));
     return;
   }
 
-  std::swap (raw_, src.raw_);
+  std::swap (raw_block_, src.raw_block_);
   std::swap (mem_vars_, src.mem_vars_);
   std::swap (fragments_, src.fragments_);
 }

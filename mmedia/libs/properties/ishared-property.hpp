@@ -15,15 +15,11 @@ class ISharedProperty
   using sync_type = std::mutex;
   using lock_type = std::scoped_lock< sync_type >;
 
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ISharedProperty)
+  U3_ADD_POINTERS_TO_SELF (ISharedProperty)
+  U3_ADD_DELETE_MOVE_COPY (ISharedProperty)
 
   ISharedProperty ()          = default;
   virtual ~ISharedProperty () = default;
-
-  ISharedProperty (const ISharedProperty&)                = delete;
-  ISharedProperty& operator= (const ISharedProperty&)     = delete;
-  ISharedProperty (ISharedProperty&&) noexcept            = delete;
-  ISharedProperty& operator= (ISharedProperty&&) noexcept = delete;
 
   auto self_test () const -> bool;
   auto cast2top () -> void*;

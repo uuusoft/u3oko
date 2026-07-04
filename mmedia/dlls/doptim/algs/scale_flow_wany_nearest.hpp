@@ -28,24 +28,24 @@ class CScaleNearestAlg final : public IOptimAlg
     switch (iinfo.ext_)
     {
 #ifdef U3_CPU_X86
-    case ::libs::helpers::sys::cpu::CpuExts::avx2:
+    case ::libs::utility::sys::cpu::CpuExts::avx2:
       sel_.set (::libs::optim::s16bit::scale::flow::wany::nearest::avx2);
       break;
-    case ::libs::helpers::sys::cpu::CpuExts::avx1:
+    case ::libs::utility::sys::cpu::CpuExts::avx1:
       sel_.set (::libs::optim::s16bit::scale::flow::wany::nearest::avx1);
       break;
-    case ::libs::helpers::sys::cpu::CpuExts::sse4_2:
-    case ::libs::helpers::sys::cpu::CpuExts::sse4_1:
-    case ::libs::helpers::sys::cpu::CpuExts::sse3:
-    case ::libs::helpers::sys::cpu::CpuExts::sse2:
+    case ::libs::utility::sys::cpu::CpuExts::sse4_2:
+    case ::libs::utility::sys::cpu::CpuExts::sse4_1:
+    case ::libs::utility::sys::cpu::CpuExts::sse3:
+    case ::libs::utility::sys::cpu::CpuExts::sse2:
       sel_.set (::libs::optim::s16bit::scale::flow::wany::nearest::sse2);
       sel_.set (::libs::optim::s16bit::scale::flow::wany::nearest::alu);
       break;
 #endif
-    case ::libs::helpers::sys::cpu::CpuExts::alu:
+    case ::libs::utility::sys::cpu::CpuExts::alu:
       sel_.set (::libs::optim::s16bit::scale::flow::wany::nearest::alu);
       break;
-    case ::libs::helpers::sys::cpu::CpuExts::usual:
+    case ::libs::utility::sys::cpu::CpuExts::usual:
 #ifdef U3_CPU_X86
       sel_.set (::libs::optim::s16bit::scale::flow::wany::nearest::sse2);
 #elif defined(U3_CPU_ARM)
@@ -55,7 +55,7 @@ class CScaleNearestAlg final : public IOptimAlg
 #endif
       break;
 #ifdef U3_CPU_ARM
-    case ::libs::helpers::sys::cpu::CpuExts::neon:
+    case ::libs::utility::sys::cpu::CpuExts::neon:
       sel_.set (::libs::optim::s16bit::scale::flow::wany::nearest::alu);
       break;
 #endif

@@ -13,21 +13,17 @@ class ILink
 {
   public:
   // ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ILink)
-
-  ILink (const ILink& src)                = delete;
-  ILink& operator= (const ILink& src)     = delete;
-  ILink (ILink&& src) noexcept            = delete;
-  ILink& operator= (ILink&& src) noexcept = delete;
+  U3_ADD_POINTERS_TO_SELF (ILink)
+  U3_ADD_DELETE_MOVE_COPY (ILink)
 
   /// Функция подключения к удаленной точки-серверу
-  bool connect (const CreateInfo& info);
+  bool connect (const CreateInfo&);
 
   /// Функция запуска точки-сервера
-  bool listen (const CreateInfo& info);
+  bool listen (const CreateInfo&);
 
   /// Функция удаление связи
-  bool destroy (const LinkDestroys& type = LinkDestroys::soft);
+  bool destroy (const LinkDestroys& = LinkDestroys::soft);
 
   /// Функция возвращает true если свзязь установлена
   bool is_connected () const;
@@ -42,13 +38,13 @@ class ILink
   /// \param[in]  id   опциональный идентификатор транзакции, к которое принадлежит данное сообщение
   /// \return     указатель на ответное сообщение или empty
   ::libs::events::IEvent::ptr send_msg (
-    const syn::IEvent::ptr&        msg,
-    const details::CallSyncs&      sync,
-    const details::Calls&          req,
-    const syn::ISeqEvent::id_type& id = syn::ISeqEvent::id_type ());
+    const syn::IEvent::ptr&,
+    const details::CallSyncs&,
+    const details::Calls&,
+    const syn::ISeqEvent::id_type& = syn::ISeqEvent::id_type ());
 
-  void               complite_msg (const syn::IEvent::ptr&, const StateProcessEvent&);
-  mem::IMem::raw_ptr get_imem ();
+  auto complite_msg (const syn::IEvent::ptr&, const StateProcessEvent&) -> void;
+  auto get_imem () -> mem::IMem::raw_ptr;
 
   protected:
   ILink ()          = default;

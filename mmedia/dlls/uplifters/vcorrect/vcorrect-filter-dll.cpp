@@ -5,8 +5,6 @@
 \date       26.07.2016
 \project    u3_vcorrect_vdd
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "vcorrect-includes_int.hpp"
 #include "vcorrect-info-filter-dll.hpp"
 #include "vcorrect-filter-dll.hpp"
@@ -45,7 +43,7 @@ Filter::transform_int (syn::TransformInfo& info)
       if (devent)
       {
         U3_LOG_DATA_MARK ("recive syn::InterfCorrectImageEvent -> update properties" + VTOLOG (devent->is_active ()));
-        const auto enable_hardware = devent->is_active () && finfo_.rprops_ && (::libs::ievents::SelectorImpls::software != finfo_.rprops_->hint_correct_impl_);
+        const auto enable_hardware = devent->is_active () && finfo_.rprops_ && (::libs::events_base::SelectorImpls::software != finfo_.rprops_->hint_correct_impl_);
 
         finfo_.hardware_impl_ = devent->get_interface ();
         finfo_.active_impl_   = enable_hardware ? finfo_.hardware_impl_ : finfo_.soft_impl_;

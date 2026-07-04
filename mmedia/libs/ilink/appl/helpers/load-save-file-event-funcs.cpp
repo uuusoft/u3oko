@@ -15,7 +15,7 @@ void
 save_event_to_bin_file (const std::string& path2folder, ::libs::events::IEvent::ptr& smsg)
 {
   const auto id_event   = smsg->get_mid ();
-  const auto event_file = ::libs::helpers::files::make_path (path2folder, ::libs::helpers::files::prepare_for_file_name (id_event));
+  const auto event_file = ::libs::utility::files::make_path (path2folder, ::libs::utility::files::prepare_for_file_name (id_event));
 
   std::ofstream ofs (event_file, std::ios_base::binary);
   ::libs::iproperties::helpers::event2bin (smsg, ofs);
@@ -26,7 +26,7 @@ void
 save_event_to_json_file (const std::string& path2folder, ::libs::events::IEvent::ptr& smsg)
 {
   const auto id_event   = smsg->get_mid ();
-  const auto event_file = ::libs::helpers::files::make_path (path2folder, ::libs::helpers::files::prepare_for_file_name (id_event));
+  const auto event_file = ::libs::utility::files::make_path (path2folder, ::libs::utility::files::prepare_for_file_name (id_event));
 
   std::ofstream ofs (event_file, std::ios_base::binary);
   ofs << smsg->save_json ();
@@ -37,7 +37,7 @@ void
 load_event_from_bin_file (const std::string& path2folder, ::libs::events::IEvent::ptr& dmsg)
 {
   const auto    id_event  = dmsg->get_mid ();
-  const auto    path2file = ::libs::helpers::files::make_path (path2folder, ::libs::helpers::files::prepare_for_file_name (id_event));
+  const auto    path2file = ::libs::utility::files::make_path (path2folder, ::libs::utility::files::prepare_for_file_name (id_event));
   std::ifstream ifs (path2file, std::ios_base::binary);
 
   if (ifs.is_open ())
@@ -54,7 +54,7 @@ void
 load_event_from_json_file (const std::string& path2folder, ::libs::events::IEvent::ptr& dmsg)
 {
   const auto    id_event  = dmsg->get_mid ();
-  const auto    path2file = ::libs::helpers::files::make_path (path2folder, ::libs::helpers::files::prepare_for_file_name (id_event));
+  const auto    path2file = ::libs::utility::files::make_path (path2folder, ::libs::utility::files::prepare_for_file_name (id_event));
   std::ifstream ifs (path2file, std::ios_base::binary);
 
   if (ifs.is_open ())

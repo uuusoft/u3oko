@@ -18,7 +18,7 @@ class LogModule final : public ::libs::ilink::appl::leaf::LeafModule
 
   private:
   //  internal typess
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ilink::appl::leaf::LeafModule)
+  U3_ADD_SUPER_CLASS (::libs::ilink::appl::leaf::LeafModule)
 
   //  IApplication overrides
   virtual auto init_appl_data_int () -> void override;
@@ -44,7 +44,7 @@ class LogModule final : public ::libs::ilink::appl::leaf::LeafModule
   auto prepare_start () -> void;
   auto check_process () -> void;
   auto add_msg_from_self (const std::string&) -> void;
-  auto process_info_log (syn::InfoLogEvent::raw_ptr, syn::IEvent::ptr) -> void;
+  auto process_info_log (syn::InfoLogEvent::raw_ptr, const syn::IEvent::ptr&) -> void;
   auto process_property_log_module (syn::PropertyLogModuleEvent::raw_ptr) -> void;
   auto process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr) -> void;
   auto process_list_logs (syn::ProcessListLogsEvent::raw_ptr) -> void;

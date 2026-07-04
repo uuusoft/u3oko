@@ -5,8 +5,6 @@
 \project    u3_desk_vgen
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../../../desk-vgen-includes_int.hpp"
 #include "capture-desk-impl-linux-wl.hpp"
 
@@ -108,8 +106,8 @@ CaptureDeskImplLinux::get_buf_int (
   U3_CHECK (img, "XGetImage");
   const auto bitspx         = (*img)->depth;
   const auto bytespx        = (bitspx >> 3);
-  const auto aligned_width  = ::libs::helpers::mem::align_value (attrs.width, 64, true);
-  const auto aligned_stride = ::libs::helpers::mem::align_value (aligned_width * bytespx, 64, true);
+  const auto aligned_width  = ::libs::utility::mem::align_value (attrs.width, 64, true);
+  const auto aligned_stride = ::libs::utility::mem::align_value (aligned_width * bytespx, 64, true);
 
   info.width_dest_     = aligned_width;
   info.height_dest_    = attrs.height;
@@ -133,7 +131,7 @@ CaptureDeskImplLinux::get_buf_int (
     }
   }
 
-  info.rgb_buf_->set_data_size (info.size_dest_data_);
+  info.rgb_buf_->set_size (info.size_dest_data_);
   // XDestroyImage (img);
   // XCloseDisplay (display);
 #  endif

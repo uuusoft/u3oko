@@ -5,7 +5,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_core_lib
 */
-#include "graph-state-type.hpp"
+#include "enum-graph-states.hpp"
 #include "impl_as_frends.hpp"
 #include "iinterf-graph-obj.hpp"
 #include "igraph-node.hpp"

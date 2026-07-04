@@ -16,10 +16,8 @@ class IInterfGraphObj
 
   public:
   //  ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IInterfGraphObj)
-
-  IInterfGraphObj (const IInterfGraphObj& src)            = delete;
-  IInterfGraphObj& operator= (const IInterfGraphObj& src) = delete;
+  U3_ADD_POINTERS_TO_SELF (IInterfGraphObj)
+  U3_ADD_DELETE_MOVE_COPY (IInterfGraphObj)
 
   protected:
   /// Конструктор, закрываем, т.к. создание объектов данного типа не предусмотренно

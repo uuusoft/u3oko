@@ -7,7 +7,7 @@
 */
 #include "dbufs-video-syn.hpp"
 
-#include "buf-flags-enum.hpp"
+#include "enum-buf-flags.hpp"
 #include "enum-mem-vars.hpp"
 #include "ibuf.hpp"
 #include "imem-buf.hpp"
@@ -18,19 +18,19 @@
 #include "video/consts/offs/dbufs-str2eof-helper-funcs.hpp"
 
 #include "video/dim-vars.hpp"
-#include "video/dim-checks-enum.hpp"
-#include "video/subs-enum.hpp"
-#include "video/alloc-buf-info.hpp"
+#include "video/enum-dim-checks.hpp"
+#include "video/enum-subs.hpp"
+#include "video/alloc-params.hpp"
 #include "video/ivideo-buf.hpp"
 
 #include "allocator/ibuf-allocator.hpp"
 #include "allocator/buf-allocator.hpp"
 #include "allocator/buf-allocator-proxy.hpp"
 
-#include "video/helpers/override_data.hpp"
-#include "video/helpers/is_equal_dim.hpp"
-#include "video/helpers/buf_get_data_funcs.hpp"
-#include "video/helpers/buf-filling-funcs.hpp"
-#include "video/helpers/fill-edges-helper-funcs.hpp"
-#include "video/helpers/reset_edges.hpp"
-#include "video/helpers/invert_rows.hpp"
+#include "video/helpers/replace-buf-params-funcs.hpp"
+#include "video/helpers/buf-dimension-equal-funcs.hpp"
+#include "video/helpers/get-data-buf-funcs.hpp"
+#include "video/helpers/fill-buf-funcs.hpp"
+#include "video/helpers/fill-buf-edges-funcs.hpp"
+#include "video/helpers/reset-buf-edges-funcs.hpp"
+#include "video/helpers/swap-buf-data-by-rows-funcs.hpp"

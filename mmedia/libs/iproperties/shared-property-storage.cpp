@@ -4,8 +4,6 @@
 \date       01.01.2017
 \project    u3_iproperties_lib
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "libs-iproperties-includes_int.hpp"
 #include "shared-property-storage.hpp"
 
@@ -27,8 +25,8 @@ SharedPropertyStorage::check (const syn::key_property_type& key) const -> bool
 }
 
 
-syn::ISharedProperty::raw_ptr
-SharedPropertyStorage::get (const syn::key_property_type& key)
+auto
+SharedPropertyStorage::get (const syn::key_property_type& key) -> syn::ISharedProperty::raw_ptr
 {
   lock_type lock (mtx_);
   auto      find = props_.find (key);

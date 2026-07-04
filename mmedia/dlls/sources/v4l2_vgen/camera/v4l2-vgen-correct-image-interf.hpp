@@ -10,11 +10,11 @@
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 namespace dlls::sources::v4l2_vgen::camera
 {
-class CorrectImageInterf : public ::libs::ievents::runtime::interf::interfaces::ICorrectImage
+class CorrectImageInterf : public ::libs::events_base::runtime::interf::interfaces::ICorrectImage
 {
   public:
   //  ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (CorrectImageInterf)
+  U3_ADD_POINTERS_TO_SELF (CorrectImageInterf)
 
   CorrectImageInterf ()          = default;
   virtual ~CorrectImageInterf () = default;

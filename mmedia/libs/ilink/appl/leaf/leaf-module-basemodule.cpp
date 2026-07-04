@@ -54,7 +54,7 @@ LeafModule::update_catch_funcs_int ()
     {
       return msg;
     }
-    return syn::IEvent::ptr ();
+    return {};
   };
 
   catch_funcs_[::libs::events::IRequestEvent::gen_get_mid ()] =
@@ -97,7 +97,7 @@ LeafModule::update_catch_funcs_int ()
       {
         stop_module_ = true;
       }
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };
@@ -140,8 +140,8 @@ LeafModule::appl_work_int ()
         {
           std::pair< syn::IEvent::raw_ptr, syn::IEvent::hid_type > cmsgs[] = {
             { msg.get (), msg->get_mid () },
-            { ::libs::iproperties::helpers::cast_event< ievents::runtime::RuntimeEvent > (msg), ievents::runtime::RuntimeEvent::gen_get_mid () },
-            { ::libs::iproperties::helpers::cast_event< ::libs::ilog_events::events::InfoLogEvent > (msg), ::libs::ilog_events::events::InfoLogEvent::gen_get_mid () }
+            { ::libs::iproperties::helpers::cast_event< events_base::runtime::RuntimeEvent > (msg), events_base::runtime::RuntimeEvent::gen_get_mid () },
+            { ::libs::iproperties::helpers::cast_event< ::libs::events_log::events::InfoLogEvent > (msg), ::libs::events_log::events::InfoLogEvent::gen_get_mid () }
           };
 
           auto ffinger = catch_funcs_.end ();
@@ -162,12 +162,12 @@ LeafModule::appl_work_int ()
           catch_msg_func_type nfunc =
             catch_funcs_.end () != ffinger ?
               ffinger->second :
-              [] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) {
-                U3_XLOG_DBG ("LeafModule::appl_work_int::default catch" + TOLOG (msg->gen_get_mid ()));
-                return syn::IEvent::ptr ();
-              };
+              [] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+            U3_XLOG_DBG ("LeafModule::appl_work_int::default catch" + TOLOG (msg->gen_get_mid ()));
+            return syn::IEvent::ptr ();
+          };
 
-          funcs.push_back (std::make_pair (nfunc, msg));
+          funcs.emplace_back (nfunc, msg);
 
           try
           {
@@ -190,7 +190,7 @@ LeafModule::appl_work_int ()
         }
 
         U3_ASSERT (!funcs.empty ());
-        auto src_complite = src;
+        const auto& src_complite = src;
 
         try
         {

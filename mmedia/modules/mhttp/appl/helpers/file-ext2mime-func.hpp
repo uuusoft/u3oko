@@ -12,7 +12,7 @@ inline const std::string&
 file_ext2mime (const std::string& ext)
 {
   // source https://mimetype.io/all-types
-  static const std::unordered_map< std::string, const std::string > ext2http_type = {
+  static const boost::unordered_flat_map< std::string, const std::string > ext2http_type = {
     { ".html", "text/html" },
     { ".htm", "text/html" },
     { ".js", "application/javascript" },

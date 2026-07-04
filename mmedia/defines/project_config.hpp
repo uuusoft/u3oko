@@ -7,11 +7,11 @@
 
 namespace configure
 {
-constexpr const char* project_name     = "develop";
-constexpr const char* git_hash         = "develop";
-constexpr const char* start_build_time = "skip";
-constexpr const char* compilers_info   = "OrangePi-Clang-_22_1_3-Clang-_22_1_3--aarch64-Release-none";
+inline constexpr const char* project_name     = "develop";
+inline constexpr const char* git_hash         = "develop";
+inline constexpr const char* start_build_time = "skip";
+inline constexpr const char* compilers_info   = "OrangePi-Clang-_22_1_3-Clang-_22_1_3--aarch64-Release-none";
 
-constexpr std::uint32_t project_ver_major = 0;
-constexpr std::uint32_t project_ver_minor = 1;
+inline constexpr std::uint32_t project_ver_major = 0;
+inline constexpr std::uint32_t project_ver_minor = 1;
 }   // namespace configure

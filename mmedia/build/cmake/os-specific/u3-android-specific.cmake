@@ -44,7 +44,7 @@ set(U3_SHARED_LINK_OPTIONS_CPP
 
 include_directories("${U3_BUILD_PATH_TO_LIBS}/../")
 
-message(NOTICE "${U3_MARK_REFACT} merge directories for android and othes")
+message(NOTICE "${U3_MARK_REFACT}merge directories for android")
 file(REMOVE_RECURSE "${CMAKE_SOURCE_DIR}/appls/u3oko/android/app/src/main/assets/service#0")
 file(COPY "${CMAKE_SOURCE_DIR}/assets/xmls/templates" DESTINATION "${CMAKE_SOURCE_DIR}/appls/u3oko/android/app/src/main/assets/service#0")
 

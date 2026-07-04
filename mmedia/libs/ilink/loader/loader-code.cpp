@@ -6,6 +6,7 @@
 */
 #include "libs-ilink-loader-includes_int.hpp"
 #include "../libs-ilink-includes_int.hpp"
+#include "memory"
 #include "loader-code.hpp"
 
 namespace libs::ilink::loader
@@ -29,11 +30,11 @@ LoaderCode::load (
     switch (type)
     {
     case ::libs::link::details::CodeRuns::appl:
-      impl_.reset (new OutProcLoaderCode);
+      impl_ = std::make_unique< OutProcLoaderCode > ();
       break;
     case ::libs::link::details::CodeRuns::dll:
     default:
-      impl_.reset (new InProcLoaderCode);
+      impl_ = std::make_unique< InProcLoaderCode > ();
       break;
     }
   }
@@ -43,15 +44,15 @@ LoaderCode::load (
 }
 
 
-bool
-LoaderCode::is_load () const
+auto
+LoaderCode::is_load () const -> bool
 {
   return impl_->is_load ();
 }
 
 
-bool
-LoaderCode::unload (bool force)
+auto
+LoaderCode::unload (bool force) -> bool
 {
   return impl_->unload (force);
 }

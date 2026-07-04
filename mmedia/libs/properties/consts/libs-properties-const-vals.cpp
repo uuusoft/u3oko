@@ -4,8 +4,7 @@
 \date       01.01.2017
 \project    u3_properties_libs
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
+#include "../libs-properties-includes_int.hpp"
 #include "libs-properties-const-vals.hpp"
 
 namespace libs::properties::consts

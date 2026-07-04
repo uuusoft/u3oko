@@ -12,9 +12,10 @@ using IHardwareCapture        = ::dlls::sources::gen_lib::interfs::IHardwareCapt
 using SourceImplInfo          = ::dlls::sources::gen_lib::SourceImplInfo;
 using pkeys2bufs_type         = ::dlls::sources::gen_lib::syn::pkeys2bufs_type;
 using tevents_type            = ::dlls::sources::gen_lib::syn::tevents_type;
-using DefaultFileMask         = ::libs::helpers::files::DefaultFileMask;
-using CpuExts                 = ::libs::helpers::sys::cpu::CpuExts;
+using DefaultFileMask         = ::libs::utility::files::DefaultFileMask;
+using CpuExts                 = ::libs::utility::sys::cpu::CpuExts;
 using IEvent                  = ::libs::events::IEvent;
-using InterfCaptureImageEvent = ::libs::ievents::runtime::interf::InterfCaptureImageEvent;
-using IBlockMem               = ::libs::helpers::mem::IBlockMem;
+using InterfCaptureImageEvent = ::libs::events_base::runtime::interf::InterfCaptureImageEvent;
+using IBlockMem               = ::libs::utility::mem::IBlockMem;
+using NodeEnumFiles           = ::libs::utility::files::NodeEnumFiles;
 }   // namespace dlls::sources::pict_vgen::syn

@@ -4,12 +4,10 @@
 \date       01.01.2017
 \project    u3_iproperties_lib
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../libs-iproperties-includes_int.hpp"
 #include "libs-iproperties-appl-paths-includes.hpp"
 #include "app-paths.hpp"
-#include "helpers/get_appl_folder.hpp"
+#include "helpers/get-appl-folders-funcs.hpp"
 
 namespace libs::iproperties::appl_paths
 {
@@ -19,46 +17,46 @@ AppPaths::load_paths (const ::libs::link::appl::InitApplication& appl_info)
   U3_XLOG_MARK ("update paths" + TOLOG (appl_info.appl_name_) + TOLOG (appl_info.company_name_) + TOLOG (appl_info.service_name_))
   U3_CHECK (appl_info.check (), "failed appl_info.check")
 
-  const auto appl_subfolder = ::libs::helpers::files::make_path (appl_info.company_name_, appl_info.appl_name_);
+  const auto appl_subfolder = ::libs::utility::files::make_path (appl_info.company_name_, appl_info.appl_name_);
   const auto service_path   = ::libs::iproperties::appl_paths::helpers::get_data_folder (appl_subfolder, appl_info.service_name_);
 
   paths_.clear ();
 
   paths_[Paths::generic_appl] = ::libs::iproperties::appl_paths::helpers::get_appl_folder (appl_subfolder);
   paths_[Paths::main_appl]    = ::libs::iproperties::appl_paths::get_current_folder ();
-  paths_[Paths::bins]         = ::libs::helpers::files::make_path (paths_[Paths::main_appl], get_path_suffix (Paths::bins));
-  paths_[Paths::emulate_bins] = ::libs::helpers::files::make_path (paths_[Paths::main_appl], get_path_suffix (Paths::emulate_bins));
+  paths_[Paths::bins]         = ::libs::utility::files::make_path (paths_[Paths::main_appl], get_path_suffix (Paths::bins));
+  paths_[Paths::emulate_bins] = ::libs::utility::files::make_path (paths_[Paths::main_appl], get_path_suffix (Paths::emulate_bins));
 
   // private service folders
-  paths_[Paths::logs]                  = ::libs::helpers::files::make_path (service_path, get_path_suffix (Paths::logs));
-  paths_[Paths::temp]                  = ::libs::helpers::files::make_path (service_path, get_path_suffix (Paths::temp));
-  paths_[Paths::active_data_module]    = ::libs::helpers::files::make_path (service_path, get_path_suffix (Paths::active_data_module));
-  paths_[Paths::active_appl_module]    = ::libs::helpers::files::make_path (service_path, get_path_suffix (Paths::active_appl_module));
-  paths_[Paths::active_event_module]   = ::libs::helpers::files::make_path (service_path, get_path_suffix (Paths::active_event_module));
-  paths_[Paths::active_storage_module] = ::libs::helpers::files::make_path (service_path, get_path_suffix (Paths::active_storage_module));
+  paths_[Paths::logs]                  = ::libs::utility::files::make_path (service_path, get_path_suffix (Paths::logs));
+  paths_[Paths::temp]                  = ::libs::utility::files::make_path (service_path, get_path_suffix (Paths::temp));
+  paths_[Paths::active_data_module]    = ::libs::utility::files::make_path (service_path, get_path_suffix (Paths::active_data_module));
+  paths_[Paths::active_appl_module]    = ::libs::utility::files::make_path (service_path, get_path_suffix (Paths::active_appl_module));
+  paths_[Paths::active_event_module]   = ::libs::utility::files::make_path (service_path, get_path_suffix (Paths::active_event_module));
+  paths_[Paths::active_storage_module] = ::libs::utility::files::make_path (service_path, get_path_suffix (Paths::active_storage_module));
   // shared folders between services
-  paths_[Paths::templates_event_module] = ::libs::helpers::files::make_path (paths_[Paths::generic_appl], get_path_suffix (Paths::templates_event_module));
-  paths_[Paths::templates_appl_module]  = ::libs::helpers::files::make_path (paths_[Paths::generic_appl], get_path_suffix (Paths::templates_appl_module));
-  paths_[Paths::templates_data_module]  = ::libs::helpers::files::make_path (paths_[Paths::generic_appl], get_path_suffix (Paths::templates_data_module));
-  paths_[Paths::templates_gui_module]   = ::libs::helpers::files::make_path (paths_[Paths::generic_appl], get_path_suffix (Paths::templates_gui_module));
-  paths_[Paths::templates_http_module]  = ::libs::helpers::files::make_path (paths_[Paths::generic_appl], get_path_suffix (Paths::templates_http_module));
+  paths_[Paths::templates_event_module] = ::libs::utility::files::make_path (paths_[Paths::generic_appl], get_path_suffix (Paths::templates_event_module));
+  paths_[Paths::templates_appl_module]  = ::libs::utility::files::make_path (paths_[Paths::generic_appl], get_path_suffix (Paths::templates_appl_module));
+  paths_[Paths::templates_data_module]  = ::libs::utility::files::make_path (paths_[Paths::generic_appl], get_path_suffix (Paths::templates_data_module));
+  paths_[Paths::templates_gui_module]   = ::libs::utility::files::make_path (paths_[Paths::generic_appl], get_path_suffix (Paths::templates_gui_module));
+  paths_[Paths::templates_http_module]  = ::libs::utility::files::make_path (paths_[Paths::generic_appl], get_path_suffix (Paths::templates_http_module));
 
 #ifdef U3_OS_ANDROID
   paths_[Paths::bins]         = "";
-  paths_[Paths::emulate_bins] = ::libs::helpers::files::make_path (paths_[Paths::generic_appl], get_path_suffix (Paths::emulate_bins));
+  paths_[Paths::emulate_bins] = ::libs::utility::files::make_path (paths_[Paths::generic_appl], get_path_suffix (Paths::emulate_bins));
   paths_[Paths::main_appl]    = paths_[Paths::bins];
 #endif
 
   for (const auto& path : paths_)
   {
     U3_XLOG_DBG ("create path" + TOLOG (path.second));
-    ::libs::helpers::files::create_folder (path.second);
+    ::libs::utility::files::create_folder (path.second);
   }
 }
 
 // EAI-REFACT
-std::string
-AppPaths::get_path_suffix (const Paths& type) const
+auto
+AppPaths::get_path_suffix (const Paths& type) const -> std::string
 {
   switch (type)
   {
@@ -126,8 +124,8 @@ AppPaths::get_path_suffix (const Paths& type) const
 }
 
 
-std::string
-AppPaths::get_path (const Paths& type) const
+auto
+AppPaths::get_path (const Paths& type) const -> std::string
 {
   switch (type)
   {

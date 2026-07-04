@@ -12,6 +12,7 @@
 #include "mmedia/dlls/codecs/codec_gen/codec-gen-includes.hpp"
 
 #include "turbojpeg.h"
+#include "defines-check-state-turbojpeg-lib.hpp"
 
 #include "consts/vcodec-mjpg-const-vals.hpp"
 #include "vcodec-mjpg-syn.hpp"

@@ -4,8 +4,6 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_iproperties_lib
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "libs-iproperties-includes_int.hpp"
 #include "libs-iproperties-includes.hpp"
 #include "shared-property-storage-proxy.hpp"
@@ -13,36 +11,51 @@
 namespace libs::iproperties
 {
 SharedPropertyStorageProxy::SharedPropertyStorageProxy () :
-  ::libs::helpers::proxy::MemProxyBase (::libs::properties::consts::id_proxy_shared_mem, sizeof (SharedPropertyStorage)),
-  pobj_ (nullptr)
+  ::libs::utility::proxy::MemProxyBase (::libs::properties::consts::id_proxy_shared_mem, sizeof (SharedPropertyStorage)),
+  pimpl_ (nullptr)
 {
   // lock_type  lock(mtx_);
-  pobj_ = pshm_->find_or_construct< SharedPropertyStorage::ptr > (cid_.c_str ()) ();
-  U3_ASSERT (pobj_);
-
-  if (!(*pobj_))
+  pimpl_ = pshm_->find_or_construct< SharedPropertyStorage::ptr > (obj_id_.c_str ()) ();
+  U3_ASSERT (pimpl_);
+  if (!(*pimpl_))
   {
-    *pobj_.load () = std::make_shared< SharedPropertyStorage > ();
+    *pimpl_.load () = std::make_shared< SharedPropertyStorage > ();
   }
 
-  U3_ASSERT (pobj_);
+  U3_ASSERT (pimpl_);
 }
 
 
-SharedPropertyStorageProxy::raw_ptr
-SharedPropertyStorageProxy::instance ()
+auto
+SharedPropertyStorageProxy::instance () -> SharedPropertyStorageProxy::raw_ptr
 {
   static SharedPropertyStorageProxy g_inst;
   return &g_inst;
 }
 
 
-syn::ISharedPropertyStorage::raw_ptr
-SharedPropertyStorageProxy::impl ()
+auto
+SharedPropertyStorageProxy::impl () -> syn::ISharedPropertyStorage::raw_ptr
 {
   // lock_type  lock(mtx_);
-  U3_ASSERT (pobj_);
-  U3_ASSERT (*pobj_);
-  return pobj_.load ()->get ();
+  U3_ASSERT (pimpl_);
+  U3_ASSERT (*pimpl_);
+  return pimpl_.load ()->get ();
+}
+
+
+SharedPropertyStorageProxy::~SharedPropertyStorageProxy ()
+{
+  U3_XLOG_DEV ("SharedPropertyStorageProxy::~SharedPropertyStorageProxy::---->");
+  if (pimpl_)
+  {
+    U3_ASSERT_NT (pshm_, "empty shared memory object for SharedPropertyStorageProxy");
+    if (pshm_)
+    {
+      pshm_->destroy< SharedPropertyStorage::ptr > (obj_id_.c_str ());
+    }
+    pimpl_ = nullptr;
+  }
+  U3_XLOG_DEV ("SharedPropertyStorageProxy::~SharedPropertyStorageProxy::<----");
 }
 }   // namespace libs::iproperties

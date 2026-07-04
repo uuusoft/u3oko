@@ -4,15 +4,13 @@
 \date       04.08.2018
 \project    u3_iproperties_lib
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../libs-iproperties-includes_int.hpp"
 #include "cast_events_funcs.hpp"
 
 namespace libs::iproperties::helpers
 {
-::libs::events::io::IEvents::raw_ptr
-get_events_impl ()
+auto
+get_events_impl () -> ::libs::events::io::IEvents::raw_ptr
 {
   auto* events = ::libs::iproperties::helpers::cast_prop_demons ()->get_events_lockfree ();
   U3_CHECK (events, "empty events");
@@ -22,8 +20,8 @@ get_events_impl ()
 }
 
 
-::libs::events::IEvent::ptr
-get_pure_event_int (const ::libs::events::IEvent::hid_type& eid)
+auto
+get_pure_event_int (const ::libs::events::IEvent::hid_type& eid) -> ::libs::events::IEvent::ptr
 {
   auto* impl = get_events_impl ();
   auto  res  = impl->get (eid);
@@ -32,8 +30,8 @@ get_pure_event_int (const ::libs::events::IEvent::hid_type& eid)
 }
 
 #if 1
-void*
-cast_event_int (const ::libs::events::IEvent::ptr& event, const ::libs::events::IEvent::hid_type& eid)
+auto
+cast_event_int (const ::libs::events::IEvent::ptr& event, const ::libs::events::IEvent::hid_type& eid) -> void*
 {
   if (!event)
   {
@@ -45,8 +43,8 @@ cast_event_int (const ::libs::events::IEvent::ptr& event, const ::libs::events::
 }
 #endif
 
-const void*
-cast_event_int (const ::libs::events::IEvent::cptr& event, const ::libs::events::IEvent::hid_type& eid)
+auto
+cast_event_int (const ::libs::events::IEvent::cptr& event, const ::libs::events::IEvent::hid_type& eid) -> const void*
 {
   if (!event)
   {
@@ -58,8 +56,8 @@ cast_event_int (const ::libs::events::IEvent::cptr& event, const ::libs::events:
 }
 
 #if 1
-void*
-cast_event_int (::libs::events::IEvent::raw_ptr event, const ::libs::events::IEvent::hid_type& eid)
+auto
+cast_event_int (::libs::events::IEvent::raw_ptr event, const ::libs::events::IEvent::hid_type& eid) -> void*
 {
   if (!event)
   {
@@ -71,8 +69,8 @@ cast_event_int (::libs::events::IEvent::raw_ptr event, const ::libs::events::IEv
 }
 #endif
 
-const void*
-cast_event_int (::libs::events::IEvent::craw_ptr event, const ::libs::events::IEvent::hid_type& eid)
+auto
+cast_event_int (::libs::events::IEvent::craw_ptr event, const ::libs::events::IEvent::hid_type& eid) -> const void*
 {
   if (!event)
   {
@@ -84,16 +82,16 @@ cast_event_int (::libs::events::IEvent::craw_ptr event, const ::libs::events::IE
 }
 
 
-bool
-event2xml (::libs::events::IEvent::ptr& src, std::string& xml)
+auto
+event2xml (::libs::events::IEvent::ptr& src, std::string& xml) -> bool
 {
   auto* impl = get_events_impl ();
   return impl->event2xml (src, xml);
 }
 
 
-std::string
-event2xml (::libs::events::IEvent::ptr& src)
+auto
+event2xml (::libs::events::IEvent::ptr& src) -> std::string
 {
   if (!src)
   {
@@ -107,16 +105,16 @@ event2xml (::libs::events::IEvent::ptr& src)
 }
 
 
-bool
-xml2event (const std::string& xml, ::libs::events::IEvent::ptr& dst)
+auto
+xml2event (const std::string& xml, ::libs::events::IEvent::ptr& dst) -> bool
 {
   auto* impl = get_events_impl ();
   return impl->xml2event (xml, dst);
 }
 
 
-bool
-xml2event (const char* xml, ::libs::events::IEvent::ptr& dst)
+auto
+xml2event (const char* xml, ::libs::events::IEvent::ptr& dst) -> bool
 {
   auto* impl = get_events_impl ();
   return impl->xml2event (std::string (xml), dst);
@@ -131,16 +129,16 @@ event2bin (::libs::events::IEvent::ptr& src, std::ostream& bin)
 }
 
 
-bool
-bin2event (std::istream& bin, ::libs::events::IEvent::ptr& dst)
+auto
+bin2event (std::istream& bin, ::libs::events::IEvent::ptr& dst) -> bool
 {
   auto* impl = get_events_impl ();
   return impl->bin2event (bin, dst);
 }
 
 
-::libs::events::IEvent::ptr
-clone_event (const ::libs::events::IEvent::craw_ptr event, const ::libs::events::Deeps& type)
+auto
+clone_event (const ::libs::events::IEvent::craw_ptr event, const ::libs::events::Deeps& type) -> ::libs::events::IEvent::ptr
 {
   U3_ASSERT (event);
   auto* impl = get_events_impl ();

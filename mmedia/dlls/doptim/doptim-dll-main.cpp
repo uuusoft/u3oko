@@ -7,8 +7,8 @@
 */
 #include "doptim-includes_int.hpp"
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::optim::io::IOptim::raw_ptr
-create_impl_vdd_doptim ()
+extern "C" BOOST_SYMBOL_EXPORT auto
+create_impl_vdd_doptim () -> ::libs::optim::io::IOptim::raw_ptr
 {
   static ::dlls::doptim::impl::IOptimImpl ret;
   return &ret;

@@ -4,16 +4,12 @@
 \date       26.07.2016
 \project    u3_dbufs
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../dbufs-includes_int.hpp"
-
 #include "buf-allocator.hpp"
 #include "mmedia/utils/dbufs/video/impl/video-buf.hpp"
 
-extern "C" BOOST_SYMBOL_EXPORT
-  utils::dbufs::allocator::BufAllocator*
-  create_dbufs_impl ()
+extern "C" BOOST_SYMBOL_EXPORT auto
+create_dbufs_impl () -> utils::dbufs::allocator::IBufAllocator::raw_ptr
 {
   return utils::dbufs::allocator::BufAllocator::instance ();
 }
@@ -21,18 +17,11 @@ extern "C" BOOST_SYMBOL_EXPORT
 
 namespace utils::dbufs::allocator
 {
-BufAllocator*
-BufAllocator::instance ()
+auto
+BufAllocator::instance () -> IBufAllocator::raw_ptr
 {
-  static BufAllocator* impl (new BufAllocator ());   //  Никогда не удаляем.
-  return impl;
-}
-
-
-BufAllocator::BufAllocator () :
-  counter_alloc_bufs_ (0),
-  counter_reuse_bufs_ (0)
-{
+  static auto impl = std::unique_ptr< BufAllocator, void (*) (BufAllocator*) > (new BufAllocator {}, [] (BufAllocator* obj) -> void { delete obj; });
+  return impl.get ();
 }
 
 
@@ -42,44 +31,47 @@ BufAllocator::~BufAllocator ()
 }
 
 
-utils::dbufs::video::IVideoBuf::ptr
-BufAllocator::create (IBufAllocator::size_buf_type size)
+auto
+BufAllocator::create (IBufAllocator::size_buf_type size) -> utils::dbufs::video::IVideoBuf::ptr
 {
   lock_type lock (mtx_);
-
   for (const utils::dbufs::video::IVideoBuf::ptr& buf : bufs_)
   {
-    // буфер еще используется, пропускаем
     if (buf.use_count () > 1)
     {
+      // буфер еще используется, пропускаем
       continue;
     }
-    //  найден уже выделенный и уже не используемый клиентом буфер.
-    bool size_ok = false;
+    // найден уже выделенный и уже не используемый клиентом буфер
     // оцениваем его пригодность по размеру - он должен быть достаточным и при этом не слишком большим
+    bool size_ok = false;
     if (size)
     {
+      // пользователю важен размер буфера
       const auto raw_buf = buf->getraw_buf ();
       if (raw_buf)
       {
-        const auto  sizeraw_buf = raw_buf->get_buf_size ();
+        const auto  sizeraw_buf = raw_buf->get_capacity ();
         const float koeff_size  = sizeraw_buf / U3_CAST_FLOAT (size);
 
         size_ok = koeff_size >= 1.0F && koeff_size <= 2.0F;
       }
     }
-
+    // если пользователю не важен размер буфера или размер буфера достаточен для пользователя
     if (0 == size || size_ok)
     {
       buf->set_flag (::utils::dbufs::BufFlags::empty, true);
       ++counter_reuse_bufs_;
+      U3_XLOG_DBG ("return reuse buf" + VTOLOG (counter_reuse_bufs_) + VTOLOG (bufs_.size ()) + PTR_TOLOG (buf.get ()));
       return buf;
     }
   }
+
   //  выделяем новый буфер.
   utils::dbufs::video::IVideoBuf::ptr newbuf (new utils::dbufs::video::impl::VideoBuf ());
-  bufs_.push_back (newbuf);
+  bufs_.emplace_back (newbuf);
   ++counter_alloc_bufs_;
+  U3_XLOG_DBG ("return new buf" + VTOLOG (counter_alloc_bufs_) + VTOLOG (bufs_.size ()) + PTR_TOLOG (newbuf.get ()));
   return newbuf;
 }
 
@@ -88,11 +80,12 @@ void
 BufAllocator::clear ()
 {
   lock_type lock (mtx_);
-  dump_state_int ();
+  U3_XLOG_DEV ("BufAllocator::clear::---->" + VTOLOG (bufs_.size ()));
+  U3_XLOG_DEV (TOLOG (dump_state_int ()));
 
   for (utils::dbufs::video::IVideoBuf::ptr& buf : bufs_)
   {
-    U3_ASSERT (buf.use_count () <= 1);
+    U3_CHECK_NT (buf.use_count () <= 1, PTR_TOLOG (buf.get ()) + VTOLOG (buf.use_count ()));
     buf->set_flag (::utils::dbufs::BufFlags::empty, true);
     buf.reset ();
   }
@@ -100,19 +93,20 @@ BufAllocator::clear ()
   bufs_.clear ();
   counter_alloc_bufs_ = 0;
   counter_reuse_bufs_ = 0;
+  U3_XLOG_DEV ("BufAllocator::clear::<----");
 }
 
 
-std::string
-BufAllocator::dump_bufs_state ()
+auto
+BufAllocator::dump_bufs_state () -> std::string
 {
   lock_type lock (mtx_);
   return dump_state_int ();
 }
 
 
-std::string
-BufAllocator::dump_state_int ()
+auto
+BufAllocator::dump_state_int () -> std::string
 {
   std::int64_t all_mem        = 0;
   std::int64_t use_mem        = 0;

@@ -5,8 +5,6 @@
 \project    u3_vgen_lib
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "gen-lib-includes_int.hpp"
 #include "isource-impl.hpp"
 
@@ -137,15 +135,15 @@ ISourceImpl::update_source_info (const SourceImplInfo& info)
 }
 
 
-bool
-ISourceImpl::is_source_started ()
+auto
+ISourceImpl::is_source_started () -> bool
 {
   return is_source_started_int ();
 }
 
 
-bool
-ISourceImpl::is_source_started_int ()
+auto
+ISourceImpl::is_source_started_int () -> bool
 {
   return started_;
 }

@@ -20,9 +20,9 @@ class WebSharedState final
   // ext types
   using send_data_type           = std::vector< char >;
   using session_type             = modules::mhttp::impl::beast::websocket_session;
-  using sessions_holder_type     = std::unordered_set< session_type* >;
+  using sessions_holder_type     = boost::unordered_flat_set< session_type* >;
   using session_ssl_type         = modules::mhttp::impl::beast::websocket_session_ssl;
-  using ssl_sessions_holder_type = std::unordered_set< session_ssl_type* >;
+  using ssl_sessions_holder_type = boost::unordered_flat_set< session_ssl_type* >;
 
   explicit WebSharedState () = default;
   ~WebSharedState ()         = default;

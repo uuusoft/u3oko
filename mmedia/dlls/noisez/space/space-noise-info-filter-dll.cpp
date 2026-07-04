@@ -9,9 +9,8 @@
 
 namespace dlls::noisez::space
 {
-InfoFilter::InfoFilter ()
+InfoFilter::InfoFilter () : rprops_ (::libs::iproperties::helpers::create_event_in_list< syn::VideoSpaceNoiseRemoverProp > (ef_props_))
 {
-  rprops_ = ::libs::iproperties::helpers::create_event_in_list< syn::VideoSpaceNoiseRemoverProp > (ef_props_);
   str2props_.insert ({ ef_props_.front ()->get_mid (), rprops_ });
 
   // auto temp = ::libs::iproperties::helpers::create_event< syn::MedianSpaceFilterProp > (rprops_->impl_info_);

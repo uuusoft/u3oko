@@ -5,7 +5,13 @@
 
 set(U3_LIBS_SYSTEM_STATIC_LIST ${U3_LIBS_SYSTEM_STATIC_LIST} X11)
 set(U3_SHARED_COMPILE_OPTIONS_CPP ${U3_SHARED_COMPILE_OPTIONS_CPP} -std=${U3_CPP_STANDARD} -frtti -fexceptions -pthread)
-set(U3_SHARED_LINK_OPTIONS_CPP ${U3_SHARED_LINK_OPTIONS_CPP} -Wl,--no-undefined -Wl,-rpath='${ORIGIN}' -lpthread -ldl -lrt)
+set(U3_SHARED_LINK_OPTIONS_CPP
+    ${U3_SHARED_LINK_OPTIONS_CPP}
+    -Wl,--no-undefined
+    -Wl,-rpath='${ORIGIN}'
+    -lpthread
+    -ldl
+    -lrt)
 set(U3_SHARED_COMPILE_DEF_CPP ${U3_SHARED_COMPILE_DEF_CPP} -DU3_OS_LINUX=1)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 

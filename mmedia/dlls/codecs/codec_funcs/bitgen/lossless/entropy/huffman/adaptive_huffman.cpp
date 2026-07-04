@@ -4,8 +4,6 @@
 \date       01.11.2016
 \project    u3_codec_funcs
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../../../../codec-funcs-includes_int.hpp"
 #include "../../../codec-funcs-bitgen-includes.hpp"
 #include "adaptive_huffman.hpp"
@@ -20,9 +18,9 @@ CObj::forward_int (
   std::uint32_t&      count_byte_dst)
 {
   U3_ASSERT (0 == count_byte_dst);
-  const std::uint8_t* usrc    = ::libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (src);
-  std::uint8_t*       udst    = ::libs::helpers::casts::reinterpret_cast_helper< std::uint8_t* > (dst);
-  std::uint8_t        counter = 0;
+  const auto*  usrc    = ::libs::utility::casts::reinterpret_cast_helper< const std::uint8_t* > (src);
+  auto*        udst    = ::libs::utility::casts::reinterpret_cast_helper< std::uint8_t* > (dst);
+  std::uint8_t counter = 0;
 
   for (std::uint32_t indx = 0; indx < count_byte_src; ++indx)
   {
@@ -77,8 +75,8 @@ CObj::backward_int (
   void*               dst,
   std::uint32_t&      count_byte_dst)
 {
-  const std::uint8_t* usrc = ::libs::helpers::casts::reinterpret_cast_helper< const std::uint8_t* > (src);
-  std::uint8_t*       udst = ::libs::helpers::casts::reinterpret_cast_helper< std::uint8_t* > (dst);
+  const auto* usrc = ::libs::utility::casts::reinterpret_cast_helper< const std::uint8_t* > (src);
+  auto*       udst = ::libs::utility::casts::reinterpret_cast_helper< std::uint8_t* > (dst);
 
   for (std::uint32_t indx = 0; indx < count_byte_src; ++indx)
   {
@@ -101,22 +99,22 @@ CObj::backward_int (
 }
 
 
-std::uint32_t
-CObj::get_granularity_int () const
+auto
+CObj::get_granularity_int () const -> std::uint32_t
 {
   return consts::src_granularity;
 }
 
 
-const std::string&
-CObj::get_id_int () const
+auto
+CObj::get_id_int () const -> const std::string&
 {
   return id_string_;
 }
 
 
-std::uint32_t
-CObj::get_max_size_int (const std::uint32_t src_size) const
+auto
+CObj::get_max_size_int (const std::uint32_t src_size) const -> std::uint32_t
 {
   const std::uint32_t base = (src_size / get_granularity_int ()) * consts::dst_granularity;
   return base + (base / 2) + 1;

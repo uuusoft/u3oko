@@ -8,9 +8,5 @@
 
 namespace dlls::codecs::vcodec_gen::helpers
 {
-void
-load_codec_from_file (
-  bool               decorate_name,
-  const std::string& file_name,
-  CodecImplInfo&     info);
+void load_codec_from_file (bool decorate_name, const std::string& file_name, CodecImplInfo& info);
 }   // namespace dlls::codecs::vcodec_gen::helpers

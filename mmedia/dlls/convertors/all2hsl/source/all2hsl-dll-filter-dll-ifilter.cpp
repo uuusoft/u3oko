@@ -13,8 +13,8 @@ namespace dlls::convertors::all2hsl
 {
 void
 Filter::load_int (
-  ::libs::icore::impl::var1::obj::FilterInfo* info,
-  const ::pugi::xml_named_node_iterator&      node)
+  syn::FilterInfo*                       info,
+  const ::pugi::xml_named_node_iterator& node)
 {
   init_pts (&info->pts_);
   finfo_.load (node);
@@ -32,7 +32,7 @@ Filter::load_int (
 
 
 void
-Filter::transform_int (::libs::icore::impl::var1::obj::dll::TransformInfo& info)
+Filter::transform_int (syn::TransformInfo& info)
 {
   prepare_transform (info);
   if (::libs::events::PropertyUsings::disabled == finfo_.ef_props_.front ()->get_using_state ())
@@ -60,9 +60,9 @@ Filter::transform_int (::libs::icore::impl::var1::obj::dll::TransformInfo& info)
     //  Требуется уточнение уже для непосредственного буфера источника. Пустой буфер допустим, например если все преобразование происходит аппаратно.
     return;
   }
-  if (::libs::helpers::uids::minor::id_val::rgb24 != format && ::libs::helpers::uids::minor::id_val::y16 != format && ::libs::helpers::uids::minor::id_val::y8 != format)
+  if (::libs::utility::uids::minor::id_val::rgb24 != format && ::libs::utility::uids::minor::id_val::y16 != format && ::libs::utility::uids::minor::id_val::y8 != format)
   {
-    U3_LOG_DATA_WRN ("unknow format for HSL convert, skip, indx=" + indx_base_buf + ", format=" + ::libs::helpers::uids::helpers::get_readable_name (format));
+    U3_LOG_DATA_WRN ("unknow format for HSL convert, skip, indx=" + indx_base_buf + ", format=" + ::libs::utility::uids::helpers::get_readable_name (format));
     return;
   }
 
@@ -73,7 +73,7 @@ Filter::transform_int (::libs::icore::impl::var1::obj::dll::TransformInfo& info)
 
 
 void
-Filter::call_int (::libs::icore::impl::var1::obj::dll::CallInterfInfo& info)
+Filter::call_int (syn::CallInterfInfo& info)
 {
   super::prepare_call (info);
   super::call_gen (info);

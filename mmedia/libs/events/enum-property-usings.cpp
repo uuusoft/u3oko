@@ -4,17 +4,15 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    mevents
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "includes_int.hpp"
 #include "enum-property-usings.hpp"
 
 namespace libs::events
 {
-const std::string&
-to_string (const PropertyUsings& val)
+auto
+to_string (const PropertyUsings& val) -> const std::string&
 {
-  static const std::unordered_map< PropertyUsings, const std::string > valmap = {
+  static const boost::unordered_flat_map< PropertyUsings, const std::string > valmap = {
     { PropertyUsings::disabled, "disabled" },
     { PropertyUsings::enabled, "enabled" },
     { PropertyUsings::automatic, "automatic" },

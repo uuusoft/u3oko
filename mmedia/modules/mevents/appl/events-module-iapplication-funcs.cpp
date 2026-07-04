@@ -4,8 +4,6 @@
 \date       01.01.2017
 \project    mevents
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../module-events-includes_int.hpp"
 #include "consts/module-events-const-vals.hpp"
 #include "events-module-syn.hpp"

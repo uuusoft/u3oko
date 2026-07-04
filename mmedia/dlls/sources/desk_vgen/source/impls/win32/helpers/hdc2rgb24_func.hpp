@@ -12,7 +12,7 @@ namespace dlls::sources::desk_vgen::impls::win32::helpers
 struct Hdc2BmpCallInfo final {
   Hdc2BmpCallInfo (
     HDC                                  source_hdc,
-    ::libs::helpers::mem::IBlockMem::ptr dest_buf,
+    ::libs::utility::mem::IBlockMem::ptr dest_buf,
     std::uint32_t                        __dest_bits,
     std::uint32_t*                       active_dest_buf,
     std::uint32_t*                       width_dest,
@@ -49,7 +49,7 @@ struct Hdc2BmpCallInfo final {
   }
 
   HDC                                  source_hdc_;
-  ::libs::helpers::mem::IBlockMem::ptr dest_buf_;
+  ::libs::utility::mem::IBlockMem::ptr dest_buf_;
   std::uint32_t                        dest_count_bits_;
   std::uint32_t*                       active_dest_buf_;
   std::uint32_t*                       width_dest_;

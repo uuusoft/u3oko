@@ -32,13 +32,13 @@ InfoFilter::init ()
     detect_prop.bindx_diff_        = rprops_->bufs_.indx_dbuf_;
 
     diff_props_.diffs_.clear ();
-    diff_props_.diffs_.push_back ({ rprops_->bufs_.indx_sbuf_, detect_prop });
+    diff_props_.diffs_.emplace_back (rprops_->bufs_.indx_sbuf_, detect_prop);
     diff_impl_.init ();
     diff_impl_.set_props (&diff_props_);
   }
 
   {
-    auto morph_op = libs::ievents::props::videos::generic::morph::str2type_morph_op (rprops_->id_morph_op_);
+    auto morph_op = libs::events_base::props::videos::generic::morph::str2type_morph_op (rprops_->id_morph_op_);
 
     syn::MorphOperationParams morph_param (
       morph_op,
@@ -81,7 +81,7 @@ InfoFilter::sync_int (bool force)
   }
 
   {
-    const auto                morph_op = libs::ievents::props::videos::generic::morph::str2type_morph_op (rprops_->id_morph_op_);
+    const auto                morph_op = libs::events_base::props::videos::generic::morph::str2type_morph_op (rprops_->id_morph_op_);
     syn::MorphOperationParams morph_param (morph_op, rprops_->size_core_morph_op_, 0, 1);
     auto&                     last    = mops_props_.diffs_.back ();
     auto&                     last_op = last.morph_operations_.back ();

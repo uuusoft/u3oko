@@ -16,10 +16,8 @@ class IOptimProxy final
   //  ext types
   using create_ioptim_func_type = ::libs::optim::io::IOptim::raw_ptr ();
 
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IOptimProxy)
-
-  IOptimProxy (const IOptimProxy& src)            = delete;
-  IOptimProxy& operator= (const IOptimProxy& src) = delete;
+  U3_ADD_POINTERS_TO_SELF (IOptimProxy)
+  U3_ADD_DELETE_MOVE_COPY (IOptimProxy)
 
   static IOptimProxy::raw_ptr        instance (const std::string& dll_path);
   ::libs::optim::io::IOptim::raw_ptr impl ();
@@ -29,6 +27,6 @@ class IOptimProxy final
   ~IOptimProxy () = default;
 
   std::function< create_ioptim_func_type > creator_;   //<
-  ::libs::helpers::dlls::dll_type          lib_;       //<
+  ::libs::utility::dlls::dll_type          lib_;       //<
 };
 }   // namespace libs::proxy

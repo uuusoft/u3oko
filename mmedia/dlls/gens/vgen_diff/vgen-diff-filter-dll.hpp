@@ -18,8 +18,8 @@ class Filter final :
 
   private:
   //  internal typess
-  using off2bufs_type = std::unordered_map< ::utils::dbufs::video::consts::offs::off_buf_type, ::utils::dbufs::video::IVideoBuf::ptr >;
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
+  using off2bufs_type = boost::unordered_flat_map< ::utils::dbufs::video::consts::offs::off_buf_type, ::utils::dbufs::video::IVideoBuf::ptr >;
+  U3_ADD_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
 
   // IFilter overrides
   virtual auto load_int (syn::FilterInfo*, const ::pugi::xml_named_node_iterator&) -> void override;

@@ -4,8 +4,6 @@
 \date       01.05.2017
 \project    u3_vcodec_mjpg
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "vcodec-mjpg-includes_int.hpp"
 #include "mjpeg-impl.hpp"
 #include "mmedia/libs/optims/optim/mcalls/helpers/buf_helpers_funcs.hpp"
@@ -28,7 +26,7 @@ MjpegImpl::get_codec_info_int (syn::VideoCodecProp* ret_info)
 
 
 void
-MjpegImpl::set_cpu_int (::libs::helpers::sys::cpu::CpuExts optim)
+MjpegImpl::set_cpu_int (::libs::utility::sys::cpu::CpuExts optim)
 {
 }
 
@@ -50,8 +48,8 @@ MjpegImpl::init_int (const codec_gen::InfoGenCodec& info)
 }
 
 
-const syn::StatisticInfo&
-MjpegImpl::get_statistic_info_int () const
+auto
+MjpegImpl::get_statistic_info_int () const -> const syn::StatisticInfo&
 {
   return statistic_;
 }
@@ -64,11 +62,11 @@ MjpegImpl::reset_statistic_info_int ()
 }
 
 
-bool
+auto
 MjpegImpl::code_int (
   const ::libs::bufs::Bufs*         src,
   ::libs::bufs::Bufs*               dst,
-  syn::TransformInfo::tevents_type* events)
+  syn::TransformInfo::tevents_type* events) -> bool
 {
   const syn::IVideoBuf::raw_ptr  obuf = (*dst)[cinfo_.bufs_.indx_dbuf_];
   const syn::IVideoBuf::craw_ptr hbuf = (*src)[utils::dbufs::video::consts::offs::hue];
@@ -80,8 +78,8 @@ MjpegImpl::code_int (
   const auto lbuf_height = lbuf->get_dim_var (::utils::dbufs::video::Dims::height);
   const auto lbuf_stride = lbuf->get_dim_var (::utils::dbufs::video::Dims::stride);
 
-  obuf->buf_alloc (syn::AllocBufInfo (lbuf_width, lbuf_height, 0, ::libs::helpers::uids::minor::id_val::rgb24));
-  ::utils::dbufs::video::helpers::override_data (*obuf, 0, 0);
+  obuf->buf_alloc (syn::AllocParams (lbuf_width, lbuf_height, 0, ::libs::utility::uids::minor::id_val::rgb24));
+  ::utils::dbufs::video::helpers::replace_buf_params (*obuf, 0, 0);
 
   ::libs::optim::io::ProxyBuf thbuf (hbuf && (*hbuf)[::utils::dbufs::MemVars::size_data] ? hbuf : nullptr, "hbuf dlls::codecs::vcodec_mjpg");
   ::libs::optim::io::ProxyBuf tsbuf (sbuf && (*sbuf)[::utils::dbufs::MemVars::size_data] ? sbuf : nullptr, "sbuf dlls::codecs::vcodec_mjpg");
@@ -95,11 +93,11 @@ MjpegImpl::code_int (
   if (use_color)
   {
     temp_buf_->buf_alloc (
-      syn::AllocBufInfo (
+      syn::AllocParams (
         lbuf_width,
         lbuf_height,
         0,
-        ::libs::helpers::uids::minor::id_val::rgb24));
+        ::libs::utility::uids::minor::id_val::rgb24));
 
     const auto                        stride_temp_buf = temp_buf_->get_dim_var (utils::dbufs::video::Dims::stride);
     std::int32_t                      stride_rgb24    = stride_temp_buf;
@@ -119,11 +117,11 @@ MjpegImpl::code_int (
   else
   {
     temp_buf_->buf_alloc (
-      syn::AllocBufInfo (
+      syn::AllocParams (
         lbuf_width,
         lbuf_height,
         lbuf_stride,
-        ::libs::helpers::uids::minor::id_val::y8));
+        ::libs::utility::uids::minor::id_val::y8));
 
     ::libs::optim::io::MCallInfo cinfo;
 
@@ -141,15 +139,15 @@ MjpegImpl::code_int (
 }
 
 
-bool
+auto
 MjpegImpl::decode_int (
   const ::libs::bufs::Bufs*         src,
   ::libs::bufs::Bufs*               dst,
-  syn::TransformInfo::tevents_type* events)
+  syn::TransformInfo::tevents_type* events) -> bool
 {
   const syn::IVideoBuf::craw_ptr compbuf   = (*src)[cinfo_.bufs_.indx_sbuf_];
   const auto                     compsize  = (*compbuf)[::utils::dbufs::MemVars::size_data];
-  const auto*                    head      = ::libs::helpers::casts::reinterpret_cast_helper< const syn::HeaderIFrame* > (utils::dbufs::video::helpers::get_const_data (compbuf));
+  const auto*                    head      = ::libs::utility::casts::reinterpret_cast_helper< const syn::HeaderIFrame* > (utils::dbufs::video::helpers::get_const_data (compbuf));
   const bool                     use_color = !head->cinfo_.nocolor_;
   const auto&                    base_head = head->base_part_;
   const auto&                    info_head = base_head.sinfo_;
@@ -174,10 +172,10 @@ MjpegImpl::decode_int (
     return false;
   }
 
-  const auto stride_alloc = info_head.width_ * ::libs::helpers::uids::helpers::get_count_bytes_from_format (::libs::helpers::uids::minor::id_val::rgb32);   //
-  const auto px_preformat = use_color ? ::libs::helpers::uids::minor::id_val::rgb24 : ::libs::helpers::uids::minor::id_val::y8;
+  const auto stride_alloc = info_head.width_ * ::libs::utility::uids::helpers::get_count_bytes_from_format (::libs::utility::uids::minor::id_val::rgb32);   //
+  const auto px_preformat = use_color ? ::libs::utility::uids::minor::id_val::rgb24 : ::libs::utility::uids::minor::id_val::y8;
 
-  temp_buf_->buf_alloc (syn::AllocBufInfo (info_head.width_, info_head.height_, stride_alloc, px_preformat));
+  temp_buf_->buf_alloc (syn::AllocParams (info_head.width_, info_head.height_, stride_alloc, px_preformat));
   temp_buf_->set_flag (utils::dbufs::BufFlags::empty, true);
   dbuf->set_flag (utils::dbufs::BufFlags::empty, true);
 

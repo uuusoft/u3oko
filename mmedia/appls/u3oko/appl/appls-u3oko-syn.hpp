@@ -8,9 +8,9 @@
 
 namespace appls::u3oko::appl::syn
 {
-using CommandCodeEvent        = ::libs::igui_events::events::CommandCodeEvent;
-using FrameDone               = ::libs::ievents::runtime::video::FrameDone;
-using ChangeStateProcessEvent = ::libs::ievents::runtime::state::ChangeStateProcessEvent;
+using CommandCodeEvent        = ::libs::events_gui::events::CommandCodeEvent;
+using FrameDone               = ::libs::events_base::runtime::video::FrameDone;
+using ChangeStateProcessEvent = ::libs::events_base::runtime::state::ChangeStateProcessEvent;
 using IEvent                  = ::libs::events::IEvent;
 using InitApplication         = ::libs::link::appl::InitApplication;
 using StateProcessEventExt    = ::libs::ilink::appl::StateProcessEventExt;

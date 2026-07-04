@@ -19,8 +19,8 @@ StateProcessEventExt::reset ()
 }
 
 
-std::string
-to_string (const StateProcessEventExt& obj)
+auto
+to_string (const StateProcessEventExt& obj) -> std::string
 {
   std::string ret = ::libs::link::to_string (obj);
   ret += ", msg " + (obj.msg_ ? std::string { obj.msg_->get_mid () } : "empty");

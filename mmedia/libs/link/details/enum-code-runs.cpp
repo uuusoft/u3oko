@@ -4,17 +4,15 @@
 \date       04.03.2022
 \project    u3_link
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../libs-link-includes_int.hpp"
 #include "enum-code-runs.hpp"
 
 namespace libs::link::details
 {
-const std::string&
-to_string (const CodeRuns& val)
+auto
+to_string (const CodeRuns& val) -> const std::string&
 {
-  static const std::unordered_map< CodeRuns, const std::string > vals = {
+  static const boost::unordered_flat_map< CodeRuns, const std::string > vals = {
     { CodeRuns::usual, "usual" },
     { CodeRuns::dll, "dll" },
     { CodeRuns::appl, "appl" },

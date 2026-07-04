@@ -9,8 +9,8 @@
 #include "detect-face-info-filter-dll.hpp"
 #include "detect-face-filter-dll.hpp"
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter::raw_ptr
-create_impl_vdd_detect_face ()
+extern "C" BOOST_SYMBOL_EXPORT auto
+create_impl_vdd_detect_face () -> ::libs::icore::impl::var1::obj::dll::IFilter::raw_ptr
 {
   ::libs::icore::impl::var1::obj::dll::IFilter::raw_ptr ret (new ::dlls::detectors::detect_face::Filter);
   return ret;

@@ -17,7 +17,7 @@ class websocket_session final : public std::enable_shared_from_this< websocket_s
   using storage_send_data_type = std::vector< std::shared_ptr< const send_data_type > >;
 
   // Take ownership of the socket
-  explicit websocket_session (boost::asio::ip::tcp::socket&& socket, const shared_state_ptr_type& shared_state);
+  explicit websocket_session (boost::asio::ip::tcp::socket&& socket, shared_state_ptr_type shared_state);
   ~websocket_session ();
 
   // Start the asynchronous accept operation

@@ -9,6 +9,6 @@
 
 namespace libs::proxy
 {
-dlls::sources::gen_lib::bcreate_source_func_type get_create_source_funct (const std::string& plib_id);
-dlls::sources::gen_lib::bfree_source_func_type   get_free_source_funct (const std::string& plib_id);
+auto get_create_source_func (const std::string&) -> dlls::sources::gen_lib::bcreate_source_func_type;
+auto get_free_source_func (const std::string&) -> dlls::sources::gen_lib::bfree_source_func_type;
 }   // namespace libs::proxy

@@ -8,10 +8,10 @@
 
 namespace dlls::codecs::bitgen::lossless::test_copy_xx_to_xx::consts
 {
-const std::string id_string                   = "test_copy_xx_to_xx";
-constexpr std::uint32_t src_short_granularity = 1;
-constexpr std::uint32_t src_granularity       = src_short_granularity;
-constexpr std::uint32_t dst_granularity       = src_granularity;
+const std::string id_string                          = "test_copy_xx_to_xx";
+inline constexpr std::uint32_t src_short_granularity = 1;
+inline constexpr std::uint32_t src_granularity       = src_short_granularity;
+inline constexpr std::uint32_t dst_granularity       = src_granularity;
 }   // namespace dlls::codecs::bitgen::lossless::test_copy_xx_to_xx::consts
 
 
@@ -20,14 +20,8 @@ namespace dlls::codecs::bitgen::lossless::test_copy_xx_to_xx
 class CObj : public IBitGen
 {
   public:
-  CObj () :
-    id_string_ (consts::id_string)
-  {
-  }
-
-  virtual ~CObj ()
-  {
-  }
+  CObj ()          = default;
+  virtual ~CObj () = default;
 
   protected:
   virtual void
@@ -38,7 +32,7 @@ class CObj : public IBitGen
     std::uint32_t&      count_byte_dst) override
   {
     count_byte_dst = count_byte_src;
-    ::libs::helpers::mem::u3copy (src, dst, count_byte_src);
+    ::libs::utility::mem::u3copy (src, dst, count_byte_src);
   }
 
   virtual void
@@ -70,6 +64,6 @@ class CObj : public IBitGen
   }
 
   private:
-  const std::string id_string_;   //<
+  const std::string id_string_ = consts::id_string;   //<
 };
 }   // namespace dlls::codecs::bitgen::lossless::test_copy_xx_to_xx

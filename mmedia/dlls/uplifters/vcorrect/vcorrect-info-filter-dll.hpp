@@ -16,14 +16,14 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
   auto init () -> void;
 
   syn::VideoCorrectProp::raw_ptr rprops_ = nullptr;   //< Настроенный указатель на свойства (для удобства)
-  syn::ICorrectImage::weak_ptr   active_impl_;        //< Выбранная на данный момент реализация коррекции изображения Может например прийти вместе с сообщением ::libs::ievents::runtime::interf::InterfCorrectImageEvent
+  syn::ICorrectImage::weak_ptr   active_impl_;        //< Выбранная на данный момент реализация коррекции изображения Может например прийти вместе с сообщением ::libs::events_base::runtime::interf::InterfCorrectImageEvent
   syn::ICorrectImage::ptr        soft_impl_;          //< Програмная реализация, которая присутствует всегда
-  syn::ICorrectImage::weak_ptr   hardware_impl_;      //< Аппаратная реализация коррекции изображения Может например прийти вместе с сообщением ::libs::ievents::runtime::interf::InterfCorrectImageEvent
+  syn::ICorrectImage::weak_ptr   hardware_impl_;      //< Аппаратная реализация коррекции изображения Может например прийти вместе с сообщением ::libs::events_base::runtime::interf::InterfCorrectImageEvent
   bool                           synced_ = false;     //< Флаг требования синхронизации
 
   private:
   // internal types
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::BaseInfoFilter)
+  U3_ADD_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::BaseInfoFilter)
 
   //  BaseInfoFilter overrides
   virtual auto load_int (const ::pugi::xml_named_node_iterator&) -> bool override;

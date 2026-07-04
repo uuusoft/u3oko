@@ -4,17 +4,15 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_link
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../libs-link-includes_int.hpp"
 #include "enum-call-syncs.hpp"
 
 namespace libs::link::details
 {
-const std::string&
-to_string (const CallSyncs& val)
+auto
+to_string (const CallSyncs& val) -> const std::string&
 {
-  static const std::unordered_map< CallSyncs, const std::string > vals = {
+  static const boost::unordered_flat_map< CallSyncs, const std::string > vals = {
     { CallSyncs::async, "async" },
     { CallSyncs::sync, "sync" },
     { CallSyncs::unknown, "unknown" }

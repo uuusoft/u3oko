@@ -5,17 +5,15 @@
 \project    mlog
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../module-log-includes_int.hpp"
 #include "log-module.hpp"
 
 namespace modules::mlog::appl
 {
-std::string
-make_suppressor_key (const syn::IEvent::ptr& val)
+auto
+make_suppressor_key (const syn::IEvent::ptr& val) -> std::string
 {
-  auto       evnt = ::libs::helpers::check::ptr (::libs::iproperties::helpers::cast_event< syn::InfoLogEvent > (val));
+  auto       evnt = ::libs::utility::check::ptr (::libs::iproperties::helpers::cast_event< syn::InfoLogEvent > (val));
   const auto info = evnt->get_appl_info ();
   return info.file_ + ":" + std::to_string (info.line_);
 }
@@ -41,8 +39,8 @@ LogModule::add_msg_from_self (const std::string& info)
   auto             dmsg = ::libs::iproperties::helpers::create_event< syn::InfoLogEvent > (rmsg);
 
   dmsg->change_appl_info (
-    ::libs::ilog_events::AppllPartLogInfo (
-      ::libs::ievents::props::modules::log::LogLevels::info,
+    ::libs::events_log::AppllPartLogInfo (
+      ::libs::events_base::props::modules::log::LogLevels::info,
       ::libs::ilink::consts::id_log,
       "wtfversion"),
     info);
@@ -66,7 +64,7 @@ LogModule::process_property_log_module (syn::PropertyLogModuleEvent::raw_ptr pro
 
 
 void
-LogModule::process_info_log (syn::InfoLogEvent::raw_ptr props, syn::IEvent::ptr msg)
+LogModule::process_info_log (syn::InfoLogEvent::raw_ptr props, const syn::IEvent::ptr& msg)
 {
   try
   {
@@ -114,12 +112,12 @@ LogModule::process_list_logs (syn::ProcessListLogsEvent::raw_ptr props)
     U3_XLOG_DBG ("LogModule::process_list_logs::---->" + TOLOG (to_string (action)));
     switch (action)
     {
-    case ::libs::ilog_events::events::LogActions::delete_sessions: {
+    case ::libs::events_log::events::LogActions::delete_sessions: {
       delete_folders (props->get_sessions ());
       break;
     }
-    case ::libs::ilog_events::events::LogActions::get_sessions: {
-      const auto             folders = libs::helpers::files::get_sort_by_time_folders (path2sessions_);
+    case ::libs::events_log::events::LogActions::get_sessions: {
+      const auto             folders = libs::utility::files::get_sort_by_time_folders (path2sessions_);
       syn::list_folders_type sessions;
 
       sessions.reserve (folders.size ());
@@ -127,14 +125,14 @@ LogModule::process_list_logs (syn::ProcessListLogsEvent::raw_ptr props)
 
       for (const auto& folder : folders)
       {
-        const std::string                     path2files = ::libs::helpers::files::make_path (path2sessions_, folder);
-        ::libs::helpers::files::NodeEnumFiles enum_files;
+        const std::string                     path2files = ::libs::utility::files::make_path (path2sessions_, folder);
+        ::libs::utility::files::NodeEnumFiles enum_files;
 
-        ::libs::helpers::files::get_files (
+        ::libs::utility::files::get_files (
           path2files,
           enum_files,
-          { ::libs::helpers::files::IncludeSubFolders::disabled, ::libs::helpers::files::IncludeFiles::enabled, ::libs::helpers::files::Recursives::disabled },
-          ::libs::helpers::files::DefaultFileMask ("?.log?"));
+          { .include_fiolders_ = ::libs::utility::files::IncludeSubFolders::disabled, .include_files_ = ::libs::utility::files::IncludeFiles::enabled, .recursive_ = ::libs::utility::files::Recursives::disabled },
+          ::libs::utility::files::DefaultFileMask ("?.log?"));
 
         std::uint64_t size_files = 0;
         for (const auto& file : enum_files.files_)
@@ -170,11 +168,11 @@ LogModule::process_log (syn::ProcessLogEvent::raw_ptr props)
 
     switch (action)
     {
-    case ::libs::ilog_events::events::LogProcessActions::get_raw_log: {
+    case ::libs::events_log::events::LogProcessActions::get_raw_log: {
       const auto         raw_session  = props->get_session ();
       const std::string& session      = raw_session.empty () ? active_session_folder_ : raw_session;
-      const std::string  path2session = ::libs::helpers::files::make_path (path2sessions_, session);
-      const auto         files        = libs::helpers::files::get_sort_by_time_files (path2session);
+      const std::string  path2session = ::libs::utility::files::make_path (path2sessions_, session);
+      const auto         files        = libs::utility::files::get_sort_by_time_files (path2session);
       auto               temp_buf     = ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree ()->impl ()->alloc (0);
 
       flush_events ();
@@ -183,15 +181,15 @@ LogModule::process_log (syn::ProcessLogEvent::raw_ptr props)
       U3_XLOG_MARK ("process LogProcessActions::get_raw_log" + VTOLOG (files.size ()));
       for (const auto& file : files)
       {
-        ::boost::filesystem::path path2file (::libs::helpers::files::make_path (path2session, file));
+        ::boost::filesystem::path path2file (::libs::utility::files::make_path (path2session, file));
 
-        if (!::libs::helpers::files::load_file2mem (path2file.string (), temp_buf))
+        if (!::libs::utility::files::load_file2mem (path2file.string (), temp_buf))
         {
-          add_msg_from_self ("call ::libs::helpers::files::load_file2mem" + TOLOG (path2file.string ()));
+          add_msg_from_self ("call ::libs::utility::files::load_file2mem" + TOLOG (path2file.string ()));
           continue;
         }
 
-        const auto add_size = temp_buf->get_data_size ();
+        const auto add_size = temp_buf->get_size ();
         if (!add_size)
         {
           continue;
@@ -209,7 +207,7 @@ LogModule::process_log (syn::ProcessLogEvent::raw_ptr props)
       break;
     }
     default: {
-      add_msg_from_self ("invalid value ::libs::ilog_events::events::LogProcessActions: " + to_string (action));
+      add_msg_from_self ("invalid value ::libs::events_log::events::LogProcessActions: " + to_string (action));
       break;
     }
     }

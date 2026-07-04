@@ -5,8 +5,6 @@
 \project    u3_vgen_mops
 \brief      Реализация загружаемых свойств фильтра МО
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "vgen-mops-includes_int.hpp"
 #include "vgen-mops-info-filter-dll.hpp"
 #include "vgen-mops-filter-dll.hpp"

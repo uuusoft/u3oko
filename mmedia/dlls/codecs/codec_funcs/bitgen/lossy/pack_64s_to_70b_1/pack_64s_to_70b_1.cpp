@@ -4,8 +4,6 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_codec_funcs
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../../../codec-funcs-includes_int.hpp"
 #include "../../codec-funcs-bitgen-includes.hpp"
 
@@ -19,8 +17,8 @@ CObj::forward_int (
   std::uint32_t&      count_byte_dst)
 {
   U3_CHECK (count_byte_src >= 4, "source too small");
-  const auto* ssrc = ::libs::helpers::casts::reinterpret_cast_helper< const std::int16_t* > (src);
-  auto*       udst = ::libs::helpers::casts::reinterpret_cast_helper< char* > (dst);
+  const auto* ssrc = ::libs::utility::casts::reinterpret_cast_helper< const std::int16_t* > (src);
+  auto*       udst = ::libs::utility::casts::reinterpret_cast_helper< char* > (dst);
 
   for (std::uint32_t bindx = 0; bindx < count_byte_src / consts::src_granularity; ++bindx)
   {
@@ -38,7 +36,7 @@ CObj::forward_int (
     res2 = ((res2 << 10) & 0x0007FC00) | ((res2 >> 12) & 0x00080000);
     res3 = (res3 & 0x000001FF) | ((res3 >> 22) & 0x00000200);
 
-    *::libs::helpers::casts::reinterpret_cast_helper< int* > (udst) = res1 | res2 | res3;
+    *::libs::utility::casts::reinterpret_cast_helper< int* > (udst) = res1 | res2 | res3;
 
     count_byte_dst += sizeof (int);
 
@@ -61,12 +59,12 @@ CObj::backward_int (
   void*               dst,
   std::uint32_t&      count_byte_dst)
 {
-  const auto* usrc = ::libs::helpers::casts::reinterpret_cast_helper< const char* > (src);
-  auto*       sdst = ::libs::helpers::casts::reinterpret_cast_helper< std::int16_t* > (dst);
+  const auto* usrc = ::libs::utility::casts::reinterpret_cast_helper< const char* > (src);
+  auto*       sdst = ::libs::utility::casts::reinterpret_cast_helper< std::int16_t* > (dst);
 
   for (std::uint32_t bindx = 0; bindx < count_byte_src / consts::dst_granularity; ++bindx)
   {
-    const auto first = *::libs::helpers::casts::reinterpret_cast_helper< const std::int32_t* > (usrc);
+    const auto first = *::libs::utility::casts::reinterpret_cast_helper< const std::int32_t* > (usrc);
 
     sdst[0] = ((first >> 20) & 0x000007FF);
     count_byte_dst += sizeof (std::int16_t);
@@ -104,22 +102,22 @@ CObj::backward_int (
 }
 
 
-std::uint32_t
-CObj::get_granularity_int () const
+auto
+CObj::get_granularity_int () const -> std::uint32_t
 {
   return consts::src_granularity;
 }
 
 
-const std::string&
-CObj::get_id_int () const
+auto
+CObj::get_id_int () const -> const std::string&
 {
   return id_string_;
 }
 
 
-std::uint32_t
-CObj::get_max_size_int (const std::uint32_t src_size) const
+auto
+CObj::get_max_size_int (const std::uint32_t src_size) const -> std::uint32_t
 {
   return (src_size / get_granularity_int ()) * consts::dst_granularity;
 }

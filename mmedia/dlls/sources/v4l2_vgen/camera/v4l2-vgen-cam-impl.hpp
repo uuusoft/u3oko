@@ -11,8 +11,8 @@ namespace dlls::sources::v4l2_vgen::camera
 class CamImpl final
 {
   public:
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (CamImpl)
-  U3_HELPER_DISABLE_ACOPY_TYPE (CamImpl)
+  U3_ADD_POINTERS_TO_SELF (CamImpl)
+  U3_ADD_DELETE_MOVE_COPY (CamImpl)
 
   explicit CamImpl (const gen_lib::SourceImplInfo& props_info);
   ~CamImpl () = default;
@@ -22,7 +22,7 @@ class CamImpl final
   auto is_init () const -> bool;
 
   private:
-  void sync_runtime_props (const syn::VideoDriverCaptureProp& capprops);
+  void sync_runtime_props (const syn::VideoDriverCaptureProp&);
 
   const gen_lib::SourceImplInfo&  srcparams_;               //<
   std::mutex                      sync_;                    //<

@@ -18,36 +18,31 @@ class IGraphNode
 
   public:
   // ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IGraphNode)
-
-  IGraphNode (const IGraphNode& src)            = delete;
-  IGraphNode& operator= (const IGraphNode& src) = delete;
+  U3_ADD_POINTERS_TO_SELF (IGraphNode)
+  U3_ADD_DELETE_MOVE_COPY (IGraphNode)
 
   protected:
   /// Функция запроса поддержки интерфейса объектом
   /// \param[in]  id   идентификатор интерфейса
   /// \return     не 0, при успехе
   IInterfGraphObj::raw_ptr
-  query (const ::libs::helpers::utils::cuuid& id)
+  query (const ::libs::utility::utils::cuuid& id)
   {
     return query_int (id);
   }
 
-  /// Функция посылки события в граф
   void
   send_event2me (events::IEvent::ptr& evnt)
   {
     send_event2me_int (evnt);
   }
 
-  /// Функция запуска объекта
   void
   run ()
   {
     run_int ();
   }
 
-  /// Функция остановки объекта
   void
   stop ()
   {
@@ -61,9 +56,9 @@ class IGraphNode
   virtual ~IGraphNode () = default;
 
   //  IGraphNode interface
-  virtual IInterfGraphObj::raw_ptr query_int (const ::libs::helpers::utils::cuuid& id) = 0;
-  virtual void                     send_event2me_int (events::IEvent::ptr& evnt)       = 0;
-  virtual void                     run_int ()                                          = 0;
-  virtual void                     stop_int ()                                         = 0;
+  virtual auto query_int (const ::libs::utility::utils::cuuid&) -> IInterfGraphObj::raw_ptr = 0;
+  virtual auto send_event2me_int (events::IEvent::ptr&) -> void                             = 0;
+  virtual auto run_int () -> void                                                           = 0;
+  virtual auto stop_int () -> void                                                          = 0;
 };
 }   // namespace libs::core::graph

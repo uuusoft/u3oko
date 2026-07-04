@@ -4,8 +4,6 @@
 \date       01.11.2016
 \project    mappl
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../module-appl-includes_int.hpp"
 
 // old shit
@@ -13,16 +11,16 @@
 void
 debug_func_for_optim1 (const ::libs::properties::vers::links::links_type* plinks)
 {
-  ::libs::helpers::statistic::ExpandedTimes timer;
+  ::libs::utility::statistic::ExpandedTimes timer;
   std::list< std::string >                  times;
   const std::size_t                         count_cycles = 10;
   const std::size_t                         width        = 1280;
   const std::size_t                         height       = 720;
   const std::size_t                         stride_src   = width * 3;
-  const std::size_t                         stride_dst   = ::libs::helpers::mem::align_value (width * sizeof (std::int16_t), 64, true);
-  ::libs::helpers::mem::IBlockMem::ptr      rgb24        = ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree ()->alloc (stride_src * 2 * height);
-  ::libs::helpers::mem::IBlockMem::ptr      l1           = ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree ()->alloc (stride_dst * 2 * height);
-  ::libs::helpers::mem::IBlockMem::ptr      l2           = ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree ()->alloc (stride_dst * 2 * height);
+  const std::size_t                         stride_dst   = ::libs::utility::mem::align_value (width * sizeof (std::int16_t), 64U, true);
+  ::libs::utility::mem::IBlockMem::ptr      rgb24        = ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree ()->alloc (stride_src * 2 * height);
+  ::libs::utility::mem::IBlockMem::ptr      l1           = ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree ()->alloc (stride_dst * 2 * height);
+  ::libs::utility::mem::IBlockMem::ptr      l2           = ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree ()->alloc (stride_dst * 2 * height);
 
   timer.begin ("Debug");
 
@@ -57,10 +55,10 @@ debug_func_for_optim1 (const ::libs::properties::vers::links::links_type* plinks
 
     for (std::size_t indxe = 0; indxe < count_elements; indxe += 4)
     {
-      __m256i data1 = mm256_lddqu_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (&vals1[indxe]));
+      __m256i data1 = mm256_lddqu_si256 (::libs::utility::casts::reinterpret_cast_helper< __m256i* > (&vals1[indxe]));
       data1         = mm256_adds_epi16 (data1, addreg1);
       data1         = mm256_mulhi_epi16 (data1, addreg2);
-      mm256_storeu_si256 (::libs::helpers::casts::reinterpret_cast_helper< __m256i* > (&vals1[indxe]), data1);
+      mm256_storeu_si256 (::libs::utility::casts::reinterpret_cast_helper< __m256i* > (&vals1[indxe]), data1);
     }
 #  endif
   }

@@ -15,7 +15,7 @@ void
 BaseModule::appl_init_int (const ::libs::link::appl::InitApplication& info)
 {
   U3_CHECK (!sys_info_, "!sys_info_");
-  sys_info_ = ::libs::helpers::sys::get_impl ();
+  sys_info_ = ::libs::utility::sys::get_impl ();
 }
 
 

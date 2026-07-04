@@ -5,8 +5,6 @@
 \project    mevents
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../module-events-includes_int.hpp"
 #include "consts/module-events-const-vals.hpp"
 #include "events-module-syn.hpp"
@@ -32,8 +30,8 @@ EventsModule::init_proxys_int ()
 }
 
 
-bool
-EventsModule::appl_deinit_int ()
+auto
+EventsModule::appl_deinit_int () -> bool
 {
   U3_XLOG_MARK ("EventsModule::deinit_int::---->");
   if (links_.get (libs::properties::vers::links::mids::events2appl))
@@ -42,10 +40,10 @@ EventsModule::appl_deinit_int ()
     auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
 
     props->change_appl_info (
-      ::libs::ilog_events::AppllPartLogInfo (
-        ::libs::ievents::props::modules::log::LogLevels::info,
+      ::libs::events_log::AppllPartLogInfo (
+        ::libs::events_base::props::modules::log::LogLevels::info,
         ::modules::mevents::appl::consts::module_name,
-        ::libs::helpers::log::get_module_version ()),
+        ::libs::utility::log::get_module_version ()),
       "");
 
     props->set_start (false);
@@ -98,10 +96,10 @@ EventsModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
 
     props->change_appl_info (
-      ::libs::ilog_events::AppllPartLogInfo (
-        ::libs::ievents::props::modules::log::LogLevels::info,
+      ::libs::events_log::AppllPartLogInfo (
+        ::libs::events_base::props::modules::log::LogLevels::info,
         ::modules::mevents::appl::consts::module_name,
-        ::libs::helpers::log::get_module_version ()),
+        ::libs::utility::log::get_module_version ()),
       "");
 
     props->set_start (true);
@@ -134,7 +132,7 @@ EventsModule::update_catch_funcs_int ()
       auto* props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
       U3_ASSERT (props);
       process_change_state_process (msg, props);
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };
@@ -149,41 +147,41 @@ EventsModule::update_catch_funcs_int ()
     return msg;
   };
 
-  catch_funcs_[syn::AddEvent2Base::gen_get_mid ()] =
+  catch_funcs_[syn::AddEvent2EventsMsg::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
-    U3_LOG_EVENTS_DEV ("received syn::AddEvent2Base:" + STOLOG (msg->get_mid ()));
+    U3_LOG_EVENTS_DEV ("received syn::AddEvent2EventsMsg:" + STOLOG (msg->get_mid ()));
     if (forward)
     {
-      auto* props = ::libs::iproperties::helpers::cast_event< syn::AddEvent2Base > (msg);
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::AddEvent2EventsMsg > (msg);
       U3_ASSERT (props);
       process_add_event2base (msg, props);
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };
 
-  catch_funcs_[syn::GetDataGraphsFromEventBase::gen_get_mid ()] =
+  catch_funcs_[syn::GetDataGraphsEventsMsg::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
-    U3_LOG_EVENTS_DEV ("received syn::GetDataGraphsFromEventBase:" + STOLOG (msg->get_mid ()));
+    U3_LOG_EVENTS_DEV ("received syn::GetDataGraphsEventsMsg:" + STOLOG (msg->get_mid ()));
     if (forward)
     {
-      auto* props = ::libs::iproperties::helpers::cast_event< syn::GetDataGraphsFromEventBase > (msg);
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::GetDataGraphsEventsMsg > (msg);
       U3_ASSERT (props);
       process_get_data_graphs (msg, props);
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };
 
-  catch_funcs_[syn::UpdateListener::gen_get_mid ()] =
+  catch_funcs_[syn::UpdateListenerEventsMsg::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
-    U3_LOG_EVENTS_DEV ("received syn::UpdateListener:" + STOLOG (msg->get_mid ()));
+    U3_LOG_EVENTS_DEV ("received syn::UpdateListenerEventsMsg:" + STOLOG (msg->get_mid ()));
     if (forward)
     {
-      auto* props = ::libs::iproperties::helpers::cast_event< syn::UpdateListener > (msg);
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::UpdateListenerEventsMsg > (msg);
       U3_ASSERT (props);
       process_update_listener (msg, props);
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };
@@ -196,7 +194,7 @@ EventsModule::update_catch_funcs_int ()
       auto* props = ::libs::iproperties::helpers::cast_event< syn::GetEventsFromBase > (msg);
       U3_ASSERT (props);
       process_get_events_from_base (msg, props);
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };

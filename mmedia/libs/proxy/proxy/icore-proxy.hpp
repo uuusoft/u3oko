@@ -9,5 +9,5 @@
 
 namespace libs::proxy
 {
-std::function< libs::icore::impl::var1::obj::dll::create_impl_func_type > get_create_data_path_module_funct (const std::string& plib_id);
+auto get_create_data_path_module_func (const std::string& plib_id) -> std::function< libs::icore::impl::var1::obj::dll::create_impl_func_type >;
 }   // namespace libs::proxy

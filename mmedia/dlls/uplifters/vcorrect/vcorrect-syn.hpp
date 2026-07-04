@@ -8,9 +8,9 @@
 
 namespace dlls::uplifters::vcorrect::syn
 {
-using VideoCorrectProp        = ::libs::ievents::props::videos::generic::correct::VideoCorrectProp;
-using ICorrectImage           = ::libs::ievents::runtime::interf::interfaces::ICorrectImage;
-using InterfCorrectImageEvent = ::libs::ievents::runtime::interf::InterfCorrectImageEvent;
+using VideoCorrectProp        = ::libs::events_base::props::videos::generic::correct::VideoCorrectProp;
+using ICorrectImage           = ::libs::events_base::runtime::interf::interfaces::ICorrectImage;
+using InterfCorrectImageEvent = ::libs::events_base::runtime::interf::InterfCorrectImageEvent;
 using IVideoBuf               = ::utils::dbufs::video::IVideoBuf;
 using IMCaller                = ::libs::optim::mcalls::IMCaller;
 using TransformInfo           = ::libs::icore::impl::var1::obj::dll::TransformInfo;
@@ -19,5 +19,5 @@ using FilterInfo              = ::libs::icore::impl::var1::obj::FilterInfo;
 using ConnectInfo             = ::libs::icore::impl::var1::obj::ConnectInfo;
 using ProxyBuf                = ::libs::optim::io::ProxyBuf;
 using IEvent                  = ::libs::events::IEvent;
-using AddEvent2Base           = ::libs::ievents_events::events::AddEvent2Base;
+using AddEvent2EventsMsg      = ::libs::events_msg::events::AddEvent2EventsMsg;
 }   // namespace dlls::uplifters::vcorrect::syn

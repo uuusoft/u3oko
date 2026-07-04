@@ -19,15 +19,15 @@ class Filter final :
 
   private:
   // internal types
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
+  U3_ADD_SUPER_CLASS (::libs::icore::impl::var1::obj::dll::FilterImpl< InfoFilter >)
   // IFilter overrides
   virtual void load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node) override;
   virtual auto transform_int (syn::TransformInfo&) -> void override;
   virtual auto call_int (syn::CallInterfInfo&) -> void override;
 
-  void         init_pts (syn::ConnectInfo* info);
-  void         itransform (syn::TransformInfo& info);
-  std::int32_t get_move_count (syn::IVideoBuf::raw_ptr);
+  auto init_pts (syn::ConnectInfo* info) -> void;
+  auto itransform (syn::TransformInfo& info) -> void;
+  auto get_move_count (syn::IVideoBuf::raw_ptr) -> std::int32_t;
 
   ::libs::optim::io::hioptim count_if_ge_;                                                                //< Быстрая функция вычисления "если больше"
   std::int64_t               count_detects_     = 0;                                                      //< Счетчик событий фиксации движения в последовательности

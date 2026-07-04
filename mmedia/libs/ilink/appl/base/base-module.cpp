@@ -16,18 +16,29 @@ BaseModule::BaseModule ()
   register_events_for_module ();
 }
 
+BaseModule::~BaseModule ()
+{
+  U3_XLOG_DBG ("BaseModule::~BaseModule::---->");
+  // debug
+  links_.reset ();
+  paths_.reset ();
+  mthreads_.reset ();
+  logger_.reset ();
+  U3_XLOG_DBG ("BaseModule::~BaseModule::<----");
+}
+
 
 void
 register_events_for_module ()
 {
   ::libs::events::register_events_in_archives ();
-  ::libs::ievents::register_events_in_archives ();
-  ::libs::ilog_events::events::register_events_in_archives ();
-  ::libs::ievents_events::events::register_events_in_archives ();
-  ::libs::igui_events::events::register_events_in_archives ();
-  ::libs::imdata_events::events::register_events_in_archives ();
-  ::libs::ihttp_events::events::register_events_in_archives ();
-  ::libs::istorage_events::events::register_events_in_archives ();
+  ::libs::events_base::register_events_in_archives ();
+  ::libs::events_log::events::register_events_in_archives ();
+  ::libs::events_msg::events::register_events_in_archives ();
+  ::libs::events_gui::events::register_events_in_archives ();
+  ::libs::events_media::events::register_events_in_archives ();
+  ::libs::events_http::events::register_events_in_archives ();
+  ::libs::events_storage::events::register_events_in_archives ();
 }
 
 
@@ -35,14 +46,14 @@ void
 update_template_for_application (const std::string& path2folder, const std::string& name)
 {
   const auto                          bcid = boost::uuids::random_generator () ();
-  const ::libs::helpers::utils::cuuid machine_cid (bcid);
+  const ::libs::utility::utils::cuuid machine_cid (bcid);
 
-  const ::libs::helpers::strings::syn::replace_val_type tmps2vals[] = {
-    { "UUU_XML_ID__________MACHINE__________NAME__________ID__________PLACEHOLDER", ::libs::helpers::utils::to_string (machine_cid) },
+  const ::libs::utility::strings::syn::replace_val_type tmps2vals[] = {
+    { "UUU_XML_ID__________MACHINE__________NAME__________ID__________PLACEHOLDER", ::libs::utility::utils::to_string (machine_cid) },
     { "UUU_XML_ID__________MACHINE__________GUID__________ID__________PLACEHOLDER", ::boost::lexical_cast< std::string > (machine_cid.get_raw_uuid_vals ()) }
   };
 
-  const auto counter_ops = ::libs::helpers::files::replace_strings_in_files (path2folder, tmps2vals, std::size (tmps2vals));
+  const auto counter_ops = ::libs::utility::files::replace_strings_in_files (path2folder, tmps2vals, std::size (tmps2vals));
   U3_CHECK_NT (counter_ops > 0U, "failed, zero replace in templates" + VTOLOG (counter_ops) + TOLOG (path2folder));
 }
 
@@ -80,7 +91,7 @@ BaseModule::load_events_props ()
 
   {
     auto* log_appl        = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
-    syn::log::g_log_level = ::libs::ievents::props::modules::log::from_raw_val (log_appl->get_val (syn::LogVals::log_level));
+    syn::log::g_log_level = ::libs::events_base::props::modules::log::from_raw_val (log_appl->get_val (syn::LogVals::log_level));
   }
 }
 
@@ -100,13 +111,13 @@ BaseModule::update_events_props ()
   auto* main_appl = ::libs::iproperties::helpers::cast_event< syn::ApplicationProp > (appl_event_props_.main_appl_properties_);
   auto* log_appl  = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
   auto* info_cpu  = ::libs::iproperties::helpers::cast_event< syn::InfoCPUEvent > (appl_event_props_.info_cpu_);
-  // auto* storage_appl = ::libs::iproperties::helpers::cast_event< ::libs::ievents::props::modules::storage::PropertyStorageModuleEvent > (appl_event_props_.storage_module_);
+  // auto* storage_appl = ::libs::iproperties::helpers::cast_event< ::libs::events_base::props::modules::storage::PropertyStorageModuleEvent > (appl_event_props_.storage_module_);
 
   orinfo->set_appl_lockfree (main_appl);
   orinfo->set_log_lockfree (log_appl);
   orinfo->set_paths_lockfree (paths_);
 
-  if (::libs::helpers::sys::cpu::CpuExts::max == info_cpu->get_cpu_type ())
+  if (::libs::utility::sys::cpu::CpuExts::max == info_cpu->get_cpu_type ())
   {
     U3_XLOG_MARK ("update cpu extension" + VTOLOG (U3_CAST_INT32_FORCE (cpu_informer_.get_max ())));
     info_cpu->set_cpu_type (cpu_informer_.get_max ());

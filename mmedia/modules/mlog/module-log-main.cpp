@@ -5,16 +5,14 @@
 \project    mlog
 \brief      Модуль логирования
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "module-log-includes_int.hpp"
 
 static std::mutex                                g_sinc;
 static volatile std::int32_t                     counter_refs_ = 0;
 static ::libs::link::appl::IApplication::raw_ptr g_appl        = nullptr;
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication::raw_ptr
-create_impl_mpl_mlog ()
+extern "C" BOOST_SYMBOL_EXPORT auto
+create_impl_mpl_mlog () -> ::libs::link::appl::IApplication::raw_ptr
 {
   std::scoped_lock lock (g_sinc);
 

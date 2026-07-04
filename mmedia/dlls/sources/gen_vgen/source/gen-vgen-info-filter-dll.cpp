@@ -5,23 +5,20 @@
 \project    u3_gen_vgen
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "gen-vgen-includes_int.hpp"
 #include "gen-vgen-info-filter-dll.hpp"
 
 namespace dlls::sources::gen_vgen
 {
-InfoFilter::InfoFilter ()
+InfoFilter::InfoFilter () :
+  rprops_ (::libs::iproperties::helpers::create_event_in_list< syn::VideoDriverProp > (ef_props_)),
+  capture_props_ (::libs::iproperties::helpers::create_event_in_list< syn::VideoDriverCaptureProp > (ef_props_)),
+  system_props_ (::libs::iproperties::helpers::create_event_in_list< syn::SystemSpecificDriverProp > (ef_props_))
 {
-  rprops_ = ::libs::iproperties::helpers::create_event_in_list< syn::VideoDriverProp > (ef_props_);
-  str2props_.insert (str2prop_type::value_type (ef_props_.back ()->get_mid (), rprops_));
-
-  capture_props_ = ::libs::iproperties::helpers::create_event_in_list< syn::VideoDriverCaptureProp > (ef_props_);
-  str2props_.insert (str2prop_type::value_type (ef_props_.back ()->get_mid (), capture_props_));
-
-  system_props_ = ::libs::iproperties::helpers::create_event_in_list< syn::SystemSpecificDriverProp > (ef_props_);
-  str2props_.insert (str2prop_type::value_type (ef_props_.back ()->get_mid (), system_props_));
+  // EAI-REFACT
+  str2props_.insert (str2prop_type::value_type (ef_props_.front ()->get_mid (), rprops_));
+  str2props_.insert (str2prop_type::value_type ((*std::next (ef_props_.begin (), 1))->get_mid (), capture_props_));
+  str2props_.insert (str2prop_type::value_type ((*std::next (ef_props_.begin (), 2))->get_mid (), system_props_));
 
   str2props_.insert (str2prop_type::value_type (links_props_.get_mid (), &links_props_));
 }
@@ -87,8 +84,8 @@ InfoFilter::sync_int (bool force)
 }
 
 
-bool
-InfoFilter::load_int (const ::pugi::xml_named_node_iterator& node)
+auto
+InfoFilter::load_int (const ::pugi::xml_named_node_iterator& node) -> bool
 {
   synced_ = false;
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY

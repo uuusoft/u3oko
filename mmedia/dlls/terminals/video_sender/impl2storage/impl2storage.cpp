@@ -4,8 +4,6 @@
 \date       14.08.2018
 \project    u3_video_sender_dll
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../video-sender-includes_int.hpp"
 #include "impl2storage-syn.hpp"
 #include "impl2storage.hpp"
@@ -58,9 +56,9 @@ Impl2Storage::open_stream ()
   auto             dmsg = ::libs::iproperties::helpers::create_event< syn::UpdateStream > (rmsg);
 
   dmsg->obj_id_.val_ = "unimplemented add name source";
-  dmsg->action_      = ::libs::istorage_events::StreamUpdates::open;
-  dmsg->direction_   = ::libs::istorage_events::StreamDirections::unknown;
-  dmsg->operation_   = ::libs::istorage_events::StreamActions::write;
+  dmsg->action_      = ::libs::events_storage::StreamUpdates::open;
+  dmsg->direction_   = ::libs::events_storage::StreamDirections::unknown;
+  dmsg->operation_   = ::libs::events_storage::StreamActions::write;
 
   send_message (rmsg, syn::CallSyncs::sync, syn::Calls::request);
 
@@ -82,8 +80,8 @@ Impl2Storage::close_stream ()
   syn::IEvent::ptr rmsg;
   auto             dmsg = ::libs::iproperties::helpers::create_event< syn::UpdateStream > (rmsg);
 
-  dmsg->action_    = ::libs::istorage_events::StreamUpdates::close;
-  dmsg->direction_ = ::libs::istorage_events::StreamDirections::unknown;
+  dmsg->action_    = ::libs::events_storage::StreamUpdates::close;
+  dmsg->direction_ = ::libs::events_storage::StreamDirections::unknown;
   // dmsg->time_ = ;
   send_message (rmsg, syn::CallSyncs::async, syn::Calls::set);
   // dmsg          = ::libs::iproperties::helpers::cast_event<syn::UpdateStream> (rmsg);
@@ -99,6 +97,8 @@ Impl2Storage::send_message (
   const syn::CallSyncs& sync,
   const syn::Calls&     req)
 {
+#if 1
+  // #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   auto*                    ilink     = ::libs::iproperties::helpers::get_prop_links ();
   ::libs::link::ILink::ptr data2appl = ilink->get_links_lockfree ().get (libs::properties::vers::links::mids::mdata2appl).lock ();
   U3_ASSERT (data2appl);
@@ -109,5 +109,6 @@ Impl2Storage::send_message (
   }
 
   data2appl->send_msg (rmsg, sync, req);
+#endif
 }
 }   // namespace dlls::terminals::video_sender::impl2storage

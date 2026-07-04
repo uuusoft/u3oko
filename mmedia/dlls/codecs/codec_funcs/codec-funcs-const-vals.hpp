@@ -8,8 +8,8 @@
 
 namespace dlls::codecs::consts
 {
-constexpr std::uint32_t dim_elements_macroblock   = 8;    //<
-constexpr std::uint32_t count_elements_macroblock = 64;   //<
-constexpr std::uint32_t off_bits                  = 3;    //<
-constexpr std::uint32_t max_size_set              = 30;   //< define max set for adaptive insert key frame
+inline constexpr std::uint32_t dim_elements_macroblock   = 8;    //<
+inline constexpr std::uint32_t count_elements_macroblock = 64;   //<
+inline constexpr std::uint32_t off_bits                  = 3;    //<
+inline constexpr std::uint32_t max_size_set              = 30;   //< define max set for adaptive insert key frame
 }   // namespace dlls::codecs::consts

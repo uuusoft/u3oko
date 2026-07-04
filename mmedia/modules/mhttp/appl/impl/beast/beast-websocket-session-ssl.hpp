@@ -19,9 +19,9 @@ class websocket_session_ssl final : public std::enable_shared_from_this< websock
 
   // Take ownership of the socket
   explicit websocket_session_ssl (
-    stream_type&&                socket,
-    boost::asio::ssl::context&   ctx,
-    const shared_state_ptr_type& shared_state);
+    stream_type&&              socket,
+    boost::asio::ssl::context& ctx,
+    shared_state_ptr_type      shared_state);
 
   ~websocket_session_ssl ();
 

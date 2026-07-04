@@ -17,11 +17,11 @@ namespace jpeg
 /**
 \brief  gpu raspberry
 */
-class JpegCodecImageInterf : public ::libs::ievents::runtime::interf::interfaces::ICodecImage
+class JpegCodecImageInterf : public ::libs::events_base::runtime::interf::interfaces::ICodecImage
 {
   public:
   //  ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (JpegCodecImageInterf)
+  U3_ADD_POINTERS_TO_SELF (JpegCodecImageInterf)
 
   JpegCodecImageInterf () :
     update_ (false),

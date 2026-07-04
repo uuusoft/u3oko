@@ -19,12 +19,12 @@ extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_android_vgen (::dlls::source
 #endif
 
 #if (U3_LIBS_ENABLE_DESK_VGEN_VSS == 1)
-extern "C" BOOST_SYMBOL_EXPORT bool get_source_vss_desk_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
-extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_desk_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
+extern "C" BOOST_SYMBOL_EXPORT auto get_source_vss_desk_vgen (::dlls::sources::gen_lib::ISourceImpl** obj) -> bool;
+extern "C" BOOST_SYMBOL_EXPORT auto free_source_vss_desk_vgen (::dlls::sources::gen_lib::ISourceImpl** obj) -> bool;
 #endif
 
-extern "C" BOOST_SYMBOL_EXPORT bool get_source_vss_fake_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
-extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_fake_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
+extern "C" BOOST_SYMBOL_EXPORT auto get_source_vss_fake_vgen (::dlls::sources::gen_lib::ISourceImpl** obj) -> bool;
+extern "C" BOOST_SYMBOL_EXPORT auto free_source_vss_fake_vgen (::dlls::sources::gen_lib::ISourceImpl** obj) -> bool;
 
 #if defined(U3_OS_RASPBERRY)
 #  if (U3_LIBS_ENABLE_RASPBERRY_OPENMAX_VGEN_VSS == 1)
@@ -43,22 +43,22 @@ extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_dshow_vgen (::dlls::sources:
 
 #if defined(U3_OS_WIN32_DESKTOP) || defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI) || defined(U3_OS_ANDROID)
 #  if (U3_LIBS_ENABLE_PICT_VGEN_VSS == 1)
-extern "C" BOOST_SYMBOL_EXPORT bool get_source_vss_pict_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
-extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_pict_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
+extern "C" BOOST_SYMBOL_EXPORT auto get_source_vss_pict_vgen (::dlls::sources::gen_lib::ISourceImpl** obj) -> bool;
+extern "C" BOOST_SYMBOL_EXPORT auto free_source_vss_pict_vgen (::dlls::sources::gen_lib::ISourceImpl** obj) -> bool;
 #  endif
 #endif
 
 #if defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI)
-extern "C" BOOST_SYMBOL_EXPORT bool get_source_vss_v4l2_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
-extern "C" BOOST_SYMBOL_EXPORT bool free_source_vss_v4l2_vgen (::dlls::sources::gen_lib::ISourceImpl** obj);
+extern "C" BOOST_SYMBOL_EXPORT auto get_source_vss_v4l2_vgen (::dlls::sources::gen_lib::ISourceImpl** obj) -> bool;
+extern "C" BOOST_SYMBOL_EXPORT auto free_source_vss_v4l2_vgen (::dlls::sources::gen_lib::ISourceImpl** obj) -> bool;
 #endif
 
 namespace libs::proxy
 {
-::dlls::sources::gen_lib::bcreate_source_func_type
-get_create_source_funct (const std::string& plib_id)
+auto
+get_create_source_func (const std::string& plib_id) -> ::dlls::sources::gen_lib::bcreate_source_func_type
 {
-  const auto lib_id = libs::helpers::dlls::undecorate_dll_name (plib_id);
+  const auto lib_id = libs::utility::dlls::undecorate_dll_name (plib_id);
 
 #ifdef U3_OS_ANDROID
 #  if defined(U3_USE_SOURCE_VSS_ANDROID_JAVA_VGEN)
@@ -120,14 +120,14 @@ get_create_source_funct (const std::string& plib_id)
   }
 #endif
 
-  U3_THROW_EXCEPTION ("failed function search" + TOLOG (lib_id));
+  U3_THROW_EXCEPT ("failed function search" + TOLOG (lib_id));
 }
 
 
-::dlls::sources::gen_lib::bfree_source_func_type
-get_free_source_funct (const std::string& plib_id)
+auto
+get_free_source_func (const std::string& plib_id) -> ::dlls::sources::gen_lib::bfree_source_func_type
 {
-  const auto lib_id = libs::helpers::dlls::undecorate_dll_name (plib_id);
+  const auto lib_id = libs::utility::dlls::undecorate_dll_name (plib_id);
 
 #ifdef U3_OS_ANDROID
 #  if defined(U3_USE_SOURCE_VSS_ANDROID_JAVA_VGEN)
@@ -189,6 +189,6 @@ get_free_source_funct (const std::string& plib_id)
   }
 #endif
 
-  U3_THROW_EXCEPTION ("failed function search" + TOLOG (lib_id));
+  U3_THROW_EXCEPT ("failed function search" + TOLOG (lib_id));
 }
 }   // namespace libs::proxy

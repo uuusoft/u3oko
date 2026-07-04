@@ -14,11 +14,6 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
   InfoFilter ();
   virtual ~InfoFilter () = default;
 
-  InfoFilter (const InfoFilter&)                = delete;
-  InfoFilter& operator= (const InfoFilter&)     = delete;
-  InfoFilter (InfoFilter&&) noexcept            = delete;
-  InfoFilter& operator= (InfoFilter&&) noexcept = delete;
-
   auto init () -> void;
 
   syn::VideoConvertProp::raw_ptr rprops_      = nullptr;   //< Настроенный указатель на свойства (для удобства)

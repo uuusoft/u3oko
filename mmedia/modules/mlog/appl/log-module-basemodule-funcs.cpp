@@ -5,8 +5,6 @@
 \project    mlog
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../module-log-includes_int.hpp"
 #include "log-module.hpp"
 
@@ -53,7 +51,7 @@ LogModule::init_links_int (const ::libs::link::appl::InitApplication& info)
   U3_MARK_UNUSED_HERE (imstorage);
 
   U3_XLOG_DBG ("LogModule::init_links_int:: pt1");
-  auto temp_link = ::libs::helpers::check::ptr (lproxy->impl ()->get_listen (
+  auto temp_link = ::libs::utility::check::ptr (lproxy->impl ()->get_listen (
     ::libs::link::CreateInfo (
       type_run,
       name_data,
@@ -84,10 +82,10 @@ LogModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
 
     props->change_appl_info (
-      ::libs::ilog_events::AppllPartLogInfo (
-        ::libs::ievents::props::modules::log::LogLevels::info,
+      ::libs::events_log::AppllPartLogInfo (
+        ::libs::events_base::props::modules::log::LogLevels::info,
         ::modules::mlog::appl::consts::module_name,
-        ::libs::helpers::log::get_module_version ()),
+        ::libs::utility::log::get_module_version ()),
       "");
 
     props->set_start (true);
@@ -98,8 +96,8 @@ LogModule::init_links_int (const ::libs::link::appl::InitApplication& info)
 }
 
 
-bool
-LogModule::appl_deinit_int ()
+auto
+LogModule::appl_deinit_int () -> bool
 {
   U3_XLOG_MARK ("LogModule::deinit_int::---->")
   flush_events ();
@@ -111,10 +109,10 @@ LogModule::appl_deinit_int ()
     auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
 
     props->change_appl_info (
-      ::libs::ilog_events::AppllPartLogInfo (
-        ::libs::ievents::props::modules::log::LogLevels::info,
+      ::libs::events_log::AppllPartLogInfo (
+        ::libs::events_base::props::modules::log::LogLevels::info,
         ::modules::mlog::appl::consts::module_name,
-        ::libs::helpers::log::get_module_version ()),
+        ::libs::utility::log::get_module_version ()),
       "");
 
     props->set_start (false);
@@ -145,7 +143,7 @@ LogModule::update_catch_funcs_int ()
       auto* props = ::libs::iproperties::helpers::cast_event< syn::InfoLogEvent > (msg);
       U3_ASSERT (props);
       process_info_log (props, msg);
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };
@@ -157,7 +155,7 @@ LogModule::update_catch_funcs_int ()
       auto* props = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (msg);
       U3_ASSERT (props);
       process_property_log_module (props);
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };
@@ -169,7 +167,7 @@ LogModule::update_catch_funcs_int ()
       auto* props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
       U3_ASSERT (props);
       process_change_state_process (props);
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };
@@ -181,7 +179,7 @@ LogModule::update_catch_funcs_int ()
       auto* props = ::libs::iproperties::helpers::cast_event< syn::ProcessListLogsEvent > (msg);
       U3_ASSERT (props);
       process_list_logs (props);
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };
@@ -193,7 +191,7 @@ LogModule::update_catch_funcs_int ()
       auto* props = ::libs::iproperties::helpers::cast_event< syn::ProcessLogEvent > (msg);
       U3_ASSERT (props);
       process_log (props);
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };

@@ -6,8 +6,6 @@
 \project    u3_mem_funcs
 \brief      Файл реализации низкоуровных функций для работы с памятью
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../mem-funcs-includes_int.hpp"
 
 namespace utils::mem_funcs::details::consts
@@ -27,18 +25,18 @@ afree (void** pptr)
     return;
   }
 
-  const auto vptr   = ::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (*pptr);
-  const auto offset = *::libs::helpers::casts::reinterpret_cast_helper< std::uint8_t* > (vptr - 1);
+  const auto vptr   = ::libs::utility::casts::reinterpret_cast_helper< std::size_t > (*pptr);
+  const auto offset = *::libs::utility::casts::reinterpret_cast_helper< std::uint8_t* > (vptr - 1);
 
   if ((0 == offset) || (offset > consts::count_add_blocks * consts::size_align))
   {
-    U3_XLOG_ERROR ("failed get block memory for free" + VTOLOG (offset) + VTOLOG (consts::count_add_blocks * consts::size_align));
+    U3_XLOG_ERROR ("FAILED GET MEMORY BLOCK FOR FREE" + VTOLOG (offset) + VTOLOG (consts::count_add_blocks * consts::size_align));
     free (*pptr);
   }
   else
   {
     U3_ASSERT_NT (vptr > offset, VTOLOG (vptr) + VTOLOG (offset));
-    auto* real_ptr = ::libs::helpers::casts::reinterpret_cast_helper< void* > (vptr - offset);
+    auto* real_ptr = ::libs::utility::casts::reinterpret_cast_helper< void* > (vptr - offset);
     free (real_ptr);
   }
 
@@ -60,10 +58,10 @@ aalloc (void** pptr, const std::size_t size)
   U3_ASSERT_NT (nullptr == *pptr, PTR_TOLOG (*pptr));
   *pptr = nullptr;
 
-  const std::size_t real_size   = size + consts::count_add_blocks * consts::size_align;
+  const std::size_t real_size   = size + static_cast< std::size_t > (consts::count_add_blocks * consts::size_align);
   std::uint8_t      offset      = 0;
   void*             raw_ptr     = malloc (real_size);
-  const auto        int_raw_ptr = ::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (raw_ptr);
+  const auto        int_raw_ptr = ::libs::utility::casts::reinterpret_cast_helper< std::size_t > (raw_ptr);
 
   if (nullptr == raw_ptr)
   {
@@ -71,8 +69,8 @@ aalloc (void** pptr, const std::size_t size)
     return;
   }
 
-  *pptr  = ::libs::helpers::casts::reinterpret_cast_helper< void* > ((int_raw_ptr + 2 * consts::size_align) & ::libs::helpers::mem::consts::align_ptr64);
-  offset = U3_CAST_UINT8 (::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (*pptr) - int_raw_ptr);
+  *pptr  = ::libs::utility::casts::reinterpret_cast_helper< void* > ((int_raw_ptr + static_cast< unsigned long > (2 * consts::size_align)) & ::libs::utility::mem::consts::align_ptr64);
+  offset = U3_CAST_UINT8 (::libs::utility::casts::reinterpret_cast_helper< std::size_t > (*pptr) - int_raw_ptr);
 
   if (offset < 1)
   {
@@ -83,8 +81,11 @@ aalloc (void** pptr, const std::size_t size)
   }
   else
   {
-    *::libs::helpers::casts::reinterpret_cast_helper< std::uint8_t* > ((::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (*pptr)) - 1) = offset;
-    *::libs::helpers::casts::reinterpret_cast_helper< std::size_t* > (raw_ptr)                                                                       = size;
+    // EAI-REFACT
+    const auto step1 = ::libs::utility::casts::reinterpret_cast_helper< std::size_t > (*pptr);
+
+    *::libs::utility::casts::reinterpret_cast_helper< std::uint8_t* > ((step1) -1) = offset;
+    *::libs::utility::casts::reinterpret_cast_helper< std::size_t* > (raw_ptr)     = size;
   }
 }
 
@@ -94,18 +95,15 @@ arealloc (void** pptr, const std::size_t size)
 {
   U3_ASSERT_NT (pptr, PTR_TOLOG (pptr));
   U3_ASSERT_NT (size > 0, VTOLOG (size));
-
   if (nullptr == pptr)
   {
     return;
   }
-
   if (nullptr == *pptr)
   {
     aalloc (pptr, size);
     return;
   }
-
   if (size <= 0)
   {
     afree (pptr);
@@ -114,7 +112,6 @@ arealloc (void** pptr, const std::size_t size)
 
   void*       new_ptr   = nullptr;
   std::size_t size_copy = 0;
-
   aalloc (&new_ptr, size);
 
   if (!new_ptr)
@@ -124,10 +121,10 @@ arealloc (void** pptr, const std::size_t size)
     return;
   }
 
-  const auto vptr     = ::libs::helpers::casts::reinterpret_cast_helper< std::size_t > (*pptr);
-  auto       offset   = *::libs::helpers::casts::reinterpret_cast_helper< std::uint8_t* > (vptr - 1);
-  auto*      real_ptr = ::libs::helpers::casts::reinterpret_cast_helper< void* > (vptr - offset);
-  const auto old_size = *::libs::helpers::casts::reinterpret_cast_helper< std::size_t* > (real_ptr);
+  const auto vptr     = ::libs::utility::casts::reinterpret_cast_helper< std::size_t > (*pptr);
+  auto       offset   = *::libs::utility::casts::reinterpret_cast_helper< std::uint8_t* > (vptr - 1);
+  auto*      real_ptr = ::libs::utility::casts::reinterpret_cast_helper< void* > (vptr - offset);
+  const auto old_size = *::libs::utility::casts::reinterpret_cast_helper< std::size_t* > (real_ptr);
 
   size_copy = old_size - offset;
   size_copy = size_copy > size ? size : size_copy;

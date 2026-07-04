@@ -8,11 +8,11 @@
 
 namespace libs::iproperties::xml::helpers
 {
-using func_enum_files_type = std::function< void (::libs::helpers::files::NodeEnumFiles&, const std::string& add_root) >;   //<
+using func_enum_files_type = std::function< void (::libs::utility::files::NodeEnumFiles&, const std::string& add_root) >;   //<
 
 void
 enum_files_function (
-  ::libs::helpers::files::NodeEnumFiles& node,
+  ::libs::utility::files::NodeEnumFiles& node,
   const std::string&                     add_root,
   const func_enum_files_type&            funct);
 

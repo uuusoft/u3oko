@@ -8,5 +8,5 @@
 
 namespace libs::optim::mcalls::consts
 {
-constexpr std::uint16_t max_threads = 32 * 8;   //< Максимальное количество поддерживаемых потоков для обработки данных
+inline constexpr std::uint16_t max_threads = 32 * 8;   //< Максимальное количество поддерживаемых потоков для обработки данных
 }

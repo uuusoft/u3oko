@@ -12,7 +12,7 @@ class IHardwareCorrect final : public syn::ICorrectImage
 {
   public:
   //  ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IHardwareCorrect)
+  U3_ADD_POINTERS_TO_SELF (IHardwareCorrect)
 
   IHardwareCorrect ()          = default;
   virtual ~IHardwareCorrect () = default;
@@ -46,10 +46,7 @@ class IHardwareCorrect final : public syn::ICorrectImage
   }
 
   virtual bool
-  process_int (
-    syn::IVideoBuf::raw_ptr h16,
-    syn::IVideoBuf::raw_ptr s16,
-    syn::IVideoBuf::raw_ptr l16) override
+  process_int (syn::IVideoBuf::raw_ptr h16, syn::IVideoBuf::raw_ptr s16, syn::IVideoBuf::raw_ptr l16) override
   {
     // Вся работа идет аппаратно.
     return false;

@@ -4,8 +4,6 @@
 \date       16.05.2016
 \project    u3_bufs
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "libs-bufs-includes_int.hpp"
 #include "bufs.hpp"
 
@@ -26,8 +24,8 @@ Bufs::set_base_index (const syn::off_buf_type& indx)
 }
 
 
-syn::off_buf_type
-Bufs::get_base_index () const
+auto
+Bufs::get_base_index () const -> syn::off_buf_type
 {
   return base_buf_index_;
 }
@@ -51,8 +49,8 @@ Bufs::reset (bool only_indxs)
 }
 
 
-syn::IVideoBuf::raw_ptr
-Bufs::operator[] (const syn::off_buf_type& indx)
+auto
+Bufs::operator[] (const syn::off_buf_type& indx) -> syn::IVideoBuf::raw_ptr
 {
   if (indx == ::utils::dbufs::video::consts::offs::invalid)
   {
@@ -69,8 +67,8 @@ Bufs::operator[] (const syn::off_buf_type& indx)
 }
 
 
-syn::IVideoBuf::craw_ptr
-Bufs::operator[] (const syn::off_buf_type& indx) const
+auto
+Bufs::operator[] (const syn::off_buf_type& indx) const -> syn::IVideoBuf::craw_ptr
 {
   if (indx == ::utils::dbufs::video::consts::offs::invalid)
   {
@@ -89,6 +87,7 @@ Bufs::operator[] (const syn::off_buf_type& indx) const
 
 void
 Bufs::swap (Bufs& src)
+  noexcept
 {
   if (this == &src)
   {
@@ -124,7 +123,7 @@ Bufs::clone (const Bufs& src)
       continue;
     }
 
-    dchild = ibuf->impl ()->create (schild.second->getraw_buf () ? schild.second->getraw_buf ()->get_data_size () : 0);
+    dchild = ibuf->impl ()->create (schild.second->getraw_buf () ? schild.second->getraw_buf ()->get_size () : 0);
     dchild->clone (schild.second.get (), 100.0F);
   }
 
@@ -160,8 +159,8 @@ Bufs::set_flag (const BufsFlags& key, bool val)
 }
 
 
-bool
-Bufs::get_flag (const BufsFlags& key) const
+auto
+Bufs::get_flag (const BufsFlags& key) const -> bool
 {
   if (BufsFlags::empty != key)
   {
@@ -178,7 +177,7 @@ Bufs::get_flag (const BufsFlags& key) const
 
 
 void
-Bufs::enum_bufs (enum_bufs_func_type funct) const
+Bufs::enum_bufs (const enum_bufs_func_type& funct) const
 {
   for (const auto& el : childs_)
   {

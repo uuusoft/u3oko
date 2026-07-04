@@ -8,8 +8,8 @@
 
 namespace libs::optim::syn
 {
-using CpuExts       = ::libs::helpers::sys::cpu::CpuExts;
+using CpuExts       = ::libs::utility::sys::cpu::CpuExts;
 using IVideoBuf     = ::utils::dbufs::video::IVideoBuf;
-using ExpandedTimes = ::libs::helpers::statistic::ExpandedTimes;
-using AddOpTime     = ::libs::helpers::statistic::helpers::functors::AddOpTime;
+using ExpandedTimes = ::libs::utility::statistic::ExpandedTimes;
+using AddOpTime     = ::libs::utility::statistic::helpers::functors::AddOpTime;
 }   // namespace libs::optim::syn

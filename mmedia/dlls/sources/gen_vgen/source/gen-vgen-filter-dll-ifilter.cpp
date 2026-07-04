@@ -5,10 +5,9 @@
 \project    u3_gen_vgen
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "gen-vgen-includes_int.hpp"
-#include "mmedia/libs/helpers/thread/generic-thread-func.hpp"
+#include "memory"
+#include "mmedia/libs/utility/thread/generic-thread-func.hpp"
 #include "gen-vgen-info-filter-dll.hpp"
 #include "gen-vgen-filter-dll.hpp"
 #include "mmedia/dlls/doptim/algs/all_algs.hpp"
@@ -32,12 +31,11 @@ Filter::load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& 
 
   idata_source_impl_.init ();
 
-  finfo_.recv_thread_.reset (
-    new std::thread (
-      ::libs::helpers::thread::generic_thread_funct< Filter >,
-      libs::properties::vers::links::mids::mdata2appl,
-      this,
-      0u));
+  finfo_.recv_thread_ = std::make_unique< std::thread > (
+    ::libs::utility::thread::generic_thread_funct< Filter >,
+    libs::properties::vers::links::mids::mdata2appl,
+    this,
+    0u);
 }
 
 
@@ -59,15 +57,15 @@ Filter::call_int (syn::CallInterfInfo& info)
 }
 
 
-::libs::core::graph::IInterfGraphObj::raw_ptr
-Filter::query_int (const ::libs::helpers::utils::cuuid& par)
+auto
+Filter::query_int (const ::libs::utility::utils::cuuid& par) -> ::libs::core::graph::IInterfGraphObj::raw_ptr
 {
-  const auto interf = ::libs::helpers::uids::minor::get (par);
-  if (interf == ::libs::helpers::uids::minor::id_val::idata_source)
+  const auto interf = ::libs::utility::uids::minor::get (par);
+  if (interf == ::libs::utility::uids::minor::id_val::idata_source)
   {
     return &idata_source_impl_;
   }
-  if (interf == ::libs::helpers::uids::minor::id_val::ctrl_driver_dshow)
+  if (interf == ::libs::utility::uids::minor::id_val::ctrl_driver_dshow)
   {
     return &support_interf_;
   }

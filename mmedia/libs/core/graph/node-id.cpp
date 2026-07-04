@@ -10,44 +10,44 @@
 namespace libs::core::graph
 {
 NodeID::NodeID (
-  const name_id_type&  name,
-  const name_dll_type& name_dll) :
-  id_node_name_ (name),
-  id_node_name_dll_ (name_dll)
+  id_name_type  name,
+  dll_name_type name_dll) :
+  id_node_name_ (std::move (name)),
+  id_node_name_dll_ (std::move (name_dll))
 {
 }
 
 
-const NodeID::name_id_type
-NodeID::get_name () const
-{
-  return id_node_name_;
-}
-
-
-NodeID::name_id_type&
-NodeID::update_name ()
+auto
+NodeID::get_name () const -> const NodeID::id_name_type
 {
   return id_node_name_;
 }
 
 
-const NodeID::name_dll_type&
-NodeID::get_name_dll () const
+auto
+NodeID::update_name () -> NodeID::id_name_type&
+{
+  return id_node_name_;
+}
+
+
+auto
+NodeID::get_name_dll () const -> const NodeID::dll_name_type&
 {
   return id_node_name_dll_;
 }
 
 
-NodeID::name_dll_type&
-NodeID::update_name_dll ()
+auto
+NodeID::update_name_dll () -> NodeID::dll_name_type&
 {
   return id_node_name_dll_;
 }
 
 
-bool
-NodeID::operator< (const NodeID& obj) const
+auto
+NodeID::operator< (const NodeID& obj) const -> bool
 {
   U3_ASSERT (check ());
   U3_ASSERT (obj.check ());
@@ -55,8 +55,8 @@ NodeID::operator< (const NodeID& obj) const
 }
 
 
-bool
-NodeID::operator== (const NodeID& obj) const
+auto
+NodeID::operator== (const NodeID& obj) const -> bool
 {
   U3_ASSERT (check ());
   U3_ASSERT (obj.check ());
@@ -64,8 +64,8 @@ NodeID::operator== (const NodeID& obj) const
 }
 
 
-bool
-NodeID::check () const
+auto
+NodeID::check () const -> bool
 {
   return id_node_name_.empty () ? false : true;
 }
@@ -80,8 +80,8 @@ NodeID::serialize (Archive& arh, const std::uint32_t /* file_version */)
 }
 
 
-std::string
-get_ext_graph_node_id (const NodeID& id)
+auto
+get_ext_graph_node_id (const NodeID& id) -> std::string
 {
   return id.get_name () + "##" + id.get_name_dll ();
 }
@@ -97,17 +97,17 @@ tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const Node
 }
 
 
-NodeID
-tag_invoke (::boost::json::value_to_tag< NodeID >, const ::boost::json::value& jvs)
+auto
+tag_invoke (::boost::json::value_to_tag< NodeID >, const ::boost::json::value& jvs) -> NodeID
 {
   NodeID      ret;
   const auto& obj = jvs.as_object ();
 
-  ::libs::helpers::json::extract (obj, ret.update_name (), "id_node_name");
-  ::libs::helpers::json::extract (obj, ret.update_name_dll (), "id_node_name_dll");
+  ::libs::utility::json::extract (obj, ret.update_name (), "id_node_name");
+  ::libs::utility::json::extract (obj, ret.update_name_dll (), "id_node_name_dll");
   return ret;
 }
 }   // namespace libs::core::graph
 
 BOOST_CLASS_EXPORT_IMPLEMENT (::libs::core::graph::NodeID);
-U3_BOOST_SERIALIZE_ALL_ARCHIVES (::libs::core::graph::NodeID);
+U3_BOOST_ADD_SERIALIZE_ARCH (::libs::core::graph::NodeID);

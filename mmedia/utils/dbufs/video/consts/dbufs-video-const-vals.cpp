@@ -4,6 +4,7 @@
 \date       01.01.2016
 \project    u3_dbufs
 */
+#include "../../dbufs-includes_int.hpp"
 
 namespace utils::dbufs::video::consts
 {

@@ -43,9 +43,9 @@ HttpModule::load_def_resource2mem ()
 {
   //  Загружаем данные по умолчанию из хранилища.
   auto&      bufs     = shared_ids2bufs_[appl::consts::id_zip_buf2http];
-  const auto path2res = ::libs::helpers::files::make_path (temp_folder_, std::string (appl::consts::id_zip_buf2http));
+  const auto path2res = ::libs::utility::files::make_path (temp_folder_, std::string (appl::consts::id_zip_buf2http));
 
-  ::libs::helpers::files::load_file2mem (path2res, bufs.buf_);
+  ::libs::utility::files::load_file2mem (path2res, bufs.buf_);
 
   bufs.off_data_       = 0;
   bufs.number_frame_   = 0;
@@ -60,9 +60,9 @@ HttpModule::delete_rw_copy ()
   if (!temp_folder_.empty ())
   {
     //  Удаляем старые временные данные.
-    if (::libs::helpers::files::is_folder (temp_folder_))
+    if (::libs::utility::files::is_folder (temp_folder_))
     {
-      ::libs::helpers::files::delete_folder (temp_folder_);
+      ::libs::utility::files::delete_folder (temp_folder_);
     }
     temp_folder_.clear ();
   }
@@ -87,7 +87,7 @@ HttpModule::create_rw_copy ()
   auto       iappl    = isys_->get_paths_lockfree ();
   const auto temppath = iappl->get_path (libs::iproperties::appl_paths::Paths::temp);
 
-  temp_folder_ = ::libs::helpers::files::make_path (temppath, consts::temp_folder_name);
+  temp_folder_ = ::libs::utility::files::make_path (temppath, consts::temp_folder_name);
 
   U3_LOG_HTTP_MARK ("copy http resources to a temporary folder" + TOLOG (temp_folder_));
   ::libs::iproperties::xml::helpers::copy_files (
@@ -107,13 +107,13 @@ HttpModule::process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr 
     if (!props->is_start ())
     {
       U3_LOG_HTTP_MARK ("stop http module");
-      stop_module_ = true;
       stop_http_server ();
+      stop_module_ = true;
     }
     else
     {
       U3_LOG_HTTP_MARK ("start http module");
-      stop_http_server ();
+      // stop_http_server ();
       start_http_server ();
     }
   }
@@ -147,9 +147,9 @@ HttpModule::process_zip_data_event (syn::ZipDataEvent::raw_ptr props)
       return;
     }
 
-    const auto off_data  = helpers::get_offset_iframe (buf.data ());
-    const auto source_id = props->get_id ();
-    auto       tempbuf   = std::vector< char > { buf.data (), buf.data () + buf.size () };
+    const auto  off_data  = helpers::get_offset_iframe (buf.data ());
+    const auto& source_id = props->get_id ();
+    auto        tempbuf   = std::vector< char > { buf.data (), buf.data () + buf.size () };
     U3_CHECK (off_data <= 255, "off_data <= 255" + VTOLOG (off_data));
     U3_CHECK (U3_CAST_INT32 (source_id.length ()) <= off_data, "source_id.length () <= off_data" + VTOLOG (source_id.length ()) + VTOLOG (off_data));
     U3_CHECK (source_id.length () <= 253, "source_id.length () <= 253" + VTOLOG (source_id.length ()));
@@ -157,7 +157,7 @@ HttpModule::process_zip_data_event (syn::ZipDataEvent::raw_ptr props)
 
     tempbuf[0] = off_data;
     tempbuf[1] = source_id.length ();
-    std::copy (source_id.begin (), source_id.end (), tempbuf.data () + count_sizes);
+    std::ranges::copy (source_id, tempbuf.data () + count_sizes);
     shared_state_->broadcast_send (std::move (tempbuf));
   }
   catch (const std::exception& excpt)
@@ -175,22 +175,22 @@ HttpModule::debug ()
 #else
   {
     std::string      content;
-    syn::IEvent::ptr rmsg = std::make_shared< ::libs::ievents::TimedEvent > ();
+    syn::IEvent::ptr rmsg = std::make_shared< ::libs::events_base::TimedEvent > ();
     ::libs::iproperties::helpers::event2xml (rmsg, content);
   }
   {
     std::string      content;
     syn::IEvent::ptr rmsg;
 
-    auto dmsg = ::libs::iproperties::helpers::create_event< ::libs::ievents::TimedEvent > (rmsg);
+    auto dmsg = ::libs::iproperties::helpers::create_event< ::libs::events_base::TimedEvent > (rmsg);
     ::libs::iproperties::helpers::event2xml (rmsg, content);
   }
 #endif
 }
 
 
-HttpModule::process_res_type
-HttpModule::process_http_request (const std::string& req, const std::string& body)
+auto
+HttpModule::process_http_request (const std::string& req, const std::string& body) -> HttpModule::process_res_type
 {
   U3_XLOG_DBG ("HttpModule::process_http_request::---->" + TOLOG (req));
   // events
@@ -212,18 +212,18 @@ HttpModule::process_http_request (const std::string& req, const std::string& bod
 }
 
 
-bool
+auto
 HttpModule::process_request_event_debug (
   const std::string& id_event,
   const std::string& content,
-  const std::string& id_data)
+  const std::string& id_data) -> bool
 {
-  if ("libs/ihttp_events/events/mem-resource-http-event" == id_event)
+  if ("libs/events_http/events/mem-resource-http-event" == id_event)
   {
     return false;
   }
-  // if (::libs::imdata_events::events::ListDevicesDataEvent::gen_get_mid () == id_event)
-  if (::libs::ievents_events::events::GetEventsFromBase::gen_get_mid () == id_event)
+  // if (::libs::events_media::events::ListDevicesDataEvent::gen_get_mid () == id_event)
+  if (::libs::events_msg::events::GetEventsFromBase::gen_get_mid () == id_event)
   {
     // U3_LOG_HTTP_DEV (TOLOG (id_event) + TOLOG (content) + TOLOG (id_data));
     // return true;
@@ -232,8 +232,8 @@ HttpModule::process_request_event_debug (
 }
 
 
-HttpModule::process_res_type
-HttpModule::process_request_event (const std::string&, const std::string& body)
+auto
+HttpModule::process_request_event (const std::string&, const std::string& body) -> HttpModule::process_res_type
 {
   U3_XLOG_DBG ("HttpModule::process_request_event::---->");
   syn::http::status bstatus = syn::http::status::ok;
@@ -270,9 +270,9 @@ HttpModule::process_request_event (const std::string&, const std::string& body)
       U3_LOG_HTTP_DEV ("post" + TOLOG (event_data) + VTOLOG (xml_type_data));
     }
 
-    auto idemons    = ::libs::iproperties::helpers::cast_prop_demons ();
-    auto ievents    = idemons->get_events_lockfree ();
-    auto recv_event = ievents->impl ()->get (id_event);
+    auto idemons     = ::libs::iproperties::helpers::cast_prop_demons ();
+    auto events_base = idemons->get_events_lockfree ();
+    auto recv_event  = events_base->impl ()->get (id_event);
 
     U3_CHECK (recv_event, "null decode event" + STOLOG (id_event));
     U3_CHECK (id_event == recv_event->get_mid (), id_event + "!=" + STOLOG (recv_event->get_mid ()));
@@ -332,8 +332,8 @@ HttpModule::process_request_event (const std::string&, const std::string& body)
 }
 
 
-std::string
-get_resource_id_from_query (const std::string& query)
+auto
+get_resource_id_from_query (const std::string& query) -> std::string
 {
   const auto beg = query.find ('?');
   const auto end = query.rfind ('?');
@@ -348,8 +348,8 @@ get_resource_id_from_query (const std::string& query)
 }
 
 
-HttpModule::process_res_type
-HttpModule::process_request_file (const std::string& req, const std::string& body)
+auto
+HttpModule::process_request_file (const std::string& req, const std::string& body) -> HttpModule::process_res_type
 {
   U3_XLOG_DBG ("HttpModule::process_request_file::---->");
   lock_type lock (mtx_);
@@ -368,13 +368,13 @@ HttpModule::process_request_file (const std::string& req, const std::string& bod
   std::string full_path;
   try
   {
-    full_path = ::libs::helpers::files::make_path (consts::temp_folder_name, req_path);
+    full_path = ::libs::utility::files::make_path (consts::temp_folder_name, req_path);
 
     auto       iappl     = isys_->get_paths_lockfree ();
     const auto dir_path  = iappl->get_path (::libs::iproperties::appl_paths::Paths::temp);
-    const auto file_path = ::libs::helpers::files::make_path (dir_path, full_path);
+    const auto file_path = ::libs::utility::files::make_path (dir_path, full_path);
 
-    ::libs::helpers::files::load_file2mem (file_path, mem);
+    ::libs::utility::files::load_file2mem (file_path, mem);
     if (mem.empty ())
     {
       bstatus = syn::http::status::not_found;
@@ -401,48 +401,48 @@ HttpModule::start_http_server ()
   prepare_resources ();
   debug ();
 
-  impl_thread_ = std::thread (
+  impl_state_.impl_thread_ = std::thread (
     [this] () -> void {
-      U3_XLOG_DBG ("HttpModule::start_http_server::thread---->");
+      U3_XLOG_DEV ("HttpModule::start_http_server::thread---->");
       try
       {
-        const auto                address  = boost::asio::ip::make_address ("0.0.0.0");
-        const auto                endpoint = boost::asio::ip::tcp::endpoint { address, consts::port };
-        boost::asio::io_context   ioc { consts::count_work_threads };
-        boost::asio::ssl::context ctx { boost::asio::ssl::context::tlsv12 };
+        const auto address  = boost::asio::ip::make_address ("0.0.0.0");
+        const auto endpoint = boost::asio::ip::tcp::endpoint { address, consts::port };
 
-        impl_ = std::make_shared< impl::beast::listener > (
-          ioc,
-          ctx,
+        impl_state_.impl_ = std::make_shared< impl::beast::listener > (
+          impl_state_.ioc_,
+          impl_state_.ctx_,
           endpoint,
           modules::mhttp::impl::beast::handler_func_type (
-            std::bind (&HttpModule::process_http_request, this, std::placeholders::_1, std::placeholders::_2)),
+            [this] (auto&& ph1, auto&& ph2) {
+              return process_http_request (std::forward< decltype (ph1) > (ph1), std::forward< decltype (ph2) > (ph2));
+            }),
           shared_state_);
 
-        impl_->run ();
-
-        work_threads_.reserve (consts::count_work_threads);
+        impl_state_.impl_->run ();
+        impl_state_.work_threads_.reserve (consts::count_work_threads);
 
         for (auto i = consts::count_work_threads; i > 0; --i)
         {
-          work_threads_.emplace_back (
-            [&ioc] {
-              ioc.run ();
+          impl_state_.work_threads_.emplace_back (
+            [this] -> void {
+              impl_state_.ioc_.run ();
             });
         }
 
-        ioc.run ();
+        impl_state_.ioc_.run ();
       }
       catch (const std::exception& excpt)
       {
         U3_LOG_HTTP_EXCEPT (excpt.what ());
       }
-      U3_XLOG_DBG ("HttpModule::start_http_server::thread<----");
+      U3_XLOG_DEV ("HttpModule::start_http_server::thread<----");
     });
+
 #if 0
-  ssl_impl_thread_ = std::thread (
+  impl_ssl_thread_ = std::thread (
     [this] () -> void {
-      U3_XLOG_DBG ("HttpModule::start_http_server::sslthread---->");
+      U3_XLOG_DEV ("HttpModule::start_http_server::sslthread---->");
       try
       {
         const auto                address  = boost::asio::ip::make_address ("0.0.0.0");
@@ -453,7 +453,7 @@ HttpModule::start_http_server ()
         // This holds the self-signed certificate used by the server
         load_server_certificate (ctx);
 
-        impl_ = std::make_shared< impl::beast::listener > (
+        ssl_impl_ = std::make_shared< impl::beast::listener > (
           ioc,
           ctx,
           endpoint,
@@ -461,25 +461,25 @@ HttpModule::start_http_server ()
             std::bind (&HttpModule::process_http_request, this, std::placeholders::_1, std::placeholders::_2)),
           shared_state_);
 
-        impl_->run ();
+        impl_ssl_->run ();
 
         ssl_work_threads_.reserve (consts::count_work_threads);
 
         for (auto i = consts::count_work_threads; i > 0; --i)
         {
           ssl_work_threads_.emplace_back (
-            [&ioc] {
-              ioc.run ();
+            [&ioc_] {
+              ioc_.run ();
             });
         }
 
-        ioc.run ();
+        ioc_.run ();
       }
       catch (const std::exception& excpt)
       {
         U3_LOG_HTTP_EXCEPT (excpt.what ());
       }
-      U3_XLOG_DBG ("HttpModule::start_http_server::sslthread<----");
+      U3_XLOG_DEV ("HttpModule::start_http_server::sslthread<----");
     });
 #endif
   U3_XLOG_DBG ("HttpModule::start_http_server::<----");
@@ -489,9 +489,18 @@ HttpModule::start_http_server ()
 void
 HttpModule::stop_http_server ()
 {
+  U3_XLOG_DEV ("HttpModule::stop_http_server::---->");
   skip_state_.reset ();
+
   // EAI-BOOST-BEAST
   // work_threads_???
   // impl_.stop ();
+  if (impl_state_.impl_)
+  {
+    impl_state_.ioc_.stop ();
+    U3_XLOG_DEV ("wait stop impl http thread");
+    impl_state_.impl_thread_.join ();
+  }
+  U3_XLOG_DEV ("HttpModule::stop_http_server::<----");
 }
 }   // namespace modules::mhttp::appl

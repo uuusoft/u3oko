@@ -6,22 +6,19 @@
 \project    u3_includes
 \brief      Базовые определения для включения во все файлы сборки
 */
-#include "../defines/defines_tstring.hpp"
+#include "../defines/logs/defines-xlog-trace.hpp"
+#include "../defines/logs/defines-file-log-id-vals.hpp"
+#include "../defines/logs/defines-convert-vals2string.hpp"
 
-#include "../defines/logs/xlog-trace-defines.hpp"
-#include "../defines/logs/file-log-id-vals-defines.hpp"
-#include "../defines/logs/convert-vals2string-log-defines.hpp"
-#include "../defines/logs/get-place-call-func.hpp"
+#include "../defines/checks/defines-asserts.hpp"
+#include "../defines/checks/defines-throw-except.hpp"
+#include "../defines/checks/defines-check-state.hpp"
 
-#include "../defines/checks/asserts-defines.hpp"
-#include "../defines/checks/throw-exceptions-defines.hpp"
-#include "../defines/checks/check-state-defines.hpp"
-#include "../defines/checks/check-state-turbojpeg-lib-defines.hpp"
+#include "../defines/helpers/defines-mark-unused.hpp"
+#include "../defines/helpers/defines-add-pointers-to-self.hpp"
+#include "../defines/helpers/defines-add-make-shared-this.hpp"
+#include "../defines/helpers/defines-add-super-type.hpp"
+#include "../defines/helpers/defines-add-disable-move-copy.hpp"
+#include "../defines/helpers/defines-mem-aligned.hpp"
 
-#include "../defines/helpers/mark-unused-defines.hpp"
-#include "../defines/helpers/add-ptrs2type-defines.hpp"
-#include "../defines/helpers/add-super2type-defines.hpp"
-#include "../defines/helpers/disable-copy-type-obj-defines.hpp"
-#include "../defines/mem-aligned-defines.hpp"
-
-#include "../defines/boost/boost-lib-serialize-type-to-archive-defines.hpp"
+#include "../defines/boost/defines-boost-lib-serialize-to-archive.hpp"

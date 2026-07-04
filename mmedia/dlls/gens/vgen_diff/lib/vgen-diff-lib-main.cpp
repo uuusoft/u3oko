@@ -5,7 +5,5 @@
 \project    u3_vgen_diff_lib
 \brief      Модуль вычисления разности кадров
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "vgen-diff-lib-includes_int.hpp"
 #include "diff-impl.hpp"

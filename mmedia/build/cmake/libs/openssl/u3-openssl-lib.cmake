@@ -85,16 +85,15 @@ else()
     #  #&& nmake
     #)
 
-  elseif(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_LINUX} OR 
-         ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_RASPBERRY} OR 
-         ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ORANGE_PI} OR 
-         ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_DARWIN})
+  elseif(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_LINUX} OR ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_RASPBERRY} OR ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ORANGE_PI}
+         OR ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_DARWIN})
 
     add_custom_command(
       TARGET ${U3_NAME_EXTLIB_OPENSSL_UTIL}
       POST_BUILD
-      COMMAND cd ${install_dir}/src/openssl-util/ && ./Configure --prefix=${U3_INSTALL_DIR_EXTLIB_OPENSSL_UTIL} --openssldir=${U3_INSTALL_DIR_EXTLIB_OPENSSL_UTIL} && make && make install
-    )
+      COMMAND
+        cd ${install_dir}/src/openssl-util/ && ./Configure --prefix=${U3_INSTALL_DIR_EXTLIB_OPENSSL_UTIL} --openssldir=${U3_INSTALL_DIR_EXTLIB_OPENSSL_UTIL} && make && make
+        install)
 
     if(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_LINUX})
       set(U3_INSTALL_DIR_EXTLIB_OPENSSL "${U3_INSTALL_DIR_EXTLIB_OPENSSL_UTIL}/lib64/libssl.a")
@@ -105,13 +104,24 @@ else()
     endif()
   elseif(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ANDROID})
     #set(U3_ANDROID_OPENSSL_OPTIONS no-apps no-external-tests)
-    set(U3_ANDROID_OPENSSL_OPTIONS no-apps no-asm no-docs no-engine no-gost no-legacy no-shared no-ssl no-tests no-zlib no-external-tests)
+    set(U3_ANDROID_OPENSSL_OPTIONS
+        no-apps
+        no-asm
+        no-docs
+        no-engine
+        no-gost
+        no-legacy
+        no-shared
+        no-ssl
+        no-tests
+        no-zlib
+        no-external-tests)
 
     file(
-      CONFIGURE 
-      OUTPUT 
-      openssl_android_build.sh 
-      CONTENT 
+      CONFIGURE
+      OUTPUT
+      openssl_android_build.sh
+      CONTENT
       [=[cd ${install_dir}/src/openssl-util/
       export ANDROID_NDK_ROOT=${ANDROID_NDK}
       export HOST_TAG=linux-x86_64
@@ -125,17 +135,21 @@ else()
       ]=]
       ESCAPE_QUOTES
       #@ONLY
-      NEWLINE_STYLE UNIX
-    )
+      NEWLINE_STYLE
+      UNIX)
 
-    file(CHMOD ${CMAKE_CURRENT_BINARY_DIR}/openssl_android_build.sh FILE_PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE OWNER_READ GROUP_READ WORLD_READ)
+    file(
+      CHMOD
+      ${CMAKE_CURRENT_BINARY_DIR}/openssl_android_build.sh
+      FILE_PERMISSIONS
+      OWNER_EXECUTE
+      GROUP_EXECUTE
+      WORLD_EXECUTE
+      OWNER_READ
+      GROUP_READ
+      WORLD_READ)
 
-    add_custom_command(
-      TARGET ${U3_NAME_EXTLIB_OPENSSL_UTIL}
-      POST_BUILD
-      COMMAND /bin/bash -c ${CMAKE_CURRENT_BINARY_DIR}/openssl_android_build.sh
-      VERBATIM
-    )
+    add_custom_command(TARGET ${U3_NAME_EXTLIB_OPENSSL_UTIL} POST_BUILD COMMAND /bin/bash -c ${CMAKE_CURRENT_BINARY_DIR}/openssl_android_build.sh VERBATIM)
 
     set(U3_INSTALL_DIR_EXTLIB_OPENSSL "${U3_INSTALL_DIR_EXTLIB_OPENSSL_UTIL}/lib/libssl.a")
     set(U3_INSTALL_DIR_EXTLIB_CRYPTO "${U3_INSTALL_DIR_EXTLIB_OPENSSL_UTIL}/lib/libcrypto.a")

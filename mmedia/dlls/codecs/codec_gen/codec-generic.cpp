@@ -4,8 +4,6 @@
 \date       26.07.2016
 \project    u3_codec_gen
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "codec-gen-includes_int.hpp"
 #include "codec-generic.hpp"
 
@@ -83,8 +81,8 @@ CodecGeneric::set_cpu (syn::CpuExts optim)
 }
 
 
-const StatisticInfo&
-CodecGeneric::get_statistic_info () const
+auto
+CodecGeneric::get_statistic_info () const -> const StatisticInfo&
 {
   return get_statistic_info_int ();
 }

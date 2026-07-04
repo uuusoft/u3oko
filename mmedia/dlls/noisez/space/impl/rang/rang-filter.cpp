@@ -5,8 +5,6 @@
 \project    u3_time_noisez
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "space-noise-impl-rang-includes_int.hpp"
 #include "rang-filter.hpp"
 #include "mmedia/dlls/doptim/algs/all_algs.hpp"
@@ -92,7 +90,7 @@ RangFilter::transform_int (
   {
     auto* impl_info = ::libs::iproperties::helpers::cast_event< syn::MedianSpaceFilterProp > (bufs.impl_info_);
     U3_CHECK (impl_info, "empty syn::MedianSpaceFilterProp");
-    if (libs::ievents::props::videos::noises::space::ext::Sortings::skip == impl_info->sort_type_)
+    if (libs::events_base::props::videos::noises::space::ext::Sortings::skip == impl_info->sort_type_)
     {
       continue;
     }
@@ -113,7 +111,7 @@ RangFilter::transform_int (
       algs.resize (pthreads_->get_count_threads ());
       std::ranges::for_each (
         algs,
-        [this, &finfo, &impl_info] (IAlgImpl::ptr& alg) {
+        [this, &finfo, &impl_info] (IAlgImpl::ptr& alg) -> void {
           if (!alg)
           {
             alg = make_rang_impl (finfo, impl_info);
@@ -121,7 +119,7 @@ RangFilter::transform_int (
         });
     }
 
-    ::libs::helpers::statistic::helpers::functors::AddOpTime slock (
+    ::libs::utility::statistic::helpers::functors::AddOpTime slock (
       finfo.expand_time_algs_,
       ::libs::core::graph::get_ext_graph_node_id (id_node),
       "one full buf " + bufs.indx_sbuf_);
@@ -180,8 +178,8 @@ RangFilter::transform_int (
 }
 
 
-IAlgImpl::ptr
-RangFilter::make_rang_impl (InfoFilter& finfo, syn::MedianSpaceFilterProp::raw_ptr impl_info)
+auto
+RangFilter::make_rang_impl (InfoFilter& finfo, syn::MedianSpaceFilterProp::raw_ptr impl_info) -> IAlgImpl::ptr
 {
   switch (impl_info->sort_type_)
   {

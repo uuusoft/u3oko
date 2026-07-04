@@ -11,7 +11,7 @@ namespace dlls::sources::desk_vgen::impls::win32::helpers
 {
 void hdc2rgb (
   const HDC&                            whdc,
-  ::libs::helpers::mem::IBlockMem::ptr& rgb_buf,
+  ::libs::utility::mem::IBlockMem::ptr& rgb_buf,
   const std::int32_t                    offset_x,
   const std::int32_t                    offset_y,
   std::uint32_t&                        active_dest_buf,
@@ -23,7 +23,7 @@ void hdc2rgb (
 
 void window2rgb (
   HWND                                  hwnd,
-  ::libs::helpers::mem::IBlockMem::ptr& rgb_buf,
+  ::libs::utility::mem::IBlockMem::ptr& rgb_buf,
   const std::int32_t                    offset_x,
   const std::int32_t                    offset_y,
   std::uint32_t&                        active_dest_buf,

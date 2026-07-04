@@ -4,17 +4,15 @@
 \date       01.01.2017
 \project    u3_pict_vgen
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "includes_int.hpp"
 #include "pict-vgen-source-impl.hpp"
 
 namespace dlls::sources::pict_vgen
 {
-Image2Frames
-image2frame (const std::string& val)
+auto
+image2frame (const std::string& val) -> Image2Frames
 {
-  static const std::unordered_map< std::string, const Image2Frames > vals = {
+  static const boost::unordered_flat_map< std::string, const Image2Frames > vals = {
     { "one", Image2Frames ::one },
     { "scroll", Image2Frames::scroll }
   };
@@ -47,31 +45,31 @@ SourceImpl::print_images2buf (utils::dbufs::video::IVideoBuf::ptr& genimage)
 {
   const auto capwidth  = U3_CAST_INT32 (source_impl_info_.capture_props_->capi_.width_);
   const auto capheight = U3_CAST_INT32 (source_impl_info_.capture_props_->capi_.height_);
-  const auto capstride = ::libs::helpers::mem::align_value (capwidth * 3, 64, true);
+  const auto capstride = ::libs::utility::mem::align_value (capwidth * 3, 64, true);
   const auto size_copy = capheight * capstride;
 
-  std::ranges::for_each (loaded_images_, [] (auto& val) { val.second.first += 1; });
+  std::ranges::for_each (loaded_images_, [] (auto& val) -> auto { val.second.first += 1; });
 
   genimage->buf_alloc (
-    ::utils::dbufs::video::AllocBufInfo (
+    ::utils::dbufs::video::AllocParams (
       capwidth,
       capheight,
       capstride,
-      ::libs::helpers::uids::minor::id_val::rgb24));
+      ::libs::utility::uids::minor::id_val::rgb24));
 
-  ::utils::dbufs::video::helpers::override_data (*genimage, 0, size_copy);
+  ::utils::dbufs::video::helpers::replace_buf_params (*genimage, 0, size_copy);
 
   auto         dstbuf   = genimage->get_buf ();
   std::int32_t cpwidth  = 0;
   auto         offfirst = U3_CAST_INT32 (off_first_image_);
 
-  const auto   folder         = ::libs::helpers::files::update_home_folder (srcimpinfo_.props_->ext_vals_.at (consts::param_keys::picter_folder));
+  const auto   folder         = ::libs::utility::files::update_home_folder (srcimpinfo_.props_->ext_vals_.at (consts::param_keys::picter_folder));
   auto         loc_image_indx = indx_image_file_;
   std::int32_t cycle_counter  = 0;
   while (++cycle_counter)
   {
     loc_image_indx             = loc_image_indx % enum_files_.files_.size ();
-    const auto image_file_name = ::libs::helpers::files::make_path (folder, enum_files_.files_[loc_image_indx].name_);
+    const auto image_file_name = ::libs::utility::files::make_path (folder, enum_files_.files_[loc_image_indx].name_);
     if (!is_image_valid (image_file_name))
     {
       ++indx_image_file_;
@@ -130,10 +128,10 @@ SourceImpl::print_images2buf (utils::dbufs::video::IVideoBuf::ptr& genimage)
 
     for (std::int32_t iy = 0; iy < image_height; ++iy)
     {
-      auto* srcline = image_info.data_->get () + iy * srcstride + offfirst * image_info.bppx_;
-      auto* dstline = dstbuf + cpwidth * 3 + iy * capstride;
+      auto* srcline = image_info.data_->get () + static_cast< ptrdiff_t > (iy * srcstride) + static_cast< ptrdiff_t > (offfirst * image_info.bppx_);
+      auto* dstline = dstbuf + cpwidth * 3 + static_cast< ptrdiff_t > (iy * capstride);
       U3_CHECK (srcline, "get scan file rgb24 image" + VTOLOG (iy));
-      ::libs::helpers::mem::u3copy (srcline, dstline, cpstride);
+      ::libs::utility::mem::u3copy (srcline, dstline, cpstride);
     }
 
     cpwidth += image_width - offfirst;
@@ -147,14 +145,14 @@ SourceImpl::print_images2buf (utils::dbufs::video::IVideoBuf::ptr& genimage)
     ++loc_image_indx;
   }
 
-  std::erase_if (
+  boost::unordered::erase_if (
     loaded_images_,
-    [] (const auto& val) { return val.second.first >= consts::max_count_cycle_store_image; });
+    [] (const auto& val) -> auto { return val.second.first >= consts::max_count_cycle_store_image; });
 }
 
 
-bool
-SourceImpl::is_image_valid (const std::string& name)
+auto
+SourceImpl::is_image_valid (const std::string& name) -> bool
 {
   int width { 0 };
   int height { 0 };
@@ -163,8 +161,8 @@ SourceImpl::is_image_valid (const std::string& name)
 }
 
 
-LoadedImage
-SourceImpl::load_image2buf (const std::string& name)
+auto
+SourceImpl::load_image2buf (const std::string& name) -> LoadedImage
 {
   using stb_image_type = helpers::ResourceHolder< void, stbi_image_free >;
 
@@ -177,7 +175,7 @@ SourceImpl::load_image2buf (const std::string& name)
   if (!data || fileheight <= 0 || filewidth <= 0 || bbpx != 3)
   {
     U3_LOG_DATA_ERROR ("failed load image" + VTOLOG (fileheight) + VTOLOG (filewidth) + VTOLOG (bbpx) + TOLOG (name));
-    return LoadedImage ();
+    return {};
   }
 
   const auto propwidth = U3_CAST_FLOAT (capheight) / U3_CAST_FLOAT (fileheight);
@@ -189,7 +187,7 @@ SourceImpl::load_image2buf (const std::string& name)
   buf->resize (ressize);
 
   stbir_resize_uint8_srgb (
-    ::libs::helpers::casts::reinterpret_cast_helper< unsigned char* > (*data),
+    ::libs::utility::casts::reinterpret_cast_helper< unsigned char* > (*data),
     filewidth,
     fileheight,
     filewidth * bbpx,
@@ -199,7 +197,7 @@ SourceImpl::load_image2buf (const std::string& name)
     resstride,
     STBIR_RGB);
 
-  buf->set_data_size (ressize);
+  buf->set_size (ressize);
   return { reswidth, capheight, bbpx, std::move (buf) };
 }
 
@@ -216,16 +214,16 @@ SourceImpl::refresh_files ()
   enum_files_.clear ();
 
   syn::DefaultFileMask check_cond (loc_mask);
-  const auto           picters_folder = ::libs::helpers::files::update_home_folder (srcimpinfo_.props_->ext_vals_.at (consts::param_keys::picter_folder));
+  const auto           picters_folder = ::libs::utility::files::update_home_folder (srcimpinfo_.props_->ext_vals_.at (consts::param_keys::picter_folder));
 
   U3_LOG_DATA_DEV ("begin refresh files in" + TOLOG (picters_folder));
-  ::libs::helpers::files::get_files (
+  ::libs::utility::files::get_files (
     picters_folder,
     enum_files_,
-    { ::libs::helpers::files::IncludeSubFolders::disabled,
-      ::libs::helpers::files::IncludeFiles::enabled,
-      ::libs::helpers::files::Recursives::disabled,
-      ::libs::helpers::files::Sorting::last_write_time },
+    { .include_fiolders_ = ::libs::utility::files::IncludeSubFolders::disabled,
+      .include_files_    = ::libs::utility::files::IncludeFiles::enabled,
+      .recursive_        = ::libs::utility::files::Recursives::disabled,
+      .sorting_          = ::libs::utility::files::Sorting::last_write_time },
     check_cond);
 
   if (enum_files_.files_.empty ())
@@ -237,7 +235,7 @@ SourceImpl::refresh_files ()
     srand (std::chrono::duration_cast< std::chrono::milliseconds > (std::chrono::high_resolution_clock::now ().time_since_epoch ()).count ());
     indx_image_file_ = rand () % enum_files_.files_.size ();
 
-    ::libs::helpers::utils::check_bound< std::uint64_t > (
+    ::libs::utility::utils::check_bound< std::uint64_t > (
       indx_image_file_,
       0llu,
       U3_CAST_UINT64 (enum_files_.files_.size () - 1));

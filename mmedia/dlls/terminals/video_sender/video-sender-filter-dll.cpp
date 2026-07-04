@@ -5,8 +5,6 @@
 \project    u3_video_sender_dll
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "video-sender-includes_int.hpp"
 #include "video-sender-info-filter.hpp"
 #include "video-sender-filter-dll.hpp"
@@ -82,7 +80,7 @@ Filter::process_events (syn::TransformInfo& info)
 
   for (const auto& event : *info.frame_events_)
   {
-    auto* devent = ::libs::iproperties::helpers::cast_event< ::libs::ievents::runtime::interf::InterfBaseIdEvent > (event);
+    auto* devent = ::libs::iproperties::helpers::cast_event< ::libs::events_base::runtime::interf::InterfBaseIdEvent > (event);
     if (devent)
     {
       finfo_.active_impl_ = devent->get_interface ();
@@ -93,7 +91,7 @@ Filter::process_events (syn::TransformInfo& info)
 
 
 void
-Filter::default_send_funct (
+Filter::default_send_func (
   syn::TransformInfo&                  info,
   const syn::Buff2ModuleInfo::craw_ptr minfo,
   const syn::id_link_type&             id)

@@ -51,7 +51,7 @@ get_shared_prop_os () -> vers::system::ISystemProperty::raw_ptr
   U3_ASSERT (rprop);
   void* ret = rprop->cast2top ();
   U3_ASSERT (ret);
-  return ::libs::helpers::casts::reinterpret_cast_helper< vers::system::ISystemProperty::raw_ptr > (ret);
+  return ::libs::utility::casts::reinterpret_cast_helper< vers::system::ISystemProperty::raw_ptr > (ret);
 }
 
 
@@ -87,7 +87,7 @@ get_prop_links () -> ::libs::properties::vers::links::ILinksProperty::raw_ptr
   U3_ASSERT (rprop);
   void* ret = rprop->cast2top ();
   U3_ASSERT (ret);
-  return ::libs::helpers::casts::reinterpret_cast_helper< ::libs::properties::vers::links::ILinksProperty::raw_ptr > (ret);
+  return ::libs::utility::casts::reinterpret_cast_helper< ::libs::properties::vers::links::ILinksProperty::raw_ptr > (ret);
 }
 
 
@@ -106,7 +106,7 @@ inline auto
 cast_prop_demons () -> ::libs::iproperties::vers::demon::IDemonsProperty::raw_ptr
 {
   auto  demon_prop = ::libs::iproperties::helpers::get_prop_demons ();
-  auto* ret        = ::libs::helpers::casts::reinterpret_cast_helper< ::libs::iproperties::vers::demon::IDemonsProperty::raw_ptr > (demon_prop);
+  auto* ret        = ::libs::utility::casts::reinterpret_cast_helper< ::libs::iproperties::vers::demon::IDemonsProperty::raw_ptr > (demon_prop);
   U3_ASSERT (demon_prop);
   U3_ASSERT (ret);
   return ret;

@@ -13,7 +13,7 @@ class SourceImpl final : public ::dlls::sources::gen_lib::ISourceImpl
 {
   public:
   //  ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (SourceImpl)
+  U3_ADD_POINTERS_TO_SELF (SourceImpl)
 
   SourceImpl () = default;
   virtual ~SourceImpl () noexcept;
@@ -35,10 +35,10 @@ class SourceImpl final : public ::dlls::sources::gen_lib::ISourceImpl
   virtual void init_int () override;
   virtual void start_int () override;
   virtual auto stop_int () -> void override;
-  virtual void get_sources_int (std::vector< syn::DataSourceInfo >& sources) override;
-  virtual void get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* events) override;
-  virtual void set_cpu_int (::libs::helpers::sys::cpu::CpuExts current_optim) override;
-  virtual void update_source_info_int (const ::dlls::sources::gen_lib::SourceImplInfo& info) override;
+  virtual void get_sources_int (std::vector< syn::DataSourceInfo >&) override;
+  virtual void get_raw_data_int (syn::pkeys2bufs_type&, syn::tevents_type*) override;
+  virtual void set_cpu_int (::libs::utility::sys::cpu::CpuExts) override;
+  virtual void update_source_info_int (const ::dlls::sources::gen_lib::SourceImplInfo&) override;
 
   std::unique_ptr< camera::CamImpl > v4l2_impl_;                                                          //<
   bool                               v4l2_init_         = false;                                          //< Флаг инициализации устройства v4l2

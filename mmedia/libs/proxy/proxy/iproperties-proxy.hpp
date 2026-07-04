@@ -8,5 +8,5 @@
 
 namespace libs::proxy
 {
-std::vector< ::libs::helpers::files::FileNode > get_list_dlls_as_libs ();
+auto get_list_dlls_as_libs () -> std::vector< ::libs::utility::files::FileNode >;
 }   // namespace libs::proxy

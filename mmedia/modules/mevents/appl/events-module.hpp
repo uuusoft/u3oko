@@ -8,14 +8,14 @@
 
 namespace modules::mevents::appl
 {
-struct ControlSizeDataBase {
+struct BaseSizeControl {
   static constexpr std::uint64_t max_count_msg_without_check = 1000;
 
-  ControlSizeDataBase ()  = default;
-  ~ControlSizeDataBase () = default;
+  BaseSizeControl ()  = default;
+  ~BaseSizeControl () = default;
 
-  ControlSizeDataBase& operator= (const ControlSizeDataBase&) = delete;
-  ControlSizeDataBase& operator= (ControlSizeDataBase&&)      = delete;
+  BaseSizeControl& operator= (const BaseSizeControl&) = delete;
+  BaseSizeControl& operator= (BaseSizeControl&&)      = delete;
 
   auto
   compression_requared (SQLite::Database* database) -> bool
@@ -25,8 +25,6 @@ struct ControlSizeDataBase {
     {
       return false;
     }
-
-    // database->
 
     msg_counter_ = 0;
     return true;
@@ -50,7 +48,9 @@ class EventsModule final : public ::libs::ilink::appl::leaf::LeafModule
 
   private:
   // internal types
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ilink::appl::leaf::LeafModule)
+  using sql_ptr_type = std::unique_ptr< SQLite::Database >;
+
+  U3_ADD_SUPER_CLASS (::libs::ilink::appl::leaf::LeafModule)
 
   friend auto free_error_callback (void*, int, const char*) -> void;
 
@@ -75,12 +75,13 @@ class EventsModule final : public ::libs::ilink::appl::leaf::LeafModule
   auto prepare_base () -> void;
   auto shutdown_base () -> void;
   auto process_change_state_process (syn::IEvent::ptr&, syn::ChangeStateProcessEvent::raw_ptr) -> void;
-  auto process_add_event2base (syn::IEvent::ptr&, syn::AddEvent2Base::raw_ptr) -> void;
-  auto process_get_data_graphs (syn::IEvent::ptr&, syn::GetDataGraphsFromEventBase::raw_ptr) -> void;
-  auto process_update_listener (syn::IEvent::ptr&, syn::UpdateListener::raw_ptr) -> void;
+  auto process_add_event2base (syn::IEvent::ptr&, syn::AddEvent2EventsMsg::raw_ptr) -> void;
+  auto process_get_data_graphs (syn::IEvent::ptr&, syn::GetDataGraphsEventsMsg::raw_ptr) -> void;
+  auto process_update_listener (syn::IEvent::ptr&, syn::UpdateListenerEventsMsg::raw_ptr) -> void;
   auto process_get_events_from_base (syn::IEvent::ptr&, syn::GetEventsFromBase::raw_ptr) -> void;
+  auto process_error (syn::IEvent::ptr&, const std::string_view info) noexcept -> void;
 
-  std::unique_ptr< SQLite::Database > base_;              //< База данных с событиями
-  ControlSizeDataBase                 size_controller_;   //<
+  sql_ptr_type    base_;              //< База данных с событиями
+  BaseSizeControl base_size_cntrl_;   //<
 };
 }   // namespace modules::mevents::appl

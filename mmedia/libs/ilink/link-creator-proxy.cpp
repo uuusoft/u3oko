@@ -11,12 +11,13 @@
 namespace libs::ilink
 {
 LinkCreatorProxy::LinkCreatorProxy () :
-  ::libs::helpers::proxy::MemProxyBase (::libs::link::consts::text::id_shared_mem_base, sizeof (::libs::link::ILinkCreator::ptr)),
-  pimpl_ (nullptr)
+  ::libs::utility::proxy::MemProxyBase (::libs::link::consts::text::id_shared_mem_base, sizeof (::libs::link::ILinkCreator::ptr))
+
 {
-  pimpl_ = pshm_->find_or_construct< ::libs::link::ILinkCreator::ptr > (cid_.c_str ()) ();
+  pimpl_ = pshm_->find_or_construct< ::libs::link::ILinkCreator::ptr > (obj_id_.c_str ()) ();
   if (*pimpl_)
   {
+    // allready exist
     return;
   }
 
@@ -50,5 +51,21 @@ LinkCreatorProxy::LinkCreatorProxy () :
     }
   }
   U3_ASSERT_SIGNAL ("unknown impl name for process" + VTOLOG (issingle) + TOLOG (implname));
+}
+
+
+LinkCreatorProxy::~LinkCreatorProxy ()
+{
+  U3_XLOG_DEV ("LinkCreatorProxy::~LinkCreatorProxy::---->");
+  if (pimpl_)
+  {
+    U3_ASSERT_NT (pshm_, "empty shared memory object for LinkCreatorProxy");
+    if (pshm_)
+    {
+      pshm_->destroy< ::libs::link::ILinkCreator::ptr > (obj_id_.c_str ());
+    }
+    pimpl_ = nullptr;
+  }
+  U3_XLOG_DEV ("LinkCreatorProxy::~LinkCreatorProxy::<----");
 }
 }   // namespace libs::ilink

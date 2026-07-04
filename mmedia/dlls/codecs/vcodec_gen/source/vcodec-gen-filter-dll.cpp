@@ -5,8 +5,6 @@
 \project    u3_vcodec_gen
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "vcodec-gen-includes_int.hpp"
 #include "mmedia/dlls/doptim/algs/all_algs.hpp"
 #include "vcodec-gen-filter-dll.hpp"
@@ -14,11 +12,17 @@
 namespace dlls::codecs::vcodec_gen
 {
 browser::CodecBrower               Filter::codec_browser_;
-::libs::helpers::dlls::FreezerDlls Filter::frozen_dlls_;
+::libs::utility::dlls::FreezerDlls Filter::frozen_dlls_;
 
 Filter::Filter ()
 {
   pthreads_ = ::libs::iproperties::helpers::get_shared_prop_os ()->get_mcalls_lockfree ();
+}
+
+
+Filter::~Filter ()
+{
+  free_impl_lib ();
 }
 
 
@@ -141,10 +145,10 @@ Filter::init_pts (::libs::icore::impl::var1::obj::ConnectInfo* info)
 }
 
 
-bool
-Filter::prepare_process_frame (syn::TransformInfo& info)
+auto
+Filter::prepare_process_frame (syn::TransformInfo& info) -> bool
 {
-  const bool                     decode = ::libs::ievents::props::videos::generic::codec::CodecModes::decoder == finfo_.rprops_->plane_.type_;
+  const bool                     decode = ::libs::events_base::props::videos::generic::codec::CodecModes::decoder == finfo_.rprops_->plane_.type_;
   const syn::IVideoBuf::craw_ptr sbuf   = (*pbuf_)[finfo_.rprops_->bufs_.indx_sbuf_];
   const syn::IVideoBuf::craw_ptr dbuf   = (*pbuf_)[finfo_.rprops_->bufs_.indx_dbuf_];
 
@@ -192,7 +196,7 @@ Filter::prepare_process_frame (syn::TransformInfo& info)
 
   if (decode)
   {
-    const syn::HeaderIFrame* head = ::libs::helpers::casts::reinterpret_cast_helper< const syn::HeaderIFrame* > (utils::dbufs::video::helpers::get_const_data (sbuf));
+    const auto* head = ::libs::utility::casts::reinterpret_cast_helper< const syn::HeaderIFrame* > (utils::dbufs::video::helpers::get_const_data (sbuf));
     if (!head || !head->check ())
     {
       U3_LOG_DATA_WRN ("invalid source buf for decode, skip");
@@ -226,7 +230,7 @@ Filter::process_frame (syn::TransformInfo& info)
 
   finfo_.dll_codec_->set_transform_info (&id_obj_, transinfo_);
 
-  const bool decode = ::libs::ievents::props::videos::generic::codec::CodecModes::decoder == finfo_.rprops_->plane_.type_;
+  const bool decode = ::libs::events_base::props::videos::generic::codec::CodecModes::decoder == finfo_.rprops_->plane_.type_;
   if (decode)
   {
     finfo_.dll_codec_->decode (pbuf_, pbuf_, info.frame_events_);
@@ -270,27 +274,34 @@ Filter::process_frame (syn::TransformInfo& info)
 
 
 void
-Filter::free_impl_lib ()
+Filter::free_impl_lib () noexcept
 {
-  active_dll_name_.clear ();
-
-  if (!finfo_.file_info_.lib_)
+  try
   {
-    return;
-  }
+    active_dll_name_.clear ();
 
-  // delete object from old library
-  if (finfo_.dll_codec_)
+    if (!finfo_.file_info_.lib_)
+    {
+      return;
+    }
+
+    // delete object from old library
+    if (finfo_.dll_codec_)
+    {
+      U3_ASSERT (finfo_.file_info_.free_codec_);
+      finfo_.file_info_.free_codec_ (finfo_.dll_codec_);
+      finfo_.dll_codec_ = nullptr;
+    }
+
+    //  free old library
+    finfo_.file_info_.reset ();
+    // U3-TODO
+    // finfo_.init (); // не работает в режиме libs only ломает работу
+  }
+  catch (...)
   {
-    U3_ASSERT (finfo_.file_info_.free_codec_);
-    finfo_.file_info_.free_codec_ (finfo_.dll_codec_);
-    finfo_.dll_codec_ = nullptr;
+    U3_LOG_DATA_EXCEPT ("...");
   }
-
-  //  free old library
-  finfo_.file_info_.reset ();
-  // U3-TODO
-  // finfo_.init (); // не работает в режиме libs only ломает работу
 }
 
 
@@ -322,7 +333,7 @@ Filter::update_int ()
 
   U3_LOG_DATA_DEV ("load codec" + TOLOG (finfo_.rprops_->dll_name_));
   helpers::load_codec_from_file (
-    ::libs::ievents::props::videos::generic::codec::CodecModes::coder == finfo_.rprops_->plane_.type_,
+    ::libs::events_base::props::videos::generic::codec::CodecModes::coder == finfo_.rprops_->plane_.type_,
     finfo_.rprops_->dll_name_,
     finfo_.file_info_);
 
@@ -352,9 +363,9 @@ Filter::log_statistic ()
   const codec_gen::StatisticInfo& info = finfo_.dll_codec_->get_statistic_info ();
 
   U3_ASSERT (info.self_test ());
-  txt.reserve (2 * 1024);
+  txt.reserve (static_cast< std::string::size_type > (2 * 1024));
 
-  txt = ::libs::ievents::props::videos::generic::codec::CodecModes::coder == finfo_.rprops_->plane_.type_ ? "coder" : "decoder";
+  txt = ::libs::events_base::props::videos::generic::codec::CodecModes::coder == finfo_.rprops_->plane_.type_ ? "coder" : "decoder";
   txt += ", frame ";
   txt += std::to_string (finfo_.counter_frames_);
   txt += "\n";

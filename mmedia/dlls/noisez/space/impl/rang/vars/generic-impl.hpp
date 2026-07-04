@@ -17,8 +17,8 @@ class GenericImpl : public IAlgImpl
   GenericImpl ()          = default;
   virtual ~GenericImpl () = default;
 
-  GenericImpl (const GenericImpl& src)            = delete;
-  GenericImpl& operator= (const GenericImpl& src) = delete;
+  GenericImpl (const GenericImpl&)            = delete;
+  GenericImpl& operator= (const GenericImpl&) = delete;
 
   virtual void
   process (const ProcessAlgInfo& info) override
@@ -85,9 +85,9 @@ class GenericImpl : public IAlgImpl
         spx += 1;
       }
 
-      sline     = ::libs::helpers::mem::move_cptr (sline, sstride);
-      iline     = ::libs::helpers::mem::move_ptr (iline, istride);
-      diff_line = ::libs::helpers::mem::move_cptr (diff_line, diff_stride);
+      sline     = ::libs::utility::mem::move_cptr (sline, sstride);
+      iline     = ::libs::utility::mem::move_ptr (iline, istride);
+      diff_line = ::libs::utility::mem::move_cptr (diff_line, diff_stride);
     }
   }
 };

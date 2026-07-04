@@ -3,17 +3,10 @@
 # copyright   Erashov A.I.
 # file        u3-shared-3rd-libs-list.cmake
 
-if(U3_DBG_EXTLIB_SKIP_SQLITE)
-  set(U3_SHARED_COMPILE_DEF_CPP ${U3_SHARED_COMPILE_DEF_CPP} -DU3_DBG_EXTLIB_SKIP_SQLITE=1)
-  set(U3_NAME_SQLITE_LIB)
-  set(U3_NAME_SQLITE_UTIL)
-else()
-  include("./build/cmake/libs/sqlite/u3-sqlite-lib.cmake")
-  set(U3_NAME_SQLITE_LIB u3-sqlite-lib)
-  set(U3_NAME_SQLITE_UTIL sqlite-util)
-
-  include("./build/cmake/libs/sqlitecpp/u3-sqlitecpp-lib.cmake")
-endif()
+include("./build/cmake/libs/sqlite/u3-sqlite-lib.cmake")
+set(U3_NAME_SQLITE_LIB u3-sqlite-lib)
+set(U3_NAME_SQLITE_UTIL sqlite-util)
+include("./build/cmake/libs/sqlitecpp/u3-sqlitecpp-lib.cmake")
 
 # shared external libs
 include("./build/cmake/libs/boost/u3-boost-lib.cmake")
@@ -29,17 +22,14 @@ if(U3_DBG_COMPILE_AT_BEGIN_EXTLIBS)
   # debug - force first compile
   include("./build/cmake/libs/stb/u3-stb-lib.cmake")
   include("./build/cmake/libs/openh264/u3-openh264-lib.cmake")
-
-  if(NOT U3_DBG_EXTLIB_SKIP_DLIB)
-    include( "./build/cmake/libs/dlib/u3-dlib-lib.cmake" )
-  endif()
+  include("./build/cmake/libs/dlib/u3-dlib-lib.cmake")
 
   if(${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_LINUX} OR ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_RASPBERRY} OR ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ORANGE_PI})
     include("./build/cmake/libs/libv4l2cpp/u3-libv4l2cpp-lib.cmake")
 
     if(U3_COMMERCIAL_PART EQUAL 1)
-      include( "./build/cmake/libs/libva/u3-libva-lib.cmake" )
-      include( "./build/cmake/libs/libva-utils/u3-libva-utils-lib.cmake" )
+      include("./build/cmake/libs/libva/u3-libva-lib.cmake")
+      include("./build/cmake/libs/libva-utils/u3-libva-utils-lib.cmake")
       #include( "./build/cmake/libs/libscreencapture-wayland/u3-libscreencapture-wayland-lib.cmake" )
       #include( "./build/cmake/libs/libdatachannel/u3-libdatachannel-lib.cmake" )
       #include( "./build/cmake/libs/libcamera/u3-libcamera-lib.cmake" )

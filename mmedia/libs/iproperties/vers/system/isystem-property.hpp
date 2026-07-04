@@ -13,7 +13,7 @@ class ISystemProperty final : public ::libs::properties::ISharedProperty
 {
   public:
   // ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (ISystemProperty)
+  U3_ADD_POINTERS_TO_SELF (ISystemProperty)
 
   ISystemProperty ();
   virtual ~ISystemProperty () = default;

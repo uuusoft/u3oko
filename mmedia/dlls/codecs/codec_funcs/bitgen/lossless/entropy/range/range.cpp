@@ -4,8 +4,6 @@
 \date       01.11.2016
 \project    u3_codec_funcs
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../../../../codec-funcs-includes_int.hpp"
 #include "../../../codec-funcs-bitgen-includes.hpp"
 // #include "range.hpp"

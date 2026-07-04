@@ -29,9 +29,9 @@ class Loader
 {
   public:
   //  ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (Loader)
+  U3_ADD_POINTERS_TO_SELF (Loader)
 
-  explicit Loader (const InitLoaderInfo& info);
+  explicit Loader (InitLoaderInfo info);
 
   bool is_file_exist (const std::string& file_name, const appl_paths::Paths& storage_type) const;
   bool is_folder_exist (const std::string& file_name, const appl_paths::Paths& storage_type) const;
@@ -39,11 +39,11 @@ class Loader
   void load (
     const std::string&                    file_name,
     const appl_paths::Paths&              storage_type,
-    ::libs::helpers::mem::IBlockMem::ptr& bmem);
+    ::libs::utility::mem::IBlockMem::ptr& bmem);
 
   void get_enum (
     const appl_paths::Paths&               storage_type,
-    ::libs::helpers::files::NodeEnumFiles& fenum,
+    ::libs::utility::files::NodeEnumFiles& fenum,
     const std::string&                     mask);
 
   private:

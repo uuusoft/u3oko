@@ -16,7 +16,7 @@ template< typename TTObj, std::int32_t (*free_funct) (TTObj*) >
 class HandlerXLibObj final
 {
   public:
-  U3_HELPER_DISABLE_ACOPY_TYPE (HandlerXLibObj)
+  U3_ADD_DELETE_MOVE_COPY (HandlerXLibObj)
 
   explicit HandlerXLibObj (TTObj* obj = nullptr) :
     obj_ (obj)

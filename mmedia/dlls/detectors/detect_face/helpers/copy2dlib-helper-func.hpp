@@ -8,7 +8,6 @@
 
 namespace dlls::detectors::detect_face::helpers
 {
-#ifndef U3_SKIP_DLIB
 template< typename TPixel >
 void
 copy2dlib (syn::IVideoBuf::raw_ptr psrc, dlib::array2d< TPixel >& img)
@@ -28,9 +27,8 @@ copy2dlib (syn::IVideoBuf::raw_ptr psrc, dlib::array2d< TPixel >& img)
       auto px = srow[indxx];
 
       px         = px < 0 ? 0 : (px > 255 ? 255 : px);
-      row[indxx] = ::libs::helpers::casts::static_cast_helper< TPixel > (px);
+      row[indxx] = ::libs::utility::casts::static_cast_helper< TPixel > (px);
     }
   }
 }
-#endif
 }   // namespace dlls::detectors::detect_face::helpers

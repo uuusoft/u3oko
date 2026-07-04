@@ -4,8 +4,6 @@
 \date       26.07.2016
 \project    u3_vgen_diff_lib
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "vgen-diff-lib-includes_int.hpp"
 #include "diff-impl.hpp"
 #include "mmedia/dlls/doptim/algs/all_algs.hpp"
@@ -66,7 +64,7 @@ DiffImpl::itransform (const syn::NodeID& id_node, ::libs::bufs::Bufs& pbufs)
     prevbuf   = prevbuf ? prevbuf : ibuf->create (0);
     temp_buf_ = temp_buf_ ? temp_buf_ : ibuf->create (0);
 
-    if (prevbuf->get_flag (::utils::dbufs::BufFlags::empty) || !utils::dbufs::video::helpers::is_equal_dim (*prevbuf, *psrc))
+    if (prevbuf->get_flag (::utils::dbufs::BufFlags::empty) || !utils::dbufs::video::helpers::buf_dimension_equal (*prevbuf, *psrc))
     {
       prevbuf->clone (psrc, 100.0F);
       copy2prev = false;
@@ -130,9 +128,9 @@ DiffImpl::bin_buf (
 
   cinfo.dsts_.emplace_back (pdst, "pdst dlls::gens::vgen_diff::lib");
 
-  cinfo.params_.evals_.emplace_back (boost::any (::libs::optim::s16bit::consts::us_all_xffff));
-  cinfo.params_.evals_.emplace_back (boost::any (bound));
-  cinfo.params_.evals_.emplace_back (boost::any (val));
+  cinfo.params_.evals_.emplace_back (::libs::optim::s16bit::consts::us_all_xffff);
+  cinfo.params_.evals_.emplace_back (bound);
+  cinfo.params_.evals_.emplace_back (val);
 
   ::libs::optim::mcalls::MTFuncInfo tfunc (&cmp_get_const_);
 

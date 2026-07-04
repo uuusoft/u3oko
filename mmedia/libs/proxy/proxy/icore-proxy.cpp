@@ -12,50 +12,50 @@
 #include "mmedia/libs/icore/libs-icore-includes.hpp"
 #include "icore-proxy.hpp"
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_vcodec_gen ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vcd_all2hsl ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vcd_all2rgb ();
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vdd_vcodec_gen () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vcd_all2hsl () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vcd_all2rgb () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
 
 #if (U3_LIBS_ENABLE_DETECT_FACE_VDD == 1)
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_detect_face ();
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vdd_detect_face () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
 #endif
 
 #if (U3_LIBS_ENABLE_VDETECT1_VDD == 1)
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_detect_move ();
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vdd_detect_move () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
 #endif
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vfn_freq_domain ();
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vfn_freq_domain () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vfn_space ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vfn_time ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_base_id ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vgd_vgen_conv3_11 ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vgd_vgen_diff ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vgd_vgen_mops ();
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vfn_space () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vfn_time () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vdd_base_id () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vgd_vgen_conv3_11 () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vgd_vgen_diff () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vgd_vgen_mops () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vsa_fixed ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vsa_flow ();
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vsa_fixed () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vsa_flow () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vsd_gen_vgen ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_vcorrect ();
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vsd_gen_vgen () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vdd_vcorrect () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_vgradient ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_vhistogram ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_vmatrix ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_vsharper ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdd_vtexter ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vut_vec2image ();
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vdd_vgradient () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vdd_vhistogram () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vdd_vmatrix () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vdd_vsharper () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vdd_vtexter () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vut_vec2image () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vts_video_sender ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vdm_mix_multiplier ();
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter* create_impl_vgd_vgen_motion ();
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vts_video_sender () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vdm_mix_multiplier () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_vgd_vgen_motion () -> ::libs::icore::impl::var1::obj::dll::IFilter*;
 
 namespace libs::proxy
 {
-std::function< libs::icore::impl::var1::obj::dll::create_impl_func_type >
-get_create_data_path_module_funct (const std::string& plib_id)
+auto
+get_create_data_path_module_func (const std::string& plib_id) -> std::function< libs::icore::impl::var1::obj::dll::create_impl_func_type >
 {
-  const auto lib_id = libs::helpers::dlls::undecorate_dll_name (plib_id);
+  const auto lib_id = libs::utility::dlls::undecorate_dll_name (plib_id);
 
   if (lib_id == "vts_video_sender")
   {
@@ -81,14 +81,12 @@ get_create_data_path_module_funct (const std::string& plib_id)
   {
     return create_impl_vcd_all2rgb;
   }
-
 #if (U3_LIBS_ENABLE_DETECT_FACE_VDD == 1)
   if (lib_id == "vdd_detect_face")
   {
     return create_impl_vdd_detect_face;
   }
 #endif
-
 #if (U3_LIBS_ENABLE_VDETECT1_VDD == 1)
   if (lib_id == "vdd_detect_move")
   {
@@ -189,6 +187,6 @@ get_create_data_path_module_funct (const std::string& plib_id)
     return create_impl_vgd_vgen_motion;
   }
 
-  U3_THROW_EXCEPTION ("find create module funct" + TOLOG (lib_id) + TOLOG (plib_id));
+  U3_THROW_EXCEPT ("find create module funct" + TOLOG (lib_id) + TOLOG (plib_id));
 }
 }   // namespace libs::proxy

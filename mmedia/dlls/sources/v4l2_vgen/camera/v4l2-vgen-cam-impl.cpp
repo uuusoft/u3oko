@@ -5,9 +5,9 @@
 \project    u3_v4l2_vgen
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../v4l2-vgen-includes_int.hpp"
+// EAI-REFACT
+#include <cstddef>
 #include <string>
 #include <functional>
 #include <thread>
@@ -21,21 +21,21 @@ namespace dlls::sources::v4l2_vgen::camera
 void
 CamImpl::sync_runtime_props (const syn::VideoDriverCaptureProp &capprops)
 {
-  const auto fourcc = libs::helpers::uids::helpers::idval2fourcc (capprops.capi_.px_format_);
+  const auto fourcc = libs::utility::uids::helpers::idval2fourcc (capprops.capi_.px_format_);
   U3_CHECK (v4l2capture_, "before sync runtime props" + VTOLOG (capprops.capi_.width_) + VTOLOG (capprops.capi_.height_) + VTOLOG (capprops.capi_.fps_) + VTOLOG (fourcc));
   capparams_ = capprops.capi_;
 
   const auto runtime_width         = v4l2capture_->getWidth ();
   const auto runtime_height        = v4l2capture_->getHeight ();
   const auto runtime_fourcc_format = v4l2capture_->getFormat ();
-  const auto runtime_format        = ::libs::helpers::uids::helpers::fourcc2idval (runtime_fourcc_format);
+  const auto runtime_format        = ::libs::utility::uids::helpers::fourcc2idval (runtime_fourcc_format);
 
   if (capparams_.width_ != runtime_width ||
       capparams_.height_ != runtime_height ||
       capparams_.px_format_ != runtime_format)
   {
     U3_LOG_DATA_WRN ("failed set format to v4l2: " + VTOLOG (runtime_width) + VTOLOG (runtime_height));
-    U3_LOG_DATA_WRN ("failed set format to v4l2: " + libs::helpers::uids::helpers::get_readable_name (runtime_format) + VTOLOG (runtime_fourcc_format));
+    U3_LOG_DATA_WRN ("failed set format to v4l2: " + libs::utility::uids::helpers::get_readable_name (runtime_format) + VTOLOG (runtime_fourcc_format));
     capparams_.width_     = runtime_width;
     capparams_.height_    = runtime_height;
     capparams_.px_format_ = runtime_format;
@@ -48,9 +48,9 @@ CamImpl::CamImpl (const gen_lib::SourceImplInfo &props_info) :
 {
   const auto &capprops    = *srcparams_.capture_props_;
   const auto &device_name = v4l2_vgen::consts::dev_path + srcparams_.props_->device_name_;
-  const auto  fourcc      = libs::helpers::uids::helpers::idval2fourcc (capprops.capi_.px_format_);
+  const auto  fourcc      = libs::utility::uids::helpers::idval2fourcc (capprops.capi_.px_format_);
   U3_LOG_DATA_DBG ("create v4l2" + TOLOG (device_name));
-  U3_LOG_DATA_DBG ("params v4l2 " + ::libs::helpers::uids::helpers::get_readable_name (capprops.capi_.px_format_) + VTOLOG (fourcc));
+  U3_LOG_DATA_DBG ("params v4l2 " + ::libs::utility::uids::helpers::get_readable_name (capprops.capi_.px_format_) + VTOLOG (fourcc));
   U3_LOG_DATA_DBG ("params v4l2" + VTOLOG (capprops.capi_.width_) + VTOLOG (capprops.capi_.height_));
   U3_LOG_DATA_DBG ("params v4l2" + VTOLOG (capprops.capi_.fps_));
 
@@ -70,34 +70,33 @@ CamImpl::CamImpl (const gen_lib::SourceImplInfo &props_info) :
 }
 
 
-bool
-CamImpl::is_init () const
+auto
+CamImpl::is_init () const -> bool
 {
   return v4l2capture_ ? true : false;
 }
 
 
-syn::IVideoBuf::ptr
-CamImpl::get_buf ()
+auto
+CamImpl::get_buf () -> syn::IVideoBuf::ptr
 {
   std::scoped_lock lock (sync_);
 
-  timeval       tv       = { 0, 100 };
+  timeval       tv       = { .tv_sec = 0, .tv_usec = 100 };
   const int32_t read_res = v4l2capture_ ? v4l2capture_->isReadable (&tv) : -1;
-
   if (1 != read_res)
   {
-    return syn::IVideoBuf::ptr ();
+    return {};
   }
 
   auto       ibuf         = ::libs::iproperties::helpers::cast_prop_demons ()->get_bufs_lockfree ()->impl ();
   auto       new_buf      = ibuf->create (0);
-  const auto bpp          = ::libs::helpers::uids::helpers::get_count_bytes_from_format (capparams_.px_format_);
+  const auto bpp          = ::libs::utility::uids::helpers::get_count_bytes_from_format (capparams_.px_format_);
   const auto stride       = capparams_.width_ * bpp;
-  const auto align_stride = ::libs::helpers::mem::align_value (stride, 64, true);
+  const auto align_stride = ::libs::utility::mem::align_value (stride, 64U, true);
 
   new_buf->buf_alloc (
-    ::utils::dbufs::video::AllocBufInfo (
+    ::utils::dbufs::video::AllocParams (
       capparams_.width_,
       capparams_.height_,
       capparams_.px_format_,
@@ -110,8 +109,8 @@ CamImpl::get_buf ()
     utils::dbufs::video::helpers::get_buf_as< char * > (new_buf.get ()),
     temp_buf_size);
 
-  new_buf->set_mem_var (::utils::dbufs::MemVars::size_data, stride * capparams_.height_);
-  new_buf->set_dim_var (utils::dbufs::video::Dims::stride, stride);
+  new_buf->set_mem_var (syn::MemVars::size_data, static_cast< const syn::mem_var_type > (stride * capparams_.height_));
+  new_buf->set_dim_var (syn::Dims::stride, stride);
   return new_buf;
 }
 
@@ -119,7 +118,7 @@ CamImpl::get_buf ()
 void
 CamImpl::sync_correct_props (syn::VideoCorrectProp::craw_ptr correctprops)
 {
-  if (::libs::ievents::SelectorImpls::software == correctprops->hint_correct_impl_)
+  if (::libs::events_base::SelectorImpls::software == correctprops->hint_correct_impl_)
   {
     return;
   }
@@ -158,7 +157,7 @@ CamImpl::sync_correct_props (syn::VideoCorrectProp::craw_ptr correctprops)
   auto fd = v4l2capture_->getFd ();
   for (const auto &cid2koeff : cids2koeffs)
   {
-    v4l2_queryctrl queryctrl;
+    v4l2_queryctrl queryctrl {};
     memset (&queryctrl, 0, sizeof (queryctrl));
     queryctrl.id = cid2koeff.first;
 
@@ -173,7 +172,7 @@ CamImpl::sync_correct_props (syn::VideoCorrectProp::craw_ptr correctprops)
       continue;
     }
 
-    v4l2_control control;
+    v4l2_control control {};
     memset (&control, 0, sizeof (control));
     control.id    = cid2koeff.first;
     control.value = enable_correct ? U3_CAST_INT32 (convert (queryctrl, cid2koeff.second)) : queryctrl.default_value;

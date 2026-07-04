@@ -16,14 +16,14 @@ class listener : public std::enable_shared_from_this< listener >
 {
   public:
   listener (
-    boost::asio::io_context&       ioc,
-    boost::asio::ssl::context&     ctx,
-    boost::asio::ip::tcp::endpoint endpoint,
-    handler_func_type              http_handler,
-    const shared_state_ptr_type&   shared_state);
+    boost::asio::io_context&              ioc,
+    boost::asio::ssl::context&            ctx,
+    const boost::asio::ip::tcp::endpoint& endpoint,
+    handler_func_type                     http_handler,
+    shared_state_ptr_type                 shared_state);
 
-  // Start accepting incoming connections
-  void run ();
+  auto run () -> void;
+  auto stop () -> void;
 
   private:
   boost::asio::io_context&       ioc_;

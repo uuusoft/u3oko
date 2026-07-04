@@ -6,7 +6,7 @@
 # move to CMakeLists.txt
 #include( "${U3_BUILD_PATH_TO_LIBS}/libs/proxy/_make/libs-proxy.cmake" )
 
-include("${U3_BUILD_PATH_TO_LIBS}/libs/helpers/_make/libs-helpers.cmake")
+include("${U3_BUILD_PATH_TO_LIBS}/libs/utility/_make/libs-utility.cmake")
 
 include("${U3_BUILD_PATH_TO_LIBS}/libs/bufs/_make/libs-dbufs.cmake")
 
@@ -14,13 +14,14 @@ include("${U3_BUILD_PATH_TO_LIBS}/libs/link/_make/libs-links-link.cmake")
 include("${U3_BUILD_PATH_TO_LIBS}/libs/ilink/_make/libs-links-ilink.cmake")
 
 include("${U3_BUILD_PATH_TO_LIBS}/libs/events/_make/libs-events-events.cmake")
-include("${U3_BUILD_PATH_TO_LIBS}/libs/ievents/_make/libs-events-ievents.cmake")
-include("${U3_BUILD_PATH_TO_LIBS}/libs/ilog_events/_make/libs-events-ilog-events.cmake")
-include("${U3_BUILD_PATH_TO_LIBS}/libs/imdata_events/_make/libs-events-imdata-events.cmake")
-include("${U3_BUILD_PATH_TO_LIBS}/libs/ievents_events/_make/libs-events-ievents-events.cmake")
-include("${U3_BUILD_PATH_TO_LIBS}/libs/igui_events/_make/libs-events-igui-events.cmake")
-include("${U3_BUILD_PATH_TO_LIBS}/libs/ihttp_events/_make/libs-events-ihttp-events.cmake")
-include("${U3_BUILD_PATH_TO_LIBS}/libs/istorage_events/_make/libs-events-istorage-events.cmake")
+include("${U3_BUILD_PATH_TO_LIBS}/libs/events_base/_make/libs-events-base.cmake")
+include("${U3_BUILD_PATH_TO_LIBS}/libs/events_log/_make/libs-events-log.cmake")
+include("${U3_BUILD_PATH_TO_LIBS}/libs/events_media/_make/libs-events-media.cmake")
+include("${U3_BUILD_PATH_TO_LIBS}/libs/events_msg/_make/libs-events-msg.cmake")
+include("${U3_BUILD_PATH_TO_LIBS}/libs/events_gui/_make/libs-events-gui.cmake")
+include("${U3_BUILD_PATH_TO_LIBS}/libs/events_http/_make/libs-events-http.cmake")
+include("${U3_BUILD_PATH_TO_LIBS}/libs/events_storage/_make/libs-events-storage.cmake")
+include("${U3_BUILD_PATH_TO_LIBS}/libs/events_user/_make/libs-events-user.cmake")
 
 include("${U3_BUILD_PATH_TO_LIBS}/libs/core/_make/libs-cores-core.cmake")
 include("${U3_BUILD_PATH_TO_LIBS}/libs/icore/_make/libs-cores-icore.cmake")

@@ -4,8 +4,7 @@
 \date       01.01.2017
 \project    mlog
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
+#include "../../module-log-includes_int.hpp"
 #include "module-log-const-vals.hpp"
 
 namespace modules::mlog::appl::consts

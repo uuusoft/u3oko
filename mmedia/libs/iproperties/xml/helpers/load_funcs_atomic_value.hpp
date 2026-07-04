@@ -56,7 +56,7 @@ load (
   const std::string&                     id,
   TTVal&                                 val)
 {
-  U3_THROW_EXCEPTION ("try load bad type from xml");
+  U3_THROW_EXCEPT ("try load bad type from xml");
 }
 
 

@@ -4,22 +4,21 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_properties_libs
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
+#include "libs-properties-includes_int.hpp"
 #include "ishared-property.hpp"
 
 namespace libs::properties
 {
-bool
-ISharedProperty::self_test () const
+auto
+ISharedProperty::self_test () const -> bool
 {
   lock_type lock (mtx_);
   return self_test_int ();
 }
 
 
-void*
-ISharedProperty::cast2top ()
+auto
+ISharedProperty::cast2top () -> void*
 {
   auto ret = cast2top_int ();
   U3_ASSERT (ret);
@@ -27,8 +26,8 @@ ISharedProperty::cast2top ()
 }
 
 
-ISharedProperty::sync_type&
-ISharedProperty::get_sync ()
+auto
+ISharedProperty::get_sync () -> ISharedProperty::sync_type&
 {
   return mtx_;
 }

@@ -4,8 +4,6 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    mevents
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../../includes_int.hpp"
 #include "rect.hpp"
 
@@ -18,29 +16,29 @@ Rect::Rect (std::uint32_t width, std::uint32_t height) :
 }
 
 
-std::uint32_t
-Rect::get_width () const
+auto
+Rect::get_width () const -> std::uint32_t
 {
   return width_;
 }
 
 
-std::uint32_t
-Rect::get_height () const
+auto
+Rect::get_height () const -> std::uint32_t
 {
   return height_;
 }
 
 
-bool
-Rect::load (::pugi::xml_named_node_iterator& param)
+auto
+Rect::load (::pugi::xml_named_node_iterator& param) -> bool
 {
   return load (*param);
 }
 
 
-bool
-Rect::load (::pugi::xml_node& param)
+auto
+Rect::load (::pugi::xml_node& param) -> bool
 {
   ::pugi::xml_attribute width  = param.attribute ("width");
   ::pugi::xml_attribute height = param.attribute ("height");
@@ -67,4 +65,4 @@ Rect::serialize (Archive& arh, const std::uint32_t /* file_version */)
 }   // namespace libs::events::props::details
 
 BOOST_CLASS_EXPORT_IMPLEMENT (::libs::events::props::details::Rect);
-U3_BOOST_SERIALIZE_ALL_ARCHIVES (::libs::events::props::details::Rect);
+U3_BOOST_ADD_SERIALIZE_ARCH (::libs::events::props::details::Rect);

@@ -13,19 +13,19 @@ class IBlockMemAllocator
 {
   public:
   //  ext types
-  using size_type = ::libs::helpers::mem::IBlockMem::size_type;
+  using size_type = ::libs::utility::mem::IBlockMem::size_type;
 
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IBlockMemAllocator)
+  U3_ADD_POINTERS_TO_SELF (IBlockMemAllocator)
 
-  IBlockMemAllocator (const IBlockMemAllocator& src)                = delete;
-  IBlockMemAllocator& operator= (const IBlockMemAllocator& src)     = delete;
-  IBlockMemAllocator (IBlockMemAllocator&& src) noexcept            = delete;
-  IBlockMemAllocator& operator= (IBlockMemAllocator&& src) noexcept = delete;
+  IBlockMemAllocator (const IBlockMemAllocator&)                = delete;
+  IBlockMemAllocator& operator= (const IBlockMemAllocator&)     = delete;
+  IBlockMemAllocator (IBlockMemAllocator&&) noexcept            = delete;
+  IBlockMemAllocator& operator= (IBlockMemAllocator&&) noexcept = delete;
 
   /// Функция выделения блока памяти с выравниваем
   /// \param[in]  size размер памяти под данные
   /// \return     указатель на блок памяти
-  virtual auto alloc (const size_type& size) -> ::libs::helpers::mem::IBlockMem::ptr = 0;
+  virtual auto alloc (const size_type& size) -> ::libs::utility::mem::IBlockMem::ptr = 0;
 
   /// Функция трассировки статуса памяти системы в данном процессе
   virtual auto dump_memory_status () -> std::string = 0;

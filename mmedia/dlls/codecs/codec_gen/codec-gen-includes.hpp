@@ -8,9 +8,9 @@
 #include "consts/codec-gen-const-vals.hpp"
 
 #include "codec-gen-syn.hpp"
-#include "styles-enum.hpp"
+#include "enum-styles.hpp"
 #include "frame-dims.hpp"
-#include "frames-enum.hpp"
+#include "enum-frames.hpp"
 #include "base-header-frame.hpp"
 #include "header-iframe.hpp"
 #include "header-iframe-hsl.hpp"
@@ -19,4 +19,4 @@
 #include "statistic-info.hpp"
 #include "codec-generic.hpp"
 
-#include "helpers/dump-buf2jpeg-file.hpp"
+#include "helpers/dump-buf2jpeg-file-funcs.hpp"

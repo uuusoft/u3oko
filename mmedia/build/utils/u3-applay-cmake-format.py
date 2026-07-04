@@ -30,7 +30,7 @@ def format_files_recursive(start_path):
                 except subprocess.CalledProcessError as e:
                     print(f"Ошибка при форматировании {file_path}: {e}")
                 except FileNotFoundError:
-                    print("Ошибка: clang-format не найден. Убедитесь, что он установлен.")
+                    print("Ошибка: cmake-format не найден. Убедитесь, что он установлен.")
                     return
 
 # --- Пример использования ---

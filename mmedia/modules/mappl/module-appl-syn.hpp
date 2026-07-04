@@ -8,9 +8,9 @@
 
 namespace modules::mappl::syn
 {
-using CpuInfo           = ::libs::helpers::sys::cpu::CpuInfo;
-using CpuExts           = ::libs::helpers::sys::cpu::CpuExts;
-using ISysInfo          = ::libs::helpers::sys::ISysInfo;
+using CpuInfo           = ::libs::utility::sys::cpu::CpuInfo;
+using CpuExts           = ::libs::utility::sys::cpu::CpuExts;
+using ISysInfo          = ::libs::utility::sys::ISysInfo;
 using InitApplication   = ::libs::link::appl::InitApplication;
 using IApplicationProxy = ::libs::link::appl::IApplicationProxy;
 using IDemonsProperty   = ::libs::iproperties::vers::demon::IDemonsProperty;

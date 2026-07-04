@@ -8,8 +8,8 @@
 #include "detect-move-info-filter-dll.hpp"
 #include "detect-move-filter-dll.hpp"
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::icore::impl::var1::obj::dll::IFilter::raw_ptr
-create_impl_vdd_detect_move ()
+extern "C" BOOST_SYMBOL_EXPORT auto
+create_impl_vdd_detect_move () -> ::libs::icore::impl::var1::obj::dll::IFilter::raw_ptr
 {
   ::libs::icore::impl::var1::obj::dll::IFilter::raw_ptr ret (new ::dlls::detectors::detect_move::Filter);
   return ret;

@@ -9,6 +9,6 @@
 namespace dlls::sources::desk_vgen::syn
 {
 using SourceImplInfo = ::dlls::sources::gen_lib::SourceImplInfo;
-using IBlockMem      = ::libs::helpers::mem::IBlockMem;
-using DataSourceInfo = ::libs::imdata_events::events::DataSourceInfo;
+using IBlockMem      = ::libs::utility::mem::IBlockMem;
+using DataSourceInfo = ::libs::events_media::events::DataSourceInfo;
 }   // namespace dlls::sources::desk_vgen::syn

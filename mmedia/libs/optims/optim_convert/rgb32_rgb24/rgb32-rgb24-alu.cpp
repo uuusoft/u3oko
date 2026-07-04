@@ -16,8 +16,8 @@ alu (::libs::optim::io::MCallInfo& info)
 {
   const auto&         rgb32      = info.srcs_.at (0);
   auto&               rgb24      = info.dsts_.at (0);
-  const auto          rgb32_bpp  = ::libs::helpers::uids::helpers::get_count_bytes_from_format (::libs::helpers::uids::minor::id_val::rgb32);
-  const auto          rgb24_bpp  = ::libs::helpers::uids::helpers::get_count_bytes_from_format (::libs::helpers::uids::minor::id_val::rgb24);
+  const auto          rgb32_bpp  = ::libs::utility::uids::helpers::get_count_bytes_from_format (::libs::utility::uids::minor::id_val::rgb32);
+  const auto          rgb24_bpp  = ::libs::utility::uids::helpers::get_count_bytes_from_format (::libs::utility::uids::minor::id_val::rgb24);
   const std::uint8_t* rgb32_buf  = rgb32.ubuf ();
   std::uint8_t*       rgb24_buf  = rgb24.ubuf ();
   const int32_t       rgb32_leak = rgb32.stride_ - rgb32.width_ * rgb32_bpp;
@@ -41,8 +41,8 @@ alu (::libs::optim::io::MCallInfo& info)
     }
 
 
-    rgb32_buf = ::libs::helpers::mem::move_cptr (rgb32_buf, rgb32_leak);
-    rgb24_buf = ::libs::helpers::mem::move_ptr (rgb24_buf, rgb24_leak);
+    rgb32_buf = ::libs::utility::mem::move_cptr (rgb32_buf, rgb32_leak);
+    rgb24_buf = ::libs::utility::mem::move_ptr (rgb24_buf, rgb24_leak);
   }
 }
 }   // namespace libs::optim::convert::rgb32_rgb24

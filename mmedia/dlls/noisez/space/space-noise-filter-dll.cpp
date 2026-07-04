@@ -5,6 +5,7 @@
 \project    u3_filter_space
 \brief      Файл реализации фильтрации в пространственной области
 */
+#include "memory"
 #include "space-noise-includes_int.hpp"
 #include "space-noise-filter-dll.hpp"
 #include "mmedia/dlls/doptim/algs/all_algs.hpp"
@@ -48,12 +49,12 @@ Filter::update_impl ()
   const auto& name = finfo_.rprops_->name_impl_;
   if ("rang" == name || "default" == name)
   {
-    impl_.reset (new impl::rang::RangFilter);
+    impl_ = std::make_unique< impl::rang::RangFilter > ();
     return;
   }
 
   U3_LOG_DATA_WRN ("unknown type filter impl" + TOLOG (name));
-  impl_.reset (new impl::rang::RangFilter);
+  impl_ = std::make_unique< impl::rang::RangFilter > ();
 }
 
 

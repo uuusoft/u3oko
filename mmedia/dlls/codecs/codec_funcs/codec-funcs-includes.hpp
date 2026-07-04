@@ -6,4 +6,4 @@
 \project    u3_codec_funcs
 */
 #include "codec-funcs-const-vals.hpp"
-#include "extern-dll-codec-funcs.hpp"
+#include "defines-extern-dll-codec-funcs.hpp"

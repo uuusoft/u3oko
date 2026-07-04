@@ -8,8 +8,8 @@
 #include "generics-devents-includes_int.hpp"
 #include "impl/events-impl.hpp"
 
-extern "C" BOOST_SYMBOL_EXPORT ::libs::events::io::IEvents::raw_ptr
-create_impl_vdd_devents ()
+extern "C" BOOST_SYMBOL_EXPORT auto
+create_impl_vdd_devents () -> ::libs::events::io::IEvents::raw_ptr
 {
   static ::dlls::devents::impl::EventsImpl ret;
   return &ret;

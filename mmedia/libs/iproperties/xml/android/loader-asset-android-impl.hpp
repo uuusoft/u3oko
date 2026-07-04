@@ -20,11 +20,11 @@ class LoaderAssetAndroidImpl final : public ILoaderImpl
   //  ILoaderImpl overrides
   virtual bool is_exist_file_int (const std::string&, const appl_paths::Paths&) const override;
   virtual bool is_exist_folder_int (const std::string&, const appl_paths::Paths&) const override;
-  virtual void get_enum_int (const appl_paths::Paths&, ::libs::helpers::files::NodeEnumFiles&, const std::string&) override;
-  virtual bool get_int (const std::string&, const appl_paths::Paths&, ::libs::helpers::mem::IBlockMem::ptr&) override;
+  virtual void get_enum_int (const appl_paths::Paths&, ::libs::utility::files::NodeEnumFiles&, const std::string&) override;
+  virtual bool get_int (const std::string&, const appl_paths::Paths&, ::libs::utility::mem::IBlockMem::ptr&) override;
 
   // internals
-  void enum_items_struct (const std::string&, const std::string&, ::libs::helpers::files::NodeEnumFiles&);
+  void enum_items_struct (const std::string&, const std::string&, ::libs::utility::files::NodeEnumFiles&);
   bool storage_not_in_asset (const appl_paths::Paths&) const;
 
   InitLoaderInfo                 iinfo_;                     //<

@@ -9,7 +9,7 @@
 namespace dlls::gens::vgen_diff::lib::syn
 {
 using IVideoBuf      = ::utils::dbufs::video::IVideoBuf;
-using VideoDiffProp  = ::libs::ievents::props::videos::gens::diff::VideoDiffProp;
+using VideoDiffProp  = ::libs::events_base::props::videos::gens::diff::VideoDiffProp;
 using TransformInfo  = ::libs::icore::impl::var1::obj::dll::TransformInfo;
 using CallInterfInfo = ::libs::icore::impl::var1::obj::dll::CallInterfInfo;
 using FilterInfo     = ::libs::icore::impl::var1::obj::FilterInfo;

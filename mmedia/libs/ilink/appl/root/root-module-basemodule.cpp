@@ -44,7 +44,7 @@ change_module_state (
 void
 RootModule::appl_work_int ()
 {
-  ::libs::helpers::thread::set_thread_priority (std::this_thread::get_id (), ::libs::helpers::thread::Priorities::high);
+  ::libs::utility::thread::set_thread_priority (std::this_thread::get_id (), ::libs::utility::thread::Priorities::high);
 
   do
   {
@@ -81,7 +81,7 @@ RootModule::appl_work_int ()
         {
           std::pair< syn::IEvent::raw_ptr, syn::IEvent::hid_type > cmsgs[] = {
             { msg.get (), msg->get_mid () },
-            { ::libs::iproperties::helpers::cast_event< ievents::runtime::RuntimeEvent > (msg), ievents::runtime::RuntimeEvent::gen_get_mid () }
+            { ::libs::iproperties::helpers::cast_event< events_base::runtime::RuntimeEvent > (msg), events_base::runtime::RuntimeEvent::gen_get_mid () }
           };
 
           auto cffinger = catch_funcs_.end ();
@@ -102,32 +102,32 @@ RootModule::appl_work_int ()
           catch_msg_func_type nfunc =
             catch_funcs_.end () != cffinger ?
               cffinger->second :
-              [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) {
-                // U3_XLOG_DBG ("RootModule::appl_work_int::default catch" + TOLOG (msg->gen_get_mid ()) + VTOLOG (forward));
-                if (forward)
-                {
-                  // Если сообщение уже пришло с транзакцией, значит это ответ на нашу транзакцию
-                  if (current_seq_.recv_seq_)
-                  {
-                    U3_ASSERT (current_seq_.answer_);
-                    return syn::IEvent::ptr ();
-                  }
-
-                  U3_ASSERT (!current_seq_.dest_);
-                  // Ищем модуль будет обрабатывать данное сообщение и, если модуль существует, помечаем сообщение для транзакции
-                  current_seq_.dest_ = get_dest_link (msg);
-                  if (current_seq_.dest_ && (current_seq_.sync_event_ || current_seq_.request_))
-                  {
-                    //  инициируем новую транзакцию.
-                    current_seq_.make_seq_ = true;
-                    current_seq_.id_seq_   = boost::uuids::random_generator () ();
-                    U3_XLOG_DBG ("make new trans event" + TOLOG (to_string (current_seq_.id_seq_)));
-                  }
-                }
+              [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+            // U3_XLOG_DBG ("RootModule::appl_work_int::default catch" + TOLOG (msg->gen_get_mid ()) + VTOLOG (forward));
+            if (forward)
+            {
+              // Если сообщение уже пришло с транзакцией, значит это ответ на нашу транзакцию
+              if (current_seq_.recv_seq_)
+              {
+                U3_ASSERT (current_seq_.answer_);
                 return syn::IEvent::ptr ();
-              };
+              }
 
-          funcs.push_back (std::make_pair (nfunc, msg));
+              U3_ASSERT (!current_seq_.dest_);
+              // Ищем модуль будет обрабатывать данное сообщение и, если модуль существует, помечаем сообщение для транзакции
+              current_seq_.dest_ = get_dest_link (msg);
+              if (current_seq_.dest_ && (current_seq_.sync_event_ || current_seq_.request_))
+              {
+                //  инициируем новую транзакцию.
+                current_seq_.make_seq_ = true;
+                current_seq_.id_seq_   = boost::uuids::random_generator () ();
+                U3_XLOG_DBG ("make new trans event" + TOLOG (to_string (current_seq_.id_seq_)));
+              }
+            }
+            return syn::IEvent::ptr ();
+          };
+
+          funcs.emplace_back (nfunc, msg);
 
           try
           {
@@ -254,8 +254,8 @@ RootModule::appl_work_int ()
 }
 
 
-bool
-RootModule::appl_deinit_int ()
+auto
+RootModule::appl_deinit_int () -> bool
 {
   U3_XLOG_DBG ("RootModule::appl_deinit_int::---->")
   bool ret = false;
@@ -269,10 +269,10 @@ RootModule::appl_deinit_int ()
       auto             dmsg = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
 
       dmsg->change_appl_info (
-        ::libs::ilog_events::AppllPartLogInfo (
-          ::libs::ievents::props::modules::log::LogLevels::info,
+        ::libs::events_log::AppllPartLogInfo (
+          ::libs::events_base::props::modules::log::LogLevels::info,
           appl_info_.appl_name_,
-          ::libs::helpers::log::get_module_version ()),
+          ::libs::utility::log::get_module_version ()),
         "");
 
       dmsg->set_start (false);
@@ -282,7 +282,7 @@ RootModule::appl_deinit_int ()
     if (links_.get (syn::mids::appl2gui))
     {
       syn::IEvent::ptr rmsg;
-      auto             dmsg = ::libs::iproperties::helpers::create_event< ::libs::igui_events::events::ExitApplEvent > (rmsg);
+      auto             dmsg = ::libs::iproperties::helpers::create_event< ::libs::events_gui::events::ExitApplEvent > (rmsg);
       links_.get (syn::mids::appl2gui)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
     }
 
@@ -398,7 +398,7 @@ RootModule::update_catch_funcs_int ()
       current_seq_.id_seq_   = seq_ret->get_seq_id ();
       return ret;
     }
-    return syn::IEvent::ptr ();
+    return {};
   };
 
   // Функция обработчик сообщения признака синхронности
@@ -417,7 +417,7 @@ RootModule::update_catch_funcs_int ()
     {
       return msg;
     }
-    return syn::IEvent::ptr ();
+    return {};
   };
 
   // Функция обработчик сообщения признака запроса
@@ -458,7 +458,7 @@ RootModule::update_catch_funcs_int ()
       auto* main_appl = ::libs::iproperties::helpers::cast_event< syn::ApplicationProp > (appl_event_props_.main_appl_properties_);
       U3_XLOG_DEV ("copy::---->" + TOLOG (main_appl->get_messenger_impl ()) + PTR_TOLOG (main_appl));
       msg->copy (main_appl);
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };
@@ -482,7 +482,7 @@ RootModule::update_catch_funcs_int ()
         const auto active_paths = paths_->get_path (::libs::iproperties::appl_paths::Paths::active_appl_module);
         helpers::save_event_to_json_file (active_paths, msg);
       }
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };
@@ -499,13 +499,13 @@ RootModule::update_catch_funcs_int ()
       else if (!process_state.answer_)
       {
         info_log->copy (msg.get ());
-        ::libs::ievents::props::modules::log::g_log_level = ::libs::ievents::props::modules::log::from_raw_val (info_log->get_val (::libs::ievents::props::modules::log::LogVals::log_level));
+        ::libs::events_base::props::modules::log::g_log_level = ::libs::events_base::props::modules::log::from_raw_val (info_log->get_val (::libs::events_base::props::modules::log::LogVals::log_level));
         links_.get (syn::mids::appl2log)->send_msg (msg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
 
         const auto active_paths = paths_->get_path (::libs::iproperties::appl_paths::Paths::active_appl_module);
         helpers::save_event_to_json_file (active_paths, msg);
       }
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };
@@ -520,7 +520,7 @@ RootModule::update_catch_funcs_int ()
         // const auto active_paths = paths_->get_path (::libs::iproperties::appl_paths::Paths::active_appl_module);
         // helpers::save_event_to_file (active_paths, msg);
       }
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };
@@ -530,7 +530,7 @@ RootModule::update_catch_funcs_int ()
     if (forward)
     {
       auto res = links_.get (syn::mids::appl2mdata)->send_msg (msg, ::libs::link::details::CallSyncs::sync, ::libs::link::details::Calls::set);
-      return syn::IEvent::ptr ();
+      return {};
     }
     return msg;
   };
@@ -628,10 +628,10 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     auto             dmsg = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
 
     dmsg->change_appl_info (
-      ::libs::ilog_events::AppllPartLogInfo (
-        ::libs::ievents::props::modules::log::LogLevels::info,
+      ::libs::events_log::AppllPartLogInfo (
+        ::libs::events_base::props::modules::log::LogLevels::info,
         appl_info_.appl_name_,
-        ::libs::helpers::log::get_module_version ()),
+        ::libs::utility::log::get_module_version ()),
       "");
 
     dmsg->set_start (true);

@@ -4,8 +4,6 @@
 \date       20.05.2017
 \project    u3_vcodec_gen
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "vcodec-gen-includes_int.hpp"
 #include "vcodec-gen-info-filter-dll.hpp"
 

@@ -11,13 +11,13 @@ namespace libs::ilink
 /// Фабрика для создания связи и передачи данных между подсистемами
 /// Гарантируется единственность существования реализации (не экземпляров данного класса, который является фактически прокси к реализации)
 /// внутри одного процесса (это необходимое и достаточное условие для любой реализации)
-class LinkCreatorProxy final : protected ::libs::helpers::proxy::MemProxyBase
+class LinkCreatorProxy final : protected ::libs::utility::proxy::MemProxyBase
 {
   public:
   //  ext types
   using create_func_type = ::libs::link::ILinkCreator::raw_ptr ();
 
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (LinkCreatorProxy)
+  U3_ADD_POINTERS_TO_SELF (LinkCreatorProxy)
 
   static LinkCreatorProxy::raw_ptr
   instance ()
@@ -36,7 +36,7 @@ class LinkCreatorProxy final : protected ::libs::helpers::proxy::MemProxyBase
 
   private:
   LinkCreatorProxy ();
-  virtual ~LinkCreatorProxy () = default;
+  virtual ~LinkCreatorProxy ();
 
   ::libs::link::ILinkCreator::ptr* pimpl_ = nullptr;   //<
 };

@@ -9,13 +9,13 @@
 namespace dlls::sources::pict_vgen::helpers
 {
 template<
-  typename ResTType,
-  void (__stdcall* free_funct) (ResTType*) >
+  typename TTRes,
+  void (__stdcall* free_funct) (TTRes*) >
 class ResourceHolder final
 {
   public:
-  explicit ResourceHolder (ResTType* val = nullptr) :
-    resval_ (val)
+  explicit ResourceHolder (TTRes* val = nullptr) :
+    val_ (val)
   {
   }
 
@@ -24,8 +24,7 @@ class ResourceHolder final
     release ();
   }
 
-  ResourceHolder (const ResourceHolder& lph) :
-    resval_ (nullptr)
+  ResourceHolder (const ResourceHolder& lph)
   {
     *this = lph;
   }
@@ -34,61 +33,58 @@ class ResourceHolder final
   operator= (const ResourceHolder& lph)
   {
     release ();
-    std::swap (resval_, lph.resval_);
+    std::swap (val_, lph.val_);
     return *this;
   }
 
   void
   release () noexcept
   {
-    if (nullptr == resval_)
+    if (val_)
     {
-      return;
+      try
+      {
+        free_funct (val_);
+      }
+      catch (const std::exception& excpt)
+      {
+        U3_LOG_DATA_EXCEPT (excpt.what ());
+      }
+      catch (...)
+      {
+        U3_LOG_DATA_EXCEPT ("...");
+      }
+      val_ = nullptr;
     }
-
-    try
-    {
-      free_funct (resval_);
-    }
-    catch (const std::exception& excpt)
-    {
-      U3_LOG_DATA_EXCEPT (excpt.what ());
-    }
-    catch (...)
-    {
-      U3_LOG_DATA_EXCEPT ("...");
-    }
-
-    resval_ = nullptr;
   }
 
-  ResTType*&
+  TTRes*&
   update ()
   {
     release ();
-    return resval_;
+    return val_;
   }
 
   void
-  set (ResTType* val)
+  set (TTRes* val)
   {
     release ();
-    resval_ = val;
+    val_ = val;
   }
 
   operator bool () const
   {
-    return resval_ ? true : false;
+    return val_ ? true : false;
   }
 
-  ResTType*
+  TTRes*
   operator* ()
   {
-    U3_CHECK (resval_, "operator*");
-    return resval_;
+    U3_CHECK (val_, "operator*");
+    return val_;
   }
 
   private:
-  ResTType* resval_;
+  TTRes* val_ = nullptr;
 };
 }   // namespace dlls::sources::pict_vgen::helpers

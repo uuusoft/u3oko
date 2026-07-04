@@ -7,12 +7,13 @@
 // #define U3_USE_DEB_LOG_LEVEL
 #include "libs-ilink-loader-includes_int.hpp"
 #include "in-proc-loader-code.hpp"
-#include "mmedia/libs/helpers/thread/generic-thread-func.hpp"
+#include "memory"
+#include "mmedia/libs/utility/thread/generic-thread-func.hpp"
 
 namespace libs::ilink::loader
 {
-InProcLoaderCode::InProcLoaderCode () :
-  info_ (nullptr)
+InProcLoaderCode::InProcLoaderCode ()
+
 {
   thread_done_.store (true);
 }
@@ -44,22 +45,22 @@ InProcLoaderCode::load_int (
   set_name_lib (name_lib);
 
   child_thread_ = std::thread (
-    ::libs::helpers::thread::generic_thread_funct< InProcLoaderCode >,
+    ::libs::utility::thread::generic_thread_funct< InProcLoaderCode >,
     libs::properties::vers::links::mids::appl2log,
     this,
     0u);
 }
 
 
-bool
-InProcLoaderCode::is_load_int () const
+auto
+InProcLoaderCode::is_load_int () const -> bool
 {
   return child_thread_.joinable () ? true : false;
 }
 
 
-bool
-InProcLoaderCode::unload_int (bool force)
+auto
+InProcLoaderCode::unload_int (bool force) -> bool
 {
   if (child_thread_.joinable ())
   {
@@ -82,12 +83,12 @@ void
 InProcLoaderCode::thread_func_impl (std::uint32_t indx_thread)
 {
   U3_XLOG_DBG ("InProcLoaderCode::thread_func_imp::---->" + VTOLOG (indx_thread) + TOLOG (lib_name_));
-  ::libs::helpers::thread::set_thread_priority (std::this_thread::get_id (), ::libs::helpers::thread::Priorities::high);
+  ::libs::utility::thread::set_thread_priority (std::this_thread::get_id (), ::libs::utility::thread::Priorities::high);
 
   boost::filesystem::path fullpath (::libs::iproperties::appl_paths::get_current_folder ());
-  const auto              sfullpath = fullpath.string ();
+  const auto&             sfullpath = fullpath.string ();
 
-  thread_appl_.reset (new ::libs::link::appl::IApplicationProxy (sfullpath, lib_name_));
+  thread_appl_ = std::make_unique< ::libs::link::appl::IApplicationProxy > (sfullpath, lib_name_);
 
   auto impl = thread_appl_->impl ();
   U3_CHECK (impl, "empty thread impl" + PTR_TOLOG (impl))

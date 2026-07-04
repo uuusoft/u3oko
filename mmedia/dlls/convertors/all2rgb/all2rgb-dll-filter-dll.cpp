@@ -16,11 +16,11 @@ Filter::alloc_temp_bufs ()
 {
   const auto          sbuf          = (*pbuf_)[finfo_.rprops_->buf_.indx_sbuf_];
   const auto          source_format = sbuf->get_format ();
-  const auto          px_format     = is_result_mono (source_format) ? ::libs::helpers::uids::minor::id_val::y16 : ::libs::helpers::uids::minor::id_val::rgb24;
-  const std::uint32_t byte2px       = ::libs::helpers::uids::helpers::get_count_bytes_from_format (px_format);
+  const auto          px_format     = is_result_mono (source_format) ? syn::id_val::y16 : syn::id_val::rgb24;
+  const std::uint32_t byte2px       = ::libs::utility::uids::helpers::get_count_bytes_from_format (px_format);
   const auto          swidth        = sbuf->get_dim_var (::utils::dbufs::video::Dims::width);
   const auto          sheight       = sbuf->get_dim_var (::utils::dbufs::video::Dims::height);
-  const std::uint32_t req_stride    = ::libs::helpers::mem::align_value (swidth * byte2px, 64U, true);
+  const std::uint32_t req_stride    = ::libs::utility::mem::align_value (swidth * byte2px, 64U, true);
   const std::uint32_t req_size      = req_stride * sheight;
 
   const ::utils::dbufs::video::consts::offs::off_buf_type indx_bufs[] = {
@@ -35,11 +35,11 @@ Filter::alloc_temp_bufs ()
     {
       //  буфер Y16 напрямую используется далее, поэтому выделяем сразу со всеми отступами.
       //  U3-REFACT: compressed buf
-      auto alloc_info = ::utils::dbufs::video::AllocBufInfo (
+      auto alloc_info = ::utils::dbufs::video::AllocParams (
         swidth,
         sheight,
         0,
-        ::libs::helpers::uids::minor::id_val::y16,
+        syn::id_val::y16,
         utils::dbufs::video::DimChecks::enable);
 
       alloc_info.flags_[::utils::dbufs::BufFlags::convolution_support] = true;
@@ -49,50 +49,49 @@ Filter::alloc_temp_bufs ()
     else
     {
       tbuf->buf_alloc (
-        ::utils::dbufs::video::AllocBufInfo (
+        ::utils::dbufs::video::AllocParams (
           swidth, sheight, req_stride, px_format));
 
-      ::utils::dbufs::video::helpers::override_data (*tbuf, 0, req_size);
+      ::utils::dbufs::video::helpers::replace_buf_params (*tbuf, 0, req_size);
     }
   }
 }
 
 
-bool
-Filter::is_result_mono (const ::libs::helpers::uids::minor::id_val& format) const
+auto
+Filter::is_result_mono (const syn::id_val& format) const -> bool
 {
   //< see Filter::get_func_for_format
-  const bool mono_support = format != ::libs::helpers::uids::minor::id_val::rgb32 && format != ::libs::helpers::uids::minor::id_val::rgb24;
+  const bool mono_support = format != syn::id_val::rgb32 && format != syn::id_val::rgb24;
   return finfo_.rprops_->strip_color_ && mono_support;
 }
 
 
-::libs::optim::io::hioptim*
-Filter::get_func_for_format (const ::libs::helpers::uids::minor::id_val& format)
+auto
+Filter::get_func_for_format (const syn::id_val& format) -> ::libs::optim::io::hioptim*
 {
   const auto mono = is_result_mono (format);
-  if (::libs::helpers::uids::minor::id_val::yuy2 == format ||
-      ::libs::helpers::uids::minor::id_val::yuyv == format)
+  if (syn::id_val::yuy2 == format || syn::id_val::yuyv == format)
   {
     return mono ? &yuy2_to_y16_ : &yuy2_to_rgb24_;
   }
-  if (::libs::helpers::uids::minor::id_val::ycb == format)
+  if (syn::id_val::ycb == format)
   {
     return mono ? &yuy2_to_y16_ : &ycb_to_rgb24_;
   }
-  if (::libs::helpers::uids::minor::id_val::uyvy == format)
+  if (syn::id_val::uyvy == format)
   {
     return mono ? &uyvy_to_y16_ : &uyvy_to_rgb24_;
   }
-  if (::libs::helpers::uids::minor::id_val::nv21 == format)
+  if (syn::id_val::nv21 == format)
   {
     return mono ? &nv21_to_y16_ : &nv21_to_rgb24_;
   }
-  if (::libs::helpers::uids::minor::id_val::i420 == format)
+  if (syn::id_val::i420 == format)
   {
     return mono ? &nv21_to_y16_ : &i420_to_rgb24_;
   }
-  if (::libs::helpers::uids::minor::id_val::rgb32 == format)
+  if (syn::id_val::rgb32 == format)
   {
     U3_CHECK (!mono, "result mono for rgb32");
     return &rgb32_to_rgb24_;
@@ -102,10 +101,10 @@ Filter::get_func_for_format (const ::libs::helpers::uids::minor::id_val& format)
 }
 
 
-::libs::helpers::uids::minor::id_val
-Filter::get_out_format_from_format (const ::libs::helpers::uids::minor::id_val& format)
+auto
+Filter::get_out_format_from_format (const syn::id_val& format) -> syn::id_val
 {
-  return is_result_mono (format) ? ::libs::helpers::uids::minor::id_val::y16 : ::libs::helpers::uids::minor::id_val::rgb24;
+  return is_result_mono (format) ? syn::id_val::y16 : syn::id_val::rgb24;
 }
 
 

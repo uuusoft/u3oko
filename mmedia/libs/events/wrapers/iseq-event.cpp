@@ -4,30 +4,34 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    mevents
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../includes_int.hpp"
 #include "iseq-event.hpp"
 
 namespace libs::events
 {
 ISeqEvent::ISeqEvent (const Acessor& pha, IEvent::ptr val, const id_type& id) :
-  IWrapBaseEvent (IWrapBaseEvent::Acessor (0), val),
+  IWrapBaseEvent (IWrapBaseEvent::Acessor (0), std::move (val)),
   id_ (id)
 {
-  property_name_ = gen_get_mid ();
 }
 
 
-IEvent::ptr
-ISeqEvent::clone_int (const ::libs::events::Deeps& deep) const
+auto
+ISeqEvent::get_mid_int () const -> const ::libs::events::IEvent::hid_type&
+{
+  return ISeqEvent::gen_get_mid ();
+}
+
+
+auto
+ISeqEvent::clone_int (const ::libs::events::Deeps& deep) const -> IEvent::ptr
 {
   return ::libs::events::deep_clone< ISeqEvent > (this, deep);
 }
 
 
-const ISeqEvent::id_type&
-ISeqEvent::get_seq_id () const
+auto
+ISeqEvent::get_seq_id () const -> const ISeqEvent::id_type&
 {
   U3_ASSERT (!id_.empty ());
   return id_;
@@ -42,8 +46,8 @@ ISeqEvent::set_seq_id (const id_type& id)
 }
 
 
-bool
-ISeqEvent::empty () const
+auto
+ISeqEvent::empty () const -> bool
 {
   return id_.empty ();
 }
@@ -62,10 +66,10 @@ template< class Archive >
 void
 ISeqEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  arh& U3_BOOST_SERIALIZATION_BASE_OBJECT_NVP ("IWrapBaseEvent", super);
+  arh& U3_BOOST_SERIALIZE_MAKE_NVP ("IWrapBaseEvent", super);
   arh& BOOST_SERIALIZATION_NVP (id_);
 }
 }   // namespace libs::events
 
 BOOST_CLASS_EXPORT_IMPLEMENT (::libs::events::ISeqEvent);
-U3_BOOST_SERIALIZE_ALL_ARCHIVES (::libs::events::ISeqEvent);
+U3_BOOST_ADD_SERIALIZE_ARCH (::libs::events::ISeqEvent);

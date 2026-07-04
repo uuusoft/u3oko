@@ -16,7 +16,7 @@ class SharedPropertyStorage : public ::libs::properties::ISharedPropertyStorage
 {
   private:
   //  internal typess
-  using storage_type = std::unordered_map< syn::key_property_type, syn::ISharedProperty::ptr >;
+  using storage_type = boost::unordered_flat_map< syn::key_property_type, syn::ISharedProperty::ptr >;
   using sync_type    = std::mutex;
   using lock_type    = std::scoped_lock< sync_type >;
 
@@ -24,7 +24,7 @@ class SharedPropertyStorage : public ::libs::properties::ISharedPropertyStorage
   SharedPropertyStorage () = default;
   virtual ~SharedPropertyStorage ();
 
-  //  ::libs::properties::ISharedPropertyStorage overrides
+  // ISharedPropertyStorage overrides
   virtual auto check (const syn::key_property_type&) const -> bool override;
   virtual auto get (const syn::key_property_type&) -> syn::ISharedProperty::raw_ptr override;
   virtual auto set_prop (const syn::key_property_type&, const syn::ISharedProperty::ptr&) -> void override;

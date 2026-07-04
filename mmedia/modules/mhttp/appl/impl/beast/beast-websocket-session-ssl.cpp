@@ -13,21 +13,21 @@
 namespace modules::mhttp::impl::beast
 {
 websocket_session_ssl::websocket_session_ssl (
-  stream_type&&                socket,
-  boost::asio::ssl::context&   ctx,
-  const shared_state_ptr_type& shared_state) :
+  stream_type&&              socket,
+  boost::asio::ssl::context& ctx,
+  shared_state_ptr_type      shared_state) :
   ws_ (std::move (socket)),
   ctx_ (ctx),
-  shared_state_ (shared_state),
+  shared_state_ (std::move (shared_state)),
   size_pending_send_ (0)
 {
-  U3_XLOG_DEV ("websocket_session_ssl::on_create" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
+  U3_XLOG_DEV ("websocket_session_ssl::on_create" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)));
 }
 
 
 websocket_session_ssl::~websocket_session_ssl ()
 {
-  U3_XLOG_DEV ("websocket_session_ssl::o_destroy" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
+  U3_XLOG_DEV ("websocket_session_ssl::o_destroy" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)));
   // Remove this session from the list of active sessions
   shared_state_->leave (this);
 }
@@ -82,7 +82,7 @@ websocket_session_ssl::on_handshake (boost::beast::error_code ec)
 
   // Set a decorator to change the Server of the handshake
   ws_.set_option (appl::syn::websocket::stream_base::decorator (
-    [] (appl::syn::websocket::response_type& res) {
+    [] (appl::syn::websocket::response_type& res) -> void {
       res.set (appl::syn::http::field::server,
                std::string (BOOST_BEAST_VERSION_STRING) +
                  " websocket-server-async-ssl");
@@ -99,7 +99,7 @@ websocket_session_ssl::on_handshake (boost::beast::error_code ec)
 void
 websocket_session_ssl::on_accept (boost::beast::error_code ec)
 {
-  U3_XLOG_DEV ("websocket_session_ssl::on_accept" + VTOLOG (::libs::helpers::casts::reinterpret_cast_helper< std::uint64_t > (this)));
+  U3_XLOG_DEV ("websocket_session_ssl::on_accept" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)));
   if (ec)
   {
     return u3beast_fail (ec, "websocket_session_ssl::accept");
@@ -228,8 +228,8 @@ websocket_session_ssl::on_write (
 }
 
 
-std::int64_t
-websocket_session_ssl::get_size_pending_send () const
+auto
+websocket_session_ssl::get_size_pending_send () const -> std::int64_t
 {
   return size_pending_send_;
 }

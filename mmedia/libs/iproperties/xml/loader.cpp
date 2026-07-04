@@ -4,15 +4,13 @@
 \date       01.01.2017
 \project    u3_iproperties_lib
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "libs-iproperties-xml-includes_int.hpp"
 #include "loader.hpp"
 
 namespace libs::iproperties::xml
 {
-Loader::Loader (const InitLoaderInfo& info) :
-  iinfo_ (info)
+Loader::Loader (InitLoaderInfo info) :
+  iinfo_ (std::move (info))
 {
 #ifdef U3_OS_WIN32_DESKTOP
   impl_ = ::std::make_shared< general::LoaderFileImpl > (iinfo_);
@@ -32,19 +30,19 @@ Loader::Loader (const InitLoaderInfo& info) :
 }
 
 
-bool
+auto
 Loader::is_file_exist (
   const std::string&       file_name,
-  const appl_paths::Paths& path_type) const
+  const appl_paths::Paths& path_type) const -> bool
 {
   return impl_->is_exist_file (file_name, path_type);
 }
 
 
-bool
+auto
 Loader::is_folder_exist (
   const std::string&       file_name,
-  const appl_paths::Paths& path_type) const
+  const appl_paths::Paths& path_type) const -> bool
 {
   return impl_->is_exist_folder (file_name, path_type);
 }
@@ -54,13 +52,13 @@ void
 Loader::load (
   const std::string&                    file_name,
   const appl_paths::Paths&              path_type,
-  ::libs::helpers::mem::IBlockMem::ptr& bmem)
+  ::libs::utility::mem::IBlockMem::ptr& bmem)
 {
   try
   {
     U3_ASSERT (!file_name.empty ());
     U3_CHECK (impl_->get (file_name, path_type, bmem), ("load file: " + file_name).c_str ());
-    // U3_CHECK( bmem->get() && bmem->get_data_size(), ("load file, empty bmem,"  + file_name ).c_str() );
+    // U3_CHECK( bmem->get() && bmem->get_size(), ("load file, empty bmem,"  + file_name ).c_str() );
   }
   catch (const std::exception& excpt)
   {
@@ -72,7 +70,7 @@ Loader::load (
 void
 Loader::get_enum (
   const appl_paths::Paths&               path_type,
-  ::libs::helpers::files::NodeEnumFiles& fenum,
+  ::libs::utility::files::NodeEnumFiles& fenum,
   const std::string&                     mask)
 {
   U3_XLOG_DBG ("Loader::get_enum" + TOLOG (to_string (path_type)) + VTOLOG (iinfo_.disable_change_search_rule_));
@@ -119,7 +117,7 @@ Loader::get_enum (
   xml::helpers::enum_files_function (
     fenum,
     "",
-    [&deep_recursive, &disable_recursive, &disable_files] (::libs::helpers::files::NodeEnumFiles& node, const std::string& add_root) {
+    [&deep_recursive, &disable_recursive, &disable_files] (::libs::utility::files::NodeEnumFiles& node, const std::string& add_root) -> void {
       if (disable_files)
       {
         node.files_.clear ();

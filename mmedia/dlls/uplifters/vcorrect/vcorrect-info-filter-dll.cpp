@@ -4,8 +4,6 @@
 \date       20.05.2017
 \project    u3_vcorrect_vdd
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "vcorrect-includes_int.hpp"
 #include "vcorrect-info-filter-dll.hpp"
 #include "vcorrect-filter-dll.hpp"
@@ -36,7 +34,7 @@ InfoFilter::sync_int (bool force)
     return;
   }
 
-  const auto use_hardware = ::libs::ievents::SelectorImpls::software != rprops_->hint_correct_impl_ && !hardware_impl_.expired ();
+  const auto use_hardware = ::libs::events_base::SelectorImpls::software != rprops_->hint_correct_impl_ && !hardware_impl_.expired ();
   active_impl_            = use_hardware ? hardware_impl_ : soft_impl_;
 
   syn::ICorrectImage::weak_ptr impls[] = {
@@ -56,8 +54,8 @@ InfoFilter::sync_int (bool force)
 }
 
 
-bool
-InfoFilter::load_int (const ::pugi::xml_named_node_iterator& node)
+auto
+InfoFilter::load_int (const ::pugi::xml_named_node_iterator& node) -> bool
 {
   synced_ = false;
   return super::load_int (node);

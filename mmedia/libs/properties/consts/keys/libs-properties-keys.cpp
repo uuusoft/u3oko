@@ -5,8 +5,7 @@
 \project    u3_properties_libs
 \brief      Текстовые идентификаторы свойств (доступные в пределха всей системы)
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
+#include "../../libs-properties-includes_int.hpp"
 #include "libs-properties-keys.hpp"
 
 namespace libs::properties::consts::keys

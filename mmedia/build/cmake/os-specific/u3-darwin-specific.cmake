@@ -14,8 +14,6 @@ set(U3_SUFFIX_DLL_NAME dylib)
 
 #set( U3_SHARED_COMPILE_OPTIONS_CPP ${U3_SHARED_COMPILE_OPTIONS_CPP} -rdynamic -export-dynamic -std=c++17 -frtti -fexceptions -fvisibility=default)
 
-if(1)
-  message(NOTICE "${U3_MARK_REFACT}add support dlib for Darwin")
-  set(U3_SHARED_COMPILE_DEF_CPP ${U3_SHARED_COMPILE_DEF_CPP} -DU3_SKIP_DLIB=TRUE)
-  set(U3_DBG_EXTLIB_SKIP_DLIB TRUE)
-endif()
+message(NOTICE "${U3_MARK_REFACT}add support dlib for Darwin")
+#set(U3_SHARED_COMPILE_DEF_CPP ${U3_SHARED_COMPILE_DEF_CPP} -DU3_SKIP_DLIB=TRUE)
+#set(U3_DBG_EXTLIB_SKIP_DLIB TRUE)

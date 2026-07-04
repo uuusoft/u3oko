@@ -9,22 +9,22 @@
 
 namespace libs::link
 {
-bool
-StateProcessEvent::is_seq_exist () const
+auto
+StateProcessEvent::is_seq_exist () const -> bool
 {
   return id_seq_.empty () ? false : true;
 }
 
 
-bool
-StateProcessEvent::is_childs_exist () const
+auto
+StateProcessEvent::is_childs_exist () const -> bool
 {
   return childs_.empty () ? false : true;
 }
 
 
-bool
-StateProcessEvent::is_failed () const
+auto
+StateProcessEvent::is_failed () const -> bool
 {
   return failed_;
 }
@@ -54,8 +54,8 @@ StateProcessEvent::update (::libs::events::IEvent::ptr& msg)
 }
 
 
-std::string
-to_string (const StateProcessEvent& val)
+auto
+to_string (const StateProcessEvent& val) -> std::string
 {
   return std::string ("StateProcessEvent[") +
          "sync_event:" + std::to_string (val.sync_event_) +

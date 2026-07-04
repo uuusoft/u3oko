@@ -19,7 +19,7 @@ class http_session : public std::enable_shared_from_this< http_session >
   http_session (
     boost::asio::ip::tcp::socket&& socket,
     const handler_func_type&       http_handler,
-    const shared_state_ptr_type&   shared_state);
+    shared_state_ptr_type          shared_state);
 
   void run ();
 

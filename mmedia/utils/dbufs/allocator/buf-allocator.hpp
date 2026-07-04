@@ -13,10 +13,13 @@ namespace utils::dbufs::allocator
 class BufAllocator final : public IBufAllocator
 {
   public:
+  U3_ADD_POINTERS_TO_SELF (BufAllocator)
+
   /// Функция возврата одиночки в слабом смысле (только для статически линкуемых модулей) т.к. она определена только в модулей dbufs
-  static BufAllocator* instance ();
+  static IBufAllocator::raw_ptr instance ();
+
   //  IBufAllocator
-  virtual auto create (size_buf_type size) -> utils::dbufs::video::IVideoBuf::ptr override;
+  virtual auto create (size_buf_type) -> utils::dbufs::video::IVideoBuf::ptr override;
   virtual auto dump_bufs_state () -> std::string override;
 
   private:
@@ -26,7 +29,7 @@ class BufAllocator final : public IBufAllocator
   using lock_type    = std::scoped_lock< sync_type >;
   using counter_type = std::int64_t;
 
-  BufAllocator ();
+  BufAllocator () = default;
   virtual ~BufAllocator ();
 
   /// Функция освобождения буферов
@@ -34,9 +37,9 @@ class BufAllocator final : public IBufAllocator
   /// Внутренняя реализации без блокировки
   std::string dump_state_int ();
 
-  bufs_type    bufs_;                 //< Список созданных буферов
-  sync_type    mtx_;                  //< Примитив для синронизации доступа к реализации
-  counter_type counter_alloc_bufs_;   //< Счетчик успешых операций выделения новых буферов
-  counter_type counter_reuse_bufs_;   //< Счетчик успешых операций повторного использования буферов
+  bufs_type    bufs_;                     //< Список созданных буферов
+  sync_type    mtx_;                      //< Примитив для синхронизации доступа к реализации
+  counter_type counter_alloc_bufs_ = 0;   //< Счетчик успешых операций выделения новых буферов debug
+  counter_type counter_reuse_bufs_ = 0;   //< Счетчик успешых операций повторного использования буферов debug
 };
 }   // namespace utils::dbufs::allocator

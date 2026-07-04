@@ -23,7 +23,7 @@ class IOptim
 {
   public:
   // ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IOptim)
+  U3_ADD_POINTERS_TO_SELF (IOptim)
 
   /// Функция возвращает по запросу реализацию оптимизированного алгоритма
   virtual hioptim get (const qoptim& info) = 0;

@@ -4,8 +4,6 @@
 \date       23.02.2022
 \project    u3_core_lib
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../libs-cores-core-includes_int.hpp"
 #include "core-consts-vals.hpp"
 

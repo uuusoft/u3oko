@@ -8,7 +8,7 @@
 
 namespace dlls::sources::pict_vgen::consts
 {
-constexpr std::int32_t max_count_cycle_store_image = 30;
+inline constexpr std::int32_t max_count_cycle_store_image = 30;
 }   // namespace dlls::sources::pict_vgen::consts
 
 namespace dlls::sources::pict_vgen::consts::param_keys

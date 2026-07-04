@@ -10,7 +10,7 @@ namespace dlls::codecs::codec_gen
 {
 struct InfoGenCodec {
   // ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (InfoGenCodec)
+  U3_ADD_POINTERS_TO_SELF (InfoGenCodec)
 
   InfoGenCodec () = default;
 

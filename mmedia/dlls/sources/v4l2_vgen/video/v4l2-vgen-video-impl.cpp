@@ -4,8 +4,6 @@
 \date       20.02.2026
 \project    u3_v4l2_vgen
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "../v4l2-vgen-includes_int.hpp"
 #include "v4l2-vgen-video-impl.hpp"
 
@@ -194,7 +192,7 @@ IEvent::ptr
 VideoImpl::get_interface_event ()
 {
   IEvent::ptr rmsg;
-  auto        dmsg = ::libs::iproperties::helpers::create_event< ::libs::ievents::runtime::interf::InterfCodecImageEvent > (rmsg);
+  auto        dmsg = ::libs::iproperties::helpers::create_event< ::libs::events_base::runtime::interf::InterfCodecImageEvent > (rmsg);
   dmsg->set_active (true);
   return rmsg;
 }
@@ -277,7 +275,7 @@ VideoImpl::init_device (const ::dlls::sources::gen_lib::SourceImplInfo& info)
   CHECK_STATUS (helpers::connect_ports (cap_port, einput_port, &devstate_->video_connect_), "Failed to connect camera video port to video input");
   CHECK_STATUS (mmal_port_parameter_set_uint32 (devstate_->cam_comp_->control, MMAL_PARAMETER_SHUTTER_SPEED, devstate_->cam_params_.shutter_speed), "Failed to set shutter speed");
 
-  eoutput_port->userdata = ::libs::helpers::casts::reinterpret_cast_helper< struct MMAL_PORT_USERDATA_T* > (devstate_);
+  eoutput_port->userdata = ::libs::utility::casts::reinterpret_cast_helper< struct MMAL_PORT_USERDATA_T* > (devstate_);
 
   CHECK_STATUS (mmal_port_enable (eoutput_port, buf_callback), "enable video port");
 
@@ -317,7 +315,7 @@ VideoImpl::buf_callback_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
   lock_type     lock (mtx_);
   MMAL_STATUS_T status   = MMAL_SUCCESS;
   bool          complete = false;
-  DriverState*  devstate = ::libs::helpers::casts::reinterpret_cast_helper< DriverState* > (port->userdata);
+  DriverState*  devstate = ::libs::utility::casts::reinterpret_cast_helper< DriverState* > (port->userdata);
 
   U3_CHECK (devstate, "Received a camera still buf callback with no state");
 
@@ -339,18 +337,18 @@ VideoImpl::buf_callback_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
     {
       time_type  end        = U3_GET_CURRENT_TIME;
       auto       diff_time  = end - video_beg_time_;
-      const auto req_stride = width * ::libs::helpers::uids::helpers::get_count_bytes_from_format (::libs::helpers::uids::minor::id_val::rgb32);
+      const auto req_stride = width * ::libs::utility::uids::helpers::get_count_bytes_from_format (::libs::utility::uids::minor::id_val::rgb32);
 
-      buf->buf_alloc (::utils::dbufs::video::AllocBufInfo (width, height, req_stride, ::libs::helpers::uids::minor::id_val::y8));
+      buf->buf_alloc (::utils::dbufs::video::AllocParams (width, height, req_stride, ::libs::utility::uids::minor::id_val::y8));
 
       video_frame_size_ = sizeof (HeaderIFrame);
-      //::utils::dbufs::video::helpers::override_data (*buf, 0, video_frame_size_);
-      HeaderIFrame* head = ::libs::helpers::casts::reinterpret_cast_helper< HeaderIFrame* > (buf->get_buf ());
+      //::utils::dbufs::video::helpers::replace_buf_params (*buf, 0, video_frame_size_);
+      HeaderIFrame* head = ::libs::utility::casts::reinterpret_cast_helper< HeaderIFrame* > (buf->get_buf ());
 
       head->reset ();
 
-      // head->base_part_.set_guid_codec (::libs::helpers::uids::codecs::x264);
-      head->base_part_.set_guid_codec (::libs::helpers::uids::codecs::mjpeg);
+      // head->base_part_.set_guid_codec (::libs::utility::uids::codecs::x264);
+      head->base_part_.set_guid_codec (::libs::utility::uids::codecs::mjpeg);
       head->base_part_.style_         = ::dlls::codecs::codec_gen::Frames::iframe;
       head->base_part_.sinfo_.width_  = width;
       head->base_part_.sinfo_.height_ = height;
@@ -379,7 +377,7 @@ VideoImpl::buf_callback_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
       empty_video_bufs_.pop_front ();
       ready_video_bufs_.push_back (buf);
 
-      HeaderIFrame* head = ::libs::helpers::casts::reinterpret_cast_helper< HeaderIFrame* > (buf->get_buf ());
+      HeaderIFrame* head = ::libs::utility::casts::reinterpret_cast_helper< HeaderIFrame* > (buf->get_buf ());
 
       head->base_part_.size_compress_ = video_frame_size_ - sizeof (HeaderIFrame);
       head->csize_                    = video_frame_size_ - sizeof (HeaderIFrame);
@@ -540,7 +538,7 @@ VideoImpl::update_codec_props_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
   */
   // VideoCodecProp::craw_ptr props = video_codec_interf_->get_codec_property ();
   //
-  // const std::uint32_t val = ::libs::helpers::utils::ret_check_bound<uint3-2_t> (U3_CAST_UINT32 (props->plane_.quality_), 1, 100);
+  // const std::uint32_t val = ::libs::utility::utils::ret_check_bound<uint3-2_t> (U3_CAST_UINT32 (props->plane_.quality_), 1, 100);
   // CHECK_STATUS ( mmal_port_parameter_set_uint32 ( video_output, MMAL_PARAMETER_JPEG_Q_FACTOR, val), "update video quality");
   // CHECK_STATUS ( mmal_port_format_commit (video_output), "Unable to update format on video output port");
 
@@ -551,7 +549,7 @@ VideoImpl::update_codec_props_int (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 void
 VideoImpl::buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 {
-  DriverState* devstate = ::libs::helpers::casts::reinterpret_cast_helper< DriverState* > (port->userdata);
+  DriverState* devstate = ::libs::utility::casts::reinterpret_cast_helper< DriverState* > (port->userdata);
   if (!devstate)
   {
     U3_LOG_DATA_WRN ("received empty user data");

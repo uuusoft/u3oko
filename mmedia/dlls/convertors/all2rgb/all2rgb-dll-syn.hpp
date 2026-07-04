@@ -8,12 +8,13 @@
 
 namespace dlls::convertors::all2rgb::syn
 {
-using VideoConvertProp = ::libs::ievents::props::videos::generic::convert::VideoConvertProp;
-using IVideoBuf        = ::utils::dbufs::video::IVideoBuf;
-using IEvent           = ::libs::events::IEvent;
-using AddEvent2Base    = ::libs::ievents_events::events::AddEvent2Base;
-using TransformInfo    = ::libs::icore::impl::var1::obj::dll::TransformInfo;
-using CallInterfInfo   = ::libs::icore::impl::var1::obj::dll::CallInterfInfo;
-using FilterInfo       = ::libs::icore::impl::var1::obj::FilterInfo;
-using ConnectInfo      = ::libs::icore::impl::var1::obj::ConnectInfo;
+using VideoConvertProp   = ::libs::events_base::props::videos::generic::convert::VideoConvertProp;
+using IVideoBuf          = ::utils::dbufs::video::IVideoBuf;
+using IEvent             = ::libs::events::IEvent;
+using AddEvent2EventsMsg = ::libs::events_msg::events::AddEvent2EventsMsg;
+using TransformInfo      = ::libs::icore::impl::var1::obj::dll::TransformInfo;
+using CallInterfInfo     = ::libs::icore::impl::var1::obj::dll::CallInterfInfo;
+using FilterInfo         = ::libs::icore::impl::var1::obj::FilterInfo;
+using ConnectInfo        = ::libs::icore::impl::var1::obj::ConnectInfo;
+using id_val             = ::libs::utility::uids::minor::id_val;
 }   // namespace dlls::convertors::all2rgb::syn

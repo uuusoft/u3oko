@@ -12,8 +12,6 @@ namespace libs::events
 class IWrapBaseEvent : public IEvent
 {
   friend class boost::serialization::access;
-  friend ::dlls::devents::impl::EventsImpl;
-  friend struct RegisterHelper;
 
   protected:
   struct Acessor {
@@ -22,9 +20,9 @@ class IWrapBaseEvent : public IEvent
 
   public:
   //  ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (IWrapBaseEvent)
-  U3_HELPER_ADD_MAKE_SHARED_FUNCT2THIS_TYPE (IWrapBaseEvent)
-  U3_HELPER_DISABLE_ACOPY_TYPE (IWrapBaseEvent)
+  U3_ADD_POINTERS_TO_SELF (IWrapBaseEvent)
+  U3_ADD_MAKE_SHARED_THIS (IWrapBaseEvent)
+  U3_ADD_DELETE_MOVE_COPY (IWrapBaseEvent)
 
   explicit IWrapBaseEvent (const Acessor& = Acessor (0), IEvent::ptr = IEvent::ptr ());
   virtual ~IWrapBaseEvent () = default;
@@ -43,13 +41,15 @@ class IWrapBaseEvent : public IEvent
   protected:
   IEvent::ptr int_;   //< Событие, для которого производится синхронизация
 
+  // IEvent overrides
+  virtual auto get_mid_int () const -> const ::libs::events::IEvent::hid_type& override;
   virtual auto clone_int (const ::libs::events::Deeps&) const -> IEvent::ptr override;
   virtual auto load_json_int (const ::boost::json::object&) -> void override;
   virtual auto save_json_int (::boost::json::object&) const -> void override;
   virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 
   private:
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (IEvent)
+  U3_ADD_SUPER_CLASS (IEvent)
 
   friend class boost::serialization::access;
 

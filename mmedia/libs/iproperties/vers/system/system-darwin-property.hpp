@@ -13,7 +13,7 @@ class SystemDarwinProperty final : public ::libs::properties::ISharedProperty
 {
   public:
   // ext types
-  U3_HELPER_THIS_TYPE_HAS_POINTERS_TO_SELF (SystemDarwinProperty)
+  U3_ADD_POINTERS_TO_SELF (SystemDarwinProperty)
 
   SystemDarwinProperty ()          = default;
   virtual ~SystemDarwinProperty () = default;

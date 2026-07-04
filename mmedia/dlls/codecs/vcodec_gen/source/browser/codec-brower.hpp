@@ -13,21 +13,21 @@ namespace dlls::codecs::vcodec_gen::browser
 class CodecBrower final
 {
   public:
-  CodecBrower ()                                  = default;
-  ~CodecBrower ()                                 = default;
-  CodecBrower (const CodecBrower& src)            = delete;
-  CodecBrower& operator= (const CodecBrower& src) = delete;
+  CodecBrower ()                              = default;
+  ~CodecBrower ()                             = default;
+  CodecBrower (const CodecBrower&)            = delete;
+  CodecBrower& operator= (const CodecBrower&) = delete;
 
   /// Функция возвращает по идентификатору имя файла с кодеком или пусто
   /// \param[in]  id идентификатор кодека
   /// \return     имя файла
-  std::string get_codec (const libs::helpers::uids::minor::id_val& id);
+  std::string get_codec (const libs::utility::uids::minor::id_val& id);
 
   private:
   //  internal typess
   using sync_type        = std::mutex;
   using lock_type        = std::scoped_lock< sync_type >;
-  using format2file_type = std::unordered_multimap< libs::helpers::uids::minor::id_val, std::string >;
+  using format2file_type = std::unordered_multimap< libs::utility::uids::minor::id_val, std::string >;
 
   /// Функция обновляет список кодеков
   void refresh_list_codecs ();

@@ -4,8 +4,6 @@
 \date       09.03.2022
 \project    u3_bufs
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "libs-bufs-includes_int.hpp"
 #include "alloc-bufs-funcs.hpp"
 
@@ -30,7 +28,7 @@ alloc_buf_by_indx (
   {
     return;
   }
-  if (!utils::dbufs::video::helpers::is_equal_dim (*nbuf, *src))
+  if (!utils::dbufs::video::helpers::buf_dimension_equal (*nbuf, *src))
   {
     nbuf->clone (src, 0.0F);
   }

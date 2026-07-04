@@ -23,7 +23,7 @@ class Impl2Gui final : public IImplSender
     syn::IVideoBuf::raw_ptr) override;
 
   bool fill_frame (const syn::TransformInfo&, void*);
-  void send_frame (const InfoFilter&, const syn::TransformInfo&, ::libs::link::ILink::ptr);
+  void send_frame (const InfoFilter&, const syn::TransformInfo&, const ::libs::link::ILink::ptr&);
   bool is_empty_frame (const void*) const;
 
   ::libs::link::mem::IBlockFakeMem last_hmem_;      //<

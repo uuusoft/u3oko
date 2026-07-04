@@ -33,7 +33,7 @@ class CountSortAlg final
     const std::int16_t* spx,
     std::int16_t*       ipx)
   {
-    start_spx = ::libs::helpers::mem::move_cptr_back (start_spx, beg_cond_core);
+    start_spx = ::libs::utility::mem::move_cptr_back (start_spx, beg_cond_core);
 
     *ipx = nfinder.get_nth_element (
       start_spx,

@@ -5,8 +5,6 @@
 \project    u3_video_sender_dll
 */
 // #define U3_USE_DEB_LOG_LEVEL
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "video-sender-includes_int.hpp"
 #include "video-sender-info-filter.hpp"
 #include "video-sender-filter-dll.hpp"
@@ -68,7 +66,7 @@ Filter::transform_int (syn::TransformInfo& info)
         auto find = funcs_.find (minfo->dest_module_id_);
         if (funcs_.end () == find)
         {
-          default_send_funct (info, minfo, minfo->dest_module_id_);
+          default_send_func (info, minfo, minfo->dest_module_id_);
         }
         else
         {
@@ -82,7 +80,7 @@ Filter::transform_int (syn::TransformInfo& info)
     for (auto& event : *info.frame_events_)
     {
       syn::IEvent::ptr rmsg;
-      auto             dmsg = ::libs::helpers::check::ptr (::libs::iproperties::helpers::create_event< syn::WrapperHttpEvent > (rmsg));
+      auto             dmsg = ::libs::utility::check::ptr (::libs::iproperties::helpers::create_event< syn::WrapperHttpEvent > (rmsg));
       dmsg->set_msg (event);
       helper->send_msg (rmsg, syn::CallSyncs::async, syn::Calls::set);
     }

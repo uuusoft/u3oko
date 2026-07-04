@@ -55,10 +55,10 @@ HttpModule::init_links_int (const syn::InitApplication& appinfo)
     auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
 
     props->change_appl_info (
-      ::libs::ilog_events::AppllPartLogInfo (
-        ::libs::ievents::props::modules::log::LogLevels::info,
+      ::libs::events_log::AppllPartLogInfo (
+        ::libs::events_base::props::modules::log::LogLevels::info,
         ::modules::mhttp::appl::consts::module_name,
-        ::libs::helpers::log::get_module_version ()),
+        ::libs::utility::log::get_module_version ()),
       "");
 
     props->set_start (true);
@@ -76,8 +76,8 @@ HttpModule::init_proxys_int ()
 }
 
 
-bool
-HttpModule::appl_deinit_int ()
+auto
+HttpModule::appl_deinit_int () -> bool
 {
   U3_XLOG_MARK ("HttpModule::deinit_int::---->")
   if (links_.get (syn::mids::http2appl))
@@ -86,10 +86,10 @@ HttpModule::appl_deinit_int ()
     auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
 
     props->change_appl_info (
-      ::libs::ilog_events::AppllPartLogInfo (
-        ::libs::ievents::props::modules::log::LogLevels::info,
+      ::libs::events_log::AppllPartLogInfo (
+        ::libs::events_base::props::modules::log::LogLevels::info,
         ::modules::mhttp::appl::consts::module_name,
-        ::libs::helpers::log::get_module_version ()),
+        ::libs::utility::log::get_module_version ()),
       "");
 
     props->set_start (false);
@@ -114,40 +114,40 @@ HttpModule::update_catch_funcs_int ()
   super::update_catch_funcs_int ();
 
   catch_funcs_[syn::ChangeStateProcessEvent::gen_get_mid ()] =
-    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
-      if (forward)
-      {
-        U3_LOG_HTTP_DBG ("int received " + syn::ChangeStateProcessEvent::gen_get_mid ());
-        auto* props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
-        U3_ASSERT (props);
-        process_change_state_process (props);
-        return syn::IEvent::ptr ();
-      }
-      return msg;
-    };
+    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      U3_LOG_HTTP_DBG ("int received " + syn::ChangeStateProcessEvent::gen_get_mid ());
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
+      U3_ASSERT (props);
+      process_change_state_process (props);
+      return syn::IEvent::ptr ();
+    }
+    return msg;
+  };
 
   catch_funcs_[syn::WrapperHttpEvent::gen_get_mid ()] =
-    [] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
-      if (forward)
-      {
-        U3_LOG_HTTP_DBG ("int received " + syn::WrapperHttpEvent::gen_get_mid ());
-        return ::libs::iproperties::helpers::cast_event< syn::WrapperHttpEvent > (msg)->get_msg ();
-      }
-      return msg;
-    };
+    [] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      U3_LOG_HTTP_DBG ("int received " + syn::WrapperHttpEvent::gen_get_mid ());
+      return ::libs::iproperties::helpers::cast_event< syn::WrapperHttpEvent > (msg)->get_msg ();
+    }
+    return msg;
+  };
 
   catch_funcs_[syn::ZipDataEvent::gen_get_mid ()] =
-    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
-      if (forward)
-      {
-        U3_LOG_HTTP_DBG ("int received " + syn::ZipDataEvent::gen_get_mid ());
-        auto* props = ::libs::iproperties::helpers::cast_event< syn::ZipDataEvent > (msg);
-        U3_ASSERT (props);
-        process_zip_data_event (props);
-        return syn::IEvent::ptr ();
-      }
-      return msg;
-    };
+    [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      U3_LOG_HTTP_DBG ("int received " + syn::ZipDataEvent::gen_get_mid ());
+      auto* props = ::libs::iproperties::helpers::cast_event< syn::ZipDataEvent > (msg);
+      U3_ASSERT (props);
+      process_zip_data_event (props);
+      return syn::IEvent::ptr ();
+    }
+    return msg;
+  };
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   catch_funcs_[syn::RuntimeEvent::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {

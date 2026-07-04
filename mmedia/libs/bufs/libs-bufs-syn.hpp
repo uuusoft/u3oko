@@ -10,4 +10,6 @@ namespace libs::bufs::syn
 {
 using off_buf_type = ::utils::dbufs::video::consts::offs::off_buf_type;
 using IVideoBuf    = ::utils::dbufs::video::IVideoBuf;
+
+namespace offs = utils::dbufs::video::consts::offs;
 }   // namespace libs::bufs::syn

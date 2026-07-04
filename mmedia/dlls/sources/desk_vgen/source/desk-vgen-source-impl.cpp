@@ -4,8 +4,6 @@
 \date       26.06.2016
 \project    u3_desk_vgen
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
 #include "desk-vgen-includes_int.hpp"
 #include "desk-vgen-source-impl.hpp"
 
@@ -57,7 +55,7 @@ SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo >& sources)
 {
   sources.emplace_back (
     "screen-camera",
-    libs::imdata_events::events::DataSources::video,
+    libs::events_media::events::DataSources::video,
     0,
     1);
 }
@@ -81,15 +79,15 @@ SourceImpl::get_raw_data_int (
   if (rgb_buf_->get ())
   {
     buf->buf_alloc (
-      ::utils::dbufs::video::AllocBufInfo (
+      ::utils::dbufs::video::AllocParams (
         capinfo.width_dest_,
         capinfo.height_dest_,
         capinfo.stride_dest_,
-        ::libs::helpers::uids::minor::id_val::rgb24,
+        ::libs::utility::uids::minor::id_val::rgb24,
         utils::dbufs::video::DimChecks::disable));
 
-    U3_CHECK (rgb_buf_->get_data_size () >= capinfo.size_dest_data_, "buf too small");
-    ::libs::helpers::mem::u3copy (rgb_buf_->get (), buf->get_buf (), capinfo.size_dest_data_);
+    U3_CHECK (rgb_buf_->get_size () >= capinfo.size_dest_data_, "buf too small");
+    ::libs::utility::mem::u3copy (rgb_buf_->get (), buf->get_buf (), capinfo.size_dest_data_);
     buf->set_flag (::utils::dbufs::BufFlags::empty, false);
     buf->set_mem_var (::utils::dbufs::MemVars::size_data, capinfo.size_dest_data_);
   }
@@ -97,7 +95,7 @@ SourceImpl::get_raw_data_int (
 
 
 void
-SourceImpl::set_cpu_int (::libs::helpers::sys::cpu::CpuExts current_optim)
+SourceImpl::set_cpu_int (::libs::utility::sys::cpu::CpuExts current_optim)
 {
 }
 

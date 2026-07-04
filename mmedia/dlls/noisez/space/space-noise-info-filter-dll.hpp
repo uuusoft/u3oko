@@ -13,9 +13,6 @@ struct InfoFilter final : public ::libs::icore::impl::var1::obj::dll::BaseInfoFi
   InfoFilter ();
   virtual ~InfoFilter () = default;
 
-  InfoFilter (const InfoFilter& src)            = delete;
-  InfoFilter& operator= (const InfoFilter& src) = delete;
-
   syn::VideoSpaceNoiseRemoverProp::raw_ptr rprops_ = nullptr;    //< Настроенный указатель на свойства (для удобства)
   syn::ExpandedTimes                       expand_time_algs_;    //< Поле для логирования времени работы
   std::int64_t                             counter_frame_ = 0;   //< Количество обработанных кадров

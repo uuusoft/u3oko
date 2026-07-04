@@ -13,7 +13,7 @@ class IOptimImpl final : public ::libs::optim::io::IOptim
 {
   public:
   //  ext types
-  using str2funcs_type = std::unordered_map< std::string, IOptimAlg::ptr >;
+  using str2funcs_type = boost::unordered_flat_map< std::string, IOptimAlg::ptr >;
   using sync_type      = std::mutex;
   using lock_type      = std::scoped_lock< sync_type >;
 
@@ -21,8 +21,8 @@ class IOptimImpl final : public ::libs::optim::io::IOptim
   virtual ~IOptimImpl () = default;
 
   //  ::libs::optim::io::IOptim overrides
-  virtual ::libs::optim::io::hioptim get (const ::libs::optim::io::qoptim& query) override;
-  virtual void                       sync_impl (const ::libs::optim::io::TInit& iinfo) override;
+  virtual auto get (const ::libs::optim::io::qoptim& query) -> ::libs::optim::io::hioptim override;
+  virtual auto sync_impl (const ::libs::optim::io::TInit& iinfo) -> void override;
 
   private:
   void construct ();

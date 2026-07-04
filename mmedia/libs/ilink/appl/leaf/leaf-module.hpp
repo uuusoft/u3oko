@@ -31,7 +31,7 @@ class LeafModule : public ::libs::ilink::appl::base::BaseModule
   auto is_now_thread_to_sleep (bool now_recv_evnt) -> bool;
 
   private:
-  U3_HELPER_THIS_TYPE_HAS_SUPER_CLASS (::libs::ilink::appl::base::BaseModule)
+  U3_ADD_SUPER_CLASS (::libs::ilink::appl::base::BaseModule)
 
   virtual auto catch_event_int (::libs::events::IEvent::ptr& evnt) -> bool = 0;
   virtual auto is_now_thread_to_sleep_int (bool now_recv_evnt) -> bool     = 0;

@@ -4,8 +4,7 @@
 \date       10.09.2018
 \project    mevents
 */
-#include "mmedia/includes/control-defines-includes.hpp"
-#include "mmedia/includes/includes.hpp"
+#include "../../includes_int.hpp"
 #include "events-buf-consts-vals.hpp"
 
 namespace libs::events::buf::consts

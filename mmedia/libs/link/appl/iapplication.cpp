@@ -39,8 +39,8 @@ IApplication::appl_work ()
 }
 
 
-bool
-IApplication::appl_deinit ()
+auto
+IApplication::appl_deinit () -> bool
 {
   return appl_deinit_int ();
 }
