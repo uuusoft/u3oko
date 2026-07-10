@@ -9,6 +9,7 @@
 
 #include "casts/memory-casts-funcs.hpp"
 #include "casts/numeric-casts-funcs.hpp"
+#include "casts/saturation-casts-funcs.hpp"
 
 #include "check/check-ptr-funcs.hpp"
 
@@ -16,7 +17,7 @@
 #include "utils/cuuid.hpp"
 #include "utils/check-bounds-funcs.hpp"
 #include "utils/values-storage.hpp"
-#include "utils/transform-value-helper.hpp"
+#include "utils/val-transform-block.hpp"
 
 #include "sys/isys-info.hpp"
 #include "sys/factory_about_sys.hpp"
@@ -38,8 +39,8 @@
 
 #include "mem/aligned-mem-funcs.hpp"
 #include "mem/move-mem-ptr-funcs.hpp"
-#include "mem/u3copy-func.hpp"
-#include "mem/buf-copy-funcs.hpp"
+#include "mem/mem-copy-raw-func.hpp"
+#include "mem/mem-copy-restride-func.hpp"
 #include "mem/set-data-buf-funcs.hpp"
 #include "mem/iblock-mem.hpp"
 

@@ -54,7 +54,7 @@ void
 SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo >& sources)
 {
   sources.emplace_back (
-    "screen-camera",
+    "screens",
     libs::events_media::events::DataSources::video,
     0,
     1);
@@ -87,7 +87,7 @@ SourceImpl::get_raw_data_int (
         utils::dbufs::video::DimChecks::disable));
 
     U3_CHECK (rgb_buf_->get_size () >= capinfo.size_dest_data_, "buf too small");
-    ::libs::utility::mem::u3copy (rgb_buf_->get (), buf->get_buf (), capinfo.size_dest_data_);
+    ::libs::utility::mem::mem_copy_raw (rgb_buf_->get (), buf->get_buf (), capinfo.size_dest_data_);
     buf->set_flag (::utils::dbufs::BufFlags::empty, false);
     buf->set_mem_var (::utils::dbufs::MemVars::size_data, capinfo.size_dest_data_);
   }

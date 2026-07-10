@@ -191,10 +191,9 @@ VideoImpl::~VideoImpl ()
 IEvent::ptr
 VideoImpl::get_interface_event ()
 {
-  IEvent::ptr rmsg;
-  auto        dmsg = ::libs::iproperties::helpers::create_event< ::libs::events_base::runtime::interf::InterfCodecImageEvent > (rmsg);
-  dmsg->set_active (true);
-  return rmsg;
+  auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< ::libs::events_base::runtime::interf::InterfCodecImageEvent > ();
+  revnt->set_active (true);
+  return evnt;
 }
 
 

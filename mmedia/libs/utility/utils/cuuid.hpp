@@ -49,9 +49,9 @@ bool operator< (const cuuid& l, const cuuid& r);
 bool operator== (const cuuid& l, const cuuid& r);
 bool operator!= (const cuuid& l, const cuuid& r);
 
-std::string to_string (const cuuid& val);
-cuuid       cuuid_from_string (const std::string& src);
-void        cuuid_to_buf (const cuuid& val, std::uint8_t buf[16]);
+auto to_string (const cuuid&) -> std::string;
+auto cuuid_from_string (const std::string&) -> cuuid;
+auto cuuid_to_buf (const cuuid&, std::uint8_t[16]) -> void;
 }   // namespace libs::utility::utils
 
 

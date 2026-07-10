@@ -23,7 +23,7 @@ u3_add_target_dylib(
   TARGET_NAME
   desk_vgen-vss
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/sources/desk_vgen/source
+  ${U3_PATH_ROOT}/dlls/sources/desk_vgen/source
   OUTPUT_NAME
   vss_desk_vgen
   FORCE_TO_DYLIB

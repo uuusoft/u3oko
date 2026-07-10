@@ -85,23 +85,23 @@ include("./build/cmake/utils/u3-update-config-project.cmake")
 include("./build/cmake/module-specific/u3-define-modules.cmake")
 include("./build/cmake/module-specific/u3-shared-3rd-libs-list.cmake")
 
-include_directories("${U3_BUILD_PATH_TO_LIBS}/../")
+include_directories("${U3_PATH_ROOT}/../")
 
 # debug test compile
-include("${U3_BUILD_PATH_TO_LIBS}/modules/mtest/_make/module-test.cmake")
+include("${U3_PATH_ROOT}/modules/mtest/_make/module-test.cmake")
 
 # internal targets
-include("${U3_BUILD_PATH_TO_LIBS}/libs/libs-list.cmake")
-include("${U3_BUILD_PATH_TO_LIBS}/utils/utils-list.cmake")
+include("${U3_PATH_ROOT}/libs/libs-list.cmake")
+include("${U3_PATH_ROOT}/utils/utils-list.cmake")
 if(U3_COMMERCIAL_PART EQUAL 1)
-  include("${U3_BUILD_PATH_TO_LIBS}/dshow_helpers/dshow-helpers-list.cmake")
+  include("${U3_PATH_ROOT}/dshow_helpers/dshow-helpers-list.cmake")
 endif()
-include("${U3_BUILD_PATH_TO_LIBS}/dlls/dlls-list.cmake")
+include("${U3_PATH_ROOT}/dlls/dlls-list.cmake")
 
 # lib-proxy depends from dlls
-include("${U3_BUILD_PATH_TO_LIBS}/libs/proxy/_make/libs-proxy.cmake")
-include("${U3_BUILD_PATH_TO_LIBS}/appls/appls-list.cmake")
-include("${U3_BUILD_PATH_TO_LIBS}/modules/modules-list.cmake")
+include("${U3_PATH_ROOT}/libs/proxy/_make/libs-proxy.cmake")
+include("${U3_PATH_ROOT}/appls/appls-list.cmake")
+include("${U3_PATH_ROOT}/modules/modules-list.cmake")
 
 if(U3_COMMERCIAL_PART EQUAL 1)
   include("./build/cmake/tests/u3-googletests.cmake")

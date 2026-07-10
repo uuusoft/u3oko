@@ -3,7 +3,7 @@
 # copyright   Erashov A.I.
 # file        env-internal-vals.cmake
 
-set(U3_BUILD_PATH_TO_LIBS ".")
+set(U3_PATH_ROOT ".")
 set(U3_LIBS_OUR_VARIABLE_LIST "")
 set(U3_LIBS_OUR_STATIC_LIST "")
 set(U3_LIBS_3RD_STATIC_LIST "")

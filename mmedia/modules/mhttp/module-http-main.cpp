@@ -43,7 +43,6 @@ factory_impl_mpl_mhttp (::libs::link::appl::IApplication::raw_ptr impl, bool cre
 }
 }   // namespace modules::mhttp::appl
 
-
 extern "C" BOOST_SYMBOL_EXPORT auto
 create_impl_mpl_mhttp () -> ::libs::link::appl::IApplication::raw_ptr
 {

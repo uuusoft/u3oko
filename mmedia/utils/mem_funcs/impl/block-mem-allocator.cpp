@@ -109,7 +109,6 @@ BlockMemAllocator::alloc (const size_type& size) -> syn::IBlockMem::ptr
 {
   lock_type           lock (mtx_);
   syn::IBlockMem::ptr exist = find_exist_block (size);
-
   if (exist)
   {
     exist->resize (size);
@@ -117,11 +116,9 @@ BlockMemAllocator::alloc (const size_type& size) -> syn::IBlockMem::ptr
   }
 
   const std::size_t real_size = std::max< size_type > (size, consts::min_size_block);
-  BlockMem::ptr     ret (new BlockMem (real_size));
-
-  blocks_.push_back (ret);
+  blocks_.emplace_back (std::make_shared< BlockMem > (real_size));
   U3_ASSERT (blocks_.size () < consts::max_count_block);
-  return ret;
+  return blocks_.back ();
 }
 
 

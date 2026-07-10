@@ -13,9 +13,9 @@ namespace modules::mlog::appl
 auto
 make_suppressor_key (const syn::IEvent::ptr& val) -> std::string
 {
-  auto       evnt = ::libs::utility::check::ptr (::libs::iproperties::helpers::cast_event< syn::InfoLogEvent > (val));
-  const auto info = evnt->get_appl_info ();
-  return info.file_ + ":" + std::to_string (info.line_);
+  auto        evnt = ::libs::utility::check::ptr (::libs::iproperties::helpers::cast_event< syn::InfoLogEvent > (val));
+  const auto& info = evnt->get_appl_info ();
+  return evnt->text (::libs::events_log::LogTexts::text) + ":" + info.file_ + ":" + std::to_string (info.line_);
 }
 
 
@@ -35,17 +35,16 @@ void
 LogModule::add_msg_from_self (const std::string& info)
 {
   U3_ASSERT (!info.empty ());
-  syn::IEvent::ptr rmsg;
-  auto             dmsg = ::libs::iproperties::helpers::create_event< syn::InfoLogEvent > (rmsg);
+  auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::InfoLogEvent > ();
 
-  dmsg->change_appl_info (
+  revnt->change_appl_info (
     ::libs::events_log::AppllPartLogInfo (
       ::libs::events_base::props::modules::log::LogLevels::info,
       ::libs::ilink::consts::id_log,
       "wtfversion"),
     info);
 
-  events_for_save_.push_back (rmsg);
+  events_for_save_.push_back (evnt);
 }
 
 
@@ -70,6 +69,7 @@ LogModule::process_info_log (syn::InfoLogEvent::raw_ptr props, const syn::IEvent
   {
     if (suppressor_.process (msg, make_suppressor_key))
     {
+      U3_XLOG_DBG ("add event to events list" + VTOLOG (events_for_save_.size ()) + STOLOG (msg->get_mid ()));
       events_for_save_.push_back (msg);
     }
   }

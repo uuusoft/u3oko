@@ -21,10 +21,4 @@ enum class BufFlags : std::uint32_t
   unknown             = 0x09,   //< Не определенно для общности
   max_bound           = 0x10,   //< Максимальное значение признака. Вспомогательное значение для проверок значений типа
 };
-
-inline constexpr std::uint32_t
-                 enum_to_raw (const BufFlags& _val)
-{
-  return U3_CAST_UINT32_FORCE (_val);
-}
 }   // namespace utils::dbufs

@@ -8,7 +8,7 @@ u3_add_target_dylib(
   TARGET_NAME
   vcodec_gen-vdd
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/codecs/vcodec_gen/source
+  ${U3_PATH_ROOT}/dlls/codecs/vcodec_gen/source
   OUTPUT_NAME
   vdd_vcodec_gen
   FORCE_TO_DYLIB

@@ -40,7 +40,7 @@ class IHardwareCorrect final : public syn::ICorrectImage
   virtual void
   update_correction_property_int (const syn::VideoCorrectProp::raw_ptr info) override
   {
-    U3_LOG_DATA_DATA ("update prop:" + STOLOG (syn::VideoCorrectProp::gen_get_mid ()));
+    U3_LOG_DATA_DBG ("update prop:" + STOLOG (syn::VideoCorrectProp::gen_get_mid ()));
     prop_.copy (info);
     update_ = true;
   }

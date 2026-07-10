@@ -18,6 +18,8 @@ enum class Image2Frames : std::uint32_t
 Image2Frames image2frame (const std::string& val);
 
 struct LoadedImage final {
+  // U3_ADD_DELETE_MOVE_COPY (LoadedImage);
+
   LoadedImage () = default;
 
   LoadedImage (
@@ -40,10 +42,6 @@ struct LoadedImage final {
     std::swap (bppx_, src.bppx_);
     std::swap (data_, src.data_);
   }
-
-  LoadedImage (const LoadedImage&)            = delete;
-  LoadedImage& operator= (const LoadedImage&) = delete;
-  LoadedImage& operator= (LoadedImage&&)      = delete;
 
   ~LoadedImage () = default;
 
@@ -83,15 +81,15 @@ class SourceImpl final : public ::dlls::sources::gen_lib::ISourceImpl
   auto load_image2buf (const std::string&) -> LoadedImage;
   auto is_image_valid (const std::string&) -> bool;
 
-  std::string                name_file_;                                                        //<
-  syn::NodeEnumFiles         enum_files_;                                                       //<
-  std::uint64_t              indx_image_file_ = 0;                                              //<
-  ptime_type                 time_last_change_file_;                                            //<
-  exts_type                  exts_ = { 0 };                                                     //<
-  syn::SourceImplInfo        source_impl_info_;                                                 //<
-  Image2Frames               image2frame_style_ = Image2Frames::scroll;                         //<
-  bufs_storage_type          loaded_images_;                                                    //<
-  float                      off_first_image_ = 0.0F;                                           //<
-  syn::IHardwareCapture::ptr icapture_        = std::make_shared< syn::IHardwareCapture > ();   //<
+  std::string                name_file_;                                                   //<
+  syn::NodeEnumFiles         enum_files_;                                                  //<
+  std::uint64_t              indx_image_file_ { 0 };                                       //<
+  ptime_type                 time_last_change_file_;                                       //<
+  exts_type                  exts_ = { 0 };                                                //<
+  syn::SourceImplInfo        source_impl_info_;                                            //<
+  Image2Frames               image2frame_style_ { Image2Frames::scroll };                  //<
+  bufs_storage_type          loaded_images_;                                               //<
+  float                      off_first_image_ { 0.0F };                                    //<
+  syn::IHardwareCapture::ptr icapture_ { std::make_shared< syn::IHardwareCapture > () };   //<
 };
 }   // namespace dlls::sources::pict_vgen

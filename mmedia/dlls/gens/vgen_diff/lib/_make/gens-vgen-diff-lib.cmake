@@ -3,4 +3,4 @@
 # copyright   Erashov A.I.
 # file        gens-vgen-diff-lib.cmake
 
-u3_add_target_lib(TARGET_NAME vgen_diff-vgd-lib SOURCE_PATH ${U3_BUILD_PATH_TO_LIBS}/dlls/gens/vgen_diff/lib)
+u3_add_target_lib(TARGET_NAME vgen_diff-vgd-lib SOURCE_PATH ${U3_PATH_ROOT}/dlls/gens/vgen_diff/lib)

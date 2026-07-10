@@ -3,4 +3,4 @@
 # copyright   Erashov A.I.
 # file        libs-events-events.cmake
 
-u3_add_target_lib(TARGET_NAME events-lib SOURCE_PATH ${U3_BUILD_PATH_TO_LIBS}/libs/events)
+u3_add_target_lib(TARGET_NAME events-lib SOURCE_PATH ${U3_PATH_ROOT}/libs/events)

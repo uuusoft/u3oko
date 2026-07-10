@@ -16,9 +16,9 @@ wrap_sync_msg (IEvent::ptr msg)
 {
   U3_CHECK (nullptr == ::libs::iproperties::helpers::cast_event< IAnswerEvent > (msg), "try sync answer event");
   U3_CHECK (nullptr == ::libs::iproperties::helpers::cast_event< ISyncEvent > (msg), "try sync sync event");
-  IEvent::ptr rmsg;
-  ::libs::iproperties::helpers::create_event< ISyncEvent > (rmsg)->set_msg (msg);
-  return rmsg;
+  auto [evnt, revnt] = libs::iproperties::helpers::create_event< ISyncEvent > ();
+  revnt->set_msg (msg);
+  return evnt;
 }
 
 /// Вспомогательная функция для добавлению сообщению признака запроса
@@ -30,9 +30,9 @@ wrap_request_msg (IEvent::ptr msg)
   U3_CHECK (nullptr == ::libs::iproperties::helpers::cast_event< ISyncEvent > (msg), "try request sync event");
   U3_CHECK (nullptr == ::libs::iproperties::helpers::cast_event< IAnswerEvent > (msg), "try request answer event");
   U3_CHECK (nullptr == ::libs::iproperties::helpers::cast_event< IRequestEvent > (msg), "try request request event");
-  IEvent::ptr rmsg;
-  ::libs::iproperties::helpers::create_event< IRequestEvent > (rmsg)->set_msg (msg);
-  return rmsg;
+  auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< IRequestEvent > ();
+  revnt->set_msg (msg);
+  return evnt;
 }
 
 /// Вспомогательная функция для добавлению сообщению признака запроса
@@ -44,9 +44,9 @@ wrap_answer_msg (IEvent::ptr msg)
   U3_CHECK (nullptr == ::libs::iproperties::helpers::cast_event< ISyncEvent > (msg), "try answer sync event");
   U3_CHECK (nullptr == ::libs::iproperties::helpers::cast_event< IAnswerEvent > (msg), "try answer answer event");
   U3_CHECK (nullptr == ::libs::iproperties::helpers::cast_event< IRequestEvent > (msg), "try answer request event");
-  IEvent::ptr rmsg;
-  ::libs::iproperties::helpers::create_event< IAnswerEvent > (rmsg)->set_msg (msg);
-  return rmsg;
+  auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< IAnswerEvent > ();
+  revnt->set_msg (msg);
+  return evnt;
 }
 
 /// Вспомогательная функция для добавлению сообщению идентификатора последовательности
@@ -57,10 +57,9 @@ inline IEvent::ptr
 wrap_seq_msg (IEvent::ptr msg, ISeqEvent::id_type id = ISeqEvent::id_type ())
 {
   U3_CHECK (nullptr == ::libs::iproperties::helpers::cast_event< ISeqEvent > (msg), "try seq seq event");
-  IEvent::ptr rmsg;
-  auto        dmsg = ::libs::iproperties::helpers::create_event< ISeqEvent > (rmsg);
-  dmsg->set_msg (msg);
-  dmsg->set_seq_id (id.empty () ? ISeqEvent::id_type (boost::uuids::random_generator () ()) : id);
-  return rmsg;
+  auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< ISeqEvent > ();
+  revnt->set_msg (msg);
+  revnt->set_seq_id (id.empty () ? ISeqEvent::id_type (boost::uuids::random_generator () ()) : id);
+  return evnt;
 }
 }   // namespace libs::events::helpers

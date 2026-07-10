@@ -76,15 +76,12 @@ class ToLog final
       return;
     }
 
-    const auto                  msglm_impl = msglm_events->impl ();
-    ::libs::events::IEvent::ptr msglm_revent;
-    auto*                       msglm_levent = ::libs::iproperties::helpers::create_event< ::libs::events_log::events::InfoLogEvent > (msglm_revent);
-    const auto                  msglm_id     = ::libs::events_log::events::InfoLogEvent::gen_get_mid ();
-    // const auto msglm_revent = msglm_impl->get (msglm_id);
-    // auto*      msglm_levent = ::libs::utility::casts::reinterpret_cast_helper< ::libs::events_log::events::InfoLogEvent* > (msglm_impl->dcast (msglm_revent.get (), msglm_id));
+    auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< ::libs::events_log::events::InfoLogEvent > ();
+    revnt->change_appl_info (
+      ::libs::events_log::AppllPartLogInfo (level_, to_string (key_.first), "wtfversion", place_),
+      buf.str ());
 
-    msglm_levent->change_appl_info (::libs::events_log::AppllPartLogInfo (level_, to_string (key_.first), "wtfversion", place_), buf.str ());
-    logger->send_msg (msglm_revent, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+    logger->send_msg (evnt);
   }
 
   void

@@ -14,6 +14,7 @@ using LinksVideoDriverProp     = ::libs::events_base::props::videos::generic::dr
 using SystemSpecificDriverProp = ::libs::events_base::runtime::video::SystemSpecificDriverProp;
 using ICaptureImage            = ::libs::events_base::runtime::interf::interfaces::ICaptureImage;
 using ChangeStateProcessEvent  = ::libs::events_base::runtime::state::ChangeStateProcessEvent;
+using InterfCaptureImageEvent  = ::libs::events_base::runtime::interf::InterfCaptureImageEvent;
 using IVideoBuf                = ::utils::dbufs::video::IVideoBuf;
 using ListDevicesDataEvent     = ::libs::events_media::events::ListDevicesDataEvent;
 using IInterfGraphObj          = ::libs::core::graph::IInterfGraphObj;

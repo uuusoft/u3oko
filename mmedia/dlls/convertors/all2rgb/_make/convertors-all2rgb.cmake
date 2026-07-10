@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   all2rgb-vcd
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/convertors/all2rgb
+  ${U3_PATH_ROOT}/dlls/convertors/all2rgb
   OUTPUT_NAME
   vcd_all2rgb
   FORCE_TO_DYLIB

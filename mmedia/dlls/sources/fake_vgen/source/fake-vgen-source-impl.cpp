@@ -46,7 +46,7 @@ void
 SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo >& sources)
 {
   sources.emplace_back (
-    "fake-camera",
+    "synthetics",
     libs::events_media::events::DataSources::video,
     0,
     1);
@@ -71,7 +71,7 @@ SourceImpl::get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* eve
       props->capi_.width_, props->capi_.height_, 0, px_format));
 
   auto it_make_func = gen_funcs_.find (px_format);
-  U3_CHECK (it_make_func != gen_funcs_.end (), "empty make buf funct");
+  U3_CHECK (it_make_func != gen_funcs_.end (), "null make buffer func fake camera");
   buf->set_format (px_format);
   auto& make_func = it_make_func->second;
 
@@ -110,10 +110,11 @@ void
 SourceImpl::update_source_info_int (const syn::SourceImplInfo& info)
 {
   const auto& px_format = srcimpinfo_.capture_props_->capi_.px_format_;
+  U3_LOG_DATA_DEV ("SourceImpl::update_source_info_int:---->" + ::libs::utility::uids::helpers::get_readable_name (px_format));
   if (!gen_funcs_[px_format])
   {
-    U3_LOG_DATA_WRN ("try use unsupported format fake came " + ::libs::utility::uids::helpers::get_readable_name (px_format));
-    // px_format = ::libs::utility::uids::minor::id_val::rgb24;
+    U3_LOG_DATA_WRN ("try use unsupported format fake camera: " + ::libs::utility::uids::helpers::get_readable_name (px_format));
+    // srcimpinfo_.capture_props_->capi_.px_format_ = ::libs::utility::uids::minor::id_val::rgb24;
   }
 }
 

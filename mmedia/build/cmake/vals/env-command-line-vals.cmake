@@ -7,8 +7,8 @@ set(U3_USE_COMMERCIAL_PART TRUE CACHE BOOL "use comercial parts")
 set(U3_CPP_STANDARD "c++23" CACHE STRING "type cpp stardard c++17, c++20, c++23, c++26")
 set(U3_SANITY_BUILD_TYPE "none" CACHE STRING "type sanity build [none/memory/ub/thread/address/etc]")
 
-set(U3_URL_TO_EXTLIBS_SRC http://192.168.88.211:8011/repository/u3soft/3rd-libs/src CACHE STRING "path to src")
-set(U3_URL_TO_EXTLIBS_BIN http://192.168.88.211:8011/repository/u3soft/3rd-libs/bin CACHE STRING "path to bin")
+set(U3_URL_TO_EXTLIBS_SRC http://192.168.88.210:8011/repository/u3soft/3rd-libs/src CACHE STRING "path to src")
+set(U3_URL_TO_EXTLIBS_BIN http://192.168.88.210:8011/repository/u3soft/3rd-libs/bin CACHE STRING "path to bin")
 
 set(U3_FORCE_COMPILE_ALL_EXTLIBS FALSE CACHE BOOL "force recompile ext libs")
 set(U3_FORCE_USE_EXT_SOURCE_FOR_EXTLIBS FALSE CACHE BOOL "force get external source for ext libs")
@@ -21,7 +21,7 @@ set(U3_USE_GIT_HASH_FOR_MARK_BUILD FALSE CACHE BOOL "use git hash for mark build
 #set(U3_DBG_EXTLIB_SKIP_SQLITE FALSE CACHE BOOL "debug skip sqlite")
 #set(U3_DBG_EXTLIB_SKIP_DLIB FALSE CACHE BOOL "debug skip dlib")
 set(U3_DBG_STOP_AFTER_DUMP_VARS FALSE CACHE BOOL "debug flag")
-set(U3_DBG_STOP_BEFORE_COMPILE_EXTLIBS FALSE CACHE BOOL "debug flag")
+set(U3_DBG_STOP_BEFORE_COMPILE_EXTLIBS TRUE CACHE BOOL "debug flag")
 set(U3_DBG_COMPILE_AT_BEGIN_EXTLIBS FALSE CACHE BOOL "debug flag")
 
 set(U3_BUILD_TESTING FALSE CACHE BOOL "google tests")

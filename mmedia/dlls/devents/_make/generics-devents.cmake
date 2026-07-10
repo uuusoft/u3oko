@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   devents-dll
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/devents
+  ${U3_PATH_ROOT}/dlls/devents
   OUTPUT_NAME
   vdd_devents
   FORCE_TO_DYLIB

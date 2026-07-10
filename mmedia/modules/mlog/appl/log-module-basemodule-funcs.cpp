@@ -50,7 +50,6 @@ LogModule::init_links_int (const ::libs::link::appl::InitApplication& info)
   U3_MARK_UNUSED_HERE (ipstorage);
   U3_MARK_UNUSED_HERE (imstorage);
 
-  U3_XLOG_DBG ("LogModule::init_links_int:: pt1");
   auto temp_link = ::libs::utility::check::ptr (lproxy->impl ()->get_listen (
     ::libs::link::CreateInfo (
       type_run,
@@ -62,7 +61,6 @@ LogModule::init_links_int (const ::libs::link::appl::InitApplication& info)
       ::libs::link::details::ModuleLinks::log,
       ::libs::link::consts::sizes::buf_all2log)));
 
-  U3_XLOG_DBG ("LogModule::init_links_int:: pt2");
   links_.set (libs::properties::vers::links::mids::log2appl, temp_link);
 
   //  нужно установить свои связи в свойства разделяемые и спользовать их
@@ -74,24 +72,6 @@ LogModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     links.set (libs::properties::vers::links::mids::log2appl, log2appl);
     logger_ = log2appl;
   }
-
-  U3_XLOG_DBG ("LogModule::init_links_int:: pt10");
-#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
-  {
-    syn::IEvent::ptr rmsg;
-    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
-
-    props->change_appl_info (
-      ::libs::events_log::AppllPartLogInfo (
-        ::libs::events_base::props::modules::log::LogLevels::info,
-        ::modules::mlog::appl::consts::module_name,
-        ::libs::utility::log::get_module_version ()),
-      "");
-
-    props->set_start (true);
-    links_.get (libs::properties::vers::links::mids::mdata2appl)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
-  }
-#endif
   U3_XLOG_DBG ("LogModule::init_links_int::<----");
 }
 
@@ -102,23 +82,6 @@ LogModule::appl_deinit_int () -> bool
   U3_XLOG_MARK ("LogModule::deinit_int::---->")
   flush_events ();
 
-#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
-  if (links_.get (libs::properties::vers::links::mids::mdata2appl))
-  {
-    syn::IEvent::ptr rmsg;
-    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
-
-    props->change_appl_info (
-      ::libs::events_log::AppllPartLogInfo (
-        ::libs::events_base::props::modules::log::LogLevels::info,
-        ::modules::mlog::appl::consts::module_name,
-        ::libs::utility::log::get_module_version ()),
-      "");
-
-    props->set_start (false);
-    links_.get (libs::properties::vers::links::mids::mdata2appl)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
-  }
-#endif
   {
     auto* links = ::libs::iproperties::helpers::get_prop_links ();
     links->update_links_lockfree ().reset_link (libs::properties::vers::links::mids::log2appl);

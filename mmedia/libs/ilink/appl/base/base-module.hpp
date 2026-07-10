@@ -50,14 +50,14 @@ class BaseModule : public ::libs::link::appl::IApplication
   ::libs::link::ILink::ptr                logger_;                                                           //< Логер текущего модуля, может быть null. Настраивается наследниками
   id_msg2func_type                        catch_funcs_;                                                      //< Функции-обработчики сообщений
   StateProcessEventExt                    current_seq_;                                                      //< Текущий запрос события в обработке, хранит всю runtime информацию события
-  ::libs::utility::sys::ISysInfo::raw_ptr sys_info_        = nullptr;                                        //< Свойства програмного окружения
-  syn::BlockMemAllocatorProxy::raw_ptr    all2mem_         = nullptr;                                        //< Указатель на интерфейс по работе с блоками памяти
-  syn::BufAllocatorProxy::raw_ptr         all2buf_         = nullptr;                                        //< Указатель на интерфейс по работе с буферами
-  ::libs::proxy::IOptimProxy*             all2optim_       = nullptr;                                        //< Указатель на интерфейс-хранилище оптимизированных алгоритмов
-  ::libs::proxy::IEventsProxy*            all2events_      = nullptr;                                        //< Указатель на интерфейс для создания различнх событий по текстовым идентификаторам
-  syn::id_link_type                       text_id_module_  = "u3_unkmodule";                                 //< текстовый идентификатор модуля, например для использования в логировании
-  bool                                    stop_module_     = false;                                          //< Флаг завершения работы
-  std::int32_t                            ms_time_sleep_   = ::libs::link::consts::ms_wait_delay_recv_msg;   //< Время засыпания рабочего потока при отсутствии сообщений
+  ::libs::utility::sys::ISysInfo::raw_ptr sys_info_       = nullptr;                                         //< Свойства програмного окружения
+  syn::BlockMemAllocatorProxy::raw_ptr    all2mem_        = nullptr;                                         //< Указатель на интерфейс по работе с блоками памяти
+  syn::BufAllocatorProxy::raw_ptr         all2buf_        = nullptr;                                         //< Указатель на интерфейс по работе с буферами
+  ::libs::proxy::IOptimProxy*             all2optim_      = nullptr;                                         //< Указатель на интерфейс-хранилище оптимизированных алгоритмов
+  ::libs::proxy::IEventsProxy*            all2events_     = nullptr;                                         //< Указатель на интерфейс для создания различнх событий по текстовым идентификаторам
+  syn::id_link_type                       text_id_module_ = "u3_unkmodule";                                  //< текстовый идентификатор модуля, например для использования в логировании
+  bool                                    stop_module_    = false;                                           //< Флаг завершения работы
+  std::chrono::milliseconds               ms_time_sleep_ { ::libs::link::consts::ms_wait_delay_recv_msg };   //< Время засыпания рабочего потока при отсутствии сообщений
   std::atomic_bool                        dbg_event_cycle_ = false;                                          //< debug
 
   private:

@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   hsl-vcd
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/convertors/all2hsl/source
+  ${U3_PATH_ROOT}/dlls/convertors/all2hsl/source
   OUTPUT_NAME
   vcd_all2hsl
   FORCE_TO_DYLIB

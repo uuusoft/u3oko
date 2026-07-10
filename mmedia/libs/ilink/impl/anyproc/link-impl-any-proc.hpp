@@ -26,14 +26,14 @@ class LinkImplAnyProc : public ::libs::link::ILink
   using int_lock_type   = std::scoped_lock< int_sync_type >;
 
   //  ILink overrides
-  virtual bool                             connect_int (const ::libs::link::CreateInfo&) override;
-  virtual bool                             listen_int (const ::libs::link::CreateInfo&) override;
-  virtual bool                             destroy_int (const ::libs::link::LinkDestroys&) override;
-  virtual bool                             is_connected_int () const override;
-  virtual ::libs::events::IEvent::ptr      received_msg_int () override;
-  virtual void                             complite_msg_int (const ::libs::events::IEvent::ptr&, const ::libs::link::StateProcessEvent&) override;
-  virtual ::libs::link::mem::IMem::raw_ptr get_imem_int () override;
-  virtual ::libs::events::IEvent::ptr      send_msg_int (const ::libs::events::IEvent::ptr&, const ::libs::link::details::CallSyncs&, const ::libs::link::details::Calls&, const ::libs::events::ISeqEvent::id_type&) override;
+  virtual auto connect_int (const ::libs::link::CreateInfo&) -> bool override;
+  virtual auto listen_int (const ::libs::link::CreateInfo&) -> bool override;
+  virtual auto destroy_int (const ::libs::link::LinkDestroys&) noexcept -> bool override;
+  virtual auto is_connected_int () const -> bool override;
+  virtual auto received_msg_int () -> syn::IEvent::ptr override;
+  virtual auto get_imem_int () -> syn::IMem::raw_ptr override;
+  virtual auto complite_msg_int (const syn::IEvent::ptr&, const ::libs::link::StateProcessEvent&) -> void override;
+  virtual auto send_msg_int (const syn::IEvent::ptr&, const syn::CallSyncs&, const syn::Calls&, const ::libs::events::ISeqEvent::id_type&) -> syn::IEvent::ptr override;
 
   void  remove_names ();
   void* mem_get (const ::libs::link::mem::IBlockFakeMem& hmem);

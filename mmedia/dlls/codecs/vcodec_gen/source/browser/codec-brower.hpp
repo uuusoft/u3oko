@@ -13,10 +13,10 @@ namespace dlls::codecs::vcodec_gen::browser
 class CodecBrower final
 {
   public:
-  CodecBrower ()                              = default;
-  ~CodecBrower ()                             = default;
-  CodecBrower (const CodecBrower&)            = delete;
-  CodecBrower& operator= (const CodecBrower&) = delete;
+  CodecBrower ()  = default;
+  ~CodecBrower () = default;
+
+  U3_ADD_DELETE_MOVE_COPY (CodecBrower);
 
   /// Функция возвращает по идентификатору имя файла с кодеком или пусто
   /// \param[in]  id идентификатор кодека

@@ -16,8 +16,8 @@ class MemImplAnyProc : public ::libs::link::mem::IMem
   virtual ~MemImplAnyProc () = default;
 
   //  IMem impl
-  virtual void* mem_alloc (int size, ::libs::link::mem::IBlockFakeMem::ptr hmem) override;
-  virtual bool  mem_free (::libs::link::mem::IBlockFakeMem::ptr hmem) override;
-  virtual bool  mem_atomic_call (::libs::link::mem::IBlockFakeMem::cptr hmem, const ::libs::link::mem::IHandlerMem& obj) override;
+  virtual void* mem_alloc (int size, ::libs::link::mem::IBlockFakeMem::ptr) override;
+  virtual bool  mem_free (::libs::link::mem::IBlockFakeMem::ptr) override;
+  virtual bool  mem_atomic_call (::libs::link::mem::IBlockFakeMem::cptr, const ::libs::link::mem::IHandlerMem&) override;
 };
 }   // namespace libs::ilink::impl::anyproc

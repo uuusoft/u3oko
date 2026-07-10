@@ -8,7 +8,9 @@
 
 namespace libs::utility::check
 {
-template< typename T, std::enable_if_t< std::is_pointer_v< T >, bool > = true >
+template< typename T >
+  requires (
+    std::is_pointer_v< T >)
 T
 ptr (T val)
 {
@@ -35,7 +37,9 @@ ptr (const std::weak_ptr< T >& val)
 }
 
 
-template< typename T, std::enable_if_t< std::is_pointer_v< T >, bool > = true >
+template< typename T >
+  requires (
+    std::is_pointer_v< T >)
 void
 must_valid_ptr (T val)
 {

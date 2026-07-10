@@ -32,7 +32,7 @@ class UpdateDrawEvent : public BaseGUIEvent
   static constexpr auto
   gen_get_mid () -> const IEvent::hid_type&
   {
-    static constexpr const char* chret = "libs/events_gui/events/props/update-draw-event";
+    static constexpr const char*            chret = "libs/events_gui/events/props/update-draw-event";
     static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }

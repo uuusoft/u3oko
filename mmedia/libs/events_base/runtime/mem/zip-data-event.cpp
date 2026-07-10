@@ -56,7 +56,7 @@ ZipDataEvent::ZipDataEvent (const ZipDataEvent& src) :
   {
     size_ = src.get_size ();
     buf_.resize (size_);
-    ::libs::utility::mem::u3copy (&src.get_zip ()[0], &buf_[0], size_);
+    ::libs::utility::mem::mem_copy_raw (&src.get_zip ()[0], &buf_[0], size_);
   }
 }
 #endif

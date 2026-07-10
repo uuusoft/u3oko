@@ -13,10 +13,10 @@ namespace libs::ilink::appl
 void
 EventPropsForApplication::init ()
 {
-  auto* pappl = ::libs::iproperties::helpers::create_event< syn::ApplicationProp > (main_appl_properties_);
-  U3_XLOG_DBG ("EventPropsForApplication::init::---->" + TOLOG (pappl->get_messenger_impl ()) + PTR_TOLOG (pappl));
-  ::libs::iproperties::helpers::create_event< syn::InfoCPUEvent > (info_cpu_);
-  ::libs::iproperties::helpers::create_event< syn::PropertyLogModuleEvent > (module_log_);
-  ::libs::iproperties::helpers::create_event< syn::PropertyStorageModuleEvent > (storage_module_);
+  U3_XLOG_DBG ("EventPropsForApplication::init::---->");
+  main_appl_properties_ = ::libs::iproperties::helpers::create_event< syn::ApplicationProp > ().first;
+  info_cpu_             = ::libs::iproperties::helpers::create_event< syn::InfoCPUEvent > ().first;
+  module_log_           = ::libs::iproperties::helpers::create_event< syn::PropertyLogModuleEvent > ().first;
+  storage_module_       = ::libs::iproperties::helpers::create_event< syn::PropertyStorageModuleEvent > ().first;
 }
 }   // namespace libs::ilink::appl

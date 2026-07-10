@@ -14,12 +14,10 @@ class IAlgImpl
   public:
   //  ext types
   U3_ADD_POINTERS_TO_SELF (IAlgImpl)
+  U3_ADD_DELETE_MOVE_COPY (IAlgImpl);
 
   IAlgImpl ()          = default;
   virtual ~IAlgImpl () = default;
-
-  IAlgImpl (const IAlgImpl&)            = delete;
-  IAlgImpl& operator= (const IAlgImpl&) = delete;
 
   virtual void process (const ProcessAlgInfo& info) = 0;
 };

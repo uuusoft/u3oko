@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   base_id-vdd
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/base_id
+  ${U3_PATH_ROOT}/dlls/base_id
   OUTPUT_NAME
   vdd_base_id
   FORCE_TO_DYLIB

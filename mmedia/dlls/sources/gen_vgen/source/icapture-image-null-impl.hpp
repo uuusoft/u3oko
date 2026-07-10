@@ -26,19 +26,19 @@ class ICaptureImageNullImpl final : public ::libs::events_base::runtime::interf:
   virtual void
   update_capture_property_int (const syn::VideoDriverCaptureProp::raw_ptr) override
   {
-    U3_LOG_DATA_DATA ("skip update_capture_property_int - VideoDriverCaptureProp");
+    U3_LOG_DATA_DEV ("skip update_capture_property_int - VideoDriverCaptureProp");
   }
 
   virtual void
   update_driver_property_int (const syn::VideoDriverProp::raw_ptr) override
   {
-    U3_LOG_DATA_DATA ("skip update_driver_property_int - VideoDriverProp");
+    U3_LOG_DATA_DEV ("skip update_driver_property_int - VideoDriverProp");
   }
 
   virtual void
   update_system_specific_property_int (const syn::SystemSpecificDriverProp::raw_ptr) override
   {
-    U3_LOG_DATA_DATA ("skip update_system_specific_property_int - SystemSpecificDriverProp");
+    U3_LOG_DATA_DEV ("skip update_system_specific_property_int - SystemSpecificDriverProp");
   }
 };
 }   // namespace dlls::sources::gen_vgen

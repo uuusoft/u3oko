@@ -31,7 +31,7 @@ void
 SourceImpl::get_sources_int (SourceImpl::sources_type& sources)
 {
   sources.emplace_back (
-    "picter-camera",
+    "images",
     libs::events_media::events::DataSources::video,
     0,
     0);
@@ -50,12 +50,10 @@ SourceImpl::get_raw_data_int (
 
   if (!send_interfaces_ && events)
   {
-    syn::IEvent::ptr rmsg;
-    auto             dmsg = ::libs::iproperties::helpers::create_event< syn::InterfCaptureImageEvent > (rmsg);
-
-    dmsg->set_interface (icapture_);
-    dmsg->set_active (true);
-    events->push_back (rmsg);
+    auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::InterfCaptureImageEvent > ();
+    revnt->set_interface (icapture_);
+    revnt->set_active (true);
+    events->push_back (evnt);
     send_interfaces_ = true;
     U3_LOG_DATA_DATA ("send interfaces: InterfCorrectImageEvent (+) InterfCaptureImageEvent (+)");
   }

@@ -8,9 +8,9 @@
 
 namespace libs::utility::mem
 {
-template< typename TTSource >
+template< typename TType >
 auto
-set_buf (TTSource* src, TTSource val, std::size_t count) -> void
+set_buf (TType* src, TType val, std::size_t count) -> void
 {
   U3_ASSERT (src);
   U3_ASSERT (count > 0);

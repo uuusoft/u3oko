@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   dbufs-dll
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/utils/dbufs
+  ${U3_PATH_ROOT}/utils/dbufs
   OUTPUT_NAME
   dbufs
   FORCE_TO_DYLIB

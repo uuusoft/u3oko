@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   module-mlog
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/modules/mlog
+  ${U3_PATH_ROOT}/modules/mlog
   OUTPUT_NAME
   mpl_mlog
   FORCE_TO_DYLIB

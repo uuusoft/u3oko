@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   vcleaner_space_vdd
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/noisez/space
+  ${U3_PATH_ROOT}/dlls/noisez/space
   OUTPUT_NAME
   vfn_space
   FORCE_TO_DYLIB

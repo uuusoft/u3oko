@@ -3,4 +3,4 @@
 # copyright   Erashov A.I.
 # file        libs-optims-convert-optim-gen-convert.cmake
 
-u3_add_target_lib(TARGET_NAME optim_gen_convert-lib SOURCE_PATH ${U3_BUILD_PATH_TO_LIBS}/libs/optims/optim_convert)
+u3_add_target_lib(TARGET_NAME optim_gen_convert-lib SOURCE_PATH ${U3_PATH_ROOT}/libs/optims/optim_convert)

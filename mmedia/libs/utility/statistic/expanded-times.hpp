@@ -31,9 +31,6 @@ class ExpandedTimes final
   ExpandedTimes () = default;
   ~ExpandedTimes ();
 
-  // ExpandedTimes (const ExpandedTimes&)            = delete;
-  // ExpandedTimes& operator= (const ExpandedTimes&) = delete;
-
   /// Основная рабочая функция со статистикой
   void visit_with (const std::function< void (const storages_type& vals) >&);
 

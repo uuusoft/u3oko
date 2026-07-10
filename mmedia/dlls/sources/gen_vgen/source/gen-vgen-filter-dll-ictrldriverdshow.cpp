@@ -15,6 +15,7 @@ namespace dlls::sources::gen_vgen
 void
 Filter::update_source_driver_exactly (InfoFilter* finfo, const std::string& impl_name)
 {
+  U3_LOG_DATA_DEV ("Filter::update_source_driver_exactly:---->" + TOLOG (impl_name));
   U3_ASSERT (!impl_name.empty ());
 
   std::unique_lock< InfoFilter::sync_type > lock (finfo->wdmtx_, consts::ms_wait_capture_device);
@@ -53,7 +54,8 @@ Filter::update_source_driver_exactly (InfoFilter* finfo, const std::string& impl
 void
 Filter::update_source_driver (InfoFilter* finfo)
 {
-  //  Тут обработчик исключения, т.к. одно исключение допустимо для переключения на фейковый драйвер в нормальной ситуации.
+  U3_LOG_DATA_DEV ("Filter::update_source_driver:---->");
+  // Тут обработчик исключения, т.к. одно исключение допустимо для переключения на фальшивый драйвер в нормальной ситуации
   try
   {
     update_source_driver_exactly (finfo, finfo->rprops_->name_impl_dll_);
@@ -64,7 +66,7 @@ Filter::update_source_driver (InfoFilter* finfo)
     U3_LOG_DATA_EXCEPT (excpt.what ());
   }
 
-  //  у фальшивого драйвера все всегда должно быть нормально.
+  // у фальшивого драйвера все всегда должно быть нормально
   update_source_driver_exactly (finfo, "vss_fake_vgen");
 }
 

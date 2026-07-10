@@ -29,7 +29,7 @@ class SystemSpecificDriverProp final : public RuntimeEvent
   static constexpr auto
   gen_get_mid () -> const IEvent::hid_type&
   {
-    static constexpr const char* chret = "libs/events_base/runtime/video/system-specific-driver-prop";
+    static constexpr const char*            chret = "libs/events_base/runtime/video/system-specific-driver-prop";
     static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }

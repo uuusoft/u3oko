@@ -59,7 +59,7 @@ set "U3_EXT_PARAMS=-DU3_FORCE_COMPILE_ALL_EXTLIBS=0"
 REM set "U3_ABSOULT_TOOLCHAIN=%realpath %U3_TOOLCHAIN%%"
 REM set "U3_ABSOULT_TOOLCHAIN=%U3_TOOLCHAIN%"
 REM set "U3_ABSOULT_TOOLCHAIN=C:/Users/ARleap/Documents/u3media/mmedia/build/cmake/toolchains/windows-x64-msv.cmake"
-set "U3_ABSOULT_TOOLCHAIN=c:/Users/ARleap/Documents/u3media/mmedia/build/cmake/toolchains/windows-x64-msv.cmake"
+set "U3_ABSOULT_TOOLCHAIN=c:/Users/ARleap/Documents/u3medias/mmedia/build/cmake/toolchains/windows-x64-msv.cmake"
 
 echo U3_TOOLCHAIN=%U3_TOOLCHAIN%
 echo U3_ABSOULT_TOOLCHAIN=%U3_ABSOULT_TOOLCHAIN%

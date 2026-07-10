@@ -21,7 +21,7 @@ struct BlockMem : public ::libs::link::mem::IBlockFakeMem {
   }
 
   void
-  reset ()
+  reset () noexcept
   {
     hmem_ = 0;
     size_ = 0;

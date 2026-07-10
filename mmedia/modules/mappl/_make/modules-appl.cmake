@@ -3,7 +3,7 @@
 # copyright   Erashov A.I.
 # file        module-appl.cmake
 
-file(TO_CMAKE_PATH "${U3_BUILD_PATH_TO_LIBS}/modules/mappl" graph-module-mappl)
+file(TO_CMAKE_PATH "${U3_PATH_ROOT}/modules/mappl" graph-module-mappl)
 file(GLOB_RECURSE files-module-mappl "${graph-module-mappl}" "${graph-module-mappl}/*.cpp" "${graph-module-mappl}/*.c")
 
 set(U3_BUILD_LOCAL_MODULE_APPL_AS_LIB 0)

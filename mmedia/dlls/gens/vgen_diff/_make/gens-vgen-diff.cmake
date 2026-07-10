@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   vgen_diff-vgd
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/gens/vgen_diff
+  ${U3_PATH_ROOT}/dlls/gens/vgen_diff
   OUTPUT_NAME
   vgd_vgen_diff
   FORCE_TO_DYLIB

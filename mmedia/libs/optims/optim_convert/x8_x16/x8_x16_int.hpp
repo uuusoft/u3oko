@@ -28,8 +28,8 @@ void get_params (
     std::int16_t*       x16_buf    = x16->buf ();                                           \
     const std::uint32_t cycles     = x16->width_ / ppc;                                     \
     const std::uint32_t full_width = cycles * ppc;                                          \
-    const std::int32_t  leak_x16   = x16->stride_ - full_width * sizeof (std::int16_t) * 1; \
-    const std::int32_t  leak_x8    = x8->stride_ - full_width * sizeof (std::uint8_t) * 1;  \
+    const std::uint32_t leak_x16   = x16->stride_ - full_width * sizeof (std::int16_t) * 1; \
+    const std::uint32_t leak_x8    = x8->stride_ - full_width * sizeof (std::uint8_t) * 1;  \
     const std::uint32_t width      = x16->width_;                                           \
     const std::uint32_t height     = x16->height_;                                          \
                                                                                             \

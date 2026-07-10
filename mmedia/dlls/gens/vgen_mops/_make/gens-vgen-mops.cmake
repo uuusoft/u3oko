@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   vgen_mops-vgd
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/gens/vgen_mops
+  ${U3_PATH_ROOT}/dlls/gens/vgen_mops
   OUTPUT_NAME
   vgd_vgen_mops
   FORCE_TO_DYLIB

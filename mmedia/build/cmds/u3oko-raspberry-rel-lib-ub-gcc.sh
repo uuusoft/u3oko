@@ -5,7 +5,7 @@
 # copyright   Erashov A.I.
 
 export U3_APPL_NAME=u3oko
-#export U3_COMMERCIAL_PART=1
+export U3_COMMERCIAL_PART=1
 export U3_AS_LIBS=1
 export U3_TOOLCHAIN=./../cmake/toolchains/raspberry-arm64-gcc.cmake
 export U3_SANITY=ub

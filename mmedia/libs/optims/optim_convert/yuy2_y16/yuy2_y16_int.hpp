@@ -24,8 +24,8 @@ void get_params (::libs::optim::io::MCallInfo& info, const ::libs::optim::io::Pr
     std::int16_t*       y16_buf    = y16->buf ();                                            \
     const std::uint32_t cycles     = yuy2->width_ / ppc;                                     \
     const std::uint32_t full_width = cycles * ppc;                                           \
-    const std::int32_t  leak_yuy2  = yuy2->stride_ - full_width * sizeof (std::uint8_t) * 2; \
-    const std::int32_t  leak_y16   = y16->stride_ - full_width * sizeof (std::uint16_t);     \
+    const std::uint32_t leak_yuy2  = yuy2->stride_ - full_width * sizeof (std::uint8_t) * 2; \
+    const std::uint32_t leak_y16   = y16->stride_ - full_width * sizeof (std::uint16_t);     \
     const std::uint32_t width      = yuy2->width_;                                           \
     const std::uint32_t height     = yuy2->height_;                                          \
                                                                                              \

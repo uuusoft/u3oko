@@ -3,4 +3,4 @@
 # copyright   Erashov A.I.
 # file        libs-events-media.cmake
 
-u3_add_target_lib(TARGET_NAME events_media-lib SOURCE_PATH ${U3_BUILD_PATH_TO_LIBS}/libs/events_media)
+u3_add_target_lib(TARGET_NAME events_media-lib SOURCE_PATH ${U3_PATH_ROOT}/libs/events_media)

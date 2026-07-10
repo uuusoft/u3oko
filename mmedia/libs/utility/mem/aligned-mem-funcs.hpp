@@ -16,50 +16,54 @@ inline constexpr std::size_t align_ptr64 = ~U3_CAST_SIZE_T_FORCE (0x3F);
 
 namespace libs::utility::mem
 {
-template< typename TTVal, std::enable_if_t< std::is_integral_v< TTVal >, bool > = true >
+template< typename TType >
+  requires (std::is_integral_v< TType >)
 inline constexpr bool
-check_align (const TTVal& val, const TTVal& align)
+check_align (const TType& val, const TType& align)
 {
-  TTVal aval = (val / align) * align;
+  TType aval = (val / align) * align;
   return aval == val ? true : false;
 }
 
 
-template< typename TTVal >
+template< typename TType >
+  requires (std::is_integral_v< TType >)
 inline constexpr bool
-check_align2 (TTVal val)
+check_align2 (TType val)
 {
   return U3_CAST_SIZE_T (val) & 0x01 ? false : true;
 }
 
 
-template< typename TVal >
+template< typename TType >
+  requires (std::is_integral_v< TType >)
 inline constexpr void
-align2 (TVal& val, bool expand = true)
+align2 (TType& val, bool expand = true)
 {
-  U3_ASSERT (sizeof (TVal) <= sizeof (std::size_t));
+  U3_ASSERT (sizeof (TType) <= sizeof (std::size_t));
   if (!check_align2 (val))
   {
-    val = ::libs::utility::casts::static_cast_helper< TVal > ((U3_CAST_SIZE_T (val) + (expand ? 7 : 0)) & consts::align_ptr2);
+    val = ::libs::utility::casts::static_cast_helper< TType > ((U3_CAST_SIZE_T (val) + (expand ? 7 : 0)) & consts::align_ptr2);
     U3_ASSERT (check_align2 (val));
   }
 }
 
 
-template< typename TTVal >
-constexpr
-  TTVal
-  get_align2 (const TTVal& val, bool expand = true)
+template< typename TType >
+  requires (std::is_integral_v< TType >)
+constexpr TType
+get_align2 (const TType& val, bool expand = true)
 {
-  TTVal ret = val;
-  align2< TTVal > (ret, expand);
+  TType ret = val;
+  align2< TType > (ret, expand);
   return ret;
 }
 
 
-template< typename TTVal >
+template< typename TType >
+  requires (std::is_integral_v< TType >)
 inline constexpr bool
-check_align8 (TTVal val)
+check_align8 (TType val)
 {
   return U3_CAST_SIZE_T (val) & 0x07 ? false : true;
 }
@@ -72,32 +76,35 @@ check_align8_ptr (const void* buf)
 }
 
 
-template< typename TVal >
+template< typename TType >
+  requires (std::is_integral_v< TType >)
 inline constexpr void
-align8 (TVal& val, bool expand = true)
+align8 (TType& val, bool expand = true)
 {
-  U3_ASSERT (sizeof (TVal) <= sizeof (std::size_t));
+  U3_ASSERT (sizeof (TType) <= sizeof (std::size_t));
   if (!check_align8 (val))
   {
-    val = ::libs::utility::casts::static_cast_helper< TVal > ((U3_CAST_SIZE_T (val) + (expand ? 7 : 0)) & consts::align_ptr8);
+    val = ::libs::utility::casts::static_cast_helper< TType > ((U3_CAST_SIZE_T (val) + (expand ? 7 : 0)) & consts::align_ptr8);
     U3_ASSERT (check_align8 (val));
   }
 }
 
 
-template< typename TTVal >
-inline constexpr TTVal
-get_align8 (const TTVal& val, bool expand = true)
+template< typename TType >
+  requires (std::is_integral_v< TType >)
+inline constexpr TType
+get_align8 (const TType& val, bool expand = true)
 {
-  TTVal ret = val;
-  align8< TTVal > (ret, expand);
+  TType ret = val;
+  align8< TType > (ret, expand);
   return ret;
 }
 
 
-template< typename TTVal >
+template< typename TType >
+  requires (std::is_integral_v< TType >)
 inline constexpr bool
-check_align16 (TTVal val)
+check_align16 (TType val)
 {
   return U3_CAST_SIZE_T (val) & 0x0F ? false : true;
 }
@@ -110,32 +117,35 @@ check_align16_ptr (const void* buf)
 }
 
 
-template< typename TTVal >
+template< typename TType >
+  requires (std::is_integral_v< TType >)
 inline constexpr void
-align16 (TTVal& val, bool expand = true)
+align16 (TType& val, bool expand = true)
 {
-  U3_ASSERT (sizeof (TTVal) <= sizeof (std::size_t));
+  U3_ASSERT (sizeof (TType) <= sizeof (std::size_t));
   if (!check_align16 (val))
   {
-    val = ::libs::utility::casts::static_cast_helper< TTVal > ((U3_CAST_SIZE_T (val) + (expand ? 15 : 0)) & consts::align_ptr16);
+    val = ::libs::utility::casts::static_cast_helper< TType > ((U3_CAST_SIZE_T (val) + (expand ? 15 : 0)) & consts::align_ptr16);
     U3_ASSERT (check_align16 (val));
   }
 }
 
 
-template< typename TTVal >
-inline constexpr TTVal
-get_align16 (const TTVal& val, bool expand = true)
+template< typename TType >
+  requires (std::is_integral_v< TType >)
+inline constexpr TType
+get_align16 (const TType& val, bool expand = true)
 {
-  TTVal ret = val;
-  align16< TTVal > (ret, expand);
+  TType ret = val;
+  align16< TType > (ret, expand);
   return ret;
 }
 
 
-template< typename TTVal >
+template< typename TType >
+  requires (std::is_integral_v< TType >)
 inline constexpr bool
-check_align32 (TTVal val)
+check_align32 (TType val)
 {
   return U3_CAST_SIZE_T (val) & 0x1F ? false : true;
 }
@@ -148,32 +158,35 @@ check_align32_ptr (const void* buf)
 }
 
 
-template< typename TTVal >
+template< typename TType >
+  requires (std::is_integral_v< TType >)
 inline constexpr void
-align32 (TTVal& val, bool expand = true)
+align32 (TType& val, bool expand = true)
 {
-  U3_ASSERT (sizeof (TTVal) <= sizeof (std::size_t));
+  U3_ASSERT (sizeof (TType) <= sizeof (std::size_t));
   if (!check_align32 (val))
   {
-    val = ::libs::utility::casts::static_cast_helper< TTVal > ((U3_CAST_SIZE_T (val) + (expand ? 31 : 0)) & consts::align_ptr32);
+    val = ::libs::utility::casts::static_cast_helper< TType > ((U3_CAST_SIZE_T (val) + (expand ? 31 : 0)) & consts::align_ptr32);
     U3_ASSERT (check_align32 (val));
   }
 }
 
 
-template< typename TTVal >
-inline constexpr TTVal
-get_align32 (const TTVal& val, bool expand = true)
+template< typename TType >
+  requires (std::is_integral_v< TType >)
+inline constexpr TType
+get_align32 (const TType& val, bool expand = true)
 {
-  TTVal ret = val;
-  align32< TTVal > (ret, expand);
+  TType ret = val;
+  align32< TType > (ret, expand);
   return ret;
 }
 
 
-template< typename TTVal >
+template< typename TType >
+  requires (std::is_integral_v< TType >)
 inline constexpr bool
-check_align64 (TTVal val)
+check_align64 (TType val)
 {
   return U3_CAST_SIZE_T (val) & 0x3F ? false : true;
 }
@@ -186,52 +199,55 @@ check_align64_ptr (const void* buf)
 }
 
 
-template< typename TTVal >
+template< typename TType >
+  requires (std::is_integral_v< TType >)
 inline constexpr void
-align64 (TTVal& val, bool expand = true)
+align64 (TType& val, bool expand = true)
 {
-  U3_ASSERT (sizeof (TTVal) <= sizeof (std::size_t));
+  U3_ASSERT (sizeof (TType) <= sizeof (std::size_t));
   if (!check_align64 (val))
   {
-    val = ::libs::utility::casts::static_cast_helper< TTVal > ((U3_CAST_SIZE_T (val) + (expand ? 63 : 0)) & consts::align_ptr64);
+    val = ::libs::utility::casts::static_cast_helper< TType > ((U3_CAST_SIZE_T (val) + (expand ? 63 : 0)) & consts::align_ptr64);
     U3_ASSERT (check_align64 (val));
   }
 }
 
 
-template< typename TTVal >
-inline constexpr TTVal
-get_align64 (const TTVal& val, bool expand = true)
+template< typename TType >
+  requires (std::is_integral_v< TType >)
+inline constexpr TType
+get_align64 (const TType& val, bool expand = true)
 {
-  TTVal ret = val;
-  align64< TTVal > (ret, expand);
+  TType ret = val;
+  align64< TType > (ret, expand);
   return ret;
 }
 
 
-template< typename TTVal, std::enable_if_t< std::is_integral_v< TTVal >, bool > = true >
-inline constexpr TTVal
-align_value (const TTVal& val, const TTVal& align, const bool expand = true)
+template< typename TType >
+  requires (std::is_integral_v< TType >)
+inline constexpr TType
+align_value (const TType& val, const TType& align, const bool expand = true)
 {
-  TTVal ret = val;
+  TType ret = val;
   switch (align)
   {
   case 1:
     break;
   case 2:
-    align2< TTVal > (ret, expand);
+    align2< TType > (ret, expand);
     break;
   case 8:
-    align8< TTVal > (ret, expand);
+    align8< TType > (ret, expand);
     break;
   case 16:
-    align16< TTVal > (ret, expand);
+    align16< TType > (ret, expand);
     break;
   case 32:
-    align32< TTVal > (ret, expand);
+    align32< TType > (ret, expand);
     break;
   case 64:
-    align64< TTVal > (ret, expand);
+    align64< TType > (ret, expand);
     break;
   default:
     U3_ASSERT_SIGNAL ("invalid align" + VTOLOG (align));

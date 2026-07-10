@@ -32,7 +32,7 @@ class TimedEvent : virtual public events_base::UserIdEvent
   static constexpr auto
   gen_get_mid () -> const IEvent::hid_type&
   {
-    static constexpr const char* chret = "libs/events_base/timed-event";
+    static constexpr const char*            chret = "libs/events_base/timed-event";
     static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }

@@ -9,18 +9,18 @@
 
 namespace utils::mem_funcs::helpers
 {
-template< typename TTOut >
-TTOut*
+template< typename TType >
+TType*
 get_as (::libs::utility::mem::IBlockMem::raw_ptr obj)
 {
-  return ::libs::utility::casts::reinterpret_cast_helper< TTOut* > (obj->get ());
+  return ::libs::utility::casts::reinterpret_cast_helper< TType* > (obj->get ());
 }
 
 
-template< typename TTOut >
-const TTOut*
+template< typename TType >
+const TType*
 get_as (::libs::utility::mem::IBlockMem::craw_ptr obj)
 {
-  return ::libs::utility::casts::reinterpret_cast_helper< const TTOut* > (obj->get ());
+  return ::libs::utility::casts::reinterpret_cast_helper< const TType* > (obj->get ());
 }
 }   // namespace utils::mem_funcs::helpers

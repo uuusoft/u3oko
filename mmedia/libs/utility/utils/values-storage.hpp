@@ -40,13 +40,13 @@ class ValuesStorage final
   raw_value_type&
   operator[] (const key_type& indx)
   {
-    return raw_vals_[enum_to_raw (indx)];
+    return raw_vals_[std::to_underlying (indx)];
   }
 
   const raw_value_type&
   operator[] (const key_type& indx) const
   {
-    return raw_vals_[enum_to_raw (indx)];
+    return raw_vals_[std::to_underlying (indx)];
   }
 
   /// Установка значений

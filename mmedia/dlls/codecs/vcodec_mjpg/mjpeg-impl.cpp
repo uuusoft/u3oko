@@ -114,7 +114,7 @@ MjpegImpl::comp_iframe (
     TJFLAG_NOREALLOC | TJFLAG_FASTDCT | TJFLAG_BOTTOMUP);
 
   U3_CHECK_TURBO_JPEG_RET (-1 != res_jpeg, "tjCompress2", false);
-  ::libs::utility::mem::u3copy (jpeg_buf_, dbuf + out_size, jpeg_size);
+  ::libs::utility::mem::mem_copy_raw (jpeg_buf_, dbuf + out_size, jpeg_size);
 
   head->csize_ = jpeg_size;
   head->coff_  = from_header;

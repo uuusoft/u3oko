@@ -31,7 +31,7 @@ class FreqVideoNoiseRemoverProp final : virtual public events_base::Event
   static constexpr auto
   gen_get_mid () -> const IEvent::hid_type&
   {
-    static constexpr const char* chret = "libs/events_base/props/videos/noises/freq/freq-video-noise-remover-prop";
+    static constexpr const char*            chret = "libs/events_base/props/videos/noises/freq/freq-video-noise-remover-prop";
     static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }

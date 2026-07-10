@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   vcorrect_vdd
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/uplifters/vcorrect
+  ${U3_PATH_ROOT}/dlls/uplifters/vcorrect
   OUTPUT_NAME
   vdd_vcorrect
   FORCE_TO_DYLIB

@@ -126,6 +126,7 @@ SourceImpl::get_raw_data_int (
   syn::pkeys2bufs_type &bufs,
   syn::tevents_type    *events)
 {
+  U3_ASSERT (events);
   {
     const auto now = std::chrono::high_resolution_clock::now ();
     if (icapture_->is_capture_property_update ())
@@ -167,21 +168,18 @@ SourceImpl::get_raw_data_int (
 
   if (!send_interfaces_ && events)
   {
+    U3_LOG_DATA_DEV ("send interface" + VTOLOG (send_interfaces_));
     {
-      syn::IEvent::ptr rmsg;
-      auto             dmsg = ::libs::iproperties::helpers::create_event< syn::InterfCorrectImageEvent > (rmsg);
-
-      dmsg->set_interface (icorrection_);
-      dmsg->set_active (true);
-      events->push_back (rmsg);
+      auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::InterfCorrectImageEvent > ();
+      revnt->set_interface (icorrection_);
+      revnt->set_active (true);
+      events->push_back (evnt);
     }
     {
-      syn::IEvent::ptr rmsg;
-      auto             dmsg = ::libs::iproperties::helpers::create_event< syn::InterfCaptureImageEvent > (rmsg);
-
-      dmsg->set_interface (icapture_);
-      dmsg->set_active (true);
-      events->push_back (rmsg);
+      auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::InterfCaptureImageEvent > ();
+      revnt->set_interface (icapture_);
+      revnt->set_active (true);
+      events->push_back (evnt);
     }
     send_interfaces_ = true;
     U3_LOG_DATA_DATA ("send InterfCorrectImageEvent, InterfCaptureImageEvent");

@@ -37,7 +37,7 @@ class AddEvent2EventsMsg : public BaseEventsMsg
   static constexpr auto
   gen_get_mid () -> const IEvent::hid_type&
   {
-    static constexpr const char* chret = "libs/events_msg/events/add-event2base";
+    static constexpr const char*            chret = "libs/events_msg/events/add-event2base";
     static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }

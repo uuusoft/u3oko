@@ -84,7 +84,7 @@ raw_copy (
   buf->set_mem_var (MemVars::size_data, size);
   buf->set_mem_var (MemVars::offset_data, 0);
 
-  ::libs::utility::mem::u3copy (rbuf, buf->get_buf () + off_dest, size);
+  ::libs::utility::mem::mem_copy_raw (rbuf, buf->get_buf () + off_dest, size);
 }
 
 
@@ -106,6 +106,6 @@ copy_video_buf2vector (
 
   out.resize (size_buf);
 
-  ::libs::utility::mem::u3copy (raw_buf, &out[0], size_buf);
+  ::libs::utility::mem::mem_copy_raw (raw_buf, &out[0], size_buf);
 }
 }   // namespace utils::dbufs::video::helpers

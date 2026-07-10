@@ -34,7 +34,7 @@ class BaseNodesDataEvent : public BaseDataEvent
   static constexpr auto
   gen_get_mid () -> const IEvent::hid_type&
   {
-    static constexpr const char* chret = "libs/events_media/events/base-nodes-data-event";
+    static constexpr const char*            chret = "libs/events_media/events/base-nodes-data-event";
     static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }

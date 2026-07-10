@@ -20,8 +20,8 @@ alu (::libs::optim::io::MCallInfo& info)
   const auto          rgb24_bpp  = ::libs::utility::uids::helpers::get_count_bytes_from_format (::libs::utility::uids::minor::id_val::rgb24);
   const std::uint8_t* rgb32_buf  = rgb32.ubuf ();
   std::uint8_t*       rgb24_buf  = rgb24.ubuf ();
-  const int32_t       rgb32_leak = rgb32.stride_ - rgb32.width_ * rgb32_bpp;
-  const int32_t       rgb24_leak = rgb24.stride_ - rgb24.width_ * rgb24_bpp;
+  const uint32_t      rgb32_leak = rgb32.stride_ - rgb32.width_ * rgb32_bpp;
+  const uint32_t      rgb24_leak = rgb24.stride_ - rgb24.width_ * rgb24_bpp;
   const auto          width      = rgb32.width_;
   const auto          height     = rgb32.height_;
 

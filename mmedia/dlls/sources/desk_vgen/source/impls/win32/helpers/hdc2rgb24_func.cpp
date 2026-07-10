@@ -90,7 +90,7 @@ hdc2buf_alu (Hdc2BmpCallInfo& info)
     *info.height_dest_ = loc_height;
   }
 
-  ::libs::utility::mem::u3copy (tbuf, info.dest_buf_->get (), min_mem_size);
+  ::libs::utility::mem::mem_copy_raw (tbuf, info.dest_buf_->get (), min_mem_size);
   info.dest_buf_->set_size (min_mem_size);
 
   *info.active_dest_buf_ = min_mem_size;

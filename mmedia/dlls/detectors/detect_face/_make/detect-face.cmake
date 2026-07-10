@@ -25,7 +25,7 @@ u3_add_target_dylib(
   TARGET_NAME
   detect-face-vdd
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/detectors/detect_face
+  ${U3_PATH_ROOT}/dlls/detectors/detect_face
   OUTPUT_NAME
   vdd_detect_face
   FORCE_TO_DYLIB

@@ -68,7 +68,7 @@ LinkImplOneProc::listen_int (const ::libs::link::CreateInfo& info) -> bool
 
 
 auto
-LinkImplOneProc::destroy_int (const ::libs::link::LinkDestroys& type) -> bool
+LinkImplOneProc::destroy_int (const ::libs::link::LinkDestroys& type) noexcept -> bool
 {
   LinkImplOneProcInt::ptr phelper;
   {

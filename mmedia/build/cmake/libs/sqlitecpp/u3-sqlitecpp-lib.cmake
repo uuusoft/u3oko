@@ -30,13 +30,8 @@ u3_project_add(
   SRC_EXT_MD5
   ${U3_EXTLIB_SQLITECPP_MD5}
   SOURCE_PATCH_COMMAND
-  #${CMAKE_COMMAND}
-  #-E
-  #copy_if_different
-  #${CMAKE_CURRENT_SOURCE_DIR}/build/cmake/libs/sqlitecpp/u3-sqlitecpp-lib-patch.cmake
-  #<SOURCE_DIR>/CMakeLists.txt
-  USE_HTTP_FOR_EXT_SRC
-  TRUE
+  USE_HTTP_FOR_EXTERNAL_SRC
+  FALSE
   BUILD_IN_SOURCE
   FALSE
   IT_CMAKE_PROJECT

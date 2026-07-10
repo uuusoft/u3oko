@@ -35,7 +35,7 @@ u3_project_add(
   copy_if_different
   ${CMAKE_CURRENT_SOURCE_DIR}/build/cmake/libs/sqlite/u3-sqlite-lib-patch.cmake
   <SOURCE_DIR>/CMakeLists.txt
-  USE_HTTP_FOR_EXT_SRC
+  USE_HTTP_FOR_EXTERNAL_SRC
   TRUE
   BUILD_IN_SOURCE
   FALSE

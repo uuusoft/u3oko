@@ -84,7 +84,7 @@ LinkImplOneProcInt::listen (const CreateInfoExt& info) -> bool
 
 
 auto
-LinkImplOneProcInt::destroy (const CreateInfoExt& info, const ::libs::link::LinkDestroys& type) -> bool
+LinkImplOneProcInt::destroy (const CreateInfoExt& info, const ::libs::link::LinkDestroys& type) noexcept -> bool
 {
   const std::string name_subsys = info.id_arg2val_[::libs::link::consts::text::id_subsys_name];
   const bool        force       = ::libs::link::LinkDestroys::force == type;

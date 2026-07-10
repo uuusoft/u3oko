@@ -13,14 +13,13 @@ class FpsController final
 {
   public:
   //  ext types
+  U3_ADD_DELETE_MOVE_COPY (FpsController);
+
   using time_type     = boost::posix_time::ptime;
   using duration_type = boost::posix_time::time_duration;
 
   FpsController ();
   ~FpsController () = default;
-
-  FpsController (const FpsController&)            = delete;
-  FpsController& operator= (const FpsController&) = delete;
 
   void  reset_action ();
   float get_fps () const;

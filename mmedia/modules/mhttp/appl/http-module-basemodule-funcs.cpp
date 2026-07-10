@@ -51,18 +51,17 @@ HttpModule::init_links_int (const syn::InitApplication& appinfo)
   }
 
   {
-    syn::IEvent::ptr rmsg;
-    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
+    auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > ();
 
-    props->change_appl_info (
+    revnt->change_appl_info (
       ::libs::events_log::AppllPartLogInfo (
         ::libs::events_base::props::modules::log::LogLevels::info,
         ::modules::mhttp::appl::consts::module_name,
         ::libs::utility::log::get_module_version ()),
       "");
 
-    props->set_start (true);
-    links_.get (syn::mids::http2appl)->send_msg (rmsg, syn::CallSyncs::async, syn::Calls::set);
+    revnt->set_start (true);
+    links_.get (syn::mids::http2appl)->send_msg (evnt);
   }
   U3_XLOG_DBG ("HttpModule::init_links_int::<----");
 }
@@ -82,18 +81,17 @@ HttpModule::appl_deinit_int () -> bool
   U3_XLOG_MARK ("HttpModule::deinit_int::---->")
   if (links_.get (syn::mids::http2appl))
   {
-    syn::IEvent::ptr rmsg;
-    auto             props = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
+    auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > ();
 
-    props->change_appl_info (
+    revnt->change_appl_info (
       ::libs::events_log::AppllPartLogInfo (
         ::libs::events_base::props::modules::log::LogLevels::info,
         ::modules::mhttp::appl::consts::module_name,
         ::libs::utility::log::get_module_version ()),
       "");
 
-    props->set_start (false);
-    links_.get (syn::mids::http2appl)->send_msg (rmsg, syn::CallSyncs::async, syn::Calls::set);
+    revnt->set_start (false);
+    links_.get (syn::mids::http2appl)->send_msg (evnt);
   }
 
   {

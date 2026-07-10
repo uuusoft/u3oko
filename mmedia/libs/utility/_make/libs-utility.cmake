@@ -3,7 +3,7 @@
 # copyright   Erashov A.I.
 # file        libs-utility.cmake
 
-u3_add_target_lib(TARGET_NAME utility-lib SOURCE_PATH ${U3_BUILD_PATH_TO_LIBS}/libs/utility)
+u3_add_target_lib(TARGET_NAME utility-lib SOURCE_PATH ${U3_PATH_ROOT}/libs/utility)
 
 target_include_directories(utility-lib PUBLIC "${U3_INCLUDE_DIR_EXTLIB_SQLITE}")
 add_dependencies(utility-lib ${U3_NAME_EXTLIB_BOOST_UTIL})

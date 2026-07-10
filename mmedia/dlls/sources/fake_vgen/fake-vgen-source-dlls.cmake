@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   fake_vgen-vss
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/sources/fake_vgen/source
+  ${U3_PATH_ROOT}/dlls/sources/fake_vgen/source
   OUTPUT_NAME
   vss_fake_vgen
   FORCE_TO_DYLIB

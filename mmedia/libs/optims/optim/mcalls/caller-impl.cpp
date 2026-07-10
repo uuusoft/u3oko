@@ -412,20 +412,16 @@ CallerImpl::thread_func_impl (const std::uint32_t thread_indx)
     }
     catch (boost::exception& excpt)
     {
-      U3_XLOG_ERROR ("CallerImpl::thread_func_impl: exception " + std::string (boost::diagnostic_information_what (excpt)));
-      U3_ASSERT_SIGNAL_NT ("failed");
+      U3_LOG_DATA_ERROR ("CallerImpl::thread_func_impl: exception " + std::string (boost::diagnostic_information_what (excpt)));
     }
     catch (std::exception& excpt)
     {
-      U3_XLOG_ERROR ("CallerImpl::thread_func_impl: exception " + std::string (excpt.what ()) + TOLOG (calls_[thread_indx].func_id_) + VTOLOG (thread_indx));
-      U3_ASSERT_SIGNAL_NT ("failed");
+      U3_LOG_DATA_ERROR ("CallerImpl::thread_func_impl: exception " + std::string (excpt.what ()) + TOLOG (calls_[thread_indx].func_id_) + VTOLOG (thread_indx));
     }
     catch (...)
     {
-      U3_XLOG_ERROR ("CallerImpl::thread_func_impl: exception...");
-      U3_ASSERT_SIGNAL_NT ("failed");
+      U3_LOG_DATA_ERROR ("CallerImpl::thread_func_impl: exception...");
     }
-
     //  release main thread
     sinfo_.bstart_->arrive_and_wait ();
   } while (true);

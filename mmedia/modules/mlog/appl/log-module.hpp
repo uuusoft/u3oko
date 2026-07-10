@@ -24,7 +24,7 @@ class LogModule final : public ::libs::ilink::appl::leaf::LeafModule
   virtual auto init_appl_data_int () -> void override;
 
   //  BaseModule overrides
-  virtual auto appl_init_int (const ::libs::link::appl::InitApplication& info) -> void override;
+  virtual auto appl_init_int (const ::libs::link::appl::InitApplication&) -> void override;
   virtual auto init_links_int (const ::libs::link::appl::InitApplication&) -> void override;
   virtual auto init_proxys_int () -> void override;
   virtual auto init_done_int () -> void override;
@@ -33,8 +33,8 @@ class LogModule final : public ::libs::ilink::appl::leaf::LeafModule
   virtual auto get_recv_link_int () -> recv_links_type override;
 
   //  LeafModule overrides
-  virtual auto catch_event_int (syn::IEvent::ptr& evnt) -> bool override;
-  virtual auto is_now_thread_to_sleep_int (bool now_recv_evnt) -> bool override;
+  virtual auto catch_event_int (syn::IEvent::ptr&) -> bool override;
+  virtual auto is_now_thread_to_sleep_int (bool) -> bool override;
 
   auto make_dir_for_logs () -> void;
   auto open_log_file () -> void;
@@ -49,7 +49,7 @@ class LogModule final : public ::libs::ilink::appl::leaf::LeafModule
   auto process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr) -> void;
   auto process_list_logs (syn::ProcessListLogsEvent::raw_ptr) -> void;
   auto process_log (syn::ProcessLogEvent::raw_ptr) -> void;
-  auto fill_tab (const std::uint64_t len, const std::uint64_t max_count_tabs, const std::uint64_t size_tab) -> std::uint64_t;
+  auto fill_tab (const std::uint64_t, const std::uint64_t, const std::uint64_t) -> std::uint64_t;
 
   syn::events_list_type                events_for_save_;         //< Временно кешированные события для сброса в лог (по таймауту или по достижению предельного размера списка)
   std::string                          path2sessions_;           //< Директория с всеми существующими сеансами

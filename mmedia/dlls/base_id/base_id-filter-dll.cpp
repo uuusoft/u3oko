@@ -61,12 +61,10 @@ Filter::transform_int (syn::TransformInfo& info)
 
   if (!send_base_interf_)
   {
-    syn::IEvent::ptr rmsg;
-    auto             dmsg = ::libs::iproperties::helpers::create_event< syn::InterfBaseIdEvent > (rmsg);
-
-    dmsg->set_interface (base_interf_);
-    dmsg->set_active (true);
-    events->push_back (rmsg);
+    auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::InterfBaseIdEvent > ();
+    revnt->set_interface (base_interf_);
+    revnt->set_active (true);
+    events->push_back (evnt);
     send_base_interf_ = true;
   }
 

@@ -88,7 +88,7 @@ Filter::thread_func_impl (std::uint32_t indx_thread)
     {
       //  Если буфер не был сформирован - вставляем задержку, чтобы не загружать систему.
       U3_LOG_DATA_TIMING ("gen vgen thread sleep" + VTOLOG (now_delay.count ()));
-      std::this_thread::sleep_for (std::chrono::milliseconds (now_delay));
+      std::this_thread::sleep_for (now_delay);
       now_delay = consts::ms_delay_skip_cycle;
     }
 

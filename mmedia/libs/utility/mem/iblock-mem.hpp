@@ -12,7 +12,7 @@ namespace libs::utility::mem
 /// Пространство имен констант функционала для работы с памятью
 namespace consts
 {
-inline constexpr std::uint8_t filling                = 0;                    //< Значение для заполнения памяти по умолчанию
+inline constexpr std::uint8_t  filling               = 0;                    //< Значение для заполнения памяти по умолчанию
 inline constexpr std::uint64_t max_memory_block_size = 1024 * 1024 * 1024;   //< эвристика
 }   // namespace consts
 }   // namespace libs::utility::mem
@@ -27,13 +27,9 @@ class IBlockMem
   using size_type = std::uint64_t;
 
   U3_ADD_POINTERS_TO_SELF (IBlockMem)
+  U3_ADD_DELETE_MOVE_COPY (IBlockMem);
 
   virtual ~IBlockMem () = default;
-
-  IBlockMem (const IBlockMem&)                    = delete;
-  IBlockMem& operator= (const IBlockMem&)         = delete;
-  IBlockMem (IBlockMem&& src) noexcept            = delete;
-  IBlockMem& operator= (IBlockMem&& src) noexcept = delete;
 
   std::uint8_t*
   get ()
@@ -88,7 +84,7 @@ class IBlockMem
   virtual auto get_int () const -> const std::uint8_t*           = 0;
   virtual auto get_capacity_int () const -> IBlockMem::size_type = 0;
   virtual auto get_size_int () const -> IBlockMem::size_type     = 0;
-  virtual auto set_size_int (IBlockMem::size_type size) -> void  = 0;
-  virtual auto resize_int (IBlockMem::size_type size) -> void    = 0;
+  virtual auto set_size_int (IBlockMem::size_type) -> void       = 0;
+  virtual auto resize_int (IBlockMem::size_type) -> void         = 0;
 };
 }   // namespace libs::utility::mem

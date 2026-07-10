@@ -119,7 +119,7 @@ IMemBuf::clone_int (IBuf::craw_ptr isrc, float percent)
     return;
   }
 
-  ::libs::utility::mem::u3copy (src->get_cbuf (), get_buf (), (*src)[MemVars::size_buf]);
+  ::libs::utility::mem::mem_copy_raw (src->get_cbuf (), get_buf (), (*src)[MemVars::size_buf]);
   fragments_ = src->fragments_;
 }
 

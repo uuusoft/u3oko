@@ -16,16 +16,32 @@ namespace libs::utility::casts
 #  define U3_CAST_INT8(u3def_val) ::boost::numeric_cast< std::int8_t > (u3def_val)
 #endif
 
+#ifndef U3_CAST_INT8_FORCE
+#  define U3_CAST_INT8_FORCE(u3def_val) ::libs::utility::casts::static_cast_helper< std::int8_t > (u3def_val)
+#endif
+
 #ifndef U3_CAST_UINT8
 #  define U3_CAST_UINT8(u3def_val) ::boost::numeric_cast< std::uint8_t > (u3def_val)
+#endif
+
+#ifndef U3_CAST_UINT8_FORCE
+#  define U3_CAST_UINT8_FORCE(u3def_val) ::libs::utility::casts::static_cast_helper< std::uint8_t > (u3def_val)
 #endif
 
 #ifndef U3_CAST_INT16
 #  define U3_CAST_INT16(u3def_val) ::boost::numeric_cast< std::int16_t > (u3def_val)
 #endif
 
+#ifndef U3_CAST_INT16_FORCE
+#  define U3_CAST_INT16_FORCE(u3def_val) ::libs::utility::casts::static_cast_helper< std::int16_t > (u3def_val)
+#endif
+
 #ifndef U3_CAST_UINT16
 #  define U3_CAST_UINT16(u3def_val) ::boost::numeric_cast< std::uint16_t > (u3def_val)
+#endif
+
+#ifndef U3_CAST_UINT16_FORCE
+#  define U3_CAST_UINT16_FORCE(u3def_val) ::libs::utility::casts::static_cast_helper< std::uint16_t > (u3def_val)
 #endif
 
 #ifndef U3_CAST_INT32

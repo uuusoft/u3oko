@@ -6,19 +6,21 @@
 \project    u3_helpers_lib
 */
 
+// EAI-REFACT old shit
 namespace libs::utility::utils
 {
 /// Шаблон для генерации целочисленных типов от перечислений и тп
 /// \tparam TTBase        Базовый тип, должен быть достаточно широким для размещения всех возможножных значений
-/// \tparam TTDef         Значение по умолчанию для базового типа
+/// \tparam def_value         Значение по умолчанию для базового типа
 /// \tparam TTFakeIndent  Фальшивый базовый класс для генерации нового типа
-template< typename TTBase, TTBase TTDef, class TTFakeIdent >
+template< typename TTBase, TTBase def_value, class TTFake >
+  requires (std::is_integral_v< TTBase >)
 class Int2Type
 {
   public:
   //  ext types
   using value_type = TTBase;
-  using item_type  = Int2Type< TTBase, TTDef, TTFakeIdent >;
+  using item_type  = Int2Type< TTBase, def_value, TTFake >;
 
   Int2Type ()  = default;
   ~Int2Type () = default;
@@ -121,6 +123,6 @@ class Int2Type
   }
 
   private:
-  TTBase val_ = TTDef;   //<
+  TTBase val_ { def_value };   //<
 };
 }   // namespace libs::utility::utils

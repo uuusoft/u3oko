@@ -9,13 +9,13 @@
 namespace dlls::sources::gen_vgen::consts
 {
 #if defined(U3_OS_WIN32_DESKTOP) || defined(U3_OS_GNU_LINUX) || defined(U3_OS_MACX_DESKTOP)
-inline constexpr std::chrono::milliseconds ms_delay_skip_cycle { 1 };
+inline constexpr std::chrono::milliseconds ms_delay_skip_cycle { 10 };
 #elif defined(U3_OS_ANDROID)
-inline constexpr std::chrono::milliseconds ms_delay_skip_cycle { 1 };
+inline constexpr std::chrono::milliseconds ms_delay_skip_cycle { 10 };
 #elif defined(U3_OS_RASPBERRY)
-inline constexpr std::chrono::milliseconds ms_delay_skip_cycle { 1 };
+inline constexpr std::chrono::milliseconds ms_delay_skip_cycle { 10 };
 #elif defined(U3_OS_ORANGE_PI)
-inline constexpr std::chrono::milliseconds ms_delay_skip_cycle { 1 };
+inline constexpr std::chrono::milliseconds ms_delay_skip_cycle { 10 };
 #else
 #  error select OS
 #endif

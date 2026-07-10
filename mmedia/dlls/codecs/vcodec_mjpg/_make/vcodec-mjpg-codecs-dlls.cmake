@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   vcodec_mjpg_vvd
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/codecs/vcodec_mjpg
+  ${U3_PATH_ROOT}/dlls/codecs/vcodec_mjpg
   OUTPUT_NAME
   vvd_vcodec_mjpg
   FORCE_TO_DYLIB

@@ -44,13 +44,14 @@ get_event_int (const ::libs::events::IEvent::hid_type& id, Args... args) -> ::li
 
 template< typename T, typename... Args >
 auto
-create_event (::libs::events::IEvent::ptr& event, Args... args) -> T*
+create_event (Args... args) -> std::pair< ::libs::events::IEvent::ptr, T* >
 {
-  U3_ASSERT (!event);
-  constexpr const auto id = T::gen_get_mid ();
-
-  event = get_event_int< T, Args... > (id, args...);
-  return ::libs::utility::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id));
+  constexpr const auto event_id = T::gen_get_mid ();
+  auto                 event    = get_event_int< T, Args... > (event_id, args...);
+  U3_ASSERT (event);
+  auto event_prop = ::libs::utility::casts::reinterpret_cast_helper< T* > (cast_event_int (event, event_id));
+  U3_ASSERT (event_prop);
+  return { event, event_prop };
 }
 
 

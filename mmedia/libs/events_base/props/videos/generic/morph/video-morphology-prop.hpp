@@ -32,7 +32,7 @@ class VideoMorphologyProp final : virtual public events_base::Event
   static constexpr auto
   gen_get_mid () -> const IEvent::hid_type&
   {
-    static constexpr const char* chret = "libs/events_base/props/videos/generic/morph/video-morphology-prop";
+    static constexpr const char*            chret = "libs/events_base/props/videos/generic/morph/video-morphology-prop";
     static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }

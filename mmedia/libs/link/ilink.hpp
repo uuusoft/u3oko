@@ -23,7 +23,7 @@ class ILink
   bool listen (const CreateInfo&);
 
   /// Функция удаление связи
-  bool destroy (const LinkDestroys& = LinkDestroys::soft);
+  bool destroy (const LinkDestroys& = LinkDestroys::soft) noexcept;
 
   /// Функция возвращает true если свзязь установлена
   bool is_connected () const;
@@ -39,8 +39,8 @@ class ILink
   /// \return     указатель на ответное сообщение или empty
   ::libs::events::IEvent::ptr send_msg (
     const syn::IEvent::ptr&,
-    const details::CallSyncs&,
-    const details::Calls&,
+    const details::CallSyncs&      = details::CallSyncs::async,
+    const details::Calls&          = details::Calls::set,
     const syn::ISeqEvent::id_type& = syn::ISeqEvent::id_type ());
 
   auto complite_msg (const syn::IEvent::ptr&, const StateProcessEvent&) -> void;
@@ -53,7 +53,7 @@ class ILink
   //  ILink interface
   virtual auto connect_int (const CreateInfo&) -> bool                                                                                                      = 0;
   virtual auto listen_int (const CreateInfo&) -> bool                                                                                                       = 0;
-  virtual auto destroy_int (const LinkDestroys&) -> bool                                                                                                    = 0;
+  virtual auto destroy_int (const LinkDestroys&) noexcept -> bool                                                                                           = 0;
   virtual auto is_connected_int () const -> bool                                                                                                            = 0;
   virtual auto received_msg_int () -> syn::IEvent::ptr                                                                                                      = 0;
   virtual auto complite_msg_int (const syn::IEvent::ptr&, const StateProcessEvent&) -> void                                                                 = 0;

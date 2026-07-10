@@ -8,7 +8,7 @@ u3_add_target_dylib(
   TARGET_NAME
   module-mhttp
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/modules/mhttp
+  ${U3_PATH_ROOT}/modules/mhttp
   OUTPUT_NAME
   mpl_mhttp
   FORCE_TO_DYLIB

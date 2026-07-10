@@ -13,12 +13,12 @@ class CallerImpl final : public IMCaller
 {
   public:
   //  ext types
+  U3_ADD_DELETE_MOVE_COPY (CallerImpl);
+
   using statistic_work_func_type = std::function< bool (syn::ExpandedTimes& obj) >;
 
   CallerImpl ();
   virtual ~CallerImpl ();
-  CallerImpl (const CallerImpl&)            = delete;
-  CallerImpl& operator= (const CallerImpl&) = delete;
 
   // IMCaller
   virtual void          set_count_threads (std::uint16_t) override;

@@ -67,6 +67,7 @@ InfoFilter::~InfoFilter ()
 void
 InfoFilter::sync_int (bool force)
 {
+  U3_LOG_DATA_DEV ("InfoFilter::sync_int::---->" + VTOLOG (force) + VTOLOG (synced_));
   if (synced_ && !force)
   {
     return;

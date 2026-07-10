@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   mem_funcs-dll
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/utils/mem_funcs
+  ${U3_PATH_ROOT}/utils/mem_funcs
   OUTPUT_NAME
   mem_funcs
   FORCE_TO_DYLIB

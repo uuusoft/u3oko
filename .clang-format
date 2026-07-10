@@ -2,7 +2,11 @@ BasedOnStyle: Google
 IndentWidth: 2
 
 Language: Cpp
+Standard: Latest
 
+RequiresClausePosition: OwnLine
+IndentRequires: true
+AllowShortCompoundRequirementOnASingleLine: false
 AccessModifierOffset: 0
 AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: true
@@ -87,6 +91,5 @@ SpacesInCStyleCastParentheses: false
 SpacesInContainerLiterals: true
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
-Standard: Cpp03
 TabWidth: 2
 UseTab: Never

@@ -3,4 +3,4 @@
 # copyright   Erashov A.I.
 # file        gen-lib-source-dlls.cmake
 
-u3_add_target_lib(TARGET_NAME gen_lib-lib SOURCE_PATH ${U3_BUILD_PATH_TO_LIBS}/dlls/sources/vgen_lib)
+u3_add_target_lib(TARGET_NAME gen_lib-lib SOURCE_PATH ${U3_PATH_ROOT}/dlls/sources/vgen_lib)

@@ -33,7 +33,7 @@ class ProcessLogEvent final : public BaseLogEvent
   static constexpr auto
   gen_get_mid () -> const IEvent::hid_type&
   {
-    static constexpr const char* chret = "libs/events_log/events/process-log-event";
+    static constexpr const char*            chret = "libs/events_log/events/process-log-event";
     static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }

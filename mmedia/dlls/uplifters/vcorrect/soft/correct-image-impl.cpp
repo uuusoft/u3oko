@@ -22,19 +22,16 @@ CorrectImageImpl::CorrectImageImpl ()
   std::int32_t cindx = 0;
   std::ranges::generate (
     contrasts_,
-
     [&cindx] () -> std::int32_t { return cindx++; });
 
   cindx = 0;
   std::ranges::generate (
     saturations_,
-
     [&cindx] () -> std::int32_t { return cindx++; });
 
   cindx = 0;
   std::ranges::generate (
     hues_,
-
     [&cindx] () -> std::int32_t { return cindx++; });
 }
 
@@ -99,6 +96,7 @@ CorrectImageImpl::process_int (
   syn::IVideoBuf::raw_ptr s16s,
   syn::IVideoBuf::raw_ptr l16s) -> bool
 {
+  U3_XLOG_DBG ("CorrectImageImpl::process_int:---->");
   if (!l16s || l16s->get_flag (::utils::dbufs::BufFlags::empty))
   {
     U3_LOG_DATA_WRN ("skip software correction, empty light buf");
@@ -122,6 +120,7 @@ CorrectImageImpl::process_int (
   // correct bright
   if (0.0F != props_->bright_.first)
   {
+    U3_XLOG_DBG ("CorrectImageImpl::process_int: bright correct");
     bright_correct (*l16s);
   }
 
@@ -135,13 +134,13 @@ CorrectImageImpl::process_int (
 
     for (auto cbuf : bufs)
     {
-      if (!cbuf || cbuf->get_flag (::utils::dbufs::BufFlags::empty))
+      if (cbuf && !cbuf->get_flag (::utils::dbufs::BufFlags::empty))
       {
-        continue;
+        sat2byte_correct (*cbuf);
       }
-      sat2byte_correct (*cbuf);
     }
   }
+  U3_XLOG_DBG ("CorrectImageImpl::process_int:<----");
   return true;
 }
 

@@ -170,22 +170,6 @@ HttpModule::process_zip_data_event (syn::ZipDataEvent::raw_ptr props)
 void
 HttpModule::debug ()
 {
-#if 1
-  return;
-#else
-  {
-    std::string      content;
-    syn::IEvent::ptr rmsg = std::make_shared< ::libs::events_base::TimedEvent > ();
-    ::libs::iproperties::helpers::event2xml (rmsg, content);
-  }
-  {
-    std::string      content;
-    syn::IEvent::ptr rmsg;
-
-    auto dmsg = ::libs::iproperties::helpers::create_event< ::libs::events_base::TimedEvent > (rmsg);
-    ::libs::iproperties::helpers::event2xml (rmsg, content);
-  }
-#endif
 }
 
 

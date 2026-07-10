@@ -17,7 +17,7 @@ u3_add_target_dylib(
   TARGET_NAME
   v4l2_vgen-vss
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/sources/v4l2_vgen
+  ${U3_PATH_ROOT}/dlls/sources/v4l2_vgen
   OUTPUT_NAME
   vss_v4l2_vgen
   FORCE_TO_DYLIB

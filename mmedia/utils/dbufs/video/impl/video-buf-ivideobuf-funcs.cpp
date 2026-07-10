@@ -243,7 +243,7 @@ VideoBuf::clone_int (IBuf::craw_ptr isrc, float percent)
 
   if (!src->get_flag (BufFlags::empty) && (percent > 0.0F) && src->get_flag (BufFlags::convolution_data))
   {
-    ::libs::utility::mem::u3copy (src->get_cbuf (), get_buf (), (*src)[MemVars::size_buf]);
+    ::libs::utility::mem::mem_copy_raw (src->get_cbuf (), get_buf (), (*src)[MemVars::size_buf]);
   }
 }
 

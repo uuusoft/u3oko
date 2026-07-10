@@ -14,11 +14,10 @@ template< typename TTImpl >
 class GenericImpl : public IAlgImpl
 {
   public:
+  U3_ADD_DELETE_MOVE_COPY (GenericImpl);
+
   GenericImpl ()          = default;
   virtual ~GenericImpl () = default;
-
-  GenericImpl (const GenericImpl&)            = delete;
-  GenericImpl& operator= (const GenericImpl&) = delete;
 
   virtual void
   process (const ProcessAlgInfo& info) override

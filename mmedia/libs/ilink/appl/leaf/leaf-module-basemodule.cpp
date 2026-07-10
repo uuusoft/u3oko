@@ -32,13 +32,12 @@ LeafModule::update_catch_funcs_int ()
     }
 
     U3_ASSERT (current_seq_.request_);   //  это должен быть запрос, иначе быссмысленно.
-    syn::IEvent::ptr rmsg;
-    auto             dmsg = ::libs::iproperties::helpers::create_event< ::libs::events::ISeqEvent > (rmsg);
+    auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< ::libs::events::ISeqEvent > ();
     // для конечного модуля, если пришло сообщение  с идентификатором, используем его для ответа
     // И изначальное сообщение должно быть запросом
-    dmsg->set_msg (msg);
-    dmsg->set_seq_id (current_seq_.id_seq_);
-    return rmsg;
+    revnt->set_msg (msg);
+    revnt->set_seq_id (current_seq_.id_seq_);
+    return evnt;
   };
 
   // Функция обработчик сообщения признака синхронности
@@ -68,11 +67,9 @@ LeafModule::update_catch_funcs_int ()
     }
 
     //  инверсия, на запрос идет ответ.
-    syn::IEvent::ptr rmsg;
-    auto             dmsg = ::libs::iproperties::helpers::create_event< ::libs::events::IAnswerEvent > (rmsg);
-
-    dmsg->set_msg (msg);
-    return rmsg;
+    auto [evnt, revnt] = libs::iproperties::helpers::create_event< ::libs::events::IAnswerEvent > ();
+    revnt->set_msg (msg);
+    return evnt;
   };
 
   catch_funcs_[::libs::events::IAnswerEvent::gen_get_mid ()] =
@@ -221,9 +218,9 @@ LeafModule::appl_work_int ()
 
       if (is_now_thread_to_sleep (recv_msg))
       {
-        if (ms_time_sleep_ > 0)
+        if (ms_time_sleep_.count () > 0)
         {
-          std::this_thread::sleep_for (std::chrono::milliseconds (ms_time_sleep_));
+          std::this_thread::sleep_for (ms_time_sleep_);
         }
         else
         {

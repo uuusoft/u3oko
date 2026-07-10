@@ -34,7 +34,7 @@ class Vec2ImageProp final : public ::libs::events_base::Event
   static constexpr auto
   gen_get_mid () -> const IEvent::hid_type&
   {
-    static constexpr const char* chret = "libs/events_base/props/videos/generic/vec2image/vec2image-prop";
+    static constexpr const char*            chret = "libs/events_base/props/videos/generic/vec2image/vec2image-prop";
     static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }

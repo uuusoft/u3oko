@@ -3,4 +3,4 @@
 # copyright   Erashov A.I.
 # file        libs-links-link.cmake
 
-u3_add_target_lib(TARGET_NAME link-lib SOURCE_PATH ${U3_BUILD_PATH_TO_LIBS}/libs/link)
+u3_add_target_lib(TARGET_NAME link-lib SOURCE_PATH ${U3_PATH_ROOT}/libs/link)

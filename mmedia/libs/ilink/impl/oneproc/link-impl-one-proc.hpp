@@ -26,7 +26,7 @@ class LinkImplOneProc final : public ::libs::link::ILink
   //  ILink overrides
   virtual auto connect_int (const ::libs::link::CreateInfo&) -> bool override;
   virtual auto listen_int (const ::libs::link::CreateInfo&) -> bool override;
-  virtual auto destroy_int (const ::libs::link::LinkDestroys&) -> bool override;
+  virtual auto destroy_int (const ::libs::link::LinkDestroys&) noexcept -> bool override;
   virtual auto is_connected_int () const -> bool override;
   virtual auto received_msg_int () -> syn::IEvent::ptr override;
   virtual auto get_imem_int () -> syn::IMem::raw_ptr override;

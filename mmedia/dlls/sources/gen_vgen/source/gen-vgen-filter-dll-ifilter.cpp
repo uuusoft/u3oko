@@ -52,6 +52,7 @@ Filter::transform_int (syn::TransformInfo& info)
 void
 Filter::call_int (syn::CallInterfInfo& info)
 {
+  U3_LOG_DATA_DBG ("Filter::call_int:---->");
   super::prepare_call (info);
   super::call_gen (info);
 }

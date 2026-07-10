@@ -34,10 +34,9 @@ change_module_state (
     return;
   }
 
-  syn::IEvent::ptr rmsg;
-  auto             dmsg = ::libs::iproperties::helpers::create_event< syn::ChangeStateProcessEvent > (rmsg);
-  dmsg->set_start (state);
-  link->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+  auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::ChangeStateProcessEvent > ();
+  revnt->set_start (state);
+  link->send_msg (evnt);
 }
 
 // EAI-REFACT function
@@ -210,11 +209,11 @@ RootModule::appl_work_int ()
             {
               U3_XLOG_DBG ("send transaction msg to leaf" + VTOLOG (seqs_exist));
               auto seq_msg = ::libs::events::helpers::wrap_seq_msg (recv_msg, current_seq_.id_seq_);
-              current_seq_.dest_->send_msg (seq_msg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+              current_seq_.dest_->send_msg (seq_msg);
             }
             else
             {
-              current_seq_.dest_->send_msg (recv_msg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+              current_seq_.dest_->send_msg (recv_msg);
             }
           }
         }
@@ -227,9 +226,9 @@ RootModule::appl_work_int ()
       // Если в данной итерации не обработано ни одного сообщения - засыпаем на определенный интервал
       if (!now_recv_msg)
       {
-        if (ms_time_sleep_ > 0)
+        if (ms_time_sleep_.count () > 0)
         {
-          std::this_thread::sleep_for (std::chrono::milliseconds (ms_time_sleep_));
+          std::this_thread::sleep_for (ms_time_sleep_);
         }
         else
         {
@@ -265,25 +264,23 @@ RootModule::appl_deinit_int () -> bool
   case DeInitStages::send_stop_msg2allmost_all: {
     if (links_.get (syn::mids::appl2log))
     {
-      syn::IEvent::ptr rmsg;
-      auto             dmsg = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
+      auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > ();
 
-      dmsg->change_appl_info (
+      revnt->change_appl_info (
         ::libs::events_log::AppllPartLogInfo (
           ::libs::events_base::props::modules::log::LogLevels::info,
           appl_info_.appl_name_,
           ::libs::utility::log::get_module_version ()),
         "");
 
-      dmsg->set_start (false);
-      links_.get (syn::mids::appl2log)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+      revnt->set_start (false);
+      links_.get (syn::mids::appl2log)->send_msg (evnt);
     }
 
     if (links_.get (syn::mids::appl2gui))
     {
-      syn::IEvent::ptr rmsg;
-      auto             dmsg = ::libs::iproperties::helpers::create_event< ::libs::events_gui::events::ExitApplEvent > (rmsg);
-      links_.get (syn::mids::appl2gui)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+      auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< ::libs::events_gui::events::ExitApplEvent > ();
+      links_.get (syn::mids::appl2gui)->send_msg (evnt);
     }
 
     change_module_state (links_.get (syn::mids::appl2http), appl_info_.appl_name_, false);
@@ -343,11 +340,9 @@ RootModule::appl_deinit_int () -> bool
   case DeInitStages::send_stop_msg2log_module: {
     if (links_.get (syn::mids::appl2log))
     {
-      syn::IEvent::ptr rmsg;
-      auto             dmsg = ::libs::iproperties::helpers::create_event< syn::ChangeStateProcessEvent > (rmsg);
-
-      dmsg->set_start (false);
-      links_.get (syn::mids::appl2log)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+      auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::ChangeStateProcessEvent > ();
+      revnt->set_start (false);
+      links_.get (syn::mids::appl2log)->send_msg (evnt);
     }
 
     deinit_stage_ = DeInitStages::wait_stop_log_module;
@@ -431,10 +426,9 @@ RootModule::update_catch_funcs_int ()
       return ret;
     }
     //  инверсия, на запрос идет ответ.
-    syn::IEvent::ptr rmsg;
-    auto             dmsg = ::libs::iproperties::helpers::create_event< ::libs::events::IAnswerEvent > (rmsg);
-    dmsg->set_msg (msg);
-    return rmsg;
+    auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< ::libs::events::IAnswerEvent > ();
+    revnt->set_msg (msg);
+    return evnt;
   };
 
   // Функция обработчик сообщения признака ответа на запрос
@@ -477,7 +471,7 @@ RootModule::update_catch_funcs_int ()
         syn::TextExtCpu helper;
         info_cpu->copy (msg.get ());
         U3_LOG_APPL_MARK ("updated cpu: " + helper.get_text (info_cpu->get_cpu_type ()) + " {" + std::to_string (info_cpu->get_cpu_count ()) + "}");
-        links_.get (syn::mids::appl2mdata)->send_msg (msg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+        links_.get (syn::mids::appl2mdata)->send_msg (msg);
 
         const auto active_paths = paths_->get_path (::libs::iproperties::appl_paths::Paths::active_appl_module);
         helpers::save_event_to_json_file (active_paths, msg);
@@ -500,7 +494,7 @@ RootModule::update_catch_funcs_int ()
       {
         info_log->copy (msg.get ());
         ::libs::events_base::props::modules::log::g_log_level = ::libs::events_base::props::modules::log::from_raw_val (info_log->get_val (::libs::events_base::props::modules::log::LogVals::log_level));
-        links_.get (syn::mids::appl2log)->send_msg (msg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+        links_.get (syn::mids::appl2log)->send_msg (msg);
 
         const auto active_paths = paths_->get_path (::libs::iproperties::appl_paths::Paths::active_appl_module);
         helpers::save_event_to_json_file (active_paths, msg);
@@ -516,7 +510,7 @@ RootModule::update_catch_funcs_int ()
     {
       if (!process_state.answer_)
       {
-        links_.get (syn::mids::appl2events)->send_msg (msg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+        links_.get (syn::mids::appl2events)->send_msg (msg);
         // const auto active_paths = paths_->get_path (::libs::iproperties::appl_paths::Paths::active_appl_module);
         // helpers::save_event_to_file (active_paths, msg);
       }
@@ -624,24 +618,22 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
   }
 
   {
-    syn::IEvent::ptr rmsg;
-    auto             dmsg = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > (rmsg);
+    auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > ();
 
-    dmsg->change_appl_info (
+    revnt->change_appl_info (
       ::libs::events_log::AppllPartLogInfo (
         ::libs::events_base::props::modules::log::LogLevels::info,
         appl_info_.appl_name_,
         ::libs::utility::log::get_module_version ()),
       "");
 
-    dmsg->set_start (true);
-    links_.get (syn::mids::appl2log)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+    revnt->set_start (true);
+    links_.get (syn::mids::appl2log)->send_msg (evnt);
   }
 
   {
-    syn::IEvent::ptr rmsg;
-    auto             dmsg = ::libs::iproperties::helpers::create_event< syn::PropertyStorageModuleEvent > (rmsg);
-    links_.get (syn::mids::appl2storage)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+    auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::PropertyStorageModuleEvent > ();
+    links_.get (syn::mids::appl2storage)->send_msg (evnt);
   }
 
   {
@@ -652,7 +644,7 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     U3_LOG_APPL_MARK ("Cores count   : " + std::to_string (info_cpu->get_cpu_count ()));
     U3_LOG_APPL_MARK ("Threads count : " + std::to_string (::libs::optim::mcalls::get_count_work_threads_by_count_cpu (info_cpu->get_cpu_count ())));
 
-    links_.get (syn::mids::appl2mdata)->send_msg (appl_event_props_.info_cpu_, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+    links_.get (syn::mids::appl2mdata)->send_msg (appl_event_props_.info_cpu_);
   }
 
   const std::tuple< syn::mids::key_storage_type > start_vals[] = {
@@ -669,10 +661,9 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
 
   for (const auto& [link_id] : start_vals)
   {
-    syn::IEvent::ptr rmsg;
-    auto             dmsg = ::libs::iproperties::helpers::create_event< syn::ChangeStateProcessEvent > (rmsg);
-    dmsg->set_start (true);
-    links_.get (link_id)->send_msg (rmsg, ::libs::link::details::CallSyncs::async, ::libs::link::details::Calls::set);
+    auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::ChangeStateProcessEvent > ();
+    revnt->set_start (true);
+    links_.get (link_id)->send_msg (evnt);
   }
   U3_XLOG_DBG ("RootModule::init_links_int::<----");
 }

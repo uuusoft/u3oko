@@ -38,7 +38,7 @@ class LinkImplOneProcInt final
   auto connect (const CreateInfoExt&) -> bool;
   auto listen (const CreateInfoExt&) -> bool;
   auto is_connected () const -> bool;
-  auto destroy (const CreateInfoExt&, const ::libs::link::LinkDestroys&) -> bool;
+  auto destroy (const CreateInfoExt&, const ::libs::link::LinkDestroys&) noexcept -> bool;
   auto received_msg (const CreateInfoExt&) -> syn::IEvent::ptr;
   auto send_msg (const CreateInfoExt&, syn::IEvent::ptr, const syn::CallSyncs&, const syn::Calls&, const ::libs::events::ISeqEvent::id_type&) -> syn::IEvent::ptr;
   auto complite_msg (const CreateInfoExt&, const syn::IEvent::ptr&, const ::libs::link::StateProcessEvent&) -> void;

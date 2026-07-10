@@ -8,7 +8,7 @@
 
 namespace dlls::sources::v4l2_vgen::consts
 {
-inline constexpr std::size_t max_check_device_count = 4;                               //<
+inline constexpr std::size_t               max_check_device_count = 4;                 //<
 inline constexpr std::chrono::milliseconds ms_timeout_recreate_device { 60 * 1000 };   //< 60 sec
 extern const std::string                   dev_path;                                   //<
 }   // namespace dlls::sources::v4l2_vgen::consts

@@ -32,10 +32,10 @@ U3OkoAppl::init_links_int (const syn::InitApplication& info)
 
   //  Устанавливаем свойства логирования
   U3_XLOG_DBG ("U3OkoAppl::init_links_int:: pt1");
-  links_.get (syn::mids::appl2log)->send_msg (appl_event_props_.module_log_, syn::CallSyncs::async, syn::Calls::set);
+  links_.get (syn::mids::appl2log)->send_msg (appl_event_props_.module_log_);
   //  Устанавливаем свойства хранилища
   U3_XLOG_DBG ("U3OkoAppl::init_links_int:: pt2");
-  links_.get (syn::mids::appl2storage)->send_msg (appl_event_props_.storage_module_, syn::CallSyncs::async, syn::Calls::set);
+  links_.get (syn::mids::appl2storage)->send_msg (appl_event_props_.storage_module_);
   U3_XLOG_DBG ("U3OkoAppl::init_links_int::<----");
 }
 

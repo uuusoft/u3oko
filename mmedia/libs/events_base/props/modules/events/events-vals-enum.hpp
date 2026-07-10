@@ -19,10 +19,4 @@ enum class EventsVals : std::uint32_t
 
 const std::string& val2str (const EventsVals& val);
 EventsVals         str2val (const std::string& str);
-
-inline constexpr std::uint32_t
-                 enum_to_raw (const EventsVals& val)
-{
-  return U3_CAST_UINT32_FORCE (val);
-}
 }   // namespace libs::events_base::props::modules::events

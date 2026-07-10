@@ -14,13 +14,9 @@ class ILinkCreator
   public:
   // ext types
   U3_ADD_POINTERS_TO_SELF (ILinkCreator)
+  U3_ADD_DELETE_MOVE_COPY (ILinkCreator);
 
   virtual ~ILinkCreator () = default;
-
-  ILinkCreator (const ILinkCreator&)                = delete;
-  ILinkCreator& operator= (const ILinkCreator&)     = delete;
-  ILinkCreator (ILinkCreator&&) noexcept            = delete;
-  ILinkCreator& operator= (ILinkCreator&&) noexcept = delete;
 
   //  ILinkCreator interface
   virtual auto get_connect (const CreateInfo&) -> ILink::ptr           = 0;

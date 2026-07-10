@@ -13,14 +13,14 @@ auto
 image2frame (const std::string& val) -> Image2Frames
 {
   static const boost::unordered_flat_map< std::string, const Image2Frames > vals = {
-    { "one", Image2Frames ::one },
+    { "one", Image2Frames::one },
     { "scroll", Image2Frames::scroll }
   };
 
   const auto finger = vals.find (val);
   if (vals.end () == finger)
   {
-    return Image2Frames ::one;
+    return Image2Frames::one;
   }
   return finger->second;
 }
@@ -131,7 +131,7 @@ SourceImpl::print_images2buf (utils::dbufs::video::IVideoBuf::ptr& genimage)
       auto* srcline = image_info.data_->get () + static_cast< ptrdiff_t > (iy * srcstride) + static_cast< ptrdiff_t > (offfirst * image_info.bppx_);
       auto* dstline = dstbuf + cpwidth * 3 + static_cast< ptrdiff_t > (iy * capstride);
       U3_CHECK (srcline, "get scan file rgb24 image" + VTOLOG (iy));
-      ::libs::utility::mem::u3copy (srcline, dstline, cpstride);
+      ::libs::utility::mem::mem_copy_raw (srcline, dstline, cpstride);
     }
 
     cpwidth += image_width - offfirst;

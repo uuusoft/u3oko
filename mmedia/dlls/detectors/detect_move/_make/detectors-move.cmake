@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   vdetect1-vdd
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/detectors/detect_move
+  ${U3_PATH_ROOT}/dlls/detectors/detect_move
   OUTPUT_NAME
   vdd_detect_move
   FORCE_TO_DYLIB

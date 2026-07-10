@@ -85,7 +85,7 @@ LinkImplAnyProc::connect_int (const ::libs::link::CreateInfo& info) -> bool
 
 
 auto
-LinkImplAnyProc::destroy_int (const ::libs::link::LinkDestroys& type) -> bool
+LinkImplAnyProc::destroy_int (const ::libs::link::LinkDestroys& type) noexcept -> bool
 {
   U3_ASSERT_SIGNAL ("failed");
   return false;

@@ -29,10 +29,4 @@ enum class LogVals : std::uint32_t
 
 const std::string& val2str (const LogVals& val);
 LogVals            str2val (const std::string& str);
-
-inline constexpr std::uint32_t
-                 enum_to_raw (const LogVals& val)
-{
-  return U3_CAST_UINT32_FORCE (val);
-}
 }   // namespace libs::events_base::props::modules::log

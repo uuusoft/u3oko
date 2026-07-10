@@ -18,12 +18,6 @@ enum class Dims : std::uint32_t
   unknown   = 0xFF    //< Не определенно для общности
 };
 
-inline constexpr std::uint32_t
-                 enum_to_raw (const Dims& _val)
-{
-  return U3_CAST_UINT32_FORCE (_val);
-}
-
 /// Тип для хранения геометрических параметров буфера
 class DimVars final
 {

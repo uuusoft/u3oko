@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   vgen_motion-vgd
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/gens/vgen_motion/source
+  ${U3_PATH_ROOT}/dlls/gens/vgen_motion/source
   OUTPUT_NAME
   vgd_vgen_motion
   FORCE_TO_DYLIB

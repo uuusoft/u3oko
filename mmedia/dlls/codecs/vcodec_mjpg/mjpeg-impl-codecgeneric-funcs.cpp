@@ -68,6 +68,7 @@ MjpegImpl::code_int (
   ::libs::bufs::Bufs*               dst,
   syn::TransformInfo::tevents_type* events) -> bool
 {
+  U3_LOG_DATA_DBG ("MjpegImpl::code_int:---->");
   const syn::IVideoBuf::raw_ptr  obuf = (*dst)[cinfo_.bufs_.indx_dbuf_];
   const syn::IVideoBuf::craw_ptr hbuf = (*src)[utils::dbufs::video::consts::offs::hue];
   const syn::IVideoBuf::craw_ptr sbuf = (*src)[utils::dbufs::video::consts::offs::sat];
@@ -111,6 +112,7 @@ MjpegImpl::code_int (
 
     cinfo.params_.pints_.push_back (&stride_rgb24);
 
+    U3_LOG_DATA_DBG ("MjpegImpl::code_int: call fhsl_to_rgb24");
     pthreads_->mthreads_call (*id_node_graph_, tfunc, cinfo, transinfo_->exptimes_, 0);
     U3_ASSERT (stride_rgb24 == U3_CAST_INT32 (stride_temp_buf));
   }
@@ -128,6 +130,7 @@ MjpegImpl::code_int (
     cinfo.srcs_.emplace_back (lbuf, "lbuf dlls::codecs::vcodec_mjpg");
     cinfo.dsts_.emplace_back (temp_buf_.get (), "temp_buf dlls::codecs::vcodec_mjpg");
 
+    U3_LOG_DATA_DBG ("MjpegImpl::code_int: call fx16_x8");
     ::libs::optim::mcalls::MTFuncInfo tfunc (&fx16_x8_);
     pthreads_->mthreads_call (*id_node_graph_, tfunc, cinfo, transinfo_->exptimes_);
   }
@@ -135,6 +138,7 @@ MjpegImpl::code_int (
   const bool ret = comp_iframe (use_color, tout_buf, out_size);
   U3_ASSERT (out_size > 0);
   obuf->set_mem_var (::utils::dbufs::MemVars::size_data, out_size);
+  U3_LOG_DATA_DBG ("MjpegImpl::code_int:<----");
   return ret;
 }
 

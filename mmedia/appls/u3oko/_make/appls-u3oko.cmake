@@ -15,8 +15,8 @@ u3_add_target_dylib(
   USE_EXACTLY_SOURCE_FILES
   TRUE
   SOURCE_FILES
-  ${U3_BUILD_PATH_TO_LIBS}/appls/u3oko/appl/u3oko-appl.cpp
-  ${U3_BUILD_PATH_TO_LIBS}/appls/u3oko/appls-u3oko-main.cpp
+  ${U3_PATH_ROOT}/appls/u3oko/appl/u3oko-appl.cpp
+  ${U3_PATH_ROOT}/appls/u3oko/appls-u3oko-main.cpp
   EXTENDED_LIBS
   ilink-lib
   optim-lib

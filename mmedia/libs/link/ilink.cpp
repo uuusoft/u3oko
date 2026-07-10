@@ -24,7 +24,7 @@ ILink::listen (const CreateInfo& info) -> bool
 
 
 auto
-ILink::destroy (const LinkDestroys& type) -> bool
+ILink::destroy (const LinkDestroys& type) noexcept -> bool
 {
   return destroy_int (type);
 }

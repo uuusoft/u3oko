@@ -14,12 +14,10 @@ class IFilterImpl
   public:
   //  ext types
   U3_ADD_POINTERS_TO_SELF (IFilterImpl)
+  U3_ADD_DELETE_MOVE_COPY (IFilterImpl);
 
   IFilterImpl ()          = default;
   virtual ~IFilterImpl () = default;
-
-  IFilterImpl& operator= (const IFilterImpl& obj) = delete;
-  IFilterImpl (const IFilterImpl& obj)            = delete;
 
   //  IFilterImpl interface
   virtual void transform_int (const ::libs::core::graph::NodeID&, ::libs::icore::impl::var1::obj::dll::TransformInfo&, InfoFilter&, ::libs::bufs::Bufs*) = 0;

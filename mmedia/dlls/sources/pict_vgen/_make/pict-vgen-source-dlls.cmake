@@ -23,7 +23,7 @@ u3_add_target_dylib(
   TARGET_NAME
   pict_vgen-vss
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/sources/pict_vgen/source
+  ${U3_PATH_ROOT}/dlls/sources/pict_vgen/source
   OUTPUT_NAME
   vss_pict_vgen
   FORCE_TO_DYLIB

@@ -24,7 +24,7 @@ class SkipSortAlg final
     const std::int32_t  size_core,
     const std::int32_t  half_size_core,
     const std::int32_t  count_core_vals,
-    const std::int32_t  beg_cond_core,
+    const std::uint32_t beg_cond_core,
     std::uint32_t       sstride,
     const std::int32_t  rang,
     const std::int16_t* spx,

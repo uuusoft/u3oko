@@ -27,6 +27,8 @@ class FinderNthElementByCount final
 {
   public:
   //  ext types
+  U3_ADD_DELETE_MOVE_COPY (FinderNthElementByCount);
+
   using source_value_type = template_source_value_type;   //< Тип входных значений (обычно short)
   using int_value_type    = template_int_value_type;      //< Тип для дипазона значений, который может обрабатываться данной реализацией. Он меньше, чем диапазон значений входного типа
 
@@ -40,9 +42,6 @@ class FinderNthElementByCount final
   }
 
   ~FinderNthElementByCount () = default;
-
-  FinderNthElementByCount (const FinderNthElementByCount&)            = delete;
-  FinderNthElementByCount& operator= (const FinderNthElementByCount&) = delete;
 
   /// Функция для получения n-элемента по распределенному массиву
   /// \param[in]  beg_core   начало области фильтрации

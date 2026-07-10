@@ -86,8 +86,7 @@ Bufs::operator[] (const syn::off_buf_type& indx) const -> syn::IVideoBuf::craw_p
 
 
 void
-Bufs::swap (Bufs& src)
-  noexcept
+Bufs::swap (Bufs& src) noexcept
 {
   if (this == &src)
   {

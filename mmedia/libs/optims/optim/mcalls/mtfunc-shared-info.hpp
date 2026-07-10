@@ -13,14 +13,13 @@ class MTFuncSharedInfo final
 {
   public:
   //  ext types
+  U3_ADD_DELETE_MOVE_COPY (MTFuncSharedInfo);
+
   using barier_type     = std::barrier<>;
   using barier_ptr_type = std::unique_ptr< barier_type >;
 
   MTFuncSharedInfo ()  = default;
   ~MTFuncSharedInfo () = default;
-
-  MTFuncSharedInfo (const MTFuncSharedInfo&)            = delete;
-  MTFuncSharedInfo& operator= (const MTFuncSharedInfo&) = delete;
 
   std::atomic_bool exit_request_ = false;   //< Флаг запроса на выход
   barier_ptr_type  bstart_;                 //< Барьер старта

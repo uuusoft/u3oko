@@ -31,8 +31,10 @@ extern "C" BOOST_SYMBOL_EXPORT auto create_impl_mpl_mdata () -> ::libs::link::ap
 extern "C" BOOST_SYMBOL_EXPORT void delete_impl_mpl_mdata (::libs::link::appl::IApplication* appl);
 #endif
 
+#if (U3_MODULES_ENABLE_STORAGE == 1)
 extern "C" BOOST_SYMBOL_EXPORT auto create_impl_mpl_mstorage () -> ::libs::link::appl::IApplication*;
 extern "C" BOOST_SYMBOL_EXPORT void delete_impl_mpl_mstorage (::libs::link::appl::IApplication* appl);
+#endif
 
 extern "C" BOOST_SYMBOL_EXPORT auto create_impl_appl_u3oko () -> ::libs::link::appl::IApplication*;
 extern "C" BOOST_SYMBOL_EXPORT void delete_impl_appl_u3oko (::libs::link::appl::IApplication* appl);
@@ -72,10 +74,12 @@ get_create_module_func (const std::string& plib_id) -> ::libs::link::appl::IAppl
     return create_impl_mpl_mdata;
   }
 #endif
+#if (U3_MODULES_ENABLE_STORAGE == 1)
   if (lib_id == "mpl_mstorage")
   {
     return create_impl_mpl_mstorage;
   }
+#endif
   if (lib_id == "appl_u3oko")
   {
     return create_impl_appl_u3oko;
@@ -117,10 +121,12 @@ get_delete_module_func (const std::string& plib_id) -> ::libs::link::appl::IAppl
     return delete_impl_mpl_mdata;
   }
 #endif
+#if (U3_MODULES_ENABLE_STORAGE == 1)
   if (lib_id == "mpl_mstorage")
   {
     return delete_impl_mpl_mstorage;
   }
+#endif
   if (lib_id == "appl_u3oko")
   {
     return delete_impl_appl_u3oko;

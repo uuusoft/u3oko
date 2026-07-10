@@ -66,7 +66,7 @@ class GetUsersSessions : public BaseUserEvent
   static constexpr auto
   gen_get_mid () -> const IEvent::hid_type&
   {
-    static constexpr const char* chret = "libs/events_user/events/get-users-sessions";
+    static constexpr const char*            chret = "libs/events_user/events/get-users-sessions";
     static constexpr const IEvent::hid_type ret { chret };
     return ret;
   }

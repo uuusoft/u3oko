@@ -19,7 +19,6 @@ Filter::~Filter ()
     jpeg_buf_      = nullptr;
     size_jpeg_buf_ = 0;
   }
-
   if (hjpeg_)
   {
     tjDestroy (hjpeg_);
@@ -76,6 +75,63 @@ Filter::transform_int (syn::TransformInfo& info)
   itransform (info);
 }
 
+
+void
+Filter::itransform (syn::TransformInfo& info)
+{
+  syn::IVideoBuf::raw_ptr psrc = (*pbuf_)[finfo_.rprops_->bufs_.indx_sbuf_];
+  if (!psrc)
+  {
+    U3_XLOG_DBG ("FACE DETECTOR SKIP if (!psrc)")
+    return;
+  }
+
+  dlib::array2d< std::uint8_t > img;
+
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
+  static std::int32_t counter   = 20;
+  const std::string   file_path = "c:/imgs/dump_" + std::to_string (counter) + ".jpg";
+  dlib::load_image (img, file_path);
+  ++counter;
+#endif
+
+  temp_buf_->clone (psrc, 100.0F);
+  utils::dbufs::video::helpers::swap_buf_data_by_rows (temp_buf_.get ());
+  helpers::copy2dlib (temp_buf_.get (), img);
+
+  // Make the image bigger by a factor of two.  This is useful since
+  // the face detector looks for faces that are about 80 by 80 pixels
+  // or larger.  Therefore, if you want to find faces that are smaller
+  // than that then you need to upsample the image as we do here by
+  // calling pyramid_up().  So this will allow it to detect faces that
+  // are at least 40 by 40 pixels in size.  We could call pyramid_up()
+  // again to find even smaller faces, but note that every time we
+  // upsample the image we make the detector run slower since it must
+  // process a larger image.
+  // dlib::pyramid_up( img );
+
+  // Now tell the face detector to give us a list of bounding boxes
+  // around all the faces it can find in the image.
+  // std::vector< dlib::rectangle > faces = finfo_.detector_ (img);
+  auto faces = finfo_.detector_ (img);
+  if (faces.empty ())
+  {
+    U3_XLOG_DBG ("FACE DETECTOR SKIP: faces not found")
+    return;
+  }
+
+  for (std::size_t i = 0; i < faces.size (); ++i)
+  {
+    const auto& face = faces[i];
+    U3_LOG_DATA_DEV ("Face index" + VTOLOG (i) + " from" + VTOLOG (faces.size ()) + VTOLOG (face.left ()) + VTOLOG (face.top ()) + VTOLOG (face.width ()) + VTOLOG (face.height ()));
+  }
+
+  auto [evnt, revnt]       = ::libs::iproperties::helpers::create_event< syn::AddEvent2EventsMsg > (libs::utility::utils::cuuid (), "???<<<>>>???");
+  auto [fd_evnt, fd_revnt] = ::libs::iproperties::helpers::create_event< syn::FaceDetect > ();
+  revnt->set_event (fd_evnt);
+  info.frame_events_->emplace_back (evnt);
+}
+
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
 void
 Filter::convert_buf2rgb24 (syn::IVideoBuf::craw_ptr psrc, syn::IVideoBuf::raw_ptr pdst)
@@ -118,8 +174,6 @@ Filter::save_buf2file (
   unsigned long       jpeg_size  = 0;
   unsigned long       max_size   = tjBufSize (lsrc.width_, lsrc.height_, out_format);
 
-  // std::generate( cur_buf, cur_buf + lsrc.stride_ * lsrc.height_, []()->std::uint8_t { return rand() % 100 + 100; } );
-  // std::generate( cur_buf, cur_buf + lsrc.stride_ * lsrc.height_, []()->std::uint8_t { return 100; } );
   if (!hjpeg_)
   {
     hjpeg_ = tjInitCompress ();
@@ -162,63 +216,4 @@ Filter::save_buf2file (
   file.flush ();
 }
 #endif
-
-void
-Filter::itransform (syn::TransformInfo& info)
-{
-  syn::IVideoBuf::raw_ptr psrc = (*pbuf_)[finfo_.rprops_->bufs_.indx_sbuf_];
-  if (!psrc)
-  {
-    U3_XLOG_DBG ("FACE DETECTOR SKIP if (!psrc)")
-    return;
-  }
-
-
-  dlib::array2d< std::uint8_t > img;
-
-#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
-  static std::int32_t counter   = 20;
-  const std::string   file_path = "c:/imgs/dump_" + std::to_string (counter) + ".jpg";
-  dlib::load_image (img, file_path);
-  ++counter;
-#endif
-
-  temp_buf_->clone (psrc, 100.0F);
-  utils::dbufs::video::helpers::swap_buf_data_by_rows (temp_buf_.get ());
-  helpers::copy2dlib (temp_buf_.get (), img);
-
-  // Make the image bigger by a factor of two.  This is useful since
-  // the face detector looks for faces that are about 80 by 80 pixels
-  // or larger.  Therefore, if you want to find faces that are smaller
-  // than that then you need to upsample the image as we do here by
-  // calling pyramid_up().  So this will allow it to detect faces that
-  // are at least 40 by 40 pixels in size.  We could call pyramid_up()
-  // again to find even smaller faces, but note that every time we
-  // upsample the image we make the detector run slower since it must
-  // process a larger image.
-  // dlib::pyramid_up( img );
-
-  // Now tell the face detector to give us a list of bounding boxes
-  // around all the faces it can find in the image.
-  // std::vector< dlib::rectangle > faces = finfo_.detector_ (img);
-  auto faces = finfo_.detector_ (img);
-  if (faces.empty ())
-  {
-    U3_XLOG_DBG ("FACE DETECTOR SKIP face not found")
-    return;
-  }
-
-  for (std::size_t i = 0; i < faces.size (); ++i)
-  {
-    const auto& face = faces[i];
-    U3_LOG_DATA_DEV ("Face" + VTOLOG (i) + " from" + VTOLOG (faces.size ()) + VTOLOG (face.left ()) + VTOLOG (face.top ()) + VTOLOG (face.width ()) + VTOLOG (face.height ()));
-  }
-
-  syn::IEvent::ptr rmsg;
-  syn::IEvent::ptr irmsg;
-  auto             dmsg = ::libs::iproperties::helpers::create_event< syn::AddEvent2EventsMsg > (rmsg, libs::utility::utils::cuuid (), "???????");
-  ::libs::iproperties::helpers::create_event< syn::FaceDetect > (irmsg);
-  dmsg->set_event (irmsg);
-  info.frame_events_->push_back (rmsg);
-}
 }   // namespace dlls::detectors::detect_face

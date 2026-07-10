@@ -14,6 +14,8 @@ template< typename ResourceTType, camera_status_t (*free_funct) (ResourceTType*)
 class ResourceHolder final
 {
   public:
+  U3_ADD_DELETE_MOVE_COPY (ResourceHolder);
+
   explicit ResourceHolder (ResourceTType* val = nullptr) :
     resource_ (val)
   {
@@ -24,10 +26,6 @@ class ResourceHolder final
   {
     release ();
   }
-
-  ResourceHolder (const ResourceHolder&)            = delete;
-  ResourceHolder& operator= (const ResourceHolder&) = delete;
-
 
   void
   release () noexcept

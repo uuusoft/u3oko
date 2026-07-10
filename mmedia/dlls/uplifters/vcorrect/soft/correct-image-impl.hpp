@@ -24,13 +24,10 @@ namespace dlls::uplifters::vcorrect::soft
 class CorrectImageImpl final : public ::libs::events_base::runtime::interf::interfaces::ICorrectImage
 {
   public:
+  U3_ADD_DELETE_MOVE_COPY (CorrectImageImpl);
+
   CorrectImageImpl ();
   virtual ~CorrectImageImpl () = default;
-
-  CorrectImageImpl (const CorrectImageImpl&)                = delete;
-  CorrectImageImpl& operator= (const CorrectImageImpl&)     = delete;
-  CorrectImageImpl (CorrectImageImpl&&) noexcept            = delete;
-  CorrectImageImpl& operator= (CorrectImageImpl&&) noexcept = delete;
 
   private:
   using graduent_array_type = std::array< std::int16_t, consts::size_graduent >;

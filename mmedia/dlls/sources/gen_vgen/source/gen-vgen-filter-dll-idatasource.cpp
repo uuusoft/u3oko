@@ -68,10 +68,10 @@ Filter::fill_buf (
 
     for (const auto& event : *events)
     {
-      auto* devent = ::libs::iproperties::helpers::cast_event< ::libs::events_base::runtime::interf::InterfCaptureImageEvent > (event);
+      auto* devent = ::libs::iproperties::helpers::cast_event< syn::InterfCaptureImageEvent > (event);
       if (devent)
       {
-        U3_LOG_DATA_MARK ("recive ::libs::events_base::runtime::interf::InterfCaptureImageEvent -> update properties" + VTOLOG (devent->is_active ()));
+        U3_LOG_DATA_MARK ("recive InterfCaptureImageEvent -> update properties" + VTOLOG (devent->is_active ()));
         finfo_.capture_impl_ = devent->is_active () ? devent->get_interface () : finfo->null_impl_;
         U3_ASSERT (!finfo_.capture_impl_.expired ());
         if (auto impl = finfo_.capture_impl_.lock ())

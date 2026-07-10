@@ -7,7 +7,7 @@ u3_add_target_dylib(
   TARGET_NAME
   doptim-dll
   SOURCE_PATH
-  ${U3_BUILD_PATH_TO_LIBS}/dlls/doptim
+  ${U3_PATH_ROOT}/dlls/doptim
   OUTPUT_NAME
   vdd_doptim
   FORCE_TO_DYLIB

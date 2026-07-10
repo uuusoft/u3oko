@@ -42,7 +42,7 @@ set(U3_SHARED_LINK_OPTIONS_CPP
     ${android-app-glue-lib}
     ${android-log-lib})
 
-include_directories("${U3_BUILD_PATH_TO_LIBS}/../")
+include_directories("${U3_PATH_ROOT}/../")
 
 message(NOTICE "${U3_MARK_REFACT}merge directories for android")
 file(REMOVE_RECURSE "${CMAKE_SOURCE_DIR}/appls/u3oko/android/app/src/main/assets/service#0")
