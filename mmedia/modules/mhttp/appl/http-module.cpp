@@ -4,7 +4,7 @@
 \date       01.01.2017
 \project    mhttp
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "../module-http-includes_int.hpp"
 #include "http-module-syn.hpp"
 #include "http-module.hpp"
@@ -240,7 +240,7 @@ HttpModule::process_request_event (const std::string&, const std::string& body) 
     const auto id_data        = pt.get< std::string > ("id_data", "xml");
     const auto url_xml_event  = pt.get< std::string > ("event");
     const auto url_id_request = pt.get< std::string > ("id_request", "request");
-    const auto type_request   = ::libs::link::details::to_request (url_id_request);
+    const auto request        = ::libs::link::details::to_request (url_id_request);
     const auto xml_type_data  = "xml" == id_data ? true : false;
 
     U3_CHECK_NT (!xml_type_data, "xml_type_data rised!")
@@ -250,7 +250,7 @@ HttpModule::process_request_event (const std::string&, const std::string& body) 
     const auto dbg_enable = process_request_event_debug (id_event, content, id_data);
     if (dbg_enable)
     {
-      U3_LOG_HTTP_DEV ("post " + ::libs::link::details::to_string (type_request) + TOLOG (url_id_event) + TOLOG (id_event));
+      U3_LOG_HTTP_DEV ("post " + ::libs::link::details::to_string (request) + TOLOG (url_id_event) + TOLOG (id_event));
       U3_LOG_HTTP_DEV ("post" + TOLOG (event_data) + VTOLOG (xml_type_data));
     }
 
@@ -261,7 +261,7 @@ HttpModule::process_request_event (const std::string&, const std::string& body) 
     U3_CHECK (recv_event, "null decode event" + STOLOG (id_event));
     U3_CHECK (id_event == recv_event->get_mid (), id_event + "!=" + STOLOG (recv_event->get_mid ()));
 
-    if (syn::Calls::generate == type_request)
+    if (syn::Calls::generate == request)
     {
       // запрос на генерацию события (в данном случае это http клиент, поэтому на генерацию xml схемы события) удовлетворяем сразу.
       content = xml_type_data ? ::libs::iproperties::helpers::event2xml (recv_event) : recv_event->save_json ();
@@ -290,8 +290,8 @@ HttpModule::process_request_event (const std::string&, const std::string& body) 
       // Иначе пересылаем сообщение в основной модуль системы, запросы всегда синхронные
       if (!send_event)
       {
-        const auto call_type = (type_request == syn::Calls::request) ? syn::CallSyncs::sync : syn::CallSyncs::async;
-        send_event           = links_.get (syn::mids::http2appl)->send_msg (recv_event, call_type, type_request);
+        const auto sync = (request == syn::Calls::request) ? syn::CallSyncs::sync : syn::CallSyncs::async;
+        send_event      = links_[syn::mids::http2appl]->send_msg (recv_event, { .sync_ = sync, .req_ = request });
       }
 
       content.clear ();

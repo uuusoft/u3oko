@@ -34,8 +34,8 @@ class LinksVideoDriverProp final : virtual public events_base::Event
     return ret;
   }
 
-  ::utils::dbufs::allocator::BufAllocatorProxy::raw_ptr     pdriver2buf_ = nullptr;   //<
-  ::utils::mem_funcs::impl::BlockMemAllocatorProxy::raw_ptr pdriver2mem_ = nullptr;   //<
+  ::utils::dbufs::allocator::BufAllocatorProxy::raw_ptr pdriver2buf_ = nullptr;   //<
+  ::utils::mems::impl::BlockMemAllocatorProxy::raw_ptr  pdriver2mem_ = nullptr;   //<
 
   private:
   U3_ADD_SUPER_CLASS (::libs::events_base::Event)

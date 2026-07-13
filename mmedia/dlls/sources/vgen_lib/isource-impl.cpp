@@ -4,7 +4,7 @@
 \date       26.06.2016
 \project    u3_vgen_lib
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "gen-lib-includes_int.hpp"
 #include "isource-impl.hpp"
 

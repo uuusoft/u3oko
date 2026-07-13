@@ -52,7 +52,7 @@ class ToLog final
     if (::libs::iproperties::helpers::check_prop_links ())
     {
       auto* props_links = ::libs::iproperties::helpers::get_prop_links ();
-      auto  logger      = props_links ? props_links->get_links_lockfree ().get (key_).lock () : nullptr;
+      auto  logger      = props_links ? props_links->get_links_lockfree ()[key_].lock () : nullptr;
       if (logger)
       {
         msg2logger (logger.get (), buftemp);

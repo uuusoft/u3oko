@@ -1,8 +1,9 @@
 # u3-applay-normalize-cpp.py
-# generator   gemini google
-# author      Erashov Anton erashov2026@proton.me
-# date        01.01.2026
-# copyright   Erashov A.I.
+# ai-generator  google gemini 
+# author        Erashov Anton erashov2026@proton.me
+# date          01.01.2026
+# copyright     Erashov A.I.
+# ai-prompt
 # Напиши на питоне функцию, которая принимает в качестве аргумента начальный путь к файлам. 
 # Для каждого файла рекурсивно, вызови clang-format, передавая в качестве аргумента путь к файлу.
 

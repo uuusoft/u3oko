@@ -4,7 +4,7 @@
 \date       01.01.2017
 \project    mhttp
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "../module-http-includes_int.hpp"
 #include "http-module-syn.hpp"
 #include "web-shared-state.hpp"

@@ -22,11 +22,12 @@ using LogVals                    = ::libs::events_base::props::modules::log::Log
 using ISharedProperty            = ::libs::properties::ISharedProperty;
 using ISystemProperty            = ::libs::iproperties::vers::system::ISystemProperty;
 using IAppPaths                  = ::libs::iproperties::appl_paths::IAppPaths;
-using BlockMemAllocatorProxy     = ::utils::mem_funcs::impl::BlockMemAllocatorProxy;
+using Paths                      = ::libs::iproperties::appl_paths::Paths;
+using BlockMemAllocatorProxy     = ::utils::mems::impl::BlockMemAllocatorProxy;
 using BufAllocatorProxy          = ::utils::dbufs::allocator::BufAllocatorProxy;
 using id_link_type               = ::libs::events_base::props::base_id::id_link_type;
 using ILinksProperty             = ::libs::properties::vers::links::ILinksProperty;
 
-namespace mids = libs::properties::vers::links::mids;
+namespace mids = ::libs::properties::vers::links::mids;
 namespace log  = ::libs::events_base::props::modules::log;
 }   // namespace libs::ilink::appl::syn

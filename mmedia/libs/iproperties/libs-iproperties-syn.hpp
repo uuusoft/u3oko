@@ -10,7 +10,7 @@ namespace libs::iproperties::syn
 {
 using ISharedProperty        = ::libs::properties::ISharedProperty;
 using ISharedPropertyStorage = ::libs::properties::ISharedPropertyStorage;
-using BlockMemAllocatorProxy = ::utils::mem_funcs::impl::BlockMemAllocatorProxy;
+using BlockMemAllocatorProxy = ::utils::mems::impl::BlockMemAllocatorProxy;
 using BufAllocatorProxy      = ::utils::dbufs::allocator::BufAllocatorProxy;
 using ApplicationProp        = ::libs::events_base::props::application::ApplicationProp;
 using PropertyLogModuleEvent = ::libs::events_base::props::modules::log::PropertyLogModuleEvent;

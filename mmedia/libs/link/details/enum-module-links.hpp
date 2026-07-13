@@ -28,6 +28,6 @@ enum class ModuleLinks : std::uint16_t
   unknown     = 0xFF    //< для общности
 };
 
-auto to_string (const ModuleLinks& val) -> const std::string&;
-auto to_string (const std::pair< ModuleLinks, ModuleLinks >& val) -> std::string;
+auto to_string (const ModuleLinks&) -> const std::string&;
+auto to_string (const std::pair< ModuleLinks, ModuleLinks >&) -> std::string;
 }   // namespace libs::link::details

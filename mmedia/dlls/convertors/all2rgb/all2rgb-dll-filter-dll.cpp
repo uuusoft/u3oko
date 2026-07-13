@@ -4,7 +4,7 @@
 \date       01.05.2017
 \project    u3_all2rgb
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "all2rgb-dll-includes_int.hpp"
 #include "all2rgb-dll-info-filter-dll.hpp"
 #include "all2rgb-dll-filter-dll.hpp"

@@ -24,7 +24,7 @@ class DimVars final
   public:
   //  ext types
   using dim_type  = std::uint32_t;
-  using dims_type = ::libs::utility::utils::ValuesStorage< Dims, std::uint32_t, Dims::max_bound, 0u >;
+  using dims_type = ::libs::utility::utils::ValuesStorage< Dims, std::uint32_t, Dims::max_bound, 0U >;
 
   DimVars ()
   {

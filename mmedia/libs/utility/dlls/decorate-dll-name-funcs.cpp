@@ -2,7 +2,7 @@
 \file       decorate-dll-name-funcs.cpp
 \date       25.02.2022
 \author     Erashov Anton erashov2026@proton.me
-\project    uuu_mem_funcs
+\project    uuu_mems
 */
 #include "../utility-lib-includes_int.hpp"
 #include "decorate-dll-name-funcs.hpp"

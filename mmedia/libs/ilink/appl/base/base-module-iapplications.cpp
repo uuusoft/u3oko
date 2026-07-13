@@ -4,7 +4,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_ilink
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "../../libs-ilink-includes_int.hpp"
 #include "../libs-ilink-appl-includes_int.hpp"
 #include "base-module.hpp"
@@ -41,21 +41,12 @@ void
 BaseModule::init_proxys_int ()
 {
   U3_XLOG_DBG ("BaseModule::init_proxys_int::---->" + TOLOG (text_id_module_));
-  all2mem_ = syn::BlockMemAllocatorProxy::instance (paths_->get_path (::libs::iproperties::appl_paths::Paths::bins));
-  U3_CHECK (all2mem_, "null all2mem");
-  U3_XLOG_DBG ("BaseModule::init_proxys_int:: pt1");
 
-  all2buf_ = syn::BufAllocatorProxy::instance (paths_->get_path (::libs::iproperties::appl_paths::Paths::bins));
-  U3_CHECK (all2buf_, "null all2buf");
-  U3_XLOG_DBG ("BaseModule::init_proxys_int:: pt2");
+  U3_CHECK (all2mem_ = syn::BlockMemAllocatorProxy::instance (paths_->get_path (syn::Paths::bins)), "null all2mem");
+  U3_CHECK (all2buf_ = syn::BufAllocatorProxy::instance (paths_->get_path (syn::Paths::bins)), "null all2buf");
+  U3_CHECK (all2optim_ = ::libs::proxy::IOptimProxy::instance (paths_->get_path (syn::Paths::bins)), "null all2optim");
+  U3_CHECK (all2events_ = ::libs::proxy::IEventsProxy::instance (paths_->get_path (syn::Paths::bins)), "null all2events");
 
-  all2optim_ = ::libs::proxy::IOptimProxy::instance (paths_->get_path (::libs::iproperties::appl_paths::Paths::bins));
-  U3_CHECK (all2optim_, "null all2optim");
-  U3_XLOG_DBG ("BaseModule::init_proxys_int:: pt3");
-
-  all2events_ = ::libs::proxy::IEventsProxy::instance (paths_->get_path (::libs::iproperties::appl_paths::Paths::bins));
-  U3_CHECK (all2events_, "null all2events");
-  U3_XLOG_DBG ("BaseModule::init_proxys_int:: pt4");
 #if 1
   {
     U3_XLOG_DBG ("BaseModule::init_proxys_int:: update shared propertyes");

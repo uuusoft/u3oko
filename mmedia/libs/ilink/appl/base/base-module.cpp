@@ -4,7 +4,7 @@
 \date       01.11.2016
 \project    u3_ilink
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "../../libs-ilink-includes_int.hpp"
 #include "../libs-ilink-appl-includes_int.hpp"
 #include "base-module.hpp"

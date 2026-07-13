@@ -4,7 +4,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_events_base_lib
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "../../../../../events-base-includes_int.hpp"
 #include "median-time-filter-prop.hpp"
 
@@ -57,7 +57,7 @@ MedianTimeFilterProp::self_correct_int ()
 {
   count_bufs_ = count_bufs_ / 2 * 2 + 1;   // гарантируем нечетность.
   count_bufs_ = ::libs::utility::utils::ret_check_bound (count_bufs_, consts::min_count_bufs, consts::max_count_bufs);
-  rang_       = ::libs::utility::utils::ret_check_bound (rang_, 0u, count_bufs_ - 1);
+  rang_       = ::libs::utility::utils::ret_check_bound (rang_, 0U, count_bufs_ - 1);
 }
 
 

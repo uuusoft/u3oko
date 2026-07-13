@@ -4,7 +4,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_ilink
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "../../libs-ilink-includes_int.hpp"
 #include "../libs-ilink-appl-includes_int.hpp"
 #include "root-module.hpp"
@@ -262,10 +262,9 @@ RootModule::appl_deinit_int () -> bool
   switch (deinit_stage_)
   {
   case DeInitStages::send_stop_msg2allmost_all: {
-    if (links_.get (syn::mids::appl2log))
+    if (links_[syn::mids::appl2log])
     {
       auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > ();
-
       revnt->change_appl_info (
         ::libs::events_log::AppllPartLogInfo (
           ::libs::events_base::props::modules::log::LogLevels::info,
@@ -274,18 +273,18 @@ RootModule::appl_deinit_int () -> bool
         "");
 
       revnt->set_start (false);
-      links_.get (syn::mids::appl2log)->send_msg (evnt);
+      links_[syn::mids::appl2log]->send_msg (evnt);
     }
 
-    if (links_.get (syn::mids::appl2gui))
+    if (links_[syn::mids::appl2gui])
     {
       auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< ::libs::events_gui::events::ExitApplEvent > ();
-      links_.get (syn::mids::appl2gui)->send_msg (evnt);
+      links_[syn::mids::appl2gui]->send_msg (evnt);
     }
 
-    change_module_state (links_.get (syn::mids::appl2http), appl_info_.appl_name_, false);
-    change_module_state (links_.get (syn::mids::appl2mdata), appl_info_.appl_name_, false);
-    change_module_state (links_.get (syn::mids::appl2gui), appl_info_.appl_name_, false);
+    change_module_state (links_[syn::mids::appl2http], appl_info_.appl_name_, false);
+    change_module_state (links_[syn::mids::appl2mdata], appl_info_.appl_name_, false);
+    change_module_state (links_[syn::mids::appl2gui], appl_info_.appl_name_, false);
 
     // std::this_thread::sleep_for (std::chrono::milliseconds (10 * 1000)); // debug
     deinit_stage_ = DeInitStages::wait_stop_data_module;
@@ -294,10 +293,10 @@ RootModule::appl_deinit_int () -> bool
     break;
   }
   case DeInitStages::wait_stop_data_module: {
-    if (!links_.get (syn::mids::appl2mdata) || !links_.get (syn::mids::appl2mdata)->is_connected ())
+    if (!links_[syn::mids::appl2mdata] || !links_[syn::mids::appl2mdata]->is_connected ())
     {
-      change_module_state (links_.get (syn::mids::appl2events), appl_info_.appl_name_, false);
-      change_module_state (links_.get (syn::mids::appl2storage), appl_info_.appl_name_, false);
+      change_module_state (links_[syn::mids::appl2events], appl_info_.appl_name_, false);
+      change_module_state (links_[syn::mids::appl2storage], appl_info_.appl_name_, false);
 
       links_.reset_link (syn::mids::appl2mdata);
       deinit_stage_ = DeInitStages::wait_stop_gui_module;
@@ -308,7 +307,7 @@ RootModule::appl_deinit_int () -> bool
     break;
   }
   case DeInitStages::wait_stop_gui_module: {
-    if (!links_.get (syn::mids::appl2gui) || !links_.get (syn::mids::appl2gui)->is_connected ())
+    if (!links_[syn::mids::appl2gui] || !links_[syn::mids::appl2gui]->is_connected ())
     {
       links_.reset_link (syn::mids::appl2gui);
       deinit_stage_ = DeInitStages::wait_stop_storage_module;
@@ -318,7 +317,7 @@ RootModule::appl_deinit_int () -> bool
     break;
   }
   case DeInitStages::wait_stop_storage_module: {
-    if (!links_.get (syn::mids::appl2storage) || !links_.get (syn::mids::appl2storage)->is_connected ())
+    if (!links_[syn::mids::appl2storage] || !links_[syn::mids::appl2storage]->is_connected ())
     {
       links_.reset_link (syn::mids::appl2storage);
       deinit_stage_ = DeInitStages::wait_stop_events_module;
@@ -328,7 +327,7 @@ RootModule::appl_deinit_int () -> bool
     break;
   }
   case DeInitStages::wait_stop_events_module: {
-    if (!links_.get (syn::mids::appl2events) || !links_.get (syn::mids::appl2events)->is_connected ())
+    if (!links_[syn::mids::appl2events] || !links_[syn::mids::appl2events]->is_connected ())
     {
       links_.reset_link (syn::mids::appl2events);
       deinit_stage_ = DeInitStages::send_stop_msg2log_module;
@@ -338,11 +337,11 @@ RootModule::appl_deinit_int () -> bool
     break;
   }
   case DeInitStages::send_stop_msg2log_module: {
-    if (links_.get (syn::mids::appl2log))
+    if (links_[syn::mids::appl2log])
     {
       auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::ChangeStateProcessEvent > ();
       revnt->set_start (false);
-      links_.get (syn::mids::appl2log)->send_msg (evnt);
+      links_[syn::mids::appl2log]->send_msg (evnt);
     }
 
     deinit_stage_ = DeInitStages::wait_stop_log_module;
@@ -351,7 +350,7 @@ RootModule::appl_deinit_int () -> bool
     break;
   }
   case DeInitStages::wait_stop_log_module: {
-    if (!links_.get (syn::mids::appl2log) || !links_.get (syn::mids::appl2log)->is_connected ())
+    if (!links_[syn::mids::appl2log] || !links_[syn::mids::appl2log]->is_connected ())
     {
       links_.reset_link (syn::mids::appl2log);
       deinit_stage_ = DeInitStages::done;
@@ -471,7 +470,7 @@ RootModule::update_catch_funcs_int ()
         syn::TextExtCpu helper;
         info_cpu->copy (msg.get ());
         U3_LOG_APPL_MARK ("updated cpu: " + helper.get_text (info_cpu->get_cpu_type ()) + " {" + std::to_string (info_cpu->get_cpu_count ()) + "}");
-        links_.get (syn::mids::appl2mdata)->send_msg (msg);
+        links_[syn::mids::appl2mdata]->send_msg (msg);
 
         const auto active_paths = paths_->get_path (::libs::iproperties::appl_paths::Paths::active_appl_module);
         helpers::save_event_to_json_file (active_paths, msg);
@@ -494,7 +493,7 @@ RootModule::update_catch_funcs_int ()
       {
         info_log->copy (msg.get ());
         ::libs::events_base::props::modules::log::g_log_level = ::libs::events_base::props::modules::log::from_raw_val (info_log->get_val (::libs::events_base::props::modules::log::LogVals::log_level));
-        links_.get (syn::mids::appl2log)->send_msg (msg);
+        links_[syn::mids::appl2log]->send_msg (msg);
 
         const auto active_paths = paths_->get_path (::libs::iproperties::appl_paths::Paths::active_appl_module);
         helpers::save_event_to_json_file (active_paths, msg);
@@ -510,7 +509,7 @@ RootModule::update_catch_funcs_int ()
     {
       if (!process_state.answer_)
       {
-        links_.get (syn::mids::appl2events)->send_msg (msg);
+        links_[syn::mids::appl2events]->send_msg (msg);
         // const auto active_paths = paths_->get_path (::libs::iproperties::appl_paths::Paths::active_appl_module);
         // helpers::save_event_to_file (active_paths, msg);
       }
@@ -523,7 +522,7 @@ RootModule::update_catch_funcs_int ()
     [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
-      auto res = links_.get (syn::mids::appl2mdata)->send_msg (msg, ::libs::link::details::CallSyncs::sync, ::libs::link::details::Calls::set);
+      auto res = links_[syn::mids::appl2mdata]->send_msg (msg, { .sync_ = ilink::syn::CallSyncs::sync, .req_ = ilink::syn::Calls::set });
       return {};
     }
     return msg;
@@ -566,7 +565,7 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
   auto       iproxy    = lproxy->impl ();
   auto       ipstorage = ::libs::iproperties::helpers::get_storage ();
 
-  const std::tuple< std::string, std::string, ::libs::link::details::ModuleLinks, std::uint32_t, syn::mids::key_storage_type > create_vals[] = {
+  const std::tuple< std::string, std::string, ::libs::link::details::ModuleLinks, std::uint64_t, syn::mids::key_storage_type > create_vals[] = {
     { "mpl_mlog", "subsys_appl2log", ::libs::link::details::ModuleLinks::log, ::libs::link::consts::sizes::buf_all2log, syn::mids::appl2log },
     { "mpl_mevents", "subsys_events", ::libs::link::details::ModuleLinks::events, ::libs::link::consts::sizes::buf_all2events, syn::mids::appl2events },
     { "mpl_mstorage", "subsys_storage", ::libs::link::details::ModuleLinks::storage, ::libs::link::consts::sizes::buf_appl2storage, syn::mids::appl2storage },
@@ -583,13 +582,24 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     ::libs::properties::consts::keys::links_property,
     std::make_shared< syn::ILinksProperty > (syn::ILinksProperty::links_type {}));
 
-  constexpr std::uint32_t dbg_delay_process = 3000;
+  constexpr std::uint32_t dbg_delay_process = 1000;
   std::uint32_t           create_counter    = 0;
   for (const auto& [dll_name, subsys_name, subsys_id, buf_size, link_id] : create_vals)
   {
-    // U3_XLOG_DEV ("debug sleep::---->" + VTOLOG (create_counter) + TOLOG (dll_name));
-    // std::this_thread::sleep_for (std::chrono::milliseconds (dbg_delay_process));
-    // U3_XLOG_DEV ("debug sleep::<----" + VTOLOG (create_counter) + TOLOG (dll_name));
+    U3_XLOG_DEV ("debug sleep::---->" + VTOLOG (create_counter) + TOLOG (dll_name));
+    std::this_thread::sleep_for (std::chrono::milliseconds (dbg_delay_process));
+    U3_XLOG_DEV ("debug sleep::<----" + VTOLOG (create_counter) + TOLOG (dll_name));
+#if 1
+    auto temp_link = iproxy->get_connect (
+      ::libs::link::CreateInfo (
+        { { ::libs::link::consts::text::id_appl_name, appl_info_.appl_name_ },
+          { ::libs::link::consts::text::id_lib_name, dll_name },
+          { ::libs::link::consts::text::id_subsys_name, subsys_name },
+          { ::libs::link::consts::text::id_lib_name, dll_name },
+          { ::libs::link::consts::text::id_size_shared_mem, buf_size },
+          { ::libs::link::consts::text::id_module_links, subsys_id },
+          { ::libs::link::consts::text::id_code_runs, type_run } }));
+#else
     auto temp_link = iproxy->get_connect (
       ::libs::link::CreateInfo (
         type_run,
@@ -600,26 +610,26 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
         subsys_name,
         subsys_id,
         buf_size));
-
+#endif
+    U3_XLOG_DEV ("prepare set link" + VTOLOG (create_counter) + TOLOG (dll_name));
     links_.set (link_id, temp_link);
     ++create_counter;
   }
 
+  U3_XLOG_DEV ("shared links");
   //  Разделяем созданные интерфейсы между всей системой через объект "свойства"
   {
     // std::this_thread::sleep_for (std::chrono::milliseconds (dbg_delay_process));
-    // U3_XLOG_DEV (PTR_TOLOG (links_.get (syn::mids::appl2log).get ()));
     auto* ilinks = ::libs::iproperties::helpers::get_prop_links ();
     auto& links  = ilinks->update_links_lockfree ();
     for (const auto& [dll_name, subsys_name, subsys_id, buf_size, link_id] : create_vals)
     {
-      links.set (link_id, links_.get (link_id));
+      links.set (link_id, links_[link_id]);
     }
   }
 
   {
     auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > ();
-
     revnt->change_appl_info (
       ::libs::events_log::AppllPartLogInfo (
         ::libs::events_base::props::modules::log::LogLevels::info,
@@ -628,12 +638,12 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
       "");
 
     revnt->set_start (true);
-    links_.get (syn::mids::appl2log)->send_msg (evnt);
+    links_[syn::mids::appl2log]->send_msg (evnt);
   }
 
   {
     auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::PropertyStorageModuleEvent > ();
-    links_.get (syn::mids::appl2storage)->send_msg (evnt);
+    links_[syn::mids::appl2storage]->send_msg (evnt);
   }
 
   {
@@ -643,8 +653,7 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     U3_LOG_APPL_MARK ("CPU ext       : " + helper.get_text (info_cpu->get_cpu_type ()));
     U3_LOG_APPL_MARK ("Cores count   : " + std::to_string (info_cpu->get_cpu_count ()));
     U3_LOG_APPL_MARK ("Threads count : " + std::to_string (::libs::optim::mcalls::get_count_work_threads_by_count_cpu (info_cpu->get_cpu_count ())));
-
-    links_.get (syn::mids::appl2mdata)->send_msg (appl_event_props_.info_cpu_);
+    links_[syn::mids::appl2mdata]->send_msg (appl_event_props_.info_cpu_);
   }
 
   const std::tuple< syn::mids::key_storage_type > start_vals[] = {
@@ -661,9 +670,10 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
 
   for (const auto& [link_id] : start_vals)
   {
+    U3_XLOG_DBG ("start subsystem:" + to_string (link_id));
     auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::ChangeStateProcessEvent > ();
     revnt->set_start (true);
-    links_.get (link_id)->send_msg (evnt);
+    links_[link_id]->send_msg (evnt);
   }
   U3_XLOG_DBG ("RootModule::init_links_int::<----");
 }

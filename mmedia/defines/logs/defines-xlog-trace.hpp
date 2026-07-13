@@ -70,7 +70,7 @@
 #  endif
 
 #  ifndef U3_XLOG_DBG
-#    ifdef U3_USE_DEB_LOG_LEVEL
+#    ifdef U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #      define U3_XLOG_DBG(u3def_param) U3_XLOG_DEV (u3def_param);
 #    else
 #      define U3_XLOG_DBG(u3def_param)

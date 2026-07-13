@@ -4,7 +4,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_helpers_lib
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "../utility-lib-includes_int.hpp"
 #include "work-with-string-bufs-funcs.hpp"
 

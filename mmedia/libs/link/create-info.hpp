@@ -9,48 +9,30 @@
 namespace libs::link
 {
 /// Структура для группировки информации для создания реализации "связь" между модулями
+/// Параметры определяют имя сервиса для настроек и данных, способ загрузки кода, имя модуля и пр.
+/// Более подробно по ключам consts::text::id_
 struct CreateInfo {
   //  ext types
-  using ids2vals_type = boost::unordered_flat_map< std::string, std::string >;
+  using val_type    = std::variant< bool, std::string, std::uint64_t, details::ModuleLinks, details::CodeRuns >;
+  using val_id_type = std::string;
+  using vals_type   = boost::unordered_flat_map< val_id_type, val_type >;
 
-  /// Конструктор по умолчанию для контейнеров и композиции в другом типе
-  CreateInfo ();
-
-  /// EAI-REFACT
-  /// \brief      Рабочий конструктор
-  /// \param[in]  run_as                 тип компоновки кода (в отдельном процессе, в текущем процесса etc)
-  /// \param[in]  name_proc              DEFINE
-  /// \param[in]  name_lib               имя модуля с кодом
-  /// \param[in]  company_name           наименование компании
-  /// \param[in]  appl_name              наименование приложения
-  /// \param[in]  subsys_name            наименования модуля
-  /// \param[in]  type                   тип связи по конечным модулям
-  /// \param[in]  size_shared_mem_bytes  размер буфера данных связи
-  CreateInfo (
-    const details::CodeRuns&    run_as,
-    const std::string&          name_proc,
-    const std::string&          name_lib,
-    const std::string&          company_name,
-    const std::string&          appl_name,
-    const std::string&          subsys_name,
-    const details::ModuleLinks& type,
-    std::int32_t                size_shared_mem_bytes);
-
+  CreateInfo ()          = default;
   virtual ~CreateInfo () = default;
+  CreateInfo (const vals_type& vals);
 
   auto check () const -> void;
-  auto make_arg (const std::string&, const std::string&) -> std::string;
   auto get_prefix () const -> std::string;
 
-  bool operator< (const CreateInfo&) const;
-  bool operator== (const CreateInfo&) const;
-
-  details::CodeRuns          run_as_;                  //< Тип требуемого запуска (dll/exe/etc)
-  std::vector< std::string > args_;                    //< Аргументы запуска
-  details::ModuleLinks       pt2pt_;                   //< Тип канала. Определяет конечные точки канала (основной модуль/http/data/onvif/storage/gui/etc)
-  std::int32_t               size_shared_mem_bytes_;   //< Макисмальный размер разделяемой памяти для канала
-  mutable ids2vals_type      id_arg2val_;              //<
+  mutable vals_type link_params_;   //<
 };
 
-std::string to_string (const CreateInfo& val);
+auto to_string (const CreateInfo& val) -> std::string;
 }   // namespace libs::link
+
+namespace libs::link::helpers
+{
+auto get_module_links (const CreateInfo& info) -> details::ModuleLinks;
+auto get_code_runs (const CreateInfo& info) -> details::CodeRuns;
+auto get_server_side (const CreateInfo& info) -> bool;
+}   // namespace libs::link::helpers

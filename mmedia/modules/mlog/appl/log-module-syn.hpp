@@ -21,4 +21,6 @@ using suppressor_type           = ::libs::utility::log::SupressorVerboseLogMsg< 
 using LogVals                   = ::libs::events_base::props::modules::log::LogVals;
 using IEvent                    = ::libs::events::IEvent;
 using StateProcessEventExt      = ::libs::ilink::appl::StateProcessEventExt;
+
+namespace mids = ::libs::properties::vers::links::mids;
 }   // namespace modules::mlog::appl::syn

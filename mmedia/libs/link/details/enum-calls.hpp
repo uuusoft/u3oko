@@ -18,6 +18,6 @@ enum class Calls : std::uint32_t
   unknown  = 0xFF    //< Не определенно для общности
 };
 
-auto to_string (const Calls& req) -> const std::string&;
-auto to_request (const std::string& str) -> Calls;
+auto to_string (const Calls&) -> const std::string&;
+auto to_request (const std::string&) -> Calls;
 }   // namespace libs::link::details

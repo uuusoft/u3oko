@@ -4,7 +4,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_time_noisez
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "space-noise-impl-rang-includes_int.hpp"
 #include "rang-filter.hpp"
 #include "mmedia/dlls/doptim/algs/all_algs.hpp"
@@ -81,6 +81,7 @@ RangFilter::transform_int (
   InfoFilter&                        finfo,
   ::libs::bufs::Bufs*                pbuf)
 {
+  U3_XLOG_DBG ("RangFilter::transform_int:---->");
   if (!temp_src_buf_)
   {
     temp_src_buf_ = ::libs::iproperties::helpers::cast_prop_demons ()->get_bufs_lockfree ()->impl ()->create (0);
@@ -175,6 +176,7 @@ RangFilter::transform_int (
 
     dst->set_mem_var (::utils::dbufs::MemVars::size_data, (*src)[::utils::dbufs::MemVars::size_data]);
   }
+  U3_XLOG_DBG ("RangFilter::transform_int:<----");
 }
 
 

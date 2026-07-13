@@ -4,7 +4,7 @@
 \date       26.07.2016
 \project    u3_vcodec_gen
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "vcodec-gen-includes_int.hpp"
 #include "mmedia/dlls/doptim/algs/all_algs.hpp"
 #include "vcodec-gen-filter-dll.hpp"

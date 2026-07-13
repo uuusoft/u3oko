@@ -5,7 +5,8 @@
 \project    u3_filter_space
 \brief      Файл реализации фильтрации в пространственной области
 */
-#include "memory"
+#define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
+// #include "memory"
 #include "space-noise-includes_int.hpp"
 #include "space-noise-filter-dll.hpp"
 #include "mmedia/dlls/doptim/algs/all_algs.hpp"
@@ -62,12 +63,10 @@ void
 Filter::transform_int (syn::TransformInfo& info)
 {
   prepare_transform (info);
-  if (::libs::events::PropertyUsings::disabled == finfo_.ef_props_.front ()->get_using_state ())
+  if (::libs::events::PropertyUsings::disabled != finfo_.ef_props_.front ()->get_using_state ())
   {
-    return;
+    itransform ();
   }
-
-  itransform ();
 }
 
 

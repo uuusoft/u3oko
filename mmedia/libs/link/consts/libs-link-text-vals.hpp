@@ -18,9 +18,17 @@ extern const char* id_subsys_name;
 extern const char* id_name_queue2dest;
 extern const char* id_name_shared_mem;
 extern const char* id_sync_init_event;
+extern const char* id_size_shared_mem;
+extern const char* id_module_links;
+extern const char* id_code_runs;
 extern const char* id_shared_mem_base;
+extern const char* id_server_side;
 extern const char* id_delay_ms;
-extern const char* default_company_name;
-extern const char* default_appl_name;
-extern const char* default_service_name;
 }   // namespace libs::link::consts::text
+
+namespace libs::link::consts::text::defaults
+{
+extern const char* company_name;
+extern const char* appl_name;
+extern const char* service_name;
+}   // namespace libs::link::consts::text::defaults

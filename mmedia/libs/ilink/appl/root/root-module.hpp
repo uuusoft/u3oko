@@ -45,7 +45,7 @@ class RootModule : public base::BaseModule
   /// Или пусто, если обработка должа производится в текущем модуле
   /// \param[in]  msg  сообщение
   /// \return     связь к модулю или пусто, если модуль неизвестен
-  auto get_dest_link (syn::IEvent::ptr& msg) -> ::libs::link::ILink::ptr;
+  auto get_dest_link (syn::IEvent::ptr&) -> ::libs::link::ILink::ptr;
 
   DeInitStages  deinit_stage_         = DeInitStages::send_stop_msg2allmost_all;                //< Текущая стадия становки модуля
   std::uint64_t deinit_stage_counter_ = 0;                                                      //<

@@ -27,6 +27,7 @@ LinkCreatorProxy::LinkCreatorProxy () :
   auto       mainappl = ipropos->get_appl_lockfree ();
   const auto implname = mainappl->get_messenger_impl ();
   const auto issingle = mainappl->is_single_process ();
+
   U3_XLOG_MARK ("init link proxy" + VTOLOG (issingle) + TOLOG (implname));
 
   if (issingle)

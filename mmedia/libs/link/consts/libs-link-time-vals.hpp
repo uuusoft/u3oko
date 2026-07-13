@@ -18,19 +18,19 @@ inline constexpr std::int32_t max_count_msgs { 1 * 1024 };         //< Макс�
 inline constexpr std::int32_t max_size_msg { 50 * 1024 * 1024 };   //< Максимальный размер сообщения в байтах
 
 #if defined(U3_OS_WIN32_DESKTOP) || defined(U3_OS_GNU_LINUX) || defined(U3_OS_MACX_DESKTOP)
-inline constexpr std::int32_t              size_shared_mem_bytes { 1024 * 1024 * 1024 };
+inline constexpr std::uint64_t             size_shared_mem_bytes { 1024 * 1024 * 1024U };
 inline constexpr std::chrono::milliseconds ms_wait_delay_recv_msg { 1 };
 inline constexpr std::chrono::milliseconds ms_wait_delay_special_msg_cycle { 1 };
 #elif defined(U3_OS_RASPBERRY)
-inline constexpr std::int32_t              size_shared_mem_bytes { 256 * 1024 * 1024 };
+inline constexpr std::uint64_t             size_shared_mem_bytes { 256 * 1024 * 1024U };
 inline constexpr std::chrono::milliseconds ms_wait_delay_recv_msg { 1 };
 inline constexpr std::chrono::milliseconds ms_wait_delay_special_msg_cycle { 1 };
 #elif defined(U3_OS_ORANGE_PI)
-inline constexpr std::int32_t              size_shared_mem_bytes { 256 * 1024 * 1024 };
+inline constexpr std::uint64_t             size_shared_mem_bytes { 256 * 1024 * 1024U };
 inline constexpr std::chrono::milliseconds ms_wait_delay_recv_msg { 1 };
 inline constexpr std::chrono::milliseconds ms_wait_delay_special_msg_cycle { 1 };
 #elif defined(U3_OS_ANDROID)
-inline constexpr std::int32_t              size_shared_mem_bytes { 128 * 1024 * 1024 };
+inline constexpr std::uint64_t             size_shared_mem_bytes { 128 * 1024 * 1024U };
 inline constexpr std::chrono::milliseconds ms_wait_delay_recv_msg { 1 };
 inline constexpr std::chrono::milliseconds ms_wait_delay_special_msg_cycle { 1 };
 #else

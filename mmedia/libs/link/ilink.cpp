@@ -4,7 +4,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_link
 */
-#include "libs-link-includes_int.hpp"
+#include "_make/libs-link-includes_int.hpp"
 #include "ilink.hpp"
 
 namespace libs::link
@@ -45,13 +45,9 @@ ILink::received_msg () -> ::libs::events::IEvent::ptr
 
 
 auto
-ILink::send_msg (
-  const syn::IEvent::ptr&        msg,
-  const details::CallSyncs&      sync,
-  const details::Calls&          req,
-  const syn::ISeqEvent::id_type& id) -> ::libs::events::IEvent::ptr
+ILink::send_msg (const syn::IEvent::ptr& msg, const CallState& call) -> ::libs::events::IEvent::ptr
 {
-  return send_msg_int (msg, sync, req, id);
+  return send_msg_int (msg, call);
 }
 
 

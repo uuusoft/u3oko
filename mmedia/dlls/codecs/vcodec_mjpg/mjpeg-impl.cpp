@@ -4,7 +4,7 @@
 \date       01.05.2017
 \project    u3_vcodec_mjpg
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "vcodec-mjpg-includes_int.hpp"
 #include "mjpeg-impl.hpp"
 #include "mmedia/dlls/doptim/algs/all_algs.hpp"

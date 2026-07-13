@@ -63,7 +63,7 @@
 #endif
 
 #ifndef U3_LOG_HTTP_DBG
-#  ifdef U3_USE_DEB_LOG_LEVEL
+#  ifdef U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #    define U3_LOG_HTTP_DBG(u3def_info)                                                                                                                  \
       {                                                                                                                                                  \
         modules::mlog::ToLog { libs::properties::vers::links::mids::http2appl, ::libs::events_base::props::modules::log::LogLevels::debug }(u3def_info); \

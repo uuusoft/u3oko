@@ -4,7 +4,7 @@
 \date       26.06.2016
 \project    u3_fake_vgen
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "includes_int.hpp"
 #include "fake-vgen-source-impl.hpp"
 

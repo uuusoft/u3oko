@@ -4,7 +4,7 @@
 \date       23.08.2018
 \project    mhttp
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "../module-http-includes_int.hpp"
 #include "mmedia/dlls/terminals/video_sender/consts/video-sender-const-vals.hpp"
 #include "http-module-syn.hpp"

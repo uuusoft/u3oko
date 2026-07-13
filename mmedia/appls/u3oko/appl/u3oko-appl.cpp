@@ -4,7 +4,7 @@
 \date       01.05.2017
 \project    u3oko
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "../appls-u3oko-includes_int.hpp"
 #include "u3oko-appl.hpp"
 
@@ -32,10 +32,10 @@ U3OkoAppl::init_links_int (const syn::InitApplication& info)
 
   //  Устанавливаем свойства логирования
   U3_XLOG_DBG ("U3OkoAppl::init_links_int:: pt1");
-  links_.get (syn::mids::appl2log)->send_msg (appl_event_props_.module_log_);
+  links_[syn::mids::appl2log]->send_msg (appl_event_props_.module_log_);
   //  Устанавливаем свойства хранилища
   U3_XLOG_DBG ("U3OkoAppl::init_links_int:: pt2");
-  links_.get (syn::mids::appl2storage)->send_msg (appl_event_props_.storage_module_);
+  links_[syn::mids::appl2storage]->send_msg (appl_event_props_.storage_module_);
   U3_XLOG_DBG ("U3OkoAppl::init_links_int::<----");
 }
 
@@ -83,13 +83,13 @@ U3OkoAppl::get_recv_link_int () -> ::libs::ilink::appl::base::BaseModule::recv_l
 {
   return {
 #if (U3_MODULES_ENABLE_GUI == 1)
-    links_.get (syn::mids::appl2gui),
+    links_[syn::mids::appl2gui],
 #endif
-    links_.get (syn::mids::appl2mdata),
-    links_.get (syn::mids::appl2http),
-    links_.get (syn::mids::appl2log),
-    links_.get (syn::mids::appl2events),
-    links_.get (syn::mids::appl2storage)
+    links_[syn::mids::appl2mdata],
+    links_[syn::mids::appl2http],
+    links_[syn::mids::appl2log],
+    links_[syn::mids::appl2events],
+    links_[syn::mids::appl2storage]
   };
 }
 }   // namespace appls::u3oko::appl

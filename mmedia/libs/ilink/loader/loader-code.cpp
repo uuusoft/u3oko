@@ -4,6 +4,7 @@
 \date       01.01.2017
 \project    u3_ilink
 */
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "libs-ilink-loader-includes_int.hpp"
 #include "../libs-ilink-includes_int.hpp"
 #include "memory"
@@ -19,20 +20,20 @@ LoaderCode::~LoaderCode ()
 
 void
 LoaderCode::load (
-  const ::libs::link::details::CodeRuns& type,
-  const ::libs::link::CreateInfo*        info,
-  const std::string&                     name_proc,
-  const std::string&                     name_lib,
-  const std::vector< std::string >&      args)
+  const syn::CodeRuns&   type,
+  const syn::CreateInfo* info,
+  const std::string&     name_proc,
+  const std::string&     name_lib)
+// const std::vector< std::string >& args)
 {
   if (!impl_)
   {
     switch (type)
     {
-    case ::libs::link::details::CodeRuns::appl:
+    case syn::CodeRuns::appl:
       impl_ = std::make_unique< OutProcLoaderCode > ();
       break;
-    case ::libs::link::details::CodeRuns::dll:
+    case syn::CodeRuns::dll:
     default:
       impl_ = std::make_unique< InProcLoaderCode > ();
       break;
@@ -40,7 +41,7 @@ LoaderCode::load (
   }
 
   U3_ASSERT (impl_);
-  impl_->load (info, name_proc, name_lib, args);
+  impl_->load (info, name_proc, name_lib);
 }
 
 

@@ -18,9 +18,9 @@ class IMem
   U3_ADD_DELETE_MOVE_COPY (IMem)
 
   //  IMem interface
-  virtual void* mem_alloc (int, IBlockFakeMem::ptr)                       = 0;
-  virtual bool  mem_free (IBlockFakeMem::ptr)                             = 0;
-  virtual bool  mem_atomic_call (IBlockFakeMem::cptr, const IHandlerMem&) = 0;
+  virtual auto mem_alloc (std::int32_t, IBlockFakeMem::ptr) -> void*             = 0;
+  virtual auto mem_free (IBlockFakeMem::ptr) -> bool                             = 0;
+  virtual auto mem_atomic_call (IBlockFakeMem::cptr, const IHandlerMem&) -> bool = 0;
 
   protected:
   IMem ()          = default;

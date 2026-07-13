@@ -116,7 +116,7 @@ struct LinksApplication final {
   }
 
   const TTLinkPtr
-  get (const key_storage_type& key) const
+  operator[] (const key_storage_type& key) const
   {
     std::scoped_lock lock (threadsan_mtx_);
     auto             finger = module_links_.find (key);
@@ -124,8 +124,8 @@ struct LinksApplication final {
     return finger != module_links_.end () ? finger->second : TTLinkPtr ();
   }
 
-  void
-  set (const key_storage_type& key, const TTLinkPtr& ptr)
+  auto
+  set (const key_storage_type& key, const TTLinkPtr& ptr) -> void
   {
     std::scoped_lock lock (threadsan_mtx_);
     module_links_[key] = ptr;

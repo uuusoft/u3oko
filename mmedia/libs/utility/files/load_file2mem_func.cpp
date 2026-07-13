@@ -20,7 +20,7 @@ load_file2mem (
   ret.reset ();
 
   std::ifstream file (file_path, std::ios::binary | std::ios::in);
-  auto          mem_allocator = ::utils::mem_funcs::impl::BlockMemAllocatorProxy::instance ()->impl ();
+  auto          mem_allocator = ::utils::mems::impl::BlockMemAllocatorProxy::instance ()->impl ();
 
   if (!mem_allocator)
   {
@@ -46,8 +46,8 @@ load_file2mem (
   file.seekg (0, std::ios::beg);
   ret = mem_allocator->alloc (size);
   ret->set_size (size);
-  file.read (::utils::mem_funcs::helpers::get_as< char > (ret.get ()), size);
-  //::utils::mem_funcs::helpers::get_as< char > (ret.get ())[size] = '\0';
+  file.read (::utils::mems::helpers::get_as< char > (ret.get ()), size);
+  //::utils::mems::helpers::get_as< char > (ret.get ())[size] = '\0';
   return true;
 }
 

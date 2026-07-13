@@ -4,7 +4,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_desk_vgen
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "../../../desk-vgen-includes_int.hpp"
 #include "capture-desk-impl-linux-wl.hpp"
 
@@ -249,7 +249,7 @@ CaptureDeskImplLinux::thread_func ()
                         [&] (pw::event::Connected& e) {
                           auto builder = ffmpeg::FFmpegOutput::Builder (e.dimensions, e.format, e.isDmaBuf);
                           builder
-                            .withScaling (common::Rect { 1920u, 1080u })
+                            .withScaling (common::Rect { 1920U, 1080U })
                             .withHWDevice (hardwareDevicePath)
                             .withOutputFormat (outputFormat)
                             .withOutputPath (outputPath);
@@ -464,7 +464,7 @@ main (int argc, char** argv)
                         [&] (pw::event::Connected& e) {
                           auto builder = ffmpeg::FFmpegOutput::Builder (e.dimensions, e.format, e.isDmaBuf);
                           builder
-                            .withScaling (common::Rect { 1920u, 1080u })
+                            .withScaling (common::Rect { 1920U, 1080U })
                             .withHWDevice (hardwareDevicePath)
                             .withOutputFormat (outputFormat)
                             .withOutputPath (outputPath);

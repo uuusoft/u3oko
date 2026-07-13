@@ -17,11 +17,11 @@ struct StateProcessEvent {
   StateProcessEvent ()          = default;
   virtual ~StateProcessEvent () = default;
 
-  bool is_seq_exist () const;
-  bool is_childs_exist () const;
-  bool is_failed () const;
-  void reset ();
-  void update (syn::IEvent::ptr&);
+  auto is_seq_exist () const -> bool;
+  auto is_childs_exist () const -> bool;
+  auto is_failed () const -> bool;
+  auto reset () -> void;
+  auto update (syn::IEvent::ptr&) -> void;
 
   bool                    sync_event_ = false;   //< Флаг синхронной передачи
   bool                    request_    = false;   //< Флаг, наличие запроса

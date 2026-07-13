@@ -29,7 +29,7 @@ get_pure_event_int (const ::libs::events::IEvent::hid_type& eid) -> ::libs::even
   return res;
 }
 
-#if 1
+
 auto
 cast_event_int (const ::libs::events::IEvent::ptr& event, const ::libs::events::IEvent::hid_type& eid) -> void*
 {
@@ -41,7 +41,7 @@ cast_event_int (const ::libs::events::IEvent::ptr& event, const ::libs::events::
   auto* res  = impl->dcast (event.get (), eid);
   return const_cast< void* > (res);
 }
-#endif
+
 
 auto
 cast_event_int (const ::libs::events::IEvent::cptr& event, const ::libs::events::IEvent::hid_type& eid) -> const void*
@@ -55,7 +55,7 @@ cast_event_int (const ::libs::events::IEvent::cptr& event, const ::libs::events:
   return res;
 }
 
-#if 1
+
 auto
 cast_event_int (::libs::events::IEvent::raw_ptr event, const ::libs::events::IEvent::hid_type& eid) -> void*
 {
@@ -67,7 +67,7 @@ cast_event_int (::libs::events::IEvent::raw_ptr event, const ::libs::events::IEv
   auto* res  = impl->dcast (event, eid);
   return const_cast< void* > (res);
 }
-#endif
+
 
 auto
 cast_event_int (::libs::events::IEvent::craw_ptr event, const ::libs::events::IEvent::hid_type& eid) -> const void*

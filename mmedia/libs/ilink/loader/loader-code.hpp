@@ -23,11 +23,11 @@ class LoaderCode final
   /// \param[in]  args       аргументы
   /// \param[in]  cntx
   void load (
-    const ::libs::link::details::CodeRuns& type,
-    const ::libs::link::CreateInfo*        info,
-    const std::string&                     name_proc,
-    const std::string&                     name_lib,
-    const std::vector< std::string >&      args);
+    const syn::CodeRuns&   type,
+    const syn::CreateInfo* info,
+    const std::string&     name_proc,
+    const std::string&     name_lib);
+  // const std::vector< std::string >& args);
 
   /// Функция проверки успешности загруженности кода в процесс
   /// \return true, если загрузка прошла успешно

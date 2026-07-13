@@ -4,7 +4,7 @@
 \date       26.07.2016
 \project    u3_gen_vgen
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "gen-vgen-includes_int.hpp"
 #include "memory"
 #include "mmedia/libs/utility/thread/generic-thread-func.hpp"
@@ -35,7 +35,7 @@ Filter::load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& 
     ::libs::utility::thread::generic_thread_funct< Filter >,
     libs::properties::vers::links::mids::mdata2appl,
     this,
-    0u);
+    0U);
 }
 
 

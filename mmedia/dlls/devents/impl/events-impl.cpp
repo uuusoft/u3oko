@@ -4,7 +4,7 @@
 \date       21.07.2017
 \project    u3_devents_dlls
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "../generics-devents-includes_int.hpp"
 #include "events-impl.hpp"
 

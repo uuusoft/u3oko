@@ -17,6 +17,7 @@ class ILoaderCodeImpl
   using args_type = std::vector< std::string >;
 
   U3_ADD_POINTERS_TO_SELF (ILoaderCodeImpl)
+  U3_ADD_DELETE_MOVE_COPY (ILoaderCodeImpl)
 
   virtual ~ILoaderCodeImpl () = default;
 
@@ -28,12 +29,12 @@ class ILoaderCodeImpl
   /// \param[in]  cntx
   void
   load (
-    const ::libs::link::CreateInfo* info,
-    const std::string&              name_proc,
-    const std::string&              name_lib,
-    const args_type&                args)
+    const syn::CreateInfo* info,
+    const std::string&     name_proc,
+    const std::string&     name_lib)
+  // const args_type&       args)
   {
-    load_int (info, name_proc, name_lib, args);
+    load_int (info, name_proc, name_lib);   //, args);
   }
 
   bool
@@ -55,8 +56,9 @@ class ILoaderCodeImpl
 
   private:
   //  ILoaderCodeImpl interface
-  virtual void load_int (const ::libs::link::CreateInfo*, const std::string&, const std::string&, const args_type&) = 0;
-  virtual bool is_load_int () const                                                                                 = 0;
-  virtual bool unload_int (bool)                                                                                    = 0;
+  // virtual void load_int (const ::libs::link::CreateInfo*, const std::string&, const std::string&, const args_type&) = 0;
+  virtual void load_int (const ::libs::link::CreateInfo*, const std::string&, const std::string&) = 0;
+  virtual bool is_load_int () const                                                               = 0;
+  virtual bool unload_int (bool)                                                                  = 0;
 };
 }   // namespace libs::ilink::loader

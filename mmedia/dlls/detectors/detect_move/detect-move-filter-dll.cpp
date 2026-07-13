@@ -139,16 +139,10 @@ Filter::itransform (syn::TransformInfo& info)
       {
         U3_LOG_DATA_DEV ("signal video detect stop");
         count_detects_ = 0;
-#if 1
+
         auto [evnt, revnt]       = ::libs::iproperties::helpers::create_event< syn::AddEvent2EventsMsg > (libs::utility::utils::cuuid (), "???????");
         auto [dv_evnt, dv_revnt] = ::libs::iproperties::helpers::create_event< syn::DetectViolation > (::libs::events_base::runtime::video::DetectViolations::stop);
         revnt->set_event (dv_evnt);
-#else
-        syn::IEvent::ptr irmsg;
-        auto             dmsg = ::libs::iproperties::helpers::crea1te_event< syn::AddEvent2EventsMsg > (rmsg, libs::utility::utils::cuuid (), "???????");
-        ::libs::iproperties::helpers::create_event< syn::DetectViolation > (irmsg, ::libs::events_base::runtime::video::DetectViolations::stop);
-        dmsg->set_event (irmsg);
-#endif
       }
     }
   }

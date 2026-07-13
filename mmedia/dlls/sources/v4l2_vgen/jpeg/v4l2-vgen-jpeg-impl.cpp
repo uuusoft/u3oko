@@ -277,7 +277,7 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
 
       VideoCodecProp::craw_ptr props = jpeg_codec_interf_->get_codec_property ();
 
-      const std::uint32_t val = ::libs::utility::utils::ret_check_bound (U3_CAST_UINT32 (props->plane_.quality_), 1u, 100u);
+      const std::uint32_t val = ::libs::utility::utils::ret_check_bound (U3_CAST_UINT32 (props->plane_.quality_), 1U, 100U);
 
       CHECK_STATUS (mmal_port_parameter_set_uint32 (encoder_output, MMAL_PARAMETER_JPEG_Q_FACTOR, val), "update jpeg quality");
     }

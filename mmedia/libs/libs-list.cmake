@@ -1,4 +1,4 @@
-# author      Erashov Anton erashov2026@proton.me, erashov2021@gmail.com
+# author      Erashov Anton erashov2026@proton.me
 # date        01.01.2017
 # copyright   Erashov A.I.
 # file        libs-list.cmake

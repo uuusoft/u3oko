@@ -43,9 +43,9 @@ VideoCodecFlatProp::correct ()
   ::libs::utility::utils::check_float (&max_percent_pframe_);
   ::libs::utility::utils::check_float (&percent_block_);
 
-  ::libs::utility::utils::check_bound (quality_, 0u, 100u);
+  ::libs::utility::utils::check_bound (quality_, 0U, 100U);
   ::libs::utility::utils::check_bound (max_percent_pframe_, 1.0F, 10.0F);
-  ::libs::utility::utils::check_bound (max_period_kframe_, 1u, 10 * 1024u);
+  ::libs::utility::utils::check_bound (max_period_kframe_, 1U, 10 * 1024U);
   ::libs::utility::utils::check_bound (percent_block_, 0.0F, 100.0F);
 }
 

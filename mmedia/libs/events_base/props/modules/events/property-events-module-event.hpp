@@ -41,7 +41,7 @@ class PropertyEventsModuleEvent final : virtual public events_base::Event
 
   protected:
   //  internal typess
-  using val_storage_type = ::libs::utility::utils::ValuesStorage< EventsVals, value_type, EventsVals::max_val, 0u >;
+  using val_storage_type = ::libs::utility::utils::ValuesStorage< EventsVals, value_type, EventsVals::max_val, 0U >;
 
   // IEvent overrides
   virtual auto get_mid_int () const -> const ::libs::events::IEvent::hid_type& override;

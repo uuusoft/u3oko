@@ -8,7 +8,7 @@
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "includes.hpp"
-#include "mmedia/libs/link/libs-link-includes.hpp"
+#include "mmedia/libs/link/_make/libs-link-includes.hpp"
 #include "includes.hpp"
 
 #undef U3_FILE_LOG_TAG

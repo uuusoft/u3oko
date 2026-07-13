@@ -17,5 +17,5 @@ enum class CodeRuns : std::uint32_t
   unknown = 0xFF    //< Не определенно для общности
 };
 
-const std::string& to_string (const CodeRuns& val);
+const std::string& to_string (const CodeRuns&);
 }   // namespace libs::link::details

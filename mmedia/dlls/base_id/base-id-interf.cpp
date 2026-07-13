@@ -4,7 +4,7 @@
 \date       06.03.2022
 \project    u3_base_id_dll
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "base_id-includes_int.hpp"
 #include "base-id-interf.hpp"
 

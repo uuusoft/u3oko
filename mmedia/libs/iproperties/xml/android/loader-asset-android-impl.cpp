@@ -214,7 +214,7 @@ LoaderAssetAndroidImpl::get_int (
     return false;
   }
 
-  ::utils::mem_funcs::helpers::get_as< char > (ret.get ())[size] = '\0';
+  ::utils::mems::helpers::get_as< char > (ret.get ())[size] = '\0';
   ret->set_size (size);
   AAsset_close (dbuf);
   return true;

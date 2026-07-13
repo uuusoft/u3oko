@@ -45,7 +45,7 @@ class IMemBuf : public IBuf
 
   protected:
   //  internal typess
-  using mem_vars_type = ::libs::utility::utils::ValuesStorage< MemVars, mem_var_type, MemVars::max_bound, 0u >;
+  using mem_vars_type = ::libs::utility::utils::ValuesStorage< MemVars, mem_var_type, MemVars::max_bound, 0U >;
 
   //  IBuf overrides
   virtual auto set_mem_var_int (const MemVars&, mem_var_type) -> void override;

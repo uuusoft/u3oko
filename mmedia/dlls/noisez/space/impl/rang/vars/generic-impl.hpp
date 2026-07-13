@@ -86,7 +86,7 @@ class GenericImpl : public IAlgImpl
 
       sline     = ::libs::utility::mem::move_cptr (sline, sstride);
       iline     = ::libs::utility::mem::move_ptr (iline, istride);
-      diff_line = ::libs::utility::mem::move_cptr (diff_line, diff_stride);
+      diff_line = dbuf_exist ? ::libs::utility::mem::move_cptr (diff_line, diff_stride) : nullptr;
     }
   }
 };

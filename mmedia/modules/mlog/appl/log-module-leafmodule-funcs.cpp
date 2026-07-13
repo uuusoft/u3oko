@@ -4,7 +4,7 @@
 \date       01.01.2017
 \project    mlog
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "../module-log-includes_int.hpp"
 #include "log-module.hpp"
 
@@ -13,7 +13,7 @@ namespace modules::mlog::appl
 auto
 LogModule::get_recv_link_int () -> ::libs::ilink::appl::base::BaseModule::recv_links_type
 {
-  return { links_.get (libs::properties::vers::links::mids::log2appl) };
+  return { links_[syn::mids::log2appl] };
 }
 
 

@@ -4,7 +4,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_ilink
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "libs-ilink-loader-includes_int.hpp"
 #include "in-proc-loader-code.hpp"
 #include "memory"
@@ -13,7 +13,6 @@
 namespace libs::ilink::loader
 {
 InProcLoaderCode::InProcLoaderCode ()
-
 {
   thread_done_.store (true);
 }
@@ -29,10 +28,9 @@ InProcLoaderCode::~InProcLoaderCode ()
 
 void
 InProcLoaderCode::load_int (
-  const ::libs::link::CreateInfo* info,
-  const std::string&              name_proc,
-  const std::string&              name_lib,
-  const args_type&                args)
+  const syn::CreateInfo* info,
+  const std::string&     name_proc,
+  const std::string&     name_lib)
 {
   U3_XLOG_DBG ("InProcLoaderCode::load_int::---->" + TOLOG (name_proc) + TOLOG (name_lib));
   info_ = info;
@@ -48,7 +46,7 @@ InProcLoaderCode::load_int (
     ::libs::utility::thread::generic_thread_funct< InProcLoaderCode >,
     libs::properties::vers::links::mids::appl2log,
     this,
-    0u);
+    0U);
 }
 
 
@@ -94,11 +92,11 @@ InProcLoaderCode::thread_func_impl (std::uint32_t indx_thread)
   U3_CHECK (impl, "empty thread impl" + PTR_TOLOG (impl))
 
   ::libs::link::appl::InitApplication info;
-  info.company_name_ = info_->id_arg2val_[link::consts::text::id_company_name].empty () ? info.company_name_ : info_->id_arg2val_[link::consts::text::id_company_name];
-  info.appl_name_    = info_->id_arg2val_[link::consts::text::id_appl_name].empty () ? info.appl_name_ : info_->id_arg2val_[link::consts::text::id_appl_name];
-  info.lib_name_     = info_->id_arg2val_[link::consts::text::id_lib_name].empty () ? info.lib_name_ : info_->id_arg2val_[link::consts::text::id_lib_name];
-  info.subsys_name_  = info_->id_arg2val_[link::consts::text::id_subsys_name].empty () ? info.subsys_name_ : info_->id_arg2val_[link::consts::text::id_subsys_name];
-  info.service_name_ = info_->id_arg2val_[link::consts::text::id_service_name].empty () ? info.service_name_ : info_->id_arg2val_[link::consts::text::id_service_name];
+  info.company_name_ = std::get< std::string > (info_->link_params_[link::consts::text::id_company_name]).empty () ? info.company_name_ : std::get< std::string > (info_->link_params_[link::consts::text::id_company_name]);
+  info.appl_name_    = std::get< std::string > (info_->link_params_[link::consts::text::id_appl_name]).empty () ? info.appl_name_ : std::get< std::string > (info_->link_params_[link::consts::text::id_appl_name]);
+  info.lib_name_     = std::get< std::string > (info_->link_params_[link::consts::text::id_lib_name]).empty () ? info.lib_name_ : std::get< std::string > (info_->link_params_[link::consts::text::id_lib_name]);
+  info.subsys_name_  = std::get< std::string > (info_->link_params_[link::consts::text::id_subsys_name]).empty () ? info.subsys_name_ : std::get< std::string > (info_->link_params_[link::consts::text::id_subsys_name]);
+  info.service_name_ = std::get< std::string > (info_->link_params_[link::consts::text::id_service_name]).empty () ? info.service_name_ : std::get< std::string > (info_->link_params_[link::consts::text::id_service_name]);
   U3_XLOG_DBG ("init appl::---->" + TOLOG (info.company_name_) + TOLOG (info.appl_name_) + TOLOG (info.lib_name_) + TOLOG (info.subsys_name_) + TOLOG (info.service_name_))
 
   impl->appl_init (info);

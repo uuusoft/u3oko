@@ -78,7 +78,7 @@
 
 // impls
 #include "mmedia/libs/utility/utility-lib-includes.hpp"
-#include "mmedia/utils/mem_funcs/mem-funcs-includes.hpp"
+#include "mmedia/utils/mems/mems-includes.hpp"
 #include "mmedia/libs/optims/s16bit/optim_conv/optim-conv-const-vals.hpp"
 #include "mmedia/utils/dbufs/dbufs-includes.hpp"
 #include "mmedia/libs/bufs/libs-bufs-includes.hpp"

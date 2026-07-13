@@ -4,7 +4,7 @@
 \date       01.01.2017
 \project    u3_events_base_lib
 */
-// #define U3_USE_DEB_LOG_LEVEL
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "../../events-base-includes_int.hpp"

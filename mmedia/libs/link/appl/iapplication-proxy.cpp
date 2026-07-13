@@ -4,8 +4,8 @@
 \date       01.11.2016
 \project    u3_link
 */
-// #define U3_USE_DEB_LOG_LEVEL
-#include "../libs-link-includes_int.hpp"
+// #define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
+#include "../_make/libs-link-includes_int.hpp"
 #include "mmedia/libs/proxy/proxy/link-proxy.hpp"
 #include "iapplication-proxy.hpp"
 

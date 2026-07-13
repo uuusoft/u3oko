@@ -20,7 +20,7 @@ class OutProcLoaderCode final : public ILoaderCodeImpl
   using iappl_uptr_type = std::unique_ptr< ::libs::link::appl::IApplicationProxy >;
 
   //  ILoaderCodeImpl
-  virtual void load_int (const ::libs::link::CreateInfo*, const std::string&, const std::string&, const args_type&) override;
+  virtual void load_int (const syn::CreateInfo*, const std::string&, const std::string&) override;
   virtual bool is_load_int () const override;
   virtual bool unload_int (bool force) override;
 
@@ -29,7 +29,7 @@ class OutProcLoaderCode final : public ILoaderCodeImpl
   /// \param[in]  name_lib имя библиотеки
   void set_name_lib (const std::string& name_lib);
 
-  const ::libs::link::CreateInfo* info_     = nullptr;   //< Данные объекта при создании
-  std::string                     lib_name_ = {};        //< Имя библиотеки с кодом объекта
+  const syn::CreateInfo* info_     = nullptr;   //< Данные объекта при создании
+  std::string            lib_name_ = {};        //< Имя библиотеки с кодом объекта
 };
 }   // namespace libs::ilink::loader

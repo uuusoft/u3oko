@@ -4,7 +4,7 @@
 \date       01.01.2017
 \project    mlog
 */
-// #define U3_USE_DEB_LOG_LEVEL
+#define U3_USE_DBG_LOG_LEVEL_FOR_THIS_UNITE
 #include "../module-log-includes_int.hpp"
 #include "log-module.hpp"
 
@@ -49,7 +49,16 @@ LogModule::init_links_int (const ::libs::link::appl::InitApplication& info)
 
   U3_MARK_UNUSED_HERE (ipstorage);
   U3_MARK_UNUSED_HERE (imstorage);
-
+#if 1
+  auto temp_link = ::libs::utility::check::ptr (lproxy->impl ()->get_listen (
+    ::libs::link::CreateInfo (
+      { { ::libs::link::consts::text::id_appl_name, "mpl_mlog" },
+        { ::libs::link::consts::text::id_lib_name, "mpl_mlog" },
+        { ::libs::link::consts::text::id_subsys_name, "subsys_log" },
+        { ::libs::link::consts::text::id_size_shared_mem, ::libs::link::consts::sizes::buf_all2log },
+        { ::libs::link::consts::text::id_module_links, ::libs::link::details::ModuleLinks::log },
+        { ::libs::link::consts::text::id_code_runs, type_run } })));
+#else
   auto temp_link = ::libs::utility::check::ptr (lproxy->impl ()->get_listen (
     ::libs::link::CreateInfo (
       type_run,
@@ -60,16 +69,16 @@ LogModule::init_links_int (const ::libs::link::appl::InitApplication& info)
       "subsys_appl2log",
       ::libs::link::details::ModuleLinks::log,
       ::libs::link::consts::sizes::buf_all2log)));
-
-  links_.set (libs::properties::vers::links::mids::log2appl, temp_link);
+#endif
+  links_.set (syn::mids::log2appl, temp_link);
 
   //  нужно установить свои связи в свойства разделяемые и спользовать их
   {
     auto* proplinks = ::libs::iproperties::helpers::get_prop_links ();
     auto& links     = proplinks->update_links_lockfree ();
-    auto  log2appl  = links_.get (libs::properties::vers::links::mids::log2appl);
+    auto  log2appl  = links_[syn::mids::log2appl];
 
-    links.set (libs::properties::vers::links::mids::log2appl, log2appl);
+    links.set (syn::mids::log2appl, log2appl);
     logger_ = log2appl;
   }
   U3_XLOG_DBG ("LogModule::init_links_int::<----");
@@ -84,11 +93,11 @@ LogModule::appl_deinit_int () -> bool
 
   {
     auto* links = ::libs::iproperties::helpers::get_prop_links ();
-    links->update_links_lockfree ().reset_link (libs::properties::vers::links::mids::log2appl);
+    links->update_links_lockfree ().reset_link (syn::mids::log2appl);
   }
 
-  links_.get (libs::properties::vers::links::mids::log2appl)->destroy ();
-  links_.reset_link (libs::properties::vers::links::mids::log2appl);
+  links_[syn::mids::log2appl]->destroy ();
+  links_.reset_link (syn::mids::log2appl);
   U3_XLOG_MARK ("LogModule::deinit_int::<----")
   return true;
 }

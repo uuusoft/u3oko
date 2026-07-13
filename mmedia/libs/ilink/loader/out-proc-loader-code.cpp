@@ -19,10 +19,10 @@ OutProcLoaderCode::~OutProcLoaderCode ()
 
 void
 OutProcLoaderCode::load_int (
-  const ::libs::link::CreateInfo* info,
-  const std::string&              name_proc,
-  const std::string&              name_lib,
-  const args_type&                args)
+  const syn::CreateInfo* info,
+  const std::string&     name_proc,
+  const std::string&     name_lib)
+// const args_type&       args)
 {
   info_ = info;
   U3_ASSERT_SIGNAL ("process");
