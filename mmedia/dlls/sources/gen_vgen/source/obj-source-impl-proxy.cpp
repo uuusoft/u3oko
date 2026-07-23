@@ -39,19 +39,11 @@ ObjSourceImplProxy::init (const std::string& impl_name)
   func_get_  = ::libs::proxy::get_create_source_func (impl_name);
   func_free_ = ::libs::proxy::get_free_source_func (impl_name);
 #else
-#  ifdef U3_OS_ANDROID
-  func_get_ = ::libs::utility::casts::reinterpret_cast_helper< gen_lib::get_source_func_type* > (
-    dlsym (impl_dll_.native (), ::libs::utility::dlls::make_func_name_lib (impl_name, gen_lib::consts::name_get_funct).c_str ()));
-
-  func_free_ = ::libs::utility::casts::reinterpret_cast_helper< gen_lib::free_source_func_type* > (
-    dlsym (impl_dll_.native (), ::libs::utility::dlls::make_func_name_lib (impl_name, gen_lib::consts::name_free_funct).c_str ()));
-#  else
   func_get_ = ::boost::dll::import_symbol< gen_lib::get_source_func_type > (
     impl_dll_, ::libs::utility::dlls::make_func_name_lib (impl_name, gen_lib::consts::name_get_funct));
 
   func_free_ = ::boost::dll::import_symbol< gen_lib::free_source_func_type > (
     impl_dll_, ::libs::utility::dlls::make_func_name_lib (impl_name, gen_lib::consts::name_free_funct));
-#  endif
 #endif
 
   U3_CHECK (func_get_ && func_free_, "get funct");

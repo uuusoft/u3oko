@@ -41,10 +41,10 @@ struct MTFuncInfo final {
     dst_align_.self_test ();
   }
 
-  io::hioptim*  pfunc_ = nullptr;       //< рабочая функция
-  AlignProperty src_align_;             //< Выравнивание  по горизонтали в пикселях для всех буферов
-  AlignProperty dst_align_;             //< Выравнивание по горизонтали в пикселях для всех буферов
-  std::uint32_t dest_div_koeffy_ = 1;   //< Коэффициент деления по вертикали буфера назначения
-  std::uint32_t dest_mul_koeffy_ = 1;   //< Коэффициент умножения по вертикали буфера назначения
+  io::hioptim*  pfunc_ { nullptr };       //< рабочая функция
+  Aligns        src_align_;               //< Выравнивание  по горизонтали в пикселях для всех буферов
+  Aligns        dst_align_;               //< Выравнивание по горизонтали в пикселях для всех буферов
+  std::uint32_t dest_div_koeffy_ { 1 };   //< Коэффициент деления по вертикали буфера назначения
+  std::uint32_t dest_mul_koeffy_ { 1 };   //< Коэффициент умножения по вертикали буфера назначения
 };
 }   // namespace libs::optim::mcalls

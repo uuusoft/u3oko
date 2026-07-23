@@ -26,14 +26,14 @@ struct VideoCodecFlatProp final {
   void correct ();
   void reset ();
 
-  std::uint16_t                      size_               = 0;                                             //< Текущий размер данной структуры, требуется для идентификации версии
-  libs::utility::uids::minor::id_val format_             = libs::utility::uids::minor::id_val::unknown;   //<
-  CodecModes                         type_               = CodecModes::coder;                             //< Режим работы (кодер/декодер)
-  std::uint32_t                      quality_            = 50;                                            //< Качество сжатия от 1 до 100
-  float                              max_percent_pframe_ = 8.0F;                                          //< Максимальный процент обновляея экрана, при котором будет генерироваться P-frame
-  std::uint32_t                      max_period_kframe_  = 500;                                           //< Максимальный период ключевых кадров
-  float                              percent_block_      = 8.0F;                                          //<
-  bool                               nocolor_            = false;                                         //< Флаг, отбрасывать цвет, даже если он есть в исходном изображении (сжатом/несжатом)
+  std::uint16_t                      size_ { sizeof (VideoCodecFlatProp) };                     //< Текущий размер данной структуры, требуется для идентификации версии
+  libs::utility::uids::minor::id_val format_ { libs::utility::uids::minor::id_val::unknown };   //<
+  CodecModes                         type_ { CodecModes::coder };                               //< Режим работы (кодер/декодер)
+  std::uint32_t                      quality_ { 50 };                                           //< Качество сжатия от 1 до 100
+  float                              max_percent_pframe_ { 8.0F };                              //< Максимальный процент обновляея экрана, при котором будет генерироваться P-frame
+  std::uint32_t                      max_period_kframe_ { 500 };                                //< Максимальный период ключевых кадров
+  float                              percent_block_ { 8.0F };                                   //<
+  bool                               nocolor_ { false };                                        //< Флаг, отбрасывать цвет, даже если он есть в исходном изображении (сжатом/несжатом)
 };
 
 auto to_string (const VideoCodecFlatProp&) -> std::string;

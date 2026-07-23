@@ -20,29 +20,29 @@ class ISourceImpl
   virtual ~ISourceImpl () = default;
 
   auto init () -> void;
-  void start ();
-  void stop ();
-  void get_sources (std::vector< syn::DataSourceInfo >&);
-  void get_raw_data (syn::pkeys2bufs_type&, syn::tevents_type*);
-  void set_cpu (syn::CpuExts);
-  void update_source_info (const SourceImplInfo&);
-  bool is_source_started ();
+  auto start () -> void;
+  auto stop () -> void;
+  auto get_sources (std::vector< syn::DataSourceInfo >&) -> void;
+  auto get_raw_data (syn::pkeys2bufs_type&, syn::tevents_type*) -> void;
+  auto set_cpu (syn::CpuExts) -> void;
+  auto update_source_info (const SourceImplInfo&) -> void;
+  auto is_source_started () -> bool;
 
   protected:
-  SourceImplInfo srcimpinfo_;                              //<
-  bool           started_         = false;                 //< Флаг запуска процесса захвата
-  bool           send_interfaces_ = false;                 //< Флаг посылки сообщения с интерфейсом кодека, чтобы управлять устройством
-  syn::CpuExts   simd_            = syn::CpuExts::usual;   //< Используемое расширение CPU
+  SourceImplInfo srcimpinfo_;                     //<
+  bool           started_ { false };              //< Флаг запуска процесса захвата
+  bool           send_interfaces_ { false };      //< Флаг посылки сообщения с интерфейсом кодека, чтобы управлять устройством
+  syn::CpuExts   simd_ { syn::CpuExts::usual };   //< Используемое расширение CPU
 
   private:
   // ISourceImpl interface
-  virtual void init_int ()                                                  = 0;
-  virtual void start_int ()                                                 = 0;
-  virtual void stop_int ()                                                  = 0;
-  virtual void get_sources_int (std::vector< syn::DataSourceInfo >&)        = 0;
-  virtual void get_raw_data_int (syn::pkeys2bufs_type&, syn::tevents_type*) = 0;
-  virtual void set_cpu_int (syn::CpuExts)                                   = 0;
-  virtual void update_source_info_int (const SourceImplInfo&)               = 0;
-  virtual bool is_source_started_int ();
+  virtual auto init_int () -> void                                                  = 0;
+  virtual auto start_int () -> void                                                 = 0;
+  virtual auto stop_int () -> void                                                  = 0;
+  virtual auto get_sources_int (std::vector< syn::DataSourceInfo >&) -> void        = 0;
+  virtual auto get_raw_data_int (syn::pkeys2bufs_type&, syn::tevents_type*) -> void = 0;
+  virtual auto set_cpu_int (syn::CpuExts) -> void                                   = 0;
+  virtual auto update_source_info_int (const SourceImplInfo&) -> void               = 0;
+  virtual auto is_source_started_int () -> bool;
 };
 }   // namespace dlls::sources::gen_lib

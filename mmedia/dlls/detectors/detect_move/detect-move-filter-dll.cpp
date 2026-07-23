@@ -74,9 +74,9 @@ Filter::get_move_count (syn::IVideoBuf::raw_ptr pdst) -> std::int32_t
   cinfo.params_.evals_.emplace_back (boost::any_cast< std::int16_t > (bound));
 
   ::libs::optim::mcalls::MTFuncInfo tfunc;
-  tfunc.pfunc_           = &count_if_ge_;
-  tfunc.src_align_.px_y_ = 1;
-  tfunc.dst_align_.px_y_ = 1;
+  tfunc.pfunc_         = &count_if_ge_;
+  tfunc.src_align_.ay_ = 1;
+  tfunc.dst_align_.ay_ = 1;
 
   pthreads_->mthreads_call (
     id_obj_,

@@ -52,7 +52,7 @@ class IHardwareCorrect final : public syn::ICorrectImage
     return false;
   }
 
-  mutable bool          update_ = false;   //< Флаг-признак изменения данных в свойствах
-  syn::VideoCorrectProp prop_;             //<
+  mutable bool          update_ { false };   //< Флаг-признак изменения данных в свойствах
+  syn::VideoCorrectProp prop_;               //<
 };
 }   // namespace dlls::sources::gen_lib::interfs

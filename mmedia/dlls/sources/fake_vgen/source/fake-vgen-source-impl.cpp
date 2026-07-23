@@ -32,7 +32,7 @@ SourceImpl::init_int ()
 void
 SourceImpl::start_int ()
 {
-  counter_frames_ = 0;
+  frame_counter_ = 0;
 }
 
 
@@ -86,7 +86,7 @@ SourceImpl::get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* eve
     static_cast< const syn::mem_var_type > (buf->get_dim_var (syn::Dims::stride) * props->capi_.height_));
 
   ++indx_bcomp_;
-  ++counter_frames_;
+  ++frame_counter_;
   time_last_frame_ = now_time;
   U3_XLOG_DBG ("SourceImpl::get_raw_data_int::<----")
 }

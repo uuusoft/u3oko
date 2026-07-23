@@ -77,7 +77,7 @@ get_thread_per_height (
       }
 
       selected_src_height = src.height_;
-      ::libs::optim::mcalls::helpers::split_height (athreads, funct.src_align_.px_y_, selected_src_height, thread_per_height_src);
+      ::libs::optim::mcalls::helpers::split_height (athreads, funct.src_align_.ay_, selected_src_height, thread_per_height_src);
       find_fulled_buf = true;
       break;
     }
@@ -97,7 +97,7 @@ get_thread_per_height (
 
       ::libs::optim::mcalls::helpers::split_height (
         athreads,
-        funct.dst_align_.px_y_,
+        funct.dst_align_.ay_,
         selected_dst_height,
         thread_per_height_dst);
 
@@ -152,8 +152,8 @@ get_count_threads_funct (
     }
   }
 
-  athreads = U3_CAST_UINT16 (::libs::utility::utils::ret_check_bound< std::uint32_t > (athreads, 1, min_src_height / funct.src_align_.px_y_));
-  athreads = U3_CAST_UINT16 (::libs::utility::utils::ret_check_bound< std::uint32_t > (athreads, 1, min_dst_height / funct.dst_align_.px_y_));
+  athreads = U3_CAST_UINT16 (::libs::utility::utils::ret_check_bound< std::uint32_t > (athreads, 1, min_src_height / funct.src_align_.ay_));
+  athreads = U3_CAST_UINT16 (::libs::utility::utils::ret_check_bound< std::uint32_t > (athreads, 1, min_dst_height / funct.dst_align_.ay_));
   athreads = U3_CAST_UINT16 (::libs::utility::utils::ret_check_bound< std::uint32_t > (athreads, 1, max_threads));
 }
 
@@ -247,7 +247,7 @@ CallerImpl::mthreads_call_int (
 
         if (new_add.buf ())
         {
-          const std::uint32_t macro_height      = new_add.height_ / funct.src_align_.px_y_;
+          const std::uint32_t macro_height      = new_add.height_ / funct.src_align_.ay_;
           const std::uint32_t height_prev_block = macro_height / thread_per_height;
           std::uint32_t       height_cur_block  = height_prev_block;
 
@@ -260,9 +260,9 @@ CallerImpl::mthreads_call_int (
           }
 
           new_add.width_  = new_add.width_ / width_macro;
-          new_add.height_ = height_cur_block * funct.src_align_.px_y_;
+          new_add.height_ = height_cur_block * funct.src_align_.ay_;
 
-          std::uint32_t off_rows = indxy * height_prev_block * funct.src_align_.px_y_;
+          std::uint32_t off_rows = indxy * height_prev_block * funct.src_align_.ay_;
           std::uint32_t off_cols = static_cast< unsigned long > (indxx * new_add.width_) * sizeof (std::int16_t);
           std::uint32_t off_src  = off_rows * new_add.stride_ + off_cols;
 
@@ -278,7 +278,7 @@ CallerImpl::mthreads_call_int (
         U3_CHECK (new_add.buf (), "new add buf empty");
         if (new_add.buf ())
         {
-          const std::uint32_t macro_height      = new_add.height_ / funct.dst_align_.px_y_;
+          const std::uint32_t macro_height      = new_add.height_ / funct.dst_align_.ay_;
           const std::uint32_t height_prev_block = macro_height / thread_per_height;
           std::uint32_t       height_cur_block  = height_prev_block;
 
@@ -291,9 +291,9 @@ CallerImpl::mthreads_call_int (
           }
 
           new_add.width_  = new_add.width_ / width_macro;
-          new_add.height_ = height_cur_block * funct.dst_align_.px_y_;
+          new_add.height_ = height_cur_block * funct.dst_align_.ay_;
 
-          std::uint32_t off_rows = indxy * height_prev_block * funct.dst_align_.px_y_ * funct.dest_mul_koeffy_ / funct.dest_div_koeffy_;
+          std::uint32_t off_rows = indxy * height_prev_block * funct.dst_align_.ay_ * funct.dest_mul_koeffy_ / funct.dest_div_koeffy_;
           std::uint32_t off_cols = static_cast< unsigned long > (indxx * new_add.width_) * sizeof (std::int16_t);
           std::uint32_t off_src  = off_rows * new_add.stride_ + off_cols;
 

@@ -19,7 +19,7 @@ struct CreateInfo {
 
   CreateInfo ()          = default;
   virtual ~CreateInfo () = default;
-  CreateInfo (const vals_type& vals);
+  explicit CreateInfo (const vals_type& vals);
 
   auto check () const -> void;
   auto get_prefix () const -> std::string;

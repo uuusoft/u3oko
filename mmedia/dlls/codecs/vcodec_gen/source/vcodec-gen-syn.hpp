@@ -12,6 +12,7 @@ using InterfCodecImageEvent = ::libs::events_base::runtime::interf::InterfCodecI
 using ICodecImage           = ::libs::events_base::runtime::interf::interfaces::ICodecImage;
 using VideoCodecProp        = ::libs::events_base::props::videos::generic::codec::VideoCodecProp;
 using Writes                = ::libs::events_base::props::videos::generic::codec::Writes;
+using CodecModes            = ::libs::events_base::props::videos::generic::codec::CodecModes;
 using ISystemProperty       = ::libs::iproperties::vers::system::ISystemProperty;
 using IVideoBuf             = ::utils::dbufs::video::IVideoBuf;
 using HeaderIFrame          = ::dlls::codecs::codec_gen::HeaderIFrame;
@@ -26,4 +27,6 @@ using ProxyBuf              = ::libs::optim::io::ProxyBuf;
 using IEvent                = ::libs::events::IEvent;
 using AddEvent2EventsMsg    = ::libs::events_msg::events::AddEvent2EventsMsg;
 using IMCaller              = ::libs::optim::mcalls::IMCaller;
+
+namespace minor = ::libs::utility::uids::minor;
 }   // namespace dlls::codecs::vcodec_gen::syn

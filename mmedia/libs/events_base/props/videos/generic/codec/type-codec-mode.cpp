@@ -5,7 +5,7 @@
 \project    u3_events_base_lib
 */
 #include "../../../../events-base-includes_int.hpp"
-#include "type-codec-mode.hpp"
+#include "enum-codec-modes.hpp"
 
 namespace libs::events_base::props::videos::generic::codec
 {

@@ -18,8 +18,8 @@ InfoFilter::InfoFilter ()
 void
 InfoFilter::init ()
 {
-  counter_frames_ = 0;
-  dll_codec_      = nullptr;
+  frame_counter_ = 0;
+  dll_codec_     = nullptr;
 
   file_info_.reset ();
 

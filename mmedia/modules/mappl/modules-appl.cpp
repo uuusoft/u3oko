@@ -38,7 +38,7 @@ process_cmd_line (std::int32_t argc, char* argv[])
   options.add_options () (::libs::link::consts::text::id_lib_name, boost::program_options::value< std::string > ());
   options.add_options () (::libs::link::consts::text::id_company_name, boost::program_options::value< std::string > ());
   options.add_options () (::libs::link::consts::text::id_appl_name, boost::program_options::value< std::string > ());
-  options.add_options () (::libs::link::consts::text::id_subsys_name, boost::program_options::value< std::string > ());
+  // options.add_options () (::libs::link::consts::text::id_subsys_name, boost::program_options::value< std::string > ());
   options.add_options () (::libs::link::consts::text::id_service_name, boost::program_options::value< std::string > ());
   options.add_options () (::libs::link::consts::text::id_delay_ms, boost::program_options::value< std::string > ());
 
@@ -70,7 +70,6 @@ process_cmd_line (std::int32_t argc, char* argv[])
     { ::libs::link::consts::text::id_lib_name, g_init_appl.lib_name_ },
     { ::libs::link::consts::text::id_company_name, g_init_appl.company_name_ },
     { ::libs::link::consts::text::id_appl_name, g_init_appl.appl_name_ },
-    { ::libs::link::consts::text::id_subsys_name, g_init_appl.subsys_name_ },
     { ::libs::link::consts::text::id_service_name, g_init_appl.service_name_ }
   };
 

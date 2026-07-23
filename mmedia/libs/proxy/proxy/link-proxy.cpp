@@ -14,8 +14,8 @@ extern "C" BOOST_SYMBOL_EXPORT void delete_impl_mpl_mevents (::libs::link::appl:
 #endif
 
 #if (U3_MODULES_ENABLE_GUI == 1)
-extern "C" BOOST_SYMBOL_EXPORT ::libs::link::appl::IApplication* create_impl_mpl_mgui ();
-extern "C" BOOST_SYMBOL_EXPORT void                              delete_impl_mpl_mgui (::libs::link::appl::IApplication* appl);
+extern "C" BOOST_SYMBOL_EXPORT auto create_impl_mpl_mgui () -> ::libs::link::appl::IApplication*;
+extern "C" BOOST_SYMBOL_EXPORT auto delete_impl_mpl_mgui (::libs::link::appl::IApplication* appl) -> void;
 #endif
 
 #if (U3_MODULES_ENABLE_HTTP == 1)

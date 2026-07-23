@@ -43,7 +43,7 @@ class VideoTimeNoiseRemoverProp final : virtual public events_base::Event
   }
 
   std::string      name_impl_          = "median2";   //< Имя реализации, которая будет использованя для фильтрации
-  std::int32_t     dump_counter_frame_ = 0;           //< Вывода времени работы через заданное количество кадров. 0 - отключение вывода (по умолчанию)
+  std::int32_t     dump_frame_counter_ = 0;           //< Вывода времени работы через заданное количество кадров. 0 - отключение вывода (по умолчанию)
   source_bufs_type bufs_;                             //< Список буферов с настройками для фильтрации
 
   private:

@@ -24,9 +24,9 @@ class CamImpl final
   private:
   void sync_runtime_props (const syn::VideoDriverCaptureProp&);
 
-  const gen_lib::SourceImplInfo&  srcparams_;               //<
-  std::mutex                      sync_;                    //<
-  std::unique_ptr< V4l2Capture >  v4l2capture_ = nullptr;   //<
-  syn::VideoDriverCapturePropInfo capparams_;               //<
+  const gen_lib::SourceImplInfo&  srcparams_;                 //<
+  std::mutex                      sync_;                      //<
+  std::unique_ptr< V4l2Capture >  v4l2capture_ { nullptr };   //<
+  syn::VideoDriverCapturePropInfo capparams_;                 //<
 };
 }   // namespace dlls::sources::v4l2_vgen::camera

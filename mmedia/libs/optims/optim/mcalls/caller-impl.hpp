@@ -21,9 +21,9 @@ class CallerImpl final : public IMCaller
   virtual ~CallerImpl ();
 
   // IMCaller
-  virtual void          set_count_threads (std::uint16_t) override;
-  virtual std::uint16_t get_count_threads () const override;
-  virtual void          mthreads_call (const ::libs::core::graph::NodeID&, const MTFuncInfo&, ::libs::optim::io::MCallInfo&, syn::ExpandedTimes&, const std::uint16_t) override;
+  virtual auto set_count_threads (std::uint16_t) -> void override;
+  virtual auto get_count_threads () const -> std::uint16_t override;
+  virtual auto mthreads_call (const ::libs::core::graph::NodeID&, const MTFuncInfo&, ::libs::optim::io::MCallInfo&, syn::ExpandedTimes&, const std::uint16_t) -> void override;
 
   // EAI-REFACT to private
   void thread_func_impl (const std::uint32_t);

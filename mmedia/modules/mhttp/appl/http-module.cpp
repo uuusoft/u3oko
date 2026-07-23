@@ -37,7 +37,7 @@ HttpModule::check_process ()
 {
 }
 
-
+#if 0
 void
 HttpModule::load_def_resource2mem ()
 {
@@ -47,11 +47,11 @@ HttpModule::load_def_resource2mem ()
 
   ::libs::utility::files::load_file2mem (path2res, bufs.buf_);
 
-  bufs.off_data_       = 0;
-  bufs.number_frame_   = 0;
-  bufs.counter_frames_ = 0;
+  bufs.off_data_      = 0;
+  bufs.number_frame_  = 0;
+  bufs.frame_counter_ = 0;
 }
-
+#endif
 
 void
 HttpModule::delete_rw_copy ()
@@ -76,7 +76,7 @@ HttpModule::prepare_resources ()
   U3_XLOG_DBG ("HttpModule::prepare_resources::---->");
   delete_rw_copy ();
   create_rw_copy ();
-  load_def_resource2mem ();
+  // load_def_resource2mem ();
   U3_XLOG_DBG ("HttpModule::prepare_resources::<----");
 }
 
@@ -423,41 +423,37 @@ HttpModule::start_http_server ()
       U3_XLOG_DEV ("HttpModule::start_http_server::thread<----");
     });
 
-#if 0
-  impl_ssl_thread_ = std::thread (
+  impl_ssl_state_.impl_thread_ = std::thread (
     [this] () -> void {
       U3_XLOG_DEV ("HttpModule::start_http_server::sslthread---->");
       try
       {
-        const auto                address  = boost::asio::ip::make_address ("0.0.0.0");
-        const auto                endpoint = boost::asio::ip::tcp::endpoint { address, consts::ssl_port };
-        boost::asio::io_context   ioc { consts::count_work_threads };
-        boost::asio::ssl::context ctx { boost::asio::ssl::context::tlsv12 };
+        const auto address  = boost::asio::ip::make_address ("0.0.0.0");
+        const auto endpoint = boost::asio::ip::tcp::endpoint { address, consts::ssl_port };
 
         // This holds the self-signed certificate used by the server
-        load_server_certificate (ctx);
+        load_server_certificate (impl_ssl_state_.ctx_);
 
-        ssl_impl_ = std::make_shared< impl::beast::listener > (
-          ioc,
-          ctx,
+        impl_ssl_state_.impl_ = std::make_shared< impl::beast::listener > (
+          impl_ssl_state_.ioc_,
+          impl_ssl_state_.ctx_,
           endpoint,
           modules::mhttp::impl::beast::handler_func_type (
             std::bind (&HttpModule::process_http_request, this, std::placeholders::_1, std::placeholders::_2)),
           shared_state_);
 
-        impl_ssl_->run ();
-
-        ssl_work_threads_.reserve (consts::count_work_threads);
+        impl_ssl_state_.impl_->run ();
+        impl_ssl_state_.work_threads_.reserve (consts::count_work_threads);
 
         for (auto i = consts::count_work_threads; i > 0; --i)
         {
-          ssl_work_threads_.emplace_back (
-            [&ioc_] {
-              ioc_.run ();
+          impl_ssl_state_.work_threads_.emplace_back (
+            [this] {
+              impl_ssl_state_.ioc_.run ();
             });
         }
 
-        ioc_.run ();
+        impl_ssl_state_.ioc_.run ();
       }
       catch (const std::exception& excpt)
       {
@@ -465,7 +461,6 @@ HttpModule::start_http_server ()
       }
       U3_XLOG_DEV ("HttpModule::start_http_server::sslthread<----");
     });
-#endif
   U3_XLOG_DBG ("HttpModule::start_http_server::<----");
 }
 
@@ -475,15 +470,19 @@ HttpModule::stop_http_server ()
 {
   U3_XLOG_DEV ("HttpModule::stop_http_server::---->");
   skip_state_.reset ();
-
-  // EAI-BOOST-BEAST
-  // work_threads_???
-  // impl_.stop ();
+  U3_XLOG_DEV ("stop http server");
   if (impl_state_.impl_)
   {
     impl_state_.ioc_.stop ();
     U3_XLOG_DEV ("wait stop impl http thread");
     impl_state_.impl_thread_.join ();
+  }
+  U3_XLOG_DEV ("stop ssl http server");
+  if (impl_ssl_state_.impl_)
+  {
+    impl_ssl_state_.ioc_.stop ();
+    U3_XLOG_DEV ("wait stop impl http thread");
+    impl_ssl_state_.impl_thread_.join ();
   }
   U3_XLOG_DEV ("HttpModule::stop_http_server::<----");
 }

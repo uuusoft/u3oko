@@ -42,34 +42,21 @@ LogModule::init_links_int (const ::libs::link::appl::InitApplication& info)
 {
   U3_XLOG_DBG ("LogModule::init_links_int::---->");
   const std::string                        name_data = "";
-  const ::libs::link::details::CodeRuns    type_run  = ::libs::link::details::CodeRuns::appl;
   ::libs::ilink::LinkCreatorProxy::raw_ptr lproxy    = ::libs::ilink::LinkCreatorProxy::instance ();
   volatile auto                            ipstorage = ::libs::iproperties::helpers::get_storage ();
   volatile auto                            imstorage = ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree ();
 
   U3_MARK_UNUSED_HERE (ipstorage);
   U3_MARK_UNUSED_HERE (imstorage);
-#if 1
+
   auto temp_link = ::libs::utility::check::ptr (lproxy->impl ()->get_listen (
     ::libs::link::CreateInfo (
       { { ::libs::link::consts::text::id_appl_name, "mpl_mlog" },
         { ::libs::link::consts::text::id_lib_name, "mpl_mlog" },
-        { ::libs::link::consts::text::id_subsys_name, "subsys_log" },
         { ::libs::link::consts::text::id_size_shared_mem, ::libs::link::consts::sizes::buf_all2log },
         { ::libs::link::consts::text::id_module_links, ::libs::link::details::ModuleLinks::log },
-        { ::libs::link::consts::text::id_code_runs, type_run } })));
-#else
-  auto temp_link = ::libs::utility::check::ptr (lproxy->impl ()->get_listen (
-    ::libs::link::CreateInfo (
-      type_run,
-      name_data,
-      "mpl_mlog",
-      info.company_name_,
-      info.appl_name_,
-      "subsys_appl2log",
-      ::libs::link::details::ModuleLinks::log,
-      ::libs::link::consts::sizes::buf_all2log)));
-#endif
+        { ::libs::link::consts::text::id_code_runs, ::libs::link::details::CodeRuns::appl } })));
+
   links_.set (syn::mids::log2appl, temp_link);
 
   //  нужно установить свои связи в свойства разделяемые и спользовать их

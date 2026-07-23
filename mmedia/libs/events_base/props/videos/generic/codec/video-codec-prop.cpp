@@ -65,7 +65,7 @@ VideoCodecProp::correct ()
 void
 VideoCodecProp::reset ()
 {
-  dll_name_.clear ();
+  preferred_impl_.clear ();
   plane_.reset ();
 }
 
@@ -85,9 +85,9 @@ VideoCodecProp::load_json_int (const ::boost::json::object& obj)
   max_period_ic_frame_  = ::libs::utility::json::get_uint32 (obj.at ("max_period_ic_frame"));
   fps_coder_            = ::libs::utility::json::get_uint32 (obj.at ("fps_coder"));
   plane_                = ::boost::json::value_to< VideoCodecFlatProp > (obj.at ("plane"));
-  dll_name_             = obj.at ("name_idll").as_string ();
+  preferred_impl_       = obj.at ("preferred_impl").as_string ();
   bufs_                 = ::boost::json::value_to< syn::EventBufs > (obj.at ("evbufs"));
-  dump_counter_frame_   = ::libs::utility::json::get_uint64 (obj.at ("dump_counter_frame"));
+  dump_frame_counter_   = ::libs::utility::json::get_uint64 (obj.at ("dump_counter_frame"));
   dump_result2file_     = obj.at ("dump_compressed_to_file").as_bool ();
   write_codec_strategy_ = ::boost::json::value_to< Writes > (obj.at ("write_codec_strategy"));
   decode_flip_y_        = obj.at ("decode_flip_y").as_bool ();
@@ -104,9 +104,9 @@ VideoCodecProp::save_json_int (::boost::json::object& obj) const
   obj["max_period_ic_frame"]     = max_period_ic_frame_;
   obj["fps_coder"]               = fps_coder_;
   obj["plane"]                   = boost::json::value_from (plane_);
-  obj["name_idll"]               = dll_name_;
+  obj["preferred_impl"]          = preferred_impl_;
   obj["evbufs"]                  = boost::json::value_from (bufs_);
-  obj["dump_counter_frame"]      = dump_counter_frame_;
+  obj["dump_counter_frame"]      = dump_frame_counter_;
   obj["dump_compressed_to_file"] = dump_result2file_;
   obj["write_codec_strategy"]    = ::boost::json::value_from (write_codec_strategy_);
   obj["decode_flip_y"]           = decode_flip_y_;
@@ -121,8 +121,8 @@ VideoCodecProp::copy_int (const IEvent::craw_ptr src)
   const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< VideoCodecProp > (src);
   super::copy_int (src);
 
-  dll_name_             = dsrc->dll_name_;
-  dump_counter_frame_   = dsrc->dump_counter_frame_;
+  preferred_impl_       = dsrc->preferred_impl_;
+  dump_frame_counter_   = dsrc->dump_frame_counter_;
   plane_                = dsrc->plane_;
   dump_result2file_     = dsrc->dump_result2file_;
   fps_coder_            = dsrc->fps_coder_;
@@ -140,7 +140,7 @@ VideoCodecProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
   arh& U3_BOOST_SERIALIZE_MAKE_NVP ("olibsoevents_baseoEvent", super);
 
-  arh& BOOST_SERIALIZATION_NVP (dll_name_);
+  arh& BOOST_SERIALIZATION_NVP (preferred_impl_);
   arh& BOOST_SERIALIZATION_NVP (dump_result2file_);
   arh& BOOST_SERIALIZATION_NVP (plane_.type_);
   arh& BOOST_SERIALIZATION_NVP (plane_.quality_);
@@ -148,7 +148,7 @@ VideoCodecProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
   arh& BOOST_SERIALIZATION_NVP (plane_.max_period_kframe_);
   arh& BOOST_SERIALIZATION_NVP (plane_.percent_block_);
   arh& BOOST_SERIALIZATION_NVP (plane_.nocolor_);
-  arh& BOOST_SERIALIZATION_NVP (dump_counter_frame_);
+  arh& BOOST_SERIALIZATION_NVP (dump_frame_counter_);
   arh& BOOST_SERIALIZATION_NVP (fps_coder_);
   arh& BOOST_SERIALIZATION_NVP (bufs_);
   arh& BOOST_SERIALIZATION_NVP (write_codec_strategy_);

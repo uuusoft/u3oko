@@ -39,53 +39,52 @@ get_abs_diff (const std::size_t& size1, const std::size_t& size2) -> std::size_t
 auto
 BlockMemAllocator::find_exist_block (const size_type& size) -> syn::IBlockMem::ptr
 {
-  syn::IBlockMem::ptr candidate;
-  std::size_t         cand_diff = 0;
+  syn::IBlockMem::ptr ret;
+  std::size_t         difference { 0 };
 
-  for (BlockMem::ptr& _block : blocks_)
+  for (BlockMem::ptr& block : blocks_)
   {
-    if (_block.use_count () > 1)
+    if (block.use_count () > 1)
     {
       continue;
     }
 
-    const auto _block_size = _block->get_capacity ();
-    if (_block_size < size)
+    const auto block_size = block->get_capacity ();
+    if (block_size < size)
     {
       continue;
     }
 
-    if (!candidate)
+    if (!ret)
     {
-      candidate = _block;
-      cand_diff = get_abs_diff (_block_size, size);
+      ret        = block;
+      difference = get_abs_diff (block_size, size);
     }
     else
     {
-      auto cur_diff = get_abs_diff (_block_size, size);
-      if (cur_diff < cand_diff)
+      auto this_difference = get_abs_diff (block_size, size);
+      if (this_difference < difference)
       {
-        candidate = _block;
-        cand_diff = cur_diff;
+        ret        = block;
+        difference = this_difference;
       }
     }
-
-    if (0 == cand_diff)
+    if (0 == difference)
     {
-      return candidate;
+      return ret;
     }
   }
-  return candidate;
+  return ret;
 }
 
 
 auto
 BlockMemAllocator::dump_status_int () -> std::string
 {
-  const auto   _count_all_blocks = blocks_.size ();
-  auto         _count_use_blocks = 0;
-  std::int64_t size_all_mem      = 0;
-  std::int64_t size_use_mem      = 0;
+  const auto   count_all_blocks = blocks_.size ();
+  auto         count_use_blocks = 0;
+  std::int64_t size_all_mem     = 0;
+  std::int64_t size_use_mem     = 0;
 
   for (auto& _block : blocks_)
   {
@@ -93,13 +92,13 @@ BlockMemAllocator::dump_status_int () -> std::string
     if (_block.use_count () > 1)
     {
       size_use_mem += _mem_block;
-      ++_count_use_blocks;
+      ++count_use_blocks;
     }
     size_all_mem += _mem_block;
   }
 
-  return std::to_string (size_all_mem) + " bytes {" + std::to_string (_count_all_blocks) + "}, " +
-         std::to_string (size_use_mem) + " {" + std::to_string (_count_use_blocks) + "} koeff " +
+  return std::to_string (size_all_mem) + " bytes {" + std::to_string (count_all_blocks) + "}, " +
+         std::to_string (size_use_mem) + " {" + std::to_string (count_use_blocks) + "} koeff " +
          std::to_string (U3_CAST_FLOAT (size_use_mem) / (size_all_mem ? size_all_mem : 1));
 }
 

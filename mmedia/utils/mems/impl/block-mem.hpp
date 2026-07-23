@@ -13,7 +13,7 @@ using IBlockMem = ::libs::utility::mem::IBlockMem;
 
 namespace utils::mems::impl
 {
-///  Реализация работы с блоком памяти
+///  Реализация блока памяти
 class BlockMem final : public syn::IBlockMem
 {
   public:
@@ -31,10 +31,8 @@ class BlockMem final : public syn::IBlockMem
   virtual auto set_size_int (size_type) -> void override;
   virtual auto resize_int (size_type) -> void override;
 
-  auto reset_memory () -> void;
-
-  std::uint8_t* buf_       = nullptr;   //< Сырой блок памяти
-  size_type     size_      = 0;         //< Размер сырого блока памяти
-  size_type     data_size_ = 0;         //< Размер данных в блоке
+  std::uint8_t* buf_ { nullptr };   //< Сырой блок памяти
+  size_type     mem_size_ { 0 };    //< Размер сырого блока памяти
+  size_type     data_size_ { 0 };   //< Размер данных в блоке
 };
 }   // namespace utils::mems::impl

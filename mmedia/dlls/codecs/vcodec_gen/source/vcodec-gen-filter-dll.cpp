@@ -11,12 +11,12 @@
 
 namespace dlls::codecs::vcodec_gen
 {
-browser::CodecBrower               Filter::codec_browser_;
+browser::CodecBrowser              Filter::codec_browser_;
 ::libs::utility::dlls::FreezerDlls Filter::frozen_dlls_;
 
 Filter::Filter ()
 {
-  pthreads_ = ::libs::iproperties::helpers::get_shared_prop_os ()->get_mcalls_lockfree ();
+  mtcaller_ = ::libs::iproperties::helpers::get_shared_prop_os ()->get_mcalls_lockfree ();
 }
 
 
@@ -28,8 +28,8 @@ Filter::~Filter ()
 
 void
 Filter::load_int (
-  ::libs::icore::impl::var1::obj::FilterInfo* info,
-  const ::pugi::xml_named_node_iterator&      node)
+  syn::FilterInfo*                       info,
+  const ::pugi::xml_named_node_iterator& node)
 {
   init_pts (&info->pts_);
   finfo_.load (node);
@@ -91,7 +91,7 @@ Filter::flip_y (syn::IVideoBuf::raw_ptr buf)
 
   cinfo.dsts_.emplace_back (buf, "Filter::flip_y");
 
-  pthreads_->mthreads_call (
+  mtcaller_->mthreads_call (
     id_obj_,
     tfunc,
     cinfo,
@@ -127,7 +127,7 @@ Filter::process_events (syn::TransformInfo& info)
 
 
 void
-Filter::call_int (::libs::icore::impl::var1::obj::dll::CallInterfInfo& info)
+Filter::call_int (syn::CallInterfInfo& info)
 {
   super::prepare_call (info);
   super::call_gen (info);
@@ -135,7 +135,7 @@ Filter::call_int (::libs::icore::impl::var1::obj::dll::CallInterfInfo& info)
 
 
 void
-Filter::init_pts (::libs::icore::impl::var1::obj::ConnectInfo* info)
+Filter::init_pts (syn::ConnectInfo* info)
 {
   info->count_ins_ = 1;
   info->ins_[0].set_info (true, ::libs::icore::impl::var1::obj::Points::input);
@@ -148,7 +148,7 @@ Filter::init_pts (::libs::icore::impl::var1::obj::ConnectInfo* info)
 auto
 Filter::prepare_process_frame (syn::TransformInfo& info) -> bool
 {
-  const bool                     decode = ::libs::events_base::props::videos::generic::codec::CodecModes::decoder == finfo_.rprops_->plane_.type_;
+  const bool                     decode = syn::CodecModes::decoder == finfo_.rprops_->plane_.type_;
   const syn::IVideoBuf::craw_ptr sbuf   = (*pbuf_)[finfo_.rprops_->bufs_.indx_sbuf_];
   const syn::IVideoBuf::craw_ptr dbuf   = (*pbuf_)[finfo_.rprops_->bufs_.indx_dbuf_];
 
@@ -203,7 +203,7 @@ Filter::prepare_process_frame (syn::TransformInfo& info) -> bool
       return false;
     }
 
-    finfo_.rprops_->dll_name_ = codec_browser_.get_codec (head->base_part_.guid_);
+    finfo_.rprops_->preferred_impl_ = codec_browser_.get_codec (head->base_part_.guid_);
   }
 
   if (!finfo_.file_info_.check ())
@@ -230,7 +230,7 @@ Filter::process_frame (syn::TransformInfo& info)
 
   finfo_.dll_codec_->set_transform_info (&id_obj_, transinfo_);
 
-  const bool decode = ::libs::events_base::props::videos::generic::codec::CodecModes::decoder == finfo_.rprops_->plane_.type_;
+  const bool decode = syn::CodecModes::decoder == finfo_.rprops_->plane_.type_;
   if (decode)
   {
     finfo_.dll_codec_->decode (pbuf_, pbuf_, info.frame_events_);
@@ -255,17 +255,17 @@ Filter::process_frame (syn::TransformInfo& info)
   {
     auto       indx_buf  = decode ? finfo_.rprops_->bufs_.indx_sbuf_ : finfo_.rprops_->bufs_.indx_dbuf_;
     const auto out_buf   = (*pbuf_)[indx_buf];
-    const auto file_name = std::string ("u3_vcodec_test") + (decode ? "d_" : "c_") + std::to_string (finfo_.counter_frames_) + ".jpg";
+    const auto file_name = std::string ("u3_vcodec_test") + (decode ? "d_" : "c_") + std::to_string (finfo_.frame_counter_) + ".jpg";
 
     U3_LOG_DATA_DEV ("dump codec output" + TOLOG (file_name));
     codec_gen::helpers::dump_buf2file (out_buf, file_name);
   }
 
-  ++finfo_.counter_frames_;
+  ++finfo_.frame_counter_;
 
-  if (finfo_.rprops_->dump_counter_frame_ > 0)
+  if (finfo_.rprops_->dump_frame_counter_ > 0)
   {
-    if (0 == (finfo_.counter_frames_ % finfo_.rprops_->dump_counter_frame_))
+    if (0 == (finfo_.frame_counter_ % finfo_.rprops_->dump_frame_counter_))
     {
       log_statistic ();
     }
@@ -313,7 +313,7 @@ Filter::sync_by_events (bool update)
     return;
   }
 
-  if (finfo_.rprops_->dll_name_ != active_dll_name_)
+  if (finfo_.rprops_->preferred_impl_ != active_dll_name_)
   {
     update_int ();
   }
@@ -325,25 +325,25 @@ Filter::update_int ()
 {
   free_impl_lib ();
 
-  if (finfo_.rprops_->dll_name_.empty ())
+  if (finfo_.rprops_->preferred_impl_.empty ())
   {
     U3_LOG_DATA_WRN ("empty name codec dll/so");
     return;
   }
 
-  U3_LOG_DATA_DEV ("load codec" + TOLOG (finfo_.rprops_->dll_name_));
+  U3_LOG_DATA_DEV ("load codec" + TOLOG (finfo_.rprops_->preferred_impl_));
   helpers::load_codec_from_file (
-    ::libs::events_base::props::videos::generic::codec::CodecModes::coder == finfo_.rprops_->plane_.type_,
-    finfo_.rprops_->dll_name_,
+    syn::CodecModes::coder == finfo_.rprops_->plane_.type_,
+    finfo_.rprops_->preferred_impl_,
     finfo_.file_info_);
 
   if (finfo_.file_info_.lib_)
   {
-    frozen_dlls_.add (finfo_.rprops_->dll_name_, finfo_.file_info_.lib_);
+    frozen_dlls_.add (finfo_.rprops_->preferred_impl_, finfo_.file_info_.lib_);
   }
 
   finfo_.file_info_.create_codec_ (&finfo_.dll_codec_);
-  U3_CHECK (finfo_.dll_codec_, "create codec" + finfo_.rprops_->dll_name_);
+  U3_CHECK (finfo_.dll_codec_, "create codec" + finfo_.rprops_->preferred_impl_);
 
   {
     codec_gen::InfoGenCodec iinfo;
@@ -352,7 +352,7 @@ Filter::update_int ()
   }
 
   finfo_.dll_codec_->set_codec_info (finfo_.rprops_);
-  active_dll_name_ = finfo_.rprops_->dll_name_;
+  active_dll_name_ = finfo_.rprops_->preferred_impl_;
 }
 
 
@@ -365,9 +365,9 @@ Filter::log_statistic ()
   U3_ASSERT (info.self_test ());
   txt.reserve (static_cast< std::string::size_type > (2 * 1024));
 
-  txt = ::libs::events_base::props::videos::generic::codec::CodecModes::coder == finfo_.rprops_->plane_.type_ ? "coder" : "decoder";
+  txt = syn::CodecModes::coder == finfo_.rprops_->plane_.type_ ? "coder" : "decoder";
   txt += ", frame ";
-  txt += std::to_string (finfo_.counter_frames_);
+  txt += std::to_string (finfo_.frame_counter_);
   txt += "\n";
 
   for (const auto& stage : info.stages_)
@@ -381,7 +381,7 @@ Filter::log_statistic ()
     txt += std::to_string (stage.second.size_datas_[1]);
     txt += ", \t";
     txt += "avr ";
-    txt += std::to_string (stage.second.size_datas_[2] / finfo_.rprops_->dump_counter_frame_);
+    txt += std::to_string (stage.second.size_datas_[2] / finfo_.rprops_->dump_frame_counter_);
     txt += "\n";
   }
 

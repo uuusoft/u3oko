@@ -24,9 +24,9 @@ class ObjSourceImplProxy final
 
   private:
   //  internal typess
-  ::libs::utility::dlls::dll_type   impl_dll_;              //< Библиотека с выбранной реализацией захвата данных из устройства
-  gen_lib::ISourceImpl::raw_ptr     impl_      = nullptr;   //< Реализация захвата, полученная из библиотеки
-  gen_lib::bcreate_source_func_type func_get_  = 0;         //< Функция создания реализации из библиотеки
-  gen_lib::bfree_source_func_type   func_free_ = 0;         //< Функция удаления реализации из библиотеки
+  ::libs::utility::dlls::dll_type   impl_dll_;           //< Библиотека с выбранной реализацией захвата данных из устройства
+  gen_lib::ISourceImpl::raw_ptr     impl_ { nullptr };   //< Реализация захвата, полученная из библиотеки
+  gen_lib::bcreate_source_func_type func_get_ { 0 };     //< Функция создания реализации из библиотеки
+  gen_lib::bfree_source_func_type   func_free_ { 0 };    //< Функция удаления реализации из библиотеки
 };
 }   // namespace dlls::sources::gen_vgen

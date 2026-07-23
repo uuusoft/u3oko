@@ -42,10 +42,10 @@ class CodecGeneric
   virtual auto reset_statistic_info_int () -> void                                                                       = 0;
   virtual auto get_statistic_info_int () const -> const StatisticInfo &                                                  = 0;
 
-  InfoGenCodec        iinfo_;                                  //< Общие параметры, разделяемые между всеми реализациями кодеков
-  syn::CpuExts        simd_           = syn::CpuExts::usual;   //< Выбранный тип расширения процессора
-  std::int64_t        counter_frames_ = 0;                     //< Счетчик кадров в текущем сеансе кодирования/декодирования
-  syn::TransformInfo *transinfo_      = nullptr;               //< Указатель на текущий параметр при вызове функции transform
-  const syn::NodeID  *id_node_graph_  = nullptr;               //< Указатель на идентификатор объекта графа обработки данных, которому принадлежит данный кодек
+  InfoGenCodec        iinfo_;                                 //< Общие параметры, разделяемые между всеми реализациями кодеков
+  syn::CpuExts        simd_          = syn::CpuExts::usual;   //< Выбранный тип расширения процессора
+  std::int64_t        frame_counter_ = 0;                     //< Счетчик кадров в текущем сеансе кодирования/декодирования
+  syn::TransformInfo *transinfo_     = nullptr;               //< Указатель на текущий параметр при вызове функции transform
+  const syn::NodeID  *id_node_graph_ = nullptr;               //< Указатель на идентификатор объекта графа обработки данных, которому принадлежит данный кодек
 };
 }   // namespace dlls::codecs::codec_gen

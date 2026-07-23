@@ -25,7 +25,7 @@ SourceImpl::init_int ()
 void
 SourceImpl::start_int ()
 {
-  counter_frames_ = 0;
+  frame_counter_ = 0;
   U3_CHECK (v4l2_init_, "not init device, skip restart");
   start_capture ();
 }
@@ -209,7 +209,7 @@ SourceImpl::get_raw_data_int (
 
     buf->clone (raw_buf.get (), 100.0F);
     raw_buf->set_flag (::utils::dbufs::BufFlags::empty, true);
-    ++counter_frames_;
+    ++frame_counter_;
   }
 }
 

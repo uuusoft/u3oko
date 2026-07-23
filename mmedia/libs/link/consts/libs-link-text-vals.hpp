@@ -14,7 +14,7 @@ extern const char* id_lib_name;
 extern const char* id_proc_name;
 extern const char* id_company_name;
 extern const char* id_appl_name;
-extern const char* id_subsys_name;
+// extern const char* id_subsys_name;
 extern const char* id_name_queue2dest;
 extern const char* id_name_shared_mem;
 extern const char* id_sync_init_event;

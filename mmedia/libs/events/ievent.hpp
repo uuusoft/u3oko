@@ -45,52 +45,38 @@ class IEvent
   {
     // empty ok
   }
-
+  ///
   auto get_mid () const -> const IEvent::hid_type&;
-
   /// Виртуальное копирование объекта через указатель на базовый класс
   /// \param[in]  src  указатель на объект-источник, должен быть того же типа, что и назначение
   void copy (const IEvent::craw_ptr);
-
   /// Функция загрузки объекта из json
   /// \param[in]  prop узел
   void load_json (const std::string&);
-
   /// Функция загрузки объекта из json
   /// \param[in]  prop узел
-  std::string save_json () const;
-
+  auto save_json () const -> std::string;
   /// Функция возращает состояние объекта класса, с точки зрения возможности использования его свойств на данный момент
   /// \return   состояние события
-  const PropertyUsings& get_using_state () const;
-#if 0
-  /// Функция возращает текстовый идентификатор типа для использоваения в файлах, которые могут формироваться в том числе и пользователем системы
-  /// Обычно это просто путь к файлу с реализацией, что гарантирует его уникальность по определению
-  /// \return   идентификатор типа события
-  hid_type get_mid () const;
-#endif
+  auto get_using_state () const -> const PropertyUsings&;
   /// Вспомогательная функция для синронизации текстового поля и значения используемого расширения CPU
-  //// Нужна для работы с HTTP сервером, который работает только с текстовым полем
+  /// Нужна для работы с HTTP сервером, который работает только с текстовым полем
   void sync_txt2val ();
-
   /// Вспомогательная функция для синронизации текстового поля и значения используемого расширения CPU
   /// Нужна для работы с HTTP сервером, который работает только с текстовым полем
   void sync_val2txt ();
-
   /// Корректировка внутренних переменных структуры
   void self_correct ();
-
   ///
   bool
   is_failed () const
   {
     return is_failed_int ();
   }
-
   /// Функция клонирования объекта
   /// \param[in]  deep параметр задает глубину копирования (полное/только создание объекта по умолчанию)
   /// \return     копия объекта
-  IEvent::ptr clone (const ::libs::events::Deeps& deep = Deeps::full) const;
+  IEvent::ptr clone (const ::libs::events::Deeps& = Deeps::full) const;
 
   protected:
   struct Acessor {

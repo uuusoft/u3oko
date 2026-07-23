@@ -135,11 +135,11 @@ Filter::convert_bufs ()
 
   tempbuf->set_format (get_out_format_from_format (pixformat));
 
-  tfunc.pfunc_           = get_func_for_format (pixformat);
-  tfunc.src_align_.px_x_ = tfunc.pfunc_->get_block_align_x ();
-  tfunc.dst_align_.px_x_ = tfunc.pfunc_->get_block_align_x ();
-  tfunc.src_align_.px_y_ = tfunc.pfunc_->get_block_align_y ();
-  tfunc.dst_align_.px_y_ = tfunc.pfunc_->get_block_align_y ();
+  tfunc.pfunc_         = get_func_for_format (pixformat);
+  tfunc.src_align_.ax_ = tfunc.pfunc_->get_block_align_x ();
+  tfunc.dst_align_.ax_ = tfunc.pfunc_->get_block_align_x ();
+  tfunc.src_align_.ay_ = tfunc.pfunc_->get_block_align_y ();
+  tfunc.dst_align_.ay_ = tfunc.pfunc_->get_block_align_y ();
 
   if (!finfo_.rprops_->debug_skip_transform_)
   {

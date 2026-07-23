@@ -15,7 +15,6 @@ const char* id_lib_name        = "libs.link.consts.text.name_lib";              
 const char* id_proc_name       = "libs.link.consts.text.name_proc";                 //< remove?
 const char* id_company_name    = "libs.link.consts.text.name_company";              //< используется для формирования уникальных идентификаторов в разделяемом памяти
 const char* id_appl_name       = "libs.link.consts.text.name_application";          //<
-const char* id_subsys_name     = "libs.link.consts.text.name_subsys";               //<
 const char* id_name_queue2dest = "libs.link.consts.text.name_msgs_queue";           //<
 const char* id_name_shared_mem = "libs.link.consts.text.name_shared_mem";           //< размер максимальный буфера для передачи сообщений при работе модулей в разлчиных процессах
 const char* id_sync_init_event = "libs.link.consts.text.name_sync_init_event";      //<
@@ -25,6 +24,7 @@ const char* id_code_runs       = "libs.link.consts.text.name_code_runs";        
 const char* id_server_side     = "libs.link.consts.text.name_server_side";          //< используется для выбора очереди при передачи/приеме сообщений
 const char* id_shared_mem_base = "uuusoft.prg.mmedia.libs.link.shared_mem_base.";   //<
 const char* id_delay_ms        = "delay";                                           //<
+// const char* id_subsys_name     = "libs.link.consts.text.name_subsys";               //<
 }   // namespace libs::link::consts::text
 
 namespace libs::link::consts::text::defaults

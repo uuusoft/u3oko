@@ -21,7 +21,7 @@ namespace dlls::sources::v4l2_vgen::camera
 void
 CamImpl::sync_runtime_props (const syn::VideoDriverCaptureProp &capprops)
 {
-  const auto fourcc = libs::utility::uids::helpers::idval2fourcc (capprops.capi_.px_format_);
+  const auto fourcc = ::libs::utility::uids::helpers::idval2fourcc (capprops.capi_.px_format_);
   U3_CHECK (v4l2capture_, "before sync runtime props" + VTOLOG (capprops.capi_.width_) + VTOLOG (capprops.capi_.height_) + VTOLOG (capprops.capi_.fps_) + VTOLOG (fourcc));
   capparams_ = capprops.capi_;
 

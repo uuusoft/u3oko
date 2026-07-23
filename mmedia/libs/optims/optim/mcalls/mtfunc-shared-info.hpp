@@ -21,7 +21,7 @@ class MTFuncSharedInfo final
   MTFuncSharedInfo ()  = default;
   ~MTFuncSharedInfo () = default;
 
-  std::atomic_bool exit_request_ = false;   //< Флаг запроса на выход
-  barier_ptr_type  bstart_;                 //< Барьер старта
+  std::atomic_bool exit_request_ { false };   //< Флаг запроса на выход
+  barier_ptr_type  bstart_;                   //< Барьер старта
 };
 }   // namespace libs::optim::mcalls

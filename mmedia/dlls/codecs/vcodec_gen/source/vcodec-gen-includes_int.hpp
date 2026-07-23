@@ -6,11 +6,6 @@
 \project    u3_vcodec_gen
 */
 #include "../../../dlls-includes_int.hpp"
-
-#include "mmedia/dlls/codecs/codec_funcs/codec-funcs-includes.hpp"
-#include "mmedia/dlls/codecs/codec_funcs/bitgen/codec-funcs-bitgen-includes.hpp"
-#include "mmedia/dlls/codecs/codec_gen/codec-gen-includes.hpp"
-#include "vcodec-gen-syn.hpp"
 #include "vcodec-gen-includes.hpp"
 
 #undef U3_FILE_LOG_TAG

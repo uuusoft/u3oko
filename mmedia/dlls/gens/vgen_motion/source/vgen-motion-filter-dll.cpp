@@ -75,10 +75,10 @@ Filter::make_motion_est_buf (
 
   ::libs::optim::mcalls::MTFuncInfo tfunc (&motion_est1_);
 
-  tfunc.src_align_.px_x_ = b2b.size_block_;
-  tfunc.dst_align_.px_x_ = b2b.size_block_;
-  tfunc.src_align_.px_y_ = b2b.size_block_;
-  tfunc.dst_align_.px_y_ = 1;
+  tfunc.src_align_.ax_ = b2b.size_block_;
+  tfunc.dst_align_.ax_ = b2b.size_block_;
+  tfunc.src_align_.ay_ = b2b.size_block_;
+  tfunc.dst_align_.ay_ = 1;
 
   // tfunc.dest_div_koeffy_ = b2b.size_block_;
   // tfunc.dest_mul_koeffy_ = 1;

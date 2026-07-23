@@ -5,7 +5,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \project    u3_proxy_libs
 */
-#include "mmedia/libs/icore/impl/var1/obj/dll/create_impl_func_type.hpp"   // REFACT
+#include "mmedia/libs/icore/impl/var1/obj/dll/create-impl-func-type.hpp"   // REFACT
 
 namespace libs::proxy
 {

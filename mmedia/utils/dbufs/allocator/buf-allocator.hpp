@@ -8,7 +8,7 @@
 
 namespace utils::dbufs::allocator
 {
-/// Реализация по управлению буферами для данных
+/// Реализация по управлению буферами
 /// Полное описание функций в суперклассе
 class BufAllocator final : public IBufAllocator
 {
@@ -27,7 +27,7 @@ class BufAllocator final : public IBufAllocator
   using bufs_type    = std::list< utils::dbufs::video::IVideoBuf::ptr >;
   using sync_type    = std::mutex;
   using lock_type    = std::scoped_lock< sync_type >;
-  using counter_type = std::int64_t;
+  using counter_type = std::uint64_t;
 
   BufAllocator () = default;
   virtual ~BufAllocator ();
@@ -37,9 +37,9 @@ class BufAllocator final : public IBufAllocator
   /// Внутренняя реализации без блокировки
   std::string dump_state_int ();
 
-  bufs_type    bufs_;                     //< Список созданных буферов
-  sync_type    mtx_;                      //< Примитив для синхронизации доступа к реализации
-  counter_type counter_alloc_bufs_ = 0;   //< Счетчик успешых операций выделения новых буферов debug
-  counter_type counter_reuse_bufs_ = 0;   //< Счетчик успешых операций повторного использования буферов debug
+  bufs_type    bufs_;                       //< Список созданных буферов
+  sync_type    mtx_;                        //< Примитив для синхронизации доступа к реализации
+  counter_type counter_alloc_bufs_ { 0 };   //< Счетчик успешых операций выделения новых буферов debug
+  counter_type counter_reuse_bufs_ { 0 };   //< Счетчик успешых операций повторного использования буферов debug
 };
 }   // namespace utils::dbufs::allocator

@@ -61,8 +61,8 @@ class IMemBuf : public IBuf
   IMemBuf () = default;
 
   private:
-  mutable syn::IBlockMem::ptr raw_block_ = nullptr;   //<
-  mem_vars_type               mem_vars_;              //<
-  fragments_type              fragments_;             //<
+  mutable syn::IBlockMem::ptr raw_block_ { nullptr };   //<
+  mem_vars_type               mem_vars_;                //<
+  fragments_type              fragments_;               //<
 };
 }   // namespace utils::dbufs

@@ -9,8 +9,8 @@
 
 #include "../lib-optim-syn.hpp"
 #include "../io/libs-optims-optim-io-includes.hpp"
-#include "helpers/check_mcall_data_align_func.hpp"
-#include "align-property.hpp"
+#include "helpers/check_mcall_align_func.hpp"
+#include "aligns.hpp"
 #include "mtfunc-info.hpp"
 #include "mtfunc-shared-info.hpp"
 #include "imcaller.hpp"

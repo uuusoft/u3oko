@@ -24,30 +24,15 @@ void
 HttpModule::init_links_int (const syn::InitApplication& appinfo)
 {
   U3_XLOG_DBG ("HttpModule::init_links_int::---->");
-  auto type_run = ::libs::link::details::CodeRuns::appl;
-  auto lproxy   = ::libs::ilink::LinkCreatorProxy::instance ();
-#if 1
+  auto lproxy    = ::libs::ilink::LinkCreatorProxy::instance ();
   auto temp_link = lproxy->impl ()->get_listen (
     ::libs::link::CreateInfo (
       { { ::libs::link::consts::text::id_appl_name, "mpl_mhttp" },
         { ::libs::link::consts::text::id_lib_name, "mpl_mhttp" },
-        { ::libs::link::consts::text::id_subsys_name, "subsys_http" },
         { ::libs::link::consts::text::id_size_shared_mem, ::libs::link::consts::sizes::buf_appl2http },
         { ::libs::link::consts::text::id_module_links, ::libs::link::details::ModuleLinks::http },
-        { ::libs::link::consts::text::id_code_runs, type_run } }));
-#else
-  const std::string name_data = "";
-  auto              temp_link = lproxy->impl ()->get_listen (
-    ::libs::link::CreateInfo (
-      type_run,
-      name_data,
-      "mpl_mhttp",
-      appinfo.company_name_,
-      appinfo.appl_name_,
-      "subsys_http",
-      ::libs::link::details::ModuleLinks::http,
-      ::libs::link::consts::sizes::buf_appl2http));
-#endif
+        { ::libs::link::consts::text::id_code_runs, ::libs::link::details::CodeRuns::appl } }));
+
   links_.set (syn::mids::http2appl, temp_link);
 
   //  Нужно установить свои связи в свойства разделяемые и спользовать их.

@@ -122,11 +122,11 @@ Filter::convert_bufs_from_rgb ()
   {
     cinfo.dsts_.emplace_back (hsl[2], "hsl 2 convertors::all2hsl");
 
-    tfunc.pfunc_           = syn::Accuracys::best == finfo_.rprops_->atype_ ? &rgb24_to_l_accurate_ : &rgb24_to_l_fast_;
-    tfunc.src_align_.px_x_ = 1;
-    tfunc.dst_align_.px_x_ = 1;
-    tfunc.src_align_.px_y_ = 1;
-    tfunc.dst_align_.px_y_ = 1;
+    tfunc.pfunc_         = syn::Accuracys::best == finfo_.rprops_->atype_ ? &rgb24_to_l_accurate_ : &rgb24_to_l_fast_;
+    tfunc.src_align_.ax_ = 1;
+    tfunc.dst_align_.ax_ = 1;
+    tfunc.src_align_.ay_ = 1;
+    tfunc.dst_align_.ay_ = 1;
   }
   else
   {
@@ -134,11 +134,11 @@ Filter::convert_bufs_from_rgb ()
     cinfo.dsts_.emplace_back (hsl[1], "hsl 1 convertors::all2hsl");
     cinfo.dsts_.emplace_back (hsl[2], "hsl 2 convertors::all2hsl");
 
-    tfunc.pfunc_           = &rgb24_to_hsl_;
-    tfunc.src_align_.px_x_ = 1;
-    tfunc.dst_align_.px_x_ = 1;
-    tfunc.src_align_.px_y_ = 1;
-    tfunc.dst_align_.px_y_ = 1;
+    tfunc.pfunc_         = &rgb24_to_hsl_;
+    tfunc.src_align_.ax_ = 1;
+    tfunc.dst_align_.ax_ = 1;
+    tfunc.src_align_.ay_ = 1;
+    tfunc.dst_align_.ay_ = 1;
   }
 
   if (!finfo_.rprops_->debug_skip_transform_)

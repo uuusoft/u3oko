@@ -29,21 +29,21 @@ class Filter final :
 
   // internals
   auto init_pts (syn::ConnectInfo*) -> void;
-  void log_statistic ();
-  void process_frame (syn::TransformInfo& info);
-  bool prepare_process_frame (syn::TransformInfo& info);
-  void process_events (syn::TransformInfo& info);
-  void update_int ();
-  void free_impl_lib () noexcept;
-  void sync_props2int ();
-  void flip_y (syn::IVideoBuf::raw_ptr buf);
+  auto log_statistic () -> void;
+  auto process_frame (syn::TransformInfo&) -> void;
+  auto prepare_process_frame (syn::TransformInfo&) -> bool;
+  auto process_events (syn::TransformInfo&) -> void;
+  auto update_int () -> void;
+  auto free_impl_lib () noexcept -> void;
+  auto sync_props2int () -> void;
+  auto flip_y (syn::IVideoBuf::raw_ptr) -> void;
 
-  static browser::CodecBrower               codec_browser_;   //< Для инфомации о доступных видеокодеках
+  static browser::CodecBrowser              codec_browser_;   //< Для инфомации о доступных видеокодеках
   static ::libs::utility::dlls::FreezerDlls frozen_dlls_;     //< Удерживаем в памяти все загруженные библиотеки, чтобы избегать сбоев при работе с событиями, которые были в них сгенерированы
 
-  bool                       external_codec_ = false;   //<
-  ::libs::optim::io::hioptim flip_y_;                   //<
-  syn::IMCaller::ptr         pthreads_;                 //< Пул рабочих потоков
-  std::string                active_dll_name_;          //< U3-REFACT
+  syn::IMCaller::ptr         mtcaller_;                                      //<
+  ::libs::optim::io::hioptim flip_y_;                                        //<
+  bool                       external_codec_ { false };                      //<
+  std::string                active_dll_name_ { "u3-dll-name-undefined" };   //< U3-REFACT
 };
 }   // namespace dlls::codecs::vcodec_gen

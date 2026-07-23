@@ -31,7 +31,7 @@ class Filter final :
   void init_pts (syn::ConnectInfo* info);
 
   BaseIdInterf::ptr base_interf_      = std::make_shared< BaseIdInterf > ();   //<
-  std::int64_t      counter_frames_   = 0;                                     //<
+  std::int64_t      frame_counter_    = 0;                                     //<
   bool              send_base_interf_ = false;                                 //<
 };
 }   // namespace dlls::base_id

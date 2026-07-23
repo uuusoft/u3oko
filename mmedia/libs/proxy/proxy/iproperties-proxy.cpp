@@ -51,6 +51,7 @@ get_list_dlls_as_libs () -> std::vector< ::libs::utility::files::FileNode >
 
   ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vvd_vcodec_test", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
   ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vvd_vcodec_mjpg", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vvd_vcodec_x264", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
 
   ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vss_desk_vgen", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
   ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vss_fake_vgen", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
@@ -65,15 +66,15 @@ get_list_dlls_as_libs () -> std::vector< ::libs::utility::files::FileNode >
 
 #ifdef U3_OS_RASPBERRY
   // ret.emplace_back (::libs::utility::files::FileNode { "vss_rasp_vgen", 0, 0, 0 });
-  ret.emplace_back (::libs::utility::files::FileNode { "vss_v4l2_vgen", 0, 0, 0 });
 #endif
 
 #ifdef U3_OS_WIN32_DESKTOP
   ret.emplace_back (::libs::utility::files::FileNode { "vss_dshow_vgen", 0, 0, 0 });
 #endif
 
-#if defined(U3_OS_GNU_LINUX) || defined(U3_OS_ORANGE_PI)
+#if defined(U3_OS_GNU_LINUX) || defined(U3_OS_ORANGE_PI) || defined(U3_OS_RASPBERRY)
   ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vss_v4l2_vgen", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
+  ret.emplace_back (::libs::utility::files::FileNode { .name_ = "vvd_vcodec_va", .create_time_ = 0, .last_write_time_ = 0, .size_ = 0 });
 #endif
 
   for (auto& file : ret)

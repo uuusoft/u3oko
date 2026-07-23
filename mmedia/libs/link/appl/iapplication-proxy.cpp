@@ -60,19 +60,11 @@ IApplicationProxy::IApplicationProxy (
   U3_XLOG_DBG ("IApplicationProxy::IApplicationProxy:: prepare frozen dll" + TOLOG (dll_path) + TOLOG (name_lib));
   frozen_dlls_.add (cpath.string (), lib_);
 
-#  ifdef U3_OS_ANDROID
-  creator_ = ::libs::utility::casts::reinterpret_cast_helper< create_obj_type* > (
-    dlsym (lib_.native (), ::libs::utility::dlls::make_func_name_lib (name_lib, "create_impl").c_str ()));
-
-  erasor_ = ::libs::utility::casts::reinterpret_cast_helper< delete_obj_type* > (
-    dlsym (lib_.native (), ::libs::utility::dlls::make_func_name_lib (name_lib, "delete_impl").c_str ()));
-#  else
   creator_ = ::boost::dll::import_symbol< create_obj_type > (
     lib_, ::libs::utility::dlls::make_func_name_lib (name_lib, "create_impl").c_str ());
 
   erasor_ = ::boost::dll::import_symbol< delete_obj_type > (
     lib_, ::libs::utility::dlls::make_func_name_lib (name_lib, "delete_impl").c_str ());
-#  endif
 #endif
 
   U3_CHECK (creator_, ("find create_impl from lib, " + cpath.string () + ", " + ::libs::utility::dlls::make_func_name_lib (name_lib, "create_impl")).c_str ());

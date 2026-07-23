@@ -72,6 +72,6 @@ Filter::transform_int (syn::TransformInfo& info)
   {
     return;
   }
-  ++counter_frames_;
+  ++frame_counter_;
 }
 }   // namespace dlls::base_id

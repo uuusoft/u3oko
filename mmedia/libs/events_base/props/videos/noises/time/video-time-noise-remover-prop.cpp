@@ -40,7 +40,7 @@ VideoTimeNoiseRemoverProp::load_json_int (const ::boost::json::object& obj)
 
   name_impl_          = obj.at ("name_impl").as_string ();
   bufs_               = ::boost::json::value_to< source_bufs_type > (obj.at ("evbufs"));
-  dump_counter_frame_ = ::libs::utility::json::get_uint32 (obj.at ("dump_counter_frame"));
+  dump_frame_counter_ = ::libs::utility::json::get_uint32 (obj.at ("dump_counter_frame"));
 }
 
 
@@ -51,7 +51,7 @@ VideoTimeNoiseRemoverProp::save_json_int (::boost::json::object& obj) const
 
   obj["name_impl"]          = name_impl_;
   obj["evbufs"]             = ::boost::json::value_from (bufs_);
-  obj["dump_counter_frame"] = dump_counter_frame_;
+  obj["dump_counter_frame"] = dump_frame_counter_;
 }
 
 
@@ -63,7 +63,7 @@ VideoTimeNoiseRemoverProp::copy_int (const IEvent::craw_ptr src)
 
   name_impl_          = dsrc->name_impl_;
   bufs_               = dsrc->bufs_;
-  dump_counter_frame_ = dsrc->dump_counter_frame_;
+  dump_frame_counter_ = dsrc->dump_frame_counter_;
 }
 
 
@@ -81,7 +81,7 @@ VideoTimeNoiseRemoverProp::serialize (Archive& arh, const std::uint32_t /* file_
 
   arh& BOOST_SERIALIZATION_NVP (name_impl_);
   arh& BOOST_SERIALIZATION_NVP (bufs_);
-  arh& BOOST_SERIALIZATION_NVP (dump_counter_frame_);
+  arh& BOOST_SERIALIZATION_NVP (dump_frame_counter_);
   // arh& BOOST_SERIALIZATION_NVP (indx_diff_buf_);
   // arh& BOOST_SERIALIZATION_NVP (impl_info_);
 

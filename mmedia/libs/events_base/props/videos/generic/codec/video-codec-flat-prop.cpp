@@ -17,7 +17,6 @@ VideoCodecFlatProp::VideoCodecFlatProp (
   std::uint32_t                             max_period_kframe,
   float                                     percent_block,
   bool                                      nocolor) :
-  size_ (sizeof (VideoCodecFlatProp)),
   format_ (format),
   type_ (type),
   quality_ (quality),

@@ -49,7 +49,6 @@ CreateInfo::CreateInfo (const vals_type& vals) :
                    { consts::text::id_lib_name, "u3-lib-name-wtf" },
                    { consts::text::id_appl_name, "u3-appl-name-wtf" },
                    { consts::text::id_service_name, "" },
-                   { consts::text::id_subsys_name, "u3-subsystem-name-wtf" },
                    { consts::text::id_size_shared_mem, consts::size_shared_mem_bytes },
                    { consts::text::id_module_links, details::ModuleLinks::gui },
                    { consts::text::id_code_runs, details::CodeRuns::usual },
@@ -90,8 +89,6 @@ CreateInfo::get_prefix () const -> std::string
   ret += std::get< std::string > (link_params_[consts::text::id_company_name]);
   ret += ".";
   ret += std::get< std::string > (link_params_[consts::text::id_appl_name]);
-  ret += ".";
-  ret += std::get< std::string > (link_params_[consts::text::id_subsys_name]);
   ret += ".";
   ret += to_string (std::get< details::ModuleLinks > (link_params_[consts::text::id_module_links]));
   ret += ".";

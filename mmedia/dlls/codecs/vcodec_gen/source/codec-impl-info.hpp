@@ -32,9 +32,9 @@ struct CodecImplInfo final {
     return nullptr == create_codec_ || nullptr == free_codec_ || nullptr == get_codec_info_ ? false : true;
   }
 
-  libs::utility::dlls::dll_type lib_;                  //< Библиотека с реализацией кодека
-  funcs::func_get_codec_type    create_codec_   = 0;   //< Функция создания кодека из библиотеки
-  funcs::func_free_codec_type   free_codec_     = 0;   //< Функция удаления кодека из библиотеки
-  funcs::func_codec_info_type   get_codec_info_ = 0;   //< Функция получения информации о кодеке из библиотеки
+  libs::utility::dlls::dll_type lib_;                    //< Библиотека с реализацией кодека
+  funcs::func_get_codec_type    create_codec_ { 0 };     //< Функция создания кодека из библиотеки
+  funcs::func_free_codec_type   free_codec_ { 0 };       //< Функция удаления кодека из библиотеки
+  funcs::func_codec_info_type   get_codec_info_ { 0 };   //< Функция получения информации о кодеке из библиотеки
 };
 }   // namespace dlls::codecs::vcodec_gen

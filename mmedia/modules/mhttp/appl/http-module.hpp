@@ -62,7 +62,7 @@ class HttpModule final : public ::libs::ilink::appl::leaf::LeafModule
   auto prepare_resources () -> void;
   auto create_rw_copy () -> void;
   auto delete_rw_copy () -> void;
-  auto load_def_resource2mem () -> void;
+  // auto load_def_resource2mem () -> void;
   auto process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr) -> void;
   auto process_zip_data_event (syn::ZipDataEvent::raw_ptr) -> void;
   auto debug () -> void;
@@ -71,15 +71,15 @@ class HttpModule final : public ::libs::ilink::appl::leaf::LeafModule
   auto process_request_file (const std::string& req, const std::string& body) -> process_res_type;
   auto process_request_event_debug (const std::string&, const std::string&, const std::string&) -> bool;
 
-  ImplState                         impl_state_;        //< Состояние для реализации
-  ImplState                         impl_ssl_state_;    //< Состояние для SSL реализации
-  syn::Loader::ptr                  resource_loader_;   //< Загрузчик статических ресурсов (файлов, скриптов и т.п) в память
-  std::string                       temp_folder_;       //< Базовая директория с ресурсами http сервера, доступна как на запись, таки и на чтение Обнуляется при рестарте сервера
-  sync_type                         mtx_;               //< Для синхронизации доступа к заделяемым ресурсам между внешними агентами и потоком обработки запросов от http интерфейса
-  ids2bufs_type                     shared_ids2bufs_;   //< Хранилище для буферов с данными, которые приходят извне Разделяется между потоком обработки запросов от http интерфейса
-  id_msg2func_type                  int_catch_funcs_;   //< Функции-обработчики сообщений со стороны http клиента пользуются для тех сообщений, которые мы можем (и должны) обработать внутри htpp сервера
-  std::shared_ptr< WebSharedState > shared_state_;      //<
-  SkipDataState                     skip_state_;        //<
-  syn::ISystemProperty::raw_ptr     isys_ = nullptr;    //<
+  ImplState                         impl_state_;         //< Состояние для реализации
+  ImplState                         impl_ssl_state_;     //< Состояние для SSL реализации
+  syn::Loader::ptr                  resource_loader_;    //< Загрузчик статических ресурсов (файлов, скриптов и т.п) в память
+  std::string                       temp_folder_;        //< Базовая директория с ресурсами http сервера, доступна как на запись, таки и на чтение Обнуляется при рестарте сервера
+  sync_type                         mtx_;                //< Для синхронизации доступа к заделяемым ресурсам между внешними агентами и потоком обработки запросов от http интерфейса
+  id_msg2func_type                  int_catch_funcs_;    //< Функции-обработчики запросов, используются для тех сообщений, которые мы можем обработать внутри http сервера
+  std::shared_ptr< WebSharedState > shared_state_;       //<
+  SkipDataState                     skip_state_;         //<
+  syn::ISystemProperty::raw_ptr     isys_ { nullptr };   //<
+  // ids2bufs_type                     shared_ids2bufs_;   //< Хранилище для буферов с данными, которые приходят извне Разделяется между потоком обработки запросов от http интерфейса
 };
 }   // namespace modules::mhttp::appl

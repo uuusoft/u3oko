@@ -8,10 +8,10 @@
 
 namespace libs::link
 {
-struct CallState {
-  details::CallSyncs      sync_   = details::CallSyncs::async;
-  details::Calls          req_    = details::Calls::set;
-  syn::ISeqEvent::id_type seq_id_ = syn::ISeqEvent::id_type ();
+struct CallState final {
+  details::CallSyncs      sync_ { details::CallSyncs::async };
+  details::Calls          req_ { details::Calls::set };
+  syn::ISeqEvent::id_type seq_id_ { syn::ISeqEvent::id_type () };
 };
 
 /// Интерфейс, который должна поддерживать реализация связи между двумя модулями системы

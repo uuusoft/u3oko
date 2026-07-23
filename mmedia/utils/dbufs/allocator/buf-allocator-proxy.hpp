@@ -12,8 +12,10 @@ extern "C" BOOST_SYMBOL_EXPORT utils::dbufs::allocator::IBufAllocator::raw_ptr c
 
 namespace utils::dbufs::allocator
 {
-/// Заместитель для доступа к реализации по управлению буферами для данных
+/// Заместитель для доступа к реализации по управлению буферами
 /// Является одиночкой только для статически линкуемых модулей (но сильнее этого и не требуется)
+/// При этом сама реализация является одиночкой в сильном смылсе
+/// В зависимости от типа сборки {U3_BUILD_MODULES_AS_LIBS} либо настраивается на реализацию как функция либо загружает dll и ищет функцию в ней
 class BufAllocatorProxy final
 {
   public:
@@ -21,10 +23,11 @@ class BufAllocatorProxy final
   U3_ADD_POINTERS_TO_SELF (BufAllocatorProxy)
   U3_ADD_DELETE_MOVE_COPY (BufAllocatorProxy)
 
-  using create_func_type = IBufAllocator::raw_ptr ();
+  using raw_create_buf_func_type = IBufAllocator::raw_ptr ();
+  using create_buf_func_type     = std::function< raw_create_buf_func_type >;
 
   /// Функция получения экземпляра заместителя
-  /// \param[in]  dll_path путь к загружаемому коду системы
+  /// \param[in]  dll_path путь к загружаемому коду реализации
   static BufAllocatorProxy::raw_ptr
   instance (const std::string& dll_path)
   {
@@ -54,19 +57,14 @@ class BufAllocatorProxy final
 
     cpath /= ::libs::utility::dlls::decorate_dll_name ("dbufs");
     lib_.load (cpath.string (), boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
-
-#  ifdef U3_OS_ANDROID
-    creator_ = ::libs::utility::casts::reinterpret_cast_helper< create_func_type* > (dlsym (lib_.native (), "create_dbufs_impl"));
-#  else
-    creator_ = boost::dll::import_symbol< create_func_type > (lib_, "create_dbufs_impl");
-#  endif
+    creator_ = boost::dll::import_symbol< raw_create_buf_func_type > (lib_, "create_dbufs_impl");
 #endif
     U3_ASSERT (creator_);
   }
 
   ~BufAllocatorProxy () = default;
 
-  ::libs::utility::dlls::dll_type   lib_;       //< Разделяемый код (dll/so), который содержит в себе реализацию некого интерфейса
-  std::function< create_func_type > creator_;   //< Собственно полученная из dll реализация
+  ::libs::utility::dlls::dll_type lib_;       //< Разделяемый код (dll/so), который содержит в себе реализацию некого интерфейса
+  create_buf_func_type            creator_;   //< Собственно полученная из dll реализация
 };
 }   // namespace utils::dbufs::allocator

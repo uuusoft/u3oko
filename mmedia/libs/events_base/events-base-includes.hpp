@@ -87,8 +87,8 @@ file        events-base-includes.hpp
 #include "props/videos/generic/driver/video-driver-capture-prop.hpp"
 
 #include "props/videos/generic/codec/consts/video-codec-prop-const-vals.hpp"
-#include "props/videos/generic/codec/override-codec-data-type.hpp"
-#include "props/videos/generic/codec/type-codec-mode.hpp"
+#include "props/videos/generic/codec/enum-writes.hpp"
+#include "props/videos/generic/codec/enum-codec-modes.hpp"
 #include "props/videos/generic/codec/video-codec-flat-prop.hpp"
 #include "props/videos/generic/codec/video-codec-prop.hpp"
 

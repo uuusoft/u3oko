@@ -24,7 +24,7 @@ CodecGeneric::code (
 {
   if (code_int (src, dst, events))
   {
-    ++counter_frames_;
+    ++frame_counter_;
   }
 }
 
@@ -37,7 +37,7 @@ CodecGeneric::decode (
 {
   if (decode_int (src, dst, events))
   {
-    ++counter_frames_;
+    ++frame_counter_;
   }
 }
 

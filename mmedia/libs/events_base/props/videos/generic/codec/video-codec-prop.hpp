@@ -44,17 +44,17 @@ class VideoCodecProp : virtual public events_base::Event
   void reset ();
 
   // EAI-REFACT to private
-  std::string        dll_name_ = "vvd_vcodec_mjpg";                                                                   //< Имя DLL с реализацией кодека
+  std::string        preferred_impl_ { "vvd_vcodec_mjpg" };                                                           //< предпочительная реализация кодека
   syn::EventBufs     bufs_ { ::utils::dbufs::video::consts::offs::lit, ::utils::dbufs::video::consts::offs::http };   //< Буфер источника/назначения. Опционален
-  std::uint32_t      max_period_ic_frame_ = 0;                                                                        //< Максимальный период ICF
-  std::uint32_t      fps_coder_           = 0;                                                                        //< Количество кадров (декодирумых/кодируемых) в секунду. Если значение <= 0 контроль частоты не производится
+  std::uint32_t      max_period_ic_frame_ { 0 };                                                                      //< Максимальный период ICF
+  std::uint32_t      fps_coder_ { 0 };                                                                                //< Количество кадров (декодирумых/кодируемых) в секунду. Если значение <= 0 контроль частоты не производится
+  Writes             write_codec_strategy_ { Writes::allways_write };                                                 //< Стратегия записи данных в буфер для кодека
+  bool               decode_flip_y_ { false };                                                                        //< Флаг, отразить изображение по вертикали при декодировании
+  bool               code_flip_y_ { false };                                                                          //< Флаг, отразить изображение по вертикали при кодировании
+  SelectorImpls      hint_codec_impl_ { ::libs::events_base::SelectorImpls::automatic };                              //< Опциональный идентификатор реализации. Например "auto", "hard", "soft", etc
+  bool               dump_result2file_ { false };                                                                     //< Флаг, для отладки добавляем возможность сбрасывать сжатые данные в файл. Каждый блок попадает в свой файл с автоматически сгенерированным уникальным именем
+  std::uint64_t      dump_frame_counter_ { 0 };                                                                       //< Количество кадров, через которое будет произведен сброс времени работы в лог. 0 - логирование отключено (по умолчанию)
   VideoCodecFlatProp plane_;                                                                                          //< Свойства компрессии, которые будут вложены в каждый сжатый кадр системы
-  Writes             write_codec_strategy_ = Writes::allways_write;                                                   //< Стратегия записи данных в буфер для кодека
-  bool               decode_flip_y_        = false;                                                                   //< Флаг, отразить изображение по вертикали при декодировании
-  bool               code_flip_y_          = false;                                                                   //< Флаг, отразить изображение по вертикали при кодировании
-  SelectorImpls      hint_codec_impl_      = ::libs::events_base::SelectorImpls::automatic;                           //< Опциональный идентификатор реализации. Например "auto", "hard", "soft", etc
-  bool               dump_result2file_     = false;                                                                   //< Флаг, для отладки добавляем возможность сбрасывать сжатые данные в файл. Каждый блок попадает в свой файл с автоматически сгенерированным уникальным именем
-  std::uint64_t      dump_counter_frame_   = 0;                                                                       //< Количество кадров, через которое будет произведен сброс времени работы в лог. 0 - логирование отключено (по умолчанию)
 
   private:
   U3_ADD_SUPER_CLASS (::libs::events_base::Event)

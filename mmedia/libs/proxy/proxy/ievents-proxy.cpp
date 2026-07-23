@@ -39,21 +39,8 @@ IEventsProxy::IEventsProxy (const std::string& dll_path)
 #else
   boost::filesystem::path cpath (dll_path);
   cpath /= ::libs::utility::dlls::decorate_dll_name ("vdd_devents");
-
-  try
-  {
-    lib_.load (cpath, boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
-  }
-  catch (boost::exception& excpt)
-  {
-    U3_XLOG_ERROR ("load lib " + std::string (boost::diagnostic_information_what (excpt, true)));
-  }
-
-#  ifdef U3_OS_ANDROID
-  creator_ = ::libs::utility::casts::reinterpret_cast_helper< create_func_type* > (dlsym (lib_.native (), "create_impl_vdd_devents"));
-#  else
+  lib_.load (cpath, boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
   creator_ = ::boost::dll::import_symbol< create_func_type > (lib_, "create_impl_vdd_devents");
-#  endif
 #endif
   U3_ASSERT (creator_);
 }

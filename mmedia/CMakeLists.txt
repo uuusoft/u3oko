@@ -19,9 +19,9 @@ project(${U3_APPL_NAME} LANGUAGES C CXX ASM_NASM)
 
 cmake_policy(SET CMP0057 NEW)
 
-# generate compile_commands.json
 # for sourcetrail https://github.com/coatisoftware/sourcetrail
 # for clang-tidy sudo apt install clang-tidy
+# set(CMAKE_EXPORT_COMPILE_COMMANDS ON) generate compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(project_name ${U3_APPL_NAME})
@@ -68,16 +68,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${U3_SYSTEM_NAME}/${CMAKE
 
 include("./build/cmake/compiler-specific/u3-selector-compiler-specific-options.cmake")
 
-set(U3_LINK_ALL_EVENTS_LIBS
-    events_user-lib
-    events_gui-lib
-    events_media-lib
-    events_storage-lib
-    events_http-lib
-    events_msg-lib
-    events_log-lib
-    events_base-lib
-    events-lib)
+set(U3_LINK_ALL_EVENTS_LIBS events_user-lib events_gui-lib events_media-lib events_storage-lib events_http-lib events_msg-lib events_log-lib events_base-lib events-lib)
 set(U3_LINK_ALL_GENERIC_LIBS properties-lib bufs-lib core-lib link-lib utility-lib)
 set(U3_LINK_ALL_IGENERIC_LIBS icore-lib ilink-lib iproperties-lib)
 
