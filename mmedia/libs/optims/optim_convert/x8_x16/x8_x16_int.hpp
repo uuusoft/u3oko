@@ -32,7 +32,7 @@ void get_params (
     const std::uint32_t width      = x16->width_;                                           \
     const std::uint32_t height     = x16->height_;                                          \
                                                                                             \
-    U3_ASSERT (leak_x16 >= 0);                                                              \
-    U3_ASSERT (leak_x8 >= 0);
+    ::libs::utility::checks::throw_ifn (leak_x16 >= 0);                                     \
+    ::libs::utility::checks::throw_ifn (leak_x8 >= 0);
 
 #endif

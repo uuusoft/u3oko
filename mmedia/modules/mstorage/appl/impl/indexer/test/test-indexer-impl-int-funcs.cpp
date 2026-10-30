@@ -58,7 +58,7 @@ TestIndexerImpl::load_state ()
     boost::archive::xml_iarchive xmla (file, boost::archive::no_header);
     xmla&                        BOOST_SERIALIZATION_NVP (state_);
 #else
-    U3_ASSERT (0);
+    ::libs::utility::checks::throw_ifn (0);
 #endif
   }
   catch (std::exception& excpt)
@@ -92,7 +92,7 @@ TestIndexerImpl::save_state ()
     boost::archive::xml_oarchive xmla (file, boost::archive::no_header);
     xmla&                        BOOST_SERIALIZATION_NVP (state_);
 #else
-    U3_ASSERT (0);
+    ::libs::utility::checks::throw_ifn (0);
 #endif
   }
   catch (std::exception& excpt)
@@ -108,11 +108,11 @@ TestIndexerImpl::save_state ()
 void
 TestIndexerImpl::open_stream (syn::UpdateStream::raw_ptr info)
 {
-  U3_ASSERT (info->stream_id_ == ::libs::events_storage::consts::empty_stream_id);
-  U3_ASSERT (info->obj_id_.is_valid ());
+  ::libs::utility::checks::throw_ifn (info->stream_id_ == ::libs::events_storage::consts::empty_stream_id);
+  ::libs::utility::checks::throw_ifn (info->obj_id_.is_valid ());
 
   info->stream_id_ = boost::uuids::random_generator () ();
-  U3_ASSERT (info->stream_id_ != ::libs::events_storage::consts::empty_stream_id);
+  ::libs::utility::checks::throw_ifn (info->stream_id_ != ::libs::events_storage::consts::empty_stream_id);
   auto& obj_state = state_->objects_[info->obj_id_];
 
   obj_state.streams_.emplace_back (info->stream_id_);
@@ -123,6 +123,6 @@ TestIndexerImpl::open_stream (syn::UpdateStream::raw_ptr info)
 void
 TestIndexerImpl::close_stream (syn::UpdateStream::raw_ptr info)
 {
-  U3_ASSERT (info->stream_id_ != ::libs::events_storage::consts::empty_stream_id);
+  ::libs::utility::checks::throw_ifn (info->stream_id_ != ::libs::events_storage::consts::empty_stream_id);
 }
 }   // namespace modules::mstorage::appl::impl::indexer::test

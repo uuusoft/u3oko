@@ -10,9 +10,9 @@ namespace utils::mems::impl
 {
 BlockMem::BlockMem (const size_type size)
 {
-  U3_THROW_IFN (size > 0, "BlockMem, zero size for alloc");
+  ::libs::utility::checks::throw_ifn (size > 0, "BlockMem, zero size for alloc");
   details::u3alloc (::libs::utility::casts::reinterpret_cast_helper< void** > (&buf_), size);
-  U3_THROW_IFN (buf_, "failed alloc buf");
+  ::libs::utility::checks::throw_ifn (buf_, "failed alloc buf");
   mem_size_ = size;
 }
 
@@ -31,7 +31,7 @@ BlockMem::~BlockMem ()
 auto
 BlockMem::get_int () -> std::uint8_t*
 {
-  U3_ASSERT (buf_);
+  ::libs::utility::checks::throw_ifn (buf_);
   return buf_;
 }
 
@@ -39,7 +39,7 @@ BlockMem::get_int () -> std::uint8_t*
 auto
 BlockMem::get_int () const -> const std::uint8_t*
 {
-  U3_ASSERT (buf_);
+  ::libs::utility::checks::throw_ifn (buf_);
   return buf_;
 }
 
@@ -61,9 +61,9 @@ BlockMem::get_size_int () const -> BlockMem::size_type
 void
 BlockMem::set_size_int (BlockMem::size_type data_size)
 {
-  U3_ASSERT (buf_);
-  U3_ASSERT (data_size_ <= mem_size_);
-  U3_ASSERT (data_size <= mem_size_);
+  ::libs::utility::checks::throw_ifn (buf_);
+  ::libs::utility::checks::throw_ifn (data_size_ <= mem_size_);
+  ::libs::utility::checks::throw_ifn (data_size <= mem_size_);
   data_size_ = data_size;
 }
 
@@ -81,7 +81,7 @@ BlockMem::resize_int (const BlockMem::size_type size)
   data_size_ = 0;
 
   details::u3realloc (::libs::utility::casts::reinterpret_cast_helper< void** > (&buf_), size);
-  U3_THROW_IFN (buf_, "failed alloc buf");
+  ::libs::utility::checks::throw_ifn (buf_, "failed alloc buf");
   mem_size_ = size;
 }
 }   // namespace utils::mems::impl

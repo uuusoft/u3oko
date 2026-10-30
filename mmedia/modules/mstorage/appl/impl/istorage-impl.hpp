@@ -41,7 +41,7 @@ class IStorageImpl
   load (const seance_type& seance, const id_chunk_type& id, syn::IBlockMem::raw_ptr mem)
   {
     check_state_for_ops ("load");
-    U3_ASSERT (id.is_valid ());
+    ::libs::utility::checks::throw_ifn (id.is_valid ());
     load_int (seance, id, mem);
   }
 
@@ -50,7 +50,7 @@ class IStorageImpl
   {
     check_state_for_ops ("save");
     const auto res = save_int (seance, mem);
-    U3_ASSERT (res.is_valid ());
+    ::libs::utility::checks::throw_ifn (res.is_valid ());
     return res;
   }
 
@@ -59,7 +59,7 @@ class IStorageImpl
   {
     check_state_for_ops ("save");
     const auto res = save_int (seance, mem, size_mem);
-    U3_ASSERT (res.is_valid ());
+    ::libs::utility::checks::throw_ifn (res.is_valid ());
     return res;
   }
 
@@ -68,7 +68,7 @@ class IStorageImpl
   {
     check_state_for_ops ("save");
     const auto res = save_int (seance, mem->get_block ().get ());
-    U3_ASSERT (res.is_valid ());
+    ::libs::utility::checks::throw_ifn (res.is_valid ());
     return res;
   }
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
@@ -110,7 +110,7 @@ class IStorageImpl
   void
   check_state_for_ops (const std::string& op) const
   {
-    U3_THROW_IFN (ImplRuns::run == status_, "invalid status for operation" + TOLOG (op));
+    ::libs::utility::checks::throw_ifn (ImplRuns::run == status_, "invalid status for operation" + TOLOG (op));
   }
 
   private:

@@ -77,3 +77,8 @@
 #  endif
 
 #endif
+
+#ifndef U3_FILE_LOG_TAG
+//  fallback mode
+#  define U3_FILE_LOG_TAG "[[failback]]          "
+#endif

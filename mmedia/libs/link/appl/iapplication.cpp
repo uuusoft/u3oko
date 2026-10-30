@@ -13,40 +13,69 @@ void
 IApplication::appl_init (const InitApplication& info)
 {
   U3_CALL_TRACE_INFO_DBG (TOLOG (info.service_name_) + TOLOG (info.company_name_) + TOLOG (info.appl_name_) + TOLOG (info.lib_name_));
-  U3_ASSERT (!init_)
-  U3_ASSERT (info.check ())
+  try
+  {
+    ::libs::utility::checks::throw_ifn (!init_);
+    ::libs::utility::checks::throw_ifn (info.check ());
 
-  appl_info_ = info;
+    appl_info_ = info;
 
-  appl_init_int (info);
-  init_appl_folders_int ();
-  init_proxys_int ();
-  init_appl_data_int ();
-  init_links_int (info);
-  update_catch_funcs_int ();
-  init_done_int ();
-
-  init_ = true;
+    appl_init_int (info);
+    init_appl_folders_int ();
+    init_proxys_int ();
+    init_appl_data_int ();
+    init_links_int (info);
+    update_catch_funcs_int ();
+    init_done_int ();
+    init_ = true;
+  }
+  catch (const std::exception& excpt)
+  {
+    U3_XLOG_ERROR (excpt.what ());
+    // U3_LOG_APPL_EXCEPT (excpt.what ());
+  }
 }
 
 
 void
 IApplication::appl_work ()
 {
-  appl_work_int ();
+  try
+  {
+    appl_work_int ();
+  }
+  catch (const std::exception& excpt)
+  {
+    U3_XLOG_ERROR (excpt.what ());
+  }
 }
 
 
 auto
 IApplication::appl_deinit () -> bool
 {
-  return appl_deinit_int ();
+  try
+  {
+    return appl_deinit_int ();
+  }
+  catch (const std::exception& excpt)
+  {
+    U3_XLOG_ERROR (excpt.what ());
+  }
+  return false;
 }
 
 
 void
 IApplication::appl_force_stop ()
 {
-  appl_force_stop_int ();
+  try
+  {
+    appl_force_stop_int ();
+  }
+  catch (const std::exception& excpt)
+  {
+    U3_XLOG_ERROR (excpt.what ());
+  }
 }
 }   // namespace libs::link::appl

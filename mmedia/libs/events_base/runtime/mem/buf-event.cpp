@@ -50,7 +50,7 @@ BuffEvent::copy_int (const ::libs::events::IEvent::craw_ptr src)
 {
   const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< BuffEvent > (src);
   super::copy_int (src);
-  U3_ASSERT_THROW ("unimplemented");
+  ::libs::utility::checks::throw_exception ("unimplemented");
 }
 
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY

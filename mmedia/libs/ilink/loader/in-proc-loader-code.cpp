@@ -88,7 +88,7 @@ InProcLoaderCode::thread_func_impl (std::uint32_t indx_thread)
   thread_appl_ = std::make_unique< ::libs::link::appl::IApplicationProxy > (sfullpath, lib_name_);
 
   auto impl = thread_appl_->impl ();
-  U3_THROW_IFN (impl, "empty thread impl" + PTR_TOLOG (impl))
+  ::libs::utility::checks::throw_ifn ((bool) impl, "empty thread impl" + PTR_TOLOG (impl));
 
   ::libs::link::appl::InitApplication info;
 
@@ -106,15 +106,15 @@ void
 InProcLoaderCode::thread_postfunc_impl (std::uint32_t indx_thread)
 {
   thread_done_.store (true);
-  U3_ASSERT (thread_appl_);
-  U3_ASSERT (thread_appl_->impl ());
+  ::libs::utility::checks::throw_ifn ((bool) thread_appl_);
+  ::libs::utility::checks::throw_ifn (thread_appl_->impl ());
 }
 
 
 void
 InProcLoaderCode::set_name_lib (const std::string& name_lib)
 {
-  U3_ASSERT (!name_lib.empty ());
+  ::libs::utility::checks::throw_ifn (!name_lib.empty ());
   lib_name_ = name_lib;
 }
 }   // namespace libs::ilink::loader

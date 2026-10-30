@@ -13,7 +13,7 @@ namespace libs::ilink::appl::base
 void
 BaseModule::appl_init_int (const ::libs::link::appl::InitApplication& info)
 {
-  U3_THROW_IFN (!sys_info_, "!sys_info_");
+  ::libs::utility::checks::throw_ifn (!sys_info_, "!sys_info_");
   sys_info_ = ::libs::utility::sys::get_impl ();
 }
 
@@ -21,7 +21,7 @@ BaseModule::appl_init_int (const ::libs::link::appl::InitApplication& info)
 void
 BaseModule::init_appl_folders_int ()
 {
-  U3_THROW_IFN (!paths_, "!sys_info_");
+  ::libs::utility::checks::throw_ifn (!paths_, "!sys_info_");
   paths_ = std::make_shared< ::libs::iproperties::appl_paths::AppPaths > ();
   paths_->load_paths (appl_info_);
 }
@@ -40,10 +40,10 @@ void
 BaseModule::init_proxys_int ()
 {
   U3_CALL_TRACE_INFO_DBG (TOLOG (text_id_module_));
-  U3_THROW_IFN (all2mem_ = syn::BlockMemAllocatorProxy::instance (paths_->get_path (syn::Paths::bins)), "null all2mem");
-  U3_THROW_IFN (all2buf_ = syn::BufAllocatorProxy::instance (paths_->get_path (syn::Paths::bins)), "null all2buf");
-  U3_THROW_IFN (all2optim_ = ::libs::proxy::IOptimProxy::instance (paths_->get_path (syn::Paths::bins)), "null all2optim");
-  U3_THROW_IFN (all2events_ = ::libs::proxy::IEventsProxy::instance (paths_->get_path (syn::Paths::bins)), "null all2events");
+  ::libs::utility::checks::throw_ifn (all2mem_ = syn::BlockMemAllocatorProxy::instance (paths_->get_path (syn::Paths::bins)), "null all2mem");
+  ::libs::utility::checks::throw_ifn (all2buf_ = syn::BufAllocatorProxy::instance (paths_->get_path (syn::Paths::bins)), "null all2buf");
+  ::libs::utility::checks::throw_ifn (all2optim_ = ::libs::proxy::IOptimProxy::instance (paths_->get_path (syn::Paths::bins)), "null all2optim");
+  ::libs::utility::checks::throw_ifn (all2events_ = ::libs::proxy::IEventsProxy::instance (paths_->get_path (syn::Paths::bins)), "null all2events");
 
   {
     U3_XLOG_DBG ("BaseModule::init_proxys_int:: update shared propertyes");

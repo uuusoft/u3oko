@@ -18,7 +18,7 @@ factory_impl_mhttp (::libs::link::appl::IApplication::raw_ptr impl, bool create)
   std::scoped_lock  lock (httpsinc);
   if (create)
   {
-    U3_ASSERT_SOFT (nullptr == impl, PTR_TOLOG (impl));
+    ::libs::utility::checks::assert_soft (nullptr == impl, PTR_TOLOG (impl));
     if (!httpappl)
     {
       httpappl = new ::modules::mhttp::appl::HttpModule;
@@ -27,16 +27,16 @@ factory_impl_mhttp (::libs::link::appl::IApplication::raw_ptr impl, bool create)
   }
   else
   {
-    U3_ASSERT_SOFT (impl, PTR_TOLOG (impl));
-    U3_ASSERT_SOFT (impl == httpappl, PTR_TOLOG (impl));
-    U3_ASSERT_SOFT (httpappl, PTR_TOLOG (httpappl));
+    ::libs::utility::checks::assert_soft (impl, PTR_TOLOG (impl));
+    ::libs::utility::checks::assert_soft (impl == httpappl, PTR_TOLOG (impl));
+    ::libs::utility::checks::assert_soft (httpappl, PTR_TOLOG (httpappl));
     --count_httprefs;
     if (count_httprefs <= 0 && httpappl)
     {
       delete httpappl;
       httpappl = nullptr;
     }
-    U3_ASSERT_SOFT (count_httprefs >= 0, PTR_TOLOG (httpappl));
+    ::libs::utility::checks::assert_soft (count_httprefs >= 0, PTR_TOLOG (httpappl));
   }
   return httpappl;
 }

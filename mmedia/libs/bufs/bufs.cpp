@@ -89,7 +89,7 @@ Bufs::swap (Bufs& src) noexcept
 {
   if (this == &src)
   {
-    U3_ASSERT_THROW ("failed");
+    ::libs::utility::checks::throw_exception ("failed");
     return;
   }
 
@@ -105,7 +105,7 @@ Bufs::clone (const Bufs& src)
 {
   if (&src == this)
   {
-    U3_ASSERT_THROW ("failed");
+    ::libs::utility::checks::throw_exception ("failed");
     return;
   }
 

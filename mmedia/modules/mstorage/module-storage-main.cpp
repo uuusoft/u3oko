@@ -30,9 +30,9 @@ delete_impl_mpl_mstorage (::libs::link::appl::IApplication::raw_ptr appl)
 {
   std::scoped_lock lock (g_sinc);
 
-  U3_ASSERT_SOFT (appl, PTR_TOLOG (appl));
-  U3_ASSERT_SOFT (appl == g_appl, PTR_TOLOG (appl));
-  U3_ASSERT_SOFT (g_appl, PTR_TOLOG (g_appl));
+  ::libs::utility::checks::assert_soft (appl, PTR_TOLOG (appl));
+  ::libs::utility::checks::assert_soft (appl == g_appl, PTR_TOLOG (appl));
+  ::libs::utility::checks::assert_soft (g_appl, PTR_TOLOG (g_appl));
 
   if (counter_refs_ <= 1)
   {

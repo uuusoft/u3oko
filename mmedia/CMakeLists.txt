@@ -7,13 +7,14 @@ cmake_minimum_required(VERSION 3.29.0)
 
 # check support applications
 set(U3_INTERNAL_APPLS_LIST "u3oko")
-if(U3_COMMERCIAL_PART EQUAL 1)
-  set(U3_INTERNAL_APPLS_LIST ${U3_INTERNAL_APPLS_LIST} "u3okolite" "u3iplo" "u3cam")
-endif()
 
-if(NOT ${U3_APPL_NAME} IN_LIST U3_INTERNAL_APPLS_LIST)
+if (U3_COMMERCIAL_PART EQUAL 1)
+  set(U3_INTERNAL_APPLS_LIST ${U3_INTERNAL_APPLS_LIST} "u3okolite" "u3iplo" "u3cam")
+endif ()
+
+if (NOT ${U3_APPL_NAME} IN_LIST U3_INTERNAL_APPLS_LIST)
   message(FATAL_ERROR "${U3_MARK_FATAL}Unknown application type U3_APPL_NAME=${U3_APPL_NAME} not in list U3_INTERNAL_APPLS_LIST=${U3_INTERNAL_APPLS_LIST}")
-endif()
+endif ()
 
 project(${U3_APPL_NAME} LANGUAGES C CXX ASM_NASM)
 
@@ -57,10 +58,10 @@ include("./build/cmake/utils/u3-check-git.cmake")
 
 include("./build/cmake/os-specific/u3-selector-os-specific-options.cmake")
 
-if(U3_BUILD_MODULES_AS_LIBS)
+if (U3_BUILD_MODULES_AS_LIBS)
   message(NOTICE "${U3_MARK_TODO}EAI-REFACT U3_BUILD_MODULES_AS_LIBS as DU3_BUILD_MODULES_AS_LIBS=1")
   set(U3_SHARED_COMPILE_DEF_CPP ${U3_SHARED_COMPILE_DEF_CPP} "-DU3_BUILD_MODULES_AS_LIBS=1")
-endif()
+endif ()
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${U3_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/arc)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${U3_SYSTEM_NAME}/${CMAKE_BUILD_TYPE})
@@ -84,9 +85,9 @@ include("${U3_PATH_ROOT}/modules/mtest/_make/module-test.cmake")
 # internal targets
 include("${U3_PATH_ROOT}/libs/libs-list.cmake")
 include("${U3_PATH_ROOT}/utils/utils-list.cmake")
-if(U3_COMMERCIAL_PART EQUAL 1)
+if (U3_COMMERCIAL_PART EQUAL 1)
   include("${U3_PATH_ROOT}/dshow_helpers/dshow-helpers-list.cmake")
-endif()
+endif ()
 include("${U3_PATH_ROOT}/dlls/dlls-list.cmake")
 
 # lib-proxy depends from dlls
@@ -94,6 +95,6 @@ include("${U3_PATH_ROOT}/libs/proxy/_make/libs-proxy.cmake")
 include("${U3_PATH_ROOT}/appls/appls-list.cmake")
 include("${U3_PATH_ROOT}/modules/modules-list.cmake")
 
-if(U3_COMMERCIAL_PART EQUAL 1)
+if (U3_COMMERCIAL_PART EQUAL 1)
   include("./build/cmake/tests/u3-googletests.cmake")
-endif()
+endif ()

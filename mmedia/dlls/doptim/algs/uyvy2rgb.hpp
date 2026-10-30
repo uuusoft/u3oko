@@ -33,7 +33,7 @@ class CUYVY2RgbAlg final : public IOptimAlg
       sel_.set (::libs::optim::convert::uyvy_rgb24::alu);
       break;
     default:
-      U3_MARK ("failed");
+      ::libs::utility::checks::mark ("failed");
       sel_.set (::libs::optim::convert::uyvy_rgb24::alu);
       break;
     }

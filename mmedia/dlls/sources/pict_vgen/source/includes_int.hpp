@@ -10,7 +10,7 @@
 #include "helpers/image-dll-resource-holder.hpp"
 
 #include "stb_image.h"
-#include "stb_image_resize2.h"
+#include "deprecated/stb_image_resize2.h"
 
 #include "pict-vgen-syn.hpp"
 #include "consts/pict-vgen-const-vals.hpp"

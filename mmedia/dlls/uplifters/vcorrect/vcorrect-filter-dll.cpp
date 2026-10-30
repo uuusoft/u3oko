@@ -23,7 +23,7 @@ Filter::load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& 
 {
   init_pts (&info->pts_);
   finfo_.load (node);
-  U3_ASSERT (!finfo_.active_impl_.expired ());
+  ::libs::utility::checks::throw_ifn (!finfo_.active_impl_.expired ());
   finfo_.active_impl_.lock ()->update_correction_property (finfo_.rprops_);
 }
 
@@ -46,7 +46,7 @@ Filter::transform_int (syn::TransformInfo& info)
 
         finfo_.hardware_impl_ = devent->get_interface ();
         finfo_.active_impl_   = enable_hardware ? finfo_.hardware_impl_ : finfo_.soft_impl_;
-        U3_ASSERT (!finfo_.active_impl_.expired ());
+        ::libs::utility::checks::throw_ifn (!finfo_.active_impl_.expired ());
         auto impl = finfo_.active_impl_.lock ();
         if (impl)
         {

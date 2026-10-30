@@ -80,14 +80,14 @@ class ComPtr final
         break;
       }
     }
-    U3_ASSERT (nullptr == ptr_);
+    ::libs::utility::checks::throw_ifn (nullptr == ptr_);
   }
 
 
   TypePointer*&
   update ()
   {
-    U3_ASSERT (!ptr_);
+    ::libs::utility::checks::throw_ifn (!ptr_);
     return ptr_;
   }
 
@@ -95,7 +95,7 @@ class ComPtr final
   TypePointer*
   operator->() const
   {
-    U3_ASSERT (ptr_);
+    ::libs::utility::checks::throw_ifn (ptr_);
     return ptr_;
   }
 
@@ -103,7 +103,7 @@ class ComPtr final
   TypePointer*
   operator* () const
   {
-    U3_ASSERT (ptr_);
+    ::libs::utility::checks::throw_ifn (ptr_);
     return ptr_;
   }
 

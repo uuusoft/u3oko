@@ -48,8 +48,8 @@ NodeID::update_name_dll () -> NodeID::dll_name_type&
 auto
 NodeID::operator< (const NodeID& obj) const -> bool
 {
-  U3_ASSERT (check ());
-  U3_ASSERT (obj.check ());
+  ::libs::utility::checks::throw_ifn (check ());
+  ::libs::utility::checks::throw_ifn (obj.check ());
   return id_node_name_ < obj.id_node_name_;
 }
 
@@ -57,8 +57,8 @@ NodeID::operator< (const NodeID& obj) const -> bool
 auto
 NodeID::operator== (const NodeID& obj) const -> bool
 {
-  U3_ASSERT (check ());
-  U3_ASSERT (obj.check ());
+  ::libs::utility::checks::throw_ifn (check ());
+  ::libs::utility::checks::throw_ifn (obj.check ());
   return id_node_name_ == obj.id_node_name_;
 }
 

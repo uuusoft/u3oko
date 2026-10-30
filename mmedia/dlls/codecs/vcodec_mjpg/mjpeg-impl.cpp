@@ -37,7 +37,7 @@ MjpegImpl::update_coder (const unsigned long max_size)
   if (!hjpeg_)
   {
     hjpeg_ = tjInitCompress ();
-    U3_THROW_IFN_TURBO_JPEG (hjpeg_, "tjInitCompress");
+    ::libs::utility::checks::throw_ifn (hjpeg_, get_error_text ());
   }
 
   if (!jpeg_buf_ || max_size > size_jpeg_buf_)
@@ -63,7 +63,7 @@ MjpegImpl::update_decoder ()
   }
 
   hjpeg_ = tjInitDecompress ();
-  U3_THROW_IFN_TURBO_JPEG (hjpeg_, "tjInitDecompress");
+  ::libs::utility::checks::throw_ifn (hjpeg_, get_error_text ());
 }
 
 
@@ -80,6 +80,7 @@ MjpegImpl::comp_iframe (
   std::int32_t                      from_header = 0;
   const ::libs::optim::io::ProxyBuf lsrc (temp_buf_.get (), "temp_buf dlls::codecs::vcodec_mjpg");
   const std::uint8_t*               cur_buf = temp_buf_->get_cbuf ();
+
   // EAI-REFACT
 #ifdef U3_CPU_X86
   const std::int32_t in_format = colored ? TJPF_RGB : TJPF_GRAY;
@@ -88,6 +89,7 @@ MjpegImpl::comp_iframe (
 #elif
 #  error "unknown cpu type"
 #endif
+
   const std::int32_t out_format = colored ? TJSAMP_444 : TJSAMP_GRAY;
   unsigned long      jpeg_size  = 0;
   unsigned long      max_size   = tjBufSize (lsrc.width_, lsrc.height_, out_format);
@@ -110,14 +112,18 @@ MjpegImpl::comp_iframe (
     props_.plane_.quality_,
     TJFLAG_NOREALLOC | TJFLAG_FASTDCT | TJFLAG_BOTTOMUP);
 
-  U3_THROW_IFN_TURBO_JPEG_RET (-1 != res_jpeg, "tjCompress2", false);
+  if (-1 == res_jpeg)
+  {
+    return false;
+  }
+
   ::libs::utility::mem::mem_copy_raw (jpeg_buf_, dbuf + out_size, jpeg_size);
 
   head->csize_ = jpeg_size;
   head->coff_  = from_header;
   from_header += jpeg_size;
   out_size += jpeg_size;
-  U3_ASSERT (out_size > 0);
+  ::libs::utility::checks::throw_ifn (out_size > 0);
 
   auto& base_header = head->base_part_;
   auto& base_size   = base_header.sinfo_;
@@ -133,7 +139,7 @@ MjpegImpl::comp_iframe (
   // libs::utility::utils::cuuid_to_buf (::libs::utility::uids::codecs::mjpeg, head->base_part_.guid_);
   head->base_part_.guid_ = ::libs::utility::uids::minor::id_val::mjpeg;
 
-  U3_ASSERT (head->check ());
+  ::libs::utility::checks::throw_ifn (head->check ());
   statistic_.update ("iframe", jpeg_size);
   return true;
 }
@@ -192,7 +198,10 @@ MjpegImpl::decomp_iframe (
       std::int32_t jpeg_subsamp = 0;
       std::int32_t jpeg_px      = 0;
 
-      U3_THROW_IFN_TURBO_JPEG (0 == tjDecompressHeader3 (hjpeg_, cdata, src_size_res, &jpeg_width, &jpeg_height, &jpeg_subsamp, &jpeg_px), "tjDecompressHeader3");
+      ::libs::utility::checks::throw_if (
+        tjDecompressHeader3 (hjpeg_, cdata, src_size_res, &jpeg_width, &jpeg_height, &jpeg_subsamp, &jpeg_px),
+        get_error_text ());
+
       temp_buf_->set_format (convert_jpeg2guid_px_format (jpeg_px));
     }
 
@@ -209,7 +218,7 @@ MjpegImpl::decomp_iframe (
       request_pixel_format,
       0);
 
-    U3_THROW_IFN_TURBO_JPEG (0 == codec_error, "tjDecompress2");
+    ::libs::utility::checks::throw_if (codec_error, get_error_text ());
 
     const auto px_format  = temp_buf_->get_format ();
     const auto stride_res = info_head.width_ * ::libs::utility::uids::helpers::get_count_bytes_from_format (px_format);

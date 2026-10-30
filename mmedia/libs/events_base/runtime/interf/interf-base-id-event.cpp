@@ -24,7 +24,7 @@ InterfBaseIdEvent::get_mid_int () const -> const ::libs::events::IEvent::hid_typ
 auto
 InterfBaseIdEvent::get_interface () -> InterfBaseIdEvent::impl_ptr_type
 {
-  U3_ASSERT (!impl_.expired ());
+  ::libs::utility::checks::throw_ifn (!impl_.expired ());
   return impl_;
 }
 

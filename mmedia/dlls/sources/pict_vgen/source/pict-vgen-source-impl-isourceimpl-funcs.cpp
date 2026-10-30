@@ -43,7 +43,7 @@ SourceImpl::get_raw_data_int (
   syn::tevents_type*    events)
 {
   auto& buf = (*bufs)[::utils::dbufs::video::consts::offs::raw];
-  U3_ASSERT (buf);
+  ::libs::utility::checks::throw_ifn ((bool) buf);
 
   buf->set_flag (::utils::dbufs::BufFlags::empty, true);
 

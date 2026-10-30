@@ -39,7 +39,7 @@ IEvent::copy (const IEvent::craw_ptr src)
 auto
 IEvent::get_mid () const -> IEvent::hid_type
 {
-  U3_ASSERT (!property_name_.empty ());
+  ::libs::utility::checks::throw_ifn (!property_name_.empty ());
   return property_name_;
 }
 #endif

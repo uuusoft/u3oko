@@ -25,8 +25,8 @@ alu (::libs::optim::io::MCallInfo& info)
   const auto          height     = rgb32.height_;
 
   U3_XLOG_DBG (VTOLOG (rgb32_leak) + VTOLOG (rgb32.stride_) + VTOLOG (rgb32.width_) + VTOLOG (rgb32_bpp));
-  U3_ASSERT (rgb32_leak >= 0);
-  U3_ASSERT (rgb24_leak >= 0);
+  ::libs::utility::checks::throw_ifn (rgb32_leak >= 0);
+  ::libs::utility::checks::throw_ifn (rgb24_leak >= 0);
   for (std::uint32_t iy = 0; iy < height; ++iy)
   {
     for (std::uint32_t ix = 0; ix < width; ++ix)

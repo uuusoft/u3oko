@@ -64,7 +64,7 @@ class I420ToRgb24Alg final : public IOptimAlg
       break;
 #  endif
     default:
-      U3_MARK ("libs.optim.convert.i420_rgb24 alu");
+      ::libs::utility::checks::mark ("libs.optim.convert.i420_rgb24 alu");
       sel_.set (libs::optim::convert::i420_rgb24::alu);
       break;
     }

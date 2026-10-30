@@ -88,7 +88,7 @@ class SystemAndroidProperty final : public ::libs::properties::ISharedProperty
   virtual bool
   self_test_int () const override
   {
-    U3_ASSERT (pappl_);
+    ::libs::utility::checks::throw_ifn (pappl_);
     return !pappl_ ? false : true;
   }
 

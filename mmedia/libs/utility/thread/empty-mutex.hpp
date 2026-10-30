@@ -16,13 +16,13 @@ struct EmptyMutex final {
   {
   }
 
-  void
-  unlock ()
+  auto
+  unlock () -> void
   {
   }
 
-  bool
-  try_lock ()
+  auto
+  try_lock () -> bool
   {
     return true;
   }

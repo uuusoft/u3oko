@@ -13,8 +13,8 @@ namespace libs::events::helpers
 inline IEvent::ptr
 wrap_sync_msg (IEvent::ptr msg)
 {
-  U3_THROW_IFN (nullptr == ::libs::iproperties::helpers::cast_event< IAnswerEvent > (msg), "try sync answer event");
-  U3_THROW_IFN (nullptr == ::libs::iproperties::helpers::cast_event< ISyncEvent > (msg), "try sync sync event");
+  ::libs::utility::checks::throw_ifn (nullptr == ::libs::iproperties::helpers::cast_event< IAnswerEvent > (msg), "try sync answer event");
+  ::libs::utility::checks::throw_ifn (nullptr == ::libs::iproperties::helpers::cast_event< ISyncEvent > (msg), "try sync sync event");
   auto [evnt, revnt] = libs::iproperties::helpers::create_event< ISyncEvent > ();
   revnt->set_msg (msg);
   return evnt;
@@ -26,9 +26,9 @@ wrap_sync_msg (IEvent::ptr msg)
 inline IEvent::ptr
 wrap_request_msg (IEvent::ptr msg)
 {
-  U3_THROW_IFN (nullptr == ::libs::iproperties::helpers::cast_event< ISyncEvent > (msg), "try request sync event");
-  U3_THROW_IFN (nullptr == ::libs::iproperties::helpers::cast_event< IAnswerEvent > (msg), "try request answer event");
-  U3_THROW_IFN (nullptr == ::libs::iproperties::helpers::cast_event< IRequestEvent > (msg), "try request request event");
+  ::libs::utility::checks::throw_ifn (nullptr == ::libs::iproperties::helpers::cast_event< ISyncEvent > (msg), "try request sync event");
+  ::libs::utility::checks::throw_ifn (nullptr == ::libs::iproperties::helpers::cast_event< IAnswerEvent > (msg), "try request answer event");
+  ::libs::utility::checks::throw_ifn (nullptr == ::libs::iproperties::helpers::cast_event< IRequestEvent > (msg), "try request request event");
   auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< IRequestEvent > ();
   revnt->set_msg (msg);
   return evnt;
@@ -40,9 +40,9 @@ wrap_request_msg (IEvent::ptr msg)
 inline IEvent::ptr
 wrap_answer_msg (IEvent::ptr msg)
 {
-  U3_THROW_IFN (nullptr == ::libs::iproperties::helpers::cast_event< ISyncEvent > (msg), "try answer sync event");
-  U3_THROW_IFN (nullptr == ::libs::iproperties::helpers::cast_event< IAnswerEvent > (msg), "try answer answer event");
-  U3_THROW_IFN (nullptr == ::libs::iproperties::helpers::cast_event< IRequestEvent > (msg), "try answer request event");
+  ::libs::utility::checks::throw_ifn (nullptr == ::libs::iproperties::helpers::cast_event< ISyncEvent > (msg), "try answer sync event");
+  ::libs::utility::checks::throw_ifn (nullptr == ::libs::iproperties::helpers::cast_event< IAnswerEvent > (msg), "try answer answer event");
+  ::libs::utility::checks::throw_ifn (nullptr == ::libs::iproperties::helpers::cast_event< IRequestEvent > (msg), "try answer request event");
   auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< IAnswerEvent > ();
   revnt->set_msg (msg);
   return evnt;
@@ -55,7 +55,7 @@ wrap_answer_msg (IEvent::ptr msg)
 inline IEvent::ptr
 wrap_seq_msg (IEvent::ptr msg, ISeqEvent::id_type id = ISeqEvent::id_type ())
 {
-  U3_THROW_IFN (nullptr == ::libs::iproperties::helpers::cast_event< ISeqEvent > (msg), "try seq seq event");
+  ::libs::utility::checks::throw_ifn (nullptr == ::libs::iproperties::helpers::cast_event< ISeqEvent > (msg), "try seq seq event");
   auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< ISeqEvent > ();
   revnt->set_msg (msg);
   revnt->set_seq_id (id.empty () ? ISeqEvent::id_type (boost::uuids::random_generator () ()) : id);

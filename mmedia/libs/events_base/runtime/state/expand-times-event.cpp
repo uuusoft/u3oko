@@ -90,7 +90,7 @@ void
 ExpandTimesEvent::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-  U3_ASSERT_SOFT (0, "ExpandTimesEvent::load_json_int: not implemented");
+  ::libs::utility::checks::assert_soft (0, "ExpandTimesEvent::load_json_int: not implemented");
 }
 
 

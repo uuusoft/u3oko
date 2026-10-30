@@ -14,9 +14,9 @@ alloc_buf_by_indx (
   const syn::off_buf_type& indx,
   syn::IVideoBuf::raw_ptr  src)
 {
-  U3_ASSERT (bufs);
+  ::libs::utility::checks::throw_ifn (bufs);
   syn::IVideoBuf::raw_ptr nbuf = (*bufs)[indx];
-  U3_ASSERT (nbuf);
+  ::libs::utility::checks::throw_ifn (nbuf);
 
   if (!src || src->get_flag (::utils::dbufs::BufFlags::empty))
   {

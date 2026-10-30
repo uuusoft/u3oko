@@ -22,7 +22,7 @@ get_os_info ()
 
   if (!GetVersionExA (&info))
   {
-    U3_MARK ("failed");
+    ::libs::utility::checks::mark ("failed");
     ret = "GetVersionEx failed";
     ret += ::libs::utility::consts::new_line;
     return ret;
@@ -53,7 +53,7 @@ get_mem_info ()
 
   if (!GlobalMemoryStatusEx (&info))
   {
-    U3_MARK ("failed");
+    ::libs::utility::checks::mark ("failed");
     ret = "GlobalMemoryStatusEx failed";
     ret += ::libs::utility::consts::new_line;
     return ret;
@@ -100,7 +100,7 @@ get_display_info ()
 
   if (!hwnd)
   {
-    U3_MARK ("failed");
+    ::libs::utility::checks::mark ("failed");
     ret += ".";
     ret += ::libs::utility::consts::new_line;
     return ret;
@@ -110,7 +110,7 @@ get_display_info ()
 
   if (!hdc)
   {
-    U3_MARK ("failed");
+    ::libs::utility::checks::mark ("failed");
     ret += ".";
     ret += ::libs::utility::consts::new_line;
     return ret;
@@ -158,7 +158,7 @@ get_display_info ()
   }
 
   ret += ::libs::utility::consts::new_line;
-  U3_THROW_IFN (ReleaseDC (hwnd, hdc), "release dc");
+  ::libs::utility::checks::throw_ifn (ReleaseDC (hwnd, hdc), "release dc");
   return ret;
 }
 
@@ -194,7 +194,7 @@ SysInfoImpl::get (const HardwareType& type) const
     break;
 #  endif
   default:
-    U3_ASSERT_THROW ("failed");
+    ::libs::utility::checks::throw_exception ("failed");
     break;
   }
   return ret;

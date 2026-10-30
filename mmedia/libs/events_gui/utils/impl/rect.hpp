@@ -34,8 +34,8 @@ class Rect : public IRect
   void
   set (IPos::craw_ptr pos, ISize::craw_ptr size)
   {
-    U3_ASSERT (pos);
-    U3_ASSERT (size);
+    ::libs::utility::checks::throw_ifn ((bool) pos);
+    ::libs::utility::checks::throw_ifn ((bool) size);
     pos_.set (pos->get_x (), pos->get_y ());
     size_.set (size->get_width (), size->get_height ());
     return;
@@ -77,7 +77,7 @@ class Rect : public IRect
   check () const
   {
     pos_.check ();
-    U3_THROW_IFN (size_.self_test (), "invalid size");
+    ::libs::utility::checks::throw_ifn (size_.self_test (), "invalid size");
     return;
   }
 

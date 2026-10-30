@@ -12,8 +12,8 @@ namespace libs::utility::mem
 void
 mem_copy_raw (const void* src, void* dst, std::size_t size)
 {
-  U3_ASSERT (src);
-  U3_ASSERT (dst);
+  ::libs::utility::checks::throw_ifn (src);
+  ::libs::utility::checks::throw_ifn (dst);
   if (size)
   {
     memcpy (dst, src, size);

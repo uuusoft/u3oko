@@ -11,10 +11,10 @@ namespace utils::dbufs::video::impl
 void
 check_dims (const VideoBuf::dim_type width, const VideoBuf::dim_type height)
 {
-  U3_THROW_IF (width < consts::min_width, "width less consts::min_width" + VTOLOG (width) + VTOLOG (consts::min_width));
-  U3_THROW_IF (width > consts::max_width, "width large consts::max_width" + VTOLOG (width) + VTOLOG (consts::max_width));
-  U3_THROW_IF (height < consts::min_height, "height less consts::min_height" + VTOLOG (height) + VTOLOG (consts::min_height));
-  U3_THROW_IF (height > consts::max_height, "height large consts::max_height" + VTOLOG (height) + VTOLOG (consts::max_height));
+  ::libs::utility::checks::throw_if (width < consts::min_width, "width less consts::min_width" + VTOLOG (width) + VTOLOG (consts::min_width));
+  ::libs::utility::checks::throw_if (width > consts::max_width, "width large consts::max_width" + VTOLOG (width) + VTOLOG (consts::max_width));
+  ::libs::utility::checks::throw_if (height < consts::min_height, "height less consts::min_height" + VTOLOG (height) + VTOLOG (consts::min_height));
+  ::libs::utility::checks::throw_if (height > consts::max_height, "height large consts::max_height" + VTOLOG (height) + VTOLOG (consts::max_height));
 }
 
 
@@ -51,8 +51,8 @@ VideoBuf::set_dim_var_int (const Dims& dtype, dim_type dval)
   switch (dtype)
   {
   case Dims::stride:
-    U3_ASSERT (dval > 0);
-    U3_ASSERT (static_cast< syn::IBlockMem::size_type > (dval * get_dim_var_int (Dims::height)) <= get_block ()->get_capacity ());
+    ::libs::utility::checks::throw_ifn (dval > 0);
+    ::libs::utility::checks::throw_ifn (static_cast< syn::IBlockMem::size_type > (dval * get_dim_var_int (Dims::height)) <= get_block ()->get_capacity ());
     break;
   default:
     break;
@@ -90,7 +90,7 @@ VideoBuf::check_int (const check_func_type& obj) const -> bool
     {
       if (!obj (indxx, indxy, bstr[indxx]))
       {
-        U3_MARK ("failed");
+        ::libs::utility::checks::mark ("failed");
         return false;
       }
     }
@@ -102,7 +102,7 @@ VideoBuf::check_int (const check_func_type& obj) const -> bool
 void
 VideoBuf::set_flag_int (const BufFlags& ftype, bool fval)
 {
-  U3_ASSERT (ftype < BufFlags::max_bound);
+  ::libs::utility::checks::throw_ifn (ftype < BufFlags::max_bound);
 
   switch (ftype)
   {
@@ -128,7 +128,7 @@ VideoBuf::set_flag_int (const BufFlags& ftype, bool fval)
 auto
 VideoBuf::get_flag_int (const BufFlags& ftype) const -> bool
 {
-  U3_ASSERT (ftype < BufFlags::max_bound);
+  ::libs::utility::checks::throw_ifn (ftype < BufFlags::max_bound);
   switch (ftype)
   {
   case BufFlags::null: {
@@ -210,8 +210,8 @@ VideoBuf::buf_alloc_int (const AllocParams& info)
   // дополнительно всегда выделяем снизу несколько строк, чтобы гарантировать нормальную работу деления буфера на рабочие потоки
   alloc_size += stride * ::libs::optim::s16bit::conv::consts::bufs::max_align_block_by_y_for_algs;
 
-  U3_THROW_IFN (alloc_size > 0, "received invalid size for alloc" + VTOLOG (alloc_size));
-  U3_THROW_IFN (info.geom_dims_[Dims::stride] <= stride, "calculated stride too small" + VTOLOG (info.geom_dims_[Dims::stride]) + VTOLOG (stride) + VTOLOG (conv_support));
+  ::libs::utility::checks::throw_ifn (alloc_size > 0, "received invalid size for alloc" + VTOLOG (alloc_size));
+  ::libs::utility::checks::throw_ifn (info.geom_dims_[Dims::stride] <= stride, "calculated stride too small" + VTOLOG (info.geom_dims_[Dims::stride]) + VTOLOG (stride) + VTOLOG (conv_support));
 
   resize (alloc_size);
   set_mem_var_int (MemVars::size_data, size_data);
@@ -228,7 +228,7 @@ void
 VideoBuf::clone_int (IBuf::craw_ptr isrc, float percent)
 {
   auto src = dynamic_cast< VideoBuf::craw_ptr > (isrc);
-  U3_ASSERT (src);
+  ::libs::utility::checks::throw_ifn (src);
   if (this == src)
   {
     U3_XLOG_WARN ("try clone itself" + PTR_TOLOG (this));

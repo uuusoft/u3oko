@@ -10,7 +10,7 @@ namespace libs::optim::mcalls::helpers
 inline void
 fill (io::ProxyBuf* buf, const std::int16_t val)
 {
-  U3_ASSERT (buf);
+  ::libs::utility::checks::throw_ifn (buf);
   for (std::uint32_t indxy = 0; indxy < buf->height_; ++indxy)
   {
     std::int16_t* rbuf = buf->get_line (indxy);

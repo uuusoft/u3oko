@@ -27,7 +27,7 @@ template< typename TType >
 TType
 get_data_as (IVideoBuf::raw_ptr buf)
 {
-  U3_THROW_IF (buf->get_flag (BufFlags::null), "try get data from null buf");
+  ::libs::utility::checks::throw_if (buf->get_flag (BufFlags::null), "try get data from null buf");
   return ::libs::utility::casts::reinterpret_cast_helper< TType > (buf->get_buf () + (*buf)[MemVars::offset_data]);
 }
 
@@ -43,7 +43,7 @@ template< typename TType >
 const TType
 get_const_data_as (IVideoBuf::craw_ptr buf)
 {
-  U3_THROW_IF (buf->get_flag (BufFlags::null), "try get data from null buf");
+  ::libs::utility::checks::throw_if (buf->get_flag (BufFlags::null), "try get data from null buf");
   return ::libs::utility::casts::reinterpret_cast_helper< const TType > (buf->get_cbuf () + (*buf)[MemVars::offset_data]);
 }
 
@@ -59,7 +59,7 @@ template< typename TType >
 TType
 get_data_with_off_as (IVideoBuf::raw_ptr buf, const IVideoBuf::dim_type off)
 {
-  U3_THROW_IF (buf->get_flag (BufFlags::null), "try get data from null buf");
+  ::libs::utility::checks::throw_if (buf->get_flag (BufFlags::null), "try get data from null buf");
   return ::libs::utility::casts::reinterpret_cast_helper< TType > (buf->get_buf () + (*buf)[MemVars::offset_data] + off);
 }
 
@@ -76,8 +76,8 @@ template< typename TType >
 TType
 get_line_data_as (IVideoBuf::raw_ptr buf, IVideoBuf::dim_type indxy)
 {
-  U3_THROW_IF (buf->get_flag (BufFlags::empty), "empty buf flag");
-  U3_THROW_IF (indxy >= buf->get_dim_var (Dims::height), "invalid height indxy");
+  ::libs::utility::checks::throw_if (buf->get_flag (BufFlags::empty), "empty buf flag");
+  ::libs::utility::checks::throw_if (indxy >= buf->get_dim_var (Dims::height), "invalid height indxy");
 
   const IVideoBuf::dim_type off = buf->get_dim_var (Dims::stride) * indxy;
   return get_data_with_off_as< TType > (buf, off);
@@ -88,8 +88,8 @@ template< typename TType >
 const TType
 get_line_const_data_as (IVideoBuf::craw_ptr buf, IVideoBuf::dim_type indxy)
 {
-  U3_THROW_IF (buf->get_flag (BufFlags::empty), "empty buf flag");
-  U3_THROW_IF (indxy >= buf->get_dim_var (Dims::height), "invalid height indxy");
+  ::libs::utility::checks::throw_if (buf->get_flag (BufFlags::empty), "empty buf flag");
+  ::libs::utility::checks::throw_if (indxy >= buf->get_dim_var (Dims::height), "invalid height indxy");
 
   const IVideoBuf::dim_type off = buf->get_dim_var (Dims::stride) * indxy;
   return get_const_data_with_off_as< const TType > (buf, off);

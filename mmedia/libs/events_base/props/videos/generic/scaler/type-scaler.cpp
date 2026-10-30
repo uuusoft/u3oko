@@ -26,7 +26,7 @@ str2scaler_type (const std::string& str) -> Scalers
     }
   }
 
-  U3_MARK ("failed");
+  ::libs::utility::checks::mark ("failed");
   return Scalers::nearest;
 }
 

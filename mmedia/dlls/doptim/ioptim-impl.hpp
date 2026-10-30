@@ -31,7 +31,7 @@ class IOptimImpl final : public ::libs::optim::io::IOptim
   add_alg ()
   {
     const auto& key = TTAlg::val_key;
-    U3_ASSERT (algs_.end () == algs_.find (key));
+    ::libs::utility::checks::throw_ifn (algs_.end () == algs_.find (key));
     algs_.insert (str2funcs_type::value_type (key, std::make_shared< TTAlg > ()));
   }
 

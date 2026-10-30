@@ -3,7 +3,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 */
-#define U3_DBG_LOG_LEVEL_ENABLE
+// #define U3_DBG_LOG_LEVEL_ENABLE
 #include "../module-log-includes_int.hpp"
 #include "log-module.hpp"
 
@@ -21,7 +21,7 @@ void
 LogModule::init_proxys_int ()
 {
   super::init_proxys_int ();
-  U3_THROW_IFN (::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree (), "alloc mem proxy");
+  ::libs::utility::checks::throw_ifn (::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree (), "alloc mem proxy");
 }
 
 
@@ -96,7 +96,7 @@ LogModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::InfoLogEvent > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       process_info_log (props, msg);
       return {};
     }
@@ -108,7 +108,7 @@ LogModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       process_property_log_module (props);
       return {};
     }
@@ -120,7 +120,7 @@ LogModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       process_change_state_process (props);
       return {};
     }
@@ -132,7 +132,7 @@ LogModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::ProcessListLogsEvent > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       process_list_logs (props);
       return {};
     }
@@ -144,7 +144,7 @@ LogModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::ProcessLogEvent > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       process_log (props);
       return {};
     }

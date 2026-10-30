@@ -84,7 +84,7 @@ get_create_module_func (const std::string& plib_id) -> ::libs::link::appl::IAppl
     return create_impl_appl_u3oko;
   }
 
-  U3_THROW_EXCEPT ("find create module funct" + TOLOG (lib_id));
+  ::libs::utility::checks::throw_exception ("find create module funct" + TOLOG (lib_id));
 }
 
 
@@ -131,6 +131,6 @@ get_delete_module_func (const std::string& plib_id) -> ::libs::link::appl::IAppl
     return delete_impl_appl_u3oko;
   }
 
-  U3_THROW_EXCEPT ("find delete module funct" + TOLOG (lib_id));
+  ::libs::utility::checks::throw_exception ("find delete module funct" + TOLOG (lib_id));
 }
 }   // namespace libs::proxy

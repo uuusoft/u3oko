@@ -99,14 +99,14 @@ class HandlerCompatibleDC
     hdc_ (nullptr),
     original_bitmap_ (nullptr)
   {
-    U3_THROW_IFN_WIN32_STATE (hdc_ = CreateCompatibleDC (hdc), "CreateCompatibleDC");
+    ::libs::utility::platforms::win32::throw_ifn (hdc_ = CreateCompatibleDC (hdc), "CreateCompatibleDC");
   }
 
   ~HandlerCompatibleDC ()
   {
     if (hdc_ && original_bitmap_)
     {
-      U3_THROW_IFN_WIN32_CALL_NT (SelectObject (hdc_, original_bitmap_), "SelectObject for original bitmap");
+      ::libs::utility::platforms::win32::test (SelectObject (hdc_, original_bitmap_), "SelectObject for original bitmap");
     }
 
     safe_delete_gdi_object (hdc_);
@@ -117,7 +117,7 @@ class HandlerCompatibleDC
   {
     if (nullptr == original_bitmap_)
     {
-      U3_THROW_IFN_WIN32_STATE (original_bitmap_ = ::libs::utility::casts::static_cast_helper< HBITMAP > (SelectObject (hdc_, obj)), "SelectObject");
+      ::libs::utility::platforms::win32::throw_ifn (original_bitmap_ = ::libs::utility::casts::static_cast_helper< HBITMAP > (SelectObject (hdc_, obj)), "SelectObject");
     }
     return original_bitmap_;
   }

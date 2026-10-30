@@ -52,7 +52,7 @@ update_template_for_application (const std::string& path2folder, const std::stri
   };
 
   const auto counter_ops = ::libs::utility::files::replace_strings_in_files (path2folder, tmps2vals, std::size (tmps2vals));
-  U3_TEST (counter_ops > 0U, "failed, zero replace in templates" + VTOLOG (counter_ops) + TOLOG (path2folder));
+  ::libs::utility::checks::test (counter_ops > 0U, "failed, zero replace in templates" + VTOLOG (counter_ops) + TOLOG (path2folder));
 }
 
 
@@ -138,7 +138,7 @@ auto
 BaseModule::get_recv_link () -> recv_links_type
 {
   auto ret = get_recv_link_int ();
-  U3_TEST (!ret.empty (), "BaseModule::get_recv_link empty ret");
+  ::libs::utility::checks::test (!ret.empty (), "BaseModule::get_recv_link empty ret");
   return ret;
 }
 }   // namespace libs::ilink::appl::base

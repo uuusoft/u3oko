@@ -79,7 +79,7 @@ class ResourceHolder final
   TTRes*
   operator* ()
   {
-    U3_THROW_IFN (val_, "operator*");
+    ::libs::utility::checks::throw_ifn (val_, "operator*");
     return val_;
   }
 

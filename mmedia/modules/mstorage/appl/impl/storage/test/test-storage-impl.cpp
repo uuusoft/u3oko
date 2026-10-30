@@ -53,7 +53,7 @@ TestStorageImpl::load_int (const seance_type& info, const id_chunk_type& id, syn
 auto
 TestStorageImpl::save_int (const seance_type& info, syn::IBlockMem::craw_ptr mem) -> TestStorageImpl::id_chunk_type
 {
-  U3_THROW_IFN (mem->get_size (), "try save empty data");
+  ::libs::utility::checks::throw_ifn (mem->get_size (), "try save empty data");
   return save_impl (info, mem->get (), mem->get_size ());
 }
 
@@ -64,8 +64,8 @@ TestStorageImpl::save_int (
   const std::uint8_t* mem,
   const std::size_t   size_mem) -> TestStorageImpl::id_chunk_type
 {
-  U3_THROW_IFN (mem, "try save empty data");
-  U3_THROW_IFN (size_mem, "try save null data");
+  ::libs::utility::checks::throw_ifn (mem, "try save empty data");
+  ::libs::utility::checks::throw_ifn (size_mem, "try save null data");
   return save_impl (info, mem, size_mem);
 }
 
@@ -103,7 +103,7 @@ void
 TestStorageImpl::remove_ids_int (const idlock_type& lid)
 {
   U3_XLOG_ERROR ("unimplementated");
-  U3_ASSERT_THROW (false);
+  ::libs::utility::checks::throw_exception (false);
 }
 
 
@@ -111,7 +111,7 @@ void
 TestStorageImpl::get_info_ids_int (const idlock_type& lid)
 {
   U3_XLOG_ERROR ("unimplementated");
-  U3_ASSERT_THROW (false);
+  ::libs::utility::checks::throw_exception (false);
 }
 #endif
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
@@ -119,7 +119,7 @@ TestStorageImpl::idlock_type
 TestStorageImpl::lock_ids_int (const ids_chunk_type& ids)
 {
   U3_XLOG_ERROR ("unimplementated");
-  U3_ASSERT_THROW (false);
+  ::libs::utility::checks::throw_exception (false);
   return idlock_type ("");
 }
 
@@ -128,7 +128,7 @@ void
 TestStorageImpl::unlock_ids_int (const idlock_type& lid)
 {
   U3_XLOG_ERROR ("unimplementated");
-  U3_ASSERT_THROW (false);
+  ::libs::utility::checks::throw_exception (false);
 }
 #endif
 }   // namespace modules::mstorage::appl::impl::storage::test

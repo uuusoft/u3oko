@@ -19,8 +19,8 @@ namespace libs::utility::proxy
 {
 MemProxyBase::MemProxyBase (const std::string& prefix, std::size_t req_size)
 {
-  U3_ASSERT (!prefix.empty ());
-  U3_ASSERT (req_size <= consts::max_size);
+  ::libs::utility::checks::throw_ifn (!prefix.empty ());
+  ::libs::utility::checks::throw_ifn (req_size <= consts::max_size);
 
   const std::string pid   = std::to_string (process::get_id ());
   const std::string times = std::to_string (process::get_start_time ());

@@ -43,7 +43,7 @@ ParamsVideoDiffProp::serialize (Archive& arh, const std::uint32_t /* file_versio
 void
 tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const ParamsVideoDiffProp& src)
 {
-  U3_ASSERT_SOFT (0, "???");
+  ::libs::utility::checks::assert_soft (0, "???");
 }
 
 
@@ -51,7 +51,7 @@ auto
 tag_invoke (::boost::json::value_to_tag< ParamsVideoDiffProp >, const ::boost::json::value& jvs) -> ParamsVideoDiffProp
 {
   ParamsVideoDiffProp ret;
-  U3_ASSERT_SOFT (0, "???");
+  ::libs::utility::checks::assert_soft (0, "???");
   return ret;
 }
 }   // namespace libs::events_base::props::videos::gens::diff

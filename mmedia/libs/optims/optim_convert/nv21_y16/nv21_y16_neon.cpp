@@ -17,7 +17,7 @@ U3_SET_TARGET_CPU (+simd)
 void
 neon (::libs::optim::io::MCallInfo& info)
 {
-  U3_MARK_TODO;
+  ::libs::utility::checks::mark_todo ("todo");
   alu (info);
 }
 }   // namespace libs::optim::convert::nv21_y16

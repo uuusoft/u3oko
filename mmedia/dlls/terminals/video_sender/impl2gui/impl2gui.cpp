@@ -31,7 +31,7 @@ Impl2Gui::send_int (
 auto
 Impl2Gui::fill_frame (const syn::TransformInfo& info, void* pmem) -> bool
 {
-  U3_ASSERT (pmem);
+  ::libs::utility::checks::throw_ifn (pmem);
   bool ret = true;
 
   try
@@ -39,8 +39,8 @@ Impl2Gui::fill_frame (const syn::TransformInfo& info, void* pmem) -> bool
     auto*      header = ::libs::utility::casts::reinterpret_cast_helper< ::modules::mgui::appl::io::VideoIO* > (pmem);
     const auto bbuf   = (**info.ibuf_)[utils::dbufs::video::consts::offs::lit];
 
-    U3_THROW_IFN (header, "empty header video frame");
-    // U3_THROW_IFN( header->check(), "check header video frame" );
+    ::libs::utility::checks::throw_ifn (header, "empty header video frame");
+    // ::libs::utility::checks::throw_ifn( header->check(), "check header video frame" );
 
     header->reset ();
     ++header->in_.counter_;
@@ -96,7 +96,7 @@ Impl2Gui::fill_frame (const syn::TransformInfo& info, void* pmem) -> bool
 auto
 Impl2Gui::is_empty_frame (const void* pmem) const -> bool
 {
-  U3_ASSERT (pmem);
+  ::libs::utility::checks::throw_ifn (pmem);
   const auto* header = ::libs::utility::casts::reinterpret_cast_helper< const ::modules::mgui::appl::io::VideoIO* > (pmem);
   return header->in_.is_valid () ? false : true;
 }
@@ -110,7 +110,7 @@ Impl2Gui::send_frame (
 {
   if (U3_MARK_UNUSED auto imem = helper->get_imem ())
   {
-    U3_ASSERT_THROW ("failed");
+    ::libs::utility::checks::throw_exception ("failed");
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
     if (finfo_.last_hmem_.check ())
     {
@@ -155,16 +155,16 @@ Impl2Gui::send_frame (
 
     if (finfo_.last_hmem_.check () && finfo_.last_hmem_.size_ < size_mem)
     {
-      U3_THROW_IFN (helper->mem_free (finfo_.last_hmem_), "free mem");
+      ::libs::utility::checks::throw_ifn (helper->mem_free (finfo_.last_hmem_), "free mem");
     }
 
     if (!finfo_.last_hmem_.check ())
     {
-      U3_THROW_IFN (helper->mem_alloc (size_mem, finfo_.last_hmem_), "alloc mem for send to gui");
+      ::libs::utility::checks::throw_ifn (helper->mem_alloc (size_mem, finfo_.last_hmem_), "alloc mem for send to gui");
     }
 
-    U3_ASSERT (finfo_.last_hmem_.check ());
-    U3_THROW_IFN (helper->mem_atomic_call (finfo_.last_hmem_, FillFrameHelper (this, info)), "call mem_atomic_call");
+    ::libs::utility::checks::throw_ifn (finfo_.last_hmem_.check ());
+    ::libs::utility::checks::throw_ifn (helper->mem_atomic_call (finfo_.last_hmem_, FillFrameHelper (this, info)), "call mem_atomic_call");
 
     helper->s1end_msg (BaseGUIEvent::ptr (
       new ::libs::events_gui::events::MemBlockEvent (finfo_.last_hmem_, finfo_.rprops_->get_id ())));

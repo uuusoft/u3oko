@@ -17,7 +17,7 @@ IMemBuf::resize (const mem_var_type& size)
     raw_block_ = _imem->alloc (size);
   }
 
-  U3_THROW_IFN (raw_block_, "get empty raw_block_");
+  ::libs::utility::checks::throw_ifn ((bool) raw_block_, "get empty raw_block_");
   if (raw_block_->get_capacity () < size)
   {
     raw_block_->resize (size);
@@ -41,12 +41,12 @@ IMemBuf::set_mem_var_int (const MemVars& type, mem_var_type val)
   case MemVars::size_data:
     if (val > 0)
     {
-      U3_THROW_IFN (val || raw_block_, "try set size_data to empty raw_block_");
-      U3_THROW_IFN (val <= raw_block_->get_capacity (), VTOLOG (val) + VTOLOG (raw_block_->get_capacity ()));
+      ::libs::utility::checks::throw_ifn (val || raw_block_, "try set size_data to empty raw_block_");
+      ::libs::utility::checks::throw_ifn (val <= raw_block_->get_capacity (), VTOLOG (val) + VTOLOG (raw_block_->get_capacity ()));
     }
     break;
   case MemVars::offset_data:
-    U3_THROW_IFN (val < (*this)[MemVars::size_buf] || 0 == val, "offset large size" + VTOLOG (val) + VTOLOG ((*this)[MemVars::size_buf]));
+    ::libs::utility::checks::throw_ifn (val < (*this)[MemVars::size_buf] || 0 == val, "offset large size" + VTOLOG (val) + VTOLOG ((*this)[MemVars::size_buf]));
     break;
   case MemVars::size_buf:
     U3_XLOG_ERROR ("try set size_buf" + VTOLOG (val));
@@ -76,7 +76,7 @@ IMemBuf::get_mem_var_int (const ::utils::dbufs::MemVars& type) const -> IMemBuf:
 auto
 IMemBuf::get_buf_int () -> std::uint8_t*
 {
-  U3_ASSERT (raw_block_);
+  ::libs::utility::checks::throw_ifn ((bool) raw_block_);
   return raw_block_->get ();
 }
 
@@ -84,7 +84,7 @@ IMemBuf::get_buf_int () -> std::uint8_t*
 auto
 IMemBuf::get_cbuf_int () const -> const std::uint8_t*
 {
-  U3_ASSERT (raw_block_);
+  ::libs::utility::checks::throw_ifn ((bool) raw_block_);
   return raw_block_->get ();
 }
 
@@ -93,7 +93,7 @@ void
 IMemBuf::clone_int (IBuf::craw_ptr isrc, float percent)
 {
   auto src = dynamic_cast< IMemBuf::craw_ptr > (isrc);
-  U3_ASSERT (src);
+  ::libs::utility::checks::throw_ifn (src);
   if (this == src)
   {
     U3_XLOG_WARN ("try clone itself" + PTR_TOLOG (this));

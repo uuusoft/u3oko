@@ -10,8 +10,8 @@ namespace libs::events_gui::utils::helpers
 inline bool
 is_equal (IRect::raw_ptr left, IRect::raw_ptr right)
 {
-  U3_ASSERT (left);
-  U3_ASSERT (right);
+  ::libs::utility::checks::throw_ifn (left);
+  ::libs::utility::checks::throw_ifn (right);
 
   if (left == right)
   {
@@ -35,8 +35,8 @@ is_equal (IRect::raw_ptr left, IRect::raw_ptr right)
 inline bool
 include (const IRect::raw_ptr rect, const IPos::raw_ptr pos)
 {
-  U3_ASSERT (rect);
-  U3_ASSERT (pos);
+  ::libs::utility::checks::throw_ifn (rect);
+  ::libs::utility::checks::throw_ifn (pos);
 
   auto gpos  = rect->get_pos ();
   auto gsize = rect->get_size ();

@@ -62,7 +62,7 @@ class YCB2RgbAlg final : public IOptimAlg
       break;
 #endif
     default:
-      U3_MARK ("failed");
+      ::libs::utility::checks::mark ("failed");
       sel_.set (::libs::optim::convert::ycb_rgb24::alu);
       break;
     }

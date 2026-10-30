@@ -14,7 +14,7 @@ get_os_info ()
 {
   std::string ret;
   std::string type_os = "unknown";
-  U3_ASSERT_THROW ("failed");
+  ::libs::utility::checks::throw_exception ("failed");
   return ret;
 }
 
@@ -23,7 +23,7 @@ get_mem_info ()
 {
   std::string        ret;
   const std::int32_t b2mb = 1024 * 1024;
-  U3_ASSERT_THROW ("failed");
+  ::libs::utility::checks::throw_exception ("failed");
   return ret;
 }
 
@@ -31,7 +31,7 @@ inline std::string
 get_display_info ()
 {
   std::string ret;
-  U3_ASSERT_THROW ("failed");
+  ::libs::utility::checks::throw_exception ("failed");
   return ret;
 }
 
@@ -65,7 +65,7 @@ SysInfoImpl::get (const HardwareType& type) const
     break;
 #  endif
   default:
-    U3_ASSERT_THROW ("failed");
+    ::libs::utility::checks::throw_exception ("failed");
     break;
   }
   return ret;
@@ -75,7 +75,7 @@ short
 SysInfoImpl::count_cpu () const
 {
   const std::int16_t ret = std::thread::hardware_concurrency ();
-  U3_ASSERT (ret > 0);
+  ::libs::utility::checks::throw_ifn (ret > 0);
   return ret;
 }
 }   // namespace libs::utility::sys::os::mac

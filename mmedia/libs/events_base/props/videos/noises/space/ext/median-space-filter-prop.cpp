@@ -25,7 +25,7 @@ to_string (const Sortings& val) -> const std::string&
   auto finger = val2val.find (val);
   if (val2val.end () == finger)
   {
-    U3_MARK ("failed find name sorting type");
+    ::libs::utility::checks::mark ("failed find name sorting type");
     finger = val2val.find (Sortings::usual);
   }
   return finger->second;
@@ -49,7 +49,7 @@ str2sort (const std::string& str) -> Sortings
   auto finger = str2sort.find (str);
   if (str2sort.end () == finger)
   {
-    U3_MARK ("failed find sorting type by name " + TOLOG (str));
+    ::libs::utility::checks::mark ("failed find sorting type by name " + TOLOG (str));
     finger = str2sort.find ("default");
   }
   return finger->second;

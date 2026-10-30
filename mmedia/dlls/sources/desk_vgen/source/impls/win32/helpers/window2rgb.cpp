@@ -25,18 +25,18 @@ hdc2rgb (
 {
   ::libs::utility::platforms::win32::HandlerCompatibleDC      thdc (whdc);
   ::libs::utility::platforms::win32::HandlerGdiObj< HBITMAP > hbmp (CreateCompatibleBitmap (whdc, width_dest, height_dest));
-  U3_THROW_IFN_WIN32_STATE (thdc && hbmp, "create compatible dc" + VTOLOG (width_dest) + VTOLOG (height_dest));
+  ::libs::utility::platforms::win32::throw_ifn (thdc && hbmp, "create compatible dc" + VTOLOG (width_dest) + VTOLOG (height_dest));
 
   thdc.select_object (*hbmp);
 
-  U3_THROW_IFN_WIN32_CALL (
+  ::libs::utility::platforms::win32::throw_ifn (
     BitBlt (*thdc, 0, 0, width_dest, height_dest, whdc, offset_x, offset_y, SRCCOPY),
     "BitBlt" + VTOLOG (width_dest) + VTOLOG (height_dest));
 
   // конвертируем образ окна в формат RGB32
   ::dlls::sources::desk_vgen::impls::win32::helpers::Hdc2BmpCallInfo call_info (*thdc, rgb_buf, dest_bits, &active_dest_buf, &width_dest, &height_dest, &stride_dest, false);
   ::dlls::sources::desk_vgen::impls::win32::helpers::hdc2buf_alu (call_info);
-  U3_THROW_IFN_WIN32_STATE (rgb_buf->get (), "convert to rgb32");
+  ::libs::utility::platforms::win32::throw_ifn (rgb_buf->get (), "convert to rgb32");
 }
 
 
@@ -62,7 +62,7 @@ window2rgb (
   }
 
   ::libs::utility::platforms::win32::HandlerWindowDC whdc (hwnd);
-  U3_THROW_IFN_WIN32_STATE (whdc, "get dc from window" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (hwnd)));
+  ::libs::utility::platforms::win32::throw_ifn (whdc, "get dc from window" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (hwnd)));
 
   hdc2rgb (*whdc, rgb_buf, offset_x, offset_y, active_dest_buf, width_dest, height_dest, stride_dest, dest_bits);
 }

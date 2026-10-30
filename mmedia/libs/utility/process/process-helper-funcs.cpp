@@ -26,7 +26,7 @@ get_start_time () -> std::int64_t
     FILETIME tkernel;
     FILETIME tuser;
 
-    U3_THROW_IFN (GetProcessTimes (GetCurrentProcess (), &tcreate, &texit, &tkernel, &tuser), "call GetProcessTimes");
+    ::libs::utility::checks::throw_ifn (GetProcessTimes (GetCurrentProcess (), &tcreate, &texit, &tkernel, &tuser), "call GetProcessTimes");
     ret = (U3_CAST_INT64 (tcreate.dwHighDateTime) << 32) | tcreate.dwLowDateTime;
   }
 #else

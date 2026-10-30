@@ -60,8 +60,8 @@ class Pos : public IPos
   void
   set (IPos::value_type x, IPos::value_type y)
   {
-    U3_ASSERT (x >= 0);
-    U3_ASSERT (y >= 0);
+    ::libs::utility::checks::throw_ifn (x >= 0);
+    ::libs::utility::checks::throw_ifn (y >= 0);
     x_ = x;
     y_ = y;
     check ();

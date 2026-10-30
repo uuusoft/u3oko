@@ -9,8 +9,8 @@
 extern "C" BOOST_SYMBOL_EXPORT auto
 get_source_vss_desk_vgen (::dlls::sources::gen_lib::ISourceImpl** ret) -> bool
 {
-  U3_ASSERT (ret);
-  U3_ASSERT (!*ret);
+  ::libs::utility::checks::throw_ifn (ret);
+  ::libs::utility::checks::throw_ifn (!*ret);
   *ret = new ::dlls::sources::desk_vgen::SourceImpl ();
   return true;
 }
@@ -19,8 +19,8 @@ get_source_vss_desk_vgen (::dlls::sources::gen_lib::ISourceImpl** ret) -> bool
 extern "C" BOOST_SYMBOL_EXPORT auto
 free_source_vss_desk_vgen (::dlls::sources::gen_lib::ISourceImpl** ret) -> bool
 {
-  U3_ASSERT (ret);
-  U3_ASSERT (*ret);
+  ::libs::utility::checks::throw_ifn (ret);
+  ::libs::utility::checks::throw_ifn (*ret);
   delete *ret;
   *ret = nullptr;
   return true;

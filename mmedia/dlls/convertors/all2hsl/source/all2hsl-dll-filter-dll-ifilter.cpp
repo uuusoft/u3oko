@@ -42,7 +42,7 @@ Filter::transform_int (syn::TransformInfo& info)
   auto& ibufs = (*info.ibuf_);
   if (ibufs->get_flag (::libs::bufs::BufsFlags::empty))
   {
-    //  Пустой буфер допустим, например если все преобразование происходит аппаратно.
+    //  Пустой буфер допустим, например если все преобразование происходит аппаратно
     return;
   }
   if (!ibufs->get_flag (::libs::bufs::BufsFlags::request2hsl))

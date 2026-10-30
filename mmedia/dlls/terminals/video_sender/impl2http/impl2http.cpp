@@ -15,7 +15,7 @@ Impl2Http::send_int (
   const syn::Buff2ModuleInfo::craw_ptr minfo,
   syn::IVideoBuf::raw_ptr              send_buf)
 {
-  U3_ASSERT (minfo);
+  ::libs::utility::checks::throw_ifn (minfo);
   auto* ilink     = ::libs::iproperties::helpers::get_prop_links ();
   auto  data2appl = ilink->get_links_lockfree ()[syn::mids::mdata2appl].lock ();
 

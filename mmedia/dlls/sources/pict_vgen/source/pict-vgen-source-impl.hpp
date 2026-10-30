@@ -31,7 +31,7 @@ struct LoadedImage final {
     bppx_ (bppx),
     data_ (std::move (data))
   {
-    U3_THROW_IFN (width_ >= 0 && height_ >= 0 && bppx_ >= 0 && bppx_ <= 8, "invalid parameters");
+    ::libs::utility::checks::throw_ifn (width_ >= 0 && height_ >= 0 && bppx_ >= 0 && bppx_ <= 8, "invalid parameters");
   }
 
   LoadedImage (LoadedImage&& src)

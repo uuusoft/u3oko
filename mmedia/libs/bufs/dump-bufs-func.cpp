@@ -16,11 +16,11 @@ dump (Bufs::craw_ptr bufs, bool only_filled)
     return;
   }
 
-  U3_ASSERT (bufs);
+  ::libs::utility::checks::throw_ifn (bufs);
 
   bufs->enum_bufs (
     [only_filled] (const syn::off_buf_type& indx, const syn::IVideoBuf::cptr& buf) -> void {
-      U3_ASSERT (buf);
+      ::libs::utility::checks::throw_ifn ((bool) buf);
       if (only_filled && (buf->get_flag (::utils::dbufs::BufFlags::empty) || buf->get_flag (::utils::dbufs::BufFlags::null)))
       {
         return;

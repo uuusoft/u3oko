@@ -20,7 +20,7 @@ auto
 ISharedProperty::cast2top () -> void*
 {
   auto ret = cast2top_int ();
-  U3_ASSERT (ret);
+  ::libs::utility::checks::throw_ifn (ret);
   return ret;
 }
 

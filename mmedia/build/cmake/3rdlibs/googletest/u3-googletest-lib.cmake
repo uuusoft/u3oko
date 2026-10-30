@@ -1,0 +1,51 @@
+# author      Erashov Anton erashov2026@proton.me
+# date        20.02.2026
+# copyright   Erashov A.I.
+# file        u3-googletest-lib.cmake
+
+include("./build/cmake/3rdlibs/googletest/u3-googletest-lib-values.cmake")
+
+set(U3_3RDLIB_NAME_GOOGLETEST_UTIL ${U3_3RDLIB_NAME_GOOGLETEST}-util)
+
+u3_project_add(
+    PROJECT_NAME ${U3_3RDLIB_NAME_GOOGLETEST_UTIL}
+    PROJECT_VERSION "v${U3_3RDLIB_VER_GOOGLETEST}"
+    #PROJECT_VERSION       "release-${U3_3RDLIB_VER_GOOGLETEST}"
+    BIN_URL ${U3_3RDLIB_ESRC_URL_GOOGLETEST_BIN}
+    NAME_BIN_MD5 U3_3RDLIB_GOOGLETEST${U3_3RDLIB_VER_GOOGLETEST_CID}_MD5_${U3_ENV_GEN_3RDLIB_POSTFIX}
+    BIN_MD5 ${U3_3RDLIB_GOOGLETEST${U3_3RDLIB_VER_GOOGLETEST_CID}_MD5_${U3_ENV_GEN_3RDLIB_POSTFIX}}
+    SRC_URL ${U3_3RDLIB_OSRC_URL_GOOGLETEST}
+    SRC_MD5 ${U3_3RDLIB_GOOGLETEST_MD5}
+    ESRC_URL ${U3_3RDLIB_ESRC_URL_GOOGLETEST_SRC}
+    ESRC_MD5 ${U3_3RDLIB_GOOGLETEST_EXT_MD5}
+    PATCH_CMD ""
+    USE_HTTP_FOR_ESRC FALSE
+    BUILD_IN_SOURCE FALSE
+    IT_CMAKE_PROJECT TRUE
+    FORCE_COMPILE FALSE
+    EXT_CMAKE_ARGS "")
+
+ExternalProject_Get_Property(${U3_3RDLIB_NAME_GOOGLETEST_UTIL} install_dir)
+
+if (${U3_GVXX_PROJECT_ADD_SOURCE_TYPE} STREQUAL "U3_ADD_PROJECT_RESULT_BIN")
+  set(U3_INCLUDE_DIR_EXTLIB_GOOGLETEST ${install_dir}/src/googletest-util)
+  set(U3_INSTALL_DIR_EXTLIB_GOOGLETEST ${install_dir}/src/googletest-util/lib/${U3_3RDLIB_GOOGLETEST_FILE_NAME})
+  set(U3_INSTALL_DIR_EXTLIB_GOOGLETEST2 ${install_dir}/src/googletest-util/lib/${U3_3RDLIB_GOOGLETEST_FILE_NAME2})
+else ()
+  set(U3_INCLUDE_DIR_EXTLIB_GOOGLETEST ${install_dir}/src/googletest-util/googletest/include)
+  set(U3_INSTALL_DIR_EXTLIB_GOOGLETEST ${install_dir}/src/googletest-util-build/lib/${U3_3RDLIB_GOOGLETEST_FILE_NAME})
+  set(U3_INSTALL_DIR_EXTLIB_GOOGLETEST2 ${install_dir}/src/googletest-util-build/lib/${U3_3RDLIB_GOOGLETEST_FILE_NAME2})
+endif ()
+
+u3_make_fake_file(FILE_NAME ${U3_INSTALL_DIR_EXTLIB_GOOGLETEST} CONTENT "googletest")
+
+add_library(googletest-lib STATIC IMPORTED)
+set_target_properties(googletest-lib PROPERTIES IMPORTED_LOCATION ${U3_INSTALL_DIR_EXTLIB_GOOGLETEST})
+add_dependencies(googletest-lib ${U3_3RDLIB_NAME_GOOGLETEST_UTIL})
+
+add_library(googletest-lib2 STATIC IMPORTED)
+set_target_properties(googletest-lib2 PROPERTIES IMPORTED_LOCATION ${U3_INSTALL_DIR_EXTLIB_GOOGLETEST2})
+add_dependencies(googletest-lib2 ${U3_3RDLIB_NAME_GOOGLETEST_UTIL})
+
+set(U3_LIBS_3RD_STATIC_LIST ${U3_LIBS_3RD_STATIC_LIST} googletest-lib)
+set(U3_DEPENDENCY_TARGETS_LIST ${U3_DEPENDENCY_TARGETS_LIST} ${U3_3RDLIB_NAME_GOOGLETEST_UTIL})

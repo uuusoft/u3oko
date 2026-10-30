@@ -21,7 +21,7 @@ struct StatisticStage final {
   void
   update (std::uint64_t val)
   {
-    U3_ASSERT (val > 0);
+    ::libs::utility::checks::throw_ifn (val > 0);
     size_datas_[0] = std::min< std::uint64_t > (size_datas_[0], val);
     size_datas_[1] = std::max< std::uint64_t > (size_datas_[1], val);
     size_datas_[2] += val;

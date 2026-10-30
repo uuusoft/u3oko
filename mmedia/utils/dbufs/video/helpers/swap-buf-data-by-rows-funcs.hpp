@@ -10,7 +10,7 @@ namespace utils::dbufs::video::helpers
 inline void
 swap_buf_data_by_rows (IVideoBuf::raw_ptr buf)
 {
-  U3_THROW_IFN (buf, "try fill null buf");
+  ::libs::utility::checks::throw_ifn (buf, "try fill null buf");
   if (!buf->get_buf () || !(*buf)[MemVars::size_buf] || buf->get_flag (BufFlags::empty))
   {
     return;

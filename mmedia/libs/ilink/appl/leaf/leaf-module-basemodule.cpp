@@ -22,15 +22,15 @@ LeafModule::update_catch_funcs_int ()
       auto* seq_ret = ::libs::iproperties::helpers::cast_event< ::libs::events::ISeqEvent > (msg);
       auto  ret     = seq_ret->get_msg ();
 
-      U3_ASSERT (ret);
-      U3_ASSERT (!seq_ret->get_seq_id ().empty ());
+      ::libs::utility::checks::throw_ifn ((bool) ret);
+      ::libs::utility::checks::throw_ifn (!seq_ret->get_seq_id ().empty ());
 
       current_seq_.recv_seq_ = true;
       current_seq_.id_seq_   = seq_ret->get_seq_id ();
       return ret;
     }
 
-    U3_ASSERT (current_seq_.request_);   //  это должен быть запрос, иначе быссмысленно.
+    ::libs::utility::checks::throw_ifn ((bool) current_seq_.request_);   //  это должен быть запрос, иначе быссмысленно.
     auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< ::libs::events::ISeqEvent > ();
     // для конечного модуля, если пришло сообщение  с идентификатором, используем его для ответа
     // И изначальное сообщение должно быть запросом
@@ -45,7 +45,7 @@ LeafModule::update_catch_funcs_int ()
     if (forward)
     {
       auto ret = ::libs::iproperties::helpers::cast_event< ::libs::events::ISyncEvent > (msg)->get_msg ();
-      U3_ASSERT (ret);
+      ::libs::utility::checks::throw_ifn ((bool) ret);
       return ret;
     }
     if (::libs::iproperties::helpers::cast_event< ::libs::events::IAnswerEvent > (msg))
@@ -61,7 +61,7 @@ LeafModule::update_catch_funcs_int ()
     {
       current_seq_.request_ = true;
       auto ret              = ::libs::iproperties::helpers::cast_event< ::libs::events::IRequestEvent > (msg)->get_msg ();
-      U3_ASSERT (ret);
+      ::libs::utility::checks::throw_ifn ((bool) ret);
       return ret;
     }
 
@@ -77,7 +77,7 @@ LeafModule::update_catch_funcs_int ()
     {
       current_seq_.answer_ = true;
       auto ret             = ::libs::iproperties::helpers::cast_event< ::libs::events::IAnswerEvent > (msg)->get_msg ();
-      U3_ASSERT (ret);
+      ::libs::utility::checks::throw_ifn ((bool) ret);
       return ret;
     }
     //  инверсия, пришел ответ модулю
@@ -185,7 +185,7 @@ LeafModule::appl_work_int ()
         {
         }
 
-        U3_ASSERT (!funcs.empty ());
+        ::libs::utility::checks::throw_ifn (!funcs.empty ());
         const auto& src_complite = src;
 
         try

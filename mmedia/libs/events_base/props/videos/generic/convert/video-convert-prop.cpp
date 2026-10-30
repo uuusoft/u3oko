@@ -23,7 +23,7 @@ str2size_type (const std::string& str) -> Src2DstEqs
   const auto find = conv.find (str);
   if (find == conv.end ())
   {
-    U3_ASSERT_THROW ("failed");
+    ::libs::utility::checks::throw_exception ("failed");
     return Src2DstEqs::equal_dst;
   }
   return find->second;
@@ -44,7 +44,7 @@ str2atype (const std::string& str) -> Accuracys
   const auto find = conv.find (str);
   if (find == conv.end ())
   {
-    U3_ASSERT_THROW ("failed");
+    ::libs::utility::checks::throw_exception ("failed");
     return Accuracys::usual;
   }
   return find->second;

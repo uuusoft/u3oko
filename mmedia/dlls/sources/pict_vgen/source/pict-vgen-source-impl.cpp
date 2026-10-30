@@ -129,7 +129,7 @@ SourceImpl::print_images2buf (utils::dbufs::video::IVideoBuf::ptr& genimage)
     {
       auto* srcline = image_info.data_->get () + static_cast< ptrdiff_t > (iy * srcstride) + static_cast< ptrdiff_t > (offfirst * image_info.bppx_);
       auto* dstline = dstbuf + cpwidth * 3 + static_cast< ptrdiff_t > (iy * capstride);
-      U3_THROW_IFN (srcline, "get scan file rgb24 image" + VTOLOG (iy));
+      ::libs::utility::checks::throw_ifn (srcline, "get scan file rgb24 image" + VTOLOG (iy));
       ::libs::utility::mem::mem_copy_raw (srcline, dstline, cpstride);
     }
 
@@ -215,7 +215,7 @@ SourceImpl::refresh_files ()
   syn::DefaultFileMask check_cond (loc_mask);
   const auto           picters_folder = ::libs::utility::files::update_home_folder (srcimpinfo_.props_->ext_vals_.at (consts::param_keys::picter_folder));
 
-  U3_LOG_DATA_DEV ("begin refresh files in" + TOLOG (picters_folder));
+  U3_LOG_DATA_DEV ("updating image files" + TOLOG (picters_folder));
   ::libs::utility::files::get_files (
     picters_folder,
     enum_files_,

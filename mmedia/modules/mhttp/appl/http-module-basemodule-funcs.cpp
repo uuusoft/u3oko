@@ -62,7 +62,7 @@ void
 HttpModule::init_proxys_int ()
 {
   super::init_proxys_int ();
-  U3_THROW_IFN (::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree (), "check create block mem allocator");
+  ::libs::utility::checks::throw_ifn (::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree (), "check create block mem allocator");
 }
 
 
@@ -105,7 +105,7 @@ HttpModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       process_change_state_process (props);
       return syn::IEvent::ptr ();
     }
@@ -126,7 +126,7 @@ HttpModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::ZipDataEvent > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       process_zip_data_event (props);
       return syn::IEvent::ptr ();
     }
@@ -139,7 +139,7 @@ HttpModule::update_catch_funcs_int ()
       {
         U3_LOG_HTTP_DBG ("int received " + syn::RuntimeEvent::gen_get_mid ());
         auto* props = ::libs::iproperties::helpers::cast_event< syn::RuntimeEvent > (msg);
-        U3_ASSERT (props);
+        ::libs::utility::checks::throw_ifn (props);
         process_runtime (props);
         return syn::IEvent::ptr ();
       }
@@ -150,7 +150,7 @@ HttpModule::update_catch_funcs_int ()
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
       U3_LOG_HTTP_DBG ("int received " + syn::MemResourceHttpEvent::gen_get_mid ());
       auto* props = ::libs::iproperties::helpers::cast_event< syn::MemResourceHttpEvent > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       process_mem_resource (props);
       return msg;
     };

@@ -41,7 +41,7 @@ LoaderFileImpl::get_enum_int (
   }
 
   const std::string root = iinfo_.paths_->get_path (path_type);
-  U3_THROW_IFN (::libs::utility::files::is_folder (root), "root not dir" + root);
+  ::libs::utility::checks::throw_ifn (::libs::utility::files::is_folder (root), "root not dir" + root);
 
   constexpr auto sub_folders = ::libs::utility::files::IncludeSubFolders::enabled;
   constexpr auto files       = ::libs::utility::files::IncludeFiles::enabled;

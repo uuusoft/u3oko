@@ -62,7 +62,7 @@ u3alloc (void** pptr, const std::size_t size)
 
   if (nullptr == raw_ptr)
   {
-    U3_MARK ("failed alloc memory" + VTOLOG (real_size) + VTOLOG (size));
+    ::libs::utility::checks::mark ("failed alloc memory" + VTOLOG (real_size) + VTOLOG (size));
     return;
   }
 
@@ -71,7 +71,7 @@ u3alloc (void** pptr, const std::size_t size)
 
   if (offset < 1)
   {
-    U3_MARK ("FAILED OFFSET ALLOCATED MEMORY" + VTOLOG (offset) + VTOLOG (real_size));
+    ::libs::utility::checks::mark ("FAILED OFFSET ALLOCATED MEMORY" + VTOLOG (offset) + VTOLOG (real_size));
     free (raw_ptr);
     raw_ptr = nullptr;
     *pptr   = nullptr;

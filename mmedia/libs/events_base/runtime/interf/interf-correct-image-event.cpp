@@ -24,7 +24,7 @@ InterfCorrectImageEvent::get_mid_int () const -> const ::libs::events::IEvent::h
 auto
 InterfCorrectImageEvent::get_interface () -> InterfCorrectImageEvent::impl_ptr_type
 {
-  U3_ASSERT (!impl_.expired ());
+  ::libs::utility::checks::throw_ifn (!impl_.expired ());
   return impl_;
 }
 

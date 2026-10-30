@@ -4,9 +4,9 @@
 # file        u3-check-git.cmake
 # source      https://jonathanhamberg.com/post/cmake-embedding-git-hash/
 
-if(NOT U3_USE_GIT_HASH_FOR_MARK_BUILD)
+if (NOT U3_USE_GIT_HASH_FOR_MARK_BUILD)
   return()
-endif()
+endif ()
 
 set(U3_LOCAL_FILE_NAME_GIT_STATE "u3-git-state.txt")
 
@@ -17,8 +17,8 @@ execute_process(COMMAND git log -1 --format=%h WORKING_DIRECTORY ${CMAKE_CURRENT
 file(WRITE ${CMAKE_BINARY_DIR}/${U3_LOCAL_FILE_NAME_GIT_STATE} ${U3_GIT_HASH})
 
 # This following command is used to retreive the git commit hash from the file.
-if(EXISTS ${CMAKE_BINARY_DIR}/${U3_LOCAL_FILE_NAME_GIT_STATE})
+if (EXISTS ${CMAKE_BINARY_DIR}/${U3_LOCAL_FILE_NAME_GIT_STATE})
   file(STRINGS ${CMAKE_BINARY_DIR}/${U3_LOCAL_FILE_NAME_GIT_STATE} U3_LOCAL_CONTENT_FILE)
   list(GET U3_LOCAL_CONTENT_FILE 0 U3_LOCAL_ONE_STRING)
   set(${U3_GIT_HASH} ${U3_LOCAL_ONE_STRING} PARENT_SCOPE)
-endif()
+endif ()

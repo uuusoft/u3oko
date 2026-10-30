@@ -1,0 +1,34 @@
+# author      Erashov Anton erashov2026@proton.me
+# date        21.03.2026
+# copyright   Erashov A.I.
+# file        u3-stb-lib-values.cmake
+
+set(U3_3RDLIB_OSRC_URL_STB https://github.com/nothings/stb.git)
+set(U3_3RDLIB_NAME_STB stb)
+set(U3_3RDLIB_VER_STB)
+set(U3_3RDLIB_VER_STB_CID 0)
+
+set(U3_3RDLIB_ESRC_URL_STB_BIN ${U3_3RDLIBS_URL_BIN}/lib-stb-bin-${U3_3RDLIB_VER_STB}-${U3_ENV_GEN_RAW_3RDLIB_POSTFIX}.zip)
+set(U3_3RDLIB_ESRC_URL_STB_SRC ${U3_3RDLIBS_URL_SRC}/lib-stb-src.zip)
+set(U3_3RDLIB_STB_FILE_NAME "${U3_PREFIX_LIB_NAME}stb-util.${U3_SUFFIX_LIB_NAME}")
+
+set(U3_3RDLIB_STB_0_MD5 0)
+set(U3_3RDLIB_STB_0_EXT_MD5 0)
+set(U3_3RDLIB_STB_EXT_MD5 0)
+
+set(U3_3RDLIB_STB0_MD5_Linux_Clang_21_Clang_21__x64_Release_none e2d638dc81b2c6852e434444d7a0c28e)
+set(U3_3RDLIB_STB0_MD5_Linux_Clang_21_Clang_21__x64_Debug_ub e522b21fd47771ff940da886cc3d59dd)
+set(U3_3RDLIB_STB0_MD5_Linux_GNU_15_GNU_15__x64_Debug_thread 14a9d6c66a0057b03465d5005f8755e9)
+set(U3_3RDLIB_STB0_MD5_Linux_Clang_21_Clang_21__x64_Debug_none 52d9a8cdf20f0c303665a4a87a3d06e8)
+set(U3_3RDLIB_STB0_MD5_Linux_Clang_21_Clang_21__x64_Debug_address 2294302e46cbe6d3215a116703a2347c)
+set(U3_3RDLIB_STB0_MD5_Linux_Clang_21_Clang_21__x64_Release_address ecfcb79e4636059b447648cdce1b64f8)
+set(U3_3RDLIB_STB0_MD5_Linux_Clang_23_Clang_23__x64_Release_none 8b26c3265aa053ccc8d75caeedc843dc)
+set(U3_3RDLIB_STB0_MD5_Linux_Clang_23_Clang_23__x64_Debug_none 52d9a8cdf20f0c303665a4a87a3d06e8)
+set(U3_3RDLIB_STB0_MD5_Linux_Clang_23_Clang_23__x64_Debug_address 11855d6e158e1937a62cbe77f539737d)
+
+set(U3_3RDLIB_STB0_MD5_OrangePi_Clang_22_Clang_22__aarch64_Release_none f02ed37cc8b2b22d561e96481f33dbef)
+set(U3_3RDLIB_STB0_MD5_OrangePi_Clang_22_Clang_22__aarch64_Debug_address 35ae9167fc2caae85533d0df449a45e7)
+
+set(U3_3RDLIB_STB0_MD5_Android_Clang_21_Clang_21__aarch64_RelWithDebInfo_none 17cca0c6898b85710b3886dfe6cf0078)
+
+set(U3_3RDLIB_STB_MD5 ${U3_3RDLIB_STB_${U3_3RDLIB_VER_STB_CID}_MD5})

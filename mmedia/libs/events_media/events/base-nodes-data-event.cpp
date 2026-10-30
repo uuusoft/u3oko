@@ -41,7 +41,7 @@ BaseNodesDataEvent::set_id_graph (id_graph_type&& id)
 auto
 BaseNodesDataEvent::check () const -> bool
 {
-  U3_ASSERT (!id_graph_.empty ());
+  ::libs::utility::checks::throw_ifn (!id_graph_.empty ());
   return id_graph_.empty () ? false : true;
 }
 

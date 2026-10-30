@@ -39,9 +39,9 @@ class BufAllocatorProxy final
   IBufAllocator::raw_ptr
   impl ()
   {
-    U3_ASSERT (creator_);
+    ::libs::utility::checks::throw_ifn ((bool) creator_);
     IBufAllocator::raw_ptr _ret = creator_ ();
-    U3_ASSERT (_ret);
+    ::libs::utility::checks::throw_ifn (_ret);
     return _ret;
   }
 
@@ -58,7 +58,7 @@ class BufAllocatorProxy final
     lib_.load (cpath.string (), boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
     creator_ = boost::dll::import_symbol< raw_create_buf_func_type > (lib_, "create_dbufs_impl");
 #endif
-    U3_ASSERT (creator_);
+    ::libs::utility::checks::throw_ifn ((bool) creator_);
   }
 
   ~BufAllocatorProxy () = default;

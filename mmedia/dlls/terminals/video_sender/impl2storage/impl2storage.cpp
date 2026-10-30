@@ -22,7 +22,7 @@ Impl2Storage::send_int (
   const syn::Buff2ModuleInfo::craw_ptr minfo,
   syn::IVideoBuf::raw_ptr              send_buf)
 {
-  U3_ASSERT (minfo);
+  ::libs::utility::checks::throw_ifn (minfo);
   if (active_stream_.empty ())
   {
     open_stream ();
@@ -60,7 +60,7 @@ Impl2Storage::open_stream ()
 
   auto us_evnt   = ::libs::iproperties::helpers::cast_event< syn::UpdateStream > (evnt);
   active_stream_ = us_evnt->stream_id_;
-  U3_THROW_IFN (!active_stream_.empty (), "received null stread_id for write data");
+  ::libs::utility::checks::throw_ifn (!active_stream_.empty (), "received null stread_id for write data");
 #endif
 }
 
@@ -90,7 +90,7 @@ Impl2Storage::send_message (
 {
   auto* ilink     = ::libs::iproperties::helpers::get_prop_links ();
   auto  data2appl = ilink->get_links_lockfree ()[syn::mids::mdata2appl].lock ();
-  U3_ASSERT (data2appl);
+  ::libs::utility::checks::throw_ifn ((bool) data2appl);
   if (!data2appl)
   {
     U3_LOG_DATA_WRN ("skip send msg to storage");

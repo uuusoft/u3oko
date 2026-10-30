@@ -18,9 +18,9 @@ convert2format (
   const std::int32_t                          bits_count,
   VIDEOINFOHEADER*                            vihead)
 {
-  U3_ASSERT (vihead);
-  U3_ASSERT (width > 0);
-  U3_ASSERT (height > 0);
+  ::libs::utility::checks::throw_ifn (vihead);
+  ::libs::utility::checks::throw_ifn (width > 0);
+  ::libs::utility::checks::throw_ifn (height > 0);
 
   vihead->bmiHeader.biBitCount     = U3_CAST_INT16 (bits_count);
   vihead->bmiHeader.biClrImportant = 0;
@@ -51,9 +51,9 @@ convert2format (
   const std::int32_t                          bits_count,
   VIDEOINFOHEADER2*                           vihead)
 {
-  U3_ASSERT (vihead);
-  U3_ASSERT (width > 0);
-  U3_ASSERT (height > 0);
+  ::libs::utility::checks::throw_ifn (vihead);
+  ::libs::utility::checks::throw_ifn (width > 0);
+  ::libs::utility::checks::throw_ifn (height > 0);
 
   vihead->dwCopyProtectFlags = 0;
   vihead->dwInterlaceFlags   = 0;
@@ -110,7 +110,7 @@ guid2dword_compression (const utils::cuuid& guid)
 utils::cuuid
 dword_compression2guid (const unsigned long val, const BITMAPINFOHEADER* bmp)
 {
-  U3_ASSERT (bmp);
+  ::libs::utility::checks::throw_ifn (bmp);
 
   static const boost::unordered_flat_map< unsigned long, std::function< utils::cuuid (const BITMAPINFOHEADER*) > > dword2guid = {
     { consts::compression::mjpg, [] (const BITMAPINFOHEADER* bmp) { return uids::minor::mjpg; } },

@@ -113,7 +113,7 @@ Filter::process_events (syn::TransformInfo& info)
     if (devent)
     {
       finfo_.active_codec_impl_ = devent->is_active () ? devent->get_interface () : devent->get_interface ();   // debug
-      U3_ASSERT (!finfo_.active_codec_impl_.expired ());
+      ::libs::utility::checks::throw_ifn (!finfo_.active_codec_impl_.expired ());
       auto impl = finfo_.active_codec_impl_.lock ();
       if (impl)
       {
@@ -287,7 +287,7 @@ Filter::free_impl_lib () noexcept
     // delete object from old library
     if (finfo_.dll_codec_)
     {
-      U3_ASSERT (finfo_.file_info_.free_codec_);
+      ::libs::utility::checks::throw_ifn ((bool) finfo_.file_info_.free_codec_);
       finfo_.file_info_.free_codec_ (finfo_.dll_codec_);
       finfo_.dll_codec_ = nullptr;
     }
@@ -342,7 +342,7 @@ Filter::update_int ()
   }
 
   finfo_.file_info_.create_codec_ (&finfo_.dll_codec_);
-  U3_THROW_IFN (finfo_.dll_codec_, "create codec" + finfo_.rprops_->preferred_impl_);
+  ::libs::utility::checks::throw_ifn ((bool) finfo_.dll_codec_, "create codec" + finfo_.rprops_->preferred_impl_);
 
   {
     codec_gen::InfoGenCodec iinfo;
@@ -361,7 +361,7 @@ Filter::log_statistic ()
   std::string                     txt;
   const codec_gen::StatisticInfo& info = finfo_.dll_codec_->get_statistic_info ();
 
-  U3_ASSERT (info.self_test ());
+  ::libs::utility::checks::throw_ifn (info.self_test ());
   txt.reserve (static_cast< std::string::size_type > (2 * 1024));
 
   txt = syn::CodecModes::coder == finfo_.rprops_->plane_.type_ ? "coder" : "decoder";
@@ -371,7 +371,7 @@ Filter::log_statistic ()
 
   for (const auto& stage : info.stages_)
   {
-    U3_ASSERT (stage.second.self_test ());
+    ::libs::utility::checks::throw_ifn (stage.second.self_test ());
     txt += stage.first;
     txt += ":\t min ";
     txt += std::to_string (stage.second.size_datas_[0]);

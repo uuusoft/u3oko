@@ -14,38 +14,43 @@ namespace libs::utility::thread
 {
 /// Общий каркас для каждой функции потока в данной системе
 /// \tparam     TTOps         тип для уникальных операций в функции потока
-/// \param[in]  ops           объект для уникальных операций для которых создается поток
-/// \param[in]  indx_thread   индекс потока внутри каждой группы (по типу TTOps), опционально
+/// \param[in]  loglink       идентификатор связи для логирования
+/// \param[in]  obj           объект для уникальных операций для которых создается поток
+/// \param[in]  thread_indx   индекс потока внутри каждой группы (по типу TTOps), опционально
 template< typename TTOps >
 void
-generic_thread_func (const syn::key_storage_type& sval, TTOps* ops, const std::uint32_t indx_thread)
+generic_thread_func (
+  const syn::key_storage_type& loglink,
+  TTOps*                       obj,
+  const std::uint32_t          thread_indx)
 {
-  ::libs::utility::thread::set_thread_priority (std::this_thread::get_id (), ::libs::utility::thread::Priorities::normal);
+  // U3_CALL_TRACE_DBG;
+  using ttops_func_type = void (TTOps::*) (std::uint32_t thread_indx);
 
-  using ttops_func_ptr_type = void (TTOps::*) (std::uint32_t indx_thread);
+  set_thread_priority (std::this_thread::get_id (), Priorities::normal);
 
-  const ttops_func_ptr_type funcs[2] = {
+  const ttops_func_type funcs[2] = {
     &TTOps::thread_func_impl,
     &TTOps::thread_postfunc_impl
   };
 
-  for (auto& func : funcs)
+  for (const auto& func : funcs)
   {
     try
     {
-      (ops->*func) (indx_thread);
+      (obj->*func) (thread_indx);
     }
     catch (boost::exception& excpt)
     {
-      modules::mlog::ToLog { sval, ::libs::events_base::props::modules::log::LogLevels::exception }(boost::diagnostic_information (excpt));
+      modules::mlog::ToLog { loglink, ::libs::events_base::props::modules::log::LogLevels::exception }(boost::diagnostic_information (excpt));
     }
     catch (std::exception& excpt)
     {
-      modules::mlog::ToLog { sval, ::libs::events_base::props::modules::log::LogLevels::exception }(excpt.what ());
+      modules::mlog::ToLog { loglink, ::libs::events_base::props::modules::log::LogLevels::exception }(excpt.what ());
     }
     catch (...)
     {
-      modules::mlog::ToLog { sval, ::libs::events_base::props::modules::log::LogLevels::exception }("unknown... exception");
+      modules::mlog::ToLog { loglink, ::libs::events_base::props::modules::log::LogLevels::exception }("generic_thread_func::exception ...");
     }
   }
 }

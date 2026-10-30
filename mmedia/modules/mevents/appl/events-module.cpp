@@ -3,7 +3,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 */
-#define U3_DBG_LOG_LEVEL_ENABLE
+// #define U3_DBG_LOG_LEVEL_ENABLE
 #include "../module-events-includes_int.hpp"
 // #include "consts/module-events-const-vals.hpp"
 #include "events-module-syn.hpp"
@@ -118,7 +118,7 @@ process_error (syn::IEvent::ptr& msg, const std::string_view info) noexcept -> v
   try
   {
     auto* props = ::libs::iproperties::helpers::cast_event< syn::OpsStatusEvent > (msg);
-    U3_THROW_IFN (props, "failed cast to OpsStatusEvent for return error" + STOLOG (info));
+    ::libs::utility::checks::throw_ifn (props, "failed cast to OpsStatusEvent for return error" + STOLOG (info));
     props->set_ops_status (::libs::events_base::OpsStatus::failed);
     props->set_ops_info (std::string (info));
   }

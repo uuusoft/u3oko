@@ -28,7 +28,7 @@ void
 ObjSourceImplProxy::init (const std::string& impl_name)
 {
   clear ();
-  U3_THROW_IFN (!impl_name.empty (), "empty impl name for capture");
+  ::libs::utility::checks::throw_ifn (!impl_name.empty (), "empty impl name for capture");
   const std::string path      = ::libs::iproperties::appl_paths::get_current_lib_folder ();
   const std::string full_path = ::libs::utility::files::make_path (path, ::libs::utility::dlls::decorate_dll_name (impl_name));
 
@@ -45,9 +45,9 @@ ObjSourceImplProxy::init (const std::string& impl_name)
     impl_dll_, ::libs::utility::dlls::make_func_name_lib (impl_name, gen_lib::consts::name_free_func));
 #endif
 
-  U3_THROW_IFN (func_get_ && func_free_, "get funct");
-  U3_THROW_IFN (func_get_ (&impl_), "create impl");
-  U3_THROW_IFN (impl_, "create func return empty impl");
+  ::libs::utility::checks::throw_ifn (func_get_ && func_free_, "get funct");
+  ::libs::utility::checks::throw_ifn (func_get_ (&impl_), "create impl");
+  ::libs::utility::checks::throw_ifn ((bool) impl_, "create func return empty impl");
   impl_->init ();
 }
 
@@ -70,7 +70,7 @@ ObjSourceImplProxy::clear ()
 auto
 ObjSourceImplProxy::get_source_impl () -> gen_lib::ISourceImpl::raw_ptr
 {
-  // U3_TEST (impl_, "return empty source impl" + TOLOG (impl_dll_.location ().string ()));
+  // ::libs::utility::checks::test (impl_, "return empty source impl" + TOLOG (impl_dll_.location ().string ()));
   return impl_;
 }
 

@@ -61,7 +61,7 @@ InfoLogEvent::text (const LogTexts& type) const -> std::string
   case LogTexts::level:
     return to_string (appl_.msg_state_);
   case LogTexts::unknown:
-    U3_ASSERT_SOFT (0, "???");
+    ::libs::utility::checks::assert_soft (0, "???");
     return "?od";
   }
   return "?od";
@@ -72,7 +72,7 @@ void
 InfoLogEvent::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-  U3_ASSERT_SOFT (0, "InfoLogEvent::load_json_int:: wtf???");
+  ::libs::utility::checks::assert_soft (0, "InfoLogEvent::load_json_int:: wtf???");
 }
 
 
@@ -80,7 +80,7 @@ void
 InfoLogEvent::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-  U3_ASSERT_SOFT (0, "InfoLogEvent::save_json_int:: wtf???");
+  ::libs::utility::checks::assert_soft (0, "InfoLogEvent::save_json_int:: wtf???");
 }
 
 

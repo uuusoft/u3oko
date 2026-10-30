@@ -25,7 +25,7 @@ void
 SourceImpl::start_int ()
 {
   frame_counter_ = 0;
-  U3_THROW_IFN (v4l2_init_, "not init device, skip restart");
+  ::libs::utility::checks::throw_ifn (v4l2_init_, "not init device, skip restart");
   start_capture ();
 }
 
@@ -105,15 +105,15 @@ SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo > &sources)
       }
       catch (boost::exception &excpt)
       {
-        // U3_LOG_DATA_EXCEPT (boost::diagnostic_information (excpt));
+        U3_LOG_DATA_DBG (boost::diagnostic_information (excpt));
       }
       catch (std::exception &excpt)
       {
-        // U3_LOG_DATA_EXCEPT (excpt.what());
+        U3_LOG_DATA_DBG (excpt.what ());
       }
       catch (...)
       {
-        // U3_LOG_DATA_EXCEPT ("unknown exception v4l2 device");
+        U3_LOG_DATA_DBG ("unknown exception v4l2 device");
       }
     }
   }
@@ -125,7 +125,7 @@ SourceImpl::get_raw_data_int (
   syn::pkeys2bufs_type &bufs,
   syn::tevents_type    *events)
 {
-  U3_ASSERT (events);
+  ::libs::utility::checks::throw_ifn ((bool) events);
   {
     const auto now = std::chrono::high_resolution_clock::now ();
     if (icapture_->is_capture_property_update ())
@@ -190,7 +190,7 @@ SourceImpl::get_raw_data_int (
   }
 
   auto &buf = (*bufs)[::utils::dbufs::video::consts::offs::raw];
-  U3_ASSERT (buf);
+  ::libs::utility::checks::throw_ifn ((bool) buf);
   buf->set_flag (::utils::dbufs::BufFlags::empty, true);
 
   if (v4l2_impl_)

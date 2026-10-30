@@ -10,7 +10,7 @@ namespace utils::dbufs::video::helpers
 inline void
 fill (IVideoBuf::raw_ptr buf, std::uint8_t _val)
 {
-  U3_THROW_IFN (buf, "empty buf for fill");
+  ::libs::utility::checks::throw_ifn (buf, "empty buf for fill");
   if (!buf->get_buf () || !(*buf)[MemVars::size_buf])
   {
     return;
@@ -26,7 +26,7 @@ fill (
   IVideoBuf::raw_ptr                                                                buf,
   const std::function< void (std::uint32_t indxx, std::uint32_t indxy, TPx& val) >& func)
 {
-  U3_THROW_IFN (buf, "empty buf for fill");
+  ::libs::utility::checks::throw_ifn (buf, "empty buf for fill");
   if (!buf->get_buf () || 0 == (*buf)[MemVars::size_buf] || buf->get_flag (BufFlags::empty))
   {
     return;
@@ -52,7 +52,7 @@ fill_buf (
   IVideoBuf::raw_ptr                                          buf,
   const std::function< void (std::uint32_t indx, TPx& val) >& func)
 {
-  U3_THROW_IFN (buf, "empty buf for fill");
+  ::libs::utility::checks::throw_ifn (buf, "empty buf for fill");
   const auto size   = (*buf)[MemVars::size_data];
   auto       begbuf = get_buf_as< TPx* > (buf);
 
@@ -75,10 +75,10 @@ raw_copy (
   IVideoBuf::raw_ptr  buf,
   std::uint32_t       off_dest = 0)
 {
-  U3_THROW_IFN (buf, "empty buf for raw copy");
-  U3_THROW_IFN (rbuf, "empty source for raw copy");
-  U3_THROW_IFN (size, "null for raw copy");
-  U3_THROW_IFN ((*buf)[MemVars::size_buf] >= size + off_dest, "size too small");
+  ::libs::utility::checks::throw_ifn (buf, "empty buf for raw copy");
+  ::libs::utility::checks::throw_ifn (rbuf, "empty source for raw copy");
+  ::libs::utility::checks::throw_ifn (size, "null for raw copy");
+  ::libs::utility::checks::throw_ifn ((*buf)[MemVars::size_buf] >= size + off_dest, "size too small");
 
   buf->set_mem_var (MemVars::size_data, size);
   buf->set_mem_var (MemVars::offset_data, 0);
@@ -92,11 +92,11 @@ copy_video_buf2vector (
   ::utils::dbufs::video::IVideoBuf::raw_ptr buf,
   std::vector< std::uint8_t >&              out)
 {
-  U3_THROW_IFN (buf, "empty source buf for copy to zip buf");
+  ::libs::utility::checks::throw_ifn (buf, "empty source buf for copy to zip buf");
   auto const raw_buf  = buf->get_cbuf ();
   const auto size_buf = (*buf)[utils::dbufs::MemVars::size_data];
-  U3_ASSERT (raw_buf);
-  U3_ASSERT (size_buf);
+  ::libs::utility::checks::throw_ifn (raw_buf);
+  ::libs::utility::checks::throw_ifn (size_buf);
 
   if (!raw_buf || !size_buf)
   {

@@ -12,9 +12,9 @@ auto
 get_events_impl () -> ::libs::events::io::IEvents::raw_ptr
 {
   auto* events = ::libs::iproperties::helpers::cast_prop_demons ()->get_events_lockfree ();
-  U3_THROW_IFN (events, "empty events");
+  ::libs::utility::checks::throw_ifn ((bool) events, "empty events");
   auto* impl = events->impl ();
-  U3_THROW_IFN (impl, "empty events impl");
+  ::libs::utility::checks::throw_ifn (impl, "empty events impl");
   return impl;
 }
 
@@ -24,7 +24,7 @@ get_pure_event_int (const ::libs::events::IEvent::hid_type& eid) -> ::libs::even
 {
   auto* impl = get_events_impl ();
   auto  res  = impl->get (eid);
-  U3_THROW_IFN (res, "get_pure_event_int:" + STOLOG (eid));
+  ::libs::utility::checks::throw_ifn ((bool) res, "get_pure_event_int:" + STOLOG (eid));
   return res;
 }
 
@@ -100,7 +100,7 @@ event2xml (::libs::events::IEvent::ptr& src) -> std::string
 
   auto*       impl = get_events_impl ();
   std::string xml;
-  U3_THROW_IFN (impl->event2xml (src, xml), "event2xml - " + STOLOG (src->get_mid ()));
+  ::libs::utility::checks::throw_ifn (impl->event2xml (src, xml), "event2xml - " + STOLOG (src->get_mid ()));
   return xml;
 }
 
@@ -125,7 +125,7 @@ void
 event2bin (::libs::events::IEvent::ptr& src, std::ostream& bin)
 {
   auto* impl = get_events_impl ();
-  U3_THROW_IFN (impl->event2bin (src, bin), "event2bin - " + STOLOG (src->get_mid ()));
+  ::libs::utility::checks::throw_ifn (impl->event2bin (src, bin), "event2bin - " + STOLOG (src->get_mid ()));
 }
 
 
@@ -140,7 +140,7 @@ bin2event (std::istream& bin, ::libs::events::IEvent::ptr& dst) -> bool
 auto
 clone_event (const ::libs::events::IEvent::craw_ptr event, const ::libs::events::Deeps& type) -> ::libs::events::IEvent::ptr
 {
-  U3_ASSERT (event);
+  ::libs::utility::checks::throw_ifn ((bool) event);
   auto* impl = get_events_impl ();
   return impl->clone (event, type);
 }

@@ -48,7 +48,7 @@ class IBlockMem
   get_capacity () const
   {
     auto ret = get_capacity_int ();
-    U3_TEST (ret <= consts::max_memory_block_size, "unusual memory block size" + VTOLOG (ret) + VTOLOG (consts::max_memory_block_size));
+    ::libs::utility::checks::test (ret <= consts::max_memory_block_size, "unusual memory block size" + VTOLOG (ret) + VTOLOG (consts::max_memory_block_size));
     return ret;
   }
 
@@ -56,14 +56,14 @@ class IBlockMem
   get_size () const
   {
     const auto ret = get_size_int ();
-    U3_THROW_IFN (ret <= get_capacity_int (), "invalid state memory" + VTOLOG (get_capacity_int ()) + VTOLOG (ret));
+    ::libs::utility::checks::throw_ifn (ret <= get_capacity_int (), "invalid state memory" + VTOLOG (get_capacity_int ()) + VTOLOG (ret));
     return ret;
   }
 
   void
   set_size (const size_type& size)
   {
-    U3_THROW_IFN (size <= get_capacity_int (), "capacity too small" + VTOLOG (get_capacity_int ()) + VTOLOG (size));
+    ::libs::utility::checks::throw_ifn (size <= get_capacity_int (), "capacity too small" + VTOLOG (get_capacity_int ()) + VTOLOG (size));
     set_size_int (size);
   }
 
@@ -71,7 +71,7 @@ class IBlockMem
   resize (const size_type& size)
   {
     resize_int (size);
-    U3_THROW_IFN (get_capacity () >= size, "resize failed");
+    ::libs::utility::checks::throw_ifn (get_capacity () >= size, "resize failed");
   }
 
   protected:

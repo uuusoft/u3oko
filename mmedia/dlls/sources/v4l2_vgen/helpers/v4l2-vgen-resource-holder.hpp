@@ -36,8 +36,7 @@ class ResourceHolder final
 
     try
     {
-      camera_status_t res = ACAMERA_OK;
-      U3_THROW_IFN_AVGEN (free_func (resource_));
+      camera_status_t res = helpers::checks::throw_ifn_camera (free_func (resource_));
     }
     catch (const std::exception& excpt)
     {
@@ -77,7 +76,7 @@ class ResourceHolder final
   ResourceTType*
   operator->()
   {
-    U3_THROW_IFN (resource_, "operator->");
+    ::libs::utility::checks::throw_ifn (resource_, "try null resource over operator->");
     return resource_;
   }
 
@@ -85,7 +84,7 @@ class ResourceHolder final
   ResourceTType*
   operator* ()
   {
-    U3_THROW_IFN (resource_, "operator*");
+    ::libs::utility::checks::throw_ifn (resource_, "try null resource over operator*");
     return resource_;
   }
 

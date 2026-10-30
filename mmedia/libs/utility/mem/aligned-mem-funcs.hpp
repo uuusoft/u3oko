@@ -39,11 +39,11 @@ template< typename TType >
 inline constexpr void
 align2 (TType& val, bool expand = true)
 {
-  U3_ASSERT (sizeof (TType) <= sizeof (std::size_t));
+  ::libs::utility::checks::throw_ifn (sizeof (TType) <= sizeof (std::size_t));
   if (!check_align2 (val))
   {
     val = ::libs::utility::casts::static_cast_helper< TType > ((U3_CAST_SIZE_T (val) + (expand ? 7 : 0)) & consts::align_ptr2);
-    U3_ASSERT (check_align2 (val));
+    ::libs::utility::checks::throw_ifn (check_align2 (val));
   }
 }
 
@@ -80,11 +80,11 @@ template< typename TType >
 inline constexpr void
 align8 (TType& val, bool expand = true)
 {
-  U3_ASSERT (sizeof (TType) <= sizeof (std::size_t));
+  ::libs::utility::checks::throw_ifn (sizeof (TType) <= sizeof (std::size_t));
   if (!check_align8 (val))
   {
     val = ::libs::utility::casts::static_cast_helper< TType > ((U3_CAST_SIZE_T (val) + (expand ? 7 : 0)) & consts::align_ptr8);
-    U3_ASSERT (check_align8 (val));
+    ::libs::utility::checks::throw_ifn (check_align8 (val));
   }
 }
 
@@ -121,11 +121,11 @@ template< typename TType >
 inline constexpr void
 align16 (TType& val, bool expand = true)
 {
-  U3_ASSERT (sizeof (TType) <= sizeof (std::size_t));
+  ::libs::utility::checks::throw_ifn (sizeof (TType) <= sizeof (std::size_t));
   if (!check_align16 (val))
   {
     val = ::libs::utility::casts::static_cast_helper< TType > ((U3_CAST_SIZE_T (val) + (expand ? 15 : 0)) & consts::align_ptr16);
-    U3_ASSERT (check_align16 (val));
+    ::libs::utility::checks::throw_ifn (check_align16 (val));
   }
 }
 
@@ -162,11 +162,11 @@ template< typename TType >
 inline constexpr void
 align32 (TType& val, bool expand = true)
 {
-  U3_ASSERT (sizeof (TType) <= sizeof (std::size_t));
+  ::libs::utility::checks::throw_ifn (sizeof (TType) <= sizeof (std::size_t));
   if (!check_align32 (val))
   {
     val = ::libs::utility::casts::static_cast_helper< TType > ((U3_CAST_SIZE_T (val) + (expand ? 31 : 0)) & consts::align_ptr32);
-    U3_ASSERT (check_align32 (val));
+    ::libs::utility::checks::throw_ifn (check_align32 (val));
   }
 }
 
@@ -203,11 +203,11 @@ template< typename TType >
 inline constexpr void
 align64 (TType& val, bool expand = true)
 {
-  U3_ASSERT (sizeof (TType) <= sizeof (std::size_t));
+  ::libs::utility::checks::throw_ifn (sizeof (TType) <= sizeof (std::size_t));
   if (!check_align64 (val))
   {
     val = ::libs::utility::casts::static_cast_helper< TType > ((U3_CAST_SIZE_T (val) + (expand ? 63 : 0)) & consts::align_ptr64);
-    U3_ASSERT (check_align64 (val));
+    ::libs::utility::checks::throw_ifn (check_align64 (val));
   }
 }
 
@@ -249,7 +249,7 @@ align_value (const TType& val, const TType& align, const bool expand = true)
     align64< TType > (ret, expand);
     break;
   default:
-    U3_ASSERT_THROW ("invalid align" + VTOLOG (align));
+    ::libs::utility::checks::throw_exception ("invalid align" + VTOLOG (align));
     break;
   }
   return ret;

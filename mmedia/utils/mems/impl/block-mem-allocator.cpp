@@ -115,7 +115,7 @@ BlockMemAllocator::alloc (const size_type& size) -> syn::IBlockMem::ptr
 
   const std::size_t real_size = std::max< size_type > (size, consts::min_size_block);
   blocks_.emplace_back (std::make_shared< BlockMem > (real_size));
-  U3_ASSERT (blocks_.size () < consts::max_count_block);
+  ::libs::utility::checks::throw_ifn (blocks_.size () < consts::max_count_block);
   return blocks_.back ();
 }
 

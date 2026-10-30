@@ -37,7 +37,7 @@ DiffImpl::set_transform_info (syn::TransformInfo* tranform_info)
 void
 DiffImpl::itransform (const syn::NodeID& id_node, ::libs::bufs::Bufs& pbufs)
 {
-  U3_ASSERT (props_);
+  ::libs::utility::checks::throw_ifn (props_);
   auto ibuf = ::libs::iproperties::helpers::cast_prop_demons ()->get_bufs_lockfree ()->impl ();
 
   for (const syn::VideoDiffProp::buf2info_type& b2b : props_->diffs_)

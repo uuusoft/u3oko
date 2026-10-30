@@ -20,7 +20,7 @@ void
 StorageModule::init_proxys_int ()
 {
   super::init_proxys_int ();
-  U3_THROW_IFN (::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree (), "alloc mem proxy");
+  ::libs::utility::checks::throw_ifn (::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree (), "alloc mem proxy");
 }
 
 
@@ -129,7 +129,7 @@ StorageModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       process_change_state_process (props);
       return {};
     }
@@ -140,7 +140,7 @@ StorageModule::update_catch_funcs_int ()
     [] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
-      U3_ASSERT_THROW ("unimplemented");
+      ::libs::utility::checks::throw_exception ("unimplemented");
       U3_MARK_UNUSED auto* props = ::libs::iproperties::helpers::cast_event< syn::MemResourceStorageEvent > (msg);
       return {};
     }
@@ -152,7 +152,7 @@ StorageModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::GetRuntimeInfo > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       process_get_runtime_info (props);
       return {};
     }
@@ -164,7 +164,7 @@ StorageModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::GetObjects > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       indexer_impl_->get_objects (props->objs_);
       return {};
     }
@@ -175,9 +175,9 @@ StorageModule::update_catch_funcs_int ()
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
     {
-      U3_ASSERT_THROW ("unimplemented");
+      ::libs::utility::checks::throw_exception ("unimplemented");
       auto* props = ::libs::iproperties::helpers::cast_event< syn::GetStatisticInfo > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       process_get_statistic_info (props);
       return {};
     }
@@ -200,7 +200,7 @@ StorageModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::WriteData > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       U3_LOG_STORAGE_DBG ("write data");
       // debug - stop write
       // process_write_data (props);
@@ -214,7 +214,7 @@ StorageModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::UpdateStream > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       process_update_stream (props);
       return {};
     }

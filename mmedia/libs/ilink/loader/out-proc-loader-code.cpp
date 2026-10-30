@@ -24,7 +24,7 @@ OutProcLoaderCode::load_int (
 // const args_type&       args)
 {
   info_ = info;
-  U3_ASSERT_THROW ("process");
+  ::libs::utility::checks::throw_exception ("process");
 
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   if (!child_process_)
@@ -40,7 +40,7 @@ OutProcLoaderCode::load_int (
 auto
 OutProcLoaderCode::is_load_int () const -> bool
 {
-  U3_ASSERT_THROW ("process");
+  ::libs::utility::checks::throw_exception ("process");
   return false;
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   // return child_process_ && *child_process_ ? true : false;
@@ -52,17 +52,17 @@ OutProcLoaderCode::is_load_int () const -> bool
 auto
 OutProcLoaderCode::unload_int (bool force) -> bool
 {
-  U3_ASSERT_THROW ("process");
+  ::libs::utility::checks::throw_exception ("process");
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   if (child_process_)
   {
     if (force)
     {
-      U3_ASSERT_THROW ("process");
+      ::libs::utility::checks::throw_exception ("process");
       // child_process_->terminate (false );
     }
 
-    U3_ASSERT_THROW ("process");
+    ::libs::utility::checks::throw_exception ("process");
     // child_process_->wait ();
     child_process_.reset ();
   }
@@ -74,7 +74,7 @@ OutProcLoaderCode::unload_int (bool force) -> bool
 void
 OutProcLoaderCode::set_name_lib (const std::string& name_lib)
 {
-  U3_ASSERT (!name_lib.empty ());
+  ::libs::utility::checks::throw_ifn (!name_lib.empty ());
   lib_name_ = name_lib;
 }
 }   // namespace libs::ilink::loader

@@ -79,7 +79,7 @@ text2grad_type (const std::string& text) -> Gradients
 void
 GradientProp::load_layer_from_xml (const ::pugi::xml_named_node_iterator& node, ChannelGradient* prop)
 {
-  U3_ASSERT (prop);
+  ::libs::utility::checks::throw_ifn (prop);
 
   ::pugi::xml_object_range< ::pugi::xml_named_node_iterator > params = node->children ("param");
   ::pugi::xml_named_node_iterator                             param  = params.begin ();

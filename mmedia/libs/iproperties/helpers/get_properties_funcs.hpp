@@ -12,9 +12,9 @@ inline auto
 get_storage () -> ::libs::properties::ISharedPropertyStorage::raw_ptr
 {
   auto proxy = ::libs::iproperties::SharedPropertyStorageProxy::instance ();
-  U3_ASSERT (proxy);
+  ::libs::utility::checks::throw_ifn (proxy);
   auto impl = proxy->impl ();
-  U3_ASSERT (impl);
+  ::libs::utility::checks::throw_ifn ((bool) impl);
   return impl;
 }
 
@@ -35,10 +35,10 @@ inline auto
 get_prop (const std::string& id) -> ::libs::properties::ISharedProperty::raw_ptr
 {
   auto storage = get_storage ();
-  U3_ASSERT (!id.empty ());
-  U3_ASSERT (storage);
+  ::libs::utility::checks::throw_ifn (!id.empty ());
+  ::libs::utility::checks::throw_ifn (storage);
   auto ret = storage->get (id.c_str ());
-  U3_ASSERT (ret);
+  ::libs::utility::checks::throw_ifn (ret);
   return ret;
 }
 
@@ -47,9 +47,9 @@ inline auto
 get_shared_prop_os () -> vers::system::ISystemProperty::raw_ptr
 {
   auto rprop = get_prop (::libs::properties::consts::keys::shared_os_property);
-  U3_ASSERT (rprop);
+  ::libs::utility::checks::throw_ifn (rprop);
   void* ret = rprop->cast2top ();
-  U3_ASSERT (ret);
+  ::libs::utility::checks::throw_ifn (ret);
   return ::libs::utility::casts::reinterpret_cast_helper< vers::system::ISystemProperty::raw_ptr > (ret);
 }
 
@@ -58,9 +58,9 @@ inline auto
 get_spec_prop_os () -> void*
 {
   ::libs::properties::ISharedProperty::raw_ptr rprop = get_prop (::libs::properties::consts::keys::specific_os_property);
-  U3_ASSERT (rprop);
+  ::libs::utility::checks::throw_ifn (rprop);
   void* ret = rprop->cast2top ();
-  U3_ASSERT (ret);
+  ::libs::utility::checks::throw_ifn (ret);
   return ret;
 }
 
@@ -73,7 +73,7 @@ check_prop_links () -> bool
     return false;
   }
   ::libs::properties::ISharedProperty::raw_ptr rprop = get_prop (::libs::properties::consts::keys::links_property);
-  U3_ASSERT (rprop);
+  ::libs::utility::checks::throw_ifn (rprop);
   void* ret = rprop->cast2top ();
   return ret ? true : false;
 }
@@ -83,9 +83,9 @@ inline auto
 get_prop_links () -> ::libs::properties::vers::links::ILinksProperty::raw_ptr
 {
   auto rprop = get_prop (::libs::properties::consts::keys::links_property);
-  U3_ASSERT (rprop);
+  ::libs::utility::checks::throw_ifn (rprop);
   void* ret = rprop->cast2top ();
-  U3_ASSERT (ret);
+  ::libs::utility::checks::throw_ifn (ret);
   return ::libs::utility::casts::reinterpret_cast_helper< ::libs::properties::vers::links::ILinksProperty::raw_ptr > (ret);
 }
 
@@ -94,9 +94,9 @@ inline auto
 get_prop_demons () -> void*
 {
   ::libs::properties::ISharedProperty::raw_ptr rprop = get_prop (::libs::properties::consts::keys::demons_property);
-  U3_ASSERT (rprop);
+  ::libs::utility::checks::throw_ifn (rprop);
   void* ret = rprop->cast2top ();
-  U3_ASSERT (ret);
+  ::libs::utility::checks::throw_ifn (ret);
   return ret;
 }
 
@@ -106,8 +106,8 @@ cast_prop_demons () -> ::libs::iproperties::vers::demon::IDemonsProperty::raw_pt
 {
   auto  demon_prop = ::libs::iproperties::helpers::get_prop_demons ();
   auto* ret        = ::libs::utility::casts::reinterpret_cast_helper< ::libs::iproperties::vers::demon::IDemonsProperty::raw_ptr > (demon_prop);
-  U3_ASSERT (demon_prop);
-  U3_ASSERT (ret);
+  ::libs::utility::checks::throw_ifn (demon_prop);
+  ::libs::utility::checks::throw_ifn (ret);
   return ret;
 }
 }   // namespace libs::iproperties::helpers

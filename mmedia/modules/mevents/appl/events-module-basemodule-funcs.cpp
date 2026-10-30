@@ -3,7 +3,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 */
-#define U3_DBG_LOG_LEVEL_ENABLE
+// #define U3_DBG_LOG_LEVEL_ENABLE
 #include "../module-events-includes_int.hpp"
 // #include "consts/module-events-const-vals.hpp"
 #include "events-module-syn.hpp"
@@ -25,7 +25,7 @@ EventsModule::init_proxys_int ()
 {
   U3_CALL_TRACE_DBG;
   super::init_proxys_int ();
-  U3_THROW_IFN (::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree (), "create block mem allocator");
+  ::libs::utility::checks::throw_ifn (::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree (), "create block mem allocator");
 }
 
 
@@ -117,7 +117,7 @@ EventsModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::ChangeStateProcessEvent > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       process_change_state_process (msg, props);
       return {};
     }
@@ -140,7 +140,7 @@ EventsModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::AddEvent2EventsMsg > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       impl_->add_event2base (msg, props);
       return {};
     }
@@ -153,7 +153,7 @@ EventsModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::GetDataGraphsEventsMsg > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       impl_->get_data_graphs (msg, props);
       return {};
     }
@@ -166,7 +166,7 @@ EventsModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::UpdateListenerEventsMsg > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       process_update_listener (msg, props);
       return {};
     }
@@ -179,7 +179,7 @@ EventsModule::update_catch_funcs_int ()
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::GetEventsFromBase > (msg);
-      U3_ASSERT (props);
+      ::libs::utility::checks::throw_ifn (props);
       impl_->get_events_from_base (msg, props);
       return {};
     }

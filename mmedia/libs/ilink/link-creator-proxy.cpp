@@ -46,11 +46,11 @@ LinkCreatorProxy::LinkCreatorProxy () :
     }
     else if ("rabbitmq" == implname)
     {
-      U3_ASSERT_THROW ("not implementated" + VTOLOG (issingle) + TOLOG (implname));
+      ::libs::utility::checks::throw_exception ("not implementated" + VTOLOG (issingle) + TOLOG (implname));
       return;
     }
   }
-  U3_ASSERT_THROW ("unknown impl name for process" + VTOLOG (issingle) + TOLOG (implname));
+  ::libs::utility::checks::throw_exception ("unknown impl name for process" + VTOLOG (issingle) + TOLOG (implname));
 }
 
 
@@ -59,7 +59,7 @@ LinkCreatorProxy::~LinkCreatorProxy ()
   U3_CALL_TRACE_DBG;
   if (pimpl_)
   {
-    U3_ASSERT_SOFT (pshm_, "empty shared memory object for LinkCreatorProxy");
+    ::libs::utility::checks::assert_soft ((bool) pshm_, "empty shared memory object for LinkCreatorProxy");
     if (pshm_)
     {
       pshm_->destroy< ::libs::link::ILinkCreator::ptr > (obj_id_.c_str ());

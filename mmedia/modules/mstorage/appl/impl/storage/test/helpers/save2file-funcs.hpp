@@ -10,7 +10,7 @@ namespace modules::mstorage::appl::impl::storage::test::helpers
 inline std::string
 get_seance_folder (const std::string& root_path, const TestStorageImpl::info_seance_type& info)
 {
-  U3_ASSERT (!root_path.empty ());
+  ::libs::utility::checks::throw_ifn (!root_path.empty ());
   auto ret = ::libs::utility::files::make_path (root_path, info.state_.id_);
   ::libs::utility::files::create_folder (ret);
   return ret;
@@ -21,7 +21,7 @@ template< typename ObjType >
 bool
 save_obj (const ObjType& obj, const std::string& path2file)
 {
-  U3_ASSERT (!path2file.empty ());
+  ::libs::utility::checks::throw_ifn (!path2file.empty ());
   std::ofstream file (path2file, std::ios::binary | std::ios::trunc);
 
   if (!file.is_open ())
@@ -36,7 +36,7 @@ save_obj (const ObjType& obj, const std::string& path2file)
     boost::archive::xml_oarchive xmla (file, boost::archive::no_header);
     xmla&                        BOOST_SERIALIZATION_NVP (obj);
 #else
-    U3_ASSERT (0);
+    ::libs::utility::checks::throw_ifn (0);
 #endif
   }
   catch (std::exception& excpt)

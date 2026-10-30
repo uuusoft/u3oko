@@ -6,15 +6,11 @@
 */
 #if defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI)
 
-// #  include "PipeWireModule/PipeWireStream.hpp"
-#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
-#    include "PortalModule/xdg-desktop-portal.hpp"
-#  endif
+#  include "PipeWireModule/PipeWireStream.hpp"
+#  include "PortalModule/xdg-desktop-portal.hpp"
 // #include "FFMPEGModule/FFmpegOutput.hpp"
 // #include "GStreamerModule/GstOutput.hpp"
-#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
-#    include "c_common.h"
-#  endif
+// #    include "c_common.h"
 #  include <cstdio>
 #  include <unistd.h>
 #  include <signal.h>
@@ -26,24 +22,23 @@ namespace dlls::sources::desk_vgen::impls::linux::wl
 class CaptureDeskImplLinux : public ::dlls::sources::desk_vgen::ICaptureDeskImpl
 {
   public:
+  using share_info_type = std::optional< portal::SharedScreen >;
+
   CaptureDeskImplLinux ();
   virtual ~CaptureDeskImplLinux ();
 
+  // EAI-REFACT
+  auto thread_func_impl (std::uint32_t indx_thread) -> void;
+  auto thread_postfunc_impl (std::uint32_t indx_thread) -> void;
+
   private:
   // ICaptureDeskImpl
-  virtual void get_buf_int (const syn::SourceImplInfo&, CaptureDeskInfo&) override;
+  virtual auto get_buf_int (const syn::SourceImplInfo&, CaptureDeskInfo&) -> void override;
 
-  void thread_func ();
-
-#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
-  std::optional< portal::SharedScreen > share_info_;   //<
-#  endif
-
-  std::thread work_thread_;   //<
-  // auto pwStream_ = pw::PipeWireStream(shareInfo.value(), true);
-  //  xlib_display_type display_;   //<
-  //  Screen*           screen_;    //<
-  //  Window            root_;      //<
+  share_info_type  share_info_;       //<
+  std::thread      work_thread_;      //<
+  std::atomic_bool stop_ { false };   //<
 };
 }   // namespace dlls::sources::desk_vgen::impls::linux::wl
+
 #endif

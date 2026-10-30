@@ -23,7 +23,7 @@ check_source (const std::string& val) -> bool
 auto
 to_json_string (const std::string& val) -> std::string
 {
-  U3_ASSERT (check_source (val));
+  ::libs::utility::checks::throw_ifn (check_source (val));
   std::string temp (val);
 
   std::ranges::transform (

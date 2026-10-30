@@ -61,7 +61,7 @@ class CRgb2LAlg2 final : public IOptimAlg
       break;
 #endif
     default:
-      U3_MARK ("failed");
+      ::libs::utility::checks::mark ("failed");
       sel_.set (::libs::optim::s16bit::convert::l_vs_rgb2::rgb24_to_l_alu);
       break;
     }

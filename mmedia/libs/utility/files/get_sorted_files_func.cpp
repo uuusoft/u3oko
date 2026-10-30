@@ -12,7 +12,7 @@ namespace libs::utility::files
 auto
 get_sort_by_time_folders (const std::string& path2sessions) -> std::vector< std::string >
 {
-  U3_ASSERT (!path2sessions.empty ());
+  ::libs::utility::checks::throw_ifn (!path2sessions.empty ());
 
   ::libs::utility::files::NodeEnumFiles enum_files;
 
@@ -34,8 +34,8 @@ get_sort_by_time_folders (const std::string& path2sessions) -> std::vector< std:
     const std::size_t           time = ::boost::filesystem::creation_time (path, error);
     // const std::size_t           time = ::boost::filesystem::last_write_time (path, error);
 
-    U3_ASSERT_SOFT (!error, error.to_string ());
-    U3_ASSERT_SOFT (time, VTOLOG (time));
+    ::libs::utility::checks::assert_soft (!error, error.to_string ());
+    ::libs::utility::checks::assert_soft (time, VTOLOG (time));
 
     sort_files.insert ({ time, file.name_ });
   }
@@ -55,7 +55,7 @@ get_sort_by_time_folders (const std::string& path2sessions) -> std::vector< std:
 auto
 get_sort_by_time_files (const std::string& path2session) -> std::vector< std::string >
 {
-  U3_ASSERT (!path2session.empty ());
+  ::libs::utility::checks::throw_ifn (!path2session.empty ());
 
   ::libs::utility::files::NodeEnumFiles enum_files;
   std::vector< std::string >            ret;
@@ -74,9 +74,9 @@ get_sort_by_time_files (const std::string& path2session) -> std::vector< std::st
     ::boost::system::error_code error;
     const std::size_t           time = ::boost::filesystem::last_write_time (path, error);
 
-    U3_ASSERT (!error);
-    U3_ASSERT (sort_files.end () == sort_files.find (time));
-    U3_ASSERT (time);
+    ::libs::utility::checks::throw_ifn (!error);
+    ::libs::utility::checks::throw_ifn (sort_files.end () == sort_files.find (time));
+    ::libs::utility::checks::throw_ifn (time);
 
     sort_files[time] = file.name_;
   }

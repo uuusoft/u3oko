@@ -12,7 +12,7 @@ namespace utils::dbufs::video::helpers
 inline void
 reset_edges (IVideoBuf::raw_ptr buf)
 {
-  U3_THROW_IFN (buf, "empty buf for reset edges");
+  ::libs::utility::checks::throw_ifn (buf, "empty buf for reset edges");
 
   if (buf->get_flag (::utils::dbufs::BufFlags::empty))
   {
@@ -28,7 +28,7 @@ reset_edges (IVideoBuf::raw_ptr buf)
   }
 
   const auto off_leak = (*buf)[MemVars::offset_data] + (*buf)[MemVars::size_data];
-  U3_THROW_IFN ((*buf)[utils::dbufs::MemVars::size_buf] >= off_leak, "off leak negative");
+  ::libs::utility::checks::throw_ifn ((*buf)[utils::dbufs::MemVars::size_buf] >= off_leak, "off leak negative");
 
   //  заполняем начало.
   ::libs::utility::mem::set_buf< std::uint8_t > (buf->get_buf (), 0, (*buf)[MemVars::offset_data]);

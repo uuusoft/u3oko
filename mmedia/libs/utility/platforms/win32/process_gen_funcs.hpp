@@ -13,8 +13,8 @@ add_process_privilage ()
 {
   HANDLE htk = 0;
 
-  U3_THROW_IFN (OpenProcessToken (GetCurrentProcess (), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &htk), "open process token");
-  U3_ASSERT (htk);
+  ::libs::utility::checks::throw_ifn (OpenProcessToken (GetCurrentProcess (), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &htk), "open process token");
+  ::libs::utility::checks::throw_ifn (htk);
 
   bool         res        = true;
   const TCHAR* text_ids[] = {
@@ -31,7 +31,7 @@ add_process_privilage ()
 
     if (!LookupPrivilegeValue (0, text_ids[indx1], &tkp.Privileges[0].Luid))
     {
-      U3_ASSERT_THROW ("failed");
+      ::libs::utility::checks::throw_exception ("failed");
       res = false;
       continue;
     }
@@ -41,7 +41,7 @@ add_process_privilage ()
 
     if (!AdjustTokenPrivileges (htk, false, &tkp, 0, ::libs::utility::casts::reinterpret_cast_helper< PTOKEN_PRIVILEGES > (0), 0))
     {
-      U3_ASSERT_THROW ("failed");
+      ::libs::utility::checks::throw_exception ("failed");
       res = false;
       continue;
     }
@@ -49,6 +49,6 @@ add_process_privilage ()
 
   CloseHandle (htk);
   htk = 0;
-  U3_THROW_IFN_WIN32_STATE (res, "CloseHandle");
+  ::libs::utility::checks::throw_ifn_WIN32_STATE (res, "CloseHandle");
 }
 }   // namespace libs::utility::platforms::win32

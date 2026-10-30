@@ -23,9 +23,9 @@ IEventsProxy::instance (const std::string& dll_path) -> IEventsProxy::raw_ptr
 auto
 IEventsProxy::impl () -> ::libs::events::io::IEvents::raw_ptr
 {
-  U3_ASSERT (creator_);
+  ::libs::utility::checks::throw_ifn ((bool) creator_);
   ::libs::events::io::IEvents::raw_ptr ret = creator_ ();
-  U3_ASSERT (ret);
+  ::libs::utility::checks::throw_ifn (ret);
   return ret;
 }
 
@@ -41,6 +41,6 @@ IEventsProxy::IEventsProxy (const std::string& dll_path)
   lib_.load (cpath, boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
   creator_ = ::boost::dll::import_symbol< create_func_type > (lib_, "create_impl_vdd_devents");
 #endif
-  U3_ASSERT (creator_);
+  ::libs::utility::checks::throw_ifn ((bool) creator_);
 }
 }   // namespace libs::proxy

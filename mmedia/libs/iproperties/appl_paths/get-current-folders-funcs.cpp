@@ -15,7 +15,7 @@ get_current_folder () -> std::string
   auto*                           orinfo = iproperties::helpers::get_shared_prop_os ();
   syn::ISharedProperty::lock_type lock (orinfo->get_sync ());
   const std::string               ret = orinfo->get_appl_path_lockfree ();
-  U3_ASSERT (!ret.empty ());
+  ::libs::utility::checks::throw_ifn (!ret.empty ());
   return ret;
 }
 

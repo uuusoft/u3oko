@@ -14,8 +14,8 @@ split_height (
   std::uint32_t       height,
   std::uint32_t&      ret)
 {
-  U3_ASSERT (max_block > 0);
-  U3_ASSERT (((height % align_block) == 0));
+  ::libs::utility::checks::throw_ifn (max_block > 0);
+  ::libs::utility::checks::throw_ifn (((height % align_block) == 0));
 
   const std::uint32_t aligned_height = ::libs::utility::mem::align_value (height, align_block, true);
   const std::uint32_t aligned_blocks = aligned_height / align_block;

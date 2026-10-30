@@ -75,7 +75,7 @@ void
 Filter::thread_func_impl (std::uint32_t indx_thread)
 {
 #ifdef U3_OS_WIN32_DESKTOP
-  U3_THROW_IFN (SUCCEEDED (CoInitializeEx (0, COINIT_MULTITHREADED)), "CoInitializeEx");   //  данная подсистема (COM) нужна, пока я использую DirectShow источники данных в адресном пространстве процесса под Win32
+  ::libs::utility::checks::throw_ifn (SUCCEEDED (CoInitializeEx (0, COINIT_MULTITHREADED)), "CoInitializeEx");   //  данная подсистема (COM) нужна, пока я использую DirectShow источники данных в адресном пространстве процесса под Win32
 #endif
 
   bool frame_loaded = true;

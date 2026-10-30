@@ -16,7 +16,7 @@ dump_buf2file (const ::utils::dbufs::video::IVideoBuf::raw_ptr out_buf, const st
     return;
   }
 
-  U3_ASSERT (!name_file.empty ());
+  ::libs::utility::checks::throw_ifn (!name_file.empty ());
   std::ofstream file (name_file.c_str (), std::ios_base::binary | std::ios_base::out | std::ios_base::trunc);
   if (!file.is_open ())
   {

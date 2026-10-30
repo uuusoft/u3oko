@@ -15,7 +15,7 @@ load_file2mem (
   const std::string&                    file_path,
   ::libs::utility::mem::IBlockMem::ptr& ret) -> bool
 {
-  U3_ASSERT (!file_path.empty ());
+  ::libs::utility::checks::throw_ifn (!file_path.empty ());
   ret.reset ();
 
   std::ifstream file (file_path, std::ios::binary | std::ios::in);
@@ -57,7 +57,7 @@ save_mem2file (
   const ::libs::utility::mem::IBlockMem::ptr& buf) -> bool
 {
   std::ofstream file (file_path, std::ios::binary | std::ios::out | std::ios::ate);
-  U3_ASSERT (!file_path.empty ());
+  ::libs::utility::checks::throw_ifn (!file_path.empty ());
 
   if (!file.is_open ())
   {
@@ -73,7 +73,7 @@ save_mem2file (
 auto
 is_file_exist (const std::string& file_path) -> bool
 {
-  U3_ASSERT (!file_path.empty ());
+  ::libs::utility::checks::throw_ifn (!file_path.empty ());
   std::error_code error;
   return std::filesystem::exists (file_path, error);
 }
@@ -82,7 +82,7 @@ is_file_exist (const std::string& file_path) -> bool
 auto
 get_file_size (const std::string& path2file) -> std::size_t
 {
-  U3_ASSERT (!path2file.empty ());
+  ::libs::utility::checks::throw_ifn (!path2file.empty ());
   std::ifstream file (path2file, std::ios::binary | std::ios::in | std::ios::ate);
 
   if (!file.is_open ())

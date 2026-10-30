@@ -27,7 +27,7 @@ struct ProcessAlgInfo final {
   {
     if (!buf_ || !sbuf_ || !pfinfo_ || !impl_info_)
     {
-      U3_MARK ("failed");
+      ::libs::utility::checks::mark ("failed");
       return false;
     }
 

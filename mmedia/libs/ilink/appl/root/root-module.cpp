@@ -19,7 +19,7 @@ RootModule::RootModule () :
 auto
 RootModule::get_dest_link (syn::IEvent::ptr& msg) -> ::libs::link::ILink::ptr
 {
-  U3_ASSERT (!current_seq_.dest_);
+  ::libs::utility::checks::throw_ifn (!current_seq_.dest_);
   //  Самые частые сообщения к основному модулю, т.к. фактически через него общаются друг с другом все другие модули.
   if (::libs::iproperties::helpers::cast_event< ::libs::events_media::events::BaseDataEvent > (msg))
   {

@@ -13,7 +13,7 @@ namespace dlls::codecs::dct
 void
 FDCTransform8x8SSE (std::int16_t* codec_block)
 {
-  U3_ASSERT_THROW ("failed");
+  ::libs::utility::checks::throw_exception ("failed");
   return FDCTransform8x8MMX (codec_block);
 }
 
@@ -21,7 +21,7 @@ FDCTransform8x8SSE (std::int16_t* codec_block)
 void
 IDCTransform8x8SSE (std::int16_t* codec_block)
 {
-  U3_ASSERT_THROW ("failed");
+  ::libs::utility::checks::throw_exception ("failed");
   return IDCTransform8x8MMX (codec_block);
 }
 }   // namespace dlls::codecs::dct

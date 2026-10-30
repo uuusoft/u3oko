@@ -71,7 +71,7 @@ MjpegImpl::code_int (
   const syn::IVideoBuf::craw_ptr hbuf = (*src)[utils::dbufs::video::consts::offs::hue];
   const syn::IVideoBuf::craw_ptr sbuf = (*src)[utils::dbufs::video::consts::offs::sat];
   const syn::IVideoBuf::craw_ptr lbuf = (*src)[props_.bufs_.indx_sbuf_];
-  U3_ASSERT (lbuf);
+  ::libs::utility::checks::throw_ifn (lbuf);
 
   const auto lbuf_width  = lbuf->get_dim_var (::utils::dbufs::video::Dims::width);
   const auto lbuf_height = lbuf->get_dim_var (::utils::dbufs::video::Dims::height);
@@ -112,7 +112,7 @@ MjpegImpl::code_int (
 
     U3_LOG_DATA_DBG ("MjpegImpl::code_int: call fhsl_to_rgb24");
     pthreads_->mthreads_call (*id_node_graph_, tfunc, cinfo, transinfo_->exptimes_, 0);
-    U3_ASSERT (stride_rgb24 == U3_CAST_INT32 (stride_temp_buf));
+    ::libs::utility::checks::throw_ifn (stride_rgb24 == U3_CAST_INT32 (stride_temp_buf));
   }
   else
   {
@@ -134,7 +134,7 @@ MjpegImpl::code_int (
   }
 
   const bool ret = comp_iframe (use_color, tout_buf, out_size);
-  U3_ASSERT (out_size > 0);
+  ::libs::utility::checks::throw_ifn (out_size > 0);
   obuf->set_mem_var (::utils::dbufs::MemVars::size_data, out_size);
   return ret;
 }

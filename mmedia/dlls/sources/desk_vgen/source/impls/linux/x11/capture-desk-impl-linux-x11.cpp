@@ -31,13 +31,13 @@ CaptureDeskImplLinux::get_buf_int (
 
   xlib_display_type display (XOpenDisplay (":0"));
   // Display* display = XOpenDisplay (":0");
-  U3_THROW_IFN (display, "XOpenDisplay");
+  ::libs::utility::checks::throw_ifn (display, "XOpenDisplay");
   Window root = DefaultRootWindow (*display);
-  U3_THROW_IFN (root, "DefaultRootWindow");
+  ::libs::utility::checks::throw_ifn (root, "DefaultRootWindow");
 
   XWindowAttributes attrs;   // = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
   memset (&attrs, 0, sizeof (attrs));
-  U3_THROW_IFN (XGetWindowAttributes (*display, root, &attrs), "XGetWindowAttributes");
+  ::libs::utility::checks::throw_ifn (XGetWindowAttributes (*display, root, &attrs), "XGetWindowAttributes");
   U3_LOG_DATA_DBG (VTOLOG (attrs.width) + VTOLOG (attrs.height) + VTOLOG (attrs.border_width) + VTOLOG (attrs.x) + VTOLOG (attrs.y) + VTOLOG (attrs.depth));
   U3_LOG_DATA_DBG (PTR_TOLOG (attrs.visual) + VTOLOG (attrs.c_class) + VTOLOG (attrs.bit_gravity) + VTOLOG (attrs.win_gravity) + VTOLOG (attrs.backing_store) + VTOLOG (attrs.map_state));
   // InputOnly
@@ -69,12 +69,12 @@ CaptureDeskImplLinux::get_buf_int (
   Bool          override_redirect;     /* boolean value for override-redirect */
   Screen*       screen;                /* back pointer to correct screen */
 #  endif
-  U3_THROW_IFN (attrs.width >= 0 && attrs.height >= 0 && attrs.border_width >= 0, VTOLOG (attrs.width) + VTOLOG (attrs.height) + VTOLOG (attrs.border_width));
+  ::libs::utility::checks::throw_ifn (attrs.width >= 0 && attrs.height >= 0 && attrs.border_width >= 0, VTOLOG (attrs.width) + VTOLOG (attrs.height) + VTOLOG (attrs.border_width));
   // xlib_image_type img (XGetImage (*display, root, 0, 0, attrs.width, attrs.height, AllPlanes, XYPixmap));
   // xlib_image_type img (XGetImage (*display, root, 0, 0, attrs.width, attrs.height, AllPlanes, ZPixmap));
   xlib_image_type img (XGetImage (*display, root, 0, 0, attrs.width, attrs.height, attrs.depth, XYPixmap));
   // XImage* img = XGetImage (*display, root, 0, 0, attrs.width, attrs.height, AllPlanes, XYPixmap);
-  U3_THROW_IFN (img, "XGetImage");
+  ::libs::utility::checks::throw_ifn (img, "XGetImage");
   const auto bitspx         = (*img)->depth;
   const auto bytespx        = (bitspx >> 3);
   const auto aligned_width  = ::libs::utility::mem::align_value (attrs.width, 64, true);

@@ -4,6 +4,9 @@
 # date        01.01.2026
 # copyright   Erashov A.I.
 
+# ./u3oko-android-rel-lib-none-clang-ninja.sh
+# ./u3oko-linux-dbg-dll-none-clang-ninja.sh
+
 clear
 
 if [[ ! -v ASAN_OPTIONS ]]; then
@@ -58,7 +61,7 @@ fi
 
 U3_FILE_TOOLCHAIN=$(basename ${U3_TOOLCHAIN} .cmake)
 U3_BIN=./../../u3builds-${U3_LIBS_PREFIX}-${U3_BUILD_PREFIX}-${U3_SANITY}-${U3_FILE_TOOLCHAIN}-${U3_GENERATOR}
-#U3_EXT_PARAMS="-DU3_FORCE_COMPILE_ALL_EXTLIBS=0"
+#U3_EXT_PARAMS="-DU3_FORCE_RECOMPILE_3RDLIBS=0"
 U3_ABSOULT_TOOLCHAIN=$(realpath ${U3_TOOLCHAIN})
 
 echo U3_APPL_NAME=${U3_APPL_NAME}

@@ -58,7 +58,7 @@ class CConvMod5x5Alg final : public IOptimAlg
 #endif
       break;
     default:
-      U3_MARK ("failed");
+      ::libs::utility::checks::mark ("failed");
       sel_.set (::libs::optim::s16bit::conv::base::c5x5::mod_alu);
       break;
     }

@@ -107,11 +107,11 @@ RootModule::appl_work_int ()
               // Если сообщение уже пришло с транзакцией, значит это ответ на нашу транзакцию
               if (current_seq_.recv_seq_)
               {
-                U3_ASSERT (current_seq_.answer_);
+                ::libs::utility::checks::throw_ifn ((bool) current_seq_.answer_);
                 return syn::IEvent::ptr ();
               }
 
-              U3_ASSERT (!current_seq_.dest_);
+              ::libs::utility::checks::throw_ifn (!current_seq_.dest_);
               // Ищем модуль будет обрабатывать данное сообщение и, если модуль существует, помечаем сообщение для транзакции
               current_seq_.dest_ = get_dest_link (msg);
               if (current_seq_.dest_ && (current_seq_.sync_event_ || current_seq_.request_))
@@ -160,7 +160,7 @@ RootModule::appl_work_int ()
               current_seq_.source_ = src;
 
               auto seqfinger = seqs_.find (current_seq_);
-              U3_ASSERT (seqfinger != seqs_.end ());
+              ::libs::utility::checks::throw_ifn (seqfinger != seqs_.end ());
               src_complite = seqfinger->source_;
               seqs_.erase (seqfinger);
             }
@@ -169,7 +169,7 @@ RootModule::appl_work_int ()
             // if (current_seq_.make_seq_)
             {
               current_seq_.source_ = src;
-              U3_ASSERT (seqs_.find (current_seq_) == seqs_.end ());
+              ::libs::utility::checks::throw_ifn (seqs_.find (current_seq_) == seqs_.end ());
               seqs_.insert (current_seq_);
               src_complite.reset ();
             }
@@ -179,7 +179,7 @@ RootModule::appl_work_int ()
           {
             if (current_seq_.dest_)   //< ДЛЯ ОТЛАДКИ, надо правильно перенаправлять FrameDone!!!
             {
-              U3_ASSERT (current_seq_.dest_);
+              ::libs::utility::checks::throw_ifn ((bool) current_seq_.dest_);
               src_complite.reset ();
             }
           }
@@ -187,14 +187,14 @@ RootModule::appl_work_int ()
           // Пока просто обрабатваем такую ситуацию так
           if (!src_complite && !current_seq_.dest_)
           {
-            U3_MARK ("[!src_complite && !current_seq_.dest_]");
+            ::libs::utility::checks::mark ("[!src_complite && !current_seq_.dest_]");
             src_complite = src;
           }
           // Если сообщение не часть транзакции - завершаем его через источник
           if (src_complite)
           {
             U3_XLOG_DBG ("complite event by source" + TOLOG (to_string (current_seq_.id_seq_)));
-            U3_ASSERT (!funcs.empty ());
+            ::libs::utility::checks::throw_ifn (!funcs.empty ());
             src_complite->complite_msg (last_msg, current_seq_);
           }
           // Иначе,
@@ -203,7 +203,7 @@ RootModule::appl_work_int ()
           // 3. Передаем сообщение в найденный модуль
           else
           {
-            U3_ASSERT (current_seq_.dest_);
+            ::libs::utility::checks::throw_ifn ((bool) current_seq_.dest_);
             if (seqs_exist)
             {
               U3_XLOG_DBG ("send transaction msg to leaf" + VTOLOG (seqs_exist));
@@ -365,7 +365,7 @@ RootModule::appl_deinit_int () -> bool
     break;
   }
   default:
-    U3_ASSERT_THROW ("Unknown deinit stage" + VTOLOG (U3_CAST_UINT32_FORCE (deinit_stage_)));
+    ::libs::utility::checks::throw_exception ("Unknown deinit stage" + VTOLOG (U3_CAST_UINT32_FORCE (deinit_stage_)));
     break;
   }
   return ret;
@@ -385,7 +385,7 @@ RootModule::update_catch_funcs_int ()
       auto* seq_ret = ::libs::iproperties::helpers::cast_event< ::libs::events::ISeqEvent > (msg);
       auto  ret     = seq_ret->get_msg ();
 
-      U3_ASSERT (ret);
+      ::libs::utility::checks::throw_ifn ((bool) ret);
       current_seq_.recv_seq_ = true;
       current_seq_.id_seq_   = seq_ret->get_seq_id ();
       return ret;
@@ -401,7 +401,7 @@ RootModule::update_catch_funcs_int ()
       current_seq_.sync_event_ = true;
 
       auto ret = ::libs::iproperties::helpers::cast_event< ::libs::events::ISyncEvent > (msg)->get_msg ();
-      U3_ASSERT (ret);
+      ::libs::utility::checks::throw_ifn ((bool) ret);
       return ret;
     }
 
@@ -419,7 +419,7 @@ RootModule::update_catch_funcs_int ()
     {
       current_seq_.request_ = true;
       auto ret              = ::libs::iproperties::helpers::cast_event< ::libs::events::IRequestEvent > (msg)->get_msg ();
-      U3_ASSERT (ret);
+      ::libs::utility::checks::throw_ifn ((bool) ret);
       return ret;
     }
     //  инверсия, на запрос идет ответ.
@@ -435,7 +435,7 @@ RootModule::update_catch_funcs_int ()
     {
       current_seq_.answer_ = true;
       auto ret             = ::libs::iproperties::helpers::cast_event< ::libs::events::IAnswerEvent > (msg)->get_msg ();
-      U3_ASSERT (ret);
+      ::libs::utility::checks::throw_ifn ((bool) ret);
       return ret;
     }
     //  инверсия, пришел ответ модулю
@@ -532,6 +532,7 @@ RootModule::init_proxys_int ()
 {
   U3_CALL_TRACE_DBG;
   super::init_proxys_int ();
+
 #if 0
   {
     U3_XLOG_DBG ("BaseModule::init_proxys_int:: update shared propertyes");
@@ -546,7 +547,7 @@ RootModule::init_proxys_int ()
 
   U3_XLOG_DBG ("RootModule::init_proxys_int:: update appl event props");
   appl_event_props_.init ();
-  U3_THROW_IFN (::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree (), "instance mem block allocator");
+  ::libs::utility::checks::throw_ifn (::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree (), "instance mem block allocator");
 #endif
 }
 

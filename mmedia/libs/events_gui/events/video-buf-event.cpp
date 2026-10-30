@@ -36,7 +36,7 @@ VideoBufEvent::get_type () const -> TypeEvents
 auto
 VideoBufEvent::get_buf () const -> const Bufs::ptr
 {
-  U3_ASSERT (buf_);
+  ::libs::utility::checks::throw_ifn ((bool) buf_);
   return buf_;
 }
 
@@ -89,7 +89,7 @@ VideoBufEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
   arh& U3_BOOST_SERIALIZE_MAKE_NVP ("olibsoevents_guioeventsoBaseGUIEvent", super);
   // ar & BOOST_SERIALIZATION_NVP( hmem_ );
   arh& BOOST_SERIALIZATION_NVP (id_);
-  U3_THROW_EXCEPT ("try serializate VideoBufEvent");
+  ::libs::utility::checks::throw_exception ("try serializate VideoBufEvent");
 }
 #endif
 }   // namespace libs::events_gui::events

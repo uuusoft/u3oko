@@ -51,7 +51,7 @@ void
 VideoDiffProp::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-  U3_ASSERT_SOFT (0, "VideoDiffProp::load_json_int:: wtf???");
+  ::libs::utility::checks::assert_soft (0, "VideoDiffProp::load_json_int:: wtf???");
 }
 
 
@@ -59,7 +59,7 @@ void
 VideoDiffProp::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-  U3_ASSERT_SOFT (0, "VideoDiffProp::save_json_int:: wtf???");
+  ::libs::utility::checks::assert_soft (0, "VideoDiffProp::save_json_int:: wtf???");
 }
 
 

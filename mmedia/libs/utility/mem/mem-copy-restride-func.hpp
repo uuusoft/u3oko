@@ -18,8 +18,8 @@ mem_copy_restride (
   const std::uint32_t dheight,
   const std::uint32_t dstride)
 {
-  U3_THROW_IFN (src, "null src");
-  U3_THROW_IFN (dst, "null dst");
+  ::libs::utility::checks::throw_ifn (src, "null src");
+  ::libs::utility::checks::throw_ifn (dst, "null dst");
 
   const auto min_height = std::min< std::uint32_t > (sheight, dheight);
   const auto min_stride = std::min< std::uint32_t > (sstride, dstride);

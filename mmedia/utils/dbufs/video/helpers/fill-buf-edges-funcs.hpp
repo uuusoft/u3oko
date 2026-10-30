@@ -14,9 +14,9 @@ namespace utils::dbufs::video::helpers
 inline void
 fill_edges (IVideoBuf::raw_ptr buf)
 {
-  U3_THROW_IFN (buf, "empty buf");
-  U3_THROW_IFN (buf->get_flag (BufFlags::convolution_support), "- operation topb_convolution_buf not support");
-  U3_THROW_IFN (buf->get_flag (BufFlags::convolution_data), "- data not support convlution");
+  ::libs::utility::checks::throw_ifn (buf, "empty buf");
+  ::libs::utility::checks::throw_ifn (buf->get_flag (BufFlags::convolution_support), "- operation topb_convolution_buf not support");
+  ::libs::utility::checks::throw_ifn (buf->get_flag (BufFlags::convolution_data), "- data not support convlution");
 
   const auto    buf_width  = buf->get_dim_var (Dims::width);
   const auto    buf_height = buf->get_dim_var (Dims::height);

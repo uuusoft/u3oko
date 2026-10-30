@@ -18,7 +18,7 @@ JpegImpl::JpegImpl (DriverState* device_state) :
   jpeg_frame_size_ (0),
   jpeg_beg_time_ (U3_GET_CURRENT_TIME)
 {
-  U3_ASSERT (devstate_);
+  ::libs::utility::checks::throw_ifn (devstate_);
 }
 
 JpegImpl::~JpegImpl ()
@@ -46,7 +46,7 @@ JpegImpl::get_filled_buf (::dlls::sources::gen_lib::syn::pkeys2bufs_type& bufs)
 
 
   auto& codec_buf = (*bufs)[::utils::dbufs::video::consts::offs::mjpg];
-  U3_ASSERT (codec_buf);
+  ::libs::utility::checks::throw_ifn (codec_buf);
 
   auto source_buf = ready_jpeg_bufs_.front ();
   ready_jpeg_bufs_.pop_front ();
@@ -90,17 +90,14 @@ JpegImpl::init_device (const ::dlls::sources::gen_lib::SourceImplInfo& info)
   int           exit_code = EX_OK;
   MMAL_STATUS_T status    = MMAL_SUCCESS;
 
-  U3_THROW_IFN (
-    MMAL_SUCCESS == helpers::create_encoder_comp_ (devstate_),
-    "create jpeg encoder");
-
+  ::libs::utility::checks::throw_ifn (MMAL_SUCCESS == helpers::create_encoder_comp_ (devstate_), "create jpeg encoder");
 
   MMAL_PORT_T* still_port   = devstate_->cam_comp_->output[helpers::consts::indx_camera_port_capture];
   MMAL_PORT_T* einput_port  = devstate_->encoder_comp_ ? devstate_->encoder_comp_->input[0] : nullptr;
   MMAL_PORT_T* eoutput_port = devstate_->encoder_comp_ ? devstate_->encoder_comp_->output[0] : nullptr;
 
-  U3_ASSERT (einput_port);
-  U3_ASSERT (eoutput_port);
+  ::libs::utility::checks::throw_ifn (einput_port);
+  ::libs::utility::checks::throw_ifn (eoutput_port);
 
   MMAL_ES_FORMAT_T* still_format = still_port->format;
 
@@ -119,7 +116,7 @@ JpegImpl::init_device (const ::dlls::sources::gen_lib::SourceImplInfo& info)
   for (int q = 0; q < num; q++)
   {
     MMAL_BUFFER_HEADER_T* buf = mmal_queue_get (devstate_->encoder_pool_->queue);
-    U3_THROW_IFN (buf, "Unable to get a required buf from pool queue ");
+    ::libs::utility::checks::throw_ifn (buf, "Unable to get a required buf from pool queue ");
     CHECK_STATUS (mmal_port_send_buf (eoutput_port, buf), "Unable to send a buf to encoder output port");
   }
 
@@ -155,7 +152,7 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
   bool          complete = false;
   DriverState*  devstate = ::libs::utility::casts::reinterpret_cast_helper< DriverState* > (port->userdata);
 
-  U3_THROW_IFN (devstate, "Received a camera still buf callback with no state");
+  ::libs::utility::checks::throw_ifn (devstate, "Received a camera still buf callback with no state");
 
 
   int        bytes_written  = 0;
@@ -230,7 +227,7 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
       // head->coff_ = from_header;
       // from_header += jpeg_size;
       // out_size += jpeg_size;
-      //  U3_ASSERT(out_size > 0);
+      //  ::libs::utility::checks::throw_ifn(out_size > 0);
 
       // head->base_part_.size_compress_ = out_size;
       // head->base_part_.sinfo_.width_ = lsrc.width_;
@@ -257,7 +254,7 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
   {
     MMAL_BUFFER_HEADER_T* new_buf = mmal_queue_get (devstate->encoder_pool_->queue);
 
-    U3_THROW_IFN (new_buf, "received null buf");
+    ::libs::utility::checks::throw_ifn (new_buf, "received null buf");
     // and back to the port from there.
     if (new_buf)
     {
@@ -282,7 +279,7 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
     }
 
     // Enable the camera still output port and tell it its callback function
-    // U3_THROW_IFN(MMAL_SUCCESS == mmal_port_enable(camera_video_port, ::encoder_buf_callback), "Failed to setup camera output");
+    // ::libs::utility::checks::throw_ifn(MMAL_SUCCESS == mmal_port_enable(camera_video_port, ::encoder_buf_callback), "Failed to setup camera output");
 #  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
     // There is a possibility that shutter needs to be set each loop.
     MMAL_STATUS_T port_status = mmal_port_parameter_set_uint32 (
@@ -290,7 +287,7 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
       MMAL_PARAMETER_SHUTTER_SPEED,
       devstate_->cam_params_.shutter_speed);
 
-    U3_THROW_IFN (MMAL_SUCCESS == helpers::mmal_status_to_int (port_status), "Unable to set shutter speed");
+    ::libs::utility::checks::throw_ifn (MMAL_SUCCESS == helpers::mmal_status_to_int (port_status), "Unable to set shutter speed");
 #  endif
     // Send all the bufs to the camera output port
     const std::int32_t num = mmal_queue_length (devstate_->encoder_pool_->queue);
@@ -299,7 +296,7 @@ JpegImpl::encoder_buf_callback (MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buf)
     {
       MMAL_BUFFER_HEADER_T* buf = mmal_queue_get (devstate_->encoder_pool_->queue);
 
-      U3_THROW_IFN (buf, "Unable to get a required buf d from pool queue");
+      ::libs::utility::checks::throw_ifn (buf, "Unable to get a required buf d from pool queue");
       CHECK_STATUS (mmal_port_send_buf (camera_video_port, buf), "Unable to send a buf to camera output port");
     }
 

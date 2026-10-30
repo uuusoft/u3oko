@@ -30,7 +30,7 @@ str2event_state (const std::string& str) -> ::libs::events::PropertyUsings
     }
   }
 
-  U3_ASSERT_THROW ("failed");
+  ::libs::utility::checks::throw_exception ("failed");
   return ::libs::events::PropertyUsings::disabled;
 }
 

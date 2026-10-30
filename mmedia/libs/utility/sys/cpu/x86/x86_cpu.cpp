@@ -58,7 +58,7 @@ get_text_about_cpu () -> std::string
   buf[48] = '\0';
   ret     = buf;
 
-  U3_ASSERT (!ret.empty ());
+  ::libs::utility::checks::throw_ifn (!ret.empty ());
   return ret;
 }
 
@@ -157,8 +157,8 @@ get_exts_cpu (SupportExtensionCPU& ret) -> bool
       break;
     }
 
-    U3_ASSERT (offs.size () == reg_shifts.size ());
-    U3_ASSERT (offs.size () == regs_source.size ());
+    ::libs::utility::checks::throw_ifn (offs.size () == reg_shifts.size ());
+    ::libs::utility::checks::throw_ifn (offs.size () == regs_source.size ());
 
     for (std::size_t indx = 0; indx < offs.size (); ++indx)
     {
@@ -172,8 +172,8 @@ get_exts_cpu (SupportExtensionCPU& ret) -> bool
       }
     }
 
-    U3_ASSERT (minor_offs.size () == minor_reg_shifts.size ());
-    U3_ASSERT (minor_offs.size () == minor_regs_source.size ());
+    ::libs::utility::checks::throw_ifn (minor_offs.size () == minor_reg_shifts.size ());
+    ::libs::utility::checks::throw_ifn (minor_offs.size () == minor_regs_source.size ());
 
     for (std::size_t indx = 0; indx < minor_offs.size (); ++indx)
     {
@@ -242,7 +242,7 @@ auto
 get_all_info_cpu (SupportExtensionCPU& ret) -> bool
 {
   ret.reset ();
-  U3_TEST (get_exts_cpu (ret), "get_all_info_cpu");
+  ::libs::utility::checks::test (get_exts_cpu (ret), "get_all_info_cpu");
 
   ret.id_cpu_ = get_text_about_cpu ();
   return true;

@@ -9,7 +9,7 @@
 #  define U3_CODEC_CREATE_FUNCT_EXTERN(name, type)                                                           \
     extern "C" BOOST_SYMBOL_EXPORT void create_codec_##name (::dlls::codecs::codec_gen::CodecGeneric** pobj) \
     {                                                                                                        \
-      U3_ASSERT (nullptr == *pobj);                                                                          \
+      ::libs::utility::checks::throw_ifn (nullptr == *pobj);                                                 \
       *pobj = new type;                                                                                      \
     }
 #endif
@@ -21,7 +21,7 @@
       if (obj)                                                                                             \
       {                                                                                                    \
         type* del = dynamic_cast< type* > (obj);                                                           \
-        U3_ASSERT (del);                                                                                   \
+        ::libs::utility::checks::throw_ifn (del);                                                          \
         delete del;                                                                                        \
       }                                                                                                    \
     }

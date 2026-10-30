@@ -53,7 +53,7 @@ BaseIdProp::save_json_int (::boost::json::object& obj) const
 void
 BaseIdProp::load_buf2module (const ::pugi::xml_named_node_iterator& node, Buff2ModuleInfo* prop)
 {
-  U3_ASSERT (prop);
+  ::libs::utility::checks::throw_ifn (prop);
   pugi::xml_attribute nfps      = node->attribute ("fps");
   pugi::xml_attribute nindx_buf = node->attribute ("indx_buf");
   pugi::xml_attribute nmodule   = node->attribute ("module");

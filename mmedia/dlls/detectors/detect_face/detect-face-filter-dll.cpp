@@ -164,7 +164,7 @@ Filter::save_buf2file (
   std::int32_t            quality,
   syn::IVideoBuf::raw_ptr psrc)
 {
-  U3_THROW_IFN (quality >= 0 && quality <= 100, "check quality");
+  ::libs::utility::checks::throw_ifn (quality >= 0 && quality <= 100, "check quality");
 
   const syn::ProxyBuf lsrc (temp_buf_.get (), "temp_buf dlls::detectors::detect_face");
   const std::uint8_t* cur_buf    = utils::dbufs::video::helpers::get_const_data (temp_buf_.get ());
@@ -206,7 +206,7 @@ Filter::save_buf2file (
   if (-1 == res_jpeg)
   {
     char* jerr = tjGetErrorStr ();
-    U3_THROW_EXCEPT ((std::string ("jpeg coder, ") + std::string (jerr ? jerr : "unknow")).c_str ());
+    ::libs::utility::checks::throw_exception ((std::string ("jpeg coder, ") + std::string (jerr ? jerr : "unknow")).c_str ());
   }
 
   std::ofstream file (file_name.c_str (), std::ios_base::ate | std::ios_base::binary);

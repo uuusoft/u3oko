@@ -148,7 +148,7 @@ MorphOperator::erosion_buf (
   utils::dbufs::video::helpers::fill_edges (tbuf);
 
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
-  U3_ASSERT (tbuf->check (
+  ::libs::utility::checks::throw_ifn (tbuf->check (
     [] (std::size_t x, std::size_t y, std::int16_t val) {
       if (val > 1)
       {
@@ -159,7 +159,7 @@ MorphOperator::erosion_buf (
     }));
 #endif
 
-  U3_ASSERT (utils::dbufs::video::helpers::buf_dimension_equal (*tbuf, *pdst));
+  ::libs::utility::checks::throw_ifn (utils::dbufs::video::helpers::buf_dimension_equal (*tbuf, *pdst));
 
   ::libs::optim::io::MCallInfo cinfo;
 
@@ -255,7 +255,7 @@ MorphOperator::dilation_buf (
   tbuf->clone (pdst, 100.0F);
 
   utils::dbufs::video::helpers::fill_edges (tbuf);
-  U3_ASSERT (utils::dbufs::video::helpers::buf_dimension_equal (*tbuf, *pdst));
+  ::libs::utility::checks::throw_ifn (utils::dbufs::video::helpers::buf_dimension_equal (*tbuf, *pdst));
 
   ::libs::optim::io::MCallInfo cinfo;
 

@@ -36,7 +36,7 @@ get_event_int (const ::libs::events::IEvent::hid_type& id, Args... args) -> ::li
 {
   auto impl = get_events_impl ();
   auto res  = impl->get (id);
-  U3_THROW_IFN (res, " get_event_int:: failed" + std::string { id });
+  ::libs::utility::checks::throw_ifn ((bool) res, " get_event_int:: failed" + std::string { id });
   auto* upres = ::libs::utility::casts::reinterpret_cast_helper< T* > (cast_event_int (res, id));
   upres->sync_event_props (args...);
   return res;
@@ -49,9 +49,9 @@ create_event (Args... args) -> std::pair< ::libs::events::IEvent::ptr, T* >
 {
   constexpr const auto event_id = T::gen_get_mid ();
   auto                 event    = get_event_int< T, Args... > (event_id, args...);
-  U3_ASSERT (event);
+  ::libs::utility::checks::throw_ifn ((bool) event);
   auto event_prop = ::libs::utility::casts::reinterpret_cast_helper< T* > (cast_event_int (event, event_id));
-  U3_ASSERT (event_prop);
+  ::libs::utility::checks::throw_ifn ((bool) event_prop);
   return { event, event_prop };
 }
 
@@ -80,7 +80,7 @@ auto
 cast_event (const ::libs::events::IEvent::ptr& event) -> T*
 {
   constexpr const auto id = T::gen_get_mid ();
-  U3_ASSERT_SOFT (event, "try cast null event to" + STOLOG (id));
+  ::libs::utility::checks::assert_soft ((bool) event, "try cast null event to" + STOLOG (id));
   return ::libs::utility::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id));
 }
 
@@ -90,7 +90,7 @@ auto
 cast_event (const ::libs::events::IEvent::cptr& event) -> const T*
 {
   constexpr const auto id = T::gen_get_mid ();
-  U3_ASSERT_SOFT (event, "try cast null event to" + STOLOG (id));
+  ::libs::utility::checks::assert_soft ((bool) event, "try cast null event to" + STOLOG (id));
   return ::libs::utility::casts::reinterpret_cast_helper< const T* > (cast_event_int (event, id));
 }
 
@@ -100,7 +100,7 @@ auto
 cast_event (const ::libs::events::IEvent::raw_ptr event) -> T*
 {
   constexpr const auto id = T::gen_get_mid ();
-  U3_ASSERT_SOFT (event, "try cast null event to" + STOLOG (id));
+  ::libs::utility::checks::assert_soft ((bool) event, "try cast null event to" + STOLOG (id));
   return ::libs::utility::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id));
 }
 
@@ -110,7 +110,7 @@ auto
 cast_event (const ::libs::events::IEvent::craw_ptr event) -> const T*
 {
   constexpr const auto eid = T::gen_get_mid ();
-  U3_ASSERT_SOFT (event, "try cast null event to" + STOLOG (eid));
+  ::libs::utility::checks::assert_soft ((bool) event, "try cast null event to" + STOLOG (eid));
   return ::libs::utility::casts::reinterpret_cast_helper< const T* > (cast_event_int (event, eid));
 }
 
@@ -128,7 +128,7 @@ auto
 dbg_check_copy_event (const ::libs::events::IEvent::craw_ptr src) -> const TTEvent*
 {
   auto* res = ::libs::iproperties::helpers::cast_event< TTEvent > (src);
-  U3_THROW_IFN (res, std::string ("invalid event type") + PTR_TOLOG (src) + " empty " + PTR_TOLOG (res));
+  ::libs::utility::checks::throw_ifn (res, std::string ("invalid event type") + PTR_TOLOG (src) + " empty " + PTR_TOLOG (res));
   return res;
 }
 }   // namespace libs::iproperties::helpers

@@ -72,7 +72,7 @@ Filter::fill_buf (
       {
         U3_LOG_DATA_MARK ("recive InterfCaptureImageEvent -> update properties" + VTOLOG (devent->is_active ()));
         finfo_.capture_impl_ = devent->is_active () ? devent->get_interface () : finfo->null_impl_;
-        U3_ASSERT (!finfo_.capture_impl_.expired ());
+        ::libs::utility::checks::throw_ifn (!finfo_.capture_impl_.expired ());
         if (auto impl = finfo_.capture_impl_.lock ())
         {
           impl->update_capture_property (finfo->capture_props_);

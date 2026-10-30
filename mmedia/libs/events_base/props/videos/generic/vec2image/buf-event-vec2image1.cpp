@@ -31,8 +31,8 @@ EventBufsVec2Image1::EventBufsVec2Image1 (const ::libs::events::buf::EventBufs& 
 void
 EventBufsVec2Image1::check_int ()
 {
-  U3_THROW_IFN (8 == size_block_ || 16 == size_block_ || 32 == size_block_, "size block invalid");
-  U3_THROW_IFN (mul_koeff_vec_ > 0, "mul koeff less 0");
+  ::libs::utility::checks::throw_ifn (8 == size_block_ || 16 == size_block_ || 32 == size_block_, "size block invalid");
+  ::libs::utility::checks::throw_ifn (mul_koeff_vec_ > 0, "mul koeff less 0");
 }
 
 

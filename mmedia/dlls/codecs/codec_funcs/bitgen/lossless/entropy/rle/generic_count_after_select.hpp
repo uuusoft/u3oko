@@ -25,13 +25,13 @@ class CGenericObj
     void*          dst,
     std::uint32_t& count_byte_dst)
   {
-    U3_ASSERT (0 == count_byte_dst);
+    ::libs::utility::checks::throw_ifn (0 == count_byte_dst);
 
     const auto* usrc    = ::libs::utility::casts::reinterpret_cast_helper< const value_type* > (src);
     auto*       udst    = ::libs::utility::casts::reinterpret_cast_helper< value_type* > (dst);
     value_type  counter = 0;
 
-    U3_ASSERT (count_byte_src / sizeof (value_type) * sizeof (value_type) == count_byte_src);
+    ::libs::utility::checks::throw_ifn (count_byte_src / sizeof (value_type) * sizeof (value_type) == count_byte_src);
 
     count_byte_src = count_byte_src / sizeof (value_type);
 
@@ -84,7 +84,7 @@ class CGenericObj
     const auto* usrc = ::libs::utility::casts::reinterpret_cast_helper< const value_type* > (src);
     auto*       udst = ::libs::utility::casts::reinterpret_cast_helper< value_type* > (dst);
 
-    U3_ASSERT (count_byte_src / sizeof (value_type) * sizeof (value_type) == count_byte_src);
+    ::libs::utility::checks::throw_ifn (count_byte_src / sizeof (value_type) * sizeof (value_type) == count_byte_src);
 
     count_byte_src = count_byte_src / sizeof (value_type);
 
@@ -93,7 +93,7 @@ class CGenericObj
       if (key_symbol_ == usrc[indx])
       {
         const value_type counter = usrc[indx + 1];
-        U3_ASSERT (counter);
+        ::libs::utility::checks::throw_ifn (counter);
 
         std::fill (
           udst + count_byte_dst,

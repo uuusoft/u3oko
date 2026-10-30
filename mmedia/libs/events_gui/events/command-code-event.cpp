@@ -13,7 +13,7 @@ namespace libs::events_gui::events
 CommandCodeEvent::CommandCodeEvent (const Acessor& pha, std::string code) :
   code_ (std::move (code))
 {
-  U3_ASSERT (!code_.empty ());
+  ::libs::utility::checks::throw_ifn (!code_.empty ());
 }
 
 
@@ -37,7 +37,7 @@ CommandCodeEvent::get_type () const -> TypeEvents
 auto
 CommandCodeEvent::get_code () const -> std::string
 {
-  U3_ASSERT (!code_.empty ());
+  ::libs::utility::checks::throw_ifn (!code_.empty ());
   return code_;
 }
 
@@ -45,7 +45,7 @@ CommandCodeEvent::get_code () const -> std::string
 void
 CommandCodeEvent::set_code (const std::string& id)
 {
-  U3_ASSERT (!id.empty ());
+  ::libs::utility::checks::throw_ifn (!id.empty ());
   code_ = id;
 }
 

@@ -33,11 +33,11 @@ TextMinorExtCpu::get_text (const CpuMinorExts& val) const -> std::string
 
   if (it == val2txt_.end ())
   {
-    U3_MARK ("failed");
+    ::libs::utility::checks::mark ("failed");
     return std::string ("???");
   }
 
-  U3_ASSERT (!it->second.empty ());
+  ::libs::utility::checks::throw_ifn (!it->second.empty ());
   return it->second;
 }
 
@@ -45,12 +45,12 @@ TextMinorExtCpu::get_text (const CpuMinorExts& val) const -> std::string
 auto
 TextMinorExtCpu::get_val (const std::string& txt) const -> CpuMinorExts
 {
-  U3_ASSERT (!txt.empty ());
+  ::libs::utility::checks::throw_ifn (!txt.empty ());
   auto it = txt2val_.find (txt);
 
   if (it == txt2val_.end ())
   {
-    U3_ASSERT_THROW ("failed");
+    ::libs::utility::checks::throw_exception ("failed");
     return CpuMinorExts::empty;
   }
   return it->second;

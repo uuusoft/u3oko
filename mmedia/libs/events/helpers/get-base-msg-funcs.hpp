@@ -31,11 +31,11 @@ get_base_msg (IEvent::ptr msg)
     ret = req_msg->get_msg ();
   }
 
-  U3_ASSERT (!::libs::iproperties::helpers::cast_event< IAnswerEvent > (ret));
-  U3_ASSERT (!::libs::iproperties::helpers::cast_event< IRequestEvent > (ret));
-  U3_ASSERT (!::libs::iproperties::helpers::cast_event< ISyncEvent > (ret));
-  U3_ASSERT (!::libs::iproperties::helpers::cast_event< ISeqEvent > (ret));
-  U3_ASSERT (ret);
+  ::libs::utility::checks::throw_ifn (!::libs::iproperties::helpers::cast_event< IAnswerEvent > (ret));
+  ::libs::utility::checks::throw_ifn (!::libs::iproperties::helpers::cast_event< IRequestEvent > (ret));
+  ::libs::utility::checks::throw_ifn (!::libs::iproperties::helpers::cast_event< ISyncEvent > (ret));
+  ::libs::utility::checks::throw_ifn (!::libs::iproperties::helpers::cast_event< ISeqEvent > (ret));
+  ::libs::utility::checks::throw_ifn ((bool) ret);
   return ret;
 }
 }   // namespace libs::events::helpers

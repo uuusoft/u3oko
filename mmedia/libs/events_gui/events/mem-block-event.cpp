@@ -54,7 +54,7 @@ MemBlockEvent::set_hmem (const ::libs::link::mem::IBlockFakeMem& mem)
 auto
 MemBlockEvent::reset_video (void* pmem) const -> bool
 {
-  U3_ASSERT (pmem);
+  ::libs::utility::checks::throw_ifn (pmem);
   auto* header = ::libs::utility::casts::reinterpret_cast_helper< ::modules::mgui::appl::io::VideoIO* > (pmem);
   header->reset ();
   return true;
@@ -90,7 +90,7 @@ void
 MemBlockEvent::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
   arh& U3_BOOST_SERIALIZE_MAKE_NVP ("olibsoevents_guioeventsoBaseGUIEvent", super);
-  U3_ASSERT_THROW ("failed");
+  ::libs::utility::checks::throw_exception ("failed");
   // ar & BOOST_SERIALIZATION_NVP( hmem_ );  Не реализовано.
   arh& BOOST_SERIALIZATION_NVP (id_);
 

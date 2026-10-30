@@ -119,7 +119,7 @@ struct LinksApplication final {
   {
     std::scoped_lock lock (threadsan_mtx_);
     auto             finger = module_links_.find (key);
-    U3_TEST (finger != module_links_.end (), "failed get link to module" + TOLOG (to_string (key)) + PTR_TOLOG (this));
+    ::libs::utility::checks::test (finger != module_links_.end (), "failed get link to module" + TOLOG (to_string (key)) + PTR_TOLOG (this));
     return finger != module_links_.end () ? finger->second : TTLinkPtr ();
   }
 
@@ -135,7 +135,7 @@ struct LinksApplication final {
   {
     std::scoped_lock lock (threadsan_mtx_);
     auto             finger = module_links_.find (key);
-    U3_TEST (finger != module_links_.end (), "failed get link to module" + TOLOG (to_string (key)) + PTR_TOLOG (this));
+    ::libs::utility::checks::test (finger != module_links_.end (), "failed get link to module" + TOLOG (to_string (key)) + PTR_TOLOG (this));
     if (finger != module_links_.end ())
     {
       finger->second.reset ();

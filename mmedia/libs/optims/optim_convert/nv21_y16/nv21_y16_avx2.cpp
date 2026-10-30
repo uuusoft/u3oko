@@ -17,7 +17,7 @@ U3_SET_TARGET_CPU (avx2)
 void
 avx2 (::libs::optim::io::MCallInfo& info)
 {
-  U3_MARK_TODO;
+  ::libs::utility::checks::mark_todo ("");
   alu (info);
 }
 }   // namespace libs::optim::convert::nv21_y16

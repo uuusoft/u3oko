@@ -23,7 +23,7 @@ class ICodecImage : public IBaseRuntimeInterf
   get_id_format () const
   {
     const id_format_type& ret = get_id_format_int ();
-    U3_ASSERT (!ret.empty ());
+    ::libs::utility::checks::throw_ifn (!ret.empty ());
     return ret;
   }
 
@@ -42,9 +42,9 @@ class ICodecImage : public IBaseRuntimeInterf
   void
   decode_image (const std::uint8_t* info, const std::int32_t size_info, syn::IBuf::raw_ptr buf)
   {
-    U3_ASSERT (info);
-    U3_ASSERT (size_info > 0);
-    U3_ASSERT (buf);
+    ::libs::utility::checks::throw_ifn (info);
+    ::libs::utility::checks::throw_ifn (size_info > 0);
+    ::libs::utility::checks::throw_ifn ((bool) buf);
     decode_image_int (info, size_info, buf);
   }
 

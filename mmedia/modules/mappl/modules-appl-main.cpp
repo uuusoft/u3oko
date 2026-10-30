@@ -93,7 +93,7 @@ init_process (int argc, char* argv[])
   const std::string curfolder = ::libs::iproperties::appl_paths::get_current_folder ();
   U3_CALL_TRACE_INFO (VTOLOG (argc) + TOLOG (curfolder));
   ::modules::mappl::up_links (curfolder, argc, argv);
-  U3_THROW_IFN (::modules::mappl::check_process (), "call check_process");
+  ::libs::utility::checks::throw_ifn (::modules::mappl::check_process (), "call check_process");
 
   ::modules::mappl::g_module_appl = std::make_shared< ::libs::link::appl::IApplicationProxy > (curfolder, ::modules::mappl::g_init_appl.lib_name_);
   ::modules::mappl::g_module_appl->impl ()->appl_init (::modules::mappl::g_init_appl);
@@ -112,7 +112,7 @@ deinit_impl_application ()
 {
   U3_CALL_TRACE;
   auto applimpl = ::modules::mappl::g_module_appl->impl ();
-  U3_ASSERT (applimpl);
+  ::libs::utility::checks::throw_ifn (applimpl);
   applimpl->appl_deinit ();
 }
 
@@ -122,7 +122,7 @@ deinit_properties ()
 {
   U3_CALL_TRACE;
   const auto& istorage = ::libs::iproperties::helpers::get_storage ();
-  U3_ASSERT (istorage);
+  ::libs::utility::checks::throw_ifn (istorage);
   istorage->reset_prop (::libs::properties::consts::keys::shared_os_property);
   // istorage->reset_prop ( ::libs::properties::consts::keys::demons_property );
 }
@@ -133,7 +133,7 @@ deinit_links ()
 {
   U3_CALL_TRACE;
   ::libs::ilink::LinkCreatorProxy::raw_ptr lproxy = ::libs::ilink::LinkCreatorProxy::instance ();
-  U3_ASSERT (lproxy);
+  ::libs::utility::checks::throw_ifn (lproxy);
   // lproxy->impl ()->close_all ();
 }
 

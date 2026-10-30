@@ -23,7 +23,7 @@ to_string (const StreamTimes& val) -> std::string
   case StreamTimes::youngest:
     return "youngest";
   case StreamTimes::unknown:
-    U3_MARK ("received StreamTimes::unknown");
+    ::libs::utility::checks::mark ("received StreamTimes::unknown");
     return "unknown";
   }
   U3_XLOG_ERROR ("unknown type StreamTimes" + VTOLOG (U3_CAST_UINT32_FORCE (val)));

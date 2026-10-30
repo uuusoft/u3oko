@@ -16,7 +16,7 @@ CObj::forward_int (
   void*               dst,
   std::uint32_t&      count_byte_dst)
 {
-  U3_ASSERT (0 == count_byte_dst);
+  ::libs::utility::checks::throw_ifn (0 == count_byte_dst);
   const auto*  usrc    = ::libs::utility::casts::reinterpret_cast_helper< const std::uint8_t* > (src);
   auto*        udst    = ::libs::utility::casts::reinterpret_cast_helper< std::uint8_t* > (dst);
   std::uint8_t counter = 0;
@@ -82,7 +82,7 @@ CObj::backward_int (
     if (key_symbol_ == usrc[indx])
     {
       const std::uint8_t counter = usrc[indx + 1];
-      U3_ASSERT (counter);
+      ::libs::utility::checks::throw_ifn (counter);
 
       std::fill (udst + count_byte_dst, udst + count_byte_dst + counter, key_symbol_);
 

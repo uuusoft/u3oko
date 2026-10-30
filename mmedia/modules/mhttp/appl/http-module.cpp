@@ -136,16 +136,16 @@ HttpModule::process_zip_data_event (syn::ZipDataEvent::raw_ptr props)
         U3_LOG_HTTP_WRN ("max size limit send data1" + VTOLOG (sending_size) + VTOLOG (consts::max_size_sending_data));
         U3_LOG_HTTP_WRN ("max size limit send data2" + VTOLOG (skip_state_.skip_send_request_) + VTOLOG (skip_state_.skip_send_bytes_));
       }
-      U3_THROW_IFN (U3_CAST_INT64 (buf.size ()) <= consts::max_size_sending_data, "max sending size too small" + VTOLOG (buf.size ()) + VTOLOG (consts::max_size_sending_data));
+      ::libs::utility::checks::throw_ifn (U3_CAST_INT64 (buf.size ()) <= consts::max_size_sending_data, "max sending size too small" + VTOLOG (buf.size ()) + VTOLOG (consts::max_size_sending_data));
       return;
     }
 
     const auto  off_data  = helpers::get_offset_iframe (buf.data ());
     const auto& source_id = props->get_id ();
     auto        tempbuf   = std::vector< char > { buf.data (), buf.data () + buf.size () };
-    U3_THROW_IFN (off_data <= 255, "off_data <= 255" + VTOLOG (off_data));
-    U3_THROW_IFN (U3_CAST_INT32 (source_id.length ()) <= off_data, "source_id.length () <= off_data" + VTOLOG (source_id.length ()) + VTOLOG (off_data));
-    U3_THROW_IFN (source_id.length () <= 253, "source_id.length () <= 253" + VTOLOG (source_id.length ()));
+    ::libs::utility::checks::throw_ifn (off_data <= 255, "off_data <= 255" + VTOLOG (off_data));
+    ::libs::utility::checks::throw_ifn (U3_CAST_INT32 (source_id.length ()) <= off_data, "source_id.length () <= off_data" + VTOLOG (source_id.length ()) + VTOLOG (off_data));
+    ::libs::utility::checks::throw_ifn (source_id.length () <= 253, "source_id.length () <= 253" + VTOLOG (source_id.length ()));
     constexpr std::uint32_t count_sizes = 2;
 
     tempbuf[0] = off_data;
@@ -234,8 +234,8 @@ HttpModule::process_request_event (const std::string&, const std::string& body) 
     const auto request        = ::libs::link::details::to_request (url_id_request);
     const auto xml_type_data  = "xml" == id_data ? true : false;
 
-    U3_THROW_IFN (helpers::url_decode (url_id_event, id_event), "URL decode id event, " + url_id_event);
-    U3_THROW_IFN (helpers::url_decode (url_xml_event, event_data), "URL decode utrl, " + url_xml_event);
+    ::libs::utility::checks::throw_ifn (helpers::url_decode (url_id_event, id_event), "URL decode id event, " + url_id_event);
+    ::libs::utility::checks::throw_ifn (helpers::url_decode (url_xml_event, event_data), "URL decode utrl, " + url_xml_event);
 
     const auto dbg_enable = process_request_event_debug (id_event, content, id_data);
     if (dbg_enable)
@@ -248,13 +248,13 @@ HttpModule::process_request_event (const std::string&, const std::string& body) 
     auto events_base = idemons->get_events_lockfree ();
     auto recv_event  = events_base->impl ()->get (id_event);
 
-    U3_THROW_IFN (recv_event, "null decode event" + STOLOG (id_event));
-    U3_THROW_IFN (id_event == recv_event->get_mid (), id_event + "!=" + STOLOG (recv_event->get_mid ()));
+    ::libs::utility::checks::throw_ifn ((bool) recv_event, "null decode event" + STOLOG (id_event));
+    ::libs::utility::checks::throw_ifn (id_event == recv_event->get_mid (), id_event + "!=" + STOLOG (recv_event->get_mid ()));
 
     if (syn::Calls::generate == request)
     {
       // запрос на генерацию события (в данном случае это http клиент, поэтому на генерацию xml схемы события) удовлетворяем сразу
-      U3_ASSERT_SOFT (xml_type_data, "boost serialization forbiden" + TOLOG (url_id_event));
+      ::libs::utility::checks::assert_soft (xml_type_data, "boost serialization forbiden" + TOLOG (url_id_event));
       // content = xml_type_data ? ::libs::iproperties::helpers::event2xml (recv_event) : recv_event->save_json ();
       content = recv_event->save_json ();
     }
@@ -265,14 +265,14 @@ HttpModule::process_request_event (const std::string&, const std::string& body) 
 #if (U3_USE_BOOST_SERIALIZTION)
         if (xml_type_data)
         {
-          U3_THROW_IFN (::libs::iproperties::helpers::xml2event (event_data, recv_event), "convert to event" + TOLOG (event_data));
+          ::libs::utility::checks::throw_ifn (::libs::iproperties::helpers::xml2event (event_data, recv_event), "convert to event" + TOLOG (event_data));
         }
         else
         {
           recv_event->load_json (event_data);
         }
 #else
-        U3_ASSERT_SOFT (xml_type_data, "boost serialization forbiden" + TOLOG (url_id_event));
+        ::libs::utility::checks::assert_soft (xml_type_data, "boost serialization forbiden" + TOLOG (url_id_event));
         recv_event->load_json (event_data);
 #endif
       }
@@ -297,7 +297,7 @@ HttpModule::process_request_event (const std::string&, const std::string& body) 
 #if (U3_USE_BOOST_SERIALIZTION)
         content = xml_type_data ? ::libs::iproperties::helpers::event2xml (send_event) : send_event->save_json ();
 #else
-        U3_ASSERT_SOFT (xml_type_data, "boost serialization forbiden");
+        ::libs::utility::checks::assert_soft (xml_type_data, "boost serialization forbiden");
         content = send_event->save_json ();
 #endif
       }

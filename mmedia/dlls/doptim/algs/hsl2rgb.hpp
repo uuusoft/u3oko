@@ -66,7 +66,7 @@ class CHSL2RgbAlg final : public IOptimAlg
       break;
 #endif
     default:
-      U3_MARK ("failed");
+      ::libs::utility::checks::mark ("failed");
       sel_.set (::libs::optim::s16bit::convert::hsl_vs_rgb::hsl_to_rgb24_alu);
       break;
     }

@@ -2,6 +2,7 @@
 # date        03.04.2026
 # copyright   Erashov A.I.
 # file        orangepi-arm64-gcc.cmake
+# sudo apt install crossbuild-essential-arm64
 
 set(U3_SYSTEM_NAME OrangePi)
 set(CMAKE_SYSTEM_NAME Linux)

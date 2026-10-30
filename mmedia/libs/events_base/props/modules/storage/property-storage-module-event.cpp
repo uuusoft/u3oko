@@ -47,14 +47,14 @@ PropertyStorageModuleEvent::clone_int (const ::libs::events::Deeps& deep) const 
 void
 PropertyStorageModuleEvent::load_json_int (const ::boost::json::object& obj)
 {
-  U3_ASSERT_SOFT (0, "???");
+  ::libs::utility::checks::assert_soft (0, "???");
 }
 
 
 void
 PropertyStorageModuleEvent::save_json_int (::boost::json::object& obj) const
 {
-  U3_ASSERT_SOFT (0, "???");
+  ::libs::utility::checks::assert_soft (0, "???");
 }
 
 

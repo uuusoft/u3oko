@@ -38,7 +38,7 @@ update_register_lib (const std::string& path, bool need_reg)
   else
   {
     unreg_func_type unreg_func = ::libs::utility::casts::reinterpret_cast_helper< unreg_func_type > (GetProcAddress (module, "DllUnregisterServer"));
-    U3_ASSERT (unreg_funct);
+    ::libs::utility::checks::throw_ifn (unreg_funct);
     if (!unreg_func || (FAILED ((*unreg_funct) ())))
     {
       U3_XLOG_ERROR ("unregister lib" + TOLOG (path));

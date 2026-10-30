@@ -28,8 +28,8 @@ class LinkCreatorProxy final : protected ::libs::utility::proxy::MemProxyBase
   ::libs::link::ILinkCreator::raw_ptr
   impl ()
   {
-    U3_ASSERT (pimpl_);
-    U3_ASSERT (*pimpl_);
+    ::libs::utility::checks::throw_ifn (pimpl_);
+    ::libs::utility::checks::throw_ifn ((bool) *pimpl_);
     return pimpl_->get ();
   }
 

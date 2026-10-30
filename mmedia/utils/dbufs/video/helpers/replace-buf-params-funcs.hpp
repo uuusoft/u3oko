@@ -13,7 +13,7 @@ replace_buf_params (
   IVideoBuf::dim_type off_data,
   IVideoBuf::dim_type size_data)
 {
-  U3_THROW_IFN (size_data + off_data <= buf[MemVars::size_buf], VTOLOG (size_data) + VTOLOG (off_data) + VTOLOG (buf[MemVars::size_buf]));
+  ::libs::utility::checks::throw_ifn (size_data + off_data <= buf[MemVars::size_buf], VTOLOG (size_data) + VTOLOG (off_data) + VTOLOG (buf[MemVars::size_buf]));
 
   buf.set_mem_var (MemVars::offset_data, off_data);
   buf.set_mem_var (MemVars::size_data, size_data);

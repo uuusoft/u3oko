@@ -33,7 +33,7 @@ class CUYVY2Y16Alg final : public IOptimAlg
       sel_.set (::libs::optim::convert::uyvy_y16::alu);
       break;
     default:
-      U3_MARK ("failed");
+      ::libs::utility::checks::mark ("failed");
       sel_.set (::libs::optim::convert::uyvy_y16::alu);
       break;
     }

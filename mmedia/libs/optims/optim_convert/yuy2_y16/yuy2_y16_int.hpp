@@ -28,7 +28,7 @@ void get_params (::libs::optim::io::MCallInfo& info, const ::libs::optim::io::Pr
     const std::uint32_t width      = yuy2->width_;                                           \
     const std::uint32_t height     = yuy2->height_;                                          \
                                                                                              \
-    U3_ASSERT (leak_yuy2 >= 0);                                                              \
-    U3_ASSERT (leak_y16 >= 0);
+    ::libs::utility::checks::throw_ifn (leak_yuy2 >= 0);                                     \
+    ::libs::utility::checks::throw_ifn (leak_y16 >= 0);
 
 #endif

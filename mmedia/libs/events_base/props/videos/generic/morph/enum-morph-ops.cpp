@@ -22,7 +22,7 @@ str2type_morph_op (const std::string& val) -> MorphOps
   auto finger = vals.find (val);
   if (vals.end () == finger)
   {
-    U3_MARK ("failed find morph type");
+    ::libs::utility::checks::mark ("failed find morph type");
     finger = vals.find ("skip");
   }
   return finger->second;
@@ -43,7 +43,7 @@ to_string (const MorphOps& val) -> const std::string&
   auto finger = vals.find (val);
   if (vals.end () == finger)
   {
-    U3_MARK ("failed find name morph type");
+    ::libs::utility::checks::mark ("failed find name morph type");
     finger = vals.find (MorphOps::empty);
   }
   return finger->second;

@@ -25,7 +25,7 @@ MopsImpl::init ()
 void
 MopsImpl::set_props (syn::VideoMorphologyProp::craw_ptr props)
 {
-  U3_ASSERT (props);
+  ::libs::utility::checks::throw_ifn (props);
   props_ = props;
 }
 

@@ -41,7 +41,7 @@ void
 VideoHistogramProp::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-  U3_ASSERT_SOFT (0, "???");
+  ::libs::utility::checks::assert_soft (0, "???");
 }
 
 
@@ -49,7 +49,7 @@ void
 VideoHistogramProp::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-  U3_ASSERT_SOFT (0, "???");
+  ::libs::utility::checks::assert_soft (0, "???");
 }
 
 

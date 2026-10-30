@@ -210,7 +210,7 @@ websocket_session_ssl::on_write (
   if (!send_queue_.empty ())
   {
     size_pending_send_ -= U3_CAST_INT64 (send_queue_.front ()->size ());
-    U3_THROW_IFN (size_pending_send_ >= 0, "invalid pending data size" + VTOLOG (size_pending_send_) + VTOLOG (bytes_transferred));
+    ::libs::utility::checks::throw_ifn (size_pending_send_ >= 0, "invalid pending data size" + VTOLOG (size_pending_send_) + VTOLOG (bytes_transferred));
     send_queue_.erase (send_queue_.begin ());
   }
 

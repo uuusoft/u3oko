@@ -58,7 +58,7 @@ class CRemoveAddNoise2Alg final : public IOptimAlg
       break;
 #endif
     default:
-      U3_MARK ("failed");
+      ::libs::utility::checks::mark ("failed");
       sel_.set (::libs::optim::s16bit::filter::noise::var2::alu);
       break;
     }

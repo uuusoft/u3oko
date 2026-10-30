@@ -24,7 +24,7 @@ struct IndexDataFileState final {
     count_fragments_ = 0;
     off_fragments_.clear ();
     off_fragments_.reserve (consts::max_count_fragments_session_data_file);
-    U3_ASSERT (!is_valid ());
+    ::libs::utility::checks::throw_ifn (!is_valid ());
   }
 
   bool
@@ -35,9 +35,9 @@ struct IndexDataFileState final {
       return false;
     }
 
-    U3_THROW_IFN (indx_data_file_ <= consts::max_count_session_data_files, VTOLOG (indx_data_file_));
-    U3_THROW_IFN (count_fragments_ <= consts::max_count_fragments_session_data_file, VTOLOG (count_fragments_));
-    U3_THROW_IFN (count_fragments_ <= off_fragments_.size (), VTOLOG (count_fragments_));
+    ::libs::utility::checks::throw_ifn (indx_data_file_ <= consts::max_count_session_data_files, VTOLOG (indx_data_file_));
+    ::libs::utility::checks::throw_ifn (count_fragments_ <= consts::max_count_fragments_session_data_file, VTOLOG (count_fragments_));
+    ::libs::utility::checks::throw_ifn (count_fragments_ <= off_fragments_.size (), VTOLOG (count_fragments_));
     return true;
   }
 

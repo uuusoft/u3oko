@@ -31,15 +31,21 @@ last_error2string (unsigned long error)
   return std::string (buf, size);
 }
 
-#ifndef U3_THROW_IFN_WIN32_CALL
-#  define U3_THROW_IFN_WIN32_CALL(x, minfo) U3_THROW_IFN (x, minfo + " error" + ::libs::utility::platforms::win32::last_error2string (GetLastError ()))
-#endif
+inline auto
+throw_ifn (const auto& aop, std::source_location location = std::source_location::current ()) -> void
+{
+  if (!aop)
+  {
+    ::libs::utility::checks::throw_exception (last_error2string (GetLastError ()), location);
+  }
+}
 
-#ifndef U3_THROW_IFN_WIN32_CALL_NT
-#  define U3_THROW_IFN_WIN32_CALL_NT(x, minfo) U3_TEST (x, minfo + " error=" + ::libs::utility::platforms::win32::last_error2string (GetLastError ()))
-#endif
-
-#ifndef U3_THROW_IFN_WIN32_STATE
-#  define U3_THROW_IFN_WIN32_STATE(x, minfo) U3_THROW_IFN (x, minfo + " error=" + ::libs::utility::platforms::win32::last_error2string (GetLastError ()))
-#endif
+inline auto
+test (const auto& aop, std::source_location location = std::source_location::current ()) -> void
+{
+  if (!aop)
+  {
+    ::libs::utility::checks::test (false, last_error2string (GetLastError ()), location);
+  }
+}
 }   // namespace libs::utility::platforms::win32

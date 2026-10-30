@@ -58,7 +58,7 @@ ChangeGraphsDataEvent::set_action (const GraphActions& action)
 auto
 ChangeGraphsDataEvent::check () const -> bool
 {
-  U3_ASSERT (!folders_.empty ());
+  ::libs::utility::checks::throw_ifn (!folders_.empty ());
   return !folders_.empty ();
 }
 

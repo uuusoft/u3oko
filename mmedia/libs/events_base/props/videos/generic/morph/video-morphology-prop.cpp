@@ -15,7 +15,7 @@ load_op (const ::pugi::xml_named_node_iterator& prop, MorphOperationParams& info
 
   if (!name_op)
   {
-    U3_ASSERT_THROW ("failed");
+    ::libs::utility::checks::throw_exception ("failed");
     return;
   }
 

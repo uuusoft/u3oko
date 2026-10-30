@@ -61,7 +61,7 @@ class CRgb2HSLAlg final : public IOptimAlg
       break;
 #endif
     default:
-      U3_MARK ("failed");
+      ::libs::utility::checks::mark ("failed");
       sel_.set (::libs::optim::s16bit::convert::hsl_vs_rgb::rgb24_to_hsl_alu);
       break;
     }

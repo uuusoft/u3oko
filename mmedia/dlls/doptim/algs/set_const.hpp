@@ -62,7 +62,7 @@ class CSetConstAlg final : public IOptimAlg
       break;
 #endif
     default:
-      U3_MARK ("failed");
+      ::libs::utility::checks::mark ("failed");
       sel_.set (::libs::optim::s16bit::bits::one_source::set::alu);
       break;
     }

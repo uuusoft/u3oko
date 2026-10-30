@@ -84,7 +84,7 @@ BufAllocator::clear ()
 
   for (utils::dbufs::video::IVideoBuf::ptr& buf : bufs_)
   {
-    U3_TEST (buf.use_count () <= 1, PTR_TOLOG (buf.get ()) + VTOLOG (buf.use_count ()));
+    ::libs::utility::checks::test (buf.use_count () <= 1, PTR_TOLOG (buf.get ()) + VTOLOG (buf.use_count ()));
     buf->set_flag (::utils::dbufs::BufFlags::empty, true);
     buf.reset ();
   }

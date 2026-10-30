@@ -26,7 +26,7 @@ replace_strings_in_files (
     { .include_fiolders_ = IncludeSubFolders::disabled, .include_files_ = IncludeFiles::enabled, .recursive_ = Recursives::disabled },
     DefaultFileMask (files_mask));
 
-  U3_ASSERT (!enum_files.files_.empty ());
+  ::libs::utility::checks::throw_ifn (!enum_files.files_.empty ());
 
   for (const auto& file : enum_files.files_)
   {

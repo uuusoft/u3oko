@@ -21,7 +21,7 @@ void
 CamImpl::sync_runtime_props (const syn::VideoDriverCaptureProp &capprops)
 {
   const auto fourcc = ::libs::utility::uids::helpers::idval2fourcc (capprops.capi_.px_format_);
-  U3_THROW_IFN (v4l2capture_, "before sync runtime props" + VTOLOG (capprops.capi_.width_) + VTOLOG (capprops.capi_.height_) + VTOLOG (capprops.capi_.fps_) + VTOLOG (fourcc));
+  ::libs::utility::checks::throw_ifn ((bool) v4l2capture_, "before sync runtime props" + VTOLOG (capprops.capi_.width_) + VTOLOG (capprops.capi_.height_) + VTOLOG (capprops.capi_.fps_) + VTOLOG (fourcc));
   capparams_ = capprops.capi_;
 
   const auto runtime_width         = v4l2capture_->getWidth ();
@@ -178,7 +178,7 @@ CamImpl::sync_correct_props (syn::VideoCorrectProp::craw_ptr correctprops)
     // U3_LOG_DATA_DEV (VTOLOG (queryctrl.minimum) + VTOLOG (queryctrl.maximum) + VTOLOG (correctprops->bright_.first) + VTOLOG (control.value));
     if (-1 == ioctl (fd, VIDIOC_S_CTRL, &control))
     {
-      U3_LOG_DATA_ERROR (VTOLOG (cid2koeff.first) + TOLOG (strerror (errno)));
+      U3_LOG_DATA_DBG (VTOLOG (cid2koeff.first) + TOLOG (strerror (errno)));
     }
   }
 }

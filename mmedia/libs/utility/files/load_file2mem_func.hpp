@@ -30,7 +30,7 @@ bool
 load_file2mem (const std::string& file_path, TContainer& ret)
 {
   std::ifstream file (file_path, std::ios::binary | std::ios::in);
-  U3_ASSERT (!file_path.empty ());
+  ::libs::utility::checks::throw_ifn (!file_path.empty ());
 
   ret.clear ();
 

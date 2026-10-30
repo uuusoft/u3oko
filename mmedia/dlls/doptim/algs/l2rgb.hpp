@@ -61,7 +61,7 @@ class CL2RgbAlg final : public IOptimAlg
       break;
 #endif
     default:
-      U3_MARK ("failed");
+      ::libs::utility::checks::mark ("failed");
       sel_.set (::libs::optim::s16bit::convert::l_vs_rgb::l_to_rgb24_alu);
       break;
     }

@@ -61,7 +61,7 @@ Filter::stop_int ()
 void
 Filter::init_pts (syn::ConnectInfo* info)
 {
-  U3_ASSERT (info);
+  ::libs::utility::checks::throw_ifn (info);
   info->count_ins_ = 1;
   info->ins_[0].set_info (true, ::libs::icore::impl::base::obj::Points::input);
   info->count_outs_ = 1;
@@ -83,7 +83,7 @@ Filter::process_events (syn::TransformInfo& info)
     if (devent)
     {
       finfo_.active_impl_ = devent->get_interface ();
-      U3_ASSERT (!finfo_.active_impl_.expired ());
+      ::libs::utility::checks::throw_ifn (!finfo_.active_impl_.expired ());
     }
   }
 }
@@ -95,7 +95,7 @@ Filter::default_send_func (
   const syn::Buff2ModuleInfo::craw_ptr minfo,
   const syn::id_link_type&             id)
 {
-  U3_ASSERT (minfo);
+  ::libs::utility::checks::throw_ifn (minfo);
   auto*                   linkprops = ::libs::iproperties::helpers::get_prop_links ();
   auto                    helper    = linkprops->get_links_lockfree ()[syn::mids::mdata2appl].lock ();
   auto&                   bufs      = (**info.ibuf_);

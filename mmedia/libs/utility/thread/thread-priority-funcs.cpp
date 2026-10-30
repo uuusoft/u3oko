@@ -39,8 +39,8 @@ to_string (const Priorities& val) -> std::string
 }
 
 
-void
-set_thread_priority (const std::thread::id& thread, const Priorities& val)
+auto
+set_thread_priority (const std::thread::id& thread, const Priorities& val) -> void
 {
   U3_XLOG_DBG ("change priority thread " << thread << " to " + to_string (val));
 #ifdef U3_OS_WIN32_DESKTOP

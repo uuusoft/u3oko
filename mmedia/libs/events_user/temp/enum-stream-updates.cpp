@@ -25,7 +25,7 @@ to_string (const StreamUpdates& val)
   auto finger = vals.find (val);
   if (vals.end () == finger)
   {
-    U3_MARK ("received StreamUpdates::unknown");
+    ::libs::utility::checks::mark("received StreamUpdates::unknown");
     finger = vals.find (StreamUpdates::unknown);
   }
   return finger->second;

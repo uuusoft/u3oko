@@ -25,7 +25,7 @@ class IOptimAlg
   syn::hioptim
   get ()
   {
-    U3_ASSERT (sel_.self_test ());
+    ::libs::utility::checks::throw_ifn (sel_.self_test ());
     return sel_;
   }
 

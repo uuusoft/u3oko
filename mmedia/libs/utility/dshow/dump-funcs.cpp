@@ -92,17 +92,16 @@ dump (const AM_MEDIA_TYPE* minfo)
 
   if (FORMAT_VideoInfo == minfo->formattype)
   {
-    U3_ASSERT (minfo->pbFormat);
-    U3_ASSERT (minfo->cbFormat >= sizeof (FORMAT_VideoInfo))
-    auto* info = ::libs::utility::casts::reinterpret_cast_helper< VIDEOINFOHEADER* > (minfo->pbFormat);
+    ::libs::utility::checks::throw_ifn (minfo->pbFormat);
+    ::libs::utility::checks::throw_ifn (minfo->cbFormat >= sizeof (FORMAT_VideoInfo)) auto* info = ::libs::utility::casts::reinterpret_cast_helper< VIDEOINFOHEADER* > (minfo->pbFormat);
     dump (*info);
     return;
   }
 
   if (FORMAT_VideoInfo2 == minfo->formattype)
   {
-    U3_ASSERT (minfo->pbFormat);
-    U3_ASSERT (minfo->cbFormat >= sizeof (FORMAT_VideoInfo2));
+    ::libs::utility::checks::throw_ifn (minfo->pbFormat);
+    ::libs::utility::checks::throw_ifn (minfo->cbFormat >= sizeof (FORMAT_VideoInfo2));
     auto* info = ::libs::utility::casts::reinterpret_cast_helper< VIDEOINFOHEADER2* > (minfo->pbFormat);
     dump (*info);
     return;

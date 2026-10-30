@@ -14,14 +14,14 @@ namespace libs::optim::convert::x16_x8
 void
 get_params (::libs::optim::io::MCallInfo& info, const ::libs::optim::io::ProxyBuf** x16, ::libs::optim::io::ProxyBuf** x8)
 {
-  U3_THROW_IFN (1 == info.srcs_.size (), "src not equal 1");
-  U3_THROW_IFN (1 == info.dsts_.size (), "dst not equal 1");
+  ::libs::utility::checks::throw_ifn (1 == info.srcs_.size (), "src not equal 1");
+  ::libs::utility::checks::throw_ifn (1 == info.dsts_.size (), "dst not equal 1");
 
   *x16 = &info.srcs_[0];
   *x8  = &info.dsts_[0];
 
-  U3_THROW_IFN (*x16, "empty x16");
-  U3_THROW_IFN (x8, "empty x8");
+  ::libs::utility::checks::throw_ifn (*x16, "empty x16");
+  ::libs::utility::checks::throw_ifn (x8, "empty x8");
 
   (*x16)->check ("y16 convert::x16_x8");
   (*x8)->check ("y8 convert::x16_x8");

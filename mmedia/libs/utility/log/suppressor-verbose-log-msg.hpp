@@ -38,11 +38,12 @@ class SupressorVerboseLogMsg final
     }
 
     std::scoped_lock lock (mtx_);
-    const auto       now    = std::chrono::system_clock::now ();
-    const auto       strval = to_string_func (val);
-    auto             finger = vals_.find (strval);
 
-    U3_ASSERT (!strval.empty ());
+    const auto now    = std::chrono::system_clock::now ();
+    const auto strval = to_string_func (val);
+    auto       finger = vals_.find (strval);
+
+    ::libs::utility::checks::throw_ifn (!strval.empty ());
     if (finger == vals_.end ())
     {
       vals_.insert ({ strval, { val, 1, 0, libs::utility::time::TimePoint (now) } });

@@ -61,7 +61,7 @@ class CNV212Y16Alg final : public IOptimAlg
       break;
 #endif
     default:
-      U3_MARK ("failed");
+      ::libs::utility::checks::mark ("failed");
       sel_.set (::libs::optim::convert::nv21_y16::alu);
       break;
     }

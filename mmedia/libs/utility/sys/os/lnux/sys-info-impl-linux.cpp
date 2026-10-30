@@ -16,7 +16,7 @@ get_os_info () -> std::string
 {
   std::string ret;
   std::string type_os = "unknown";
-  U3_ASSERT_THROW ("failed");
+  ::libs::utility::checks::throw_exception ("failed");
   return ret;
 }
 
@@ -25,7 +25,7 @@ get_mem_info () -> std::string
 {
   std::string ret;
   // const std::int32_t b2mb = 1024 * 1024;
-  U3_ASSERT_THROW ("failed");
+  ::libs::utility::checks::throw_exception ("failed");
   return ret;
 }
 
@@ -33,7 +33,7 @@ inline auto
 get_display_info () -> std::string
 {
   std::string ret;
-  U3_ASSERT_THROW ("failed");
+  ::libs::utility::checks::throw_exception ("failed");
   return ret;
 }
 
@@ -65,7 +65,7 @@ SysInfoImpl::get (const HardwareType& type) const -> std::string
     break;
 #  endif
   default:
-    U3_ASSERT_THROW ("failed");
+    ::libs::utility::checks::throw_exception ("failed");
     break;
   }
   return ret;
@@ -75,7 +75,7 @@ auto
 SysInfoImpl::count_cpu () const -> short
 {
   auto ret = U3_CAST_INT16 (get_nprocs ());
-  U3_ASSERT (ret > 0);
+  ::libs::utility::checks::throw_ifn (ret > 0);
   return ret;
 }
 }   // namespace libs::utility::sys::os::linux

@@ -25,7 +25,7 @@ BaseLogEvent::get_mid_int () const -> const ::libs::events::IEvent::hid_type&
 auto
 BaseLogEvent::text (const LogTexts& type) const -> std::string
 {
-  U3_ASSERT_THROW ("call BaseLogEvent::text");
+  ::libs::utility::checks::throw_exception ("call BaseLogEvent::text");
   return std::string ("BaseLogEvent placeholder");
 }
 

@@ -14,7 +14,7 @@ struct IdStorageChunk final {
 
   IdStorageChunk ()
   {
-    U3_ASSERT (!is_valid ());
+    ::libs::utility::checks::throw_ifn (!is_valid ());
   }
 
   bool

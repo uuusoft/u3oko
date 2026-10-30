@@ -11,7 +11,7 @@ struct NameRemover final {
   NameRemover (const std::string& name) :
     name_ (name)
   {
-    U3_ASSERT (!name_.empty ());
+    ::libs::utility::checks::throw_ifn (!name_.empty ());
     boost::interprocess::shared_memory_object::remove (name_.c_str ());
   }
 

@@ -11,8 +11,8 @@ namespace libs::events_gui::utils::helpers
 inline bool
 is_equal (ISize::craw_ptr left, ISize::craw_ptr right)
 {
-  U3_ASSERT (left);
-  U3_ASSERT (right);
+  ::libs::utility::checks::throw_ifn (left);
+  ::libs::utility::checks::throw_ifn (right);
 
   if (left == right)
   {

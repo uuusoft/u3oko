@@ -21,9 +21,9 @@ struct FrameDims final {
   bool
   check () const
   {
-    U3_ASSERT (width_ >= 0);
-    U3_ASSERT (height_ >= 0);
-    U3_ASSERT (width_ <= stride_);
+    ::libs::utility::checks::throw_ifn (width_ >= 0);
+    ::libs::utility::checks::throw_ifn (height_ >= 0);
+    ::libs::utility::checks::throw_ifn (width_ <= stride_);
     return width_ >= 0 && height_ >= 0 && width_ <= stride_;
   }
 

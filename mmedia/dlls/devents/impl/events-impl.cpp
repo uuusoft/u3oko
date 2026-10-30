@@ -29,7 +29,7 @@ EventsImpl::get (const hid_type& eid) -> syn::IEvent::ptr
   }
 
   auto ret = itf->second ();
-  U3_ASSERT (ret);
+  ::libs::utility::checks::throw_ifn ((bool) ret);
   ++counter_create_events_[id_event_type { eid }];
 
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
@@ -91,7 +91,7 @@ EventsImpl::dcast (syn::IEvent::craw_ptr src, const hid_type& eid) -> const void
 auto
 EventsImpl::event2xml (syn::IEvent::ptr& src, std::string& xml) -> bool
 {
-  U3_ASSERT (src);
+  ::libs::utility::checks::throw_ifn (src);
   try
   {
     std::stringstream            istr;
@@ -118,7 +118,7 @@ EventsImpl::xml2event (const std::string& xml, syn::IEvent::ptr& dst) -> bool
   try
   {
     xmla >> BOOST_SERIALIZATION_NVP (dst);
-    U3_ASSERT (dst);
+    ::libs::utility::checks::throw_ifn (dst);
     dst->sync_txt2val ();
   }
   catch (std::exception& excpt)
@@ -133,7 +133,7 @@ EventsImpl::xml2event (const std::string& xml, syn::IEvent::ptr& dst) -> bool
 auto
 EventsImpl::event2bin (syn::IEvent::ptr& src, std::ostream& bin) -> bool
 {
-  U3_ASSERT (src);
+  ::libs::utility::checks::throw_ifn (src);
   try
   {
     boost::archive::binary_oarchive arc (bin);
@@ -155,7 +155,7 @@ EventsImpl::bin2event (std::istream& bin, syn::IEvent::ptr& dst) -> bool
   try
   {
     arc >> dst;
-    U3_ASSERT (dst);
+    ::libs::utility::checks::throw_ifn (dst);
     dst->sync_txt2val ();
   }
   catch (std::exception& excpt)
@@ -180,8 +180,8 @@ EventsImpl::dbg_state_dump () -> void
 void
 EventsImpl::make_event_funcs ()
 {
-  U3_ASSERT (gen_func_events_.empty ());
-  U3_ASSERT (cast_func_events_.empty ());
+  ::libs::utility::checks::throw_ifn (gen_func_events_.empty ());
+  ::libs::utility::checks::throw_ifn (cast_func_events_.empty ());
 
   // add_event<::libs::events::IEvent);
   add_event< ::libs::events::IWrapBaseEvent > ();

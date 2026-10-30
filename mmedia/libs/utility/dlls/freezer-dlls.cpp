@@ -17,8 +17,8 @@ FreezerDlls::add (const std::string& name, const dll_type& lib)
     return;
   }
 
-  U3_ASSERT (!name.empty ());
-  U3_ASSERT (lib.is_loaded ());
+  ::libs::utility::checks::throw_ifn (!name.empty ());
+  ::libs::utility::checks::throw_ifn (lib.is_loaded ());
   lock_type lock (mtx_);
   dlls_.insert (dlls_type::value_type (name, lib));
 #endif

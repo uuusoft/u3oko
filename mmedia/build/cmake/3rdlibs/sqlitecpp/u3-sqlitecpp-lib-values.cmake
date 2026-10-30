@@ -1,0 +1,36 @@
+# author      Erashov Anton erashov2026@proton.me
+# date        06.03.2026
+# copyright   Erashov A.I.
+# file        u3-sqlitecpp-lib-values.cmake
+
+set(U3_3RDLIB_OSRC_URL_SQLITECPP https://github.com/SRombauts/SQLiteCpp.git)
+set(U3_3RDLIB_NAME_SQLITECPP sqlitecpp)
+set(U3_3RDLIB_VER_SQLITECPP 3.3.3)
+
+string(MAKE_C_IDENTIFIER ${U3_3RDLIB_VER_SQLITECPP} U3_3RDLIB_VER_SQLITECPP_CID)
+
+set(U3_3RDLIB_ESRC_URL_SQLITECPP_BIN ${U3_3RDLIBS_URL_BIN}/lib-sqlitecpp-bin-${U3_3RDLIB_VER_SQLITECPP}-${U3_ENV_GEN_RAW_3RDLIB_POSTFIX}.zip)
+set(U3_3RDLIB_ESRC_URL_SQLITECPP_SRC ${U3_3RDLIBS_URL_SRC}/lib-sqlitecpp-src-${U3_3RDLIB_VER_SQLITECPP}.zip)
+
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5 f1290dbc52166570601d6ddfcaf54a3f)
+set(U3_3RDLIB_SQLITECPP_3_3_3_EXT_MD5 0)
+
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5_Linux_Clang_21_Clang_21__x64_Release_none 0)
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5_Linux_Clang_21_Clang_21__x64_Debug_ub 2973f57e7ca8de62730c9b0b09f5a755)
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5_Linux_GNU_15_GNU_15__x64_Debug_thread 0)
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5_Linux_Clang_21_Clang_21__x64_Debug_none 0)
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5_Linux_Clang_21_Clang_21__x64_Debug_address d0cdc55313fbaa0829c99e043a54ef3d)
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5_Linux_Clang_21_Clang_21__x64_Release_address 4807e22422cf05879dd8ad9b2bd6faef)
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5_Linux_Clang_23_Clang_23__x64_Release_none d3f5b59875d611dfdb8e1d86e217feca)
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5_Linux_Clang_23_Clang_23__x64_Debug_none f38f792f2ec8a2ff06cb0fc5bed498df)
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5_Linux_Clang_23_Clang_23__x64_Debug_address ff5a0d4b1a4847a82706db2705429501)
+
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5_OrangePi_Clang_22_Clang_22__aarch64_Release_none 0)
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5_OrangePi_Clang_22_Clang_22__aarch64_Debug_address 221e91b3d6042ff6a91cec60a13c60fc)
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5_OrangePi_Clang_22_Clang_22__aarch64_Release_ub d9cbda3ca7bb662c35dd7758791773ea)
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5_OrangePi_Clang_22_Clang_22__aarch64_Release_none cf7e2a0d1825df0f387add0daafd3ef5)
+
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5_Android_Clang_21_Clang_21__aarch64_RelWithDebInfo_none 70b24deeb326e4658091df7680b14ead)
+set(U3_3RDLIB_SQLITECPP_3_3_3_MD5_Android_Clang_21_Clang_21__aarch64_Debug_none 0)
+
+set(U3_3RDLIB_SQLITECPP_MD5 ${U3_3RDLIB_SQLITECPP${U3_3RDLIB_VER_SQLITECPP_CID}_MD5})

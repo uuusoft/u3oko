@@ -11,8 +11,8 @@ template< typename TType >
 auto
 set_buf (TType* src, TType val, std::size_t count) -> void
 {
-  U3_ASSERT (src);
-  U3_ASSERT (count > 0);
+  ::libs::utility::checks::throw_ifn (src);
+  ::libs::utility::checks::throw_ifn (count > 0);
   std::fill (src, src + count, val);
 }
 }   // namespace libs::utility::mem

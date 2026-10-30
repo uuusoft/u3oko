@@ -26,7 +26,7 @@ ProcessLogEvent::get_mid_int () const -> const ::libs::events::IEvent::hid_type&
 auto
 ProcessLogEvent::text (const LogTexts& type) const -> std::string
 {
-  U3_ASSERT_THROW ("failed");
+  ::libs::utility::checks::throw_exception ("failed");
   return "ProcessLogEvent::text:: wtf???";
 }
 

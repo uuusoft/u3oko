@@ -26,7 +26,7 @@ http2json (const std::string& http, std::string& json)
     const auto beg_equal = http.find ('=', beg_pos);
     const auto beg_amper = http.find ('&', beg_equal);
 
-    U3_THROW_IFN (std::string::npos != beg_equal, "convert http 2 json, equal not found");
+    ::libs::utility::checks::throw_ifn (std::string::npos != beg_equal, "convert http 2 json, equal not found");
 
     json += count_tags ? ", " : "";
     json += "\"";

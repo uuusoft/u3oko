@@ -59,7 +59,7 @@ class CSat2ByteAlg final : public IOptimAlg
       break;
 #endif
     default:
-      U3_MARK ("failed");
+      ::libs::utility::checks::mark ("failed");
       sel_.set (::libs::optim::s16bit::ops::sat_2byte_alu);
       break;
     }

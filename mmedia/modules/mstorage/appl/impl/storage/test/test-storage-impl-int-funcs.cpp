@@ -30,8 +30,8 @@ TestStorageImpl::prepare_write_seance (const seance_type& info)
   auto full_path = ::libs::utility::files::make_path (root_path_, info);
   U3_LOG_DATA_MARK ("prepare folder for write seance" + TOLOG (full_path));
   ::libs::utility::files::create_folder (full_path);
-  U3_ASSERT (seances2infos_.end () != seances2infos_.find (info));
-  U3_ASSERT_THROW ("TestStorageImpl::prepare_write_seance: unimplementated");
+  ::libs::utility::checks::throw_ifn (seances2infos_.end () != seances2infos_.find (info));
+  ::libs::utility::checks::throw_exception ("TestStorageImpl::prepare_write_seance: unimplementated");
   // auto uinfo = seances2infos_[info];
   // helpers::store_seance (root_path_, uinfo);
   // uinfo.state_.count_fragments_ = 0;
@@ -44,7 +44,7 @@ TestStorageImpl::save_impl (const seance_type& info, const std::uint8_t* mem, co
 {
   auto& sinfo = get_seance_info (info);
   get_next_write_id_by_seance (info, sinfo);
-  U3_THROW_IFN (save_data (info, sinfo, mem, size_mem), "save data to file");
+  ::libs::utility::checks::throw_ifn (save_data (info, sinfo, mem, size_mem), "save data to file");
   return sinfo.cursor_;
 }
 
@@ -78,17 +78,17 @@ TestStorageImpl::get_next_write_id_by_seance (const seance_type& info, info_sean
     }
 
     dfile.open (file_path, std::ios::trunc | std::ios::binary | std::ios::out);
-    U3_THROW_IFN (dfile.is_open (), "open data file" + TOLOG (file_path));
-    U3_THROW_IFN (!dfile.bad (), "error state data file");
+    ::libs::utility::checks::throw_ifn (dfile.is_open (), "open data file" + TOLOG (file_path));
+    ::libs::utility::checks::throw_ifn (!dfile.bad (), "error state data file");
   }
 
-  U3_ASSERT (sinfo.index_state_.is_valid ());
+  ::libs::utility::checks::throw_ifn (sinfo.index_state_.is_valid ());
   sinfo.cursor_.reset ();
   sinfo.cursor_.id_file_     = sinfo.index_state_.indx_data_file_;
   sinfo.cursor_.id_fragment_ = sinfo.index_state_.count_fragments_;
 
-  U3_ASSERT (sinfo.cursor_.is_valid ());
-  U3_ASSERT (sinfo.data_file_.is_open ());
+  ::libs::utility::checks::throw_ifn (sinfo.cursor_.is_valid ());
+  ::libs::utility::checks::throw_ifn (sinfo.data_file_.is_open ());
 }
 
 
@@ -100,8 +100,8 @@ TestStorageImpl::save_data (
   const std::size_t   size_mem) -> bool
 {
   auto& file = sinfo.data_file_;
-  U3_ASSERT (file.is_open ());
-  U3_ASSERT (sinfo.index_state_.is_valid ());
+  ::libs::utility::checks::throw_ifn (file.is_open ());
+  ::libs::utility::checks::throw_ifn (sinfo.index_state_.is_valid ());
 
   ++sinfo.index_state_.count_fragments_;
   sinfo.index_state_.off_fragments_.emplace_back (sinfo.size_data_file_, size_mem);              //
@@ -112,12 +112,12 @@ TestStorageImpl::save_data (
     U3_LOG_DATA_ERROR ("write to data file" + VTOLOG (errno) + TOLOG (strerror (errno)));
     --sinfo.index_state_.count_fragments_;
     sinfo.index_state_.off_fragments_.pop_back ();
-    U3_ASSERT (sinfo.index_state_.is_valid ());
+    ::libs::utility::checks::throw_ifn (sinfo.index_state_.is_valid ());
     return false;
   }
 
   sinfo.size_data_file_ += size_mem;
-  U3_ASSERT (sinfo.index_state_.is_valid ());
+  ::libs::utility::checks::throw_ifn (sinfo.index_state_.is_valid ());
   return true;
 }
 

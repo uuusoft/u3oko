@@ -10,7 +10,7 @@ namespace libs::iproperties::appl_paths::helpers
 inline std::string
 get_appl_folder (const std::string& name_appl)
 {
-  U3_THROW_IFN (!name_appl.empty (), "name_appl empty");
+  ::libs::utility::checks::throw_ifn (!name_appl.empty (), "name_appl empty");
   std::string ret;
 
 #ifdef U3_OS_WIN32_DESKTOP
@@ -20,7 +20,7 @@ get_appl_folder (const std::string& name_appl)
 
     if (FAILED (SHGetFolderPathA (0, CSIDL_LOCAL_APPDATA, 0, SHGFP_TYPE_DEFAULT, tbuf)))
     {
-      U3_ASSERT_THROW ("failed");
+      ::libs::utility::checks::throw_exception ("failed");
       return ret;
     }
 

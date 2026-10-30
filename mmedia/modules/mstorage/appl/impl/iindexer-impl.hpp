@@ -19,7 +19,7 @@ class IIndexerImpl
   void
   set_info (const syn::PathInfo::craw_ptr info)
   {
-    // U3_ASSERT (info);
+    // ::libs::utility::checks::throw_ifn (info);
     set_info_int (info);
   }
 
@@ -37,7 +37,7 @@ class IIndexerImpl
   void
   update_stream (syn::UpdateStream::raw_ptr info)
   {
-    U3_ASSERT (info);
+    ::libs::utility::checks::throw_ifn (info);
     update_stream_int (info);
   }
 

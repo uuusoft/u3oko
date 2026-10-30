@@ -20,6 +20,6 @@ enum class Priorities : std::uint32_t
   unknown       = 0xFF    //<
 };
 
-std::string to_string (const Priorities& val);
-void        set_thread_priority (const std::thread::id& thread, const Priorities& val);
+auto to_string (const Priorities&) -> std::string;
+auto set_thread_priority (const std::thread::id&, const Priorities&) -> void;
 }   // namespace libs::utility::thread

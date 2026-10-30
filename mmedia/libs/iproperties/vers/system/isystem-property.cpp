@@ -103,10 +103,10 @@ ISystemProperty::set_mcalls_lockfree (::libs::optim::mcalls::IMCaller::ptr& ptr)
 auto
 ISystemProperty::self_test_int () const -> bool
 {
-  U3_ASSERT (!appl_path_.empty ());
-  U3_ASSERT (!data_path_.empty ());
-  U3_ASSERT (mthreads_);
-  U3_ASSERT (main_appl_properties_);
+  ::libs::utility::checks::throw_ifn (!appl_path_.empty ());
+  ::libs::utility::checks::throw_ifn (!data_path_.empty ());
+  ::libs::utility::checks::throw_ifn ((bool) mthreads_);
+  ::libs::utility::checks::throw_ifn (main_appl_properties_);
   return appl_path_.empty () || data_path_.empty () || !mthreads_ || !main_appl_properties_ ? false : true;
 }
 

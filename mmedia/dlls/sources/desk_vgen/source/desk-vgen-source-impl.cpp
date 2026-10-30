@@ -61,9 +61,7 @@ SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo >& sources)
 
 
 void
-SourceImpl::get_raw_data_int (
-  ::dlls::sources::gen_lib::syn::pkeys2bufs_type& bufs,
-  ::dlls::sources::gen_lib::syn::tevents_type*    events)
+SourceImpl::get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* events)
 {
   auto& buf = (*bufs)[::utils::dbufs::video::consts::offs::raw];
   buf->set_flag (::utils::dbufs::BufFlags::empty, true);
@@ -85,7 +83,7 @@ SourceImpl::get_raw_data_int (
         ::libs::utility::uids::minor::id_val::rgb24,
         utils::dbufs::video::DimChecks::disable));
 
-    U3_THROW_IFN (rgb_buf_->get_size () >= capinfo.size_dest_data_, "buf too small");
+    ::libs::utility::checks::throw_ifn (rgb_buf_->get_size () >= capinfo.size_dest_data_, "buf too small");
     ::libs::utility::mem::mem_copy_raw (rgb_buf_->get (), buf->get_buf (), capinfo.size_dest_data_);
     buf->set_flag (::utils::dbufs::BufFlags::empty, false);
     buf->set_mem_var (::utils::dbufs::MemVars::size_data, capinfo.size_dest_data_);
@@ -94,7 +92,7 @@ SourceImpl::get_raw_data_int (
 
 
 void
-SourceImpl::set_cpu_int (::libs::utility::sys::cpu::CpuExts current_optim)
+SourceImpl::set_cpu_int (syn::CpuExts current_optim)
 {
 }
 

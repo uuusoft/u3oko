@@ -56,7 +56,7 @@ Filter::transform_int (syn::TransformInfo& info)
   prepare_transform (info);
 
   auto events = info.frame_events_;
-  U3_ASSERT (events);
+  ::libs::utility::checks::throw_ifn ((bool) events);
 
   if (!send_base_interf_)
   {

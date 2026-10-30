@@ -21,16 +21,16 @@ alu (
   std::uint32_t       max_size_buf_rgb32,
   std::uint8_t        fill_alpha)
 {
-  U3_ASSERT (rgb24_buf);
-  U3_ASSERT (stride_rgb24);
-  U3_ASSERT (width);
-  U3_ASSERT (height);
-  U3_ASSERT (rgb32_buf);
-  U3_ASSERT (stride_rgb32);
-  U3_ASSERT (max_size_buf_rgb32);
-  U3_ASSERT (width * 3 <= stride_rgb24);
-  U3_ASSERT (width * 4 <= stride_rgb32);
-  U3_ASSERT (stride_rgb32 * height <= max_size_buf_rgb32);
+  ::libs::utility::checks::throw_ifn (rgb24_buf);
+  ::libs::utility::checks::throw_ifn (stride_rgb24);
+  ::libs::utility::checks::throw_ifn (width);
+  ::libs::utility::checks::throw_ifn (height);
+  ::libs::utility::checks::throw_ifn (rgb32_buf);
+  ::libs::utility::checks::throw_ifn (stride_rgb32);
+  ::libs::utility::checks::throw_ifn (max_size_buf_rgb32);
+  ::libs::utility::checks::throw_ifn (width * 3 <= stride_rgb24);
+  ::libs::utility::checks::throw_ifn (width * 4 <= stride_rgb32);
+  ::libs::utility::checks::throw_ifn (stride_rgb32 * height <= max_size_buf_rgb32);
 
   const std::uint32_t leak_rgb32 = stride_rgb32 - width * 4;
   const std::uint32_t leak_rgb24 = stride_rgb24 - width * 3;

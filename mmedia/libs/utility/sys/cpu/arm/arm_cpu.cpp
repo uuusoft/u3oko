@@ -15,7 +15,7 @@ get_text_about_cpu ()
 {
   // debug
   std::string ret = "test text cpu arm";
-  U3_ASSERT (!ret.empty ());
+  ::libs::utility::checks::throw_ifn (!ret.empty ());
   return ret;
 }
 
@@ -32,7 +32,7 @@ bool
 get_all_info_cpu (SupportExtensionCPU &ret)
 {
   ret.reset ();
-  U3_TEST (get_exts_cpu (ret), "get_all_info_cpu");
+  ::libs::utility::checks::test (get_exts_cpu (ret), "get_all_info_cpu");
   ret.id_cpu_ = get_text_about_cpu ();
   return true;
 }

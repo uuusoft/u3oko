@@ -17,8 +17,8 @@ call_exec (
   const std::string& cmd,
   const std::string& info)
 {
-  U3_ASSERT (!cmd.empty ());
-  U3_ASSERT (pbase);
+  ::libs::utility::checks::throw_ifn (!cmd.empty ());
+  ::libs::utility::checks::throw_ifn (pbase);
 
   MemoryHandler sql_error;
 
@@ -29,6 +29,6 @@ call_exec (
     nullptr,
     sql_error.update_as< char* > ());
 
-  U3_THROW_IFN (SQLITE_OK == res, "sql " + info + ", " + cmd + std::string (":") + (sql_error.get_as< char* > () ? sql_error.get_as< char* > () : "?errsql?"));
+  ::libs::utility::checks::throw_ifn (SQLITE_OK == res, "sql " + info + ", " + cmd + std::string (":") + (sql_error.get_as< char* > () ? sql_error.get_as< char* > () : "?errsql?"));
 }
 }   // namespace libs::utility::sqlite

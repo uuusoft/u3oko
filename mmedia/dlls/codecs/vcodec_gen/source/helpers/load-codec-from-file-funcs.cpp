@@ -42,9 +42,9 @@ load_codec_from_file (
     info.lib_, make_name_function (file_name, consts::func_name_get_info));
 #endif
 
-  U3_THROW_IFN (info.create_codec_, "empty info.create_codec_");
-  U3_THROW_IFN (info.free_codec_, "empty info.free_codec_");
-  U3_THROW_IFN (info.get_codec_info_, "empty info.get_codec_info_");
-  U3_THROW_IFN (info.check (), "failed load codec" + TOLOG (file_name) + TOLOG (full_path));
+  ::libs::utility::checks::throw_ifn ((bool) info.create_codec_, "empty info.create_codec_");
+  ::libs::utility::checks::throw_ifn ((bool) info.free_codec_, "empty info.free_codec_");
+  ::libs::utility::checks::throw_ifn ((bool) info.get_codec_info_, "empty info.get_codec_info_");
+  ::libs::utility::checks::throw_ifn (info.check (), "failed load codec" + TOLOG (file_name) + TOLOG (full_path));
 }
 }   // namespace dlls::codecs::vcodec_gen::helpers

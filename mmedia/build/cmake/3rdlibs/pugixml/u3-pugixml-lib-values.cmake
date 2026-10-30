@@ -1,0 +1,37 @@
+# author      Erashov Anton erashov2026@proton.me
+# date        10.09.2024
+# copyright   Erashov A.I.
+# file        u3-pugixml-lib-values.cmake
+
+set(U3_3RDLIB_OSRC_URL_PUGIXML https://github.com/zeux/pugixml.git)
+set(U3_3RDLIB_NAME_PUGIXML pugixml)
+set(U3_3RDLIB_VER_PUGIXML 1.14)
+
+string(MAKE_C_IDENTIFIER ${U3_3RDLIB_VER_PUGIXML} U3_3RDLIB_VER_PUGIXML_CID)
+
+set(U3_3RDLIB_ESRC_URL_PUGIXML_BIN ${U3_3RDLIBS_URL_BIN}/lib-pugixml-bin-${U3_3RDLIB_VER_PUGIXML}-${U3_ENV_GEN_RAW_3RDLIB_POSTFIX}.zip)
+set(U3_3RDLIB_ESRC_URL_PUGIXML_SRC ${U3_3RDLIBS_URL_SRC}/lib-pugixml-src-${U3_3RDLIB_VER_PUGIXML}.zip)
+set(U3_3RDLIB_PUGIXML_FILE_NAME "${U3_PREFIX_LIB_NAME}pugixml.${U3_SUFFIX_LIB_NAME}")
+set(U3_3RDLIB_PUGIXML_EXT_MD5 0)
+
+set(U3_3RDLIB_PUGIXML_1_14_MD5 fbbde869620685270825ccdc0e35d7fc)
+set(U3_3RDLIB_PUGIXML_1_14_EXT_MD5 e5722674fcb33a147aaae5a136d44943)
+
+set(U3_3RDLIB_PUGIXML_1_14_MD5_Linux_Clang_21_Clang_21__x64_Release_none a88395e4a40317a40356deb4a5258ed2)
+set(U3_3RDLIB_PUGIXML_1_14_MD5_Linux_Clang_21_Clang_21__x64_Debug_ub 53768a4c393cf17e3b506fd4a3498554)
+set(U3_3RDLIB_PUGIXML_1_14_MD5_Linux_GNU_15_GNU_15__x64_Debug_thread ad17d200d2369254f6f6ea62d4716c36)
+set(U3_3RDLIB_PUGIXML_1_14_MD5_Linux_Clang_21_Clang_21__x64_Debug_none 8899a9396867446164f11482bbc52236)
+set(U3_3RDLIB_PUGIXML_1_14_MD5_Linux_Clang_21_Clang_21__x64_Debug_address 9bbf984ae5ea84cef27cbb3ed78fc08f)
+set(U3_3RDLIB_PUGIXML_1_14_MD5_Linux_Clang_21_Clang_21__x64_Release_address 71d16704660d5a8be72b6845545d7bfe)
+set(U3_3RDLIB_PUGIXML_1_14_MD5_Linux_Clang_23_Clang_23__x64_Release_none 7a8d0c28ef74b862c1a8d2826e32690c)
+set(U3_3RDLIB_PUGIXML_1_14_MD5_Linux_Clang_23_Clang_23__x64_Debug_none ec79672fc0069bae560e1f401be6a56e)
+set(U3_3RDLIB_PUGIXML_1_14_MD5_Linux_Clang_23_Clang_23__x64_Debug_address 637f7b79d01c19bce82329ae3e03a524)
+
+set(U3_3RDLIB_PUGIXML_1_14_MD5_OrangePi_Clang_22_Clang_22__aarch64_Release_none bc0469f5190f9aa298b11bd8017d2e62)
+set(U3_3RDLIB_PUGIXML_1_14_MD5_OrangePi_Clang_22_Clang_22__aarch64_Debug_address b0d9cfb3535595ae97c0fb199e1a5eb8)
+set(U3_3RDLIB_PUGIXML_1_14_MD5_OrangePi_Clang_22_Clang_22__aarch64_Release_ub 0ae96cc4d8215799c1c1e3854292cd23)
+
+set(U3_3RDLIB_PUGIXML_1_14_MD5_Android_Clang_21_Clang_21__aarch64_RelWithDebInfo_none 37edeef8d4881d9947650b5f87b6f351)
+set(U3_3RDLIB_PUGIXML_1_14_MD5_Android_Clang_21_Clang_21__aarch64_Debug_none 064012976d0c82b98f8585e8c9056d9e)
+
+set(U3_3RDLIB_PUGIXML_MD5 ${U3_3RDLIB_PUGIXML${U3_3RDLIB_VER_PUGIXML_CID}_MD5})

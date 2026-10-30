@@ -1,0 +1,34 @@
+# author      Erashov Anton erashov2026@proton.me
+# date        08.09.2024
+# copyright   Erashov A.I.
+# file        u3-openh264-lib-values.cmake
+
+set(U3_3RDLIB_OSRC_URL_OPENH264 https://github.com/cisco/openh264.git)
+set(U3_3RDLIB_NAME_OPENH264 openh264)
+set(U3_3RDLIB_VER_OPENH264 2.5.1)
+
+string(MAKE_C_IDENTIFIER ${U3_3RDLIB_VER_OPENH264} U3_3RDLIB_VER_OPENH264_CID)
+
+set(U3_3RDLIB_ESRC_URL_OPENH264_BIN ${U3_3RDLIBS_URL_BIN}/lib-openh264-bin-${U3_3RDLIB_VER_OPENH264}-${U3_ENV_GEN_RAW_3RDLIB_POSTFIX}.zip)
+set(U3_3RDLIB_ESRC_URL_OPENH264_SRC ${U3_3RDLIBS_URL_SRC}/lib-openh264-src-${U3_3RDLIB_VER_OPENH264}.zip)
+
+set(U3_3RDLIB_OPENH264_2_5_1_MD5 127ae07199ecb7b60b222197311f1a8b)
+#set(U3_3RDLIB_OPENH264_2_5_1_MD5 73e41947d91fd6f4739870fa68477b3c)
+
+set(U3_3RDLIB_OPENH264_2_5_1_MD5_Linux_Clang_21_Clang_21__x64_Release_none ecee6e0301ded58e1bbda10c3f029f8d)
+set(U3_3RDLIB_OPENH264_2_5_1_MD5_Linux_Clang_21_Clang_21__x64_Debug_ub e778b64cb3d6735755f3cf2053e1030f)
+set(U3_3RDLIB_OPENH264_2_5_1_MD5_Linux_GNU_15_GNU_15__x64_Debug_thread f165f2704d80bd476a832dbb96a12691)
+set(U3_3RDLIB_OPENH264_2_5_1_MD5_Linux_Clang_21_Clang_21__x64_Debug_none fec31339cc67e5646a26025e0dc53e38)
+set(U3_3RDLIB_OPENH264_2_5_1_MD5_Linux_Clang_21_Clang_21__x64_Debug_address 8554655bafec0070a3237a2b6c50f972)
+set(U3_3RDLIB_OPENH264_2_5_1_MD5_Linux_Clang_21_Clang_21__x64_Release_address 242cfaf509bb3fb9c25914aa475d4c11)
+set(U3_3RDLIB_OPENH264_2_5_1_MD5_Linux_Clang_23_Clang_23__x64_Release_none 7f813efae081836411c89ec1f882f167)
+set(U3_3RDLIB_OPENH264_2_5_1_MD5_Linux_Clang_23_Clang_23__x64_Debug_none 2b0b02db8b01923ce0e6aa432dad94da)
+set(U3_3RDLIB_OPENH264_2_5_1_MD5_Linux_Clang_23_Clang_23__x64_Debug_address 76272bd685652ae62b2cef4321c6b779)
+
+set(U3_3RDLIB_OPENH264_2_5_1_MD5_OrangePi_Clang_22_Clang_22__aarch64_Release_none d6dd2b59277a7830223445fb9c023d09)
+set(U3_3RDLIB_OPENH264_2_5_1_MD5_OrangePi_Clang_22_Clang_22__aarch64_Debug_address 0aff623c702af346bf2a5df8d89ca4a8)
+
+set(U3_3RDLIB_OPENH264_2_5_1_MD5_Android_Clang_21_Clang_21__aarch64_RelWithDebInfo_none b0fd56f682b851ce9204281879787bc1)
+set(U3_3RDLIB_OPENH264_2_5_1_MD5_Android_Clang_21_Clang_21__aarch64_Debug_none 71472e00555ab7304b345989bc303eee)
+
+set(U3_3RDLIB_OPENH264_MD5 ${U3_3RDLIB_OPENH264${U3_3RDLIB_VER_OPENH264_CID}_MD5})

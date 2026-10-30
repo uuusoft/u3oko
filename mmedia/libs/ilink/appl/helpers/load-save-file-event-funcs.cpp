@@ -33,7 +33,7 @@ load_event_from_bin_file (const std::string& path2folder, ::libs::events::IEvent
   {
     ::libs::events::IEvent::ptr msg;
     ::libs::iproperties::helpers::bin2event (ifs, msg);
-    U3_THROW_IFN (msg, "empty loaded msg" + TOLOG (path2folder));
+    ::libs::utility::checks::throw_ifn ((bool) msg, "empty loaded msg" + TOLOG (path2folder));
     dmsg->copy (msg.get ());
   }
 }

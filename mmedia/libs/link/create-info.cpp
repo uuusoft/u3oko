@@ -3,6 +3,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 */
+// #define U3_DBG_LOG_LEVEL_ENABLE
 #include "_make/libs-link-includes_int.hpp"
 #include "create-info.hpp"
 
@@ -11,8 +12,8 @@ namespace libs::link::helpers
 auto
 make_arg (const std::string& id, const std::string& val) -> std::string
 {
-  U3_ASSERT (!id.empty ());
-  U3_ASSERT (!val.empty ());
+  ::libs::utility::checks::throw_ifn (!id.empty ());
+  ::libs::utility::checks::throw_ifn (!val.empty ());
   const std::string ret (std::string ("--") + id + std::string ("=") + val);
   return ret;
 }
@@ -53,7 +54,7 @@ CreateInfo::CreateInfo (const vals_type& vals) :
                    { consts::text::id_code_runs, details::CodeRuns::usual },
                    { consts::text::id_server_side, false } } }
 {
-  U3_CALL_TRACE_INFO (VTOLOG (link_params_.size ()) + VTOLOG (vals.size ()));
+  U3_CALL_TRACE_DBG (VTOLOG (link_params_.size ()) + VTOLOG (vals.size ()));
   link_params_.reserve (link_params_.size () + vals.size ());
   for (const auto& [key, val] : vals)
   {
@@ -74,7 +75,7 @@ CreateInfo::CreateInfo (const vals_type& vals) :
 void
 CreateInfo::check () const
 {
-  // U3_THROW_IFN (!args_.empty (), "check args");
+  // ::libs::utility::checks::throw_ifn (!args_.empty (), "check args");
 }
 
 

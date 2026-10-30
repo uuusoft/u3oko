@@ -18,7 +18,7 @@ std::atomic< std::uint32_t > CallerImpl::impl_counter_ = 0;
 CallerImpl::CallerImpl ()
 {
   lock_type lock (mtx_);
-  U3_THROW_IFN (impl_counter_ >= 0 && impl_counter_ <= 1, VTOLOG (impl_counter_));
+  ::libs::utility::checks::throw_ifn (impl_counter_ >= 0 && impl_counter_ <= 1, VTOLOG (impl_counter_));
   ++impl_counter_;
   max_threads_ = 1;
   create_threads ();
@@ -104,9 +104,9 @@ get_thread_per_height (
     }
   }
 
-  U3_ASSERT (width_macro);
-  U3_ASSERT (1 == width_macro);
-  U3_ASSERT (find_fulled_buf);
+  ::libs::utility::checks::throw_ifn (width_macro);
+  ::libs::utility::checks::throw_ifn (1 == width_macro);
+  ::libs::utility::checks::throw_ifn (find_fulled_buf);
 
   if (find_fulled_buf)
   {
@@ -117,8 +117,8 @@ get_thread_per_height (
     thread_per_height = 1;
   }
 
-  U3_ASSERT (thread_per_height);
-  U3_ASSERT (thread_per_height != std::numeric_limits< std::uint32_t >::max ());
+  ::libs::utility::checks::throw_ifn (thread_per_height);
+  ::libs::utility::checks::throw_ifn (thread_per_height != std::numeric_limits< std::uint32_t >::max ());
 }
 
 
@@ -129,7 +129,7 @@ get_count_threads_func (
   const std::uint16_t max_threads,
   std::uint16_t&      athreads)
 {
-  U3_ASSERT (info.srcs_.size () || info.dsts_.size ());   // очевидно, какие то данные алгоритм должен или получать или генерировать
+  ::libs::utility::checks::throw_ifn (info.srcs_.size () || info.dsts_.size ());   // очевидно, какие то данные алгоритм должен или получать или генерировать
 
   // Ищем минимальный размер буфера среди всех переданных, как источников, так и приемников результата.
   std::uint32_t min_src_height = std::numeric_limits< std::uint32_t >::max ();
@@ -173,9 +173,9 @@ CallerImpl::mthreads_call_int (
 
   athreads = (0 == athreads) ? max_threads_ : athreads;            // вызывающий может явно установить количество потоков для обработки, иначе испольуем максимум
   athreads = std::min< std::uint16_t > (athreads, max_threads_);   // явно установленное значение не может быть больше максимального
-  U3_ASSERT (max_threads_ > 0);
-  U3_ASSERT (athreads <= max_threads_);
-  U3_ASSERT (athreads > 0);
+  ::libs::utility::checks::throw_ifn (max_threads_ > 0);
+  ::libs::utility::checks::throw_ifn (athreads <= max_threads_);
+  ::libs::utility::checks::throw_ifn (athreads > 0);
 
   //  Тестовый запуск потоков при пустой функции
   if (func.is_empty ())
@@ -198,7 +198,7 @@ CallerImpl::mthreads_call_int (
     call.params_ = info.params_;
   }
 
-  U3_THROW_IFN (info.dsts_.size () || info.srcs_.size (), "useless call without data" + VTOLOG (info.dsts_.size ()) + VTOLOG (info.srcs_.size ()));
+  ::libs::utility::checks::throw_ifn (info.dsts_.size () || info.srcs_.size (), "useless call without data" + VTOLOG (info.dsts_.size ()) + VTOLOG (info.srcs_.size ()));
 
   std::uint32_t thread_per_height   = 0;
   std::uint32_t selected_src_height = 0;
@@ -273,7 +273,7 @@ CallerImpl::mthreads_call_int (
       for (const io::ProxyBuf& cbuf : info.dsts_)
       {
         io::ProxyBuf new_add = cbuf;
-        U3_THROW_IFN (new_add.buf (), "new add buf empty");
+        ::libs::utility::checks::throw_ifn (new_add.buf (), "new add buf empty");
         if (new_add.buf ())
         {
           const std::uint32_t macro_height      = new_add.height_ / func.dst_align_.ay_;
@@ -316,7 +316,7 @@ CallerImpl::mthreads_call_int (
 void
 CallerImpl::stop_and_wait_threads ()
 {
-  U3_CALL_TRACE;
+  U3_CALL_TRACE_DBG;
   try
   {
     MTFuncInfo    fake_func;
@@ -374,7 +374,7 @@ CallerImpl::create_threads ()
       thread_indx);
   }
 
-  U3_ASSERT (threads_.size () == max_threads_);
+  ::libs::utility::checks::throw_ifn (threads_.size () == max_threads_);
 }
 
 
@@ -402,8 +402,8 @@ CallerImpl::thread_func_impl (const std::uint32_t thread_indx)
 
     try
     {
-      U3_ASSERT (calls_.size () > thread_indx);
-      U3_ASSERT (src_heights_.size () > thread_indx);
+      ::libs::utility::checks::throw_ifn (calls_.size () > thread_indx);
+      ::libs::utility::checks::throw_ifn (src_heights_.size () > thread_indx);
       thread_funcs_[thread_indx](calls_[thread_indx]);
     }
     catch (boost::exception& excpt)

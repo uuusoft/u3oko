@@ -22,7 +22,7 @@ StorageModule::process_read_data (syn::ReadData::raw_ptr props)
   const impl::IStorageImpl::seance_type sstream_id = ::libs::utility::utils::to_string (stream_id);
   auto                                  int_msg    = props->get_msg ();
 
-  U3_ASSERT (int_msg);
+  ::libs::utility::checks::throw_ifn ((bool) int_msg);
   if (!check_access_rights (stream_id, syn::StreamActions::read))
   {
     U3_XLOG_WARN ("invalide access rights for read operation " + sstream_id);
@@ -43,7 +43,7 @@ StorageModule::process_read_data (syn::ReadData::raw_ptr props)
   }
   else
   {
-    U3_ASSERT (size_data > 0);
+    ::libs::utility::checks::throw_ifn (size_data > 0);
     streams_runtime_infos_[stream_id].count_read_bytes_ += size_data;
   }
 #endif
@@ -57,7 +57,7 @@ StorageModule::process_write_data (syn::WriteData::raw_ptr props)
   const impl::IStorageImpl::seance_type sstream_id = ::libs::utility::utils::to_string (stream_id);
   auto                                  int_msg    = props->get_msg ();
 
-  U3_ASSERT (int_msg);
+  ::libs::utility::checks::throw_ifn ((bool) int_msg);
   if (!check_access_rights (stream_id, syn::StreamActions::write))
   {
     U3_LOG_STORAGE_WRN ("invalid access rights for write operation " + sstream_id);
@@ -79,7 +79,7 @@ StorageModule::process_write_data (syn::WriteData::raw_ptr props)
   }
   else
   {
-    U3_ASSERT_THROW ("unknown type write data" + STOLOG (int_msg->get_mid ()));
+    ::libs::utility::checks::throw_exception ("unknown type write data" + STOLOG (int_msg->get_mid ()));
     return;
   }
 
@@ -89,7 +89,7 @@ StorageModule::process_write_data (syn::WriteData::raw_ptr props)
   }
   else
   {
-    U3_ASSERT (size_data > 0);
+    ::libs::utility::checks::throw_ifn (size_data > 0);
     streams_runtime_infos_[stream_id].count_write_bytes_ += size_data;
   }
 }
@@ -116,15 +116,15 @@ StorageModule::process_update_stream (syn::UpdateStream::raw_ptr props)
   switch (props->action_)
   {
   case ::libs::events_storage::StreamUpdates::open:
-    U3_ASSERT (props->stream_id_.empty ());
+    ::libs::utility::checks::throw_ifn (props->stream_id_.empty ());
     break;
   case ::libs::events_storage::StreamUpdates::close:
-    U3_ASSERT_SOFT (!props->stream_id_.empty (), "stream_id empty");
+    ::libs::utility::checks::assert_soft (!props->stream_id_.empty (), "stream_id empty");
     streams_rights_.erase (props->stream_id_);
     break;
   case ::libs::events_storage::StreamUpdates::change:
   case ::libs::events_storage::StreamUpdates::check_and_get_info:
-    U3_ASSERT (!props->stream_id_.empty ());
+    ::libs::utility::checks::throw_ifn (!props->stream_id_.empty ());
     break;
   default:
     U3_XLOG_ERROR ("find action stream " + to_string (props->action_));
@@ -136,15 +136,15 @@ StorageModule::process_update_stream (syn::UpdateStream::raw_ptr props)
   switch (props->action_)
   {
   case ::libs::events_storage::StreamUpdates::open:
-    U3_ASSERT (streams_rights_.end () == streams_rights_.find (props->stream_id_));
-    U3_ASSERT (!props->stream_id_.empty ());
+    ::libs::utility::checks::throw_ifn (streams_rights_.end () == streams_rights_.find (props->stream_id_));
+    ::libs::utility::checks::throw_ifn (!props->stream_id_.empty ());
     streams_rights_[props->stream_id_] = props->operation_;
     break;
   case ::libs::events_storage::StreamUpdates::close:
     break;
   case ::libs::events_storage::StreamUpdates::change:
   case ::libs::events_storage::StreamUpdates::check_and_get_info:
-    U3_ASSERT (streams_rights_.end () != streams_rights_.find (props->stream_id_));
+    ::libs::utility::checks::throw_ifn (streams_rights_.end () != streams_rights_.find (props->stream_id_));
     break;
   default:
     U3_XLOG_ERROR ("find action stream " + to_string (props->action_));
@@ -235,7 +235,7 @@ StorageModule::load_binary_statistic ()
   }
 
   impl::IStorageImpl::ids_chunk_type ids;
-  U3_ASSERT_THROW ("StorageModule::load_binary_statistic: umimplemented");
+  ::libs::utility::checks::throw_exception ("StorageModule::load_binary_statistic: umimplemented");
 
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   storage_impl_->get_all_ids (ids);

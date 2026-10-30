@@ -18,7 +18,7 @@ struct StatisticInfo final {
   bool
   self_test () const
   {
-    U3_ASSERT (!stages_.empty ());
+    ::libs::utility::checks::throw_ifn (!stages_.empty ());
     return !stages_.empty ();
   }
 

@@ -62,7 +62,7 @@ class CRgb2LAlg final : public IOptimAlg
 #endif
     default:
       U3_XLOG_WARN ("cpu extension" + VTOLOG (U3_CAST_UINT32_FORCE (iinfo.ext_)));
-      U3_MARK ("failed");
+      ::libs::utility::checks::mark ("failed");
       sel_.set (::libs::optim::s16bit::convert::l_vs_rgb::rgb24_to_l_alu);
       break;
     }

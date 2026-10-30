@@ -13,7 +13,7 @@ template< typename T, typename U >
 move_ptr (T ptr, U off)
 {
   auto* ret = casts::reinterpret_cast_helper< std::uint8_t* > (ptr);
-  U3_ASSERT (ret);
+  ::libs::utility::checks::throw_ifn (ret);
   ret += off;
   return casts::reinterpret_cast_helper< T > (ret);
 }
@@ -25,7 +25,7 @@ template< typename T, typename U >
 move_cptr (T ptr, U off)
 {
   const auto* ret = casts::reinterpret_cast_helper< const std::uint8_t* > (ptr);
-  U3_ASSERT (ret);
+  ::libs::utility::checks::throw_ifn (ret);
   ret += off;
   return casts::reinterpret_cast_helper< T > (ret);
 }
@@ -37,7 +37,7 @@ template< typename T, typename U >
 move_ptr_back (T ptr, U off)
 {
   auto* ret = casts::reinterpret_cast_helper< std::uint8_t* > (ptr);
-  U3_ASSERT (ret && casts::reinterpret_cast_helper< std::uint64_t > (ret) >= off);
+  ::libs::utility::checks::throw_ifn (ret && casts::reinterpret_cast_helper< std::uint64_t > (ret) >= off);
   ret -= off;
   return casts::reinterpret_cast_helper< T > (ret);
 }
@@ -49,7 +49,7 @@ template< typename T, typename U >
 move_cptr_back (T ptr, U off)
 {
   const auto* ret = casts::reinterpret_cast_helper< const std::uint8_t* > (ptr);
-  U3_ASSERT (ret && casts::reinterpret_cast_helper< std::uint64_t > (ret) >= off);
+  ::libs::utility::checks::throw_ifn (ret && casts::reinterpret_cast_helper< std::uint64_t > (ret) >= off);
   ret -= off;
   return casts::reinterpret_cast_helper< T > (ret);
 }

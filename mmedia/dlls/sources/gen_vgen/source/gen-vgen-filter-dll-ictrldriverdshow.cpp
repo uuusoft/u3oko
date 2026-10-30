@@ -15,10 +15,10 @@ void
 Filter::update_source_driver_exactly (InfoFilter* finfo, const std::string& impl_name)
 {
   U3_CALL_TRACE_INFO (TOLOG (impl_name));
-  U3_ASSERT (!impl_name.empty ());
+  ::libs::utility::checks::throw_ifn (!impl_name.empty ());
 
   std::unique_lock< InfoFilter::sync_type > lock (finfo->wdmtx_, consts::ms_wait_capture_device);
-  U3_THROW_IFN (lock.owns_lock (), "update source driver" + TOLOG (impl_name));
+  ::libs::utility::checks::throw_ifn (lock.owns_lock (), "update source driver" + TOLOG (impl_name));
 
   finfo->proxy2hardware_.init (impl_name);
 
@@ -37,8 +37,8 @@ Filter::update_source_driver_exactly (InfoFilter* finfo, const std::string& impl
   finfo->links_props_.pdriver2buf_ = pdemons->get_bufs_lockfree ();
   finfo->links_props_.pdriver2mem_ = pdemons->get_mem_lockfree ();
 
-  U3_ASSERT (finfo->links_props_.pdriver2buf_);
-  U3_ASSERT (finfo->links_props_.pdriver2mem_);
+  ::libs::utility::checks::throw_ifn ((bool) finfo->links_props_.pdriver2buf_);
+  ::libs::utility::checks::throw_ifn ((bool) finfo->links_props_.pdriver2mem_);
   //::dlls::sources::gen_lib::SourceImplInfo
   driver->update_source_info ({ finfo->rprops_, finfo->capture_props_, &finfo->links_props_ });
   driver->start ();

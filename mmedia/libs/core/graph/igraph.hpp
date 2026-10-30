@@ -48,7 +48,7 @@ class IGraph
   void
   set_logger (::libs::link::ILink::weak_ptr ptr)
   {
-    U3_ASSERT (ptr.lock ());
+    ::libs::utility::checks::throw_ifn ((bool) ptr.lock ());
     set_logger_int (ptr);
   }
 

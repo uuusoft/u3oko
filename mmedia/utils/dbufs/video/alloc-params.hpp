@@ -54,7 +54,7 @@ struct AllocParams {
     force_size_ (size),
     check_dims_ (DimChecks::disable)
   {
-    U3_ASSERT (size > 0);
+    ::libs::utility::checks::throw_ifn (size > 0);
     geom_dims_[::utils::dbufs::video::Dims::width]  = width;
     geom_dims_[::utils::dbufs::video::Dims::height] = height;
     geom_dims_[::utils::dbufs::video::Dims::stride] = width;   // Это верное присваивание, т.к. коструктор используется для конструрования буфера для сжатых данных, stride не имеет смысла
@@ -65,7 +65,7 @@ struct AllocParams {
     minor_ (::libs::utility::uids::minor::id_val::unknown),
     check_dims_ (DimChecks::disable)
   {
-    U3_ASSERT (size > 0);
+    ::libs::utility::checks::throw_ifn (size > 0);
   }
 
   /// Функция проверки корректности параметров вызова

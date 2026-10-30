@@ -16,7 +16,8 @@ clear
 #export U3_BUILD_PREFIX=rel
 #export U3_OS=Linux
 #export U3_GENERATOR=Ninja
-export JAVA_HOME=/home/erashov/Documents/android-studio/jbr
+#export JAVA_HOME=/home/erashov/Documents/android-studio/jbr
+export JAVA_HOME=/snap/android-studio/247/jbr
 #export JAVA_HOME=${GRADLE_LOCAL_JAVA_HOME}
 
 cd ./../../appls/u3oko/android
@@ -26,3 +27,4 @@ chmod +x ./gradlew
 #./gradlew tasks
 ./gradlew installRelease
 #adb pair 192.168.88.216:41325 <code from device>
+#adb pair 192.168.88.216:46475 <code from device>

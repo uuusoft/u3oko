@@ -26,7 +26,7 @@ namespace libs::utility::files
 auto
 make_short_path (const std::string& path) -> std::string
 {
-  U3_THROW_IFN (!path.empty (), "empty path");
+  ::libs::utility::checks::throw_ifn (!path.empty (), "empty path");
 
 #ifdef U3_OS_WIN32_DESKTOP
   const auto req_size = GetShortPathNameA (path.c_str (), nullptr, 0);
@@ -100,7 +100,7 @@ delete_folder (const std::string& path)
 {
   boost::system::error_code error;
   boost::filesystem::remove_all (path, error);
-  U3_ASSERT (!error);
+  ::libs::utility::checks::throw_ifn (!error);
 }
 
 

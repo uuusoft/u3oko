@@ -39,7 +39,7 @@ LoaderCode::load (
     }
   }
 
-  U3_ASSERT (impl_);
+  ::libs::utility::checks::throw_ifn ((bool) impl_);
   impl_->load (info, name_proc, name_lib);
 }
 

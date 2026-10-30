@@ -44,7 +44,7 @@ Rect::load (::pugi::xml_node& param) -> bool
 
   if (!width || !height)
   {
-    U3_ASSERT_THROW ("failed");
+    ::libs::utility::checks::throw_exception ("failed");
     return false;
   }
 

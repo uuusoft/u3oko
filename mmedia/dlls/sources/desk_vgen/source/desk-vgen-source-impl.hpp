@@ -19,8 +19,8 @@ class SourceImpl final : public ::dlls::sources::gen_lib::ISourceImpl
   virtual void start_int () override;
   virtual auto stop_int () -> void override;
   virtual void get_sources_int (std::vector< syn::DataSourceInfo >&) override;
-  virtual void get_raw_data_int (::dlls::sources::gen_lib::syn::pkeys2bufs_type&, ::dlls::sources::gen_lib::syn::tevents_type*) override;
-  virtual void set_cpu_int (::libs::utility::sys::cpu::CpuExts) override;
+  virtual void get_raw_data_int (syn::pkeys2bufs_type&, syn::tevents_type*) override;
+  virtual void set_cpu_int (syn::CpuExts) override;
   virtual void update_source_info_int (const syn::SourceImplInfo&) override;
 
   void free_int ();

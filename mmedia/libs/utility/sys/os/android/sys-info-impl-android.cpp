@@ -16,7 +16,7 @@ get_os_info ()
 {
   std::string ret;
   std::string type_os = "unknown";
-  U3_ASSERT_THROW ("failed");
+  ::libs::utility::checks::throw_exception ("failed");
   return ret;
 }
 
@@ -25,7 +25,7 @@ get_mem_info ()
 {
   std::string ret;
   // const std::int32_t b2mb = 1024 * 1024;
-  U3_ASSERT_THROW ("failed");
+  ::libs::utility::checks::throw_exception ("failed");
   return ret;
 }
 
@@ -33,7 +33,7 @@ inline std::string
 get_display_info ()
 {
   std::string ret;
-  U3_ASSERT_THROW ("failed");
+  ::libs::utility::checks::throw_exception ("failed");
   return ret;
 }
 
@@ -67,7 +67,7 @@ SysInfoImpl::get (const HardwareType& type) const
     break;
 #  endif
   default:
-    U3_ASSERT_THROW ("failed");
+    ::libs::utility::checks::throw_exception ("failed");
     break;
   }
   return ret;
@@ -77,7 +77,7 @@ short
 SysInfoImpl::count_cpu () const
 {
   std::size_t ret = U3_CAST_INT16 (android_getCpuCount ());
-  U3_ASSERT (ret > 0);
+  ::libs::utility::checks::throw_ifn (ret > 0);
   return ret;
 }
 }   // namespace libs::utility::sys::os::android

@@ -30,14 +30,14 @@ PathInfo::serialize (Archive& arh, const std::uint32_t /* file_version */)
 void
 tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const PathInfo& src)
 {
-  U3_ASSERT_SOFT (0, "???");
+  ::libs::utility::checks::assert_soft (0, "???");
 }
 
 
 auto
 tag_invoke (::boost::json::value_to_tag< PathInfo >, const ::boost::json::value& jvs) -> PathInfo
 {
-  U3_ASSERT_SOFT (0, "???");
+  ::libs::utility::checks::assert_soft (0, "???");
   return {};
 }
 }   // namespace libs::events_base::props::modules::storage

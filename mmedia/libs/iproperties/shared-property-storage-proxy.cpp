@@ -15,13 +15,13 @@ SharedPropertyStorageProxy::SharedPropertyStorageProxy () :
 {
   // lock_type  lock(mtx_);
   pimpl_ = pshm_->find_or_construct< SharedPropertyStorage::ptr > (obj_id_.c_str ()) ();
-  U3_ASSERT (pimpl_);
+  ::libs::utility::checks::throw_ifn (pimpl_);
   if (!(*pimpl_))
   {
     *pimpl_.load () = std::make_shared< SharedPropertyStorage > ();
   }
 
-  U3_ASSERT (pimpl_);
+  ::libs::utility::checks::throw_ifn (pimpl_);
 }
 
 
@@ -37,8 +37,8 @@ auto
 SharedPropertyStorageProxy::impl () -> syn::ISharedPropertyStorage::raw_ptr
 {
   // lock_type  lock(mtx_);
-  U3_ASSERT (pimpl_);
-  U3_ASSERT (*pimpl_);
+  ::libs::utility::checks::throw_ifn (pimpl_);
+  ::libs::utility::checks::throw_ifn ((bool) *pimpl_);
   return pimpl_.load ()->get ();
 }
 
@@ -48,7 +48,7 @@ SharedPropertyStorageProxy::~SharedPropertyStorageProxy ()
   U3_CALL_TRACE_DBG;
   if (pimpl_)
   {
-    U3_ASSERT_SOFT (pshm_, "empty shared memory object for SharedPropertyStorageProxy");
+    ::libs::utility::checks::assert_soft ((bool) pshm_, "empty shared memory object for SharedPropertyStorageProxy");
     if (pshm_)
     {
       pshm_->destroy< SharedPropertyStorage::ptr > (obj_id_.c_str ());

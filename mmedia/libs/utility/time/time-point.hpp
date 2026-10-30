@@ -16,8 +16,8 @@ class TimePoint final
 
   explicit TimePoint (const time_point& now = std::chrono::system_clock::now ());
 
-  time_point get_time () const;
-  void       set_time (const time_point& time);
+  auto get_time () const -> time_point;
+  auto set_time (const time_point& time) -> void;
 
   private:
   time_point time_;   //<

@@ -90,7 +90,7 @@ void
 AddEvent2EventsMsg::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-  U3_ASSERT_SOFT (0, "AddEvent2EventsMsg::load_json_int:: wtf???");
+  ::libs::utility::checks::assert_soft (0, "AddEvent2EventsMsg::load_json_int:: wtf???");
 }
 
 
@@ -98,7 +98,7 @@ void
 AddEvent2EventsMsg::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-  U3_ASSERT_SOFT (0, "AddEvent2EventsMsg::save_json_int:: wtf???");
+  ::libs::utility::checks::assert_soft (0, "AddEvent2EventsMsg::save_json_int:: wtf???");
 }
 
 

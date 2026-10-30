@@ -20,7 +20,7 @@ LoaderAssetAndroidImpl::LoaderAssetAndroidImpl (const InitLoaderInfo& info) :
   syn::ISharedProperty::lock_type lock (osinfo->get_sync ());
 
   asset_manager_ = osinfo->get_aappl_lockfree ()->activity->assetManager;
-  U3_THROW_IFN (asset_manager_, "empty asset_manager_");
+  ::libs::utility::checks::throw_ifn (asset_manager_, "empty asset_manager_");
 }
 
 
@@ -46,7 +46,7 @@ LoaderAssetAndroidImpl::enum_items_struct (
   AAssetDir*        cur_folder = AAssetManager_openDir (asset_manager_, cur_root.c_str ());
 
   U3_XLOG_MARK ("LoaderAssetAndroidImpl::enum_items_struct enum asset struct from" + TOLOG (cur_root))
-  U3_THROW_IFN (cur_folder, "open asset folder " + cur_root);
+  ::libs::utility::checks::throw_ifn (cur_folder, "open asset folder " + cur_root);
 
   AAssetDir_rewind (cur_folder);
   do
@@ -71,7 +71,7 @@ LoaderAssetAndroidImpl::enum_items_struct (
 
     const std::string path_item = ::libs::utility::files::make_path (cur_root, name_item);
     U3_XLOG_MARK ("find item in asset struct" + TOLOG (raw_name_item) + TOLOG (name_item) + VTOLOG (it_folder) + TOLOG (path_item))
-    U3_ASSERT (!name_item.empty ());
+    ::libs::utility::checks::throw_ifn (!name_item.empty ());
 
     if (it_folder)
     {
@@ -93,7 +93,7 @@ LoaderAssetAndroidImpl::enum_items_struct (
     }
     else
     {
-      U3_ASSERT_THROW (("unknown type item " + path_item).c_str ());
+      ::libs::utility::checks::throw_exception (("unknown type item " + path_item).c_str ());
     }
   } while (true);
 
@@ -129,7 +129,7 @@ LoaderAssetAndroidImpl::is_exist_file_int (
     return common_impl_->is_exist_file (file_name, path_type);
   }
 
-  U3_ASSERT (!file_name.empty ());
+  ::libs::utility::checks::throw_ifn (!file_name.empty ());
 
   const std::string root      = iinfo_.paths_->get_path (path_type);
   const std::string file_path = ::libs::utility::files::make_path (root, file_name);
@@ -158,7 +158,7 @@ LoaderAssetAndroidImpl::is_exist_folder_int (
   return is_exist_file_int (folder_name, path_type);
 
 #  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
-  U3_ASSERT (!file_name.empty ());
+  ::libs::utility::checks::throw_ifn (!file_name.empty ());
   const std::string folder_name = file_name;   // + ".dir";
   const std::string root        = iinfo_.paths_->get_path (path_type);
   const std::string file_path   = ::libs::utility::files::make_path (root, folder_name);
@@ -186,8 +186,8 @@ LoaderAssetAndroidImpl::get_int (
     return common_impl_->get (file_name, path_type, ret);
   }
 
-  U3_ASSERT (!file_name.empty ());
-  U3_ASSERT (!ret);
+  ::libs::utility::checks::throw_ifn (!file_name.empty ());
+  ::libs::utility::checks::throw_ifn (!ret);
   ret.reset ();
 
   const std::string root      = iinfo_.paths_->get_path (path_type);
@@ -196,7 +196,7 @@ LoaderAssetAndroidImpl::get_int (
 
   if (!dbuf)
   {
-    U3_ASSERT_THROW ("failed");
+    ::libs::utility::checks::throw_exception ("failed");
     // void AAssetDir_close(AAssetDir* assetDir);
     return false;
   }
@@ -208,7 +208,7 @@ LoaderAssetAndroidImpl::get_int (
   const std::int32_t bread = AAsset_read (dbuf, ret->get (), size);
   if (bread != size)
   {
-    U3_ASSERT_THROW ("failed");
+    ::libs::utility::checks::throw_exception ("failed");
     AAsset_close (dbuf);
     return false;
   }

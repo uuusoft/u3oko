@@ -109,7 +109,7 @@ struct ProxyBuf final {
   void
   reinit (syn::IVideoBuf::raw_ptr src, const char* debinfo)
   {
-    U3_ASSERT (src);
+    ::libs::utility::checks::throw_ifn (src);
     std::int16_t* buf = src->get_flag (utils::dbufs::BufFlags::null) ? nullptr : utils::dbufs::video::helpers::get_data_as< std::int16_t* > (src);
 
     set_buf (buf);
@@ -149,10 +149,10 @@ struct ProxyBuf final {
       return;
     }
     // Эти проверки не должны выбрасывать исключения, т.к. это допустимая ситуация во внешней логике
-    // U3_TEST (stride_, "zero stride: " << info);
-    // U3_TEST (width_, "zero width: " << info);
-    // U3_TEST (height_, "zero height: " << info);
-    U3_THROW_IF (width_ > stride_, "stride less width: " + VTOLOG (width_) + ">" + VTOLOG (stride_) + " " + info);
+    // ::libs::utility::checks::test (stride_, "zero stride: " << info);
+    // ::libs::utility::checks::test (width_, "zero width: " << info);
+    // ::libs::utility::checks::test (height_, "zero height: " << info);
+    ::libs::utility::checks::throw_if (width_ > stride_, "stride less width: " + VTOLOG (width_) + ">" + VTOLOG (stride_) + " " + info);
   }
 
   bool
@@ -164,7 +164,7 @@ struct ProxyBuf final {
   std::int16_t*
   buf ()
   {
-    U3_ASSERT (!const_data_);
+    ::libs::utility::checks::throw_ifn (!const_data_);
     return buf_;
   }
 
@@ -177,7 +177,7 @@ struct ProxyBuf final {
   std::uint8_t*
   ubuf ()
   {
-    U3_ASSERT (!const_data_);
+    ::libs::utility::checks::throw_ifn (!const_data_);
     return U3_CAST_CPROXY_BUFF< std::uint8_t* > (buf_);
   }
 
@@ -197,7 +197,7 @@ struct ProxyBuf final {
   void
   set_ubuf (uint8_t* buf)
   {
-    U3_ASSERT (buf);
+    ::libs::utility::checks::throw_ifn ((bool) buf);
     buf_        = U3_CAST_CPROXY_BUFF< std::int16_t* > (buf);
     const_data_ = false;
   }
@@ -205,17 +205,17 @@ struct ProxyBuf final {
   std::int16_t*
   get_line (std::uint32_t indx, bool unsafe = false)
   {
-    U3_ASSERT (!const_data_);
-    U3_THROW_IFN (buf_, "buf_:");
-    U3_THROW_IF (indx >= height_, "indx < height_:" + VTOLOG (indx) + VTOLOG (height_));
+    ::libs::utility::checks::throw_ifn (!const_data_);
+    ::libs::utility::checks::throw_ifn (buf_, "buf_");
+    ::libs::utility::checks::throw_if (indx >= height_, "indx < height_:" + VTOLOG (indx) + VTOLOG (height_));
     return U3_CAST_CPROXY_BUFF< std::int16_t* > (ubuf () + stride_ * indx);
   }
 
   const std::int16_t*
   get_cline (std::uint32_t indx, bool unsafe = false) const
   {
-    U3_THROW_IFN (buf_, "buf_:");
-    U3_THROW_IF (indx >= height_, "indx < height_:" + VTOLOG (indx) + VTOLOG (height_));
+    ::libs::utility::checks::throw_ifn (buf_, "buf_:");
+    ::libs::utility::checks::throw_if (indx >= height_, "indx < height_:" + VTOLOG (indx) + VTOLOG (height_));
     return U3_CAST_CPROXY_BUFF< const std::int16_t* > (ubuf () + stride_ * indx);
   }
 

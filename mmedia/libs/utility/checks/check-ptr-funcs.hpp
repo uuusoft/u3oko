@@ -13,7 +13,7 @@ template< typename T >
 T
 ptr (T val)
 {
-  U3_ASSERT (val);
+  ::libs::utility::checks::throw_ifn ((bool) val);
   return val;
 }
 
@@ -22,7 +22,7 @@ template< typename T >
 const std::shared_ptr< T >&
 ptr (const std::shared_ptr< T >& val)
 {
-  U3_ASSERT (val);
+  ::libs::utility::checks::throw_ifn ((bool) val);
   return val;
 }
 
@@ -31,7 +31,7 @@ template< typename T >
 const std::weak_ptr< T >&
 ptr (const std::weak_ptr< T >& val)
 {
-  U3_ASSERT (val);
+  ::libs::utility::checks::throw_ifn ((bool) val);
   return val;
 }
 
@@ -42,7 +42,7 @@ template< typename T >
 void
 must_valid_ptr (T val)
 {
-  U3_ASSERT (val);
+  ::libs::utility::checks::throw_ifn ((bool) val);
 }
 
 
@@ -50,7 +50,7 @@ template< typename T >
 void
 must_valid_ptr (const std::shared_ptr< T >& val)
 {
-  U3_ASSERT (val);
+  ::libs::utility::checks::throw_ifn ((bool) val);
 }
 
 
@@ -58,6 +58,6 @@ template< typename T >
 void
 must_valid_ptr (const std::weak_ptr< T >& val)
 {
-  U3_ASSERT (val);
+  ::libs::utility::checks::throw_ifn ((bool) val);
 }
 }   // namespace libs::utility::checks

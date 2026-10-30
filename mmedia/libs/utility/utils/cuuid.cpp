@@ -23,15 +23,15 @@ cuuid::cuuid (const ::boost::uuids::uuid& base) :
 cuuid::cuuid (const data_type val_array)
 {
   std::copy (val_array, val_array + 16, id_.begin ());
-  U3_ASSERT (!id_.is_nil () || 0 == val_array[0]);
+  ::libs::utility::checks::throw_ifn (!id_.is_nil () || 0 == val_array[0]);
 }
 
 
 cuuid::cuuid (const std::initializer_list< value_type > val_array)
 {
-  U3_ASSERT (16 == val_array.size ());
+  ::libs::utility::checks::throw_ifn (16 == val_array.size ());
   std::ranges::copy (val_array, id_.begin ());
-  U3_ASSERT (!id_.is_nil () || 0 == *val_array.begin ());
+  ::libs::utility::checks::throw_ifn (!id_.is_nil () || 0 == *val_array.begin ());
 }
 
 #ifdef U3_OS_WIN32_DESKTOP

@@ -419,7 +419,7 @@ void
 FDCTransform8x8MMX (std::int16_t* codec_block)
 {
 #  if defined(U3_CPU_X86_64) || defined(U3_OS_ANDROID) || defined(U3_CNTRL_FORCE_USE_X86_X64_ASM)
-  U3_MARK_I64;
+  ::libs::utility::checks::mark_i64 ("i64");
   // U1UU_THROW_EXCEPTION("req intrinsic impl") );
 #  else
   // long long xt70[2]; // xt7xt6xt5xt4, xt3xt2xt1xt0
@@ -1316,7 +1316,7 @@ void
 IDCTransform8x8MMX (std::int16_t* block)
 {
 #  if defined(U3_CPU_X86_64) || defined(U3_OS_ANDROID) || defined(U3_CNTRL_FORCE_USE_X86_X64_ASM)
-  U3_MARK_I64;
+  ::libs::utility::checks::mark_i64 ("i64");
   // U1UU_THROW_EXCEPTION("req intrinsic impl") );
 #  else
 

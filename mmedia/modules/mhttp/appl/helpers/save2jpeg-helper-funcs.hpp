@@ -10,9 +10,9 @@ namespace modules::mhttp::appl::helpers
 inline std::int32_t
 get_offset_iframe (const std::uint8_t* buf)
 {
-  U3_ASSERT (buf);
+  ::libs::utility::checks::throw_ifn (buf);
   const auto* head = ::libs::utility::casts::reinterpret_cast_helper< const ::dlls::codecs::codec_gen::HeaderIFrame* > (buf);
-  U3_ASSERT (head->check ());
+  ::libs::utility::checks::throw_ifn (head->check ());
   return head->base_part_.size_;
 }
 
@@ -26,9 +26,9 @@ save_jpeg2file (
   const std::string&         name_file,
   syn::ZipDataEvent::raw_ptr image)
 {
-  U3_ASSERT (!root.empty ());
-  U3_ASSERT (!name_file.empty ());
-  U3_ASSERT (image);
+  ::libs::utility::checks::throw_ifn (!root.empty ());
+  ::libs::utility::checks::throw_ifn (!name_file.empty ());
+  ::libs::utility::checks::throw_ifn (image);
 
   auto*       osprops     = ::libs::iproperties::helpers::get_shared_prop_os ();
   auto        iappl       = osprops->get_paths_lockfree ();
@@ -36,7 +36,7 @@ save_jpeg2file (
   const auto  file_path   = ::libs::utility::files::make_path (file_folder, name_file);
   const auto* head        = ::libs::utility::casts::reinterpret_cast_helper< const ::dlls::codecs::codec_gen::HeaderIFrame* > (&image->get_zip ()[0]);
 
-  U3_ASSERT (head->check ());
+  ::libs::utility::checks::throw_ifn (head->check ());
 
   const std::uint8_t* beg          = &image->get_zip ()[0];
   const std::uint8_t* sdata        = beg + head->base_part_.size_;

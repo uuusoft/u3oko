@@ -18,7 +18,7 @@ SourceImpl::SourceImpl ()
 
 SourceImpl::~SourceImpl ()
 {
-  U3_TEST (free_int (), "SourceImpl::~SourceImpl");
+  ::libs::utility::checks::test (free_int (), "SourceImpl::~SourceImpl");
 }
 
 
@@ -57,7 +57,7 @@ SourceImpl::get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* eve
 {
   U3_CALL_TRACE_DBG;
   auto& buf = (*bufs)[::utils::dbufs::video::consts::offs::raw];
-  U3_ASSERT (buf);
+  ::libs::utility::checks::throw_ifn ((bool) buf);
 
   buf->set_flag (::utils::dbufs::BufFlags::empty, true);
 
@@ -70,7 +70,7 @@ SourceImpl::get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* eve
       props->capi_.width_, props->capi_.height_, 0, px_format));
 
   auto it_make_func = gen_funcs_.find (px_format);
-  U3_THROW_IFN (it_make_func != gen_funcs_.end (), "null make buffer func fake camera");
+  ::libs::utility::checks::throw_ifn (it_make_func != gen_funcs_.end (), "null make buffer func fake camera");
   buf->set_format (px_format);
   auto& make_func = it_make_func->second;
 

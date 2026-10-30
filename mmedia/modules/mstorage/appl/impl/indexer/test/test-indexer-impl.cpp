@@ -59,13 +59,13 @@ TestIndexerImpl::update_stream_int (syn::UpdateStream::raw_ptr info)
     close_stream (info);
     break;
   case ::libs::events_storage::StreamUpdates::change:
-    U3_ASSERT (info->stream_id_ != ::libs::events_storage::consts::empty_stream_id);
+    ::libs::utility::checks::throw_ifn (info->stream_id_ != ::libs::events_storage::consts::empty_stream_id);
     break;
   case ::libs::events_storage::StreamUpdates::check_and_get_info:
-    U3_ASSERT (info->stream_id_ != ::libs::events_storage::consts::empty_stream_id);
+    ::libs::utility::checks::throw_ifn (info->stream_id_ != ::libs::events_storage::consts::empty_stream_id);
     break;
   default:
-    U3_ASSERT_THROW ("find action " + to_string (info->action_));
+    ::libs::utility::checks::throw_exception ("find action " + to_string (info->action_));
     break;
   }
 

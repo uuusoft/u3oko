@@ -32,7 +32,7 @@ ISeqEvent::clone_int (const ::libs::events::Deeps& deep) const -> IEvent::ptr
 auto
 ISeqEvent::get_seq_id () const -> const ISeqEvent::id_type&
 {
-  U3_ASSERT (!id_.empty ());
+  ::libs::utility::checks::throw_ifn (!id_.empty ());
   return id_;
 }
 
@@ -40,7 +40,7 @@ ISeqEvent::get_seq_id () const -> const ISeqEvent::id_type&
 void
 ISeqEvent::set_seq_id (const id_type& id)
 {
-  U3_ASSERT (!id.empty ());
+  ::libs::utility::checks::throw_ifn (!id.empty ());
   id_ = id;
 }
 

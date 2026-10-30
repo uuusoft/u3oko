@@ -61,7 +61,7 @@ class CX8_X16Alg final : public IOptimAlg
       break;
 #endif
     default:
-      U3_MARK ("failed");
+      ::libs::utility::checks::mark ("failed");
       sel_.set (::libs::optim::convert::x8_x16::alu);
       break;
     }

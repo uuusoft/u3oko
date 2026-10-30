@@ -15,7 +15,8 @@ CObj::forward_int (
   void*               dst,
   std::uint32_t&      count_byte_dst)
 {
-  U3_THROW_IF (count_byte_src < 4, "source too small");
+  ::libs::utility::checks::throw_if (count_byte_src < 4, "source too small");
+
   const auto* ssrc = ::libs::utility::casts::reinterpret_cast_helper< const std::int16_t* > (src);
   auto*       udst = ::libs::utility::casts::reinterpret_cast_helper< char* > (dst);
 

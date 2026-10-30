@@ -4,8 +4,8 @@
 \author     Erashov Anton erashov2026@proton.me
 \brief      Файл реализации фильтрации в пространственной области
 */
-#define U3_DBG_LOG_LEVEL_ENABLE
-// #include "memory"
+// #define U3_DBG_LOG_LEVEL_ENABLE
+//  #include "memory"
 #include "space-noise-includes_int.hpp"
 #include "space-noise-filter-dll.hpp"
 #include "mmedia/dlls/doptim/algs/all_algs.hpp"

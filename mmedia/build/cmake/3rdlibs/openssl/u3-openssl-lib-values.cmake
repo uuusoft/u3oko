@@ -1,0 +1,37 @@
+# author      Erashov Anton erashov2026@proton.me
+# date        17.09.2024
+# copyright   Erashov A.I.
+# file        u3-openssl-lib-values.cmake
+
+set(U3_3RDLIB_VER_OPENSSL 3.3.2)
+#set(U3_3RDLIB_VER_OPENSSL 4.0.0)
+
+string(MAKE_C_IDENTIFIER ${U3_3RDLIB_VER_OPENSSL} U3_3RDLIB_VER_OPENSSL_CID)
+
+set(U3_3RDLIB_OSRC_URL_OPENSSL https://github.com/openssl/openssl/releases/download/openssl-${U3_3RDLIB_VER_OPENSSL}/openssl-${U3_3RDLIB_VER_OPENSSL}.tar.gz)
+set(U3_3RDLIB_NAME_OPENSSL openssl)
+
+set(U3_3RDLIB_ESRC_URL_OPENSSL_BIN ${U3_3RDLIBS_URL_BIN}/lib-openssl-bin-${U3_3RDLIB_VER_OPENSSL}-${U3_ENV_GEN_RAW_3RDLIB_POSTFIX}.zip)
+set(U3_3RDLIB_ESRC_URL_OPENSSL_SRC ${U3_3RDLIBS_URL_SRC}/lib-openssl-src-${U3_3RDLIB_VER_OPENSSL}.zip)
+
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5 015fca2692596560b6fe8a2d8fecd84b)
+
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5_Linux_Clang_21_Clang_21__x64_Release_none 2f99bde0b667a18681f72d3b23f627c3)
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5_Linux_Clang_21_Clang_21__x64_Debug_ub 2ee32e566ed277a9d884cf8917b8735c)
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5_Linux_GNU_15_GNU_15__x64_Debug_thread df7ba21d6f77c45aaa130d951c7ffe44)
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5_Linux_Clang_21_Clang_21__x64_Debug_none 9fd781e349d7a18e1e9a1d82dfe88672)
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5_Linux_Clang_21_Clang_21__x64_Debug_address e0c33849d01f60666222baac7cf084ba)
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5_Linux_Clang_21_Clang_21__x64_Release_address 88d153e5f5643847a3298322942bc364)
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5_Linux_Clang_23_Clang_23__x64_Release_none 4405ed9c60fe2ac2a917c30936520862)
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5_Linux_Clang_23_Clang_23__x64_Debug_none 27cbdb1864ca1d33699dae93959cb055)
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5_Linux_Clang_23_Clang_23__x64_Debug_address df3dc67121ddcf43a1bd885ff2a9e69e)
+
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5_OrangePi_Clang_22_Clang_22__aarch64_Release_none 47e6f4f617669a3a04324a8ee0fceafc)
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5_OrangePi_Clang_22_Clang_22__aarch64_Debug_address 818042baaab863502ec82aa50be969cc)
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5_OrangePi_Clang_22_Clang_22__aarch64_Release_ub ce7c78f3f90fa8ef2f4479c2c01999d6)
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5_OrangePi_Clang_22_Clang_22__aarch64_Release_none 4b4f53474d4ce15c89dfe8d7b1406e89)
+
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5_Android_Clang_21_Clang_21__aarch64_RelWithDebInfo_none cc790f81bd5da372d5e846ed88a5d0ae)
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5_Android_Clang_21_Clang_21__aarch64_Debug_none 722409a2146358180d53d93628ca307a)
+
+set(U3_3RDLIB_OPENSSL_MD5 ${U3_3RDLIB_OPENSSL${U3_3RDLIB_VER_OPENSSL_CID}_MD5})

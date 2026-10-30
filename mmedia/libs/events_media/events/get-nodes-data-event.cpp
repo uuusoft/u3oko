@@ -44,14 +44,14 @@ GetNodesDataEvent::set_nodes (GetNodesDataEvent::nodes_list_type& nodes)
 auto
 GetNodesDataEvent::check () const -> bool
 {
-  U3_ASSERT (super::check ());
-  U3_ASSERT (!nodes_.empty ());
+  ::libs::utility::checks::throw_ifn (super::check ());
+  ::libs::utility::checks::throw_ifn (!nodes_.empty ());
 
   for (const auto& node : nodes_)
   {
     if (!node.check ())
     {
-      U3_ASSERT_THROW ("check node GetNodesDataEvent");
+      ::libs::utility::checks::throw_exception ("check node GetNodesDataEvent");
       return false;
     }
   }

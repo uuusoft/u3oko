@@ -17,14 +17,14 @@ get_params (
   const ::libs::optim::io::ProxyBuf** y8,
   ::libs::optim::io::ProxyBuf**       y16)
 {
-  U3_THROW_IFN (1 == info.srcs_.size (), "src not equal 1");
-  U3_THROW_IFN (1 == info.dsts_.size (), "dst not equal 1");
+  ::libs::utility::checks::throw_ifn (1 == info.srcs_.size (), "src not equal 1");
+  ::libs::utility::checks::throw_ifn (1 == info.dsts_.size (), "dst not equal 1");
 
   *y8  = &info.srcs_[0];
   *y16 = &info.dsts_[0];
 
-  U3_THROW_IFN (*y8, "empty y8");
-  U3_THROW_IFN (y16, "empty y16");
+  ::libs::utility::checks::throw_ifn (*y8, "empty y8");
+  ::libs::utility::checks::throw_ifn (y16, "empty y16");
 
   (*y8)->check ("y8 libs::optim::convert::nv21_y16");
   (*y16)->check ("y16 libs::optim::convert::nv21_y16");

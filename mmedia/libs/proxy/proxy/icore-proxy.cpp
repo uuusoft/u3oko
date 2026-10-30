@@ -186,6 +186,6 @@ get_create_data_path_module_func (const std::string& plib_id) -> std::function< 
     return create_impl_vgd_vgen_motion;
   }
 
-  U3_THROW_EXCEPT ("find create module funct" + TOLOG (lib_id) + TOLOG (plib_id));
+  ::libs::utility::checks::throw_exception ("find create module funct" + TOLOG (lib_id) + TOLOG (plib_id));
 }
 }   // namespace libs::proxy

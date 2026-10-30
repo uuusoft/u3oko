@@ -23,7 +23,7 @@ to_string (const LogActions& act) -> std::string
   case LogActions::unknown:
     return "unknown sessions";
   default:
-    U3_ASSERT_THROW ("unknown LogActions");
+    ::libs::utility::checks::throw_exception ("unknown LogActions");
     break;
   }
   return "???";

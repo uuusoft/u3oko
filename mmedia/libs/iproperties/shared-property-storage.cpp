@@ -52,7 +52,7 @@ SharedPropertyStorage::set_prop (const syn::key_property_type& key, const syn::I
       // перезапись допустима только для пустого значения.
       if (checkit->second)
       {
-        U3_TEST (!checkit->second, "skip, try change not empty property" + TOLOG (key) + PTR_TOLOG (checkit->second.get ()) + PTR_TOLOG (ptr.get ()));
+        ::libs::utility::checks::test (!checkit->second, "skip, try change not empty property" + TOLOG (key) + PTR_TOLOG (checkit->second.get ()) + PTR_TOLOG (ptr.get ()));
         return;
       }
     }

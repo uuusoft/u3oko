@@ -25,13 +25,13 @@ IOptimImpl::get (const ::libs::optim::io::qoptim& query) -> syn::hioptim
 
   if (algs_.end () == find)
   {
-    U3_ASSERT (query.id_.c_str () && 0);
+    ::libs::utility::checks::throw_ifn (query.id_.c_str () && 0);
     return syn::hioptim (nullptr);
   }
 
-  U3_ASSERT (find->second);
+  ::libs::utility::checks::throw_ifn ((bool) find->second);
   syn::hioptim ret = find->second->get ();
-  U3_ASSERT (ret.self_test ());
+  ::libs::utility::checks::throw_ifn (ret.self_test ());
   return ret;
 }
 
@@ -43,7 +43,7 @@ IOptimImpl::sync_impl (const ::libs::optim::io::TInit& iinfo)
   lock_type                             lock (mtx_);
   for (str2funcs_type::value_type& val : algs_)
   {
-    U3_ASSERT (val.second);
+    ::libs::utility::checks::throw_ifn ((bool) val.second);
     val.second->sync_impl (iinfo);
   }
 }
@@ -52,7 +52,7 @@ IOptimImpl::sync_impl (const ::libs::optim::io::TInit& iinfo)
 void
 IOptimImpl::construct ()
 {
-  U3_ASSERT (algs_.empty ());
+  ::libs::utility::checks::throw_ifn (algs_.empty ());
 
   add_alg< algs::CRgb2HSLAlg > ();
   add_alg< algs::CRgb2LAlg > ();

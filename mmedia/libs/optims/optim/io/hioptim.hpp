@@ -35,7 +35,7 @@ class hioptim final
   ::libs::optim::io::mtcall_func
   get () const
   {
-    U3_ASSERT (self_test ());
+    ::libs::utility::checks::throw_ifn (self_test ());
     const ::libs::optim::io::mtcall_func ret = pfunc_->load ();
     return ret;
   }
@@ -43,21 +43,21 @@ class hioptim final
   void
   set (::libs::optim::io::mtcall_func pfunct)
   {
-    U3_ASSERT (self_test ());
+    ::libs::utility::checks::throw_ifn (self_test ());
     pfunc_->store (pfunct);
   }
 
   void
   set_algoritm_name (const std::string& id)
   {
-    U3_ASSERT (!id.empty ());
+    ::libs::utility::checks::throw_ifn (!id.empty ());
     id_func_ = id;
   }
 
   std::string
   get_algoritm_name () const
   {
-    U3_ASSERT (!id_func_.empty ());
+    ::libs::utility::checks::throw_ifn (!id_func_.empty ());
     return id_func_;
   }
 

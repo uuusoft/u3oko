@@ -92,7 +92,7 @@ Filter::get_func_for_format (const syn::id_val& format) -> ::libs::optim::io::hi
   }
   if (syn::id_val::rgb32 == format)
   {
-    U3_THROW_IFN (!mono, "result mono for rgb32");
+    ::libs::utility::checks::throw_ifn (!mono, "result mono for rgb32");
     return &rgb32_to_rgb24_;
   }
   U3_LOG_DATA_ERROR ("unknown pixel format");

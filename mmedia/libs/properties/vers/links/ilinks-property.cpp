@@ -37,7 +37,7 @@ ILinksProperty::update_links_lockfree () -> ILinksProperty::links_type&
 auto
 ILinksProperty::self_test_int () const -> bool
 {
-  U3_ASSERT (links_.self_test ());
+  ::libs::utility::checks::throw_ifn (links_.self_test ());
   return links_.self_test () ? true : false;
 }
 

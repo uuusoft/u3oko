@@ -22,6 +22,6 @@ sorting_inplace_insert (TTIt beg, TTIt end)
       std::swap (*iit, *std::prev (iit));
     }
   }
-  U3_ASSERT (std::is_sorted (beg, end));
+  ::libs::utility::checks::throw_ifn (std::is_sorted (beg, end));
 }
 }   // namespace libs::utility::sorting

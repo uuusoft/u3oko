@@ -30,9 +30,9 @@ class BlockMemAllocatorProxy final
   IBlockMemAllocator::raw_ptr
   impl ()
   {
-    U3_ASSERT (creator_);
+    ::libs::utility::checks::throw_ifn ((bool) creator_);
     IBlockMemAllocator::raw_ptr _ret = creator_ ();
-    U3_ASSERT (_ret);
+    ::libs::utility::checks::throw_ifn (_ret);
     return _ret;
   }
 
@@ -48,7 +48,7 @@ class BlockMemAllocatorProxy final
     lib_.load (_cpath, boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
     creator_ = ::boost::dll::import_symbol< create_func_type > (_cpath, "create_mem_impl");
 #endif
-    U3_ASSERT (creator_);
+    ::libs::utility::checks::throw_ifn ((bool) creator_);
   }
 
   ~BlockMemAllocatorProxy () = default;
