@@ -27,10 +27,27 @@ to_string (const Calls& val) -> const std::string&
   return finger->second;
 }
 
-
+// EAI-REFACT
 auto
-to_request (const std::string& str) -> Calls
+to_request (const std::string& val) -> Calls
 {
+#if 1
+  static const boost::unordered_flat_map< std::string, const Calls, ::libs::utility::utils::TransparentStringHash, std::equal_to<> > vals = {
+    { "set", Calls::set },
+    { "request", Calls::request },
+    { "answer", Calls::answer },
+    { "generate", Calls::generate },
+    { "unknown", Calls::unknown }
+  };
+
+  auto finger = vals.find (val);
+  if (vals.end () == finger)
+  {
+    U3_XLOG_WARN ("unknown Calls: " + val);
+    return Calls::request;
+  }
+  return finger->second;
+#else
   if ("set" == str)
   {
     return Calls::set;
@@ -49,5 +66,6 @@ to_request (const std::string& str) -> Calls
   }
   U3_XLOG_WARN ("unknown text Calls " + str);
   return Calls::request;
+#endif
 }
 }   // namespace libs::link::details

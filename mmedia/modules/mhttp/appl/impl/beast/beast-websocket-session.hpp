@@ -21,7 +21,7 @@ class websocket_session final : public std::enable_shared_from_this< websocket_s
 
   // Start the asynchronous accept operation
   template< class Body, class Allocator >
-  void do_accept (appl::syn::http::request< Body, appl::syn::http::basic_fields< Allocator > > req);
+  void do_accept (appl::syn::http::request< Body, appl::syn::http::basic_fields< Allocator > >);
 
   auto send (const std::shared_ptr< const send_data_type >& ss) -> void;
   auto get_size_pending_send () const -> std::int64_t;

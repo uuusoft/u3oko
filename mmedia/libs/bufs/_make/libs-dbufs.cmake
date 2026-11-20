@@ -3,4 +3,6 @@
 # copyright   Erashov A.I.
 # file        libs-dbufs.cmake
 
-u3_add_target_lib(TARGET_NAME bufs-lib SOURCE_PATH ${U3_PATH_ROOT}/libs/bufs)
+u3_add_target_lib(
+    TARGET_NAME bufs-lib
+    SOURCE_PATH ${U3_PATH_ROOT}/libs/bufs)

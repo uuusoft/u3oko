@@ -35,7 +35,7 @@ to_string (const Sortings& val) -> const std::string&
 auto
 str2sort (const std::string& str) -> Sortings
 {
-  static const boost::unordered_flat_map< std::string, const Sortings > str2sort = {
+  static const boost::unordered_flat_map< std::string, const Sortings, ::libs::utility::utils::TransparentStringHash, std::equal_to<> > str2sort = {
     { "usual", Sortings::usual },
     { "adaptive", Sortings::adaptive },
     { "skip", Sortings::skip },

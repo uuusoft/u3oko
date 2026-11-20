@@ -7,6 +7,6 @@
 
 namespace libs::events_base::props::modules::events::consts
 {
-extern const char* max_count_events;
-extern const char* max_size_database;
+inline constexpr std::string_view max_count_events { "max_count_events" };
+inline constexpr std::string_view max_size_database { "max_size_database" };
 }   // namespace libs::events_base::props::modules::events::consts

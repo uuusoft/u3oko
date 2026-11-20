@@ -9,8 +9,4 @@
 
 namespace libs::properties::consts::keys
 {
-const key_property_type shared_os_property   = "shared_os_property";
-const key_property_type specific_os_property = "specific_os_property";
-const key_property_type links_property       = "links_property";
-const key_property_type demons_property      = "demons_property";
 }   // namespace libs::properties::consts::keys

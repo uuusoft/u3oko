@@ -20,7 +20,7 @@ make_suppressor_key (const syn::IEvent::ptr& val) -> std::string
 
 LogModule::LogModule ()
 {
-  text_id_module_ = ::libs::ilink::consts::id_log;
+  module_id_ = ::libs::ilink::consts::id_log;
 }
 
 
@@ -82,7 +82,7 @@ LogModule::process_info_log (syn::InfoLogEvent::raw_ptr props, const syn::IEvent
 void
 LogModule::process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr props)
 {
-  U3_CALL_TRACE_INFO (VTOLOG (props->is_start ()));
+  U3_CALL_TRACE_INFO (FVTOLOG (props->is_start ()));
   try
   {
     if (!props->is_start ())
@@ -108,7 +108,7 @@ LogModule::process_list_logs (syn::ProcessListLogsEvent::raw_ptr props)
   try
   {
     const auto action = props->get_action ();
-    U3_CALL_TRACE_INFO_DBG (TOLOG (to_string (action)));
+    U3_CALL_TRACE_INFO_DBG (FTOLOG (to_string (action)));
     switch (action)
     {
     case ::libs::events_log::events::LogActions::delete_sessions: {

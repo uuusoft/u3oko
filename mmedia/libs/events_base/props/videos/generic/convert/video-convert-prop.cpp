@@ -11,7 +11,7 @@ namespace libs::events_base::props::videos::generic::convert
 auto
 str2size_type (const std::string& str) -> Src2DstEqs
 {
-  using convert_type = boost::unordered_flat_map< std::string, Src2DstEqs >;
+  using convert_type = boost::unordered_flat_map< std::string, Src2DstEqs, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
 
   static const convert_type conv = {
     convert_type::value_type ("src_int_dst", Src2DstEqs::src_int_dst),
@@ -33,7 +33,7 @@ str2size_type (const std::string& str) -> Src2DstEqs
 auto
 str2atype (const std::string& str) -> Accuracys
 {
-  using convert_type = boost::unordered_flat_map< std::string, Accuracys >;
+  using convert_type = boost::unordered_flat_map< std::string, Accuracys, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
 
   static const convert_type conv = {
     convert_type::value_type ("default", Accuracys::usual),
@@ -84,7 +84,7 @@ VideoConvertProp::load_json_int (const ::boost::json::object& obj)
   strip_color_          = obj.at ("strip_color").as_bool ();
   debug_skip_transform_ = obj.at ("debug_skip_transform").as_bool ();
   flip_y_               = obj.at ("flip_y").as_bool ();
-  buf_                  = ::boost::json::value_to< syn::EventBufs > (obj.at ("evbufs"));
+  buf_                  = ::boost::json::value_to< syn::EventBufs > (obj.at (::libs::events::buf::consts::node_name));
 }
 
 
@@ -93,15 +93,15 @@ VideoConvertProp::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
 
-  obj["rtype"]                = U3_CAST_UINT32_FORCE (rtype_);
-  obj["atype"]                = U3_CAST_UINT32_FORCE (atype_);
-  obj["rwidth"]               = rwidth_;
-  obj["rheight"]              = rheight_;
-  obj["duplicate_image"]      = duplicate_image_;
-  obj["strip_color"]          = strip_color_;
-  obj["debug_skip_transform"] = debug_skip_transform_;
-  obj["flip_y"]               = flip_y_;
-  obj["evbufs"]               = ::boost::json::value_from (buf_);
+  obj["rtype"]                                = U3_CAST_UINT32_FORCE (rtype_);
+  obj["atype"]                                = U3_CAST_UINT32_FORCE (atype_);
+  obj["rwidth"]                               = rwidth_;
+  obj["rheight"]                              = rheight_;
+  obj["duplicate_image"]                      = duplicate_image_;
+  obj["strip_color"]                          = strip_color_;
+  obj["debug_skip_transform"]                 = debug_skip_transform_;
+  obj["flip_y"]                               = flip_y_;
+  obj[::libs::events::buf::consts::node_name] = ::boost::json::value_from (buf_);
 }
 
 

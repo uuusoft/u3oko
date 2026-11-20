@@ -5,6 +5,12 @@
 \date       01.01.2017
 */
 
+namespace libs::events_base::props::videos::generic::gradient::syn
+{
+using persistent_off_buf_type = ::utils::dbufs::video::consts::offs::persistent_off_buf_type;
+}
+
+
 namespace libs::events_base::props::videos::generic::gradient
 {
 class GradientProp final : virtual public events_base::Event
@@ -18,7 +24,7 @@ class GradientProp final : virtual public events_base::Event
 
   public:
   //  ext types
-  using channels_type = std::list< std::pair< ::utils::dbufs::video::consts::offs::off_buf_type, ChannelGradient > >;
+  using channels_type = std::list< std::pair< ::utils::dbufs::video::consts::offs::persistent_off_buf_type, ChannelGradient > >;
 
   U3_ADD_POINTERS_TO_SELF (GradientProp)
   U3_ADD_MAKE_SHARED_THIS (GradientProp)

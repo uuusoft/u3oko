@@ -46,8 +46,8 @@ class RootModule : public base::BaseModule
   /// \return     связь к модулю или пусто, если модуль неизвестен
   auto get_dest_link (syn::IEvent::ptr&) -> ::libs::link::ILink::ptr;
 
-  DeInitStages  deinit_stage_ { DeInitStages::send_stop_msg2allmost_all };                    //< Текущая стадия становки модуля
-  std::uint64_t deinit_stage_counter_ { 0 };                                                  //<
-  time_type     time_dump_status_ { boost::posix_time::microsec_clock::universal_time () };   //< Время последнего вывода информации о статусе системы в лог
+  DeInitStages  deinit_stage_ { DeInitStages::start_send_stop_msgs };                         //< текущая стадия становки модуля
+  std::uint64_t deinit_stage_counter_ { 0 };                                                  //< счетчик ожидания при остановке модуля
+  time_type     time_dump_status_ { boost::posix_time::microsec_clock::universal_time () };   //< время последнего вывода информации о статусе системы в лог
 };
 }   // namespace libs::ilink::appl::root

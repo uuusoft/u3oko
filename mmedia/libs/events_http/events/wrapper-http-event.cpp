@@ -10,7 +10,9 @@
 
 namespace libs::events_http::events
 {
-WrapperHttpEvent::WrapperHttpEvent (const Acessor& pha, ::libs::events::IEvent::ptr msg) :
+WrapperHttpEvent::WrapperHttpEvent (
+  const Acessor&              pha,
+  ::libs::events::IEvent::ptr msg) :
   int_ (std::move (msg))
 {
 }

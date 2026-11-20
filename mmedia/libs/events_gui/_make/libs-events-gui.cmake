@@ -3,4 +3,6 @@
 # copyright   Erashov A.I.
 # file        libs-events-gui.cmake
 
-u3_add_target_lib(TARGET_NAME events_gui-lib SOURCE_PATH ${U3_PATH_ROOT}/libs/events_gui)
+u3_add_target_lib(
+    TARGET_NAME events_gui-lib
+    SOURCE_PATH ${U3_PATH_ROOT}/libs/events_gui)

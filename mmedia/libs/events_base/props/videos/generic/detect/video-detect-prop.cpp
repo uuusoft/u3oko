@@ -40,7 +40,7 @@ VideoDetectProp::load_json_int (const ::boost::json::object& obj)
   counter_morph_op_     = ::libs::utility::json::get_int32 (obj.at ("counter_morph_op"));
   min_size_spot_        = ::libs::utility::json::get_int32 (obj.at ("min_size_spot"));
   max_size_spot_        = ::libs::utility::json::get_int32 (obj.at ("max_size_spot"));
-  bufs_                 = ::boost::json::value_to< ::libs::events::buf::EventBufs > (obj.at ("evbufs"));
+  bufs_                 = ::boost::json::value_to< ::libs::events::buf::EventBufs > (obj.at (::libs::events::buf::consts::node_name));
   time_after_last_move_ = ::libs::utility::json::get_int32 (obj.at ("time_after_last_move"));
   lazy_optim_           = obj.at ("lazy_optim").as_bool ();
   time_id_              = ::libs::utility::json::get_int32 (obj.at ("time_id"));
@@ -54,19 +54,19 @@ VideoDetectProp::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
 
-  obj["mode"]                 = mode_;
-  obj["bound"]                = bound_;
-  obj["size_core_morph_op"]   = size_core_morph_op_;
-  obj["id_morph_op"]          = id_morph_op_;
-  obj["counter_morph_op"]     = counter_morph_op_;
-  obj["min_size_spot"]        = min_size_spot_;
-  obj["max_size_spot"]        = max_size_spot_;
-  obj["evbufs"]               = ::boost::json::value_from (bufs_);
-  obj["time_after_last_move"] = time_after_last_move_;
-  obj["lazy_optim"]           = lazy_optim_;
-  obj["time_id"]              = time_id_;
-  obj["zone_id"]              = zone_id_;
-  obj["hint_detector_impl"]   = ::boost::json::value_from (hint_detector_impl_);
+  obj["mode"]                                 = mode_;
+  obj["bound"]                                = bound_;
+  obj["size_core_morph_op"]                   = size_core_morph_op_;
+  obj["id_morph_op"]                          = id_morph_op_;
+  obj["counter_morph_op"]                     = counter_morph_op_;
+  obj["min_size_spot"]                        = min_size_spot_;
+  obj["max_size_spot"]                        = max_size_spot_;
+  obj[::libs::events::buf::consts::node_name] = ::boost::json::value_from (bufs_);
+  obj["time_after_last_move"]                 = time_after_last_move_;
+  obj["lazy_optim"]                           = lazy_optim_;
+  obj["time_id"]                              = time_id_;
+  obj["zone_id"]                              = zone_id_;
+  obj["hint_detector_impl"]                   = ::boost::json::value_from (hint_detector_impl_);
 }
 
 

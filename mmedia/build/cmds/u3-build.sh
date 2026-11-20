@@ -52,21 +52,23 @@ else
 fi
 
 if [[ ! -v U3_GENERATOR ]]; then
-    U3_GENERATOR=Unix Makefiles
+    U3_GENERATOR="Unix Makefiles"
 fi
 
 if [[ -z ${U3_COMMERCIAL_PART} ]]; then
     U3_COMMERCIAL_PART=0
 fi
 
+U3_GENERATOR_PATH_NAME="${U3_GENERATOR// /}"
+
 U3_FILE_TOOLCHAIN=$(basename ${U3_TOOLCHAIN} .cmake)
-U3_BIN=./../../u3builds-${U3_LIBS_PREFIX}-${U3_BUILD_PREFIX}-${U3_SANITY}-${U3_FILE_TOOLCHAIN}-${U3_GENERATOR}
+U3_BIN=./../../u3builds-bin-${U3_FILE_TOOLCHAIN}-${U3_LIBS_PREFIX}-${U3_BUILD_PREFIX}-${U3_SANITY}-${U3_GENERATOR_PATH_NAME}
 #U3_EXT_PARAMS="-DU3_FORCE_RECOMPILE_3RDLIBS=0"
-U3_ABSOULT_TOOLCHAIN=$(realpath ${U3_TOOLCHAIN})
+U3_TOOLCHAIN_PATH=$(realpath ${U3_TOOLCHAIN})
 
 echo U3_APPL_NAME=${U3_APPL_NAME}
 echo U3_TOOLCHAIN=${U3_TOOLCHAIN}
-echo U3_ABSOULT_TOOLCHAIN=${U3_ABSOULT_TOOLCHAIN}
+echo U3_TOOLCHAIN_PATH=${U3_TOOLCHAIN_PATH}
 echo U3_BIN=${U3_BIN}
 echo U3_BUILD=${U3_BUILD}
 echo U3_SANITY=${U3_SANITY}
@@ -76,6 +78,7 @@ echo U3_AS_LIBS=${U3_AS_LIBS}
 echo U3_EXT_PARAMS=${U3_EXT_PARAMS}
 echo U3_LIBS_PREFIX=${U3_LIBS_PREFIX}
 echo U3_GENERATOR=${U3_GENERATOR}
+echo U3_GENERATOR_PATH_NAME=${U3_GENERATOR_PATH_NAME}
 echo U3_USE_GIT_HASH_FOR_MARK_BUILD=${U3_USE_GIT_HASH_FOR_MARK_BUILD}
 echo U3_COMMERCIAL_PART=${U3_COMMERCIAL_PART}
 
@@ -90,13 +93,21 @@ cd ./../../
 #run-clang-tidy -p ${U3_BIN} -checks='-*,cppcoreguidelines-*' -fix > ${U3_BIN}/clang-tidy-fixes.log 2>&1
 #run-clang-tidy -p ${U3_BIN} -checks='-*,clang-analyzer-*' -fix > ${U3_BIN}/clang-tidy-fixes.log 2>&1
 #run-clang-tidy -p ${U3_BIN} -checks='-*,performance-*' -fix > ${U3_BIN}/clang-tidy-fixes.log 2>&1
-#objc-*,
-#performance-*,
-#readability-*,
-#-modernize-use-trailing-return-type
 
 # config
-cmake -G "${U3_GENERATOR}" -S . -B ${U3_BIN} -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${U3_ABSOULT_TOOLCHAIN} -DCMAKE_BUILD_TYPE=${U3_BUILD} -DU3_APPL_NAME=${U3_APPL_NAME} -DU3_USE_GIT_HASH_FOR_MARK_BUILD=${U3_USE_GIT_HASH_FOR_MARK_BUILD} -DU3_COMMERCIAL_PART=${U3_COMMERCIAL_PART} -DU3_BUILD_MODULES_AS_LIBS=${U3_AS_LIBS} -DU3_SANITY_BUILD_TYPE=${U3_SANITY} -DU3_BUILD_TESTING=${U3_BUILD_TESTING} ${U3_EXT_PARAMS}
+cmake \
+    -G "${U3_GENERATOR}" \
+    -S . \
+    -B ${U3_BIN} \
+    -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${U3_TOOLCHAIN_PATH} \
+    -DCMAKE_BUILD_TYPE=${U3_BUILD} \
+    -DU3_APPL_NAME=${U3_APPL_NAME} \
+    -DU3_USE_GIT_HASH_FOR_MARK_BUILD=${U3_USE_GIT_HASH_FOR_MARK_BUILD} \
+    -DU3_COMMERCIAL_PART=${U3_COMMERCIAL_PART} \
+    -DU3_BUILD_MODULES_AS_LIBS=${U3_AS_LIBS} \
+    -DU3_SANITY_TYPE=${U3_SANITY} \
+    -DU3_BUILD_TESTING=${U3_BUILD_TESTING} \
+    ${U3_EXT_PARAMS}
 
 if [[ ${U3_BUILD_TESTING} == "1" ]]; then
     cmake --build ${U3_BIN} -j 1 --config ${U3_BUILD} --target ${U3_APPL_NAME}-tests

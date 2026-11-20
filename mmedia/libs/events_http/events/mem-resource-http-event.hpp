@@ -25,7 +25,11 @@ class MemResourceHttpEvent : public BaseHttpEvent
   U3_ADD_MAKE_SHARED_THIS (MemResourceHttpEvent)
   U3_ADD_DELETE_MOVE_COPY (MemResourceHttpEvent)
 
-  explicit MemResourceHttpEvent (const Acessor& = Acessor (0), id_mem_type id = "", const number_mem_buf_type& number = 0);
+  explicit MemResourceHttpEvent (
+    const Acessor&             = Acessor (0),
+    id_mem_type                = "",
+    const number_mem_buf_type& = 0);
+
   virtual ~MemResourceHttpEvent () = default;
 
   static constexpr auto
@@ -44,9 +48,9 @@ class MemResourceHttpEvent : public BaseHttpEvent
   auto set_request (bool request) -> void;
 
   protected:
-  id_mem_type         id_;                     //< Идентифкатор ресурса. Например см. ZipDataEvent::id_buf_type
-  number_mem_buf_type number_;                 //< Порядковый номер ресурса
-  bool                request_for_transmit_;   //< Флаг требование - пометить буфер для передачи. Т.е. http клиент обязуется забрать данный буфер
+  id_mem_type         id_;                               //< Идентификатор ресурса, для примера см. ZipDataEvent::id_buf_type
+  number_mem_buf_type number_ { 0 };                     //< Порядковый номер ресурса
+  bool                request_for_transmit_ { false };   //< Флаг требование - пометить буфер для передачи. Т.е. http клиент обязуется забрать данный буфер
 
   private:
   U3_ADD_SUPER_CLASS (::libs::events_http::events::BaseHttpEvent)

@@ -21,7 +21,7 @@ class Filter final :
   // internal types
   U3_ADD_SUPER_CLASS (::libs::icore::impl::base::obj::dll::FilterImpl< InfoFilter >)
   // IFilter overrides
-  virtual void load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node) override;
+  virtual auto load_int (syn::FilterInfo*, const ::pugi::xml_named_node_iterator&) -> void override;
   virtual auto transform_int (syn::TransformInfo&) -> void override;
   virtual auto call_int (syn::CallInterfInfo&) -> void override;
 

@@ -15,12 +15,12 @@ namespace libs::events_base::props::videos::generic::convolution
 struct BuffVideoConvolutionProp final : public ::libs::events::buf::EventBufs {
   public:
   explicit BuffVideoConvolutionProp (
-    const syn::off_buf_type& src              = utils::dbufs::video::consts::offs::invalid,
-    const syn::off_buf_type& dst              = utils::dbufs::video::consts::offs::invalid,
-    const Convs&             convolution_type = Convs::skip,
-    const std::int32_t       core_size        = 5,
-    const std::int32_t       core_koeff       = 0,
-    const bool               use_module       = false);
+    const syn::off_buf_type src              = utils::dbufs::video::consts::offs::invalid,
+    const syn::off_buf_type dst              = utils::dbufs::video::consts::offs::invalid,
+    const Convs&            convolution_type = Convs::skip,
+    const std::int32_t      core_size        = 5,
+    const std::int32_t      core_koeff       = 0,
+    const bool              use_module       = false);
 
   explicit BuffVideoConvolutionProp (
     const ::libs::events::buf::EventBufs& buf,

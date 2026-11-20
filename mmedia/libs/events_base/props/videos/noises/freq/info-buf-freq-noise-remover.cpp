@@ -9,11 +9,11 @@
 namespace libs::events_base::props::videos::noises::freq
 {
 InfoBuffFreqNoiseRemover::InfoBuffFreqNoiseRemover (
-  const syn::off_buf_type& src,
-  const syn::off_buf_type& dst,
-  syn::off_buf_type        bindx_diff,
-  std::int16_t             bound_x_plus_y,
-  float                    dwt_koeff2) :
+  const syn::off_buf_type src,
+  const syn::off_buf_type dst,
+  syn::off_buf_type       bindx_diff,
+  std::int16_t            bound_x_plus_y,
+  float                   dwt_koeff2) :
   ::libs::events::buf::EventBufs (src, dst),
   bindx_diff_ (std::move (bindx_diff)),
   bound_x_plus_y_ (bound_x_plus_y),

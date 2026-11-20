@@ -6,13 +6,15 @@
 # https://stackoverflow.com/questions/7412548/error-gnu-stubs-32-h-no-such-file-or-directory-while-compiling-nachos-source
 # opensuse sudo zypper install glibc-devel-32bit
 
-set(U3_SYSTEM_NAME Linux)
+set(U3_PLATFORM_NAME Linux)
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR x32)
+set(U3_SYSTEM_PROCESSOR_ARCH x86)
 
 set(CMAKE_C_COMPILER gcc)
 set(CMAKE_CXX_COMPILER g++)
 set(CMAKE_ASM_COMPILER gcc)
+set(U3_CXX_COMPILER_ARCH gcc)
 
 # -mllvm --x86-asm-syntax=intel
 set(U3_SHARED_COMPILE_OPTIONS_CPP ${U3_SHARED_COMPILE_OPTIONS_CPP} -m32)

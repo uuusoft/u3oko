@@ -56,13 +56,13 @@ set "U3_FILE_TOOLCHAIN=%U3_TOOLCHAIN%"
 set "U3_FILE_TOOLCHAIN=windows-x64-msv"
 set "U3_BIN=./../builds-%U3_LIBS_PREFIX%-%U3_BUILD_PREFIX%-%U3_SANITY%-%U3_FILE_TOOLCHAIN%-%U3_GENERATOR%"
 set "U3_EXT_PARAMS=-DU3_FORCE_RECOMPILE_3RDLIBS=0"
-REM set "U3_ABSOULT_TOOLCHAIN=%realpath %U3_TOOLCHAIN%%"
-REM set "U3_ABSOULT_TOOLCHAIN=%U3_TOOLCHAIN%"
-REM set "U3_ABSOULT_TOOLCHAIN=C:/Users/ARleap/Documents/u3media/mmedia/build/cmake/toolchains/windows-x64-msv.cmake"
-set "U3_ABSOULT_TOOLCHAIN=c:/Users/ARleap/Documents/u3medias/mmedia/build/cmake/toolchains/windows-x64-msv.cmake"
+REM set "U3_TOOLCHAIN_PATH=%realpath %U3_TOOLCHAIN%%"
+REM set "U3_TOOLCHAIN_PATH=%U3_TOOLCHAIN%"
+REM set "U3_TOOLCHAIN_PATH=C:/Users/ARleap/Documents/u3media/mmedia/build/cmake/toolchains/windows-x64-msv.cmake"
+set "U3_TOOLCHAIN_PATH=c:/Users/ARleap/Documents/u3medias/mmedia/build/cmake/toolchains/windows-x64-msv.cmake"
 
 echo U3_TOOLCHAIN=%U3_TOOLCHAIN%
-echo U3_ABSOULT_TOOLCHAIN=%U3_ABSOULT_TOOLCHAIN%
+echo U3_TOOLCHAIN_PATH=%U3_TOOLCHAIN_PATH%
 echo U3_BIN=%U3_BIN%
 echo U3_BUILD=%U3_BUILD%
 echo U3_SANITY=%U3_SANITY%
@@ -74,7 +74,7 @@ echo U3_LIBS_PREFIX=%U3_LIBS_PREFIX%
 echo U3_GENERATOR=%U3_GENERATOR%
 
 cd ./../../
-cmake %U3_GENERATOR% -S . -B %U3_BIN% -DCMAKE_TOOLCHAIN_FILE:FILEPATH=%U3_ABSOULT_TOOLCHAIN% -DCMAKE_BUILD_TYPE=%U3_BUILD% -DU3_BUILD_MODULES_AS_LIBS=%U3_AS_LIBS% -DU3_SANITY_BUILD_TYPE=%U3_SANITY% %U3_EXT_PARAMS%
+cmake %U3_GENERATOR% -S . -B %U3_BIN% -DCMAKE_TOOLCHAIN_FILE:FILEPATH=%U3_TOOLCHAIN_PATH% -DCMAKE_BUILD_TYPE=%U3_BUILD% -DU3_BUILD_MODULES_AS_LIBS=%U3_AS_LIBS% -DU3_SANITY_TYPE=%U3_SANITY% %U3_EXT_PARAMS%
 cmake --build %U3_BIN% -j 1 --config %U3_BUILD%
 REM #cmake --build %U3_BIN%
 REM echo xcopy ./assets/xmls/templates  "%U3_BIN%/%U3_OS%/%U3_BUILD%" /s /e

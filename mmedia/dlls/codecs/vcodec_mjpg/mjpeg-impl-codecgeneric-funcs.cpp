@@ -169,7 +169,7 @@ MjpegImpl::decode_int (
   auto* const dbuf = (*dst)[props_.bufs_.indx_dbuf_];
   if (!dbuf)
   {
-    // U3_LOG_DATA_WRN ("receive invalid destination buf, skip" + TOLOG (props_.bufs_.indx_dbuf_));
+    // U3_LOG_DATA_WRN ("receive invalid destination buf, skip" + STOLOG (props_.bufs_.indx_dbuf_));
     return false;
   }
 

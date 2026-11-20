@@ -43,13 +43,13 @@ LogModule::open_log_file ()
 void
 LogModule::delete_folders (const syn::list_folders_type& folders)
 {
-  U3_CALL_TRACE_INFO_DBG (VTOLOG (folders.size ()) + TOLOG (active_session_folder_));
+  U3_CALL_TRACE_INFO_DBG (FVTOLOG (folders.size ()) + TOLOG (active_session_folder_));
   for (const auto& folder : folders)
   {
     U3_XLOG_DBG ("delete check" + TOLOG (folder.session_id_));
     if (folder.session_id_ == active_session_folder_)
     {
-      // нельзя удалять директорию текущего сеанса логирования.
+      // нельзя удалять директорию текущего сеанса логирования
       continue;
     }
 

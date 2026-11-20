@@ -7,7 +7,7 @@
 
 namespace libs::utility::log
 {
-auto clear_func_name (const std::string_view func_name) -> std::string_view;
-auto clear_file_name (const std::string_view file_name) -> std::string_view;
-auto get_text_source_place (const std::source_location& loc = std::source_location::current ()) -> std::string;
+auto clear_func_name (const std::string_view) -> std::string_view;
+auto clear_file_name (const std::string_view) -> std::string_view;
+auto get_text_source_place (const std::source_location& = std::source_location::current ()) -> std::string;
 }   // namespace libs::utility::log

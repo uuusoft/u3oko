@@ -9,8 +9,8 @@
 namespace libs::events_base::props::videos::generic::scaler
 {
 EventBufsVideoScaler::EventBufsVideoScaler (
-  const ::utils::dbufs::video::consts::offs::off_buf_type& src,
-  const ::utils::dbufs::video::consts::offs::off_buf_type& dst) :
+  const syn::off_buf_type src,
+  const syn::off_buf_type dst) :
   ::libs::events::buf::EventBufs (src, dst)
 {
 }

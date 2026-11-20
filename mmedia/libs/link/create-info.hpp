@@ -14,7 +14,7 @@ struct CreateInfo {
   //  ext types
   using val_type    = std::variant< bool, std::string, std::uint64_t, details::ModuleLinks, details::CodeRuns >;
   using val_id_type = std::string;
-  using vals_type   = boost::unordered_flat_map< val_id_type, val_type >;
+  using vals_type   = boost::unordered_flat_map< val_id_type, val_type, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
 
   CreateInfo ()          = default;
   virtual ~CreateInfo () = default;

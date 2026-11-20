@@ -24,8 +24,8 @@ class WrapperHttpEvent : public BaseHttpEvent
   U3_ADD_DELETE_MOVE_COPY (WrapperHttpEvent)
 
   explicit WrapperHttpEvent (
-    const Acessor&                  = Acessor (0),
-    ::libs::events::IEvent::ptr msg = ::libs::events::IEvent::ptr ());
+    const Acessor&              = Acessor (0),
+    ::libs::events::IEvent::ptr = ::libs::events::IEvent::ptr ());
 
   virtual ~WrapperHttpEvent () = default;
 

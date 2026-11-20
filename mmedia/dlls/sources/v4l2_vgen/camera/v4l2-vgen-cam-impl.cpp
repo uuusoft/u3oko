@@ -46,7 +46,7 @@ CamImpl::CamImpl (const gen_lib::SourceImplInfo &props_info) :
   srcparams_ (props_info)
 {
   const auto &capprops    = *srcparams_.capture_props_;
-  const auto &device_name = v4l2_vgen::consts::dev_path + srcparams_.props_->device_name_;
+  const auto  device_name = std::string (v4l2_vgen::consts::dev_path) + srcparams_.props_->device_name_;
   const auto  fourcc      = libs::utility::uids::helpers::idval2fourcc (capprops.capi_.px_format_);
   U3_LOG_DATA_DBG ("create v4l2" + TOLOG (device_name));
   U3_LOG_DATA_DBG ("params v4l2 " + ::libs::utility::uids::helpers::get_readable_name (capprops.capi_.px_format_) + VTOLOG (fourcc));
@@ -162,12 +162,12 @@ CamImpl::sync_correct_props (syn::VideoCorrectProp::craw_ptr correctprops)
 
     if (-1 == ioctl (fd, VIDIOC_QUERYCTRL, &queryctrl))
     {
-      U3_LOG_DATA_DBG (VTOLOG (cid2koeff.first) + TOLOG (strerror (errno)));
+      U3_LOG_DATA_DBG (FVTOLOG (cid2koeff.first) + TOLOG (strerror (errno)));
       continue;
     }
     else if (queryctrl.flags & V4L2_CTRL_FLAG_DISABLED)
     {
-      U3_LOG_DATA_DBG (VTOLOG (cid2koeff.first) + " not supported");
+      U3_LOG_DATA_DBG (FVTOLOG (cid2koeff.first) + " not supported");
       continue;
     }
 
@@ -175,10 +175,10 @@ CamImpl::sync_correct_props (syn::VideoCorrectProp::craw_ptr correctprops)
     memset (&control, 0, sizeof (control));
     control.id    = cid2koeff.first;
     control.value = enable_correct ? U3_CAST_INT32 (convert (queryctrl, cid2koeff.second)) : queryctrl.default_value;
-    // U3_LOG_DATA_DEV (VTOLOG (queryctrl.minimum) + VTOLOG (queryctrl.maximum) + VTOLOG (correctprops->bright_.first) + VTOLOG (control.value));
+    // U3_LOG_DATA_DEV (FVTOLOG (queryctrl.minimum) + VTOLOG (queryctrl.maximum) + VTOLOG (correctprops->bright_.first) + VTOLOG (control.value));
     if (-1 == ioctl (fd, VIDIOC_S_CTRL, &control))
     {
-      U3_LOG_DATA_DBG (VTOLOG (cid2koeff.first) + TOLOG (strerror (errno)));
+      U3_LOG_DATA_DBG (FVTOLOG (cid2koeff.first) + TOLOG (strerror (errno)));
     }
   }
 }

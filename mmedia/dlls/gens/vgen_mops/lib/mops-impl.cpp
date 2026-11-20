@@ -69,7 +69,7 @@ MopsImpl::itransform (const syn::NodeID& id_node, ::libs::bufs::Bufs& bufs)
         continue;
       }
 
-      U3_LOG_DATA_DBG (FTOLOG (b2b.sindx_diff_) + TOLOG (b2b.bindx_diff_) + to_string (op.morph_type_) + VTOLOG (op.bound_filling_) + VTOLOG (op.val_filling_));
+      U3_LOG_DATA_DBG (FTOLOG (b2b.sindx_diff_) + STOLOG (b2b.bindx_diff_) + to_string (op.morph_type_) + VTOLOG (op.bound_filling_) + VTOLOG (op.val_filling_));
       //  бинаризация в 0..1 как подготовка буфера для выполнения морфологической операции
       bin_buf (id_node, b2b, op.bound_filling_, 1, pdst);
       //  собственно производим МО над подготовленным буфером

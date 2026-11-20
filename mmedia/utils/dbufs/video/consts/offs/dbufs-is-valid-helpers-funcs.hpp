@@ -9,11 +9,11 @@
 namespace utils::dbufs::video::consts::offs
 {
 /// Функция проверки корректности типа-индекса буфера
-/// \param[in]  _indx индекс буфера
+/// \param[in]  indx индекс буфера
 /// \return     true, если индекс корректен, иначе false
 inline bool
-is_valid (const off_buf_type& _indx)
+is_valid (const off_buf_type indx)
 {
-  return invalid != _indx ? true : false;
+  return invalid != indx ? true : false;
 }
 }   // namespace utils::dbufs::video::consts::offs

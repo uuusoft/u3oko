@@ -15,7 +15,7 @@ enum class StreamTimes : std::uint32_t
   unknown  = 0xFF    //<
 };
 
-std::string to_string (const StreamTimes& val);
+std::string to_string (const StreamTimes&);
 void        tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const StreamTimes& src);
 StreamTimes tag_invoke (::boost::json::value_to_tag< StreamTimes >, const ::boost::json::value& jvs);
 }   // namespace libs::events_storage

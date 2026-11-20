@@ -115,7 +115,7 @@ Filter::default_send_func (
     return;
   }
 
-  U3_LOG_DATA_DBG ("send frame to client" + TOLOG (minfo->indx_buf_) + STOLOG (id));
+  U3_LOG_DATA_DBG ("send frame to client" + STOLOG (minfo->indx_buf_) + STOLOG (id));
   impl->second->send (finfo_, info, minfo, send_buf);
 }
 }   // namespace dlls::terminals::video_sender

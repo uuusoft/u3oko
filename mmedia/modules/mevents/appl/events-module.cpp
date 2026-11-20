@@ -24,7 +24,7 @@ free_error_callback (void* parg, int code, const char* msg)
 EventsModule::EventsModule ()
 {
   U3_CALL_TRACE_DBG;
-  text_id_module_ = ::libs::ilink::consts::id_events;
+  module_id_ = ::libs::ilink::consts::id_events;
 #if (U3_COMMERCIAL_PART == 1)
   impl_ = std::make_unique< impls::sqlite::SqliteEventModuleImpl > ();
 #else

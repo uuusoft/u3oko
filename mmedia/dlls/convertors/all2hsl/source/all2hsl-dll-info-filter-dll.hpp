@@ -15,7 +15,7 @@ struct InfoFilter final : public ::libs::icore::impl::base::obj::dll::BaseInfoFi
 
   auto init () -> void;
 
-  syn::VideoConvertProp::raw_ptr rprops_      = nullptr;   //< Настроенный указатель на свойства (для удобства)
-  bool                           strip_color_ = false;     //< Флаг-требование, отбрасывать цвет при преобразовании, расширряет условие из свойств, т.к ряд форматов по определению не несут цвета
+  syn::VideoConvertProp::raw_ptr rprops_ { nullptr };      //< Настроенный указатель на свойства (для удобства)
+  bool                           strip_color_ { false };   //< Флаг-требование, отбрасывать цвет при преобразовании, расширряет условие из свойств, т.к ряд форматов по определению не несут цвета
 };
 }   // namespace dlls::convertors::all2hsl

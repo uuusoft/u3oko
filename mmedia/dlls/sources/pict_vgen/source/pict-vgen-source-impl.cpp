@@ -11,7 +11,7 @@ namespace dlls::sources::pict_vgen
 auto
 image2frame (const std::string& val) -> Image2Frames
 {
-  static const boost::unordered_flat_map< std::string, const Image2Frames > vals = {
+  static const boost::unordered_flat_map< std::string, const Image2Frames, ::libs::utility::utils::TransparentStringHash, std::equal_to<> > vals = {
     { "one", Image2Frames::one },
     { "scroll", Image2Frames::scroll }
   };
@@ -62,7 +62,7 @@ SourceImpl::print_images2buf (utils::dbufs::video::IVideoBuf::ptr& genimage)
   std::int32_t cpwidth  = 0;
   auto         offfirst = U3_CAST_INT32 (off_first_image_);
 
-  const auto   folder         = ::libs::utility::files::update_home_folder (srcimpinfo_.props_->ext_vals_.at (consts::param_keys::picter_folder));
+  const auto   folder         = ::libs::utility::files::update_home_folder (srcimpinfo_.props_->ext_vals_.at (std::string (consts::param_keys::picter_folder)));
   auto         loc_image_indx = indx_image_file_;
   std::int32_t cycle_counter  = 0;
   while (++cycle_counter)
@@ -213,7 +213,7 @@ SourceImpl::refresh_files ()
   enum_files_.clear ();
 
   syn::DefaultFileMask check_cond (loc_mask);
-  const auto           picters_folder = ::libs::utility::files::update_home_folder (srcimpinfo_.props_->ext_vals_.at (consts::param_keys::picter_folder));
+  const auto           picters_folder = ::libs::utility::files::update_home_folder (srcimpinfo_.props_->ext_vals_.at (std::string (consts::param_keys::picter_folder)));
 
   U3_LOG_DATA_DEV ("updating image files" + TOLOG (picters_folder));
   ::libs::utility::files::get_files (
@@ -249,7 +249,7 @@ SourceImpl::sync_internal_structures ()
   loaded_images_.clear ();
   off_first_image_ = 0.0F;
   refresh_files ();
-  image2frame_style_ = image2frame (srcimpinfo_.props_->ext_vals_.at (consts::param_keys::image2frame));
+  image2frame_style_ = image2frame (srcimpinfo_.props_->ext_vals_.at (std::string (consts::param_keys::image2frame)));
 }
 
 

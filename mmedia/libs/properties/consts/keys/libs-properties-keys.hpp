@@ -8,10 +8,11 @@
 
 namespace libs::properties::consts::keys
 {
-using key_property_type = std::string;
+using key_property_type            = std::string_view;
+using persistent_key_property_type = std::string;
 
-extern const key_property_type shared_os_property;     //< Идентификатор свойств ОС
-extern const key_property_type specific_os_property;   //< Идентификатор свойств ОС специфичных для каждой из них
-extern const key_property_type links_property;         //< Идентификатор свойств связей между подсистемами
-extern const key_property_type demons_property;        //< Идентификатор свойств интерфейсов различных сервисов (памяти, оптимизации etc)
+inline constexpr std::string_view shared_os_property   = "shared_os_property";     //< Идентификатор свойств ОС
+inline constexpr std::string_view specific_os_property = "specific_os_property";   //< Идентификатор свойств ОС специфичных для каждой из них
+inline constexpr std::string_view links_property       = "links_property";         //< Идентификатор свойств связей между подсистемами
+inline constexpr std::string_view demons_property      = "demons_property";        //< Идентификатор свойств интерфейсов различных сервисов (памяти, оптимизации etc)
 }   // namespace libs::properties::consts::keys

@@ -28,12 +28,12 @@ CaptureDeskImplWin32::get_buf_int (
   {
     RECT               window_rect { 0, 0, 0, 0 };
     POINT              offset_pos { 0, 0 };
-    const auto         display_name = props_info.props_->ext_vals_.at (consts::param_keys::display_name);
+    const auto         display_name = props_info.props_->ext_vals_.at (std::string (consts::param_keys::display_name));
     syn::HandlerGdiObj hdc (CreateDCA ("DISPLAY", display_name.c_str (), nullptr, nullptr));
 
     window_rect.right  = GetDeviceCaps (*hdc, HORZRES);
     window_rect.bottom = GetDeviceCaps (*hdc, VERTRES);
-    // U3_LOG_APPL_MARK (VTOLOG (window_rect.right) + VTOLOG (window_rect.bottom));
+    // U3_LOG_APPL_MARK (FVTOLOG (window_rect.right) + VTOLOG (window_rect.bottom));
 
 #  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
     std::uint32_t   dev_index = 0;
@@ -50,7 +50,7 @@ CaptureDeskImplWin32::get_buf_int (
         const std::string display_device = _DisplayDevice.DeviceName;
         const std::string display_string = _DisplayDevice.DeviceString;
 
-        U3_LOG_APPL_MARK (VTOLOG (dev_index) + TOLOG (display_device) + TOLOG (display_string));
+        U3_LOG_APPL_MARK (FVTOLOG (dev_index) + TOLOG (display_device) + TOLOG (display_string));
       }
 
       memset (&_DisplayDevice, 0, sizeof (_DisplayDevice));

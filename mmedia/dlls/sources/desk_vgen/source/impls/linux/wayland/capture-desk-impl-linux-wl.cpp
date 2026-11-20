@@ -9,6 +9,7 @@
 #include "mmedia/libs/utility/thread/generic-thread-func.hpp"
 
 #if defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI)
+#  ifndef U3_EXTLIB_WLSCREENCAPT_FORCE_SKIP_USE
 
 namespace dlls::sources::desk_vgen::impls::linux::wl
 {
@@ -52,7 +53,7 @@ CaptureDeskImplLinux::thread_func_impl (std::uint32_t indx_thread) -> void
   const char* outputPath         = nullptr;
   const char* outputFormat       = nullptr;
 
-#  if 0
+#    if 0
 static void
 printUsage (const char* argv0)
 {
@@ -97,21 +98,21 @@ printUsage (const char* argv0)
     printUsage (argv[0]);
     return;
   }
-#  endif
+#    endif
 
   sigset_t procMask;
   sigemptyset (&procMask);
   sigaddset (&procMask, SIGINT);
   sigaddset (&procMask, SIGTERM);
   sigprocmask (SIG_BLOCK, &procMask, nullptr);
-#  if 1
+#    if 1
   int signalFd = signalfd (-1, &procMask, SFD_CLOEXEC);
   if (signalFd == -1)
   {
     U3_XLOG_ERROR ("creating signalfd failed");
     return;
   }
-#  endif
+#    endif
   U3_XLOG_DEV ("skip screencapture_wayland_init");
   int   argc    = 2;
   char* argv[3] = {
@@ -126,7 +127,8 @@ printUsage (const char* argv0)
   try
   {
     auto cursorMode = withCursor ? CURSOR_MODE_EMBED : CURSOR_MODE_HIDDEN;
-    // share_info_   = portal::requestPipeWireShare (cursorMode);
+    U3_XLOG_DEV ("SKIP REQUEST TEMPORARELY");
+    // share_info_     = portal::requestPipeWireShare (cursorMode);
     if (!share_info_)
     {
       U3_XLOG_MARK ("User cancelled request");
@@ -134,14 +136,13 @@ printUsage (const char* argv0)
       return;
     }
 
-
     printf ("SharedScreen fd = %d, node = %u\n", share_info_.value ().pipeWireFd, share_info_.value ().pipeWireNode);
-#  if 0
+#    if 1
     {
       std::uint64_t cycle_counter = 0;
       auto          pwStream      = pw::PipeWireStream (share_info_.value (), true);
       U3_XLOG_DEV ("init ffmpge - skip");
-#    if 0      
+#      if 0      
       // this must be declared after and therefore destroyed before pwStream, so that frame processing is stopped
       // and all references to frames from the stream are dropped before pwStream is destroyed.
       // std::unique_ptr< ffmpeg::FFmpegOutput > ffmpegOutput;
@@ -164,7 +165,7 @@ printUsage (const char* argv0)
           U3_XLOG_ERROR ("poll failed");
           return;
         }
-#      if 0
+#        if 0
         if (fds[1].revents & POLLIN)
         {
           signalfd_siginfo siginfo;
@@ -174,7 +175,7 @@ printUsage (const char* argv0)
             stop_ = true;
           }
         }
-#      endif
+#        endif
         U3_XLOG_DEV ("cycle" + VTOLOG (cycle_counter) + VTOLOG (res));
         if (!(fds[0].revents & POLLIN))
         {
@@ -214,9 +215,9 @@ printUsage (const char* argv0)
             *ev);
         }
       }
-#    endif
+#      endif
     }
-#  endif
+#    endif
     U3_XLOG_DEV ("skip  screencapture_wayland_deinit");
     pw::deinit ();
     // gstreamer::deinit ();
@@ -249,7 +250,7 @@ CaptureDeskImplLinux::get_buf_int (
     return;
   }
 
-#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
+#    ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   XSetErrorHandler (error_handler);
 
   xlib_display_type display (XOpenDisplay (":0"));
@@ -261,22 +262,22 @@ CaptureDeskImplLinux::get_buf_int (
   XWindowAttributes attrs;   // = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
   memset (&attrs, 0, sizeof (attrs));
   ::libs::utility::checks::throw_ifn (XGetWindowAttributes (*display, root, &attrs), "XGetWindowAttributes");
-  U3_LOG_DATA_DBG (VTOLOG (attrs.width) + VTOLOG (attrs.height) + VTOLOG (attrs.border_width) + VTOLOG (attrs.x) + VTOLOG (attrs.y) + VTOLOG (attrs.depth));
+  U3_LOG_DATA_DBG (FVTOLOG (attrs.width) + VTOLOG (attrs.height) + VTOLOG (attrs.border_width) + VTOLOG (attrs.x) + VTOLOG (attrs.y) + VTOLOG (attrs.depth));
   U3_LOG_DATA_DBG (PTR_TOLOG (attrs.visual) + VTOLOG (attrs.c_class) + VTOLOG (attrs.bit_gravity) + VTOLOG (attrs.win_gravity) + VTOLOG (attrs.backing_store) + VTOLOG (attrs.map_state));
   // InputOnly
   // IsUnmapped
-#    ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
+#      ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   int     x, y;          /* location of window */
   int     width, height; /* width and height of window */
   int     border_width;  /* border width of window */
   int     depth;         /* depth of window */
   Visual* visual;        /* the associated visual structure */
   Window  root;          /* root of screen containing window */
-#      if defined(__cplusplus) || defined(c_plusplus)
+#        if defined(__cplusplus) || defined(c_plusplus)
   int c_class; /* C++ InputOutput, InputOnly*/
-#      else
+#        else
   int class; /* InputOutput, InputOnly*/
-#      endif
+#        endif
   int           bit_gravity;           /* one of bit gravity values */
   int           win_gravity;           /* one of the window gravity values */
   int           backing_store;         /* NotUseful, WhenMapped, Always */
@@ -291,7 +292,7 @@ CaptureDeskImplLinux::get_buf_int (
   long          do_not_propagate_mask; /* set of events that should not propagate */
   Bool          override_redirect;     /* boolean value for override-redirect */
   Screen*       screen;                /* back pointer to correct screen */
-#    endif
+#      endif
   ::libs::utility::checks::throw_ifn (attrs.width >= 0 && attrs.height >= 0 && attrs.border_width >= 0, VTOLOG (attrs.width) + VTOLOG (attrs.height) + VTOLOG (attrs.border_width));
   // xlib_image_type img (XGetImage (*display, root, 0, 0, attrs.width, attrs.height, AllPlanes, XYPixmap));
   // xlib_image_type img (XGetImage (*display, root, 0, 0, attrs.width, attrs.height, AllPlanes, ZPixmap));
@@ -310,7 +311,7 @@ CaptureDeskImplLinux::get_buf_int (
 
   info.rgb_buf_->resize (info.size_dest_data_);
 
-  // U3_LOG_DATA_DEV (VTOLOG (attrs.x) + VTOLOG (attrs.y) + VTOLOG (attrs.depth) + VTOLOG (attrs.width) + VTOLOG (attrs.height));
+  // U3_LOG_DATA_DEV (FVTOLOG (attrs.x) + VTOLOG (attrs.y) + VTOLOG (attrs.depth) + VTOLOG (attrs.width) + VTOLOG (attrs.height));
   auto rgb_buf = info.rgb_buf_->get ();
   for (std::int32_t y = 0; y < attrs.height; ++y)
   {
@@ -328,8 +329,9 @@ CaptureDeskImplLinux::get_buf_int (
   info.rgb_buf_->set_size (info.size_dest_data_);
   // XDestroyImage (img);
   // XCloseDisplay (display);
-#  endif
+#    endif
 }
 }   // namespace dlls::sources::desk_vgen::impls::linux::wl
 
+#  endif
 #endif

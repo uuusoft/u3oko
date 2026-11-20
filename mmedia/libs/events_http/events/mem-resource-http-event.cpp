@@ -15,8 +15,7 @@ MemResourceHttpEvent::MemResourceHttpEvent (
   id_mem_type                id,
   const number_mem_buf_type& number) :
   id_ (std::move (id)),
-  number_ (number),
-  request_for_transmit_ (false)
+  number_ (number)
 {
 }
 

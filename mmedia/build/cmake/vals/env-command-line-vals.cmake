@@ -5,7 +5,7 @@
 
 set(U3_USE_COMMERCIAL_PART TRUE CACHE BOOL "use comercial parts")
 set(U3_CPP_STANDARD "c++23" CACHE STRING "type cpp stardard c++17, c++20, c++23, c++26")
-set(U3_SANITY_BUILD_TYPE "none" CACHE STRING "type sanity build [none/memory/ub/thread/address/etc]")
+set(U3_SANITY_TYPE "none" CACHE STRING "type sanity build [none/memory/ub/thread/address/etc]")
 set(U3_USE_BOOST_SERIALIZTION FALSE CACHE BOOL "use boost serialization")
 
 set(U3_HOST_NAME "localhost" CACHE STRING "host name")

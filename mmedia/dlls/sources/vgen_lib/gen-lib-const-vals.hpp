@@ -7,8 +7,8 @@
 
 namespace dlls::sources::gen_lib::consts
 {
-extern const std::string name_get_func;    //<
-extern const std::string name_free_func;   //<
+inline constexpr std::string_view name_get_func { "get_source" };
+inline constexpr std::string_view name_free_func { "free_source" };
 }   // namespace dlls::sources::gen_lib::consts
 
 namespace dlls::sources::gen_lib

@@ -19,7 +19,7 @@ class VideoDiffProp final : virtual public events_base::Event
 
   public:
   //  ext types
-  using buf2info_type = std::pair< ::utils::dbufs::video::consts::offs::off_buf_type, InfoBuffVideoDiffProp >;
+  using buf2info_type = std::pair< syn::persistent_off_buf_type, InfoBuffVideoDiffProp >;
 
   U3_ADD_POINTERS_TO_SELF (VideoDiffProp)
   U3_ADD_MAKE_SHARED_THIS (VideoDiffProp)

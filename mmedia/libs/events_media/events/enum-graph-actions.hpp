@@ -17,7 +17,7 @@ enum class GraphActions : std::uint32_t
   unknown = 0xFF    //<
 };
 
-const std::string& to_string (const GraphActions& val);
+auto to_string (const GraphActions&) -> const std::string&;
 
 inline constexpr GraphActions
 change_graph_action_from_raw_val (std::uint32_t val)

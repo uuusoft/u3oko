@@ -54,7 +54,7 @@ CreateInfo::CreateInfo (const vals_type& vals) :
                    { consts::text::id_code_runs, details::CodeRuns::usual },
                    { consts::text::id_server_side, false } } }
 {
-  U3_CALL_TRACE_DBG (VTOLOG (link_params_.size ()) + VTOLOG (vals.size ()));
+  U3_CALL_TRACE_DBG (FVTOLOG (link_params_.size ()) + VTOLOG (vals.size ()));
   link_params_.reserve (link_params_.size () + vals.size ());
   for (const auto& [key, val] : vals)
   {

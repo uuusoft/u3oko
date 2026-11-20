@@ -37,22 +37,21 @@ class HttpModule final : public ::libs::ilink::appl::leaf::LeafModule
 
   using sync_type = std::mutex;
   using lock_type = std::scoped_lock< sync_type >;
-  // using ids2bufs_type = boost::unordered_flat_map< std::string, Id2BufInfo >;
 
   //  IApplication overrides
   virtual auto init_appl_data_int () -> void override;
 
   //  BaseModule overrides
-  virtual auto appl_init_int (const syn::InitApplication& info) -> void override;
-  virtual auto init_links_int (const syn::InitApplication& info) -> void override;
+  virtual auto appl_init_int (const syn::InitApplication&) -> void override;
+  virtual auto init_links_int (const syn::InitApplication&) -> void override;
   virtual auto init_proxys_int () -> void override;
   virtual auto appl_deinit_int () -> bool override;
   virtual auto update_catch_funcs_int () -> void override;
   virtual auto get_recv_link_int () -> recv_links_type override;
 
   //  LeafModule overrides
-  virtual auto catch_event_int (syn::IEvent::ptr& evnt) -> bool override;
-  virtual auto is_now_thread_to_sleep_int (bool now_recv_evnt) -> bool override;
+  virtual auto catch_event_int (syn::IEvent::ptr&) -> bool override;
+  virtual auto is_now_thread_to_sleep_int (bool) -> bool override;
 
   // internal
   auto check_process () -> void;
@@ -61,13 +60,12 @@ class HttpModule final : public ::libs::ilink::appl::leaf::LeafModule
   auto prepare_resources () -> void;
   auto create_rw_copy () -> void;
   auto delete_rw_copy () -> void;
-  // auto load_def_resource2mem () -> void;
   auto process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr) -> void;
   auto process_zip_data_event (syn::ZipDataEvent::raw_ptr) -> void;
   auto debug () -> void;
-  auto process_http_request (const std::string& req, const std::string& body) -> process_res_type;
-  auto process_request_event (const std::string& req, const std::string& body) -> process_res_type;
-  auto process_request_file (const std::string& req, const std::string& body) -> process_res_type;
+  auto process_http_request (const std::string&, const std::string&) -> process_res_type;
+  auto process_request_event (const std::string&, const std::string&) -> process_res_type;
+  auto process_request_file (const std::string&, const std::string&) -> process_res_type;
   auto process_request_event_debug (const std::string&, const std::string&, const std::string&) -> bool;
 
   ImplState                         impl_state_;         //< Состояние для реализации
@@ -79,6 +77,5 @@ class HttpModule final : public ::libs::ilink::appl::leaf::LeafModule
   std::shared_ptr< WebSharedState > shared_state_;       //<
   SkipDataState                     skip_state_;         //<
   syn::ISystemProperty::raw_ptr     isys_ { nullptr };   //<
-  // ids2bufs_type                     shared_ids2bufs_;   //< Хранилище для буферов с данными, которые приходят извне Разделяется между потоком обработки запросов от http интерфейса
 };
 }   // namespace modules::mhttp::appl

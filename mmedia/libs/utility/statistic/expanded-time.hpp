@@ -19,7 +19,7 @@ class ExpandedTime final
   duration_type sum_   = count_time_type (0);   //< сумма всех времен
   std::uint64_t count_ = 0;                     //< количество элементов
 
-  ExpandedTime& operator+= (const ExpandedTime& val);
+  ExpandedTime& operator+= (const ExpandedTime&);
 
   private:
   friend class boost::serialization::access;

@@ -20,17 +20,17 @@ class Filter final :
   U3_ADD_SUPER_CLASS (::libs::icore::impl::base::obj::dll::FilterImpl< InfoFilter >)
 
   // IFilter overrides
-  virtual void load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node) override;
+  virtual auto load_int (syn::FilterInfo*, const ::pugi::xml_named_node_iterator&) -> void override;
   virtual auto transform_int (syn::TransformInfo&) -> void override;
   virtual auto call_int (syn::CallInterfInfo&) -> void override;
-  virtual void run_int () override;
+  virtual auto run_int () -> void override;
   virtual auto stop_int () -> void override;
 
   // internals
   void init_pts (syn::ConnectInfo* info);
 
-  BaseIdInterf::ptr base_interf_      = std::make_shared< BaseIdInterf > ();   //<
-  std::int64_t      frame_counter_    = 0;                                     //<
-  bool              send_base_interf_ = false;                                 //<
+  BaseIdInterf::ptr base_interf_ { std::make_shared< BaseIdInterf > () };   //<
+  std::int64_t      frame_counter_ { 0 };                                   //<
+  bool              send_base_interf_ { false };                            //<
 };
 }   // namespace dlls::base_id

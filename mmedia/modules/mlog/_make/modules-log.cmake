@@ -4,23 +4,17 @@
 # file        modules-log.cmake
 
 u3_add_target_dylib(
-  TARGET_NAME
-  module-mlog
-  SOURCE_PATH
-  ${U3_PATH_ROOT}/modules/mlog
-  OUTPUT_NAME
-  mpl_mlog
-  FORCE_TO_DYLIB
-  FALSE
-  USE_EXACTLY_SOURCE_FILES
-  FALSE
-  SOURCE_FILES
-  ""
-  EXTENDED_LIBS
-  ilink-lib
-  optim-lib
-  icore-lib
-  iproperties-lib
-  dbufs-dll
-  DEPEND_TARGETS
-  dbufs-dll)
+    TARGET_NAME module-mlog
+    SOURCE_PATH ${U3_PATH_ROOT}/modules/mlog
+    OUTPUT_NAME mpl_mlog
+    FORCE_TO_DYLIB FALSE
+    USE_EXACTLY_SOURCE_FILES FALSE
+    SOURCE_FILES ""
+    EXTENDED_LIBS
+    ilink-lib
+    optim-lib
+    icore-lib
+    iproperties-lib
+    dbufs-dll
+    DEPEND_TARGETS
+    dbufs-dll)

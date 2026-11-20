@@ -11,8 +11,8 @@ namespace appls::u3oko::appl
 {
 U3OkoAppl::U3OkoAppl ()
 {
-  text_id_module_ = ::libs::ilink::consts::id_u3oko;
-  ms_time_sleep_  = ::libs::link::consts::ms_wait_delay_special_msg_cycle;   //< особый модуль, который задействован в обработке сообщений от всех других, изменяем время ожидания следующего события в 0
+  module_id_     = ::libs::ilink::consts::id_u3oko;
+  ms_time_sleep_ = ::libs::link::consts::ms_wait_delay_special_msg_cycle;   //< особый модуль, который задействован в обработке сообщений от всех других, изменяем время ожидания следующего события в 0
 }
 
 

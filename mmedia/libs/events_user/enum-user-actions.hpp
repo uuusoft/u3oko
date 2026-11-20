@@ -9,14 +9,14 @@ namespace libs::events_user
 {
 enum class UserActions : std::uint32_t
 {
-  query   = 0x00,   //< запросить список пользователей
-  add     = 0x01,   //< добавить -/-
-  remove  = 0x02,   //< удалить -/-
-  disable = 0x03,   //< отключить -/-
-  unknown = 0xFF    //<
+  query = 0,         //< запросить список пользователей
+  add,               //< добавить пользователей из списка
+  remove,            //< удалить пользователей из списка
+  disable,           //< отключить пользователей из списка
+  unknown = 0xFFFF   //<
 };
 
-// std::string   to_string (const UserActions& val);
+// std::string   to_string (const UserActions& );
 auto tag_invoke (::boost::json::value_from_tag, ::boost::json::value&, const UserActions&) -> void;
 auto tag_invoke (::boost::json::value_to_tag< UserActions >, const ::boost::json::value&) -> UserActions;
 }   // namespace libs::events_user

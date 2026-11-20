@@ -28,21 +28,21 @@ change_module_state (
   const std::string&                           name_appl,
   bool                                         state)
 {
-  if (!link)
+  if (link)
   {
-    return;
+    auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::ChangeStateProcessEvent > ();
+    revnt->set_start (state);
+    link->send_msg (evnt);
   }
-
-  auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::ChangeStateProcessEvent > ();
-  revnt->set_start (state);
-  link->send_msg (evnt);
 }
 
 // EAI-REFACT function
 void
 RootModule::appl_work_int ()
 {
-  ::libs::utility::thread::set_thread_priority (std::this_thread::get_id (), ::libs::utility::thread::Priorities::high);
+  ::libs::utility::thread::set_thread_priority (
+    std::this_thread::get_id (),
+    ::libs::utility::thread::Priorities::high);
 
   do
   {
@@ -142,7 +142,7 @@ RootModule::appl_work_int ()
 
         const bool seqs_exist   = current_seq_.recv_seq_ || current_seq_.make_seq_;
         auto       src_complite = src;
-        // U3_XLOG_DBG (VTOLOG (current_seq_.answer_) + VTOLOG (seqs_exist) + VTOLOG (current_seq_.recv_seq_));
+        // U3_XLOG_DBG (FVTOLOG (current_seq_.answer_) + VTOLOG (seqs_exist) + VTOLOG (current_seq_.recv_seq_));
         // Если это не часть последовательности и ответ, то это ответ данному модулю на его же запрос -
         // ничего никуда не пересылаем - запрос уже обработан
         if (current_seq_.answer_ && !seqs_exist)
@@ -239,7 +239,7 @@ RootModule::appl_work_int ()
         //  ждем остановки всех зависимых модулей.
         if (appl_deinit ())
         {
-          U3_XLOG_MARK ("RootModule::appl_work_int: appl_deinit ok" + TOLOG (text_id_module_));
+          U3_XLOG_MARK ("RootModule::appl_work_int: appl_deinit ok" + TOLOG (module_id_));
           break;
         }
       }
@@ -256,11 +256,14 @@ auto
 RootModule::appl_deinit_int () -> bool
 {
   U3_CALL_TRACE_DBG;
-  bool ret = false;
+  bool ret         = false;
+  auto old_counter = deinit_stage_counter_;
+
+  ++deinit_stage_counter_;
 
   switch (deinit_stage_)
   {
-  case DeInitStages::send_stop_msg2allmost_all: {
+  case DeInitStages::start_send_stop_msgs: {
     if (links_[syn::mids::appl2log])
     {
       auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::ChangeStateSubSysLogEvent > ();
@@ -286,8 +289,7 @@ RootModule::appl_deinit_int () -> bool
     change_module_state (links_[syn::mids::appl2gui], appl_info_.appl_name_, false);
 
     // std::this_thread::sleep_for (std::chrono::milliseconds (10 * 1000)); // debug
-    deinit_stage_ = DeInitStages::wait_stop_data_module;
-    U3_XLOG_MARK ("RootModule::deinit_int next stage" + VTOLOG (U3_CAST_UINT32_FORCE (deinit_stage_)) + " after" + VTOLOG (deinit_stage_counter_) + PTR_TOLOG (this));
+    deinit_stage_         = DeInitStages::wait_stop_data_module;
     deinit_stage_counter_ = 0;
     break;
   }
@@ -298,19 +300,16 @@ RootModule::appl_deinit_int () -> bool
       change_module_state (links_[syn::mids::appl2storage], appl_info_.appl_name_, false);
 
       links_.reset_link (syn::mids::appl2mdata);
-      deinit_stage_ = DeInitStages::wait_stop_gui_module;
-      U3_XLOG_MARK ("RootModule::deinit_int next stage" + VTOLOG (U3_CAST_UINT32_FORCE (deinit_stage_)) + " after" + VTOLOG (deinit_stage_counter_) + PTR_TOLOG (this));
+      deinit_stage_         = DeInitStages::wait_stop_gui_module;
       deinit_stage_counter_ = 0;
     }
-    ++deinit_stage_counter_;
     break;
   }
   case DeInitStages::wait_stop_gui_module: {
     if (!links_[syn::mids::appl2gui] || !links_[syn::mids::appl2gui]->is_connected ())
     {
       links_.reset_link (syn::mids::appl2gui);
-      deinit_stage_ = DeInitStages::wait_stop_storage_module;
-      U3_XLOG_MARK ("RootModule::deinit_int next stage" + VTOLOG (U3_CAST_UINT32_FORCE (deinit_stage_)) + " after" + VTOLOG (deinit_stage_counter_) + PTR_TOLOG (this));
+      deinit_stage_         = DeInitStages::wait_stop_storage_module;
       deinit_stage_counter_ = 0;
     }
     break;
@@ -319,8 +318,7 @@ RootModule::appl_deinit_int () -> bool
     if (!links_[syn::mids::appl2storage] || !links_[syn::mids::appl2storage]->is_connected ())
     {
       links_.reset_link (syn::mids::appl2storage);
-      deinit_stage_ = DeInitStages::wait_stop_events_module;
-      U3_XLOG_MARK ("RootModule::deinit_int next stage" + VTOLOG (U3_CAST_UINT32_FORCE (deinit_stage_)) + " after" + VTOLOG (deinit_stage_counter_) + PTR_TOLOG (this));
+      deinit_stage_         = DeInitStages::wait_stop_events_module;
       deinit_stage_counter_ = 0;
     }
     break;
@@ -329,8 +327,7 @@ RootModule::appl_deinit_int () -> bool
     if (!links_[syn::mids::appl2events] || !links_[syn::mids::appl2events]->is_connected ())
     {
       links_.reset_link (syn::mids::appl2events);
-      deinit_stage_ = DeInitStages::send_stop_msg2log_module;
-      U3_XLOG_MARK ("RootModule::deinit_int next stage" + VTOLOG (U3_CAST_UINT32_FORCE (deinit_stage_)) + " after" + VTOLOG (deinit_stage_counter_) + PTR_TOLOG (this));
+      deinit_stage_         = DeInitStages::send_stop_msg2log_module;
       deinit_stage_counter_ = 0;
     }
     break;
@@ -343,8 +340,7 @@ RootModule::appl_deinit_int () -> bool
       links_[syn::mids::appl2log]->send_msg (evnt);
     }
 
-    deinit_stage_ = DeInitStages::wait_stop_log_module;
-    U3_XLOG_MARK ("RootModule::deinit_int next stage" + VTOLOG (U3_CAST_UINT32_FORCE (deinit_stage_)) + " after" + VTOLOG (deinit_stage_counter_) + PTR_TOLOG (this));
+    deinit_stage_         = DeInitStages::wait_stop_log_module;
     deinit_stage_counter_ = 0;
     break;
   }
@@ -352,21 +348,23 @@ RootModule::appl_deinit_int () -> bool
     if (!links_[syn::mids::appl2log] || !links_[syn::mids::appl2log]->is_connected ())
     {
       links_.reset_link (syn::mids::appl2log);
-      deinit_stage_ = DeInitStages::done;
-      U3_XLOG_MARK ("RootModule::deinit_int next stage" + VTOLOG (U3_CAST_UINT32_FORCE (deinit_stage_)) + " after" + VTOLOG (deinit_stage_counter_) + PTR_TOLOG (this));
+      deinit_stage_         = DeInitStages::done;
       deinit_stage_counter_ = 0;
     }
     break;
   }
   case DeInitStages::done: {
     ret = true;
-    U3_XLOG_MARK ("RootModule::deinit_int next stage" + VTOLOG (U3_CAST_UINT32_FORCE (deinit_stage_)) + " after" + VTOLOG (deinit_stage_counter_) + PTR_TOLOG (this));
-    deinit_stage_counter_ = 0;
+    // deinit_stage_counter_ = 0;
     break;
   }
   default:
-    ::libs::utility::checks::throw_exception ("Unknown deinit stage" + VTOLOG (U3_CAST_UINT32_FORCE (deinit_stage_)));
+    ::libs::utility::checks::throw_exception ("process uknown deinit stage" + to_string (deinit_stage_));
     break;
+  }
+  if (0 == deinit_stage_counter_)
+  {
+    U3_XLOG_MARK ("Start waiting new stage: " + to_string (deinit_stage_) + " after " + std::to_string (old_counter) + " cycles");
   }
   return ret;
 }
@@ -579,13 +577,13 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     ::libs::properties::consts::keys::links_property,
     std::make_shared< syn::ILinksProperty > (syn::ILinksProperty::links_type {}));
 
-  constexpr std::uint32_t dbg_delay_process = 1000;
-  std::uint32_t           create_counter    = 0;
+  constexpr std::chrono::milliseconds dbg_delay_process { 100 };
+  std::uint32_t                       create_counter = 0;
   for (const auto& [dll_name, subsys_name, subsys_id, buf_size, link_id] : create_vals)
   {
-    U3_CALL_TRACE_INFO (VTOLOG (create_counter) + TOLOG (dll_name));
-    std::this_thread::sleep_for (std::chrono::milliseconds (dbg_delay_process));
-    U3_XLOG_DEV ("debug sleep:<----" + VTOLOG (create_counter) + TOLOG (dll_name));
+    U3_CALL_TRACE_INFO (FVTOLOG (create_counter) + TOLOG (dll_name));
+    // std::this_thread::sleep_for (dbg_delay_process);
+    // U3_XLOG_DEV ("debug sleep:<----" + VTOLOG (create_counter) + TOLOG (dll_name));
     auto temp_link = iproxy->get_connect (
       ::libs::link::CreateInfo (
         { { ::libs::link::consts::text::id_appl_name, appl_info_.appl_name_ },
@@ -602,7 +600,7 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
 
   //  Разделяем созданные интерфейсы между всей системой через объект "свойства"
   {
-    // std::this_thread::sleep_for (std::chrono::milliseconds (dbg_delay_process));
+    // std::this_thread::sleep_for (dbg_delay_process);
     auto* ilinks = ::libs::iproperties::helpers::get_prop_links ();
     auto& links  = ilinks->update_links_lockfree ();
     for (const auto& [dll_name, subsys_name, subsys_id, buf_size, link_id] : create_vals)

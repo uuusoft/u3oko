@@ -11,7 +11,7 @@ namespace libs::events_base::props::videos::generic::driver
 auto
 str2focus (const std::string& str) -> Focus
 {
-  const boost::unordered_flat_map< std::string, Focus > vals = {
+  const boost::unordered_flat_map< std::string, Focus, ::libs::utility::utils::TransparentStringHash, std::equal_to<> > vals = {
     { "auto_generic", Focus::auto_generic },
     { "auto_near", Focus::auto_near },
     { "auto_macro", Focus::auto_macro },

@@ -19,8 +19,8 @@ class IEventsProxy final
   U3_ADD_POINTERS_TO_SELF (IEventsProxy)
   U3_ADD_DELETE_MOVE_COPY (IEventsProxy)
 
-  static IEventsProxy::raw_ptr         instance (const std::string& dll_path);
-  ::libs::events::io::IEvents::raw_ptr impl ();
+  static auto instance (const std::string& dll_path) -> IEventsProxy::raw_ptr;
+  auto        impl () -> ::libs::events::io::IEvents::raw_ptr;
 
   private:
   explicit IEventsProxy (const std::string& dll_path);

@@ -17,5 +17,5 @@ enum class PropertyUsings : std::uint32_t
   unknown   = 0xFF    //< Не определенно для общности
 };
 
-const std::string& to_string (const PropertyUsings& val);
+auto to_string (const PropertyUsings&) -> const std::string&;
 }   // namespace libs::events

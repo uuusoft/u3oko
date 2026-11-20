@@ -46,7 +46,7 @@ class ZipDataEvent : public RuntimeEvent
   auto update_zip (::utils::dbufs::video::IVideoBuf::raw_ptr&) -> void;
   auto get_size () const -> std::size_t;
   auto get_id () const -> const id_buf_type&;
-  auto set_id (const id_buf_type&) -> void;
+  auto set_id (const std::string_view) -> void;
   auto get_number () const -> const number_buf_type&;
   auto set_number (const number_buf_type&) -> void;
 

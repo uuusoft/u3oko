@@ -7,8 +7,7 @@
 
 namespace libs::utility::consts
 {
-extern const std::string new_line;
-
-inline constexpr std::uint32_t uinvalid = 0xFFFFFFFFu;
-inline constexpr std::int32_t  iinvalid = -1;
+inline constexpr std::string_view new_line { "\r" };          //<
+inline constexpr std::uint32_t    uinvalid { 0xFFFFFFFFU };   //<
+inline constexpr std::int32_t     iinvalid { -1 };            //<
 }   // namespace libs::utility::consts

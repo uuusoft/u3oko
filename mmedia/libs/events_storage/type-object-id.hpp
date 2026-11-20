@@ -13,13 +13,12 @@ class TypeObjectId
   // ext types
   using id_type = std::string;
 
-  explicit TypeObjectId (const id_type& = consts::empty_object_id);
+  explicit TypeObjectId (std::string_view = consts::empty_object_id);
   virtual ~TypeObjectId () = default;
 
-  bool is_valid () const;
-  void reset ();
-
-  bool operator== (const TypeObjectId& obj) const;
+  auto is_valid () const -> bool;
+  auto reset () -> void;
+  auto operator== (const TypeObjectId& obj) const -> bool;
 
   id_type val_;   //<
 
@@ -31,8 +30,8 @@ class TypeObjectId
   serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
-void         tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const TypeObjectId& src);
-TypeObjectId tag_invoke (::boost::json::value_to_tag< TypeObjectId >, const ::boost::json::value& jvs);
+auto tag_invoke (::boost::json::value_from_tag, ::boost::json::value&, const TypeObjectId&) -> void;
+auto tag_invoke (::boost::json::value_to_tag< TypeObjectId >, const ::boost::json::value&) -> TypeObjectId;
 }   // namespace libs::events_storage
 
 U3_BOOST_CLASS_EXPORT_KEY (::libs::events_storage::TypeObjectId);

@@ -9,9 +9,9 @@
 namespace libs::events_base::props::videos::noises::freq
 {
 FreqVideoNoiseRemoverProp::FreqVideoNoiseRemoverProp (const Acessor& pha) :
-  bufs_ ({ { syn::offs::lit, InfoBuffFreqNoiseRemover (syn::offs::lit, syn::offs::lit, syn::offs::lit, 8, 1) },
-           { syn::offs::hue, InfoBuffFreqNoiseRemover (syn::offs::hue, syn::offs::hue, syn::offs::hue, 8, 1) },
-           { syn::offs::hue, InfoBuffFreqNoiseRemover (syn::offs::sat, syn::offs::sat, syn::offs::sat, 8, 1) } })
+  bufs_ ({ { syn::persistent_off_buf_type { syn::offs::lit }, InfoBuffFreqNoiseRemover (syn::offs::lit, syn::offs::lit, syn::offs::lit, 8, 1) },
+           { syn::persistent_off_buf_type { syn::offs::hue }, InfoBuffFreqNoiseRemover (syn::offs::hue, syn::offs::hue, syn::offs::hue, 8, 1) },
+           { syn::persistent_off_buf_type { syn::offs::hue }, InfoBuffFreqNoiseRemover (syn::offs::sat, syn::offs::sat, syn::offs::sat, 8, 1) } })
 {
 }
 
@@ -35,7 +35,7 @@ FreqVideoNoiseRemoverProp::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
 
-  bufs_ = ::boost::json::value_to< freq_bufs_type > (obj.at ("evbufs"));
+  bufs_ = ::boost::json::value_to< freq_bufs_type > (obj.at (::libs::events::buf::consts::node_name));
 }
 
 
@@ -44,7 +44,7 @@ FreqVideoNoiseRemoverProp::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
 
-  obj["evbufs"] = ::boost::json::value_from (bufs_);
+  obj[::libs::events::buf::consts::node_name] = ::boost::json::value_from (bufs_);
 }
 
 

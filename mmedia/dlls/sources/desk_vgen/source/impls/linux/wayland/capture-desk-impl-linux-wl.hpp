@@ -5,17 +5,17 @@
 \author     Erashov Anton erashov2026@proton.me
 */
 #if defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI)
-
-#  include "PipeWireModule/PipeWireStream.hpp"
-#  include "PortalModule/xdg-desktop-portal.hpp"
+#  ifndef U3_EXTLIB_WLSCREENCAPT_FORCE_SKIP_USE
+#    include "PipeWireModule/PipeWireStream.hpp"
+#    include "PortalModule/xdg-desktop-portal.hpp"
 // #include "FFMPEGModule/FFmpegOutput.hpp"
 // #include "GStreamerModule/GstOutput.hpp"
 // #    include "c_common.h"
-#  include <cstdio>
-#  include <unistd.h>
-#  include <signal.h>
-#  include <sys/signalfd.h>
-#  include <poll.h>
+#    include <cstdio>
+#    include <unistd.h>
+#    include <signal.h>
+#    include <sys/signalfd.h>
+#    include <poll.h>
 
 namespace dlls::sources::desk_vgen::impls::linux::wl
 {
@@ -40,5 +40,5 @@ class CaptureDeskImplLinux : public ::dlls::sources::desk_vgen::ICaptureDeskImpl
   std::atomic_bool stop_ { false };   //<
 };
 }   // namespace dlls::sources::desk_vgen::impls::linux::wl
-
+#  endif
 #endif

@@ -26,12 +26,27 @@ u3_project_add(
 
 ExternalProject_Get_Property(${U3_3RDLIB_NAME_STB_UTIL} install_dir)
 
-if (${U3_GVXX_PROJECT_ADD_SOURCE_TYPE} STREQUAL "U3_ADD_PROJECT_RESULT_BIN")
-  set(U3_INCLUDE_DIR_EXTLIB_STB ${install_dir}/src/stb-util)
-  set(U3_INSTALL_DIR_EXTLIB_STB ${install_dir}/src/stb-util/${U3_3RDLIB_STB_FILE_NAME})
-else ()
-  set(U3_INCLUDE_DIR_EXTLIB_STB ${install_dir}/src/stb-util)
+set(U3_INCLUDE_DIR_EXTLIB_STB ${install_dir}/src/stb-util)
+
+if (NOT U3_GVXX_PROJECT_ADD_SOURCE_TYPE STREQUAL "U3_ADD_PROJECT_RESULT_BIN")
+
   set(U3_INSTALL_DIR_EXTLIB_STB ${install_dir}/src/stb-util-build/${U3_3RDLIB_STB_FILE_NAME})
+  set(U3_BIN_TEMP_FOLDER_EXTLIB_STB "${install_dir}/~temp-stb-util")
+
+  add_custom_command(
+      TARGET ${U3_3RDLIB_NAME_STB_UTIL}
+      POST_BUILD
+      COMMAND
+      ${CMAKE_COMMAND} -E rm -Rf "${U3_BIN_TEMP_FOLDER_EXTLIB_STB}"
+      COMMAND
+      ${CMAKE_COMMAND} -E make_directory "${U3_BIN_TEMP_FOLDER_EXTLIB_STB}"
+      COMMAND
+      ${CMAKE_COMMAND} -E copy "${install_dir}/src/stb-util/*.h" "${U3_BIN_TEMP_FOLDER_EXTLIB_STB}"
+      COMMAND
+      ${CMAKE_COMMAND} -E copy_directory_if_different "${install_dir}/src/stb-util/deprecated/" "${U3_BIN_TEMP_FOLDER_EXTLIB_STB}/deprecated/"
+      COMMAND
+      ${CMAKE_COMMAND} -E chdir "${U3_BIN_TEMP_FOLDER_EXTLIB_STB}" tar czvf "${install_dir}/../${U3_3RDLIB_NAME_STB_BIN}" "./")
+
 endif ()
 
 add_library(stb-lib INTERFACE)

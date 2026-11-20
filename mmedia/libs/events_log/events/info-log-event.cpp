@@ -14,6 +14,7 @@ InfoLogEvent::InfoLogEvent (
   const Acessor&,
   const AppllPartLogInfo& appl,
   std::string             info) :
+
   info_ (std::move (info)),
   appl_ (appl)
 {

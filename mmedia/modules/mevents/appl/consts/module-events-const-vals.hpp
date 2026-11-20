@@ -7,6 +7,6 @@
 
 namespace modules::mevents::appl::consts
 {
-extern const char*             module_name;                     //<
-inline constexpr std::uint32_t max_return_count_events = 128;   //<
+inline constexpr std::string_view module_name { "u3m_events" };      //<
+inline constexpr std::uint32_t    max_return_count_events { 128 };   //<
 }   // namespace modules::mevents::appl::consts

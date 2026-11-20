@@ -20,7 +20,8 @@ void
 InfoFilter::init ()
 {
   rprops_ = ::libs::iproperties::helpers::create_event_in_list< syn::VideoDetectProp > (ef_props_);
-  str2props_.insert ({ ef_props_.front ()->get_mid (), rprops_ });
+  // str2props_.insert ({ ef_props_.front ()->get_mid (), rprops_ });
+  str2props_[ef_props_.front ()->get_mid ()] = rprops_;
 
   {
     syn::InfoBuffVideoDiffProp detect_prop;

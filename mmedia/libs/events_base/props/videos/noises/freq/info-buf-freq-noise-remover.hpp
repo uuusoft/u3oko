@@ -6,10 +6,12 @@
 */
 namespace libs::events_base::props::videos::noises::freq::syn
 {
-using off_buf_type = ::utils::dbufs::video::consts::offs::off_buf_type;
+using off_buf_type            = ::utils::dbufs::video::consts::offs::off_buf_type;
+using persistent_off_buf_type = ::utils::dbufs::video::consts::offs::persistent_off_buf_type;
 
 namespace offs = ::utils::dbufs::video::consts::offs;
 }   // namespace libs::events_base::props::videos::noises::freq::syn
+
 
 namespace libs::events_base::props::videos::noises::freq
 {
@@ -18,17 +20,17 @@ struct InfoBuffFreqNoiseRemover final : public ::libs::events::buf::EventBufs {
   U3_ADD_POINTERS_TO_SELF (InfoBuffFreqNoiseRemover)
 
   InfoBuffFreqNoiseRemover (
-    const syn::off_buf_type& src            = syn::offs::invalid,
-    const syn::off_buf_type& dst            = syn::offs::invalid,
-    syn::off_buf_type        bindx_diff     = syn::offs::invalid,
-    std::int16_t             bound_x_plus_y = 1,
-    float                    dwt_koeff2     = 1.0F);
+    const syn::off_buf_type src            = syn::offs::invalid,
+    const syn::off_buf_type dst            = syn::offs::invalid,
+    syn::off_buf_type       bindx_diff     = syn::offs::invalid,
+    std::int16_t            bound_x_plus_y = 1,
+    float                   dwt_koeff2     = 1.0F);
 
   explicit InfoBuffFreqNoiseRemover (const ::libs::events::buf::EventBufs& buf);
 
-  syn::off_buf_type bindx_diff_     = syn::offs::invalid;   //<
-  std::int16_t      bound_x_plus_y_ = 1;                    //<
-  float             dwt_koeff2_     = 1.0F;                 //<
+  syn::persistent_off_buf_type bindx_diff_ { syn::offs::invalid };   //<
+  std::int16_t                 bound_x_plus_y_ = { 1 };              //<
+  float                        dwt_koeff2_     = { 1.0F };           //<
 
   template< class Archive >
   void serialize (Archive& arh, const std::uint32_t /* file_version */);

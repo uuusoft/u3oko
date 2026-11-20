@@ -11,7 +11,7 @@ namespace libs::events_base::props::videos::generic::morph
 auto
 str2type_morph_op (const std::string& val) -> MorphOps
 {
-  static const boost::unordered_flat_map< std::string, const MorphOps > vals = {
+  static const boost::unordered_flat_map< std::string, const MorphOps, ::libs::utility::utils::TransparentStringHash, std::equal_to<> > vals = {
     { "erosion", MorphOps::erosion },
     { "dilation", MorphOps::dilation },
     { "binary", MorphOps::binary },

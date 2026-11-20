@@ -16,10 +16,10 @@ class ISharedPropertyStorage
   U3_ADD_DELETE_MOVE_COPY (ISharedPropertyStorage)
 
   //  ISharedPropertyStorage interface
-  virtual auto check (const consts::keys::key_property_type&) const -> bool                           = 0;
-  virtual auto get (const consts::keys::key_property_type&) -> ISharedProperty::raw_ptr               = 0;
-  virtual auto set_prop (const consts::keys::key_property_type&, const ISharedProperty::ptr&) -> void = 0;
-  virtual auto reset_prop (const consts::keys::key_property_type&) -> void                            = 0;
+  virtual auto check (const consts::keys::key_property_type) const -> bool                           = 0;
+  virtual auto get (const consts::keys::key_property_type) -> ISharedProperty::raw_ptr               = 0;
+  virtual auto set_prop (const consts::keys::key_property_type, const ISharedProperty::ptr&) -> void = 0;
+  virtual auto reset_prop (const consts::keys::key_property_type) -> void                            = 0;
 
   protected:
   ISharedPropertyStorage ()          = default;

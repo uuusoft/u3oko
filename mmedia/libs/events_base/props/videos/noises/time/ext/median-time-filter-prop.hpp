@@ -11,6 +11,7 @@ inline constexpr std::uint32_t min_count_bufs = 3;    //< Минимальное
 inline constexpr std::uint32_t max_count_bufs = 31;   //< Максимальное количество буферов во временной области, которое может быть использовано для медианной фильтрации
 }   // namespace libs::events_base::props::videos::noises::time::ext::consts
 
+
 namespace libs::events_base::props::videos::noises::time::ext
 {
 /// Перечисление различных типов сортировок
@@ -55,12 +56,12 @@ class MedianTimeFilterProp final : virtual public events_base::Event
     return ret;
   }
 
-  std::uint32_t     count_bufs_    = 3;                                                    //< Количество буферов медианной фильтрации
-  std::uint32_t     rang_          = 2;                                                    //< Ранг выбираемого числа из отсортированной последовательности 0 <= rang < count_bufs_
-  bool              motion_detect_ = false;                                                //< Флаг учета движения в кадре при фильтрации
-  Sortings          sort_type_     = Sortings::usual;                                      //< Тип сортировки
-  syn::off_buf_type indx_diff_buf_ = utils::dbufs::video::consts::offs::move_detect_res;   //<
-  bool              use_diff_buf_  = false;                                                //<
+  std::uint32_t                count_bufs_ { 3 };                                                       //< Количество буферов медианной фильтрации
+  std::uint32_t                rang_ { 2 };                                                             //< Ранг выбираемого числа из отсортированной последовательности 0 <= rang < count_bufs_
+  bool                         motion_detect_ { false };                                                //< Флаг учета движения в кадре при фильтрации
+  Sortings                     sort_type_ { Sortings::usual };                                          //< Тип сортировки
+  syn::persistent_off_buf_type indx_diff_buf_ { utils::dbufs::video::consts::offs::move_detect_res };   //<
+  bool                         use_diff_buf_ { false };                                                 //<
 
   private:
   U3_ADD_SUPER_CLASS (::libs::events_base::Event)

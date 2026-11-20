@@ -16,6 +16,6 @@ enum class EventsVals : std::uint32_t
   unknown           = 0xFF    //< Не определенно для общности
 };
 
-const std::string& val2str (const EventsVals& val);
+const std::string& val2str (const EventsVals&);
 EventsVals         str2val (const std::string& str);
 }   // namespace libs::events_base::props::modules::events

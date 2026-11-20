@@ -24,6 +24,6 @@ enum class LogLevels : std::uint32_t
   unknown       = 0xFF    //<  Не определенно для общности
 };
 
-LogLevels          from_raw_val (std::uint32_t val);
-const std::string& to_string (const LogLevels& val);
+LogLevels from_raw_val (std::uint32_t val);
+auto      to_string (const LogLevels&) -> const std::string&;
 }   // namespace libs::events_base::props::modules::log

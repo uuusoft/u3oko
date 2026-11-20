@@ -3,13 +3,14 @@
 \file       morph-operation-params.hpp
 \date       10.09.2018
 \author     Erashov Anton erashov2026@proton.me
-
 */
 
 namespace libs::events_base::props::videos::generic::morph::syn
 {
-using off_buf_type = ::utils::dbufs::video::consts::offs::off_buf_type;
-}
+using off_buf_type            = ::utils::dbufs::video::consts::offs::off_buf_type;
+using persistent_off_buf_type = ::utils::dbufs::video::consts::offs::persistent_off_buf_type;
+}   // namespace libs::events_base::props::videos::generic::morph::syn
+
 
 namespace libs::events_base::props::videos::generic::morph
 {
@@ -24,10 +25,10 @@ struct MorphOperationParams final {
 
   bool self_test () const;
 
-  MorphOps     morph_type_;      //<
-  std::int32_t size_spot_;       //<
-  std::int32_t bound_filling_;   //<
-  std::int32_t val_filling_;     //<
+  MorphOps     morph_type_ { MorphOps::empty };   //<
+  std::int32_t size_spot_ { 3 };                  //<
+  std::int32_t bound_filling_ { 1 };              //<
+  std::int32_t val_filling_ { 255 };              //<
 
   private:
   friend class boost::serialization::access;

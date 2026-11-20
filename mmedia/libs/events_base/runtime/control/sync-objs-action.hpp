@@ -20,7 +20,7 @@ enum class SyncActions : std::uint32_t
 };
 
 // EAI-REFACT
-std::string to_string (const SyncActions& val);
+std::string to_string (const SyncActions&);
 
 inline constexpr SyncActions
 sync_objs_action_from_raw_val (std::uint32_t val)

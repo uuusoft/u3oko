@@ -12,6 +12,5 @@
 
 #include "events-user-includes.hpp"
 
-// 22
 #undef U3_FILE_LOG_TAG
 #define U3_FILE_LOG_TAG "u3events+user          "

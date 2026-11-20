@@ -12,7 +12,7 @@ namespace libs::events_base::props::videos::noises::time::ext
 auto
 str2sort (const std::string& val) -> Sortings
 {
-  static const boost::unordered_flat_map< std::string, const Sortings > val2val = {
+  static const boost::unordered_flat_map< std::string, const Sortings, ::libs::utility::utils::TransparentStringHash, std::equal_to<> > val2val = {
     { "default", Sortings::usual },
     { "adaptive", Sortings::adaptive },
     { "skip", Sortings::skip },
@@ -63,7 +63,7 @@ MedianTimeFilterProp::self_correct_int ()
 void
 MedianTimeFilterProp::load_json_int (const ::boost::json::object& obj)
 {
-  U3_XLOG_DBG (TOLOG (::boost::json::serialize (obj)));
+  U3_XLOG_DBG (FTOLOG (::boost::json::serialize (obj)));
   super::load_json_int (obj);
 
   count_bufs_    = ::libs::utility::json::get_uint32 (obj.at ("count_bufs"));

@@ -229,7 +229,7 @@ LeafModule::appl_work_int ()
 
       if (stop_module_)
       {
-        U3_XLOG_DEV ("LeafModule::appl_work_int: stop module recived" + TOLOG (text_id_module_));
+        U3_XLOG_DEV ("LeafModule::appl_work_int: stop module recived" + TOLOG (module_id_));
         break;
       }
     }

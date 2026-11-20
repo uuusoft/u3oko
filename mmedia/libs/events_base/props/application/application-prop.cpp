@@ -13,7 +13,7 @@ namespace libs::events_base::props::application
 {
 ApplicationProp::ApplicationProp (const Acessor& pha)
 {
-  U3_CALL_TRACE_INFO_DBG (TOLOG (messenger_impl_) + PTR_TOLOG (this));
+  U3_CALL_TRACE_INFO_DBG (FTOLOG (messenger_impl_) + PTR_TOLOG (this));
 }
 
 
@@ -34,7 +34,7 @@ ApplicationProp::is_single_process () const -> bool
 auto
 ApplicationProp::get_messenger_impl () const -> const std::string&
 {
-  U3_CALL_TRACE_INFO_DBG (TOLOG (messenger_impl_) + PTR_TOLOG (this));
+  U3_CALL_TRACE_INFO_DBG (FTOLOG (messenger_impl_) + PTR_TOLOG (this));
   return messenger_impl_;
 }
 
@@ -87,7 +87,7 @@ template< class Archive >
 void
 ApplicationProp::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  U3_CALL_TRACE_INFO_DBG (TOLOG (messenger_impl_) + PTR_TOLOG (this));
+  U3_CALL_TRACE_INFO_DBG (FTOLOG (messenger_impl_) + PTR_TOLOG (this));
   arh& U3_BOOST_SERIALIZE_MAKE_NVP ("olibsoevents_baseoEvent", super);
   arh& BOOST_SERIALIZATION_NVP (single_process_);
   arh& BOOST_SERIALIZATION_NVP (messenger_impl_);

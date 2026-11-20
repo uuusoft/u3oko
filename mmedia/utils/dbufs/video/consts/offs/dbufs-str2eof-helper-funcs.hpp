@@ -10,5 +10,5 @@ namespace utils::dbufs::video::consts::offs
 /// Вспомогательная свободная функция для конвертации строки в индекс буфера
 /// \param[in]  str  строка
 /// \return     тип буфера
-const off_buf_type& str2eoffbuf (const std::string& str);
+auto str2eoffbuf (const std::string& str) -> const off_buf_type;
 }   // namespace utils::dbufs::video::consts::offs

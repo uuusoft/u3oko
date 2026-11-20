@@ -10,7 +10,10 @@
 
 namespace libs::events_log::events
 {
-ProcessLogEvent::ProcessLogEvent (const Acessor&, const AppllPartLogInfo& appl) :
+ProcessLogEvent::ProcessLogEvent (
+  const Acessor&,
+  const AppllPartLogInfo& appl) :
+
   action_ (LogProcessActions::get_raw_log)
 {
 }

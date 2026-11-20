@@ -32,7 +32,7 @@ class IBaseId : public IBaseRuntimeInterf
   /// Функция возвращает информацию маршрутизации данных от данного источника
   /// \return информация маршрутизации
   buf_infos_type
-  get_module_infos (const syn::off_buf_type& indx_buf) const
+  get_module_infos (const syn::off_buf_type indx_buf) const
   {
     return get_module_infos_int (indx_buf);
   }
@@ -50,9 +50,9 @@ class IBaseId : public IBaseRuntimeInterf
 
   private:
   //  IBaseId interface
-  virtual auto change_state_int (bool) -> void                                                  = 0;
-  virtual auto update_property_int (const ::libs::events::IEvent::craw_ptr) -> void             = 0;
-  virtual auto get_module_infos_int (const syn::off_buf_type& indx_buf) const -> buf_infos_type = 0;
-  virtual auto get_source_name_int () const -> const syn::source_name_type&                     = 0;
+  virtual auto change_state_int (bool) -> void                                                 = 0;
+  virtual auto update_property_int (const ::libs::events::IEvent::craw_ptr) -> void            = 0;
+  virtual auto get_module_infos_int (const syn::off_buf_type indx_buf) const -> buf_infos_type = 0;
+  virtual auto get_source_name_int () const -> const syn::source_name_type&                    = 0;
 };
 }   // namespace libs::events_base::runtime::interf::interfaces

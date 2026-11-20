@@ -60,8 +60,8 @@ void
 dump (const BITMAPINFOHEADER& info)
 {
   U3_XLOG_WARN ("dump BITMAPINFOHEADER:");
-  U3_XLOG_WARN (VTOLOG (info.biBitCount) + to_str_bi_compression (info.biCompression) + VTOLOG (info.biWidth) + VTOLOG (info.biHeight) + VTOLOG (info.biPlanes));
-  U3_XLOG_WARN (VTOLOG (info.biClrImportant) + VTOLOG (info.biClrUsed) + VTOLOG (info.biSize) + VTOLOG (info.biXPelsPerMeter) + VTOLOG (info.biYPelsPerMeter));
+  U3_XLOG_WARN (FVTOLOG (info.biBitCount) + to_str_bi_compression (info.biCompression) + VTOLOG (info.biWidth) + VTOLOG (info.biHeight) + VTOLOG (info.biPlanes));
+  U3_XLOG_WARN (FVTOLOG (info.biClrImportant) + VTOLOG (info.biClrUsed) + VTOLOG (info.biSize) + VTOLOG (info.biXPelsPerMeter) + VTOLOG (info.biYPelsPerMeter));
 }
 
 
@@ -69,7 +69,7 @@ void
 dump (const VIDEOINFOHEADER& info)
 {
   U3_XLOG_WARN ("dump VIDEOINFOHEADER:");
-  U3_XLOG_WARN (VTOLOG (info.AvgTimePerFrame) + VTOLOG (info.dwBitErrorRate) + VTOLOG (info.dwBitRate));
+  U3_XLOG_WARN (FVTOLOG (info.AvgTimePerFrame) + VTOLOG (info.dwBitErrorRate) + VTOLOG (info.dwBitRate));
   U3_XLOG_WARN ("source rect=" + to_str_rect (info.rcSource) + " target rect=" + to_str_rect (info.rcTarget));
   dump (info.bmiHeader);
 }
@@ -88,7 +88,7 @@ dump (const AM_MEDIA_TYPE* minfo)
 {
   U3_XLOG_WARN ("dump AM_MEDIA_TYPE:");
   U3_XLOG_WARN (::libs::utility::utils::to_string (utils::cuuid (minfo->formattype)) + " majortype=" + ::libs::utility::utils::to_string (utils::cuuid (minfo->majortype)) + " subtype=" + ::libs::utility::utils::to_string (utils::cuuid (minfo->subtype)));
-  U3_XLOG_WARN (VTOLOG (minfo->lSampleSize) + VTOLOG (minfo->bFixedSizeSamples) + VTOLOG (minfo->bTemporalCompression));
+  U3_XLOG_WARN (FVTOLOG (minfo->lSampleSize) + VTOLOG (minfo->bFixedSizeSamples) + VTOLOG (minfo->bTemporalCompression));
 
   if (FORMAT_VideoInfo == minfo->formattype)
   {

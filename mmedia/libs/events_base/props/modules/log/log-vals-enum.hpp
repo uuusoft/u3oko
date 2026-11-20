@@ -26,6 +26,6 @@ enum class LogVals : std::uint32_t
   max_val                       = 0x1F    //< Граница значений данного типа для формирования статических массивов, проверки значения etc
 };
 
-const std::string& val2str (const LogVals& val);
+const std::string& val2str (const LogVals&);
 LogVals            str2val (const std::string& str);
 }   // namespace libs::events_base::props::modules::log

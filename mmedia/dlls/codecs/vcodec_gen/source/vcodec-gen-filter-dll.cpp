@@ -163,7 +163,7 @@ Filter::prepare_process_frame (syn::TransformInfo& info) -> bool
   //  Недействительный буфер назначения не допустим в любом случае.
   if (!dbuf)
   {
-    U3_LOG_DATA_WRN ("null destination buf, skip" + TOLOG (finfo_.rprops_->bufs_.indx_dbuf_));
+    U3_LOG_DATA_WRN ("null dest buf, skip" + STOLOG (finfo_.rprops_->bufs_.indx_dbuf_));
     return false;
   }
 

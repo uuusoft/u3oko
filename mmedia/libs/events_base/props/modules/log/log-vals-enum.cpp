@@ -37,7 +37,7 @@ val2str (const LogVals& val) -> const std::string&
 auto
 str2val (const std::string& str) -> LogVals
 {
-  static const boost::unordered_flat_map< std::string, const LogVals > str2val = {
+  static const boost::unordered_flat_map< std::string, const LogVals, ::libs::utility::utils::TransparentStringHash, std::equal_to<> > str2val = {
     { consts::max_cache_events, LogVals::max_cache_events },
     { consts::ms_max_period_flush_events, LogVals::ms_max_period_flush_events },
     { consts::max_size_one_log_file_byte, LogVals::max_size_one_log_file_byte },

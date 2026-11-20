@@ -35,7 +35,7 @@ void
 VideoConvolutionProp::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-  bufs_ = ::boost::json::value_to< std::vector< BuffVideoConvolutionProp > > (obj.at ("evbufs"));
+  bufs_ = ::boost::json::value_to< std::vector< BuffVideoConvolutionProp > > (obj.at (::libs::events::buf::consts::node_name));
 }
 
 
@@ -43,7 +43,7 @@ void
 VideoConvolutionProp::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
-  obj["evbufs"] = ::boost::json::value_from (bufs_);
+  obj[::libs::events::buf::consts::node_name] = ::boost::json::value_from (bufs_);
 }
 
 

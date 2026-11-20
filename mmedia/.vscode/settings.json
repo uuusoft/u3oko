@@ -57,7 +57,7 @@
     },
     "git.ignoreLimitWarning": true,
     "editor.formatOnSave": true,
-    "clang-format~.executable": "E:/Android/Sdk/ndk/30.0.14904198/toolchains/llvm/prebuilt/windows-x86_64/bin/clang-format",
+    "clang-format~.executable": "",
     "compile-hero": {
         "disable-compile-files-on-did-save-code": false,
         "notification-toggle": false,
@@ -68,5 +68,19 @@
         "ignore": [
             "*/*.json"
         ],
+    },
+    // JavaScript Stardard Style options
+    "standard.validate": [
+        "javascript",
+        "javascriptreact",
+        "html"
+    ],
+    "standard.options": {
+        "plugins": [
+            "html"
+        ]
+    },
+    "files.associations": {
+        "*.vue": "html"
     }
 }

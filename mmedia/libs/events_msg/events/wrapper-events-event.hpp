@@ -23,7 +23,10 @@ class WrapperEventsEvent : public BaseEventsMsg
   U3_ADD_MAKE_SHARED_THIS (WrapperEventsEvent)
   U3_ADD_DELETE_MOVE_COPY (WrapperEventsEvent)
 
-  explicit WrapperEventsEvent (const Acessor& = Acessor (0), ::libs::events::IEvent::ptr msg = ::libs::events::IEvent::ptr ());
+  explicit WrapperEventsEvent (
+    const Acessor&              = Acessor (0),
+    ::libs::events::IEvent::ptr = ::libs::events::IEvent::ptr ());
+
   virtual ~WrapperEventsEvent () = default;
 
   static constexpr auto

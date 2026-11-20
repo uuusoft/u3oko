@@ -3,9 +3,10 @@
 # copyright   Erashov A.I.
 # file        v4l2-vgen-source-dlls.cmake
 
-if (NOT ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_LINUX} AND NOT ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_RASPBERRY} AND NOT ${U3_SYSTEM_NAME} STREQUAL
-    ${U3_SYSTEM_NAME_ORANGE_PI})
-  message(WARNING "Unsupported OS received " ${U3_SYSTEM_NAME})
+if (NOT U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_LINUX AND
+    NOT U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_RASPBERRY AND
+    NOT U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_ORANGE_PI)
+  message(WARNING "unsupported operating system ${U3_PLATFORM_NAME}")
   return()
 endif ()
 
@@ -14,18 +15,12 @@ if (NOT U3_DBG_COMPILE_AT_BEGIN_EXTLIBS)
 endif ()
 
 u3_add_target_dylib(
-    TARGET_NAME
-    v4l2_vgen-vss
-    SOURCE_PATH
-    ${U3_PATH_ROOT}/dlls/sources/v4l2_vgen
-    OUTPUT_NAME
-    vss_v4l2_vgen
-    FORCE_TO_DYLIB
-    FALSE
-    USE_EXACTLY_SOURCE_FILES
-    FALSE
-    SOURCE_FILES
-    ""
+    TARGET_NAME v4l2_vgen-vss
+    SOURCE_PATH ${U3_PATH_ROOT}/dlls/sources/v4l2_vgen
+    OUTPUT_NAME vss_v4l2_vgen
+    FORCE_TO_DYLIB FALSE
+    USE_EXACTLY_SOURCE_FILES FALSE
+    SOURCE_FILES ""
     EXTENDED_LIBS
     gen_lib-lib
     v4l2cpp-lib

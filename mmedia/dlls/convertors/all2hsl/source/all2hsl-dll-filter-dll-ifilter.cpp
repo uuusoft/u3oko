@@ -20,13 +20,13 @@ Filter::load_int (
 
   auto ioptim = ::libs::iproperties::helpers::cast_prop_demons ()->get_optim_lockfree ()->impl ();
 
-  fx8_to_x16_          = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CX8_X16Alg::val_key));
-  rgb24_to_hsl_        = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CRgb2HSLAlg::val_key));
-  rgb24_to_l_fast_     = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CRgb2LAlg::val_key));
-  rgb24_to_l_accurate_ = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CRgb2LAlg2::val_key));
-  set_const_func_      = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CSetConstAlg::val_key));
-  scale_func_          = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CScaleNearestAlg::val_key));
-  flip_y_              = ioptim->get (::libs::optim::io::qoptim (::dlls::doptim::impl::algs::CFlipYAlg::val_key));
+  fx8_to_x16_          = ioptim->get (syn::qoptim (::dlls::doptim::impl::algs::CX8_X16Alg::val_key));
+  rgb24_to_hsl_        = ioptim->get (syn::qoptim (::dlls::doptim::impl::algs::CRgb2HSLAlg::val_key));
+  rgb24_to_l_fast_     = ioptim->get (syn::qoptim (::dlls::doptim::impl::algs::CRgb2LAlg::val_key));
+  rgb24_to_l_accurate_ = ioptim->get (syn::qoptim (::dlls::doptim::impl::algs::CRgb2LAlg2::val_key));
+  set_const_func_      = ioptim->get (syn::qoptim (::dlls::doptim::impl::algs::CSetConstAlg::val_key));
+  scale_func_          = ioptim->get (syn::qoptim (::dlls::doptim::impl::algs::CScaleNearestAlg::val_key));
+  flip_y_              = ioptim->get (syn::qoptim (::dlls::doptim::impl::algs::CFlipYAlg::val_key));
 }
 
 
@@ -59,9 +59,12 @@ Filter::transform_int (syn::TransformInfo& info)
     //  Требуется уточнение уже для непосредственного буфера источника. Пустой буфер допустим, например если все преобразование происходит аппаратно.
     return;
   }
-  if (::libs::utility::uids::minor::id_val::rgb24 != format && ::libs::utility::uids::minor::id_val::y16 != format && ::libs::utility::uids::minor::id_val::y8 != format)
+
+  if (::libs::utility::uids::minor::id_val::rgb24 != format &&
+      ::libs::utility::uids::minor::id_val::y16 != format &&
+      ::libs::utility::uids::minor::id_val::y8 != format)
   {
-    U3_LOG_DATA_WRN ("unknow format for HSL convert, skip, indx=" + indx_base_buf + ", format=" + ::libs::utility::uids::helpers::get_readable_name (format));
+    U3_LOG_DATA_WRN ("unknown format HSL convert" + STOLOG (indx_base_buf) + " format:" + ::libs::utility::uids::helpers::get_readable_name (format));
     return;
   }
 

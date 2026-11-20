@@ -64,7 +64,8 @@ EventsModule::init_links_int (const ::libs::link::appl::InitApplication& info)
   U3_CALL_TRACE_DBG;
   const std::string name_data = "";
   auto              lproxy    = ::libs::ilink::LinkCreatorProxy::instance ();
-  auto              temp_link = lproxy->impl ()->get_listen (
+
+  auto temp_link = lproxy->impl ()->get_listen (
     ::libs::link::CreateInfo (
       { { ::libs::link::consts::text::id_appl_name, "mpl_mevents" },
         { ::libs::link::consts::text::id_lib_name, "mpl_mevents" },

@@ -16,8 +16,8 @@ enum class MorphOps : std::uint32_t
   unknown  = 0xFF    //<
 };
 
-MorphOps           str2type_morph_op (const std::string& txt);
-const std::string& to_string (const MorphOps& val);
-void               tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const MorphOps& src);
-MorphOps           tag_invoke (::boost::json::value_to_tag< MorphOps >, const ::boost::json::value& jvs);
+MorphOps str2type_morph_op (const std::string& txt);
+auto     to_string (const MorphOps&) -> const std::string&;
+void     tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const MorphOps& src);
+MorphOps tag_invoke (::boost::json::value_to_tag< MorphOps >, const ::boost::json::value& jvs);
 }   // namespace libs::events_base::props::videos::generic::morph

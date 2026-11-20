@@ -17,7 +17,7 @@ Bufs::Bufs ()
 
 
 void
-Bufs::set_base_index (const syn::off_buf_type& indx)
+Bufs::set_base_index (const syn::off_buf_type indx)
 {
   base_buf_index_ = indx;
 }
@@ -49,14 +49,14 @@ Bufs::reset (bool only_indxs)
 
 
 auto
-Bufs::operator[] (const syn::off_buf_type& indx) -> syn::IVideoBuf::raw_ptr
+Bufs::operator[] (const syn::off_buf_type indx) -> syn::IVideoBuf::raw_ptr
 {
   if (indx == ::utils::dbufs::video::consts::offs::invalid)
   {
     return nullptr;
   }
 
-  auto& ret = childs_[indx];
+  auto& ret = childs_[syn::persistent_off_buf_type { indx }];
   if (!ret)
   {
     auto ibuf = ::libs::iproperties::helpers::cast_prop_demons ()->get_bufs_lockfree ();
@@ -67,14 +67,14 @@ Bufs::operator[] (const syn::off_buf_type& indx) -> syn::IVideoBuf::raw_ptr
 
 
 auto
-Bufs::operator[] (const syn::off_buf_type& indx) const -> syn::IVideoBuf::craw_ptr
+Bufs::operator[] (const syn::off_buf_type indx) const -> syn::IVideoBuf::craw_ptr
 {
   if (indx == ::utils::dbufs::video::consts::offs::invalid)
   {
     return nullptr;
   }
 
-  auto& ret = childs_[indx];
+  auto& ret = childs_[syn::persistent_off_buf_type { indx }];
   if (!ret)
   {
     auto ibuf = ::libs::iproperties::helpers::cast_prop_demons ()->get_bufs_lockfree ();
@@ -132,9 +132,9 @@ Bufs::clone (const Bufs& src)
 
 
 void
-Bufs::set_buf (const syn::off_buf_type& indx, syn::IVideoBuf::ptr& buf)
+Bufs::set_buf (const syn::off_buf_type indx, syn::IVideoBuf::ptr& buf)
 {
-  childs_[indx] = buf;
+  childs_[syn::persistent_off_buf_type { indx }] = buf;
 }
 
 

@@ -6,6 +6,6 @@ file        libs-cores-core-includes.hpp
 \brief      Файл, определяет набор интерфейсов и типов для ядра
 */
 #include "graph/libs-cores-core-graph-includes.hpp"
-#include "consts/core-consts-vals.hpp"
+#include "consts/core-const-vals.hpp"
 
 #include "icore.hpp"

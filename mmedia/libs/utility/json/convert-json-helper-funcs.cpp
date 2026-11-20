@@ -28,7 +28,6 @@ to_json_string (const std::string& val) -> std::string
 
   std::ranges::transform (
     temp,
-
     temp.begin (),
     [] (char ch) -> char {
       return ch == ' ' ? libs::utility::json::consts::special_symbol : ch;

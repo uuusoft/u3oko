@@ -4,20 +4,14 @@
 # file        convertors-all2rgb.cmake
 
 u3_add_target_dylib(
-  TARGET_NAME
-  all2rgb-vcd
-  SOURCE_PATH
-  ${U3_PATH_ROOT}/dlls/convertors/all2rgb
-  OUTPUT_NAME
-  vcd_all2rgb
-  FORCE_TO_DYLIB
-  FALSE
-  USE_EXACTLY_SOURCE_FILES
-  FALSE
-  SOURCE_FILES
-  ""
-  EXTENDED_LIBS
-  optim-lib
-  dbufs-dll
-  DEPEND_TARGETS
-  dbufs-dll)
+    TARGET_NAME all2rgb-vcd
+    SOURCE_PATH ${U3_PATH_ROOT}/dlls/convertors/all2rgb
+    OUTPUT_NAME vcd_all2rgb
+    FORCE_TO_DYLIB FALSE
+    USE_EXACTLY_SOURCE_FILES FALSE
+    SOURCE_FILES ""
+    EXTENDED_LIBS
+    optim-lib
+    dbufs-dll
+    DEPEND_TARGETS
+    dbufs-dll)

@@ -15,5 +15,5 @@ auto decorate_dll_name (const std::string&) -> std::string;
 auto undecorate_dll_name (const std::string&) -> std::string;
 auto get_prefix () -> std::string;
 auto get_dll_suffix () -> std::string;
-auto make_func_name_lib (const std::string&, const std::string&) -> std::string;
+auto make_func_name_lib (const std::string&, const std::string_view) -> std::string;
 }   // namespace libs::utility::dlls

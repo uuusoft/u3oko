@@ -7,6 +7,6 @@
 
 namespace dlls::sources::desk_vgen::consts::param_keys
 {
-extern const std::string window_name;
-extern const std::string display_name;
+inline constexpr std::string_view window_name  = "dlls::sources::desk_vgen::window_name";
+inline constexpr std::string_view display_name = "dlls::sources::desk_vgen::display_name";
 }   // namespace dlls::sources::desk_vgen::consts::param_keys

@@ -25,9 +25,9 @@ class ToLog final
 {
   public:
   ToLog (
-    const syn::key_storage_type& key,
-    const syn::LogLevels&        level,
-    const std::source_location&  place = std::source_location::current ()) :
+    const syn::key_storage_type key,
+    const syn::LogLevels&       level,
+    const std::source_location& place = std::source_location::current ()) :
     key_ (key),
     place_ (place),
     level_ (level)

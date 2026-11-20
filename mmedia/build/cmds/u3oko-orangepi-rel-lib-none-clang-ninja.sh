@@ -1,5 +1,5 @@
 #!/bin/bash
-# u3oko-orangepi-rel-lib-ub-clang-ninja.sh
+# u3oko-orangepi-rel-lib-none-clang-ninja.sh
 # author      Erashov Anton erashov2026@proton.me
 # date        01.01.2026
 # copyright   Erashov A.I.

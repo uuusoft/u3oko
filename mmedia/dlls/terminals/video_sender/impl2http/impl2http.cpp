@@ -34,7 +34,6 @@ Impl2Http::send_int (
   auto              impl  = finfo.active_impl_.lock ();
   const std::string srcid = impl ? impl->get_source_name () : "";
   zd_revnt->set_id (srcid);
-  // zd_revnt->set_id (appl::consts::id_zip_buf2http + srcid);
 
   revnt->set_msg (zd_evnt);
   data2appl->send_msg (evnt);

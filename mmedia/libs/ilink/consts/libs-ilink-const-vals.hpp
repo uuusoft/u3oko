@@ -9,6 +9,7 @@ namespace libs::ilink::consts
 {
 using id_link_type = std::string;
 
+// EAI-REFACT
 extern const char* id_any;
 extern const char* id_appl;
 extern const char* id_appl_log;
@@ -42,6 +43,6 @@ extern const char* id_u3drv;
 extern const char* id_u3watch;
 extern const char* id_u3mask;
 
-inline constexpr std::uint32_t max_count_unsend_msg     = 16 * 1024;   //<
-inline constexpr std::uint32_t warning_count_unsend_msg = 1 * 1024;    //<
+inline constexpr std::uint32_t max_count_unsend_msg { 16 * 1024 };      //<
+inline constexpr std::uint32_t warning_count_unsend_msg { 1 * 1024 };   //<
 }   // namespace libs::ilink::consts

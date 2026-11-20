@@ -10,6 +10,5 @@
 extern "C" BOOST_SYMBOL_EXPORT auto
 create_impl_vdd_detect_move () -> ::libs::icore::impl::base::obj::dll::IFilter::raw_ptr
 {
-  ::libs::icore::impl::base::obj::dll::IFilter::raw_ptr ret (new ::dlls::detectors::detect_move::Filter);
-  return ret;
+  return new ::dlls::detectors::detect_move::Filter;
 }

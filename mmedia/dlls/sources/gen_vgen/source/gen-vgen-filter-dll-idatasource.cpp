@@ -43,7 +43,7 @@ Filter::fill_buf (
         {
           continue;
         }
-        U3_LOG_DATA_DBG ("get full buf from source" + VTOLOG (set_raw_as_base) + TOLOG (keybuf.first));
+        U3_LOG_DATA_DBG ("get full buf from source" + VTOLOG (set_raw_as_base) + STOLOG (keybuf.first));
         //  Сырой (не пустой) буфер имеет приоритет.
         if (!set_raw_as_base)
         {

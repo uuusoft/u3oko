@@ -32,7 +32,7 @@ void
 Vec2ImageProp::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
-  bufs_ = ::boost::json::value_to< Vec2ImageProp::vec_bufs_type > (obj.at ("evbufs"));
+  bufs_ = ::boost::json::value_to< Vec2ImageProp::vec_bufs_type > (obj.at (::libs::events::buf::consts::node_name));
 }
 
 
@@ -42,7 +42,7 @@ Vec2ImageProp::save_json_int (::boost::json::object& obj) const
   U3_XLOG_DBG ("Vec2ImageProp::save_json_int");
   super::save_json_int (obj);
 
-  obj["evbufs"] = ::boost::json::value_from (bufs_);
+  obj[::libs::events::buf::consts::node_name] = ::boost::json::value_from (bufs_);
 }
 
 

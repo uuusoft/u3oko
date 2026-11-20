@@ -7,7 +7,7 @@
 
 namespace dlls::convertors::all2hsl::consts
 {
-extern const ::utils::dbufs::video::consts::offs::off_buf_type dupl_h;   ///<
-extern const ::utils::dbufs::video::consts::offs::off_buf_type dupl_s;   ///<
-extern const ::utils::dbufs::video::consts::offs::off_buf_type dupl_l;   ///<
+inline constexpr ::utils::dbufs::video::consts::offs::off_buf_type dupl_h = "dupl_h";
+inline constexpr ::utils::dbufs::video::consts::offs::off_buf_type dupl_s = "dupl_s";
+inline constexpr ::utils::dbufs::video::consts::offs::off_buf_type dupl_l = "dupl_l";
 }   // namespace dlls::convertors::all2hsl::consts

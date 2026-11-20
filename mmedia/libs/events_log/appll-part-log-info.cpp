@@ -12,13 +12,13 @@ namespace libs::events_log
 {
 AppllPartLogInfo::AppllPartLogInfo (
   const syn::LogLevels&       msg_state,
-  std::string                 subsys,
-  std::string                 version,
+  const std::string_view      subsys,
+  const std::string_view      version,
   const std::source_location& place) :
 
   msg_state_ (msg_state),
-  subsys_ (std::move (subsys)),
-  version_ (std::move (version)),
+  subsys_ (subsys),
+  version_ (version),
   func_ (place.function_name ()),
   file_ (place.file_name ()),
   line_ (place.line ())

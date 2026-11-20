@@ -59,7 +59,7 @@ LoaderAssetAndroidImpl::enum_items_struct (
 
     bool              it_folder       = false;
     std::string       name_item       = raw_name_item;
-    const std::string sign_folder     = ".dir";
+    const std::string sign_folder     = ".folder-mark";
     std::size_t       off_sign_folder = name_item.find (sign_folder);
 
     if (std::string::npos != off_sign_folder)
@@ -154,12 +154,12 @@ LoaderAssetAndroidImpl::is_exist_folder_int (
     return common_impl_->is_exist_folder (file_name, path_type);
   }
 
-  const std::string folder_name = file_name + ".dir";
+  const std::string folder_name = file_name + ".folder-mark";
   return is_exist_file_int (folder_name, path_type);
 
 #  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   ::libs::utility::checks::throw_ifn (!file_name.empty ());
-  const std::string folder_name = file_name;   // + ".dir";
+  const std::string folder_name = file_name;   // + ".folder-mark";
   const std::string root        = iinfo_.paths_->get_path (path_type);
   const std::string file_path   = ::libs::utility::files::make_path (root, folder_name);
   AAssetDir*        dbuf        = AAssetManager_openDir (asset_manager_, file_path.c_str ());

@@ -15,8 +15,11 @@ SourceImpl::SourceImpl ()
 #elif defined(U3_OS_ANDROID)
   impl_ = std::make_unique< impls::android::CaptureDeskImplAndroid > ();
 #elif defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI)
+#  ifndef U3_EXTLIB_WLSCREENCAPT_FORCE_SKIP_USE
   // impl_ = std::make_unique< impls::linux::x11::CaptureDeskImplLinux > ();
   impl_ = std::make_unique< impls::linux::wl::CaptureDeskImplLinux > ();
+#  else
+#  endif
 #elif defined(U3_OS_MACX_DESKTOP)
   impl_ = std::make_unique< impls::mac::CaptureDeskImplMac > ();
 #else
@@ -65,6 +68,7 @@ SourceImpl::get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* eve
 {
   auto& buf = (*bufs)[::utils::dbufs::video::consts::offs::raw];
   buf->set_flag (::utils::dbufs::BufFlags::empty, true);
+
   if (!rgb_buf_)
   {
     rgb_buf_ = ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree ()->impl ()->alloc (0);
@@ -83,7 +87,7 @@ SourceImpl::get_raw_data_int (syn::pkeys2bufs_type& bufs, syn::tevents_type* eve
         ::libs::utility::uids::minor::id_val::rgb24,
         utils::dbufs::video::DimChecks::disable));
 
-    ::libs::utility::checks::throw_ifn (rgb_buf_->get_size () >= capinfo.size_dest_data_, "buf too small");
+    ::libs::utility::checks::throw_ifn (rgb_buf_->get_size () >= capinfo.size_dest_data_, "buffer too small");
     ::libs::utility::mem::mem_copy_raw (rgb_buf_->get (), buf->get_buf (), capinfo.size_dest_data_);
     buf->set_flag (::utils::dbufs::BufFlags::empty, false);
     buf->set_mem_var (::utils::dbufs::MemVars::size_data, capinfo.size_dest_data_);

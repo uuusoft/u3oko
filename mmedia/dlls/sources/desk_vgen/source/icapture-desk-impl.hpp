@@ -25,8 +25,8 @@ class ICaptureDeskImpl
   public:
   virtual ~ICaptureDeskImpl () = default;
 
-  void
-  get_buf (const syn::SourceImplInfo& props_info, CaptureDeskInfo& info)
+  auto
+  get_buf (const syn::SourceImplInfo& props_info, CaptureDeskInfo& info) -> void
   {
     get_buf_int (props_info, info);
   }
@@ -36,6 +36,6 @@ class ICaptureDeskImpl
 
   private:
   // ICaptureDeskImpl
-  virtual void get_buf_int (const syn::SourceImplInfo&, CaptureDeskInfo&) = 0;
+  virtual auto get_buf_int (const syn::SourceImplInfo&, CaptureDeskInfo&) -> void = 0;
 };
 }   // namespace dlls::sources::desk_vgen

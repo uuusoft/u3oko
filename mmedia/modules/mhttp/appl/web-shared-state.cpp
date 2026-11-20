@@ -62,8 +62,6 @@ WebSharedState::broadcast_send (send_data_type&& message)
     }
   }
 
-  // For each session in our local list, try to acquire a strong
-  // pointer. If successful, then send the message on that session.
   U3_XLOG_DBG ("WebSharedState::send:begin" + VTOLOG (ssl_weakss.size ()) + VTOLOG (weakss.size ()) + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)))
   for (auto const& weaks : ssl_weakss)
   {
@@ -72,6 +70,7 @@ WebSharedState::broadcast_send (send_data_type&& message)
       wsk->send (holdmessage);
     }
   }
+
   for (auto const& weaks : weakss)
   {
     if (auto wsk = weaks.lock ())

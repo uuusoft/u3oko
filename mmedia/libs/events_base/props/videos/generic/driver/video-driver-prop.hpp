@@ -22,7 +22,7 @@ class VideoDriverProp final : virtual public events_base::Event
   U3_ADD_MAKE_SHARED_THIS (VideoDriverProp)
   U3_ADD_DELETE_MOVE_COPY (VideoDriverProp)
 
-  using ext_vals_storage_type = boost::unordered_flat_map< std::string, std::string >;
+  using ext_vals_storage_type = boost::unordered_flat_map< std::string, std::string, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
 
   explicit VideoDriverProp (const Acessor& = Acessor (0));
   virtual ~VideoDriverProp () = default;

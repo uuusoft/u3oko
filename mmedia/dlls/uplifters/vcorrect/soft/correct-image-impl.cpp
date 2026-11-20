@@ -149,7 +149,7 @@ CorrectImageImpl::bright_correct (syn::IVideoBuf& y16s)
   //  Если нужно корректируем смещение освещености в соотвествии со средним значением в кадре
   //  т.е. если яркость отлична от заданное более чем на указанный парог изменяем коррекцию освещенности
   auto bright = U3_CAST_INT16 (255 * props_->bright_.first);
-  U3_LOG_DATA_DATA (VTOLOG (bright) + VTOLOG (props_->bright_.first));
+  U3_LOG_DATA_DATA (FVTOLOG (bright) + VTOLOG (props_->bright_.first));
   if (0 == bright)
   {
     return;
@@ -207,7 +207,7 @@ CorrectImageImpl::graduent_correct (syn::IVideoBuf& buf, const graduent_array_ty
   cinfo.params_.dest_mask_ = ::libs::optim::s16bit::consts::us_all_xffff;
   cinfo.params_.consts_.emplace_back (&vals2vals[0]);
   cinfo.params_.ints_.emplace_back (U3_CAST_INT32 (vals2vals.size ()));
-  // U3_XLOG_DEV (VTOLOG (cinfo.params_.ints_[0]) + VTOLOG (U3_CAST_INT32 (vals2vals.size ())));
+  // U3_XLOG_DEV (FVTOLOG (cinfo.params_.ints_[0]) + VTOLOG (U3_CAST_INT32 (vals2vals.size ())));
 
   ::libs::optim::mcalls::MTFuncInfo tfunc (&mfunc_grad_func_);
 

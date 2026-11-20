@@ -9,21 +9,21 @@
 namespace utils::dbufs::video::consts::offs
 {
 auto
-str2eoffbuf (const std::string& key) -> const off_buf_type&
+str2eoffbuf (const std::string& key) -> const off_buf_type
 {
-  static const boost::unordered_flat_map< std::string, const off_buf_type > valmap = {
+  static const boost::unordered_flat_map< std::string, const off_buf_type, ::libs::utility::utils::TransparentStringHash, std::equal_to<> > valmap = {
     { "", invalid },
     { "-", invalid },
     { "?", invalid },
     { "??", invalid },
     { "???", invalid },
-    { invalid, invalid }
+    { std::string (invalid), invalid }
   };
 
   auto finger = valmap.find (key);
   if (valmap.end () == finger)
   {
-    finger = valmap.find (invalid);
+    finger = valmap.find (std::string (invalid));
   }
   return finger->second;
 }

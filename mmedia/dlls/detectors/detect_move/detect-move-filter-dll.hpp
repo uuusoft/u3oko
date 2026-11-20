@@ -20,12 +20,12 @@ class Filter final :
   // internal types
   U3_ADD_SUPER_CLASS (::libs::icore::impl::base::obj::dll::FilterImpl< InfoFilter >)
   // IFilter overrides
-  virtual void load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node) override;
+  virtual auto load_int (syn::FilterInfo*, const ::pugi::xml_named_node_iterator&) -> void override;
   virtual auto transform_int (syn::TransformInfo&) -> void override;
   virtual auto call_int (syn::CallInterfInfo&) -> void override;
 
-  auto init_pts (syn::ConnectInfo* info) -> void;
-  auto itransform (syn::TransformInfo& info) -> void;
+  auto init_pts (syn::ConnectInfo*) -> void;
+  auto itransform (syn::TransformInfo&) -> void;
   auto get_move_count (syn::IVideoBuf::raw_ptr) -> std::int32_t;
 
   ::libs::optim::io::hioptim count_if_ge_;                                                                //< Быстрая функция вычисления "если больше"

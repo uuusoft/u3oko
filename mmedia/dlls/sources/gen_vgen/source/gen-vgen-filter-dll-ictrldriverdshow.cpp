@@ -14,7 +14,7 @@ namespace dlls::sources::gen_vgen
 void
 Filter::update_source_driver_exactly (InfoFilter* finfo, const std::string& impl_name)
 {
-  U3_CALL_TRACE_INFO (TOLOG (impl_name));
+  U3_CALL_TRACE_INFO (FTOLOG (impl_name));
   ::libs::utility::checks::throw_ifn (!impl_name.empty ());
 
   std::unique_lock< InfoFilter::sync_type > lock (finfo->wdmtx_, consts::ms_wait_capture_device);

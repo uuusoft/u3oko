@@ -11,5 +11,4 @@
 namespace libs::events_storage::consts
 {
 const stream_id_type empty_stream_id (::boost::uuids::nil_uuid ());
-const char*          empty_object_id = "";
 }   // namespace libs::events_storage::consts

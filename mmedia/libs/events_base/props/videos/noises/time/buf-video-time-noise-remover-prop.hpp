@@ -6,18 +6,20 @@
 */
 namespace libs::events_base::props::videos::noises::time::syn
 {
-using off_buf_type = ::utils::dbufs::video::consts::offs::off_buf_type;
+using persistent_off_buf_type = ::utils::dbufs::video::consts::offs::persistent_off_buf_type;
+using off_buf_type            = ::utils::dbufs::video::consts::offs::off_buf_type;
 
 namespace offs = ::utils::dbufs::video::consts::offs;
 }   // namespace libs::events_base::props::videos::noises::time::syn
+
 
 namespace libs::events_base::props::videos::noises::time
 {
 struct BuffVideoTimeNoiseRemoverProp final : public ::libs::events::buf::EventBufs {
   public:
   explicit BuffVideoTimeNoiseRemoverProp (
-    const syn::off_buf_type& src = syn::offs::invalid,
-    const syn::off_buf_type& dst = syn::offs::invalid);
+    const syn::off_buf_type src = syn::offs::invalid,
+    const syn::off_buf_type dst = syn::offs::invalid);
 
   explicit BuffVideoTimeNoiseRemoverProp (const ::libs::events::buf::EventBufs& buf);
 

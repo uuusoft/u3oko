@@ -32,5 +32,5 @@ enum class Paths : std::uint32_t
   unknown                  = 0xFF    //< Не определенно для общности XX
 };
 
-const std::string& to_string (const Paths& val);
+auto to_string (const Paths&) -> const std::string&;
 }   // namespace libs::iproperties::appl_paths

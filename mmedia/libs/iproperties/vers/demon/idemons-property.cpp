@@ -3,6 +3,7 @@
 \date       02.03.2022
 \author     Erashov Anton erashov2026@proton.me
 */
+// #define U3_DBG_LOG_LEVEL_ENABLE
 #include "../../libs-iproperties-includes_int.hpp"
 #include "idemons-property.hpp"
 

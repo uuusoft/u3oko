@@ -24,8 +24,8 @@ class ProcessListLogsEvent final : public BaseLogEvent
   U3_ADD_DELETE_MOVE_COPY (ProcessListLogsEvent)
 
   explicit ProcessListLogsEvent (
-    const Acessor&               = Acessor (0),
-    const AppllPartLogInfo& appl = AppllPartLogInfo (::libs::events_base::props::modules::log::LogLevels::info, "xpllex", "xpllex"));
+    const Acessor&          = Acessor (0),
+    const AppllPartLogInfo& = AppllPartLogInfo (::libs::events_base::props::modules::log::LogLevels::info, "xpllex", "xpllex"));
 
   virtual ~ProcessListLogsEvent () = default;
 

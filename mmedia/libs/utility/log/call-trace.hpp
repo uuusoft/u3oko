@@ -12,7 +12,7 @@ class CallTrace final
   public:
   U3_ADD_DELETE_MOVE_COPY (CallTrace)
 
-  explicit CallTrace (std::string info = "", std::source_location place = std::source_location::current ()) :
+  explicit CallTrace (std::string info = "", const std::source_location& place = std::source_location::current ()) :
     place_ (std::move (place)),
     info_ (std::move (info))
   {

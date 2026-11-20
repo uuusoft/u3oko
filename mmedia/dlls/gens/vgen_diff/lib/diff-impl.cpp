@@ -42,9 +42,9 @@ DiffImpl::itransform (const syn::NodeID& id_node, ::libs::bufs::Bufs& pbufs)
 
   for (const syn::VideoDiffProp::buf2info_type& b2b : props_->diffs_)
   {
-    const ::utils::dbufs::video::consts::offs::off_buf_type sindx = b2b.first;
-    const ::utils::dbufs::video::consts::offs::off_buf_type dindx = b2b.second.bindx_diff_;
-    syn::IVideoBuf::raw_ptr                                 psrc  = pbufs[sindx];
+    const auto              sindx = b2b.first;
+    const auto              dindx = b2b.second.bindx_diff_;
+    syn::IVideoBuf::raw_ptr psrc  = pbufs[sindx];
 
     if (!psrc || psrc->get_flag (::utils::dbufs::BufFlags::empty))
     {

@@ -7,5 +7,5 @@
 
 namespace libs::bufs
 {
-void alloc_buf_by_indx (Bufs::raw_ptr, const syn::off_buf_type&, syn::IVideoBuf::raw_ptr);
+void alloc_buf_by_indx (Bufs::raw_ptr, const syn::off_buf_type, syn::IVideoBuf::raw_ptr);
 }   // namespace libs::bufs

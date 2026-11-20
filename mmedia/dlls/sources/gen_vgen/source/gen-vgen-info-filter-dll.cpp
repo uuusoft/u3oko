@@ -66,7 +66,7 @@ InfoFilter::~InfoFilter ()
 void
 InfoFilter::sync_int (bool force)
 {
-  U3_CALL_TRACE_INFO (VTOLOG (force) + VTOLOG (synced_));
+  U3_CALL_TRACE_INFO (FVTOLOG (force) + VTOLOG (synced_));
   if (synced_ && !force)
   {
     return;

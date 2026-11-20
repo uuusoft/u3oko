@@ -12,5 +12,5 @@ using main_appl_func_type = int (int argc, char* argv[]);
 
 namespace modules::mappl::consts
 {
-extern const std::string name_mfunc;   //<
+inline constexpr std::string_view name_mfunc { "main_impl" };   //<
 }

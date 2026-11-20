@@ -11,7 +11,7 @@ namespace libs::events_base::props::modules::storage
 auto
 str2checker_storage (const std::string& str) -> Checkers
 {
-  static const boost::unordered_flat_map< std::string, const Checkers > strs2checkers = {
+  static const boost::unordered_flat_map< std::string, const Checkers, ::libs::utility::utils::TransparentStringHash, std::equal_to<> > strs2checkers = {
     { "", Checkers::start_stop },
     { "start_stop", Checkers::start_stop },
     { "disabled", Checkers::disabled },

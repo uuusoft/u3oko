@@ -17,12 +17,12 @@ class Filter final :
 
   private:
   //  internal typess
-  using off2bufs_type = boost::unordered_flat_map< ::utils::dbufs::video::consts::offs::off_buf_type, ::utils::dbufs::video::IVideoBuf::ptr >;
+  using off2bufs_type = boost::unordered_flat_map< syn::persistent_off_buf_type, ::utils::dbufs::video::IVideoBuf::ptr, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
   U3_ADD_SUPER_CLASS (::libs::icore::impl::base::obj::dll::FilterImpl< InfoFilter >)
 
   // IFilter overrides
   virtual auto load_int (syn::FilterInfo*, const ::pugi::xml_named_node_iterator&) -> void override;
-  virtual auto transform_int (syn::TransformInfo& info) -> void override;
+  virtual auto transform_int (syn::TransformInfo&) -> void override;
   virtual auto call_int (syn::CallInterfInfo&) -> void override;
 
   auto init_pts (syn::ConnectInfo*) -> void;

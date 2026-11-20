@@ -19,6 +19,7 @@ using mem_var_type       = ::utils::dbufs::IBuf::mem_var_type;
 using Dims               = ::utils::dbufs::video::Dims;
 using MemVars            = ::utils::dbufs::MemVars;
 using Accuracys          = ::libs::events_base::props::videos::generic::convert::Accuracys;
+using qoptim             = ::libs::optim::io::qoptim;
 
 namespace offs = ::utils::dbufs::video::consts::offs;
 }   // namespace dlls::convertors::all2hsl::syn

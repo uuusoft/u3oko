@@ -18,7 +18,8 @@ BuffEvent::BuffEvent (::utils::dbufs::video::IVideoBuf::cptr& buf)
   if (buf)
   {
     auto impl = ::libs::utility::checks::ptr (::libs::iproperties::helpers::cast_prop_demons ()->get_bufs_lockfree ()->impl ());
-    buf_      = impl->create (buf->get_block () ? buf->get_block ()->get_size () : 0);
+
+    buf_ = impl->create (buf->get_block () ? buf->get_block ()->get_size () : 0);
     buf_->clone (&*buf, 100.0F);
   }
 }

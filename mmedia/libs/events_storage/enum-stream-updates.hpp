@@ -16,7 +16,7 @@ enum class StreamUpdates : std::uint32_t
   unknown            = 0xFF    //<
 };
 
-const std::string& to_string (const StreamUpdates& val);
-void               tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const StreamUpdates& src);
-StreamUpdates      tag_invoke (::boost::json::value_to_tag< StreamUpdates >, const ::boost::json::value& jvs);
+auto          to_string (const StreamUpdates&) -> const std::string&;
+void          tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const StreamUpdates& src);
+StreamUpdates tag_invoke (::boost::json::value_to_tag< StreamUpdates >, const ::boost::json::value& jvs);
 }   // namespace libs::events_storage

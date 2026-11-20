@@ -20,6 +20,7 @@ u3_project_add(
     ESRC_URL ${U3_3RDLIB_ESRC_URL_TURBO_JPEG_SRC}
     ESRC_MD5 ${U3_3RDLIB_TURBO_JPEG_MD5}
     PATCH_CMD ""
+    INSTALL_COMMAND "echo"
     USE_HTTP_FOR_ESRC FALSE
     BUILD_IN_SOURCE TRUE
     IT_CMAKE_PROJECT TRUE
@@ -28,26 +29,43 @@ u3_project_add(
 
 ExternalProject_Get_Property(${U3_3RDLIB_NAME_TURBO_JPEG_UTIL} install_dir)
 
-if (${U3_GVXX_PROJECT_ADD_SOURCE_TYPE} STREQUAL "U3_ADD_PROJECT_RESULT_BIN")
-  set(U3_INCLUDE_DIR_EXTLIB_TURBO_JPEG ${install_dir}/src/turbo_jpeg-util)
-  if (${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_WINDOWS})
-    set(U3_INSTALL_DIR_EXTLIB_TURBO_JPEG "${install_dir}/src/turbo_jpeg-util/turbojpeg-static.lib")
-  else ()
-    set(U3_INSTALL_DIR_EXTLIB_TURBO_JPEG "${install_dir}/src/turbo_jpeg-util/libturbojpeg.a")
-  endif ()
+if (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_WINDOWS)
+  set(U3_FILE_BODY_NAME_TURBO_JPEG "turbojpeg-static")
 else ()
+  set(U3_FILE_BODY_NAME_TURBO_JPEG "turbojpeg")
+endif ()
+
+set(U3_INCLUDE_DIR_EXTLIB_TURBO_JPEG "${install_dir}/src/turbo_jpeg-util")
+set(U3_INSTALL_DIR_EXTLIB_TURBO_JPEG "${install_dir}/src/turbo_jpeg-util/${U3_PREFIX_LIB_NAME}${U3_FILE_BODY_NAME_TURBO_JPEG}.${U3_SUFFIX_LIB_NAME}")
+
+if (NOT U3_GVXX_PROJECT_ADD_SOURCE_TYPE STREQUAL "U3_ADD_PROJECT_RESULT_BIN")
+
   set(U3_INCLUDE_DIR_EXTLIB_TURBO_JPEG ${install_dir}/src/turbo_jpeg-util/src)
-  if (${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_WINDOWS})
-    set(U3_INSTALL_DIR_EXTLIB_TURBO_JPEG "${install_dir}/src/turbo_jpeg-util/${CMAKE_BUILD_TYPE}/turbojpeg-static.lib")
-  elseif (${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_DARWIN})
-    if (${CMAKE_GENERATOR} STREQUAL "Xcode")
-      set(U3_INSTALL_DIR_EXTLIB_TURBO_JPEG "${install_dir}/src/turbo_jpeg-util/${CMAKE_BUILD_TYPE}/libturbojpeg.a")
-    else ()
-      set(U3_INSTALL_DIR_EXTLIB_TURBO_JPEG "${install_dir}/src/turbo_jpeg-util/libturbojpeg.a")
-    endif ()
+
+  if (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_WINDOWS OR
+      CMAKE_GENERATOR STREQUAL "Xcode")
+    set(U3_ADD2PATH_EXTLIB_TURBO_JPEG "${CMAKE_BUILD_TYPE}/")
   else ()
-    set(U3_INSTALL_DIR_EXTLIB_TURBO_JPEG "${install_dir}/src/turbo_jpeg-util/libturbojpeg.a")
+    set(U3_ADD2PATH_EXTLIB_TURBO_JPEG "")
   endif ()
+
+  set(U3_INSTALL_DIR_EXTLIB_TURBO_JPEG "${install_dir}/src/turbo_jpeg-util/${U3_ADD2PATH_EXTLIB_TURBO_JPEG}${U3_PREFIX_LIB_NAME}${U3_FILE_BODY_NAME_TURBO_JPEG}.${U3_SUFFIX_LIB_NAME}")
+  set(U3_BIN_TEMP_FOLDER_EXTLIB_TURBO_JPEG "${install_dir}/~temp-turbo_jpeg-util")
+
+  add_custom_command(
+      TARGET ${U3_3RDLIB_NAME_TURBO_JPEG_UTIL}
+      POST_BUILD
+      COMMAND
+      ${CMAKE_COMMAND} -E rm -Rf "${U3_BIN_TEMP_FOLDER_EXTLIB_TURBO_JPEG}"
+      COMMAND
+      ${CMAKE_COMMAND} -E make_directory "${U3_BIN_TEMP_FOLDER_EXTLIB_TURBO_JPEG}"
+      COMMAND
+      ${CMAKE_COMMAND} -E copy "${install_dir}/src/turbo_jpeg-util/*.a" "${U3_BIN_TEMP_FOLDER_EXTLIB_TURBO_JPEG}"
+      COMMAND
+      ${CMAKE_COMMAND} -E copy "${install_dir}/src/turbo_jpeg-util/src/*.h" "${U3_BIN_TEMP_FOLDER_EXTLIB_TURBO_JPEG}"
+      COMMAND
+      ${CMAKE_COMMAND} -E chdir "${U3_BIN_TEMP_FOLDER_EXTLIB_TURBO_JPEG}" tar czvf "${install_dir}/../${U3_3RDLIB_NAME_TURBO_JPEG_BIN}" "./")
+
 endif ()
 
 u3_make_fake_file(FILE_NAME ${U3_INSTALL_DIR_EXTLIB_TURBO_JPEG} CONTENT "turbo_jpeg")
@@ -56,5 +74,5 @@ add_library(turbo_jpeg-lib STATIC IMPORTED)
 add_dependencies(turbo_jpeg-lib ${U3_3RDLIB_NAME_TURBO_JPEG_UTIL})
 set_target_properties(turbo_jpeg-lib PROPERTIES IMPORTED_LOCATION ${U3_INSTALL_DIR_EXTLIB_TURBO_JPEG})
 
-#set( U3_LIBS_3RD_STATIC_LIST ${U3_LIBS_3RD_STATIC_LIST} turbo_jpeg-lib )
+#set( U3_3RDLIBS_STATIC_LIST ${U3_3RDLIBS_STATIC_LIST} turbo_jpeg-lib )
 set(U3_DEPENDENCY_TARGETS_LIST ${U3_DEPENDENCY_TARGETS_LIST} ${U3_3RDLIB_NAME_TURBO_JPEG_UTIL})

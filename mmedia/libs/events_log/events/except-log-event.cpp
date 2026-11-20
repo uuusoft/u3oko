@@ -10,7 +10,11 @@
 
 namespace libs::events_log::events
 {
-ExceptLogEvent::ExceptLogEvent (const Acessor&, const AppllPartLogInfo& appl, const std::string& info) :
+ExceptLogEvent::ExceptLogEvent (
+  const Acessor&,
+  const AppllPartLogInfo& appl,
+  const std::string&      info) :
+
   InfoLogEvent (InfoLogEvent::Acessor (0), appl, info)
 {
 }

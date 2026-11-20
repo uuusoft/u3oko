@@ -12,7 +12,7 @@ inline constexpr std::int32_t max_count_cycle_store_image = 30;
 
 namespace dlls::sources::pict_vgen::consts::param_keys
 {
-extern const std::string picter_folder;
-extern const std::string scroll_speed;
-extern const std::string image2frame;
+inline constexpr std::string_view picter_folder = "dlls::sources::pict_vgen::picter_folder";
+inline constexpr std::string_view scroll_speed  = "dlls::sources::pict_vgen::scroll_speed";
+inline constexpr std::string_view image2frame   = "dlls::sources::pict_vgen::image2frame";
 }   // namespace dlls::sources::pict_vgen::consts::param_keys

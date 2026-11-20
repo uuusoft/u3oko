@@ -15,7 +15,7 @@ enum class StreamActions : std::uint32_t
   unknown      = 0xFF    //<
 };
 
-std::string   to_string (const StreamActions& val);
+std::string   to_string (const StreamActions&);
 void          tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const StreamActions& src);
 StreamActions tag_invoke (::boost::json::value_to_tag< StreamActions >, const ::boost::json::value& jvs);
 }   // namespace libs::events_storage

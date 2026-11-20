@@ -26,10 +26,10 @@ class WebSharedState final
   explicit WebSharedState () = default;
   ~WebSharedState ()         = default;
 
-  auto join (session_ssl_type* session) -> void;
-  auto leave (session_ssl_type* session) -> void;
-  auto join (session_type* session) -> void;
-  auto leave (session_type* session) -> void;
+  auto join (session_ssl_type*) -> void;
+  auto leave (session_ssl_type*) -> void;
+  auto join (session_type*) -> void;
+  auto leave (session_type*) -> void;
   auto broadcast_send (send_data_type&&) -> void;
   auto get_size_pending_send () const -> std::int64_t;
 

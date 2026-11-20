@@ -9,7 +9,9 @@
 namespace modules::mhttp::appl
 {
 auto
-factory_impl_mhttp (::libs::link::appl::IApplication::raw_ptr impl, bool create) -> ::libs::link::appl::IApplication::raw_ptr
+factory_impl_mhttp (
+  ::libs::link::appl::IApplication::raw_ptr impl,
+  bool                                      create) -> ::libs::link::appl::IApplication::raw_ptr
 {
   static std::int64_t               count_httprefs = 0;
   static syn::IApplication::raw_ptr httpappl       = nullptr;

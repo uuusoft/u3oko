@@ -7,10 +7,8 @@ include("./build/cmake/3rdlibs/libv4l2cpp/u3-libv4l2cpp-lib-values.cmake")
 
 set(U3_3RDLIB_NAME_V4L2CPP_UTIL ${U3_3RDLIB_NAME_V4L2CPP}-util)
 
-#message(FATAL_ERROR "U3_3RDLIB_V4L2CPP${U3_3RDLIB_VER_V4L2CPP_CID}_MD5_${U3_ENV_GEN_3RDLIB_POSTFIX}")
 u3_project_add(
     PROJECT_NAME ${U3_3RDLIB_NAME_V4L2CPP_UTIL}
-    #PROJECT_VERSION       "v${U3_3RDLIB_VER_V4L2CPP}"
     BIN_URL ${U3_3RDLIB_ESRC_URL_V4L2CPP_BIN}
     NAME_BIN_MD5 U3_3RDLIB_V4L2CPP${U3_3RDLIB_VER_V4L2CPP_CID}_MD5_${U3_ENV_GEN_3RDLIB_POSTFIX}
     BIN_MD5 ${U3_3RDLIB_V4L2CPP${U3_3RDLIB_VER_V4L2CPP_CID}_MD5_${U3_ENV_GEN_3RDLIB_POSTFIX}}
@@ -19,6 +17,7 @@ u3_project_add(
     ESRC_URL ${U3_3RDLIB_ESRC_URL_V4L2CPP_SRC}
     ESRC_MD5 ${U3_3RDLIB_V4L2CPP_EXT_MD5}
     PATCH_CMD ""
+    INSTALL_COMMAND "echo"
     USE_HTTP_FOR_ESRC FALSE
     BUILD_IN_SOURCE FALSE
     IT_CMAKE_PROJECT TRUE
@@ -27,12 +26,27 @@ u3_project_add(
 
 ExternalProject_Get_Property(${U3_3RDLIB_NAME_V4L2CPP_UTIL} install_dir)
 
-if (${U3_GVXX_PROJECT_ADD_SOURCE_TYPE} STREQUAL "U3_ADD_PROJECT_RESULT_BIN")
-  set(U3_INCLUDE_DIR_EXTLIB_V4L2CPP ${install_dir}/src/v4l2cpp-util/inc)
-  set(U3_INSTALL_DIR_EXTLIB_V4L2CPP ${install_dir}/src/v4l2cpp-util/${U3_3RDLIB_V4L2CPP_FILE_NAME})
-else ()
-  set(U3_INCLUDE_DIR_EXTLIB_V4L2CPP ${install_dir}/src/v4l2cpp-util/inc)
+set(U3_INCLUDE_DIR_EXTLIB_V4L2CPP ${install_dir}/src/v4l2cpp-util/inc)
+set(U3_INSTALL_DIR_EXTLIB_V4L2CPP ${install_dir}/src/v4l2cpp-util/${U3_3RDLIB_V4L2CPP_FILE_NAME})
+
+if (NOT U3_GVXX_PROJECT_ADD_SOURCE_TYPE STREQUAL "U3_ADD_PROJECT_RESULT_BIN")
   set(U3_INSTALL_DIR_EXTLIB_V4L2CPP ${install_dir}/src/v4l2cpp-util-build/${U3_3RDLIB_V4L2CPP_FILE_NAME})
+  set(U3_BIN_TEMP_FOLDER_EXTLIB_V4L2CPP "${install_dir}/~temp-v4l2cpp-util")
+
+  add_custom_command(
+      TARGET ${U3_3RDLIB_NAME_V4L2CPP_UTIL}
+      POST_BUILD
+      COMMAND
+      ${CMAKE_COMMAND} -E rm -Rf "${U3_BIN_TEMP_FOLDER_EXTLIB_V4L2CPP}"
+      COMMAND
+      ${CMAKE_COMMAND} -E make_directory "${U3_BIN_TEMP_FOLDER_EXTLIB_V4L2CPP}"
+      COMMAND
+      ${CMAKE_COMMAND} -E copy "${install_dir}/src/v4l2cpp-util-build/*.a" "${U3_BIN_TEMP_FOLDER_EXTLIB_V4L2CPP}"
+      COMMAND
+      ${CMAKE_COMMAND} -E copy_directory_if_different "${install_dir}/src/v4l2cpp-util/inc/" "${U3_BIN_TEMP_FOLDER_EXTLIB_V4L2CPP}/inc/"
+      COMMAND
+      ${CMAKE_COMMAND} -E chdir "${U3_BIN_TEMP_FOLDER_EXTLIB_V4L2CPP}" tar czvf "${install_dir}/../${U3_3RDLIB_NAME_V4L2CPP_BIN}" "./")
+
 endif ()
 
 u3_make_fake_file(FILE_NAME ${U3_INSTALL_DIR_EXTLIB_V4L2CPP} CONTENT "v4l2cpp")

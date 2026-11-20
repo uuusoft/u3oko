@@ -5,21 +5,15 @@
 # U3_COMMERCIAL_PART
 
 u3_add_target_dylib(
-  TARGET_NAME
-  vcodec_gen-vdd
-  SOURCE_PATH
-  ${U3_PATH_ROOT}/dlls/codecs/vcodec_gen/source
-  OUTPUT_NAME
-  vdd_vcodec_gen
-  FORCE_TO_DYLIB
-  FALSE
-  USE_EXACTLY_SOURCE_FILES
-  FALSE
-  SOURCE_FILES
-  ""
-  EXTENDED_LIBS
-  codec_gen-lib
-  codec_funcs-lib
-  dbufs-dll
-  DEPEND_TARGETS
-  dbufs-dll)
+    TARGET_NAME vcodec_gen-vdd
+    SOURCE_PATH ${U3_PATH_ROOT}/dlls/codecs/vcodec_gen/source
+    OUTPUT_NAME vdd_vcodec_gen
+    FORCE_TO_DYLIB FALSE
+    USE_EXACTLY_SOURCE_FILES FALSE
+    SOURCE_FILES ""
+    EXTENDED_LIBS
+    codec_gen-lib
+    codec_funcs-lib
+    dbufs-dll
+    DEPEND_TARGETS
+    dbufs-dll)

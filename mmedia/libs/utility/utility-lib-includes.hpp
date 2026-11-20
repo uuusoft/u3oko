@@ -18,6 +18,7 @@
 #include "utils/check-bounds-funcs.hpp"
 #include "utils/values-storage.hpp"
 #include "utils/val-transform-block.hpp"
+#include "utils/transparet-string-hash.hpp"
 
 #include "sys/isys-info.hpp"
 #include "sys/factory_about_sys.hpp"

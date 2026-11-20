@@ -11,6 +11,7 @@ namespace dlls::devents::impl
 class EventsImpl;
 }   // namespace dlls::devents::impl
 
+
 namespace libs::events
 {
 /// Базовый класс (интерфейс) всех событий системы
@@ -24,7 +25,8 @@ class IEvent
 
   public:
   //  ext types
-  using hid_type = std::string_view;
+  using hid_type            = std::string_view;
+  using persistent_hid_type = std::string;
 
   U3_ADD_POINTERS_TO_SELF (IEvent)
   U3_ADD_DELETE_MOVE_COPY (IEvent)
@@ -44,7 +46,7 @@ class IEvent
   {
     // empty ok
   }
-  ///
+
   auto get_mid () const -> const IEvent::hid_type&;
   /// Виртуальное копирование объекта через указатель на базовый класс
   /// \param[in]  src  указатель на объект-источник, должен быть того же типа, что и назначение

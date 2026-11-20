@@ -6,8 +6,13 @@
 */
 #include "mmedia/libs/link/appl/iapplication-proxy.hpp"
 
+namespace libs::proxy::syn
+{
+using IApplicationProxy = ::libs::link::appl::IApplicationProxy;
+}   // namespace libs::proxy::syn
+
 namespace libs::proxy
 {
-auto get_create_module_func (const std::string&) -> ::libs::link::appl::IApplicationProxy::create_func_type;
-auto get_delete_module_func (const std::string&) -> ::libs::link::appl::IApplicationProxy::delete_func_type;
+auto get_create_module_func (const std::string&) -> syn::IApplicationProxy::create_func_type;
+auto get_delete_module_func (const std::string&) -> syn::IApplicationProxy::delete_func_type;
 }   // namespace libs::proxy

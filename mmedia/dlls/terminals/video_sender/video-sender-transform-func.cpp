@@ -52,7 +52,7 @@ Filter::transform_int (syn::TransformInfo& info)
   }
 
   bufs->enum_bufs (
-    [this, &impl, &info] (const ::utils::dbufs::video::consts::offs::off_buf_type& indx, const syn::IVideoBuf::cptr& buf) -> void {
+    [this, &impl, &info] (const ::utils::dbufs::video::consts::offs::off_buf_type indx, const syn::IVideoBuf::cptr& buf) -> void {
       auto minfos = impl->get_module_infos (indx);
 
       if (minfos.empty ())

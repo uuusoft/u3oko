@@ -3,4 +3,6 @@
 # copyright   Erashov A.I.
 # file        lib-funcs-codecs-dlls.cmake
 
-u3_add_target_lib(TARGET_NAME codec_funcs-lib SOURCE_PATH ${U3_PATH_ROOT}/dlls/codecs/codec_funcs)
+u3_add_target_lib(
+    TARGET_NAME codec_funcs-lib
+    SOURCE_PATH ${U3_PATH_ROOT}/dlls/codecs/codec_funcs)

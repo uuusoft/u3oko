@@ -30,7 +30,7 @@ IApplicationProxy::IApplicationProxy (
   const std::string& dll_path,
   const std::string& name_lib)
 {
-  U3_CALL_TRACE_INFO_DBG (TOLOG (dll_path) + TOLOG (name_lib));
+  U3_CALL_TRACE_INFO_DBG (FTOLOG (dll_path) + TOLOG (name_lib));
   ::libs::utility::checks::throw_ifn (!dll_path.empty ());
   ::libs::utility::checks::throw_ifn (!name_lib.empty ());
 
@@ -47,6 +47,7 @@ IApplicationProxy::IApplicationProxy (
   creator_ = ::libs::proxy::get_create_module_func (name_lib);
   erasor_  = ::libs::proxy::get_delete_module_func (name_lib);
 #else
+
   std::error_code load_error;
   lib_.load (cpath, boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders, load_error);
   if (!lib_.is_loaded ())
@@ -63,6 +64,7 @@ IApplicationProxy::IApplicationProxy (
 
   erasor_ = ::boost::dll::import_symbol< delete_obj_type > (
     lib_, ::libs::utility::dlls::make_func_name_lib (name_lib, "delete_impl").c_str ());
+
 #endif
 
   ::libs::utility::checks::throw_ifn (

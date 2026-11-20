@@ -12,7 +12,7 @@ class IOptimImpl final : public ::libs::optim::io::IOptim
 {
   public:
   //  ext types
-  using str2funcs_type = boost::unordered_flat_map< std::string, IOptimAlg::ptr >;
+  using str2funcs_type = boost::unordered_flat_map< std::string, IOptimAlg::ptr, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
   using sync_type      = std::mutex;
   using lock_type      = std::scoped_lock< sync_type >;
 

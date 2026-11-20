@@ -10,9 +10,9 @@ namespace libs::bufs
 {
 void
 alloc_buf_by_indx (
-  Bufs::raw_ptr            bufs,
-  const syn::off_buf_type& indx,
-  syn::IVideoBuf::raw_ptr  src)
+  Bufs::raw_ptr           bufs,
+  const syn::off_buf_type indx,
+  syn::IVideoBuf::raw_ptr src)
 {
   ::libs::utility::checks::throw_ifn (bufs);
   syn::IVideoBuf::raw_ptr nbuf = (*bufs)[indx];
@@ -20,7 +20,7 @@ alloc_buf_by_indx (
 
   if (!src || src->get_flag (::utils::dbufs::BufFlags::empty))
   {
-    U3_XLOG_WARN ("try alloc buf from empty buf" + TOLOG (indx));
+    U3_XLOG_WARN ("try alloc buf from empty buf" + STOLOG (indx));
     return;
   }
   if (nbuf == src)

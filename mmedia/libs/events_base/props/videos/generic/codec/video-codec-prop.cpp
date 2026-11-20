@@ -85,7 +85,7 @@ VideoCodecProp::load_json_int (const ::boost::json::object& obj)
   fps_coder_            = ::libs::utility::json::get_uint32 (obj.at ("fps_coder"));
   plane_                = ::boost::json::value_to< VideoCodecFlatProp > (obj.at ("plane"));
   preferred_impl_       = obj.at ("preferred_impl").as_string ();
-  bufs_                 = ::boost::json::value_to< syn::EventBufs > (obj.at ("evbufs"));
+  bufs_                 = ::boost::json::value_to< syn::EventBufs > (obj.at (::libs::events::buf::consts::node_name));
   dump_frame_counter_   = ::libs::utility::json::get_uint64 (obj.at ("dump_counter_frame"));
   dump_result2file_     = obj.at ("dump_compressed_to_file").as_bool ();
   write_codec_strategy_ = ::boost::json::value_to< Writes > (obj.at ("write_codec_strategy"));
@@ -100,17 +100,17 @@ VideoCodecProp::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
 
-  obj["max_period_ic_frame"]     = max_period_ic_frame_;
-  obj["fps_coder"]               = fps_coder_;
-  obj["plane"]                   = boost::json::value_from (plane_);
-  obj["preferred_impl"]          = preferred_impl_;
-  obj["evbufs"]                  = boost::json::value_from (bufs_);
-  obj["dump_counter_frame"]      = dump_frame_counter_;
-  obj["dump_compressed_to_file"] = dump_result2file_;
-  obj["write_codec_strategy"]    = ::boost::json::value_from (write_codec_strategy_);
-  obj["decode_flip_y"]           = decode_flip_y_;
-  obj["code_flip_y"]             = code_flip_y_;
-  obj["hint_codec_impl"]         = ::boost::json::value_from (hint_codec_impl_);
+  obj["max_period_ic_frame"]                  = max_period_ic_frame_;
+  obj["fps_coder"]                            = fps_coder_;
+  obj["plane"]                                = boost::json::value_from (plane_);
+  obj["preferred_impl"]                       = preferred_impl_;
+  obj[::libs::events::buf::consts::node_name] = boost::json::value_from (bufs_);
+  obj["dump_counter_frame"]                   = dump_frame_counter_;
+  obj["dump_compressed_to_file"]              = dump_result2file_;
+  obj["write_codec_strategy"]                 = ::boost::json::value_from (write_codec_strategy_);
+  obj["decode_flip_y"]                        = decode_flip_y_;
+  obj["code_flip_y"]                          = code_flip_y_;
+  obj["hint_codec_impl"]                      = ::boost::json::value_from (hint_codec_impl_);
 }
 
 

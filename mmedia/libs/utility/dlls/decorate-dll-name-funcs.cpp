@@ -9,9 +9,9 @@
 namespace libs::utility::dlls
 {
 auto
-make_func_name_lib (const std::string& lib_name, const std::string& prefix_func) -> std::string
+make_func_name_lib (const std::string& lib_name, const std::string_view prefix_func) -> std::string
 {
-  return prefix_func + "_" + undecorate_dll_name (lib_name);
+  return std::string (prefix_func) + "_" + undecorate_dll_name (lib_name);
 }
 
 
@@ -44,15 +44,14 @@ auto
 get_prefix () -> std::string
 {
 #if defined(U3_OS_ANDROID) || defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_ORANGE_PI)
-  const std::string prefix = "lib";
+  return "lib";
 #elif defined(U3_OS_WIN32_DESKTOP)
-  const std::string prefix = "";
+  return "";
 #elif defined(U3_OS_MACX_DESKTOP)
-  const std::string prefix = "lib";
+  return "lib";
 #else
 #  error select OS
 #endif
-  return prefix;
 }
 
 

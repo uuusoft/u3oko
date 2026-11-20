@@ -13,7 +13,9 @@ struct InfoFilter final : public ::libs::icore::impl::base::obj::dll::BaseInfoFi
   virtual ~InfoFilter () = default;
 
   syn::VideoDetectProp::raw_ptr rprops_ = nullptr;   //< Уже настроенный указатель на свойства фильтра props_
-  dlib::frontal_face_detector   detector_;           //< Детектор лица из dlib, debug создается примерно полторы минуты и работает так же крайне медленно
+#ifndef U3_EXTLIB_DLIB_FORCE_SKIP_USE
+  dlib::frontal_face_detector detector_;   //< Детектор лица из dlib, debug создается примерно полторы минуты и работает так же крайне медленно
+#endif
 
   private:
   auto init () -> void;

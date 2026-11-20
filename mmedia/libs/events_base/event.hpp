@@ -34,8 +34,8 @@ class Event : public ::libs::events::IEvent
     return ret;
   }
 
-  auto get_gextp_json () const -> const std::string&;
-  auto set_gextp_json (const std::string&) -> void;
+  auto get_genextprop_json () const -> const std::string&;
+  auto set_genextprop_json (const std::string&) -> void;
 
   protected:
   // IEvent overrides
@@ -44,7 +44,9 @@ class Event : public ::libs::events::IEvent
   virtual auto save_json_int (::boost::json::object&) const -> void override;
   virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 
-  std::string gextp_json_;   //< general extended properties json format
+  // EAI-REFACT
+  /// общие свойства используется для введения новых фич, после завершения отладки данные из этого поля должны оформлятся в отдельные сообщения
+  std::string genextprop_json_;
 
   private:
   // internal types

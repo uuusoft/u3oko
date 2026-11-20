@@ -8,6 +8,7 @@
 // EAI-REFACT
 #include <regex>
 #include <queue>
+
 #include "mmedia/includes/includes.hpp"
 #include "../modules-includes_int.hpp"
 #include "mmedia/dlls/terminals/video_sender/consts/video-sender-const-vals.hpp"

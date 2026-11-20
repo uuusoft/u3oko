@@ -26,7 +26,7 @@ class BufsEvent : public RuntimeEvent
   U3_ADD_DELETE_MOVE_COPY (BufsEvent)
 
   explicit BufsEvent (const Acessor& = Acessor (0));
-  explicit BufsEvent (const Acessor&, ::libs::bufs::Bufs::ptr& buf, std::list< IEvent::ptr >* events);
+  explicit BufsEvent (const Acessor&, ::libs::bufs::Bufs::ptr&, std::list< IEvent::ptr >*);
   virtual ~BufsEvent () = default;
 
   static constexpr auto
@@ -51,7 +51,6 @@ class BufsEvent : public RuntimeEvent
   // IEvent overrides
   virtual auto get_mid_int () const -> const ::libs::events::IEvent::hid_type& override;
   virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
-  // virtual void load_int( const ::pugi::xml_named_node_iterator& node ) override;
   virtual auto copy_int (const IEvent::craw_ptr) -> void override;
 };
 }   // namespace libs::events_base::runtime::mem

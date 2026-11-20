@@ -18,6 +18,7 @@ Filter::~Filter ()
     jpeg_buf_      = nullptr;
     size_jpeg_buf_ = 0;
   }
+
   if (hjpeg_)
   {
     tjDestroy (hjpeg_);
@@ -85,14 +86,15 @@ Filter::itransform (syn::TransformInfo& info)
     return;
   }
 
+#ifndef U3_EXTLIB_DLIB_FORCE_SKIP_USE
   dlib::array2d< std::uint8_t > img;
 
-#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
+#  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   static std::int32_t counter   = 20;
   const std::string   file_path = "c:/imgs/dump_" + std::to_string (counter) + ".jpg";
   dlib::load_image (img, file_path);
   ++counter;
-#endif
+#  endif
 
   temp_buf_->clone (psrc, 100.0F);
   utils::dbufs::video::helpers::swap_buf_data_by_rows (temp_buf_.get ());
@@ -129,6 +131,7 @@ Filter::itransform (syn::TransformInfo& info)
   auto [fd_evnt, fd_revnt] = ::libs::iproperties::helpers::create_event< syn::FaceDetect > ();
   revnt->set_event (fd_evnt);
   info.frame_events_->emplace_back (evnt);
+#endif
 }
 
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY

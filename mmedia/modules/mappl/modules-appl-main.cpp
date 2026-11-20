@@ -21,7 +21,7 @@ void
 signal_stop_process (int signal)
 {
   static std::atomic< std::uint32_t > stop_counter = 0;
-  U3_CALL_TRACE_INFO_DBG (VTOLOG (signal) + VTOLOG (stop_counter));
+  U3_CALL_TRACE_INFO_DBG (FVTOLOG (signal) + VTOLOG (stop_counter));
   if (::modules::mappl::g_module_appl && ::modules::mappl::g_module_appl->impl () && 0 == stop_counter)
   {
     U3_XLOG_MARK ("start stoping process:" + VTOLOG (signal));
@@ -91,7 +91,7 @@ void
 init_process (int argc, char* argv[])
 {
   const std::string curfolder = ::libs::iproperties::appl_paths::get_current_folder ();
-  U3_CALL_TRACE_INFO (VTOLOG (argc) + TOLOG (curfolder));
+  U3_CALL_TRACE_INFO (FVTOLOG (argc) + TOLOG (curfolder));
   ::modules::mappl::up_links (curfolder, argc, argv);
   ::libs::utility::checks::throw_ifn (::modules::mappl::check_process (), "call check_process");
 

@@ -10,17 +10,17 @@ namespace libs::events::props::details
 class Rect
 {
   public:
-  explicit Rect (std::uint32_t width = 0, std::uint32_t height = 0);
+  explicit Rect (std::uint32_t = 0, std::uint32_t = 0);
   virtual ~Rect () = default;
 
-  std::uint32_t get_width () const;
-  std::uint32_t get_height () const;
-  bool          load (::pugi::xml_named_node_iterator& param);
-  bool          load (::pugi::xml_node& param);
+  auto get_width () const -> std::uint32_t;
+  auto get_height () const -> std::uint32_t;
+  auto load (::pugi::xml_named_node_iterator&) -> bool;
+  auto load (::pugi::xml_node&) -> bool;
 
   private:
-  std::uint32_t width_  = 0;
-  std::uint32_t height_ = 0;
+  std::uint32_t width_ { 0 };
+  std::uint32_t height_ { 0 };
 
   friend class boost::serialization::access;
 

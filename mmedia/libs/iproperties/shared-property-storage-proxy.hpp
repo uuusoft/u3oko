@@ -28,6 +28,6 @@ class SharedPropertyStorageProxy final : protected ::libs::utility::proxy::MemPr
   SharedPropertyStorageProxy ();
   virtual ~SharedPropertyStorageProxy ();
 
-  std::atomic< SharedPropertyStorage::ptr* > pimpl_;   //< Реализация свойств, которая лежит в разделяемой памяти в пределах одного процесса
+  std::atomic< SharedPropertyStorage::ptr* > pimpl_ { nullptr };   //< Реализация свойств, которая лежит в разделяемой памяти в пределах одного процесса
 };
 }   // namespace libs::iproperties

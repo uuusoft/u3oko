@@ -11,7 +11,7 @@ namespace libs::events_base::props::modules::storage
 auto
 str2using_path (const std::string& str) -> PathUsings
 {
-  static const boost::unordered_flat_map< std::string, const PathUsings > strs2paths = {
+  static const boost::unordered_flat_map< std::string, const PathUsings, ::libs::utility::utils::TransparentStringHash, std::equal_to<> > strs2paths = {
     { "", PathUsings::disabled },
     { "disabled", PathUsings::disabled },
     { "read_only", PathUsings::read_only },

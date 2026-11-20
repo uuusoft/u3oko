@@ -37,7 +37,7 @@ VideoSpaceNoiseRemoverProp::load_json_int (const ::boost::json::object& obj)
   super::load_json_int (obj);
 
   name_impl_ = obj.at ("name_impl").as_string ();
-  bufs_      = ::boost::json::value_to< source_bufs_type > (obj.at ("evbufs"));
+  bufs_      = ::boost::json::value_to< source_bufs_type > (obj.at (::libs::events::buf::consts::node_name));
 }
 
 
@@ -46,8 +46,8 @@ VideoSpaceNoiseRemoverProp::save_json_int (::boost::json::object& obj) const
 {
   super::save_json_int (obj);
 
-  obj["name_impl"] = name_impl_;
-  obj["evbufs"]    = ::boost::json::value_from (bufs_);
+  obj["name_impl"]                            = name_impl_;
+  obj[::libs::events::buf::consts::node_name] = ::boost::json::value_from (bufs_);
 }
 
 

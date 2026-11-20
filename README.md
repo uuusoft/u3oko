@@ -29,6 +29,7 @@
   - [msys2](https://www.msys2.org)
   - [cygwin](https://www.cygwin.com/install.html)
 
+Для примера, подготовка Ubuntu/Debian для сборки
 ```
 sudo apt update
 sudo apt install build-essential
@@ -45,6 +46,10 @@ sudo apt install libx11-dev
 sudo apt install libdrm-dev
 #sudo apt-get install pkg-config
 sudo apt install libsystemd-dev
+sudo apt install binutils gcc-arm-linux-gnueabihf crossbuild-essential-armhf
+
+sudo dpkg --add-architecture armhf && apt update 
+sudo apt install -y libstdc++-10-dev:armhf 
 
 #sudo add-apt-repository ppa:pipewire-debian/pipewire-upstream
 #sudo apt update
@@ -66,6 +71,7 @@ git clone https://github.com/uuusoft/u3oko.git
 cd u3oko/mmedia/build/cmds
 ./u3oko-linux-rel-lib-none-clang-ninja.sh
 ./u3oko-linux-dbg-lib-none-clang-ninja.sh
+./u3oko-orangepi-rel-lib-none-clang.sh
 
 ./u3oko-linux-dbg-lib-address-clang-ninja.sh
 ./u3oko-linux-dbg-dll-address-clang-ninja.sh
@@ -77,7 +83,7 @@ cd u3oko/mmedia/build/cmds
 Пример использования
 ```
 git clone https://github.com/uuusoft/u3oko-3rd-artifacts.git
-cd u3oko-3rd-artofacts
+cd u3oko-3rd-artifacts
 python3 -m http.server 8011
 ```
 Порт 8011 должен совпадать с переменной cmake ```U3_HOST_PORT``` из файла параметров конфигурации сборки. 

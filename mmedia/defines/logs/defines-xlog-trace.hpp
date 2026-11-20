@@ -80,5 +80,5 @@
 
 #ifndef U3_FILE_LOG_TAG
 //  fallback mode
-#  define U3_FILE_LOG_TAG "[[failback]]          "
+#  define U3_FILE_LOG_TAG "u3deftag              "
 #endif

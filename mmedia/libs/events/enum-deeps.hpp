@@ -15,5 +15,5 @@ enum class Deeps : std::uint32_t
   unknown = 0xFF    //< Не определенно для общности
 };
 
-const std::string& to_string (const Deeps& val);
+auto to_string (const Deeps&) -> const std::string&;
 }   // namespace libs::events

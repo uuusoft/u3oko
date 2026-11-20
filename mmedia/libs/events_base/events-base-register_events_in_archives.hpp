@@ -7,5 +7,5 @@
 
 namespace libs::events_base
 {
-void register_events_in_archives ();
+auto register_events_in_archives () -> void;
 }   // namespace libs::events_base

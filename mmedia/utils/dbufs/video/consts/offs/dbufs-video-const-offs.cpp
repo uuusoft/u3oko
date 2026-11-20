@@ -8,6 +8,7 @@
 
 namespace utils::dbufs::video::consts::offs
 {
+/*
 const off_buf_type empty                  = "";
 const off_buf_type invalid                = "???";
 const off_buf_type any                    = "***";
@@ -46,4 +47,5 @@ const off_buf_type move_est_res           = "move-est-res";
 const off_buf_type temp1                  = "tmp1";
 const off_buf_type temp2                  = "tmp2";
 const off_buf_type temp3                  = "tmp3";
+*/
 }   // namespace utils::dbufs::video::consts::offs

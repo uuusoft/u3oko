@@ -11,7 +11,7 @@ namespace modules::mstorage::appl
 {
 StorageModule::StorageModule ()
 {
-  text_id_module_ = ::libs::ilink::consts::id_storage;
+  module_id_ = ::libs::ilink::consts::id_storage;
 }
 
 
@@ -80,7 +80,6 @@ StorageModule::process_write_data (syn::WriteData::raw_ptr props)
   else
   {
     ::libs::utility::checks::throw_exception ("unknown type write data" + STOLOG (int_msg->get_mid ()));
-    return;
   }
 
   if (props->is_failed ())
@@ -99,13 +98,18 @@ void
 StorageModule::process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr props)
 {
   stop_module_ = props->is_start () ? false : true;
-  sync_status_impls ();
   streams_runtime_infos_.clear ();
   streams_rights_.clear ();
 
   if (props->is_start ())
   {
+    // create_impls (props);
+    sync_status_impls ();
     load_binary_statistic ();
+  }
+  else
+  {
+    delete_impls ();
   }
 }
 
@@ -208,8 +212,17 @@ StorageModule::create_impls (syn::PropertyStorageModuleEvent::raw_ptr props)
   storage_impl_ = storage_impl_ ? storage_impl_ : get_storage_impl ();
   indexer_impl_ = indexer_impl_ ? indexer_impl_ : get_indexer_impl ();
 
-  indexer_impl_->set_info (props->get_paths ().empty () ? nullptr : &props->get_paths ().front ());
-  storage_impl_->set_info (props->get_paths ().empty () ? nullptr : &props->get_paths ().front ());
+  const auto pinfo = props->get_paths ().empty () ? nullptr : &props->get_paths ().front ();
+  indexer_impl_->set_info (pinfo);
+  storage_impl_->set_info (pinfo);
+}
+
+
+void
+StorageModule::delete_impls ()
+{
+  storage_impl_.reset ();
+  indexer_impl_.reset ();
 }
 
 

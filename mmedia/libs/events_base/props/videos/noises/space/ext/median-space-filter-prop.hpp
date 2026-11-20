@@ -13,6 +13,7 @@ inline constexpr std::int32_t min_dim_core  = 1;                                
 inline constexpr std::int32_t max_dim_core  = 2;                                                               //< Макимальная размерность ядра
 }   // namespace libs::events_base::props::videos::noises::space::ext::consts
 
+
 namespace libs::events_base::props::videos::noises::space::ext
 {
 /// Перечисление различных типов сортировок
@@ -28,9 +29,9 @@ enum class Sortings : std::uint32_t
   unknown  = 0xFF    //< Не определенно для общности
 };
 
-const std::string& to_string (const Sortings& val);
-void               tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const Sortings& src);
-Sortings           tag_invoke (::boost::json::value_to_tag< Sortings >, const ::boost::json::value& jvs);
+auto     to_string (const Sortings&) -> const std::string&;
+void     tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const Sortings& src);
+Sortings tag_invoke (::boost::json::value_to_tag< Sortings >, const ::boost::json::value& jvs);
 
 class MedianSpaceFilterProp final : virtual public events_base::Event
 {
@@ -58,14 +59,14 @@ class MedianSpaceFilterProp final : virtual public events_base::Event
     return ret;
   }
 
-  std::int32_t      size_core_      = 5;                                   //< Размер ядра медианной фильтрации
-  std::int32_t      dim_core_       = 2;                                   //< Размерность ядра фильтрации [1.2]
-  std::int32_t      rang_           = 2;                                   //< Ранг выбираемого числа из отсортированной последовательности 0 <= rang < count_core_ ^ dim_core_
-  Sortings          sort_type_      = Sortings::usual;                     //< Тип сортировки
-  std::int32_t      size_cond_core_ = 0;                                   //< Размер ядра фильтрации, если есть признак в буфере условий. 0 - фильтрации не производится
-  std::int32_t      cond_rang_      = 0;                                   //< Ранг числа, если есть буфер условий
-  syn::off_buf_type indx_cond_buf_  = syn::offs::space_noise_filter_res;   //< Опицональный индекс буфера условий. Буфер условий определяет размер ядра фильтрации (и вообще саму возможность фильтрации)
-  bool              use_cond_buf_   = false;                               //< Флаг учета буфера условий при фильтрации
+  std::int32_t                 size_core_ { 5 };                                       //< Размер ядра медианной фильтрации
+  std::int32_t                 dim_core_ { 2 };                                        //< Размерность ядра фильтрации [1.2]
+  std::int32_t                 rang_ { 2 };                                            //< Ранг выбираемого числа из отсортированной последовательности 0 <= rang < count_core_ ^ dim_core_
+  Sortings                     sort_type_ { Sortings::usual };                         //< Тип сортировки
+  std::int32_t                 size_cond_core_ { 0 };                                  //< Размер ядра фильтрации, если есть признак в буфере условий. 0 - фильтрации не производится
+  std::int32_t                 cond_rang_ { 0 };                                       //< Ранг числа, если есть буфер условий
+  syn::persistent_off_buf_type indx_cond_buf_ { syn::offs::space_noise_filter_res };   //< Опицональный индекс буфера условий. Буфер условий определяет размер ядра фильтрации (и вообще саму возможность фильтрации)
+  bool                         use_cond_buf_ { false };                                //< Флаг учета буфера условий при фильтрации
 
   private:
   U3_ADD_SUPER_CLASS (::libs::events_base::Event)

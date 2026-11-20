@@ -18,7 +18,7 @@ class Filter final :
 
   private:
   //  internal typess
-  using off_buf2buf_type = boost::unordered_flat_map< ::utils::dbufs::video::consts::offs::off_buf_type, syn::IVideoBuf::ptr >;
+  using off_buf2buf_type = boost::unordered_flat_map< syn::persistent_off_buf_type, syn::IVideoBuf::ptr, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
   U3_ADD_SUPER_CLASS (::libs::icore::impl::base::obj::dll::FilterImpl< InfoFilter >)
 
   // IFilter overrides

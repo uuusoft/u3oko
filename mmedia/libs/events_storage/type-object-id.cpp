@@ -10,7 +10,8 @@
 
 namespace libs::events_storage
 {
-TypeObjectId::TypeObjectId (const id_type& val)
+TypeObjectId::TypeObjectId (std::string_view val) :
+  val_ (val)
 {
 }
 

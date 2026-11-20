@@ -26,7 +26,7 @@ class Filter final :
 
   // IFilter overrides
   virtual auto load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node) -> void override;
-  virtual auto transform_int (syn::TransformInfo& info) -> void override;
+  virtual auto transform_int (syn::TransformInfo&) -> void override;
   virtual auto call_int (syn::CallInterfInfo& info) -> void override;
   virtual auto run_int () -> void override;
   virtual auto stop_int () -> void override;

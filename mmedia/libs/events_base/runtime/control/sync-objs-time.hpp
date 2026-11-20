@@ -15,7 +15,7 @@ enum class SyncTimes : std::uint32_t
 };
 
 // EAI-REFACT
-std::string to_string (const SyncTimes& val);
+std::string to_string (const SyncTimes&);
 
 inline constexpr SyncTimes
 sync_objs_time_from_raw_val (std::uint32_t val)

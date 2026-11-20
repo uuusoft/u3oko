@@ -37,6 +37,7 @@ ZipDataEvent::ZipDataEvent (
   std::size_t            size,
   const number_buf_type& number_buf,
   const id_buf_type&     id) :
+
   zip_buf_ (std::move (buf)),
   size_zip_buf_ (size),
   id_zip_buf_ (id),
@@ -110,7 +111,7 @@ ZipDataEvent::get_id () const -> const ZipDataEvent::id_buf_type&
 
 
 void
-ZipDataEvent::set_id (const id_buf_type& id)
+ZipDataEvent::set_id (const std::string_view id)
 {
   id_zip_buf_ = id;
 }

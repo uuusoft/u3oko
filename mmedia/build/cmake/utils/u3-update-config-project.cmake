@@ -10,7 +10,6 @@ else ()
   configure_file("includes/project_config.hpp.in.develop" "${CMAKE_CURRENT_SOURCE_DIR}/includes/project_config.hpp")
 endif ()
 
-#
 add_custom_target(
     AlwaysCheckGit
     COMMAND

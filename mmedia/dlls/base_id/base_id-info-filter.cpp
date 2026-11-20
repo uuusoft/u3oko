@@ -8,8 +8,10 @@
 
 namespace dlls::base_id
 {
-InfoFilter::InfoFilter () : rprops_ (::libs::iproperties::helpers::create_event_in_list< syn::BaseIdProp > (ef_props_))
+InfoFilter::InfoFilter () :
+  rprops_ (::libs::iproperties::helpers::create_event_in_list< syn::BaseIdProp > (ef_props_))
 {
-  str2props_.insert ({ ef_props_.front ()->get_mid (), rprops_ });
+  // str2props_.insert ({ ef_props_.front ()->get_mid (), rprops_ });
+  str2props_[ef_props_.front ()->get_mid ()] = rprops_;
 }
 }   // namespace dlls::base_id

@@ -16,7 +16,7 @@ SharedPropertyStorage::~SharedPropertyStorage ()
 
 
 auto
-SharedPropertyStorage::check (const syn::key_property_type& key) const -> bool
+SharedPropertyStorage::check (const syn::key_property_type key) const -> bool
 {
   lock_type lock (mtx_);
   auto      find = props_.find (key);
@@ -25,7 +25,7 @@ SharedPropertyStorage::check (const syn::key_property_type& key) const -> bool
 
 
 auto
-SharedPropertyStorage::get (const syn::key_property_type& key) -> syn::ISharedProperty::raw_ptr
+SharedPropertyStorage::get (const syn::key_property_type key) -> syn::ISharedProperty::raw_ptr
 {
   lock_type lock (mtx_);
   auto      find = props_.find (key);
@@ -33,7 +33,7 @@ SharedPropertyStorage::get (const syn::key_property_type& key) -> syn::ISharedPr
   if (find == props_.end ())
   {
     // Допустимо - может быть такое при инициализации системы
-    U3_XLOG_WARN ("u3_helpers_lib::SharedPropertyStorage::get not found" + TOLOG (key));
+    U3_XLOG_WARN ("u3_helpers_lib::SharedPropertyStorage::get not found" + STOLOG (key));
     return nullptr;
   }
   return find->second.get ();
@@ -41,7 +41,7 @@ SharedPropertyStorage::get (const syn::key_property_type& key) -> syn::ISharedPr
 
 
 void
-SharedPropertyStorage::set_prop (const syn::key_property_type& key, const syn::ISharedProperty::ptr& ptr)
+SharedPropertyStorage::set_prop (const syn::key_property_type key, const syn::ISharedProperty::ptr& ptr)
 {
   lock_type lock (mtx_);
 
@@ -52,22 +52,24 @@ SharedPropertyStorage::set_prop (const syn::key_property_type& key, const syn::I
       // перезапись допустима только для пустого значения.
       if (checkit->second)
       {
-        ::libs::utility::checks::test (!checkit->second, "skip, try change not empty property" + TOLOG (key) + PTR_TOLOG (checkit->second.get ()) + PTR_TOLOG (ptr.get ()));
+        ::libs::utility::checks::test (
+          !checkit->second,
+          "skip, try change not empty property" + STOLOG (key) + PTR_TOLOG (checkit->second.get ()) + PTR_TOLOG (ptr.get ()));
         return;
       }
     }
   }
 
-  U3_XLOG_DBG ("update prop" + TOLOG (key) + PTR_TOLOG (ptr.get ()));
+  U3_XLOG_DBG ("update prop" + STOLOG (key) + PTR_TOLOG (ptr.get ()));
   props_[key] = ptr;
 }
 
 
 void
-SharedPropertyStorage::reset_prop (const syn::key_property_type& key)
+SharedPropertyStorage::reset_prop (const syn::key_property_type key)
 {
   lock_type lock (mtx_);
-  U3_XLOG_DBG ("reset prop" + TOLOG (key));
+  U3_XLOG_DBG ("reset prop" + STOLOG (key));
   props_[key] = syn::ISharedProperty::ptr ();
 }
 }   // namespace libs::iproperties

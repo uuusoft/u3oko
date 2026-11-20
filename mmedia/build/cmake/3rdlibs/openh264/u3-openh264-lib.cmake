@@ -7,8 +7,6 @@ include("./build/cmake/3rdlibs/openh264/u3-openh264-lib-values.cmake")
 
 set(U3_3RDLIB_NAME_OPENH264_UTIL ${U3_3RDLIB_NAME_OPENH264}-util)
 
-#message(FATAL_ERROR "U3_3RDLIB_ESRC_URL_OPENH264_SRC=${U3_3RDLIB_ESRC_URL_OPENH264_SRC}")
-
 u3_project_add(
     PROJECT_NAME ${U3_3RDLIB_NAME_OPENH264_UTIL}
     PROJECT_VERSION "${U3_3RDLIB_VER_OPENH264}"
@@ -24,93 +22,76 @@ u3_project_add(
     BUILD_IN_SOURCE FALSE
     IT_CMAKE_PROJECT FALSE
     FORCE_COMPILE FALSE
-    EXT_CMAKE_ARGS "")
+    EXT_CMAKE_ARGS ""
+)
 
 ExternalProject_Get_Property(${U3_3RDLIB_NAME_OPENH264_UTIL} install_dir)
 
-if (${U3_GVXX_PROJECT_ADD_SOURCE_TYPE} STREQUAL "U3_ADD_PROJECT_RESULT_BIN")
-  set(U3_INCLUDE_DIR_EXTLIB_OPENH264 ${install_dir}/src/openh264-util)
-  if (${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_WINDOWS})
-    set(U3_INSTALL_DIR_EXTLIB_OPENH264 "${install_dir}/src/openh264-util/openh264.lib")
+set(U3_INCLUDE_DIR_EXTLIB_OPENH264 "${install_dir}/src/openh264-util")
+set(U3_INSTALL_DIR_EXTLIB_OPENH264 "${install_dir}/src/openh264-util/${U3_PREFIX_LIB_NAME}openh264.${U3_SUFFIX_LIB_NAME}")
+
+if (NOT U3_GVXX_PROJECT_ADD_SOURCE_TYPE STREQUAL "U3_ADD_PROJECT_RESULT_BIN")
+
+  if (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_WINDOWS)
+
+    set(U3_3RDLIB_OPENH264_MAKE_CALL
+        AutoBuildForWindows.bat
+        ${U3_WINDOWS_ARCH_ID}-${U3_WINDOWS_BUILD_TYPE_ID}-ASM
+    )
+
+  elseif (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_LINUX)
+
+    set(U3_3RDLIB_OPENH264_MAKE_CALL
+        make clean &&
+        make libraries OS=linux ARCH=${U3_LINUX_ARCH_ID}
+    )
+
+  elseif (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_RASPBERRY)
+
+    set(U3_3RDLIB_OPENH264_MAKE_CALL
+        make clean &&
+        make libraries OS=linux CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER} ARCH=${U3_RASPBERRY_ARCH_ID}
+    )
+
+  elseif (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_ORANGE_PI)
+
+    set(U3_3RDLIB_OPENH264_MAKE_CALL
+        make clean &&
+        make libraries OS=linux CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER} ARCH=${U3_ORANGE_PI_ARCH_ID}
+    )
+
+  elseif (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_ANDROID)
+
+    set(U3_3RDLIB_OPENH264_MAKE_CALL
+        make clean &&
+        make libraries OS=android ARCH=arm64 NDKROOT=${ANDROID_NDK} TARGET=${U3_CMAKE_SYSTEM_VERSION}
+    )
+
+  elseif (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_DARWIN)
+
+    set(U3_3RDLIB_OPENH264_MAKE_CALL
+        make clean &&
+        make libraries OS=darwin CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER} ARCH=${U3_DARWIN_ARCH_ID}
+    )
+
   else ()
-    set(U3_INSTALL_DIR_EXTLIB_OPENH264 "${install_dir}/src/openh264-util/libopenh264.a")
+    message(FATAL_ERROR "unsupported OS ${U3_PLATFORM_NAME}")
   endif ()
-else ()
-  set(U3_INCLUDE_DIR_EXTLIB_OPENH264 ${install_dir}/src/openh264-util)
 
-  if (${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_WINDOWS})
-    set(U3_INSTALL_DIR_EXTLIB_OPENH264 "${install_dir}/src/openh264-util/openh264.lib")
+  set(U3_BIN_TEMP_FOLDER_EXTLIB_OPENH264 "${install_dir}/~temp-openh264-util")
 
-    if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-      if (U3_ENV_PTR_BITS_COUNT EQUAL 32)
-        set(U3_LOCAL_CALL_PARAM Win32-Debug-ASM)
-      else ()
-        set(U3_LOCAL_CALL_PARAM Win64-Debug-ASM)
-      endif ()
-    else ()
-      if (U3_ENV_PTR_BITS_COUNT EQUAL 32)
-        set(U3_LOCAL_CALL_PARAM Win32-Release-ASM)
-      else ()
-        set(U3_LOCAL_CALL_PARAM Win64-Release-ASM)
-      endif ()
-    endif ()
+  add_custom_command(
+      TARGET ${U3_3RDLIB_NAME_OPENH264_UTIL}
+      POST_BUILD
+      COMMAND cd ${install_dir}/src/openh264-util/ && ${U3_3RDLIB_OPENH264_MAKE_CALL}
+      COMMAND ${CMAKE_COMMAND} -E rm -Rf "${U3_BIN_TEMP_FOLDER_EXTLIB_OPENH264}"
+      COMMAND ${CMAKE_COMMAND} -E make_directory "${U3_BIN_TEMP_FOLDER_EXTLIB_OPENH264}"
+      COMMAND ${CMAKE_COMMAND} -E copy "${install_dir}/src/openh264-util/*.a" "${U3_BIN_TEMP_FOLDER_EXTLIB_OPENH264}"
+      COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different "${install_dir}/src/openh264-util/codec" "${U3_BIN_TEMP_FOLDER_EXTLIB_OPENH264}/codec"
+      COMMAND ${CMAKE_COMMAND} -E rm -f "${install_dir}/../${U3_3RDLIB_NAME_OPENH264_BIN}"
+      COMMAND ${CMAKE_COMMAND} -E chdir "${U3_BIN_TEMP_FOLDER_EXTLIB_OPENH264}" tar czvf "${install_dir}/../${U3_3RDLIB_NAME_OPENH264_BIN}" "./"
+  )
 
-    add_custom_command(TARGET ${U3_3RDLIB_NAME_OPENH264_UTIL} POST_BUILD COMMAND cd ${install_dir}/src/openh264-util/build/ && AutoBuildForWindows.bat ${U3_LOCAL_CALL_PARAM})
-  elseif (${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_LINUX})
-
-    if (U3_ENV_PTR_BITS_COUNT EQUAL 32)
-      set(U3_LOCAL_CALL_PARAM_ARCH x86)
-    else ()
-      set(U3_LOCAL_CALL_PARAM_ARCH x86_64)
-    endif ()
-
-    add_custom_command(
-        TARGET ${U3_3RDLIB_NAME_OPENH264_UTIL} POST_BUILD COMMAND cd ${install_dir}/src/openh264-util/ && make clean && make libraries OS=linux ARCH=${U3_LOCAL_CALL_PARAM})
-
-    set(U3_INSTALL_DIR_EXTLIB_OPENH264 "${install_dir}/src/openh264-util/libopenh264.a")
-  elseif (${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_RASPBERRY} OR ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ORANGE_PI})
-
-    if (U3_ENV_PTR_BITS_COUNT EQUAL 32)
-      set(U3_LOCAL_CALL_PARAM_ARCH arm)
-    else ()
-      set(U3_LOCAL_CALL_PARAM_ARCH arm64)
-    endif ()
-
-    add_custom_command(
-        TARGET ${U3_3RDLIB_NAME_OPENH264_UTIL}
-        POST_BUILD
-        COMMAND cd ${install_dir}/src/openh264-util/ && make clean && make libraries OS=linux CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER} ARCH=${U3_LOCAL_CALL_PARAM})
-
-    set(U3_INSTALL_DIR_EXTLIB_OPENH264 "${install_dir}/src/openh264-util/libopenh264.a")
-
-  elseif (${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ANDROID})
-    set(U3_LOCAL_CALL_PARAM_ARCH arm64)
-
-    add_custom_command(
-        TARGET ${U3_3RDLIB_NAME_OPENH264_UTIL}
-        POST_BUILD
-        COMMAND
-        cd ${install_dir}/src/openh264-util/ && make clean && make libraries OS=android ARCH=${U3_LOCAL_CALL_PARAM_ARCH} NDKROOT=${ANDROID_NDK} TARGET=${U3_CMAKE_SYSTEM_VERSION})
-
-    set(U3_INSTALL_DIR_EXTLIB_OPENH264 "${install_dir}/src/openh264-util/libopenh264.a")
-
-  elseif (${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_DARWIN})
-
-    if (U3_ENV_PTR_BITS_COUNT EQUAL 32)
-      set(U3_LOCAL_CALL_PARAM_ARCH arm)
-    else ()
-      set(U3_LOCAL_CALL_PARAM_ARCH arm64)
-    endif ()
-
-    add_custom_command(
-        TARGET ${U3_3RDLIB_NAME_OPENH264_UTIL}
-        POST_BUILD
-        COMMAND cd ${install_dir}/src/openh264-util/ && make clean && make libraries OS=darwin CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER} ARCH=${U3_LOCAL_CALL_PARAM})
-
-    set(U3_INSTALL_DIR_EXTLIB_OPENH264 "${install_dir}/src/openh264-util/libopenh264.a")
-  else ()
-    message(FATAL_ERROR "unsupported OS ${U3_SYSTEM_NAME}")
-  endif ()
 endif ()
 
 u3_make_fake_file(FILE_NAME ${U3_INSTALL_DIR_EXTLIB_OPENH264} CONTENT "openh264")
@@ -119,5 +100,5 @@ add_library(openh264-lib STATIC IMPORTED)
 add_dependencies(openh264-lib ${U3_3RDLIB_NAME_OPENH264_UTIL})
 set_target_properties(openh264-lib PROPERTIES IMPORTED_LOCATION ${U3_INSTALL_DIR_EXTLIB_OPENH264})
 
-#set( U3_LIBS_3RD_STATIC_LIST ${U3_LIBS_3RD_STATIC_LIST} openh264-lib )
+#set( U3_3RDLIBS_STATIC_LIST ${U3_3RDLIBS_STATIC_LIST} openh264-lib )
 set(U3_DEPENDENCY_TARGETS_LIST ${U3_DEPENDENCY_TARGETS_LIST} ${U3_3RDLIB_NAME_OPENH264_UTIL})

@@ -3,4 +3,6 @@
 # copyright   Erashov A.I.
 # file        libs-proxy.cmake
 
-u3_add_target_lib(TARGET_NAME proxy-lib SOURCE_PATH ${U3_PATH_ROOT}/libs/proxy)
+u3_add_target_lib(
+    TARGET_NAME proxy-lib
+    SOURCE_PATH ${U3_PATH_ROOT}/libs/proxy)

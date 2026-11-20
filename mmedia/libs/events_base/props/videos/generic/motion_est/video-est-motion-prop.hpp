@@ -5,12 +5,6 @@
 \date       01.01.2017
 */
 
-namespace libs::events_base::props::videos::generic::motion_est::consts
-{
-const std::pair< std::int8_t, std::int8_t > inv_vec (U3_CAST_INT8 (127), U3_CAST_INT8 (127));
-}   // namespace libs::events_base::props::videos::generic::motion_est::consts
-
-
 namespace libs::events_base::props::videos::generic::motion_est
 {
 class VideoEstMotionProp final : virtual public events_base::Event
@@ -24,7 +18,7 @@ class VideoEstMotionProp final : virtual public events_base::Event
 
   public:
   //  ext types
-  using bufs_type = std::vector< libs::events_base::props::videos::generic::motion_est::EventBufsMotionEst >;
+  using bufs_type = std::vector< EventBufsMotionEst >;
 
   U3_ADD_POINTERS_TO_SELF (VideoEstMotionProp)
   U3_ADD_MAKE_SHARED_THIS (VideoEstMotionProp)

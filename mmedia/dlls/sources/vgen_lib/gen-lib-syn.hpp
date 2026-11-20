@@ -8,7 +8,8 @@
 namespace dlls::sources::gen_lib::syn
 {
 using tevents_type             = std::list< ::libs::events::IEvent::ptr >;
-using keys2bufs_type           = boost::unordered_flat_map< ::utils::dbufs::video::consts::offs::off_buf_type, ::utils::dbufs::video::IVideoBuf::ptr >;
+using persistent_off_buf_type  = ::utils::dbufs::video::consts::offs::persistent_off_buf_type;
+using keys2bufs_type           = boost::unordered_flat_map< persistent_off_buf_type, ::utils::dbufs::video::IVideoBuf::ptr, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
 using pkeys2bufs_type          = std::shared_ptr< keys2bufs_type >;
 using VideoDriverProp          = ::libs::events_base::props::videos::generic::driver::VideoDriverProp;
 using VideoDriverCaptureProp   = ::libs::events_base::props::videos::generic::driver::VideoDriverCaptureProp;

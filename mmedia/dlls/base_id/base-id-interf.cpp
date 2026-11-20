@@ -39,7 +39,7 @@ BaseIdInterf::update_property_int (const syn::IEvent::craw_ptr info)
 
 
 auto
-BaseIdInterf::get_module_infos_int (const syn::off_buf_type& indx_buf) const -> BaseIdInterf::buf_infos_type
+BaseIdInterf::get_module_infos_int (const syn::off_buf_type indx_buf) const -> BaseIdInterf::buf_infos_type
 {
   buf_infos_type ret;
 

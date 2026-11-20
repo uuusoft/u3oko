@@ -4,7 +4,11 @@
 # file        windows-x32-msv.cmake
 # https://stackoverflow.com/questions/31148943/option-to-force-either-32-bit-or-64-bit-build-with-cmake
 
-set(U3_SYSTEM_NAME Windows)
+set(U3_PLATFORM_NAME Windows)
 set(CMAKE_SYSTEM_NAME Windows)
 set(CMAKE_GENERATOR_PLATFORM Win32 CACHE INTERNAL "Force 32-bit compilation")
 set(CMAKE_SYSTEM_PROCESSOR Win32)
+set(U3_SYSTEM_PROCESSOR_ARCH x86)
+
+set(U3_CXX_COMPILER_ARCH gcc)
+

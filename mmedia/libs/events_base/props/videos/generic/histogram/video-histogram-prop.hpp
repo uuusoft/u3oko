@@ -11,8 +11,8 @@ struct EventBufsHistogram final : public ::libs::events::buf::EventBufs {
   public:
   EventBufsHistogram () = default;
 
-  bool         norm_  = false;   //<
-  std::int32_t dindx_ = -1;      //<
+  bool         norm_ { false };   //<
+  std::int32_t dindx_ { -1 };     //<
 
   template< class Archive >
   void
@@ -31,7 +31,7 @@ class VideoHistogramProp final : virtual public events_base::Event
 
   public:
   //  ext types
-  using type2buf_type = std::vector< std::pair< ::utils::dbufs::video::consts::offs::off_buf_type, EventBufsHistogram > >;
+  using type2buf_type = std::vector< std::pair< ::utils::dbufs::video::consts::offs::persistent_off_buf_type, EventBufsHistogram > >;
 
   U3_ADD_POINTERS_TO_SELF (VideoHistogramProp)
   U3_ADD_MAKE_SHARED_THIS (VideoHistogramProp)

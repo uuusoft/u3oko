@@ -29,20 +29,20 @@ class Filter final :
   U3_ADD_SUPER_CLASS (::libs::icore::impl::base::obj::dll::FilterImpl< InfoFilter >)
 
   using send_func_type       = std::function< void (syn::TransformInfo&, const syn::Buff2ModuleInfo::craw_ptr) >;
-  using send_funcs_type      = boost::unordered_flat_map< syn::id_link_type, send_func_type >;
+  using send_funcs_type      = boost::unordered_flat_map< syn::id_link_type, send_func_type, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
   using send_impl_func_type  = std::function< void (syn::TransformInfo&, const syn::Buff2ModuleInfo::craw_ptr) >;
-  using send_impl_funcs_type = boost::unordered_flat_map< syn::id_link_type, IImplSender::ptr >;
+  using send_impl_funcs_type = boost::unordered_flat_map< syn::id_link_type, IImplSender::ptr, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
 
   // IFilter overrides
-  virtual void load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node) override;
+  virtual auto load_int (syn::FilterInfo*, const ::pugi::xml_named_node_iterator&) -> void override;
   virtual auto transform_int (syn::TransformInfo&) -> void override;
   virtual auto call_int (syn::CallInterfInfo&) -> void override;
-  virtual void run_int () override;
+  virtual auto run_int () -> void override;
   virtual auto stop_int () -> void override;
 
-  void init_pts (syn::ConnectInfo* info);
-  void send_info_msg (syn::TransformInfo& info);
-  void process_events (syn::TransformInfo& info);
+  void init_pts (syn::ConnectInfo*);
+  void send_info_msg (syn::TransformInfo&);
+  void process_events (syn::TransformInfo&);
   void init_send_funcs ();
   void default_send_func (syn::TransformInfo&, const syn::Buff2ModuleInfo::craw_ptr, const syn::id_link_type&);
 

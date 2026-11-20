@@ -7,8 +7,9 @@
 
 namespace libs::events_base::props::base_id::syn
 {
-using off_buf_type = ::utils::dbufs::video::consts::offs::off_buf_type;
-}
+using off_buf_type            = ::utils::dbufs::video::consts::offs::off_buf_type;
+using persistent_off_buf_type = ::utils::dbufs::video::consts::offs::persistent_off_buf_type;
+}   // namespace libs::events_base::props::base_id::syn
 
 namespace libs::events_base::props::base_id
 {
@@ -20,15 +21,15 @@ struct Buff2ModuleInfo final {
   U3_ADD_POINTERS_TO_SELF (Buff2ModuleInfo)
 
   explicit Buff2ModuleInfo (
-    float             fps            = 0.0F,
-    syn::off_buf_type indx_buf       = ::utils::dbufs::video::consts::offs::invalid,
-    id_link_type      dest_module_id = "");
+    float             = 0.0F,
+    syn::off_buf_type = ::utils::dbufs::video::consts::offs::invalid,
+    id_link_type      = "");
 
   virtual ~Buff2ModuleInfo () = default;
 
-  float             fps_ = 0.0F;       //<
-  syn::off_buf_type indx_buf_;         //<
-  id_link_type      dest_module_id_;   //<
+  float                        fps_ { 0.0F };     //<
+  syn::persistent_off_buf_type indx_buf_;         //<
+  id_link_type                 dest_module_id_;   //<
 
   private:
   friend class boost::serialization::access;

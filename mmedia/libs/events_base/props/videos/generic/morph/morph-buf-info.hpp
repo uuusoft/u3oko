@@ -18,9 +18,9 @@ struct MorphBuffInfo final {
 
   virtual ~MorphBuffInfo () = default;
 
-  syn::off_buf_type     sindx_diff_;         //<
-  syn::off_buf_type     bindx_diff_;         //<
-  morph_operations_type morph_operations_;   //<
+  syn::persistent_off_buf_type sindx_diff_;         //<
+  syn::persistent_off_buf_type bindx_diff_;         //<
+  morph_operations_type        morph_operations_;   //<
 
   private:
   friend class boost::serialization::access;

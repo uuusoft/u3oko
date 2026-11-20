@@ -37,14 +37,14 @@ IDataSourceImpl::init ()
     try
     {
       const auto file = ::libs::utility::dlls::undecorate_dll_name (ufile.name_);
-      U3_LOG_DATA_DBG ("check dll file" + TOLOG (file));
+      U3_LOG_DATA_MARK ("check data source dll file" + TOLOG (file) + VTOLOG (file.length ()));
       if ((file.length () <= 4) || (!file.starts_with ("vss_")))
       {
         continue;
       }
 
       types_.emplace_back (file);
-      sources_.emplace_back ();
+      sources_.emplace_back ();   //< reserved
 
       const std::string  path2file = path + "/" + ufile.name_;
       ObjSourceImplProxy rdriver { ufile.name_ };
@@ -53,7 +53,7 @@ IDataSourceImpl::init ()
     }
     catch (const std::exception& excpt)
     {
-      U3_LOG_DATA_EXCEPT (TOLOG (ufile.name_) + ", " + excpt.what ());
+      U3_LOG_DATA_EXCEPT (FTOLOG (ufile.name_) + ", " + excpt.what ());
     }
   }
 }

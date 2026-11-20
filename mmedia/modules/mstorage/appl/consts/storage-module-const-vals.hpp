@@ -7,5 +7,5 @@
 
 namespace modules::mstorage::appl::consts
 {
-extern const char* module_name;
+inline constexpr std::string_view module_name { "u3m_store" };   //<
 }   // namespace modules::mstorage::appl::consts

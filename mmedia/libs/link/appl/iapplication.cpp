@@ -12,7 +12,7 @@ namespace libs::link::appl
 void
 IApplication::appl_init (const InitApplication& info)
 {
-  U3_CALL_TRACE_INFO_DBG (TOLOG (info.service_name_) + TOLOG (info.company_name_) + TOLOG (info.appl_name_) + TOLOG (info.lib_name_));
+  U3_CALL_TRACE_INFO_DBG (FTOLOG (info.service_name_) + TOLOG (info.company_name_) + TOLOG (info.appl_name_) + TOLOG (info.lib_name_));
   try
   {
     ::libs::utility::checks::throw_ifn (!init_);

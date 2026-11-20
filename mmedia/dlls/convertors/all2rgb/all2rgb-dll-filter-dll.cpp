@@ -26,7 +26,7 @@ Filter::alloc_temp_bufs ()
     ::utils::dbufs::video::consts::offs::temp1
   };
 
-  for (const ::utils::dbufs::video::consts::offs::off_buf_type& indx_buf : indx_bufs)
+  for (const ::utils::dbufs::video::consts::offs::off_buf_type indx_buf : indx_bufs)
   {
     syn::IVideoBuf::raw_ptr tbuf = (*pbuf_)[indx_buf];
 

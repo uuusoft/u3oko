@@ -17,7 +17,7 @@ class TextMinorExtCpu final
 
   private:
   //  internal typess
-  using str2val_type = boost::unordered_flat_map< std::string, CpuMinorExts >;
+  using str2val_type = boost::unordered_flat_map< std::string, CpuMinorExts, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
   using val2str_type = boost::unordered_flat_map< CpuMinorExts, std::string >;
 
   str2val_type txt2val_;   //<

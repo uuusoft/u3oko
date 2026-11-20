@@ -15,14 +15,12 @@ IBitGen::forward (
   void*               dst,
   std::uint32_t&      count_byte_dst)
 {
-  ::libs::utility::checks::throw_ifn (src, "null src");
-  ::libs::utility::checks::throw_ifn (count_byte_src, "empty src");
-  ::libs::utility::checks::throw_ifn (dst, "null dst");
-  ::libs::utility::checks::throw_ifn (::libs::utility::mem::check_align< std::uint32_t > (count_byte_src, get_granularity ()), "src granularity unalign");
+  ::libs::utility::checks::throw_ifn (src && count_byte_src && dst);
+  ::libs::utility::checks::throw_ifn (::libs::utility::mem::check_align< std::uint32_t > (count_byte_src, get_granularity ()));
 
   count_byte_dst = 0;
   forward_int (src, count_byte_src, dst, count_byte_dst);
-  ::libs::utility::checks::throw_if (count_byte_dst <= 0, "dst empty");
+  ::libs::utility::checks::throw_if (count_byte_dst <= 0);
 }
 
 
@@ -33,9 +31,9 @@ IBitGen::backward (
   void*               dst,
   std::uint32_t&      count_byte_dst)
 {
-  ::libs::utility::checks::throw_ifn (src, "null src");
-  ::libs::utility::checks::throw_ifn (count_byte_src, "empty src");
-  ::libs::utility::checks::throw_ifn (dst, "null dst");
+  ::libs::utility::checks::throw_ifn (src);
+  ::libs::utility::checks::throw_ifn (count_byte_src);
+  ::libs::utility::checks::throw_ifn (dst);
 
   count_byte_dst = 0;
   backward_int (src, count_byte_src, dst, count_byte_dst);

@@ -15,7 +15,7 @@ enum class StreamDirections : std::uint32_t
   unknown  = 0xFF    //<
 };
 
-std::string      to_string (const StreamDirections& val);
+std::string      to_string (const StreamDirections& );
 void             tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const StreamDirections& src);
 StreamDirections tag_invoke (::boost::json::value_to_tag< StreamDirections >, const ::boost::json::value& jvs);
 }   // namespace libs::events_storage

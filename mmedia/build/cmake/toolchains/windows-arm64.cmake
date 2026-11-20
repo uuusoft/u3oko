@@ -3,13 +3,17 @@
 # copyright   Erashov A.I.
 # file        windows-arm64.cmake
 
-set(U3_SYSTEM_NAME Windows)
+set(U3_PLATFORM_NAME Windows)
 set(CMAKE_SYSTEM_NAME Windows)
 set(CMAKE_SYSTEM_PROCESSOR aarch64)
+set(U3_SYSTEM_PROCESSOR_ARCH arm64)
 
-set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc-11)
-set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++-11)
-set(CMAKE_ASM_COMPILER aarch64-linux-gnu-gcc-11)
+# EAI-TODO
+#set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc-11)
+#set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++-11)
+#set(CMAKE_ASM_COMPILER aarch64-linux-gnu-gcc-11)
+set(U3_CXX_COMPILER_ARCH gcc)
+???()
 
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)

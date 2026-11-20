@@ -19,7 +19,7 @@ EventsImpl::EventsImpl ()
 auto
 EventsImpl::get (const hid_type& eid) -> syn::IEvent::ptr
 {
-  U3_CALL_TRACE_INFO_DBG (STOLOG (eid));
+  U3_CALL_TRACE_INFO_DBG (FSTOLOG (eid));
   lock_type lock (mtx_);
   auto      itf = gen_func_events_.find (id_event_type { eid });
   if (gen_func_events_.end () == itf)

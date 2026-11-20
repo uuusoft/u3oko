@@ -9,12 +9,12 @@
 namespace libs::events_base::props::videos::generic::convolution
 {
 BuffVideoConvolutionProp::BuffVideoConvolutionProp (
-  const syn::off_buf_type& src,
-  const syn::off_buf_type& dst,
-  const Convs&             convolution_type,
-  const std::int32_t       core_size,
-  const std::int32_t       core_koeff,
-  const bool               use_module) :
+  const syn::off_buf_type src,
+  const syn::off_buf_type dst,
+  const Convs&            convolution_type,
+  const std::int32_t      core_size,
+  const std::int32_t      core_koeff,
+  const bool              use_module) :
 
   ::libs::events::buf::EventBufs (src, dst),
   core_size_ (core_size),

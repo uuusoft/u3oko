@@ -95,7 +95,7 @@ RangFilter::transform_int (
     }
     if (!syn::offs::is_valid (bufs.indx_sbuf_))
     {
-      U3_LOG_DATA_ERROR ("unvalid destination buf" + TOLOG (bufs.indx_sbuf_));
+      U3_LOG_DATA_ERROR ("unvalid dest" + STOLOG (bufs.indx_sbuf_));
       continue;
     }
     auto src = (*pbuf)[bufs.indx_sbuf_];
@@ -121,7 +121,7 @@ RangFilter::transform_int (
     ::libs::utility::statistic::helpers::functors::AddOpTime slock (
       finfo.expand_time_algs_,
       ::libs::core::graph::get_ext_graph_node_id (id_node),
-      "one full buf " + bufs.indx_sbuf_);
+      "one full buf " + std::string (bufs.indx_sbuf_));
 
     ::libs::bufs::alloc_buf_by_indx (pbuf, bufs.indx_dbuf_, src);
 

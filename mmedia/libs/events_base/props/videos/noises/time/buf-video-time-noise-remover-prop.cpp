@@ -10,8 +10,8 @@
 namespace libs::events_base::props::videos::noises::time
 {
 BuffVideoTimeNoiseRemoverProp::BuffVideoTimeNoiseRemoverProp (
-  const syn::off_buf_type& src,
-  const syn::off_buf_type& dst) :
+  const syn::off_buf_type src,
+  const syn::off_buf_type dst) :
   ::libs::events::buf::EventBufs (src, dst)
 {
 }

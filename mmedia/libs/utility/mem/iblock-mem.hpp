@@ -11,8 +11,8 @@ namespace libs::utility::mem
 /// Пространство имен констант функционала для работы с памятью
 namespace consts
 {
-inline constexpr std::uint8_t  filling               = 0;                    //< Значение для заполнения памяти по умолчанию
-inline constexpr std::uint64_t max_memory_block_size = 1024 * 1024 * 1024;   //< эвристика
+inline constexpr std::uint8_t  filling        = 0;                    //< Значение для заполнения памяти по умолчанию
+inline constexpr std::uint64_t max_block_size = 1024 * 1024 * 1024;   //< эвристика
 }   // namespace consts
 }   // namespace libs::utility::mem
 
@@ -48,7 +48,7 @@ class IBlockMem
   get_capacity () const
   {
     auto ret = get_capacity_int ();
-    ::libs::utility::checks::test (ret <= consts::max_memory_block_size, "unusual memory block size" + VTOLOG (ret) + VTOLOG (consts::max_memory_block_size));
+    ::libs::utility::checks::test (ret <= consts::max_block_size, "unusual memory block size" + VTOLOG (ret) + VTOLOG (consts::max_block_size));
     return ret;
   }
 

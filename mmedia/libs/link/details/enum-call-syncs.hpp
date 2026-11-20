@@ -16,5 +16,5 @@ enum class CallSyncs : std::uint32_t
   unknown = 0xFF    //< Не определенно для общности
 };
 
-const std::string& to_string (const CallSyncs&);
+auto to_string (const CallSyncs&) -> const std::string&;
 }   // namespace libs::link::details

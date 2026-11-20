@@ -12,8 +12,8 @@ auto
 val2str (const EventsVals& val) -> const std::string&
 {
   static boost::unordered_flat_map< EventsVals, const std::string > val2str = {
-    { EventsVals::max_count_events, consts::max_count_events },
-    { EventsVals::max_size_database, consts::max_size_database },
+    { EventsVals::max_count_events, std::string (consts::max_count_events) },
+    { EventsVals::max_size_database, std::string (consts::max_size_database) },
     { EventsVals::unknown, "unknown" },
   };
 
@@ -29,9 +29,9 @@ val2str (const EventsVals& val) -> const std::string&
 auto
 str2val (const std::string& str) -> EventsVals
 {
-  static const boost::unordered_flat_map< std::string, EventsVals > str2val = {
-    { consts::max_count_events, EventsVals::max_count_events },
-    { consts::max_size_database, EventsVals::max_size_database }
+  static const boost::unordered_flat_map< std::string, EventsVals, ::libs::utility::utils::TransparentStringHash, std::equal_to<> > str2val = {
+    { std::string (consts::max_count_events), EventsVals::max_count_events },
+    { std::string (consts::max_size_database), EventsVals::max_size_database }
   };
 
   auto find = str2val.find (str);

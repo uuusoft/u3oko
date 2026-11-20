@@ -60,7 +60,7 @@ Filter::Filter ()
     std::size_t indx = 0;
     for (const auto& source_dll_name : source_dll_names)
     {
-      U3_LOG_DATA_DBG (VTOLOG (indx) + TOLOG (source_dll_name));
+      U3_LOG_DATA_DBG (FVTOLOG (indx) + TOLOG (source_dll_name));
       syn::ListDevicesDataEvent::src_infos_type sources;
 
       idata_source_impl_.get_sources (source_dll_name, sources);

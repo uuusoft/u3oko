@@ -24,8 +24,8 @@ class WrapperStorageEvent : public BaseStorageEvent
   U3_ADD_DELETE_MOVE_COPY (WrapperStorageEvent)
 
   explicit WrapperStorageEvent (
-    const Acessor&                  = Acessor (0),
-    ::libs::events::IEvent::ptr msg = ::libs::events::IEvent::ptr ());
+    const Acessor&              = Acessor (0),
+    ::libs::events::IEvent::ptr = ::libs::events::IEvent::ptr ());
 
   virtual ~WrapperStorageEvent () = default;
 

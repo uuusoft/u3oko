@@ -22,7 +22,7 @@ class TestStorageImpl : public IStorageImpl
 
   private:
   // internal types
-  using id_chunk2info = boost::unordered_flat_map< seance_type, info_seance_type >;
+  using id_chunk2info = boost::unordered_flat_map< seance_type, info_seance_type, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
   using idlocks_type  = boost::unordered_flat_set< idlock_type >;
 
   //  IStorageImpl overrides

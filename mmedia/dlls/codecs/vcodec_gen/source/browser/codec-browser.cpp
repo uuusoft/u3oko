@@ -33,7 +33,7 @@ CodecBrowser::get_codec (const syn::minor::id_val& id) -> std::string
 void
 CodecBrowser::refresh_list_codecs ()
 {
-  U3_CALL_TRACE_INFO (VTOLOG (refreshed_));
+  U3_CALL_TRACE_INFO (FVTOLOG (refreshed_));
   if (refreshed_)
   {
     return;

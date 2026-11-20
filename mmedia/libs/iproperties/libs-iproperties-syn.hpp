@@ -7,15 +7,15 @@
 
 namespace libs::iproperties::syn
 {
-using ISharedProperty        = ::libs::properties::ISharedProperty;
-using ISharedPropertyStorage = ::libs::properties::ISharedPropertyStorage;
-using BlockMemAllocatorProxy = ::utils::mems::impl::BlockMemAllocatorProxy;
-using BufAllocatorProxy      = ::utils::dbufs::allocator::BufAllocatorProxy;
-using ApplicationProp        = ::libs::events_base::props::application::ApplicationProp;
-using PropertyLogModuleEvent = ::libs::events_base::props::modules::log::PropertyLogModuleEvent;
-using VideoDriverCaptureProp = ::libs::events_base::props::videos::generic::driver::VideoDriverCaptureProp;
-using key_property_type      = ::libs::properties::consts::keys::key_property_type;
-using NodeEnumFiles          = ::libs::utility::files::NodeEnumFiles;
-using IBlockMem              = ::libs::utility::mem::IBlockMem;
-// using Paths                  = ::libs::iproperties::appl_paths::Paths;
+using ISharedProperty              = ::libs::properties::ISharedProperty;
+using ISharedPropertyStorage       = ::libs::properties::ISharedPropertyStorage;
+using BlockMemAllocatorProxy       = ::utils::mems::impl::BlockMemAllocatorProxy;
+using BufAllocatorProxy            = ::utils::dbufs::allocator::BufAllocatorProxy;
+using ApplicationProp              = ::libs::events_base::props::application::ApplicationProp;
+using PropertyLogModuleEvent       = ::libs::events_base::props::modules::log::PropertyLogModuleEvent;
+using VideoDriverCaptureProp       = ::libs::events_base::props::videos::generic::driver::VideoDriverCaptureProp;
+using NodeEnumFiles                = ::libs::utility::files::NodeEnumFiles;
+using IBlockMem                    = ::libs::utility::mem::IBlockMem;
+using key_property_type            = ::libs::properties::consts::keys::key_property_type;
+using persistent_key_property_type = ::libs::properties::consts::keys::persistent_key_property_type;
 }   // namespace libs::iproperties::syn

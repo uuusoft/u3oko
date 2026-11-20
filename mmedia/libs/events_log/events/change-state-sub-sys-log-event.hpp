@@ -22,7 +22,7 @@ class ChangeStateSubSysLogEvent final : public InfoLogEvent
   U3_ADD_DELETE_MOVE_COPY (ChangeStateSubSysLogEvent)
 
   explicit ChangeStateSubSysLogEvent (const Acessor& = Acessor (0));
-  ChangeStateSubSysLogEvent (const Acessor&, const AppllPartLogInfo& appl, bool start);
+  ChangeStateSubSysLogEvent (const Acessor&, const AppllPartLogInfo&, bool);
   virtual ~ChangeStateSubSysLogEvent () = default;
 
   static constexpr auto
@@ -47,7 +47,7 @@ class ChangeStateSubSysLogEvent final : public InfoLogEvent
   private:
   U3_ADD_SUPER_CLASS (::libs::events_log::events::InfoLogEvent)
 
-  bool start_ = false;   //<
+  bool start_ { false };   //<
 
   template< class Archive >
   void serialize (Archive& arh, const std::uint32_t /* file_version */);

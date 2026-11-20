@@ -109,7 +109,7 @@ Filter::itransform (syn::TransformInfo& info)
 
   if (!pdst || pdst->get_flag (::utils::dbufs::BufFlags::empty))
   {
-    U3_LOG_DATA_WRN ("empty diff dst buf" + TOLOG (finfo_.rprops_->bufs_.indx_dbuf_));
+    U3_LOG_DATA_WRN ("empty diff" + STOLOG (finfo_.rprops_->bufs_.indx_dbuf_));
     return;
   }
 

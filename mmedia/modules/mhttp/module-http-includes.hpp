@@ -34,7 +34,6 @@
 #include "appl/consts/module-http-const-vals.hpp"
 #include "appl/http-module-syn.hpp"
 #include "appl/skip-data-state.hpp"
-#include "appl/id2buf-info.hpp"
 
 #include "appl/impl/beast/beast-handle-request-func.hpp"
 #include "appl/impl/beast/beast-websocket-session.hpp"

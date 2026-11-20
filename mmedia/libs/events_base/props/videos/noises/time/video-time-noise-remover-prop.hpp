@@ -7,8 +7,10 @@
 
 namespace libs::events_base::props::videos::noises::time::syn
 {
-using off_buf_type = ::utils::dbufs::video::consts::offs::off_buf_type;
-}
+using off_buf_type            = ::utils::dbufs::video::consts::offs::off_buf_type;
+using persistent_off_buf_type = ::utils::dbufs::video::consts::offs::persistent_off_buf_type;
+}   // namespace libs::events_base::props::videos::noises::time::syn
+
 
 namespace libs::events_base::props::videos::noises::time
 {
@@ -41,9 +43,9 @@ class VideoTimeNoiseRemoverProp final : virtual public events_base::Event
     return ret;
   }
 
-  std::string      name_impl_          = "median2";   //< Имя реализации, которая будет использованя для фильтрации
-  std::int32_t     dump_frame_counter_ = 0;           //< Вывода времени работы через заданное количество кадров. 0 - отключение вывода (по умолчанию)
-  source_bufs_type bufs_;                             //< Список буферов с настройками для фильтрации
+  std::string      name_impl_ { "median2" };    //< Имя реализации, которая будет использованя для фильтрации
+  std::int32_t     dump_frame_counter_ { 0 };   //< Вывода времени работы через заданное количество кадров. 0 - отключение вывода (по умолчанию)
+  source_bufs_type bufs_;                       //< Список буферов с настройками для фильтрации
 
   private:
   U3_ADD_SUPER_CLASS (::libs::events_base::Event)

@@ -3,7 +3,11 @@
 # copyright   Erashov A.I.
 # file        windows-x64-msv.cmake
 
-set(U3_SYSTEM_NAME Windows)
+set(U3_PLATFORM_NAME Windows)
 set(CMAKE_SYSTEM_NAME Windows)
 set(CMAKE_GENERATOR_PLATFORM x64)
 set(CMAKE_SYSTEM_PROCESSOR AMD64)
+set(U3_SYSTEM_PROCESSOR_ARCH x86_64)
+
+set(U3_CXX_COMPILER_ARCH gcc)
+

@@ -5,13 +5,13 @@
 
 cmake_minimum_required(VERSION 3.29.0)
 
-# check support applications
+# make list support applications
 set(U3_INTERNAL_APPLS_LIST "u3oko")
-
 if (U3_COMMERCIAL_PART EQUAL 1)
   set(U3_INTERNAL_APPLS_LIST ${U3_INTERNAL_APPLS_LIST} "u3okolite" "u3iplo" "u3cam")
 endif ()
 
+# check type application
 if (NOT ${U3_APPL_NAME} IN_LIST U3_INTERNAL_APPLS_LIST)
   message(FATAL_ERROR "${U3_MARK_FATAL}Unknown application type U3_APPL_NAME=${U3_APPL_NAME} not in list U3_INTERNAL_APPLS_LIST=${U3_INTERNAL_APPLS_LIST}")
 endif ()
@@ -26,6 +26,7 @@ cmake_policy(SET CMP0057 NEW)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(project_name ${U3_APPL_NAME})
+
 # EAI-REFACT
 set(project_version_major 0)
 set(project_version_minor 2)
@@ -56,26 +57,45 @@ include("./build/cmake/utils/u3-sanity-functional.cmake")
 include("./build/cmake/utils/u3-check-preconditions.cmake")
 include("./build/cmake/utils/u3-check-git.cmake")
 
-include("./build/cmake/os-specific/u3-selector-os-specific-options.cmake")
+include("./build/cmake/specific-os/u3-selector-os-specific-options.cmake")
 
 if (U3_BUILD_MODULES_AS_LIBS)
   message(NOTICE "${U3_MARK_TODO}EAI-REFACT U3_BUILD_MODULES_AS_LIBS as DU3_BUILD_MODULES_AS_LIBS=1")
   set(U3_SHARED_COMPILE_DEF_CPP ${U3_SHARED_COMPILE_DEF_CPP} "-DU3_BUILD_MODULES_AS_LIBS=1")
 endif ()
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${U3_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/arc)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${U3_SYSTEM_NAME}/${CMAKE_BUILD_TYPE})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${U3_SYSTEM_NAME}/${CMAKE_BUILD_TYPE})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${U3_PLATFORM_NAME}/${CMAKE_BUILD_TYPE}/arc)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${U3_PLATFORM_NAME}/${CMAKE_BUILD_TYPE})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${U3_PLATFORM_NAME}/${CMAKE_BUILD_TYPE})
 
-include("./build/cmake/compiler-specific/u3-selector-compiler-specific-options.cmake")
+include("./build/cmake/specific-compiler/u3-selector-compiler-specific-options.cmake")
 
-set(U3_LINK_ALL_EVENTS_LIBS events_user-lib events_gui-lib events_media-lib events_storage-lib events_http-lib events_msg-lib events_log-lib events_base-lib events-lib)
-set(U3_LINK_ALL_GENERIC_LIBS properties-lib bufs-lib core-lib link-lib utility-lib)
-set(U3_LINK_ALL_IGENERIC_LIBS icore-lib ilink-lib iproperties-lib)
+set(U3_LINK_EVENTS_LIBS
+    events_user-lib
+    events_gui-lib
+    events_media-lib
+    events_storage-lib
+    events_http-lib
+    events_msg-lib
+    events_log-lib
+    events_base-lib
+    events-lib)
+
+set(U3_LINK_BASE_LIBS
+    properties-lib
+    bufs-lib
+    core-lib
+    link-lib
+    utility-lib)
+
+set(U3_LINK_IBASE_LIBS
+    icore-lib
+    ilink-lib
+    iproperties-lib)
 
 include("./build/cmake/utils/u3-update-config-project.cmake")
-include("./build/cmake/module-specific/u3-define-modules.cmake")
-include("./build/cmake/module-specific/u3-shared-3rd-libs-list.cmake")
+include("./build/cmake/specific-module/u3-define-modules.cmake")
+include("./build/cmake/specific-module/u3-shared-3rd-libs-list.cmake")
 
 include_directories("${U3_PATH_ROOT}/../")
 
@@ -85,9 +105,12 @@ include("${U3_PATH_ROOT}/modules/mtest/_make/module-test.cmake")
 # internal targets
 include("${U3_PATH_ROOT}/libs/libs-list.cmake")
 include("${U3_PATH_ROOT}/utils/utils-list.cmake")
+
+# EAI-REFACT move to dlls
 if (U3_COMMERCIAL_PART EQUAL 1)
   include("${U3_PATH_ROOT}/dshow_helpers/dshow-helpers-list.cmake")
 endif ()
+
 include("${U3_PATH_ROOT}/dlls/dlls-list.cmake")
 
 # lib-proxy depends from dlls

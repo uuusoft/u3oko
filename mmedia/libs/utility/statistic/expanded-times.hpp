@@ -22,8 +22,8 @@ class ExpandedTimes final
   public:
   //  ext types
   using key_storage_type = std::string;
-  using storage_type     = boost::unordered_flat_map< key_storage_type, ExpandedTime >;
-  using storages_type    = boost::unordered_flat_map< key_storage_type, storage_type >;
+  using storage_type     = boost::unordered_flat_map< key_storage_type, ExpandedTime, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
+  using storages_type    = boost::unordered_flat_map< key_storage_type, storage_type, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
 
   U3_ADD_DELETE_MOVE_COPY (ExpandedTimes)
 

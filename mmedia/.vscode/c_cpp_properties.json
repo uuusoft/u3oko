@@ -22,7 +22,7 @@
             ],
             "compilerGraph": "/usr/bin/clang++-12.0",
             "cStandard": "c11",
-            "cppStandard": "c++20",
+            "cppStandard": "c++23",
             "intelliSenseMode": "clang-x64",
             "compileCommands": "${workspaceFolder}/build/compile_commands.json"
         }

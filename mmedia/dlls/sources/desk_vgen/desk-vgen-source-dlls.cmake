@@ -4,7 +4,7 @@
 # file        desk-vgen-source-dlls.cmake
 
 if (NOT U3_COMMERCIAL_PART EQUAL 1)
-  message(FATAL_ERROR "U3_COMMERCIAL_PART not 1 " ${U3_COMMERCIAL_PART})
+  message(FATAL_ERROR "unvalid value U3_COMMERCIAL_PART=${U3_COMMERCIAL_PART}")
   return()
 endif ()
 
@@ -12,10 +12,6 @@ endif ()
 set(U3_DESK_VGEN_VSS_EXT_DEPEND_TARGETS "")
 set(U3_DESK_VGEN_VSS_3RDLIBS "")
 
-#if (${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_LINUX} OR
-#    ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_RASPBERRY} OR
-#    ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ORANGE_PI})
-#  set(U3_USE_WAYLAND_SCREENCAPTURE_LIB TRUE)
 if (U3_USE_WAYLAND_SCREENCAPTURE_LIB)
   find_package(PkgConfig REQUIRED)
   #find_package(PipeWire REQUIRED)
@@ -34,25 +30,20 @@ if (NOT U3_DBG_COMPILE_AT_BEGIN_EXTLIBS)
   endif ()
 endif ()
 
-if (U3_USE_WAYLAND_SCREENCAPTURE_LIB)
+if (U3_USE_WAYLAND_SCREENCAPTURE_LIB AND
+    NOT U3_EXTLIB_WLSCREENCAPT_FORCE_SKIP_USE)
   pkg_check_modules(PIPEWIRE REQUIRED libpipewire-0.3)
   set(U3_DESK_VGEN_VSS_EXT_DEPEND_TARGETS ${U3_DESK_VGEN_VSS_EXT_DEPEND_TARGETS} wlscreencapture-util)
   set(U3_DESK_VGEN_VSS_3RDLIBS ${U3_DESK_VGEN_VSS_3RDLIBS} wlscreencapture-lib sdbus-cpp-lib systemd pipewire-0.3)
 endif ()
 
 u3_add_target_dylib(
-    TARGET_NAME
-    desk_vgen-vss
-    SOURCE_PATH
-    ${U3_PATH_ROOT}/dlls/sources/desk_vgen/source
-    OUTPUT_NAME
-    vss_desk_vgen
-    FORCE_TO_DYLIB
-    FALSE
-    USE_EXACTLY_SOURCE_FILES
-    FALSE
-    SOURCE_FILES
-    ""
+    TARGET_NAME desk_vgen-vss
+    SOURCE_PATH ${U3_PATH_ROOT}/dlls/sources/desk_vgen/source
+    OUTPUT_NAME vss_desk_vgen
+    FORCE_TO_DYLIB FALSE
+    USE_EXACTLY_SOURCE_FILES FALSE
+    SOURCE_FILES ""
     EXTENDED_LIBS
     gen_lib-lib
     dbufs-dll
@@ -66,22 +57,25 @@ u3_add_target_dylib(
     ${U3_DESK_VGEN_VSS_EXT_DEPEND_TARGETS}
     dbufs-dll)
 
-
-#if ( ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_LINUX} OR ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_RASPBERRY} OR ${U3_SYSTEM_NAME} STREQUAL ${U3_SYSTEM_NAME_ORANGE_PI})
+#if (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_LINUX OR
+#    U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_RASPBERRY OR
+#    U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_ORANGE_PI)
 #    wlscreencapture-lib
-#endif()
-if (U3_USE_WAYLAND_SCREENCAPTURE_LIB)
-  #message( FATAL_ERROR "U3_INCLUDE_DIR_EXTLIB_WAYLAND_SCREEN_CAPTURE=${U3_INCLUDE_DIR_EXTLIB_WAYLAND_SCREEN_CAPTURE}" )
-  #message( FATAL_ERROR "U3_INSTALL_DIR_EXTLIB_WAYLAND_SCREEN_CAPTURE=${U3_INSTALL_DIR_EXTLIB_WAYLAND_SCREEN_CAPTURE}")
-  #U3_INCLUDE_DIR_EXTLIB_WAYLAND_SCREEN_CAPTURE
-  target_include_directories(desk_vgen-vss SYSTEM PRIVATE "${U3_INCLUDE_DIR_EXTLIB_WAYLAND_SCREEN_CAPTURE}" ${SYSTEMD_INCLUDE_DIRS} ${PIPEWIRE_INCLUDE_DIRS})
+#endif ()
+
+if (U3_USE_WAYLAND_SCREENCAPTURE_LIB AND
+    NOT U3_EXTLIB_WLSCREENCAPT_FORCE_SKIP_USE)
+  #message( FATAL_ERROR "U3_INCLUDE_DIR_EXTLIB_WLSCREENCAPT=${U3_INCLUDE_DIR_EXTLIB_WLSCREENCAPT}" )
+  #message( FATAL_ERROR "U3_INSTALL_DIR_EXTLIB_WLSCREENCAPT=${U3_INSTALL_DIR_EXTLIB_WLSCREENCAPT}")
+  #U3_INCLUDE_DIR_EXTLIB_WLSCREENCAPT
+  target_include_directories(desk_vgen-vss SYSTEM PRIVATE "${U3_INCLUDE_DIR_EXTLIB_WLSCREENCAPT}" ${SYSTEMD_INCLUDE_DIRS} ${PIPEWIRE_INCLUDE_DIRS})
   #target_link_libraries(desk_vgen-vss PRIVATE PkgConfig::PipeWire)
   #PkgConfig::PipeWire
   #target_include_directories(my_app PRIVATE ${SYSTEMD_INCLUDE_DIRS})
   #/home/erashov/Documents/u3media/u3temp-Raspberry-Clang-Clang--aarch64-Release-ub/wlscreencapture-util/wlscreencapture-util/src/wlscreencapture-util/include
   #/home/erashov/Documents/u3media/u3temp-Raspberry-Clang-Clang--aarch64-Release-ub/wlscreencapture-util/src/wlscreencapture-util/wlscreencapture-util/include
   #u3_make_fake_file(
-  #  FILE_NAME ${U3_INCLUDE_DIR_EXTLIB_WAYLAND_SCREEN_CAPTURE}/c_common.h2
+  #  FILE_NAME ${U3_INCLUDE_DIR_EXTLIB_WLSCREENCAPT}/c_common.h2
   #  CONTENT "c_common.h2"
   #)
 

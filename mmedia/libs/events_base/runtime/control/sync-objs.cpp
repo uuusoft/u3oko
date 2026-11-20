@@ -109,9 +109,9 @@ SyncObjs::load_json_int (const ::boost::json::object& obj)
 {
   super::load_json_int (obj);
 #ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
-  action_ ? ? ? = ::boost::json::value_to< LogProcessActions > (obj.at ("action???"));
-  info_         = ::boost::json::value_to< InfoLogSessionFragment > (obj.at ("info"));
-  session_      = obj.at ("session").as_string ();
+  action_ ? -? ? = ::boost::json::value_to< LogProcessActions > (obj.at ("action???"));
+  info_          = ::boost::json::value_to< InfoLogSessionFragment > (obj.at ("info"));
+  session_       = obj.at ("session").as_string ();
 #endif
 }
 

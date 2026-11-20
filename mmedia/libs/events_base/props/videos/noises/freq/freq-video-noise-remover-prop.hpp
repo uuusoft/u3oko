@@ -18,7 +18,7 @@ class FreqVideoNoiseRemoverProp final : virtual public events_base::Event
 
   public:
   // ext types
-  using freq_bufs_type = std::list< std::pair< syn::off_buf_type, InfoBuffFreqNoiseRemover > >;
+  using freq_bufs_type = std::list< std::pair< syn::persistent_off_buf_type, InfoBuffFreqNoiseRemover > >;
 
   U3_ADD_POINTERS_TO_SELF (FreqVideoNoiseRemoverProp)
   U3_ADD_MAKE_SHARED_THIS (FreqVideoNoiseRemoverProp)

@@ -36,7 +36,7 @@ to_string (const LogLevels& val) -> const std::string&
   auto finger = val2str.find (val);
   if (val2str.end () == finger)
   {
-    U3_XLOG_WARN ("convert LogLevels to string" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+    U3_XLOG_WARN ("Unknown LogLevels" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
     finger = val2str.find (LogLevels::unknown);
   }
   return finger->second;

@@ -7,5 +7,5 @@
 
 namespace dlls::terminals::video_sender::consts
 {
-extern const char* id_zip_buf2storage;   //< Идентификатор ресурса (jpeg изображение) для storage
+inline constexpr std::string_view id_zip_buf2storage { "mem.dlls.terminals.video_sender.2storage.image_camera.jpg" };   //< Идентификатор ресурса (jpeg изображение) для storage
 }   // namespace dlls::terminals::video_sender::consts

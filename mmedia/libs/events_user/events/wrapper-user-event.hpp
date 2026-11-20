@@ -23,8 +23,8 @@ class WrapperUserEvent : public BaseUserEvent
   U3_ADD_DELETE_MOVE_COPY (WrapperUserEvent)
 
   explicit WrapperUserEvent (
-    const Acessor&                  = Acessor (0),
-    ::libs::events::IEvent::ptr msg = ::libs::events::IEvent::ptr ());
+    const Acessor&              = Acessor (0),
+    ::libs::events::IEvent::ptr = ::libs::events::IEvent::ptr ());
 
   virtual ~WrapperUserEvent () = default;
 

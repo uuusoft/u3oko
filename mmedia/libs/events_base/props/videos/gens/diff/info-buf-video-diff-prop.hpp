@@ -12,8 +12,8 @@ struct InfoBuffVideoDiffProp final {
   InfoBuffVideoDiffProp ()          = default;
   virtual ~InfoBuffVideoDiffProp () = default;
 
-  ::utils::dbufs::video::consts::offs::off_buf_type bindx_diff_ = utils::dbufs::video::consts::offs::invalid;   //< Буфера источника и назначения для разности
-  ParamsVideoDiffProp                               op_;                                                        //< Операция постобработки разности
+  syn::persistent_off_buf_type bindx_diff_ { ::utils::dbufs::video::consts::offs::invalid };   //< Буфера источника и назначения для разности
+  ParamsVideoDiffProp          op_;                                                            //< Операция постобработки разности
 
   private:
   friend class boost::serialization::access;
@@ -22,8 +22,8 @@ struct InfoBuffVideoDiffProp final {
   void serialize (Archive& arh, const std::uint32_t /* file_version */);
 };
 
-void                  tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const InfoBuffVideoDiffProp& src);
-InfoBuffVideoDiffProp tag_invoke (::boost::json::value_to_tag< InfoBuffVideoDiffProp >, const ::boost::json::value& jvs);
+auto tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const InfoBuffVideoDiffProp& src) -> void;
+auto tag_invoke (::boost::json::value_to_tag< InfoBuffVideoDiffProp >, const ::boost::json::value& jvs) -> InfoBuffVideoDiffProp;
 }   // namespace libs::events_base::props::videos::gens::diff
 
 U3_BOOST_CLASS_EXPORT_KEY (::libs::events_base::props::videos::gens::diff::InfoBuffVideoDiffProp);

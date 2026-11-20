@@ -22,22 +22,22 @@ include("${U3_PATH_ROOT}/dlls/gens/vgen_mops/lib/_make/gens-vgen-mops-lib.cmake"
 include("${U3_PATH_ROOT}/dlls/gens/vgen_mops/_make/gens-vgen-mops.cmake")
 include("${U3_PATH_ROOT}/dlls/gens/vgen_motion/gens-vgen-motion.cmake")
 
-if(U3_COMMERCIAL_PART EQUAL 1)
+if (U3_COMMERCIAL_PART EQUAL 1)
   include("${U3_PATH_ROOT}/dlls/utils/vec2image/utils-vec2image.cmake")
-endif()
+endif ()
 
 include("${U3_PATH_ROOT}/dlls/sources/vgen_lib/_make/gen-lib-source-dlls.cmake")
 include("${U3_PATH_ROOT}/dlls/sources/gen_vgen/gen-vgen-source-dlls.cmake")
 include("${U3_PATH_ROOT}/dlls/sources/v4l2_vgen/_make/v4l2-vgen-source-dlls.cmake")
 include("${U3_PATH_ROOT}/dlls/sources/fake_vgen/fake-vgen-source-dlls.cmake")
 
-if(U3_COMMERCIAL_PART EQUAL 1)
+if (U3_COMMERCIAL_PART EQUAL 1)
   include("${U3_PATH_ROOT}/dlls/sources/desk_vgen/desk-vgen-source-dlls.cmake")
   include("${U3_PATH_ROOT}/dlls/sources/dshow_vgen/_make/dshow-vgen-source-dlls.cmake")
   include("${U3_PATH_ROOT}/dlls/sources/pict_vgen/_make/pict-vgen-source-dlls.cmake")
   include("${U3_PATH_ROOT}/dlls/sources/android_vgen/_make/android-vgen-source-dlls.cmake")
   #include( "${U3_PATH_ROOT}/dlls/sources/rasp_vgen/_make/rasp-vgen-sources-dlls.cmake" )
-endif()
+endif ()
 
 include("${U3_PATH_ROOT}/dlls/codecs/codec_funcs/_make/lib-funcs-codecs-dlls.cmake")
 include("${U3_PATH_ROOT}/dlls/codecs/codec_gen/_make/codec-gen-codecs-dlls.cmake")
@@ -45,27 +45,27 @@ include("${U3_PATH_ROOT}/dlls/codecs/vcodec_gen/vcodec-gen-codecs-dlls.cmake")
 include("${U3_PATH_ROOT}/dlls/codecs/vcodec_mjpg/_make/vcodec-mjpg-codecs-dlls.cmake")
 include("${U3_PATH_ROOT}/dlls/codecs/vcodec_x264/_make/vcodec-x264-codecs-dlls.cmake")
 
-if(U3_COMMERCIAL_PART EQUAL 1)
+if (U3_COMMERCIAL_PART EQUAL 1)
   #include("${U3_PATH_ROOT}/dlls/codecs/vcodec_va/_make/vcodec-va-codecs-dlls.cmake")
   #include("${U3_PATH_ROOT}/dlls/codecs/vcodec_x265/_make/vcodec-x265-codecs-dlls.cmake")
   #include("${U3_PATH_ROOT}/dlls/codecs/vcodec_android/_make/vcodec-android-codecs-dlls.cmake")
   #include("${U3_PATH_ROOT}/dlls/codecs/vcodec_test/_make/vcodec-test-codecs-dlls.cmake")
-endif()
+endif ()
 
-if(U3_COMMERCIAL_PART EQUAL 1)
+if (U3_COMMERCIAL_PART EQUAL 1)
   include("${U3_PATH_ROOT}/dlls/noisez/freq_domain/filter-freq-domain.cmake")
-endif()
+endif ()
 
 include("${U3_PATH_ROOT}/dlls/noisez/space/_make/filter-space-domain.cmake")
 include("${U3_PATH_ROOT}/dlls/noisez/time/_make/filter-time-domain.cmake")
 
 include("${U3_PATH_ROOT}/dlls/uplifters/vcorrect/_make/uplifterss-vcorrect.cmake")
 
-if(U3_COMMERCIAL_PART EQUAL 1)
+if (U3_COMMERCIAL_PART EQUAL 1)
   include("${U3_PATH_ROOT}/dlls/uplifters/vgradient/uplifterss-vgradient.cmake")
 
   include("${U3_PATH_ROOT}/dlls/scales/flow/scales-flow.cmake")
   include("${U3_PATH_ROOT}/dlls/scales/fixed/scales-fixed.cmake")
 
   include("${U3_PATH_ROOT}/dlls/mixers/mix_multiplier/mixers-mix-mulltiplier.cmake")
-endif()
+endif ()

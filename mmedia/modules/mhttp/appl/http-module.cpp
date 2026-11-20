@@ -20,7 +20,7 @@ HttpModule::HttpModule ()
     auto iappl = isys_->get_paths_lockfree ();
 
     resource_loader_ = std::make_shared< syn::Loader > (::libs::iproperties::xml::InitLoaderInfo (iappl));
-    text_id_module_  = ::libs::ilink::consts::id_http;
+    module_id_       = ::libs::ilink::consts::id_http;
     shared_state_    = std::make_shared< WebSharedState > ();
   }
   catch (const std::exception& excpt)
@@ -35,21 +35,6 @@ HttpModule::check_process ()
 {
 }
 
-#if 0
-void
-HttpModule::load_def_resource2mem ()
-{
-  //  Загружаем данные по умолчанию из хранилища.
-  auto&      bufs     = shared_ids2bufs_[appl::consts::id_zip_buf2http];
-  const auto path2res = ::libs::utility::files::make_path (temp_folder_, std::string (appl::consts::id_zip_buf2http));
-
-  ::libs::utility::files::load_file2mem (path2res, bufs.buf_);
-
-  bufs.off_data_      = 0;
-  bufs.number_frame_  = 0;
-  bufs.frame_counter_ = 0;
-}
-#endif
 
 void
 HttpModule::delete_rw_copy ()
@@ -71,7 +56,6 @@ HttpModule::prepare_resources ()
 {
   delete_rw_copy ();
   create_rw_copy ();
-  // load_def_resource2mem ();
 }
 
 
@@ -81,7 +65,7 @@ HttpModule::create_rw_copy ()
   auto       iappl    = isys_->get_paths_lockfree ();
   const auto temppath = iappl->get_path (libs::iproperties::appl_paths::Paths::temp);
 
-  temp_folder_ = ::libs::utility::files::make_path (temppath, consts::temp_folder_name);
+  temp_folder_ = ::libs::utility::files::make_path (temppath, std::string (consts::temp_folder_name));
 
   U3_LOG_HTTP_MARK ("copy http resources to a temporary folder" + TOLOG (temp_folder_));
   ::libs::iproperties::xml::helpers::copy_files (
@@ -130,7 +114,7 @@ HttpModule::process_zip_data_event (syn::ZipDataEvent::raw_ptr props)
       const auto now = std::chrono::high_resolution_clock::now ();
       skip_state_.skip_send_bytes_ += sending_size;
       ++skip_state_.skip_send_request_;
-      if (now - skip_state_.last_send_time_ >= consts::inform_period_about_skip_data)
+      if (now - skip_state_.last_send_time_ >= consts::skip_data_timeout_info)
       {
         skip_state_.last_send_time_ = now;
         U3_LOG_HTTP_WRN ("max size limit send data1" + VTOLOG (sending_size) + VTOLOG (consts::max_size_sending_data));
@@ -201,7 +185,7 @@ HttpModule::process_request_event_debug (
   // if (::libs::events_media::events::ListDevicesDataEvent::gen_get_mid () == id_event)
   if (::libs::events_msg::events::GetEventsFromBase::gen_get_mid () == id_event)
   {
-    // U3_LOG_HTTP_DEV (TOLOG (id_event) + TOLOG (content) + TOLOG (id_data));
+    // U3_LOG_HTTP_DEV (FTOLOG (id_event) + TOLOG (content) + TOLOG (id_data));
     // return true;
   }
   return false;
@@ -227,15 +211,15 @@ HttpModule::process_request_event (const std::string&, const std::string& body) 
 
     boost::property_tree::read_json (strcontent, pt);
 
-    const auto url_id_event   = pt.get< std::string > ("id_event", "/libs/events/event");
-    const auto id_data        = pt.get< std::string > ("id_data", "xml");
-    const auto url_xml_event  = pt.get< std::string > ("event");
-    const auto url_id_request = pt.get< std::string > ("id_request", "request");
-    const auto request        = ::libs::link::details::to_request (url_id_request);
-    const auto xml_type_data  = "xml" == id_data ? true : false;
+    const auto url_id_event  = pt.get< std::string > ("id_event", "/libs/events/event");
+    const auto id_data       = pt.get< std::string > ("id_data", "xml");
+    const auto url_xml_event = pt.get< std::string > ("event");
+    const auto request_txt   = pt.get< std::string > ("id_request", "request");
+    const auto request       = ::libs::link::details::to_request (request_txt);
+    const auto xml_type_data = "xml" == id_data ? true : false;
 
-    ::libs::utility::checks::throw_ifn (helpers::url_decode (url_id_event, id_event), "URL decode id event, " + url_id_event);
-    ::libs::utility::checks::throw_ifn (helpers::url_decode (url_xml_event, event_data), "URL decode utrl, " + url_xml_event);
+    ::libs::utility::checks::throw_ifn (helpers::url_decode (url_id_event, id_event), TOLOG (url_id_event));
+    ::libs::utility::checks::throw_ifn (helpers::url_decode (url_xml_event, event_data), TOLOG (url_xml_event));
 
     const auto dbg_enable = process_request_event_debug (id_event, content, id_data);
     if (dbg_enable)
@@ -254,7 +238,7 @@ HttpModule::process_request_event (const std::string&, const std::string& body) 
     if (syn::Calls::generate == request)
     {
       // запрос на генерацию события (в данном случае это http клиент, поэтому на генерацию xml схемы события) удовлетворяем сразу
-      ::libs::utility::checks::assert_soft (xml_type_data, "boost serialization forbiden" + TOLOG (url_id_event));
+      ::libs::utility::checks::assert_soft (!xml_type_data, "boost serialization forbiden" + TOLOG (url_id_event));
       // content = xml_type_data ? ::libs::iproperties::helpers::event2xml (recv_event) : recv_event->save_json ();
       content = recv_event->save_json ();
     }
@@ -265,14 +249,16 @@ HttpModule::process_request_event (const std::string&, const std::string& body) 
 #if (U3_USE_BOOST_SERIALIZTION)
         if (xml_type_data)
         {
-          ::libs::utility::checks::throw_ifn (::libs::iproperties::helpers::xml2event (event_data, recv_event), "convert to event" + TOLOG (event_data));
+          ::libs::utility::checks::throw_ifn (
+            ::libs::iproperties::helpers::xml2event (event_data, recv_event),
+            FTOLOG (event_data));
         }
         else
         {
           recv_event->load_json (event_data);
         }
 #else
-        ::libs::utility::checks::assert_soft (xml_type_data, "boost serialization forbiden" + TOLOG (url_id_event));
+        ::libs::utility::checks::assert_soft (!xml_type_data, "boost serialization forbiden" + TOLOG (url_id_event) + TOLOG (event_data));
         recv_event->load_json (event_data);
 #endif
       }
@@ -297,40 +283,24 @@ HttpModule::process_request_event (const std::string&, const std::string& body) 
 #if (U3_USE_BOOST_SERIALIZTION)
         content = xml_type_data ? ::libs::iproperties::helpers::event2xml (send_event) : send_event->save_json ();
 #else
-        ::libs::utility::checks::assert_soft (xml_type_data, "boost serialization forbiden");
+        ::libs::utility::checks::assert_soft (!xml_type_data, "boost serialization forbiden");
         content = send_event->save_json ();
 #endif
       }
       if (dbg_enable)
       {
-        U3_LOG_HTTP_DEV (TOLOG (content));
+        U3_LOG_HTTP_DEV (FTOLOG (content));
       }
     }
   }
   catch (const std::exception& excpt)
   {
     U3_LOG_HTTP_EXCEPT (excpt.what () + TOLOG (id_event));
-    U3_LOG_HTTP_MARK (TOLOG (event_data));
+    U3_LOG_HTTP_MARK (FTOLOG (event_data));
     content.clear ();
     bstatus = syn::http::status::internal_server_error;
   }
   return { std::vector< char > (content.begin (), content.end ()), mime, bstatus };
-}
-
-
-auto
-get_resource_id_from_query (const std::string& query) -> std::string
-{
-  const auto beg = query.find ('?');
-  const auto end = query.rfind ('?');
-
-  if (std::string::npos == beg ||
-      std::string::npos == end ||
-      end <= beg)
-  {
-    return appl::consts::id_zip_buf2http;
-  }
-  return query.substr (beg + 1, end - beg - 1);
 }
 
 
@@ -351,9 +321,10 @@ HttpModule::process_request_file (const std::string& req, const std::string& bod
   }
 
   std::string full_path;
+
   try
   {
-    full_path = ::libs::utility::files::make_path (consts::temp_folder_name, req_path);
+    full_path = ::libs::utility::files::make_path (std::string (consts::temp_folder_name), req_path);
 
     auto       iappl     = isys_->get_paths_lockfree ();
     const auto dir_path  = iappl->get_path (::libs::iproperties::appl_paths::Paths::temp);

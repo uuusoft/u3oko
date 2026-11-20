@@ -45,7 +45,6 @@ class BuffEvent : public RuntimeEvent
   // IEvent overrides
   virtual auto get_mid_int () const -> const ::libs::events::IEvent::hid_type& override;
   virtual auto clone_int (const ::libs::events::Deeps&) const -> ::libs::events::IEvent::ptr override;
-  // virtual void load_int( const ::pugi::xml_named_node_iterator& node ) override;
   virtual auto copy_int (const ::libs::events::IEvent::craw_ptr) -> void override;
 };
 }   // namespace libs::events_base::runtime::mem

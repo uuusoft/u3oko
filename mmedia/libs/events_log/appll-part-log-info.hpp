@@ -14,10 +14,10 @@ namespace libs::events_log
 {
 struct AppllPartLogInfo final {
   explicit AppllPartLogInfo (
-    const syn::LogLevels&       msg_state = syn::LogLevels::info,
-    std::string                 subsys    = "xsybx",
-    std::string                 version   = "xverx",
-    const std::source_location& place     = std::source_location::current ());
+    const syn::LogLevels&       = syn::LogLevels::info,
+    const std::string_view      = "xsybx",
+    const std::string_view      = "xverx",
+    const std::source_location& = std::source_location::current ());
 
   virtual ~AppllPartLogInfo () = default;
 

@@ -31,7 +31,7 @@ InProcLoaderCode::load_int (
   const std::string&     name_proc,
   const std::string&     name_lib)
 {
-  U3_CALL_TRACE_INFO_DBG (TOLOG (name_proc) + TOLOG (name_lib));
+  U3_CALL_TRACE_INFO_DBG (FTOLOG (name_proc) + TOLOG (name_lib));
   info_ = info;
   if (is_load_int ())
   {
@@ -79,7 +79,7 @@ InProcLoaderCode::unload_int (bool force) -> bool
 void
 InProcLoaderCode::thread_func_impl (std::uint32_t indx_thread)
 {
-  U3_CALL_TRACE_INFO_DBG (VTOLOG (indx_thread) + TOLOG (lib_name_));
+  U3_CALL_TRACE_INFO_DBG (FVTOLOG (indx_thread) + TOLOG (lib_name_));
   ::libs::utility::thread::set_thread_priority (std::this_thread::get_id (), ::libs::utility::thread::Priorities::high);
 
   boost::filesystem::path fullpath (::libs::iproperties::appl_paths::get_current_folder ());

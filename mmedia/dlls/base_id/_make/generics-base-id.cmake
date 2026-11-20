@@ -4,19 +4,13 @@
 # file        generics-base-id.cmake
 
 u3_add_target_dylib(
-  TARGET_NAME
-  base_id-vdd
-  SOURCE_PATH
-  ${U3_PATH_ROOT}/dlls/base_id
-  OUTPUT_NAME
-  vdd_base_id
-  FORCE_TO_DYLIB
-  FALSE
-  USE_EXACTLY_SOURCE_FILES
-  FALSE
-  SOURCE_FILES
-  ""
-  EXTENDED_LIBS
-  dbufs-dll
-  DEPEND_TARGETS
-  dbufs-dll)
+    TARGET_NAME base_id-vdd
+    SOURCE_PATH ${U3_PATH_ROOT}/dlls/base_id
+    OUTPUT_NAME vdd_base_id
+    FORCE_TO_DYLIB FALSE
+    USE_EXACTLY_SOURCE_FILES FALSE
+    SOURCE_FILES ""
+    EXTENDED_LIBS
+    dbufs-dll
+    DEPEND_TARGETS
+    dbufs-dll)

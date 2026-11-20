@@ -30,7 +30,7 @@ BaseModule::init_appl_folders_int ()
 void
 BaseModule::init_appl_data_int ()
 {
-  U3_CALL_TRACE_INFO_DBG (TOLOG (text_id_module_));
+  U3_CALL_TRACE_INFO_DBG (FTOLOG (module_id_));
   load_events_props ();
   update_events_props ();
 }
@@ -39,7 +39,7 @@ BaseModule::init_appl_data_int ()
 void
 BaseModule::init_proxys_int ()
 {
-  U3_CALL_TRACE_INFO_DBG (TOLOG (text_id_module_));
+  U3_CALL_TRACE_INFO_DBG (FTOLOG (module_id_));
   ::libs::utility::checks::throw_ifn (all2mem_ = syn::BlockMemAllocatorProxy::instance (paths_->get_path (syn::Paths::bins)), "null all2mem");
   ::libs::utility::checks::throw_ifn (all2buf_ = syn::BufAllocatorProxy::instance (paths_->get_path (syn::Paths::bins)), "null all2buf");
   ::libs::utility::checks::throw_ifn (all2optim_ = ::libs::proxy::IOptimProxy::instance (paths_->get_path (syn::Paths::bins)), "null all2optim");

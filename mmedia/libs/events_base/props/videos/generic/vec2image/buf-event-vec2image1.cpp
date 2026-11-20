@@ -10,8 +10,8 @@
 namespace libs::events_base::props::videos::generic::vec2image
 {
 EventBufsVec2Image1::EventBufsVec2Image1 (
-  const ::utils::dbufs::video::consts::offs::off_buf_type& src,
-  const ::utils::dbufs::video::consts::offs::off_buf_type& dst) :
+  const syn::off_buf_type src,
+  const syn::off_buf_type dst) :
 
   ::libs::events::buf::EventBufs (src, dst),
   size_block_ (16),

@@ -32,20 +32,20 @@ last_error2string (unsigned long error)
 }
 
 inline auto
-throw_ifn (const auto& aop, std::source_location location = std::source_location::current ()) -> void
+throw_ifn (const auto& aop, const std::source_location& place = std::source_location::current ()) -> void
 {
   if (!aop)
   {
-    ::libs::utility::checks::throw_exception (last_error2string (GetLastError ()), location);
+    ::libs::utility::checks::throw_exception (last_error2string (GetLastError ()), place);
   }
 }
 
 inline auto
-test (const auto& aop, std::source_location location = std::source_location::current ()) -> void
+test (const auto& aop, const std::source_location& place = std::source_location::current ()) -> void
 {
   if (!aop)
   {
-    ::libs::utility::checks::test (false, last_error2string (GetLastError ()), location);
+    ::libs::utility::checks::test (false, last_error2string (GetLastError ()), place);
   }
 }
 }   // namespace libs::utility::platforms::win32

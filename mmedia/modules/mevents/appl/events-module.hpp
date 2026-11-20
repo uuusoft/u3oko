@@ -25,8 +25,8 @@ class EventsModule final : public ::libs::ilink::appl::leaf::LeafModule
   virtual auto init_appl_data_int () -> void override;
 
   //  BaseModule overrides
-  virtual auto appl_init_int (const ::libs::link::appl::InitApplication& info) -> void override;
-  virtual auto init_links_int (const ::libs::link::appl::InitApplication& info) -> void override;
+  virtual auto appl_init_int (const ::libs::link::appl::InitApplication&) -> void override;
+  virtual auto init_links_int (const ::libs::link::appl::InitApplication&) -> void override;
   virtual auto init_proxys_int () -> void override;
   virtual auto appl_deinit_int () -> bool override;
   virtual auto update_catch_funcs_int () -> void override;
@@ -34,8 +34,8 @@ class EventsModule final : public ::libs::ilink::appl::leaf::LeafModule
   virtual auto init_done_int () -> void override;
 
   //  LeafModule overrides
-  virtual auto catch_event_int (syn::IEvent::ptr& evnt) -> bool override;
-  virtual auto is_now_thread_to_sleep_int (bool now_recv_evnt) -> bool override;
+  virtual auto catch_event_int (syn::IEvent::ptr&) -> bool override;
+  virtual auto is_now_thread_to_sleep_int (bool) -> bool override;
 
   auto check_process () -> void;
   auto error_callback (const std::string& error_text) -> void;

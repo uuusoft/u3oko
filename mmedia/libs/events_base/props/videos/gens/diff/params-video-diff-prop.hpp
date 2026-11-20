@@ -5,18 +5,29 @@
 \author     Erashov Anton erashov2026@proton.me
 */
 
+namespace libs::events_base::props::videos::gens::diff::syn
+{
+using off_buf_type            = ::utils::dbufs::video::consts::offs::off_buf_type;
+using persistent_off_buf_type = ::utils::dbufs::video::consts::offs::persistent_off_buf_type;
+}   // namespace libs::events_base::props::videos::gens::diff::syn
+
+
 namespace libs::events_base::props::videos::gens::diff
 {
 /// Структура хранит информацию о операции постобработки разности
 struct ParamsVideoDiffProp final {
-  ParamsVideoDiffProp (bool enable = false, std::int16_t bound_filling = 0, std::int16_t val_filling = 1);
+  ParamsVideoDiffProp (
+    bool         enable        = false,
+    std::int16_t bound_filling = 0,
+    std::int16_t val_filling   = 1);
+
   virtual ~ParamsVideoDiffProp () = default;
 
   bool self_test () const;
 
-  bool         enable_        = false;   //< Флаг, включить постобработку вычисленной разности
-  std::int16_t bound_filling_ = 0;       //< Значение границы, ниже или равно которой значения пикселей сбрасываются в 0
-  std::int16_t val_filling_   = 1;       //< Значение пикселей, начальное значение которых больше границы
+  bool         enable_ { false };      //< Флаг, включить постобработку вычисленной разности
+  std::int16_t bound_filling_ { 0 };   //< Значение границы, ниже или равно которой значения пикселей сбрасываются в 0
+  std::int16_t val_filling_ { 1 };     //< Значение пикселей, начальное значение которых больше границы
 
   private:
   friend class boost::serialization::access;

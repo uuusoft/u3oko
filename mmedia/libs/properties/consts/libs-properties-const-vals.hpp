@@ -7,5 +7,5 @@
 
 namespace libs::properties::consts
 {
-extern const char* id_proxy_shared_mem;   //<
+inline constexpr std::string_view id_proxy_shared_mem { "uuusoft.xxx.mmedia.libs.helpers.properties.property_storage_proxy.managed_shared_memory." };
 }

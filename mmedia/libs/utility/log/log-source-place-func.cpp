@@ -34,10 +34,10 @@ clear_file_name (const std::string_view file_name) -> std::string_view
 
 
 auto
-get_text_source_place (const std::source_location& loc) -> std::string
+get_text_source_place (const std::source_location& place) -> std::string
 {
-  const auto func_name = clear_func_name (loc.function_name ());
-  const auto file_name = clear_file_name (loc.file_name ());
-  return std::string (file_name) + '[' + std::to_string (loc.line ()) + ':' + std::to_string (loc.column ()) + "] " + std::string (func_name);
+  const auto func_name = clear_func_name (place.function_name ());
+  const auto file_name = clear_file_name (place.file_name ());
+  return std::string (file_name) + '[' + std::to_string (place.line ()) + ':' + std::to_string (place.column ()) + "] " + std::string (func_name);
 }
 }   // namespace libs::utility::log

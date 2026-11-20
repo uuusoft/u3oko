@@ -62,7 +62,9 @@ void
 HttpModule::init_proxys_int ()
 {
   super::init_proxys_int ();
-  ::libs::utility::checks::throw_ifn (::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree (), "check create block mem allocator");
+  ::libs::utility::checks::throw_ifn (
+    ::libs::iproperties::helpers::cast_prop_demons ()->get_mem_lockfree (),
+    "check create block mem allocator");
 }
 
 

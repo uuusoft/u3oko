@@ -8,5 +8,6 @@
 namespace libs::events_storage::consts
 {
 extern const stream_id_type empty_stream_id;
-extern const char*          empty_object_id;
+
+inline constexpr std::string_view empty_object_id { "" };
 }   // namespace libs::events_storage::consts

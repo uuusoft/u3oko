@@ -17,13 +17,14 @@ file        includes.hpp
 
 #include "props/details/rect.hpp"
 
-#include "buf/consts/events-buf-consts-vals.hpp"
+#include "buf/consts/events-buf-const-vals.hpp"
 #include "buf/event-bufs.hpp"
 
 #include "io/ievents.hpp"
 
-// EAI-REFACT remove exception
-#include "mmedia/libs/iproperties/helpers/cast_events_funcs.hpp"   //  исключение.
+// EAI-REFACT remove exception include cast_events_funcs.hpp
+#include "mmedia/libs/iproperties/helpers/cast_events_funcs.hpp"
+
 #include "helpers/get-base-msg-funcs.hpp"
 #include "helpers/wrap-events-funcs.hpp"
 

@@ -37,11 +37,12 @@ class StorageModule final : public ::libs::ilink::appl::leaf::LeafModule
 
   //  LeafModule overrides
   virtual auto catch_event_int (::libs::events::IEvent::ptr& evnt) -> bool override;
-  virtual auto is_now_thread_to_sleep_int (bool now_recv_evnt) -> bool override;
+  virtual auto is_now_thread_to_sleep_int (bool) -> bool override;
 
   // int functions
-  auto sync_status_impls () -> void;
   auto create_impls (syn::PropertyStorageModuleEvent::raw_ptr) -> void;
+  auto delete_impls () -> void;
+  auto sync_status_impls () -> void;
   auto check_access_rights (const syn::stream_id_type&, const syn::StreamActions&) const -> bool;
   auto process_update_stream (syn::UpdateStream::raw_ptr) -> void;
   auto process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr) -> void;
@@ -51,10 +52,10 @@ class StorageModule final : public ::libs::ilink::appl::leaf::LeafModule
   auto process_get_statistic_info (syn::GetStatisticInfo::raw_ptr) -> void;
   auto load_binary_statistic () -> void;
 
-  impl::IStorageImpl::ptr    storage_impl_;            //< Выбранная реализация хранения бинарных данных
-  impl::IIndexerImpl::ptr    indexer_impl_;            //< Выбранная реализация индексирования данных
-  runtime_storage_type       streams_runtime_infos_;   //< Поле сбора статистики использования потоков после старта, т.е. в текущем сеансе
-  access_rights_storage_type streams_rights_;          //< Поле прав доступа к данным потоков
-  runtime_storage_type       streams_infos_;           //< Поле отражает статистику использования данных на момент старта
+  impl::IStorageImpl::ptr    storage_impl_;            //< выбранная реализация хранения бинарных данных
+  impl::IIndexerImpl::ptr    indexer_impl_;            //< выбранная реализация индексирования данных
+  runtime_storage_type       streams_runtime_infos_;   //< поле сбора статистики использования потоков после старта, т.е. в текущем сеансе
+  access_rights_storage_type streams_rights_;          //< поле прав доступа к данным потоков
+  runtime_storage_type       streams_infos_;           //< поле отражает статистику использования данных на момент старта
 };
 }   // namespace modules::mstorage::appl

@@ -9,11 +9,11 @@ namespace libs::events_base
 {
 enum class OpsStatus : std::uint32_t
 {
-  success = 0x00,   //<
-  failed  = 0x01,   //<
-  mixed   = 0x02,   //<
-  unset   = 0x03,   //<
-  unknown = 0xFF    //<
+  success = 0,       //<
+  failed,            //<
+  mixed,             //<
+  unset,             //<
+  unknown = 0xFFFF   //<
 };
 
 inline constexpr OpsStatus

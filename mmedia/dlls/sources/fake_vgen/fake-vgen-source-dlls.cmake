@@ -4,20 +4,14 @@
 # file        fake-vgen-source-dlls.cmake
 
 u3_add_target_dylib(
-  TARGET_NAME
-  fake_vgen-vss
-  SOURCE_PATH
-  ${U3_PATH_ROOT}/dlls/sources/fake_vgen/source
-  OUTPUT_NAME
-  vss_fake_vgen
-  FORCE_TO_DYLIB
-  FALSE
-  USE_EXACTLY_SOURCE_FILES
-  FALSE
-  SOURCE_FILES
-  ""
-  EXTENDED_LIBS
-  gen_lib-lib
-  dbufs-dll
-  DEPEND_TARGETS
-  dbufs-dll)
+    TARGET_NAME fake_vgen-vss
+    SOURCE_PATH ${U3_PATH_ROOT}/dlls/sources/fake_vgen/source
+    OUTPUT_NAME vss_fake_vgen
+    FORCE_TO_DYLIB FALSE
+    USE_EXACTLY_SOURCE_FILES FALSE
+    SOURCE_FILES ""
+    EXTENDED_LIBS
+    gen_lib-lib
+    dbufs-dll
+    DEPEND_TARGETS
+    dbufs-dll)

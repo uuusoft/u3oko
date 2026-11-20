@@ -40,7 +40,7 @@ class ExpandTimesEvent : public RuntimeEvent
   //  ext types
   using key_storage_type   = std::string;
   using storages_type      = ::libs::utility::statistic::ExpandedTimes::storages_type;
-  using full_storages_type = boost::unordered_flat_map< key_storage_type, storages_type >;
+  using full_storages_type = boost::unordered_flat_map< key_storage_type, storages_type, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
 
   U3_ADD_POINTERS_TO_SELF (ExpandTimesEvent)
   U3_ADD_MAKE_SHARED_THIS (ExpandTimesEvent)

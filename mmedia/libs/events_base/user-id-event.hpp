@@ -25,7 +25,11 @@ class UserIdEvent : virtual public events_base::OpsStatusEvent
   using user_id_type         = ::libs::utility::utils::cuuid;
   using user_session_id_type = ::libs::utility::utils::cuuid;
 
-  explicit UserIdEvent (const Acessor& = Acessor (0), const user_id_type& = {}, const user_session_id_type& = {});
+  explicit UserIdEvent (
+    const Acessor&              = Acessor (0),
+    const user_id_type&         = {},
+    const user_session_id_type& = {});
+
   virtual ~UserIdEvent () = default;
 
   static constexpr auto

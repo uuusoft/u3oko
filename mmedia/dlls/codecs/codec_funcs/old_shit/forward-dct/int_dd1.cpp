@@ -64,7 +64,7 @@
  * shows that the values given below are the most effective.
  */
 
-? ? ?
+? -? ?
 #  if BITS_IN_JSAMPLE == 8
 #    define CONST_BITS 13
 #    define PASS1_BITS 2
@@ -123,12 +123,12 @@
 #  endif
 
 
-    /*
-     * Perform the forward DCT on one block of samples.
-     */
+     /*
+      * Perform the forward DCT on one block of samples.
+      */
 
   GLOBAL ()
-    jpeg_fdct_islow (DCTELEM *data)
+    jpeg_fdct_islow (DCTELEM * data)
 {
   INT32    tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7;
   INT32    tmp10, tmp11, tmp12, tmp13;

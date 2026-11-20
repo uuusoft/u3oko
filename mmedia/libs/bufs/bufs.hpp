@@ -14,16 +14,16 @@ class Bufs final
 {
   public:
   // ext types
-  using enum_bufs_func_type = std::function< void (const syn::off_buf_type& indx, const syn::IVideoBuf::cptr& buf) >;
+  using enum_bufs_func_type = std::function< void (const syn::off_buf_type indx, const syn::IVideoBuf::cptr& buf) >;
   U3_ADD_POINTERS_TO_SELF (Bufs)
 
   Bufs ();
   ~Bufs () = default;
 
-  auto set_buf (const syn::off_buf_type&, syn::IVideoBuf::ptr&) -> void;
-  auto operator[] (const syn::off_buf_type&) -> syn::IVideoBuf::raw_ptr;
-  auto operator[] (const syn::off_buf_type&) const -> syn::IVideoBuf::craw_ptr;
-  auto set_base_index (const syn::off_buf_type&) -> void;
+  auto set_buf (const syn::off_buf_type, syn::IVideoBuf::ptr&) -> void;
+  auto operator[] (const syn::off_buf_type) -> syn::IVideoBuf::raw_ptr;
+  auto operator[] (const syn::off_buf_type) const -> syn::IVideoBuf::craw_ptr;
+  auto set_base_index (const syn::off_buf_type) -> void;
   auto get_base_index () const -> syn::off_buf_type;
   auto set_flag (const BufsFlags&, bool) -> void;
   auto get_flag (const BufsFlags&) const -> bool;
@@ -34,11 +34,11 @@ class Bufs final
 
   private:
   //  internal typess
-  using video_bufs_type = boost::unordered_flat_map< syn::off_buf_type, syn::IVideoBuf::ptr >;
+  using video_bufs_type = boost::unordered_flat_map< syn::persistent_off_buf_type, syn::IVideoBuf::ptr, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
   using flags_type      = ::libs::utility::utils::ValuesStorage< BufsFlags, bool, BufsFlags::max_bound, false >;
 
-  syn::off_buf_type       base_buf_index_ { syn::offs::raw };   //< Индекс базового буфера, который будет ответственен за свойства, общие для всего списка
-  mutable video_bufs_type childs_;                              //< Набор дочерних буферов
-  flags_type              flags_;                               //< Флаги, разделяемые между всеми буферами
+  syn::persistent_off_buf_type base_buf_index_ { syn::offs::raw };   //< Индекс базового буфера, который будет ответственен за свойства, общие для всего списка
+  mutable video_bufs_type      childs_;                              //< Набор дочерних буферов
+  flags_type                   flags_;                               //< Флаги, разделяемые между всеми буферами
 };
 }   // namespace libs::bufs

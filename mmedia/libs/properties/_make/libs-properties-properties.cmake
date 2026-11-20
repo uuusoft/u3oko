@@ -3,4 +3,6 @@
 # copyright   Erashov A.I.
 # file        libs-properties-properties.cmake
 
-u3_add_target_lib(TARGET_NAME properties-lib SOURCE_PATH ${U3_PATH_ROOT}/libs/properties)
+u3_add_target_lib(
+    TARGET_NAME properties-lib
+    SOURCE_PATH ${U3_PATH_ROOT}/libs/properties)

@@ -19,7 +19,11 @@ void
 InfoFilter::init ()
 {
   rprops_ = ::libs::iproperties::helpers::create_event_in_list< syn::VideoDetectProp > (ef_props_);
-  str2props_.insert ({ ef_props_.front ()->get_mid (), rprops_ });
+  // str2props_.insert ({ ef_props_.front ()->get_mid (), rprops_ });
+  str2props_[ef_props_.front ()->get_mid ()] = rprops_;
+
+#ifndef U3_EXTLIB_DLIB_FORCE_SKIP_USE
   detector_ = dlib::get_frontal_face_detector ();
+#endif
 }
 }   // namespace dlls::detectors::detect_face

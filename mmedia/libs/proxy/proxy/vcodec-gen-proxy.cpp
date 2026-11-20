@@ -34,7 +34,7 @@ extern "C" BOOST_SYMBOL_EXPORT void get_codec_info_vvd_vcodec_va (libs::utility:
 namespace libs::proxy
 {
 auto
-get_create_codec_func (const std::string& plib_id) -> dlls::codecs::vcodec_gen::funcs::func_get_codec_type
+get_create_codec_func (const std::string& plib_id) -> syn::funcs::func_get_codec_type
 {
   const auto lib_id = libs::utility::dlls::undecorate_dll_name (plib_id);
 
@@ -67,7 +67,7 @@ get_create_codec_func (const std::string& plib_id) -> dlls::codecs::vcodec_gen::
 
 
 auto
-get_free_codec_func (const std::string& plib_id) -> dlls::codecs::vcodec_gen::funcs::func_free_codec_type
+get_free_codec_func (const std::string& plib_id) -> syn::funcs::func_free_codec_type
 {
   const auto lib_id = libs::utility::dlls::undecorate_dll_name (plib_id);
 
@@ -101,7 +101,7 @@ get_free_codec_func (const std::string& plib_id) -> dlls::codecs::vcodec_gen::fu
 
 
 auto
-get_info_codec_func (const std::string& plib_id) -> dlls::codecs::vcodec_gen::funcs::func_codec_info_type
+get_info_codec_func (const std::string& plib_id) -> syn::funcs::func_codec_info_type
 {
   const auto lib_id = libs::utility::dlls::undecorate_dll_name (plib_id);
 
@@ -114,7 +114,7 @@ get_info_codec_func (const std::string& plib_id) -> dlls::codecs::vcodec_gen::fu
 #if (U3_LIBS_ENABLE_VCODEC_TEST_VVD == 1)
   if (lib_id == "vvd_vcodec_test")
   {
-    return get_codec_info_vvd_vcodec_test ? ? ? ;
+    return get_codec_info_vvd_vcodec_test ? -? ? ;
   }
 #endif
 #if (U3_LIBS_ENABLE_VCODEC_X264_VVD == 1)

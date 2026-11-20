@@ -63,7 +63,7 @@ SourceImpl::get_raw_data_int (
     sync_internal_structures ();
   }
 
-  const auto picters_folder = ::libs::utility::files::update_home_folder (srcimpinfo_.props_->ext_vals_.at (consts::param_keys::picter_folder));
+  const auto picters_folder = ::libs::utility::files::update_home_folder (srcimpinfo_.props_->ext_vals_.at (std::string (consts::param_keys::picter_folder)));
   if (picters_folder.empty () ||
       enum_files_.files_.empty () ||
       !::libs::utility::files::is_folder (picters_folder))
@@ -77,7 +77,7 @@ SourceImpl::get_raw_data_int (
   if (::dlls::sources::pict_vgen::Image2Frames::one != image2frame_style_)
   {
     auto               diff              = now - time_last_change_file_;
-    const std::int32_t user_scroll_speed = std::stoi (srcimpinfo_.props_->ext_vals_.at (consts::param_keys::scroll_speed));
+    const std::int32_t user_scroll_speed = std::stoi (srcimpinfo_.props_->ext_vals_.at (std::string (consts::param_keys::scroll_speed)));
     float              scroll_speed      = user_scroll_speed * 30.0F * diff.total_milliseconds () / 1000.0F;
 
     ::libs::utility::utils::check_bound (scroll_speed, 1.0F, 500.0F);
@@ -99,7 +99,7 @@ SourceImpl::set_cpu_int (syn::CpuExts current_optim)
 void
 SourceImpl::update_source_info_int (const syn::SourceImplInfo& info)
 {
-  U3_CALL_TRACE_INFO_DBG (VTOLOG (info.capture_props_->capi_.width_) + VTOLOG (info.capture_props_->capi_.height_));
+  U3_CALL_TRACE_INFO_DBG (FVTOLOG (info.capture_props_->capi_.width_) + VTOLOG (info.capture_props_->capi_.height_));
   source_impl_info_ = info;
   sync_internal_structures ();
 }

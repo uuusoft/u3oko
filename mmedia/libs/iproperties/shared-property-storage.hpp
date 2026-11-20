@@ -15,7 +15,7 @@ class SharedPropertyStorage : public ::libs::properties::ISharedPropertyStorage
 {
   private:
   //  internal typess
-  using storage_type = boost::unordered_flat_map< syn::key_property_type, syn::ISharedProperty::ptr >;
+  using storage_type = boost::unordered_flat_map< syn::persistent_key_property_type, syn::ISharedProperty::ptr, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
   using sync_type    = std::mutex;
   using lock_type    = std::scoped_lock< sync_type >;
 
@@ -24,10 +24,10 @@ class SharedPropertyStorage : public ::libs::properties::ISharedPropertyStorage
   virtual ~SharedPropertyStorage ();
 
   // ISharedPropertyStorage overrides
-  virtual auto check (const syn::key_property_type&) const -> bool override;
-  virtual auto get (const syn::key_property_type&) -> syn::ISharedProperty::raw_ptr override;
-  virtual auto set_prop (const syn::key_property_type&, const syn::ISharedProperty::ptr&) -> void override;
-  virtual auto reset_prop (const syn::key_property_type&) -> void override;
+  virtual auto check (const syn::key_property_type) const -> bool override;
+  virtual auto get (const syn::key_property_type) -> syn::ISharedProperty::raw_ptr override;
+  virtual auto set_prop (const syn::key_property_type, const syn::ISharedProperty::ptr&) -> void override;
+  virtual auto reset_prop (const syn::key_property_type) -> void override;
 
   private:
   mutable sync_type mtx_;     //< Для синхронизации доступа к хранилищу

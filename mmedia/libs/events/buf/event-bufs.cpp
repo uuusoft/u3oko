@@ -9,10 +9,19 @@
 namespace libs::events::buf
 {
 EventBufs::EventBufs (
-  syn::off_buf_type src,
-  syn::off_buf_type dst) :
+  syn::persistent_off_buf_type src,
+  syn::persistent_off_buf_type dst) :
   indx_sbuf_ (std::move (src)),
   indx_dbuf_ (std::move (dst))
+{
+}
+
+
+EventBufs::EventBufs (
+  syn::off_buf_type src,
+  syn::off_buf_type dst) :
+  indx_sbuf_ (std::move (syn::persistent_off_buf_type { src })),
+  indx_dbuf_ (std::move (syn::persistent_off_buf_type { dst }))
 {
 }
 

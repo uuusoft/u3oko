@@ -17,6 +17,7 @@ BufsEvent::BufsEvent (
   const Acessor&,
   ::libs::bufs::Bufs::ptr&  buf,
   std::list< IEvent::ptr >* events) :
+
   buf_ (buf),
   events_ (events)
 {

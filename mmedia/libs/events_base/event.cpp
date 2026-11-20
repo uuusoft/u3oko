@@ -48,16 +48,16 @@ Event::get_mid_int () const -> const ::libs::events::IEvent::hid_type&
 
 
 auto
-Event::get_gextp_json () const -> const std::string&
+Event::get_genextprop_json () const -> const std::string&
 {
-  return gextp_json_;
+  return genextprop_json_;
 }
 
 
 auto
-Event::set_gextp_json (const std::string& val) -> void
+Event::set_genextprop_json (const std::string& val) -> void
 {
-  gextp_json_ = val;
+  genextprop_json_ = val;
 }
 
 
@@ -71,16 +71,21 @@ Event::clone_int (const ::libs::events::Deeps& deep) const -> ::libs::events::IE
 void
 Event::load_json_int (const ::boost::json::object& obj)
 {
-  U3_CALL_TRACE_INFO_DBG (TOLOG (boost::json::serialize (obj)));
-  // gextp_json_ = ::libs::utility::json::get_string (obj.at ("gextp_json"));
+  U3_CALL_TRACE_INFO_DBG (FTOLOG (boost::json::serialize (obj)));
+  if (!obj.try_at ("genextprop_json"))
+  {
+    U3_XLOG_DBG ("skip load genextprop_json");
+    return;
+  }
+  genextprop_json_ = ::libs::utility::json::get_string (obj.at ("genextprop_json"));
 }
 
 
 void
 Event::save_json_int (::boost::json::object& obj) const
 {
-  U3_CALL_TRACE_INFO_DBG (TOLOG (boost::json::serialize (obj)));
-  // obj["gextp_json"] = ::libs::utility::json::to_string (gextp_json_);
+  U3_CALL_TRACE_INFO_DBG (FTOLOG (boost::json::serialize (obj)));
+  obj["genextprop_json"] = ::libs::utility::json::to_string (genextprop_json_);
 }
 
 
@@ -89,7 +94,7 @@ Event::copy_int (const IEvent::craw_ptr src)
 {
   const auto* dsrc = ::libs::iproperties::helpers::dbg_check_copy_event< Event > (src);
   super::copy_int (src);
-  gextp_json_ = dsrc->gextp_json_;
+  genextprop_json_ = dsrc->genextprop_json_;
 }
 
 #if (U3_USE_BOOST_SERIALIZTION)
@@ -98,7 +103,7 @@ void
 Event::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
   arh& U3_BOOST_SERIALIZE_MAKE_NVP ("olibsoeventsoIEvent", ::libs::events::IEvent);
-  arh& BOOST_SERIALIZATION_NVP (gextp_json_);
+  arh& BOOST_SERIALIZATION_NVP (genextprop_json_);
 }
 #endif
 }   // namespace libs::events_base

@@ -38,7 +38,7 @@ CaptureDeskImplLinux::get_buf_int (
   XWindowAttributes attrs;   // = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
   memset (&attrs, 0, sizeof (attrs));
   ::libs::utility::checks::throw_ifn (XGetWindowAttributes (*display, root, &attrs), "XGetWindowAttributes");
-  U3_LOG_DATA_DBG (VTOLOG (attrs.width) + VTOLOG (attrs.height) + VTOLOG (attrs.border_width) + VTOLOG (attrs.x) + VTOLOG (attrs.y) + VTOLOG (attrs.depth));
+  U3_LOG_DATA_DBG (FVTOLOG (attrs.width) + VTOLOG (attrs.height) + VTOLOG (attrs.border_width) + VTOLOG (attrs.x) + VTOLOG (attrs.y) + VTOLOG (attrs.depth));
   U3_LOG_DATA_DBG (PTR_TOLOG (attrs.visual) + VTOLOG (attrs.c_class) + VTOLOG (attrs.bit_gravity) + VTOLOG (attrs.win_gravity) + VTOLOG (attrs.backing_store) + VTOLOG (attrs.map_state));
   // InputOnly
   // IsUnmapped
@@ -87,7 +87,7 @@ CaptureDeskImplLinux::get_buf_int (
 
   info.rgb_buf_->resize (info.size_dest_data_);
 
-  // U3_LOG_DATA_DEV (VTOLOG (attrs.x) + VTOLOG (attrs.y) + VTOLOG (attrs.depth) + VTOLOG (attrs.width) + VTOLOG (attrs.height));
+  // U3_LOG_DATA_DEV (FVTOLOG (attrs.x) + VTOLOG (attrs.y) + VTOLOG (attrs.depth) + VTOLOG (attrs.width) + VTOLOG (attrs.height));
   auto rgb_buf = info.rgb_buf_->get ();
   for (std::int32_t y = 0; y < attrs.height; ++y)
   {

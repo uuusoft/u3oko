@@ -14,7 +14,7 @@ enum class Image2Frames : std::uint32_t
   unknown = 0xFF    //<
 };
 
-Image2Frames image2frame (const std::string& val);
+Image2Frames image2frame (const std::string&);
 
 struct LoadedImage final {
   // U3_ADD_DELETE_MOVE_COPY (LoadedImage)
@@ -50,6 +50,7 @@ struct LoadedImage final {
   syn::IBlockMem::ptr data_   = {};
 };
 
+
 class SourceImpl final : public ::dlls::sources::gen_lib::ISourceImpl
 {
   public:
@@ -58,11 +59,11 @@ class SourceImpl final : public ::dlls::sources::gen_lib::ISourceImpl
 
   private:
   //  internal types
-  using exts_type             = std::array< std::uint32_t, 256 >;                                  //<
-  using ptime_type            = boost::posix_time::ptime;                                          //<
-  using sources_type          = std::vector< ::libs::events_media::events::DataSourceInfo >;       //<
-  using val_bufs_storage_type = std::pair< std::int32_t, LoadedImage >;                            //<
-  using bufs_storage_type     = boost::unordered_flat_map< std::string, val_bufs_storage_type >;   //<
+  using exts_type             = std::array< std::uint32_t, 256 >;                                                                                                  //<
+  using ptime_type            = boost::posix_time::ptime;                                                                                                          //<
+  using sources_type          = std::vector< ::libs::events_media::events::DataSourceInfo >;                                                                       //<
+  using val_bufs_storage_type = std::pair< std::int32_t, LoadedImage >;                                                                                            //<
+  using bufs_storage_type     = boost::unordered_flat_map< std::string, val_bufs_storage_type, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;   //<
 
   //  ::dlls::sources::gen_lib::ISourceImpl
   virtual auto init_int () -> void override;

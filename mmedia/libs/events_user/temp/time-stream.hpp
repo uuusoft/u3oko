@@ -68,7 +68,7 @@ class TimeStream final
 
 bool operator< (const TimeStream& left, const TimeStream& right);
 
-std::string to_string (const TimeStream& val);
+std::string to_string (const TimeStream& );
 void        tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const TimeStream& src);
 TimeStream  tag_invoke (::boost::json::value_to_tag< TimeStream >, const ::boost::json::value& jvs);
 }   // namespace libs::events_user

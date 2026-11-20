@@ -15,10 +15,10 @@ class SupressorVerboseLogMsg final
   inline static constexpr std::chrono::minutes max_time_suppress_period { 5 };         //< max time suppress msgs one type
   inline static constexpr std::uint64_t        max_count_msg_before_suppress { 50 };   //< max count msgs before suppress
 
-  using storage_node_type       = std::tuple< TTNode, std::uint64_t, std::uint64_t, libs::utility::time::TimePoint >;   //< info, counter msg, counter suppress, time
-  using storage_type            = boost::unordered_flat_map< std::string, storage_node_type >;                          //<
-  using flash_function_type     = std::function< void (const storage_node_type& val) >;                                 //<
-  using to_string_function_type = std::function< std::string (const TTNode& val) >;                                     //<
+  using storage_node_type       = std::tuple< TTNode, std::uint64_t, std::uint64_t, libs::utility::time::TimePoint >;                                            //< info, counter msg, counter suppress, time
+  using storage_type            = boost::unordered_flat_map< std::string, storage_node_type, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;   //<
+  using flash_function_type     = std::function< void (const storage_node_type& val) >;                                                                          //<
+  using to_string_function_type = std::function< std::string (const TTNode& val) >;                                                                              //<
 
   U3_ADD_DELETE_MOVE_COPY (SupressorVerboseLogMsg)
 

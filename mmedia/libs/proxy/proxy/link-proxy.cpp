@@ -42,7 +42,7 @@ extern "C" BOOST_SYMBOL_EXPORT void delete_impl_appl_u3oko (::libs::link::appl::
 namespace libs::proxy
 {
 auto
-get_create_module_func (const std::string& plib_id) -> ::libs::link::appl::IApplicationProxy::create_func_type
+get_create_module_func (const std::string& plib_id) -> syn::IApplicationProxy::create_func_type
 {
   const auto lib_id = libs::utility::dlls::undecorate_dll_name (plib_id);
 #if (U3_MODULES_ENABLE_EVENTS == 1)
@@ -89,7 +89,7 @@ get_create_module_func (const std::string& plib_id) -> ::libs::link::appl::IAppl
 
 
 auto
-get_delete_module_func (const std::string& plib_id) -> ::libs::link::appl::IApplicationProxy::delete_func_type
+get_delete_module_func (const std::string& plib_id) -> syn::IApplicationProxy::delete_func_type
 {
   const auto lib_id = libs::utility::dlls::undecorate_dll_name (plib_id);
 #if (U3_MODULES_ENABLE_EVENTS == 1)

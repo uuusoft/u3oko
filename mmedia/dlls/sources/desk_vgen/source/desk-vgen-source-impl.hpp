@@ -15,13 +15,13 @@ class SourceImpl final : public ::dlls::sources::gen_lib::ISourceImpl
 
   private:
   //  ::dlls::sources::gen_lib::ISourceImpl
-  virtual void init_int () override;
-  virtual void start_int () override;
+  virtual auto init_int () -> void override;
+  virtual auto start_int () -> void override;
   virtual auto stop_int () -> void override;
-  virtual void get_sources_int (std::vector< syn::DataSourceInfo >&) override;
-  virtual void get_raw_data_int (syn::pkeys2bufs_type&, syn::tevents_type*) override;
-  virtual void set_cpu_int (syn::CpuExts) override;
-  virtual void update_source_info_int (const syn::SourceImplInfo&) override;
+  virtual auto get_sources_int (std::vector< syn::DataSourceInfo >&) -> void override;
+  virtual auto get_raw_data_int (syn::pkeys2bufs_type&, syn::tevents_type*) -> void override;
+  virtual auto set_cpu_int (syn::CpuExts) -> void override;
+  virtual auto update_source_info_int (const syn::SourceImplInfo&) -> void override;
 
   void free_int ();
 

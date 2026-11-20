@@ -12,5 +12,6 @@ export U3_SANITY=none
 export U3_BUILD=Release
 export U3_BUILD_PREFIX=rel
 export U3_OS=Linux
+#export U3_GENERATOR=Ninja
 
 source ./u3-build.sh

@@ -93,7 +93,7 @@ Filter::alloc_temp_bufs ()
   const syn::IVideoBuf::raw_ptr l16_buf     = (*pbuf_)[syn::offs::lit];
   const syn::offs::off_buf_type indx_bufs[] = { syn::offs::temp1, syn::offs::temp2 };
 
-  for (const syn::offs::off_buf_type& indx_buf : indx_bufs)
+  for (const syn::offs::off_buf_type indx_buf : indx_bufs)
   {
     syn::IVideoBuf::raw_ptr tbuf = (*pbuf_)[indx_buf];
     tbuf->clone (l16_buf, 0.0F);
