@@ -41,7 +41,7 @@ EventsModule::~EventsModule ()
   }
   catch (const std::exception& excpt)
   {
-    U3_LOG_EVENTS_EXCEPT (excpt.what ());
+    U3_LOG_EVENTS_EXCEPT ("what:{}", excpt.what ());
   }
 }
 
@@ -55,7 +55,7 @@ EventsModule::check_process ()
 void
 EventsModule::error_callback (const std::string& error_text)
 {
-  U3_LOG_EVENTS_ERROR (std::string ("sqlite error: ") + error_text);
+  U3_LOG_EVENTS_ERROR ("sqlite error:{}", error_text);
 }
 
 
@@ -76,7 +76,7 @@ EventsModule::process_change_state_process (
   }
   catch (const std::exception& excpt)
   {
-    U3_LOG_EVENTS_EXCEPT (excpt.what ());
+    U3_LOG_EVENTS_EXCEPT ("what:{}", excpt.what ());
     process_error (msg, excpt.what ());
   }
 }
@@ -105,7 +105,7 @@ EventsModule::process_update_listener (
   }
   catch (const std::exception& excpt)
   {
-    U3_LOG_EVENTS_EXCEPT (excpt.what ());
+    U3_LOG_EVENTS_EXCEPT ("what:{}", excpt.what ());
     process_error (msg, excpt.what ());
   }
 }
@@ -118,13 +118,13 @@ process_error (syn::IEvent::ptr& msg, const std::string_view info) noexcept -> v
   try
   {
     auto* props = ::libs::iproperties::helpers::cast_event< syn::OpsStatusEvent > (msg);
-    ::libs::utility::checks::throw_ifn (props, "failed cast to OpsStatusEvent for return error" + STOLOG (info));
+    ::libs::utility::checks::throw_ifn (props, U3_FORMAT ("failed cast to OpsStatusEvent for return error {}", info));
     props->set_ops_status (::libs::events_base::OpsStatus::failed);
     props->set_ops_info (std::string (info));
   }
   catch (const std::exception& excpt)
   {
-    U3_LOG_EVENTS_EXCEPT (excpt.what ());
+    U3_LOG_EVENTS_EXCEPT ("what:{}", excpt.what ());
   }
 }
 }   // namespace modules::mevents::appl

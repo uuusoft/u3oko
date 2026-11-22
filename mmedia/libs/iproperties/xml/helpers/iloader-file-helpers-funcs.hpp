@@ -1,6 +1,6 @@
 #pragma once
 /**
-\file       load_funcs_atomic_value.hpp
+\file       iloader-file-helpers-funcs.hpp
 \author     Erashov Anton erashov2026@proton.me
 \date       17.02.2022
 */

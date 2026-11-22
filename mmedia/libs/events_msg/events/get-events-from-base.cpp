@@ -132,7 +132,6 @@ template< class Archive >
 void
 GetEventsFromBase::serialize (Archive& arh, const std::uint32_t /* file_version */)
 {
-  U3_XLOG_DBG ("GetEventsFromBase::serialize->")
   arh& U3_BOOST_SERIALIZE_MAKE_NVP ("BaseEventsMsg", super);
   // arh& BOOST_SERIALIZATION_NVP (event_types_);
   // arh& BOOST_SERIALIZATION_NVP (data_graph_ids_);
@@ -140,7 +139,6 @@ GetEventsFromBase::serialize (Archive& arh, const std::uint32_t /* file_version 
   arh& BOOST_SERIALIZATION_NVP (database_events_);
 
   self_correct ();
-  U3_XLOG_DBG ("GetEventsFromBase::serialize<-")
 }
 #endif
 }   // namespace libs::events_msg::events

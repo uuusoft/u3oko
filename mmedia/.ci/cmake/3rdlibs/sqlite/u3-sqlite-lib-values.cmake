@@ -1,0 +1,19 @@
+# author      Erashov Anton erashov2026@proton.me
+# date        06.09.2024
+# copyright   Erashov A.I.
+# file        u3-sqlite-lib-values.cmake
+
+set(U3_3RDLIB_OSRC_URL_SQLITE https://www.sqlite.org/2024/sqlite-amalgamation-3460100.zip)
+set(U3_3RDLIB_NAME_SQLITE sqlite)
+set(U3_3RDLIB_VER_SQLITE 3460100)
+
+string(MAKE_C_IDENTIFIER ${U3_3RDLIB_VER_SQLITE} U3_3RDLIB_VER_SQLITE_CID)
+
+set(U3_3RDLIB_NAME_SQLITE_BIN lib-sqlite-bin-${U3_3RDLIB_VER_SQLITE}-${U3_GENV_RAW_3RDLIB_POSTFIX}.zip)
+set(U3_3RDLIB_ESRC_URL_SQLITE_BIN ${U3_3RDLIBS_URL_BIN}/${U3_3RDLIB_NAME_SQLITE_BIN})
+set(U3_3RDLIB_ESRC_URL_SQLITE_SRC ${U3_3RDLIBS_URL_SRC}/lib-sqlite-src-${U3_3RDLIB_VER_SQLITE}.zip)
+
+set(U3_3RDLIB_SQLITE_3460100_MD5 1fb0f7ebbee45752098cf453b6dffff3)
+
+set(U3_3RDLIB_SQLITE_MD5 ${U3_3RDLIB_SQLITE${U3_3RDLIB_VER_SQLITE_CID}_MD5})
+

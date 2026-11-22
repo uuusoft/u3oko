@@ -21,6 +21,7 @@
 #include <filesystem>
 #include <codecvt>
 #include <ctime>
+#include <print>
 
 #include <typeinfo>
 #include <typeindex>

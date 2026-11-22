@@ -26,7 +26,7 @@ to_string (const StreamTimes& val) -> std::string
     ::libs::utility::checks::mark ("received StreamTimes::unknown");
     return "unknown";
   }
-  U3_XLOG_ERROR ("unknown type StreamTimes" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+  U3_XLOG_ERROR ("unknown type StreamTimes:{}", U3_CAST_UINT32_FORCE (val));
   return "xxx";
 }
 }   // namespace libs::events_storage

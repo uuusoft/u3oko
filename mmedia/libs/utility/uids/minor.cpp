@@ -344,7 +344,7 @@ to_string (const id_val& val) -> const std::string&
   auto finger = vals.find (val);
   if (finger == vals.end ())
   {
-    U3_XLOG_WARN ("unknown type id_val" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+    U3_XLOG_WARN ("unknown type id_val:{}", U3_CAST_UINT32_FORCE (val));
     finger = vals.find (id_val::unknown);
   }
   return finger->second;

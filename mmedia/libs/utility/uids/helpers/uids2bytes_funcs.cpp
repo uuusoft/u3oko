@@ -32,7 +32,7 @@ idval2fourcc (const libs::utility::uids::minor::id_val& par) -> std::uint32_t
   auto finger = ids2fourccs.find (par);
   if (ids2fourccs.end () == finger)
   {
-    U3_XLOG_WARN ("idval2fourcc:: id_val not found, default value for" + VTOLOG (U3_CAST_UINT32_FORCE (par)) + " is consts::fourcc::YUY2");
+    U3_XLOG_WARN ("idval2fourcc:: id_val not found {}", U3_CAST_UINT32_FORCE (par));
     return consts::fourcc::YUY2;
   }
   return finger->second;
@@ -55,7 +55,7 @@ fourcc2idval (std::uint32_t par) -> libs::utility::uids::minor::id_val
   auto find = fourccs2ids.find (par);
   if (fourccs2ids.end () == find)
   {
-    U3_XLOG_WARN ("fourccs2ids: fourcc not found, default value for " + VTOLOG (par));
+    U3_XLOG_WARN ("fourccs2ids: fourcc not found {}", par);
     return libs::utility::uids::minor::id_val::unknown;
   }
   return find->second;
@@ -95,7 +95,7 @@ get_count_bytes_from_format (const libs::utility::uids::minor::id_val& format) -
   auto finger = vals.find (format);
   if (vals.end () == finger)
   {
-    U3_XLOG_WARN ("get_count_bytes_from_format: unknown id_val format" + TOLOG (to_string (format)));
+    U3_XLOG_WARN ("get_count_bytes_from_format: unknown id_val format {}", to_string (format));
     // по умолчанию определяем максимальное количество байт на пиксель (т.е. std::int16_t RGBA = 4x2=8 байт)
     return 8;
   }

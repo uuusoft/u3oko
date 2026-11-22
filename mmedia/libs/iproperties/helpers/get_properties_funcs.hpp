@@ -38,7 +38,7 @@ get_prop (const std::string_view id) -> ::libs::properties::ISharedProperty::raw
   ::libs::utility::checks::throw_ifn (!id.empty ());
   ::libs::utility::checks::throw_ifn (storage);
   auto ret = storage->get (id);
-  ::libs::utility::checks::throw_ifn (ret, STOLOG (id));
+  ::libs::utility::checks::throw_ifn (ret, U3_FORMAT ("{}", id));
   return ret;
 }
 
@@ -46,11 +46,11 @@ get_prop (const std::string_view id) -> ::libs::properties::ISharedProperty::raw
 inline auto
 get_shared_prop_os () -> vers::system::ISystemProperty::raw_ptr
 {
-  U3_XLOG_DBG ("get_shared_prop_os:0" + STOLOG (::libs::properties::consts::keys::shared_os_property));
+  U3_XLOG_DBG ("get_shared_prop_os:{}", ::libs::properties::consts::keys::shared_os_property);
   auto rprop = get_prop (::libs::properties::consts::keys::shared_os_property);
   ::libs::utility::checks::throw_ifn (rprop);
   void* ret = rprop->cast2top ();
-  ::libs::utility::checks::throw_ifn (ret, STOLOG (::libs::properties::consts::keys::shared_os_property));
+  ::libs::utility::checks::throw_ifn (ret, U3_FORMAT ("{}", ::libs::properties::consts::keys::shared_os_property));
   return ::libs::utility::casts::reinterpret_cast_helper< vers::system::ISystemProperty::raw_ptr > (ret);
 }
 

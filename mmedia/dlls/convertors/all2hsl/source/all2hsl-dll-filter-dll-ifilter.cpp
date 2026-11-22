@@ -64,7 +64,7 @@ Filter::transform_int (syn::TransformInfo& info)
       ::libs::utility::uids::minor::id_val::y16 != format &&
       ::libs::utility::uids::minor::id_val::y8 != format)
   {
-    U3_LOG_DATA_WRN ("unknown format HSL convert" + STOLOG (indx_base_buf) + " format:" + ::libs::utility::uids::helpers::get_readable_name (format));
+    U3_LOG_DATA_WRN ("unknown format HSL convert indx_base_buf:{} format:{}", indx_base_buf, ::libs::utility::uids::helpers::get_readable_name (format));
     return;
   }
 

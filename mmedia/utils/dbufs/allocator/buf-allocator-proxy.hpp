@@ -5,7 +5,7 @@
 \date       01.01.2016
 */
 
-#if (U3_BUILD_MODULES_AS_LIBS == 1)
+#if (U3_BUILD_AS_MONOLITH == 1)
 extern "C" BOOST_SYMBOL_EXPORT utils::dbufs::allocator::IBufAllocator::raw_ptr create_dbufs_impl ();
 #endif
 
@@ -14,7 +14,7 @@ namespace utils::dbufs::allocator
 /// Заместитель для доступа к реализации по управлению буферами
 /// Является одиночкой только для статически линкуемых модулей (но сильнее этого и не требуется)
 /// При этом сама реализация является одиночкой в сильном смылсе
-/// В зависимости от типа сборки {U3_BUILD_MODULES_AS_LIBS} либо настраивается на реализацию как функция либо загружает dll и ищет функцию в ней
+/// В зависимости от типа сборки {U3_BUILD_AS_MONOLITH} либо настраивается на реализацию как функция либо загружает dll и ищет функцию в ней
 class BufAllocatorProxy final
 {
   public:
@@ -48,7 +48,7 @@ class BufAllocatorProxy final
   private:
   BufAllocatorProxy (U3_MARK_UNUSED const std::string& dll_path)
   {
-#if (U3_BUILD_MODULES_AS_LIBS == 1)
+#if (U3_BUILD_AS_MONOLITH == 1)
     U3_MARK_UNUSED_HERE (lib_);
     creator_ = create_dbufs_impl;
 #else

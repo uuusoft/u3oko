@@ -79,9 +79,7 @@ get_list_dlls_as_libs () -> std::vector< syn::FileNode >
   for (auto& file : ret)
   {
     file.name_ = ::libs::utility::dlls::decorate_dll_name (file.name_);
-    U3_XLOG_DBG ("get_list_dlls_as_libs find file in libs" + TOLOG (file.name_));
   }
-  U3_XLOG_DBG ("get_list_dlls_as_libs" + VTOLOG (ret.size ()));
   return ret;
 }
 }   // namespace libs::proxy

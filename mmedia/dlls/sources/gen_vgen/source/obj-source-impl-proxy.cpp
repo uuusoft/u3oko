@@ -12,7 +12,7 @@ namespace dlls::sources::gen_vgen
 {
 ObjSourceImplProxy::ObjSourceImplProxy (const std::string& impl_name)
 {
-  U3_XLOG_DEV ("prepare capture dll" + TOLOG (impl_name));
+  U3_XLOG_DEV ("prepare capture:{}", impl_name);
   if (!impl_name.empty ())
   {
     init (impl_name);
@@ -32,20 +32,15 @@ ObjSourceImplProxy::init (const std::string& impl_name)
   clear ();
   ::libs::utility::checks::throw_if (impl_name.empty (), "empty impl name for capture");
 
-  U3_XLOG_DEV ("ObjSourceImplProxy::init::0" + TOLOG (impl_name));
-  const std::string path = ::libs::iproperties::appl_paths::get_current_lib_folder ();
-  U3_XLOG_DEV ("ObjSourceImplProxy::init::1" + TOLOG (path));
-  const auto dec_impl_name = ::libs::utility::dlls::decorate_dll_name (impl_name);
-  U3_XLOG_DEV ("ObjSourceImplProxy::init::2" + TOLOG (dec_impl_name));
-  const std::string full_path = ::libs::utility::files::make_path (path, dec_impl_name);
-  U3_XLOG_DEV ("ObjSourceImplProxy::init::3" + TOLOG (full_path) + TOLOG (dec_impl_name));
+  const std::string path          = ::libs::iproperties::appl_paths::get_current_lib_folder ();
+  const auto        dec_impl_name = ::libs::utility::dlls::decorate_dll_name (impl_name);
+  const std::string full_path     = ::libs::utility::files::make_path (path, dec_impl_name);
 
-  U3_XLOG_DEV ("try load capture dll" + TOLOG (full_path.c_str ()));
   impl_dll_.load (
     full_path.c_str (),
     boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
 
-#if (U3_BUILD_MODULES_AS_LIBS == 1)
+#if (U3_BUILD_AS_MONOLITH == 1)
   func_get_  = ::libs::proxy::get_create_source_func (impl_name);
   func_free_ = ::libs::proxy::get_free_source_func (impl_name);
 #else
@@ -61,7 +56,6 @@ ObjSourceImplProxy::init (const std::string& impl_name)
   ::libs::utility::checks::throw_ifn (func_get_ && func_free_, "get funct");
   ::libs::utility::checks::throw_ifn (func_get_ (&impl_), "create impl");
   ::libs::utility::checks::throw_ifn ((bool) impl_, "create func return empty impl");
-  U3_XLOG_DEV ("try init capture dll" + TOLOG (full_path.c_str ()));
   impl_->init ();
 }
 
@@ -84,7 +78,7 @@ ObjSourceImplProxy::clear ()
 auto
 ObjSourceImplProxy::get_source_impl () -> gen_lib::ISourceImpl::raw_ptr
 {
-  // ::libs::utility::checks::test (impl_, "return empty source impl" + TOLOG (impl_dll_.location ().string ()));
+  // ::libs::utility::checks::test (impl_, "return empty source impl" + TOL-OG (impl_dll_.location ().string ()));
   return impl_;
 }
 

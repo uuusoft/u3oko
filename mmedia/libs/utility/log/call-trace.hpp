@@ -12,16 +12,19 @@ class CallTrace final
   public:
   U3_ADD_DELETE_MOVE_COPY (CallTrace)
 
-  explicit CallTrace (std::string info = "", const std::source_location& place = std::source_location::current ()) :
+  explicit CallTrace (
+    const std::string_view      info  = "",
+    const std::source_location& place = std::source_location::current ()) :
+
     place_ (std::move (place)),
-    info_ (std::move (info))
+    info_ (info)
   {
-    U3_XLOG_MARK (std::string (libs::utility::log::clear_func_name (place_.function_name ())) + ":----> " + info_);
+    U3_XLOG_MARK ("{}:---->{}", clear_func_name (place_.function_name ()), info_);
   }
 
   ~CallTrace ()
   {
-    U3_XLOG_MARK (std::string (libs::utility::log::clear_func_name (place_.function_name ())) + ":<---- " + info_);
+    U3_XLOG_MARK ("{}:<----{}", clear_func_name (place_.function_name ()), info_);
   }
 
   private:
@@ -32,23 +35,18 @@ class CallTrace final
 
 
 #ifdef U3_CNTRL_DISABLED_CONSOLE_LOG
-
 #  ifndef U3_CALL_TRACE_DBG
 #    define U3_CALL_TRACE_DBG
 #  endif
-
 #  ifndef U3_CALL_TRACE_INFO_DBG
 #    define U3_CALL_TRACE_INFO_DBG
 #  endif
-
 #  ifndef U3_CALL_TRACE
 #    define U3_CALL_TRACE
 #  endif
-
 #  ifndef U3_CALL_TRACE_INFO
 #    define U3_CALL_TRACE_INFO
 #  endif
-
 #else
 
 #  ifndef U3_CALL_TRACE_DBG
@@ -61,7 +59,7 @@ class CallTrace final
 
 #  ifndef U3_CALL_TRACE_INFO_DBG
 #    ifdef U3_DBG_LOG_LEVEL_ENABLE
-#      define U3_CALL_TRACE_INFO_DBG(u3def_param) ::libs::utility::log::CallTrace trace (u3def_param);
+#      define U3_CALL_TRACE_INFO_DBG(u3def_param, ...) ::libs::utility::log::CallTrace trace (std::format (u3def_param __VA_OPT__ (, ) __VA_ARGS__));
 #    else
 #      define U3_CALL_TRACE_INFO_DBG
 #    endif
@@ -72,7 +70,6 @@ class CallTrace final
 #  endif
 
 #  ifndef U3_CALL_TRACE_INFO
-#    define U3_CALL_TRACE_INFO(u3def_param) ::libs::utility::log::CallTrace trace (u3def_param);
+#    define U3_CALL_TRACE_INFO(u3def_param, ...) ::libs::utility::log::CallTrace trace (std::format (u3def_param __VA_OPT__ (, ) __VA_ARGS__));
 #  endif
-
 #endif

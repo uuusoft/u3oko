@@ -3,5 +3,5 @@
 # copyright   Erashov A.I.
 # file        utils-list.cmake
 
-include("${U3_PATH_ROOT}/utils/dbufs/_make/utils-dbufs.cmake")
-include("${U3_PATH_ROOT}/utils/mems/_make/utils-mems.cmake")
+include("${U3_PATH_ROOT}/utils/dbufs/utils-dbufs.cmake")
+include("${U3_PATH_ROOT}/utils/mems/utils-mems.cmake")

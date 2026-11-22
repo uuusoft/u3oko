@@ -21,7 +21,7 @@ Impl2Http::send_int (
 
   if (!data2appl)
   {
-    U3_LOG_DATA_WRN ("empty data2appl, skip send msg to http" + VTOLOG (finfo.count_frames_) + VTOLOG (send_buf->get_dim_var (utils::dbufs::video::Dims::height)));
+    U3_LOG_DATA_WRN ("empty data2appl, skip send msg to http count_frames:{} {}", finfo.count_frames_, send_buf->get_dim_var (utils::dbufs::video::Dims::height));
     return;
   }
 

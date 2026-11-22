@@ -32,7 +32,7 @@ IEventsProxy::impl () -> ::libs::events::io::IEvents::raw_ptr
 
 IEventsProxy::IEventsProxy (const std::string& dll_path)
 {
-#if (U3_BUILD_MODULES_AS_LIBS == 1)
+#if (U3_BUILD_AS_MONOLITH == 1)
   U3_MARK_UNUSED_HERE (lib_);
   creator_ = create_impl_vdd_devents;
 #else

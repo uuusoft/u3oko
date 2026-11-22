@@ -21,7 +21,7 @@ factory_impl_mevents (::libs::link::appl::IApplication::raw_ptr impl, bool creat
   std::scoped_lock lock (eventssinc);
   if (create)
   {
-    ::libs::utility::checks::assert_soft (nullptr == impl, PTR_TOLOG (impl));
+    ::libs::utility::checks::assert_soft (nullptr == impl);
     if (!eventsappl)
     {
       eventsappl = new ::modules::mevents::appl::EventsModule;
@@ -30,16 +30,16 @@ factory_impl_mevents (::libs::link::appl::IApplication::raw_ptr impl, bool creat
   }
   else
   {
-    ::libs::utility::checks::assert_soft (impl, PTR_TOLOG (impl));
-    ::libs::utility::checks::assert_soft (impl == eventsappl, PTR_TOLOG (impl));
-    ::libs::utility::checks::assert_soft (eventsappl, PTR_TOLOG (eventsappl));
+    ::libs::utility::checks::assert_soft (impl);
+    ::libs::utility::checks::assert_soft (impl == eventsappl);
+    ::libs::utility::checks::assert_soft (eventsappl);
     --count_eventsrefs;
     if (count_eventsrefs <= 0 && eventsappl)
     {
       delete eventsappl;
       eventsappl = nullptr;
     }
-    ::libs::utility::checks::assert_soft (count_eventsrefs >= 0, PTR_TOLOG (eventsappl));
+    ::libs::utility::checks::assert_soft (count_eventsrefs >= 0);
   }
   return eventsappl;
 }

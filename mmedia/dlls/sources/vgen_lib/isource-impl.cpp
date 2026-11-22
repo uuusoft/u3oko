@@ -18,7 +18,7 @@ ISourceImpl::init ()
   }
   catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what ());
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
   }
 }
 
@@ -38,7 +38,7 @@ ISourceImpl::start ()
   }
   catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what ());
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
   }
 }
 
@@ -59,7 +59,7 @@ ISourceImpl::stop ()
   }
   catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what ());
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
   }
 }
 
@@ -74,7 +74,7 @@ ISourceImpl::get_sources (std::vector< syn::DataSourceInfo >& sources)
   }
   catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what ());
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
   }
 }
 
@@ -88,7 +88,7 @@ ISourceImpl::get_raw_data (syn::pkeys2bufs_type& bufs, syn::tevents_type* events
   }
   catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what ());
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
   }
 }
 
@@ -103,7 +103,7 @@ ISourceImpl::set_cpu (syn::CpuExts cpu)
   }
   catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what ());
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
   }
 }
 
@@ -129,7 +129,7 @@ ISourceImpl::update_source_info (const SourceImplInfo& info)
   }
   catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what ());
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
   }
 }
 

@@ -28,7 +28,7 @@ CallerImpl::mthreads_call (
   }
   catch (const std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what ());
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
   }
   catch (...)
   {
@@ -40,7 +40,7 @@ CallerImpl::mthreads_call (
 void
 CallerImpl::set_count_threads (std::uint16_t count)
 {
-  U3_XLOG_MARK ("update the number of work threads" + VTOLOG (count))
+  U3_XLOG_MARK ("update the number of work threads {}", count);
   lock_type lock (mtx_);
   ::libs::utility::utils::check_bound< std::uint16_t > (count, 1, consts::max_threads);
   stop_and_wait_threads ();

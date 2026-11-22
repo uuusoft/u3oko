@@ -68,7 +68,6 @@ LogModule::process_info_log (syn::InfoLogEvent::raw_ptr props, const syn::IEvent
   {
     if (suppressor_.process (msg, make_suppressor_key))
     {
-      U3_XLOG_DBG ("add event to events list" + VTOLOG (events_for_save_.size ()) + STOLOG (msg->get_mid ()));
       events_for_save_.push_back (msg);
     }
   }
@@ -82,7 +81,7 @@ LogModule::process_info_log (syn::InfoLogEvent::raw_ptr props, const syn::IEvent
 void
 LogModule::process_change_state_process (syn::ChangeStateProcessEvent::raw_ptr props)
 {
-  U3_CALL_TRACE_INFO (FVTOLOG (props->is_start ()));
+  U3_CALL_TRACE_INFO ("is_start:{}", props->is_start ());
   try
   {
     if (!props->is_start ())
@@ -108,7 +107,6 @@ LogModule::process_list_logs (syn::ProcessListLogsEvent::raw_ptr props)
   try
   {
     const auto action = props->get_action ();
-    U3_CALL_TRACE_INFO_DBG (FTOLOG (to_string (action)));
     switch (action)
     {
     case ::libs::events_log::events::LogActions::delete_sessions: {
@@ -120,7 +118,6 @@ LogModule::process_list_logs (syn::ProcessListLogsEvent::raw_ptr props)
       syn::list_folders_type sessions;
 
       sessions.reserve (folders.size ());
-      U3_XLOG_DBG ("refresh sessions list" + VTOLOG (folders.size ()));
 
       for (const auto& folder : folders)
       {
@@ -139,7 +136,7 @@ LogModule::process_list_logs (syn::ProcessListLogsEvent::raw_ptr props)
           size_files += file.size_;
         }
 
-        U3_XLOG_DBG ("session" + TOLOG (path2files) + VTOLOG (enum_files.files_.size ()) + VTOLOG (size_files));
+        U3_XLOG_DBG ("session:{} :{} :{}", path2files, enum_files.files_.size (), size_files);
         sessions.emplace_back (folder, size_files);
         // sessions.emplace_back (syn::InfoLogSession (folder, size_files));
       }
@@ -147,7 +144,7 @@ LogModule::process_list_logs (syn::ProcessListLogsEvent::raw_ptr props)
       break;
     }
     default:
-      U3_XLOG_ERROR ("unknown type LogActions " + to_string (action));
+      U3_XLOG_ERROR ("unknown type LogActions:{}", to_string (action));
       break;
     }
   }
@@ -177,14 +174,14 @@ LogModule::process_log (syn::ProcessLogEvent::raw_ptr props)
       flush_events ();
 
       syn::ProcessLogEvent::info_session_type info;
-      U3_XLOG_MARK ("process LogProcessActions::get_raw_log" + VTOLOG (files.size ()));
+      U3_XLOG_MARK ("process LogProcessActions::get_raw_log {}", files.size ());
       for (const auto& file : files)
       {
         ::boost::filesystem::path path2file (::libs::utility::files::make_path (path2session, file));
 
         if (!::libs::utility::files::load_file2mem (path2file.string (), temp_buf))
         {
-          add_msg_from_self ("call ::libs::utility::files::load_file2mem" + TOLOG (path2file.string ()));
+          add_msg_from_self (U3_FORMAT ("call load_file2mem {}", path2file.string ()));
           continue;
         }
 
@@ -196,7 +193,7 @@ LogModule::process_log (syn::ProcessLogEvent::raw_ptr props)
 
         const auto old_size = info.data_.size ();
         const auto new_size = add_size + old_size;
-        U3_XLOG_MARK ("add raw file to log" + VTOLOG (old_size) + VTOLOG (new_size) + TOLOG (path2file.string ()));
+        U3_XLOG_MARK ("add raw file to log {} {} {}", old_size, new_size, path2file.string ());
         info.data_.reserve (new_size);
         std::copy (temp_buf->get (), temp_buf->get () + add_size, std::back_inserter (info.data_));
         // add_msg_from_self( std::string( "load log file: " + file + ", add_size= " + to_str( add_size ) + ", info.data_.size=" + to_str( info.data_.size() ) ) );

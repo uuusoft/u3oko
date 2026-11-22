@@ -1,0 +1,20 @@
+# author      Erashov Anton erashov2026@proton.me
+# date        17.09.2024
+# copyright   Erashov A.I.
+# file        u3-openssl-lib-values.cmake
+
+set(U3_3RDLIB_VER_OPENSSL 3.3.2)
+#set(U3_3RDLIB_VER_OPENSSL 4.0.0)
+
+string(MAKE_C_IDENTIFIER ${U3_3RDLIB_VER_OPENSSL} U3_3RDLIB_VER_OPENSSL_CID)
+
+set(U3_3RDLIB_OSRC_URL_OPENSSL https://github.com/openssl/openssl/releases/download/openssl-${U3_3RDLIB_VER_OPENSSL}/openssl-${U3_3RDLIB_VER_OPENSSL}.tar.gz)
+set(U3_3RDLIB_NAME_OPENSSL openssl)
+
+set(U3_3RDLIB_NAME_OPENSSL_BIN lib-openssl-bin-${U3_3RDLIB_VER_OPENSSL}-${U3_GENV_RAW_3RDLIB_POSTFIX}.zip)
+set(U3_3RDLIB_ESRC_URL_OPENSSL_BIN ${U3_3RDLIBS_URL_BIN}/${U3_3RDLIB_NAME_OPENSSL_BIN})
+set(U3_3RDLIB_ESRC_URL_OPENSSL_SRC ${U3_3RDLIBS_URL_SRC}/lib-openssl-src-${U3_3RDLIB_VER_OPENSSL}.zip)
+
+set(U3_3RDLIB_OPENSSL_3_3_2_MD5 015fca2692596560b6fe8a2d8fecd84b)
+
+set(U3_3RDLIB_OPENSSL_MD5 ${U3_3RDLIB_OPENSSL${U3_3RDLIB_VER_OPENSSL_CID}_MD5})

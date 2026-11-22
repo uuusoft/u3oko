@@ -28,7 +28,7 @@ class IIndexerImpl
   {
     if (!change_state_int (state))
     {
-      U3_XLOG_ERROR ("change state storage impl " + to_string (state));
+      U3_XLOG_ERROR ("change state storage impl:{}", to_string (state));
       return;
     }
     status_ = state;

@@ -3,7 +3,7 @@
 \date       04.03.2022
 \author     Erashov Anton erashov2026@proton.me
 */
-#include "../_make/libs-link-includes_int.hpp"
+#include "../libs-link-includes_int.hpp"
 #include "enum-calls.hpp"
 
 namespace libs::link::details
@@ -43,7 +43,7 @@ to_request (const std::string& val) -> Calls
   auto finger = vals.find (val);
   if (vals.end () == finger)
   {
-    U3_XLOG_WARN ("unknown Calls: " + val);
+    U3_XLOG_WARN ("unknown Calls:{}", val);
     return Calls::request;
   }
   return finger->second;
@@ -64,7 +64,7 @@ to_request (const std::string& val) -> Calls
   {
     return Calls::generate;
   }
-  U3_XLOG_WARN ("unknown text Calls " + str);
+  U3_XLOG_WARN ("unknown Calls:{}", str);
   return Calls::request;
 #endif
 }

@@ -23,7 +23,7 @@ to_string (const StreamDirections& val) -> std::string
   case StreamDirections::forward:
     return "forward";
   default:
-    U3_XLOG_ERROR ("unknown StreamDirections" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+    U3_XLOG_ERROR ("unknown StreamDirections:{}", U3_CAST_UINT32_FORCE (val));
     return "unknown StreamDirections";
   }
 }

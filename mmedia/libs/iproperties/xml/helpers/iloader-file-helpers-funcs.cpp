@@ -1,5 +1,5 @@
 /**
-\file       load_funcs_atomic_value.hpp
+\file       iloader-file-helpers-funcs.cpp
 \author     Erashov Anton erashov2026@proton.me
 \date       17.02.2022
 */
@@ -78,7 +78,7 @@ copy_files (
         }
         else
         {
-          U3_XLOG_ERROR ("load file to memory" + TOLOG (src_path_file) + " for copy to" + TOLOG (dst_path_file));
+          U3_XLOG_ERROR ("copy file:{} :{}", src_path_file, dst_path_file);
         }
       }
       return;

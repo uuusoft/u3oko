@@ -6,95 +6,81 @@
 */
 
 #ifndef U3_LOG_HTTP_DEV
-#  define U3_LOG_HTTP_DEV(u3def_info)                                \
+#  define U3_LOG_HTTP_DEV(u3def_format, ...)                         \
     {                                                                \
       modules::mlog::ToLog {                                         \
-        libs::properties::vers::links::mids::http2appl,              \
+        ::libs::properties::vers::links::mids::http2appl,            \
         ::libs::events_base::props::modules::log::LogLevels::develop \
-      }(u3def_info);                                                 \
+      }(std::format (u3def_format __VA_OPT__ (, ) __VA_ARGS__));     \
     }
 #endif
+
 
 #ifndef U3_LOG_HTTP_EXCEPT
-#  define U3_LOG_HTTP_EXCEPT(u3def_info)                               \
+#  define U3_LOG_HTTP_EXCEPT(u3def_format, ...)                        \
     {                                                                  \
       modules::mlog::ToLog {                                           \
-        libs::properties::vers::links::mids::http2appl,                \
+        ::libs::properties::vers::links::mids::http2appl,              \
         ::libs::events_base::props::modules::log::LogLevels::exception \
-      }(u3def_info);                                                   \
+      }(std::format (u3def_format __VA_OPT__ (, ) __VA_ARGS__));       \
     }
 #endif
+
 
 #ifndef U3_LOG_HTTP_ERROR
-#  define U3_LOG_HTTP_ERROR(u3def_info)                            \
+#  define U3_LOG_HTTP_ERROR(u3def_format, ...)                     \
     {                                                              \
       modules::mlog::ToLog {                                       \
-        libs::properties::vers::links::mids::http2appl,            \
+        ::libs::properties::vers::links::mids::http2appl,          \
         ::libs::events_base::props::modules::log::LogLevels::error \
-      }(u3def_info);                                               \
+      }(std::format (u3def_format __VA_OPT__ (, ) __VA_ARGS__));   \
     }
 #endif
+
 
 #ifndef U3_LOG_HTTP_WRN
-#  define U3_LOG_HTTP_WRN(u3def_info)                                \
+#  define U3_LOG_HTTP_WRN(u3def_format, ...)                         \
     {                                                                \
       modules::mlog::ToLog {                                         \
-        libs::properties::vers::links::mids::http2appl,              \
+        ::libs::properties::vers::links::mids::http2appl,            \
         ::libs::events_base::props::modules::log::LogLevels::warning \
-      }(u3def_info);                                                 \
+      }(std::format (u3def_format __VA_OPT__ (, ) __VA_ARGS__));     \
     }
 #endif
+
 
 #ifndef U3_LOG_HTTP_MARK
-#  define U3_LOG_HTTP_MARK(u3def_info)                            \
+#  define U3_LOG_HTTP_MARK(u3def_format, ...)                     \
     {                                                             \
       modules::mlog::ToLog {                                      \
-        libs::properties::vers::links::mids::http2appl,           \
+        ::libs::properties::vers::links::mids::http2appl,         \
         ::libs::events_base::props::modules::log::LogLevels::mark \
-      }(u3def_info);                                              \
+      }(std::format (u3def_format __VA_OPT__ (, ) __VA_ARGS__));  \
     }
 #endif
+
 
 #ifndef U3_LOG_HTTP_INFO
-#  define U3_LOG_HTTP_INFO(u3def_info)                            \
+#  define U3_LOG_HTTP_INFO(u3def_format, ...)                     \
     {                                                             \
       modules::mlog::ToLog {                                      \
-        libs::properties::vers::links::mids::http2appl,           \
+        ::libs::properties::vers::links::mids::http2appl,         \
         ::libs::events_base::props::modules::log::LogLevels::info \
-      }(u3def_info);                                              \
+      }(std::format (u3def_format __VA_OPT__ (, ) __VA_ARGS__));  \
     }
 #endif
 
-#ifndef U3_LOG_HTTP_TIMING
-#  define U3_LOG_HTTP_TIMING(u3def_info)                            \
-    {                                                               \
-      modules::mlog::ToLog {                                        \
-        libs::properties::vers::links::mids::http2appl,             \
-        ::libs::events_base::props::modules::log::LogLevels::timing \
-      }(u3def_info);                                                \
-    }
-#endif
-
-#ifndef U3_LOG_HTTP_DATA
-#  define U3_LOG_HTTP_DATA(u3def_info)                            \
-    {                                                             \
-      modules::mlog::ToLog {                                      \
-        libs::properties::vers::links::mids::http2appl,           \
-        ::libs::events_base::props::modules::log::LogLevels::data \
-      }(u3def_info);                                              \
-    }
-#endif
 
 #ifndef U3_LOG_HTTP_DBG
 #  ifdef U3_DBG_LOG_LEVEL_ENABLE
-#    define U3_LOG_HTTP_DBG(u3def_info)                              \
+#    define U3_LOG_HTTP_DBG(u3def_format, ...)                       \
       {                                                              \
         modules::mlog::ToLog {                                       \
-          libs::properties::vers::links::mids::http2appl,            \
+          ::libs::properties::vers::links::mids::http2appl,          \
           ::libs::events_base::props::modules::log::LogLevels::debug \
-        }(u3def_info);                                               \
+        }(std::format (u3def_format __VA_OPT__ (, ) __VA_ARGS__));   \
       }
 #  else
-#    define U3_LOG_HTTP_DBG(u3def_info)
+#    define U3_LOG_HTTP_DBG(u3def_format, ...)
 #  endif
 #endif

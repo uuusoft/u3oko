@@ -22,7 +22,7 @@ endif ()
 
 if (NOT U3_DBG_COMPILE_AT_BEGIN_EXTLIBS)
   if (U3_USE_WAYLAND_SCREENCAPTURE_LIB)
-    include("./build/cmake/3rdlibs/libscreencapture-wayland/u3-libscreencapture-wayland-lib.cmake")
+    include("./.ci/cmake/3rdlibs/libscreencapture-wayland/u3-libscreencapture-wayland-lib.cmake")
     pkg_check_modules(SYSTEMD REQUIRED libsystemd)
     # 4. Link the systemd library and include directories
     #target_link_libraries(my_app PRIVATE ${SYSTEMD_LIBRARIES})
@@ -55,7 +55,8 @@ u3_add_target_dylib(
     ${SYSTEMD_LIBRARIES}
     DEPEND_TARGETS
     ${U3_DESK_VGEN_VSS_EXT_DEPEND_TARGETS}
-    dbufs-dll)
+    dbufs-dll
+)
 
 #if (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_LINUX OR
 #    U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_RASPBERRY OR

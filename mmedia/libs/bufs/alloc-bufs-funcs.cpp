@@ -20,7 +20,7 @@ alloc_buf_by_indx (
 
   if (!src || src->get_flag (::utils::dbufs::BufFlags::empty))
   {
-    U3_XLOG_WARN ("try alloc buf from empty buf" + STOLOG (indx));
+    U3_XLOG_WARN ("try alloc buf from empty buf:{}", indx);
     return;
   }
   if (nbuf == src)

@@ -2,7 +2,6 @@
 \file       ut-libs-helpers-mem.cxx
 \author     Erashov Anton erashov2026@proton.me
 \date       01.01.2026
-
 U3_COMMERCIAL_PART_SOURCE
 */
 #include <gtest/gtest.h>

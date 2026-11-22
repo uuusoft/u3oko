@@ -30,9 +30,9 @@ class listener : public std::enable_shared_from_this< listener >
   boost::asio::ip::tcp::acceptor acceptor_;
   const handler_func_type        http_handler_;
   shared_state_ptr_type          shared_state_;
-  bool                           ssl_enable_ = true;
+  bool                           ssl_enable_ { true };
 
-  void do_accept ();
-  void on_accept (boost::beast::error_code ec, boost::asio::ip::tcp::socket socket);
+  auto do_accept () -> void;
+  auto on_accept (boost::beast::error_code, boost::asio::ip::tcp::socket) -> void;
 };
 }   // namespace modules::mhttp::impl::beast

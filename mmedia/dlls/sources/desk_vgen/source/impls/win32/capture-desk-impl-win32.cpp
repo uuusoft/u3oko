@@ -33,7 +33,6 @@ CaptureDeskImplWin32::get_buf_int (
 
     window_rect.right  = GetDeviceCaps (*hdc, HORZRES);
     window_rect.bottom = GetDeviceCaps (*hdc, VERTRES);
-    // U3_LOG_APPL_MARK (FVTOLOG (window_rect.right) + VTOLOG (window_rect.bottom));
 
 #  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
     std::uint32_t   dev_index = 0;
@@ -49,8 +48,7 @@ CaptureDeskImplWin32::get_buf_int (
       {
         const std::string display_device = _DisplayDevice.DeviceName;
         const std::string display_string = _DisplayDevice.DeviceString;
-
-        U3_LOG_APPL_MARK (FVTOLOG (dev_index) + TOLOG (display_device) + TOLOG (display_string));
+        // U3_LOG_APPL_MARK (FV-T-OLOG (dev_index) + TO-LOG (display_device) + TO-LOG (display_string));
       }
 
       memset (&_DisplayDevice, 0, sizeof (_DisplayDevice));
@@ -72,8 +70,8 @@ CaptureDeskImplWin32::get_buf_int (
       info.height_dest_ = props_info.capture_props_->capi_.height_;
 
       libs::utility::platforms::win32::throw_ifn (GetPhysicalCursorPos (&offset_pos), "GetCursorPos");
-      // ::libs::utility::checks::throw_ifn (PhysicalToLogicalPoint (window, &offset_pos), "PhysicalToLogicalPoint" + VTOLOG (GetLastError ()));
-      // ::libs::utility::checks::throw_ifn (LogicalToPhysicalPointForPerMonitorDPI (window, &offset_pos), "PhysicalToLogicalPointForPerMonitorDPI" + VTOLOG (GetLastError ()));
+      // ::libs::utility::checks::throw_ifn (PhysicalToLogicalPoint (window, &offset_pos), "PhysicalToLogicalPoint" + VTOL-OG (GetLastError ()));
+      // ::libs::utility::checks::throw_ifn (LogicalToPhysicalPointForPerMonitorDPI (window, &offset_pos), "PhysicalToLogicalPointForPerMonitorDPI" + VTOL-OG (GetLastError ()));
 
       std::int32_t loc_x = offset_pos.x - info.width_dest_ / 2;
       std::int32_t loc_y = offset_pos.y - info.height_dest_ / 2;

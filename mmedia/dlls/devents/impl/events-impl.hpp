@@ -80,10 +80,8 @@ class EventsImpl final : public ::libs::events::io::IEvents
   void
   add_event_cast ()
   {
-    U3_XLOG_DBG ("add create func event to gloabl table" + STOLOG (TTEvent::gen_get_mid ()));
     cast_func_events_[id_event_type { TTEvent::gen_get_mid () }] = [] (syn::IEvent::craw_ptr src) -> const void* {
       auto* res = dynamic_cast< typename TTEvent::craw_ptr > (src);
-      U3_CALL_TRACE_INFO_DBG (STOLOG (TTEvent::gen_get_mid ()) + PTR_TOLOG (src) + PTR_TOLOG (res));
       return res;
     };
   }

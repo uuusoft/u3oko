@@ -31,13 +31,13 @@ IDataSourceImpl::init ()
 
   types_.reserve (files.files_.size ());
   sources_.reserve (files.files_.size ());
-  U3_LOG_DATA_MARK ("find dll sources" + VTOLOG (files.files_.size ()));   // + TOLOG (to_string (::libs::iproperties::appl_paths::Paths::emulate_bins)));
+  U3_LOG_DATA_MARK ("find dll sources:{}", files.files_.size ());
   for (const auto& ufile : files.files_)
   {
     try
     {
       const auto file = ::libs::utility::dlls::undecorate_dll_name (ufile.name_);
-      U3_LOG_DATA_MARK ("check data source dll file" + TOLOG (file) + VTOLOG (file.length ()));
+      U3_LOG_DATA_MARK ("check data source dll file {} {}", file, file.length ());
       if ((file.length () <= 4) || (!file.starts_with ("vss_")))
       {
         continue;
@@ -49,11 +49,11 @@ IDataSourceImpl::init ()
       const std::string  path2file = path + "/" + ufile.name_;
       ObjSourceImplProxy rdriver { ufile.name_ };
       rdriver.get_source_impl ()->get_sources (sources_.back ());
-      U3_LOG_DATA_MARK ("add source from dll" + TOLOG (ufile.name_) + VTOLOG (sources_.size ()));
+      U3_LOG_DATA_MARK ("add source from dll {} {}", ufile.name_, sources_.size ());
     }
     catch (const std::exception& excpt)
     {
-      U3_LOG_DATA_EXCEPT (FTOLOG (ufile.name_) + ", " + excpt.what ());
+      U3_LOG_DATA_EXCEPT ("name:{} what:{}", ufile.name_, excpt.what ());
     }
   }
 }

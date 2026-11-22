@@ -81,7 +81,7 @@ CaptureDeskImplAndroid::get_buf_int (const syn::SourceImplInfo& props_info, Capt
     RECT       window_rect;
     POINT      offset_pos = { 0, 0 };
 
-    ::libs::utility::checks::throw_ifn (GetClientRect (window, &window_rect), "GetClientRect" + VTOLOG (GetLastError ()));
+    ::libs::utility::checks::throw_ifn (GetClientRect (window, &window_rect), U3_FORMAT ("GetClientRect {}", GetLastError ()));
 
     switch (props_info.capture_props_->type_capture_)
     {
@@ -89,9 +89,12 @@ CaptureDeskImplAndroid::get_buf_int (const syn::SourceImplInfo& props_info, Capt
       width_dest  = props_info.capture_props_->width_;
       height_dest = props_info.capture_props_->height_;
 
-      ::libs::utility::checks::throw_ifn (GetPhysicalCursorPos (&offset_pos), "GetCursorPos" + VTOLOG (GetLastError ()));
-      // ::libs::utility::checks::throw_ifn (PhysicalToLogicalPoint (window, &offset_pos), "PhysicalToLogicalPoint" + VTOLOG (GetLastError ()));
-      // ::libs::utility::checks::throw_ifn (LogicalToPhysicalPointForPerMonitorDPI (window, &offset_pos), "PhysicalToLogicalPointForPerMonitorDPI" + VTOLOG (GetLastError ()));
+      ::libs::utility::checks::throw_ifn (
+        GetPhysicalCursorPos (&offset_pos),
+        U3_FORMAT ("GetCursorPos {}", GetLastError ()));
+
+      // ::libs::utility::checks::throw_ifn (PhysicalToLogicalPoint (window, &offset_pos), "PhysicalToLogicalPoint" + VT-OLOG (GetLastError ()));
+      // ::libs::utility::checks::throw_ifn (LogicalToPhysicalPointForPerMonitorDPI (window, &offset_pos), "PhysicalToLogicalPointForPerMonitorDPI" + VTO-LOG (GetLastError ()));
 
       int loc_x = offset_pos.x;
       int loc_y = offset_pos.y;

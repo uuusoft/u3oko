@@ -20,7 +20,7 @@ make_text_id (std::string_view info, const std::source_location& place) -> std::
 auto
 throw_exception (std::string_view info, const std::source_location& place) -> void
 {
-  U3_XLOG_ASSERT (make_text_id (info, place));
+  U3_XLOG_ASSERT ("{}", make_text_id (info, place));
   // U3_XLOG_DEV (std::stacktrace::current ());
   std::stringstream temp;
   temp << make_text_id (info, place);
@@ -37,7 +37,7 @@ assert_impl (
 {
   if (!cond)
   {
-    U3_XLOG_ASSERT (make_text_id (info, place));
+    U3_XLOG_ASSERT ("{}", make_text_id (info, place));
     if (hard)
     {
       throw_exception (info, place);
@@ -82,7 +82,7 @@ test (bool cond, std::string_view info, const std::source_location& place) -> vo
 {
   if (!cond)
   {
-    U3_XLOG_MARK (make_text_id (info, place));
+    U3_XLOG_MARK ("{}", make_text_id (info, place));
   }
 }
 
@@ -90,20 +90,20 @@ test (bool cond, std::string_view info, const std::source_location& place) -> vo
 auto
 mark (std::string_view info, const std::source_location& place) -> void
 {
-  U3_XLOG_DEV ("MARK-G: " + make_text_id (info, place));
+  U3_XLOG_DEV ("MARK-G:{}", make_text_id (info, place));
 }
 
 
 auto
 mark_i64 (std::string_view info, const std::source_location& place) -> void
 {
-  U3_XLOG_DBG ("MARK-64: " + make_text_id (info, place));
+  U3_XLOG_DEV ("MARK-64:{}", make_text_id (info, place));
 }
 
 
 auto
 mark_todo (std::string_view info, const std::source_location& place) -> void
 {
-  U3_XLOG_DBG ("MARK-TODO: " + make_text_id (info, place));
+  U3_XLOG_DEV ("MARK-TODO:{}", make_text_id (info, place));
 }
 }   // namespace libs::utility::checks

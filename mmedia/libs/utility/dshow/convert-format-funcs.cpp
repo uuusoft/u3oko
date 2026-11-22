@@ -100,7 +100,7 @@ guid2dword_compression (const utils::cuuid& guid)
   auto find = guid2dword.find (guid);
   if (guid2dword.end () == find)
   {
-    U3_XLOG_WARN ("guid2dword_compression: guid not found, default value for " + uids::helpers::get_readable_name (guid) + " guid=" + ::libs::utility::utils::to_string (guid));
+    U3_XLOG_WARN ("guid not found, default value for {} -> {}", uids::helpers::get_readable_name (guid), ::libs::utility::utils::to_string (guid));
     return consts::compression::bitfields;
   }
   return find->second;
@@ -133,7 +133,7 @@ dword_compression2guid (const unsigned long val, const BITMAPINFOHEADER* bmp)
         case 16:
           return uids::minor::rgb565;
         default:
-          U3_XLOG_WARN ("unknown compress id" + VTOLOG (val) + to_str_dword (val));
+          U3_XLOG_WARN ("unknown compress id:{}", val);
           break;
         }
         return uids::minor::id_val::rgb24;
@@ -143,7 +143,7 @@ dword_compression2guid (const unsigned long val, const BITMAPINFOHEADER* bmp)
   auto find = dword2guid.find (val);
   if (dword2guid.end () == find)
   {
-    U3_XLOG_WARN ("dword_compression2guid: compress id not found, default value for" + VTOLOG (val) + to_str_dword (val));
+    U3_XLOG_WARN ("compress id not found, default value for {}", val);
     return uids::minor::unknown;
   }
 

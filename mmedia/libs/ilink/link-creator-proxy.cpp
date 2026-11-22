@@ -27,8 +27,7 @@ LinkCreatorProxy::LinkCreatorProxy () :
   const auto implname = mainappl->get_messenger_impl ();
   const auto issingle = mainappl->is_single_process ();
 
-  U3_XLOG_MARK ("init link proxy" + VTOLOG (issingle) + TOLOG (implname));
-
+  U3_XLOG_MARK ("init link proxy single:{} {}", issingle, implname);
   if (issingle)
   {
     if ("fast" == implname)
@@ -46,11 +45,11 @@ LinkCreatorProxy::LinkCreatorProxy () :
     }
     else if ("rabbitmq" == implname)
     {
-      ::libs::utility::checks::throw_exception ("not implementated" + VTOLOG (issingle) + TOLOG (implname));
+      ::libs::utility::checks::throw_exception (U3_FORMAT ("not implementated {} {}", issingle, implname));
       return;
     }
   }
-  ::libs::utility::checks::throw_exception ("unknown impl name for process" + VTOLOG (issingle) + TOLOG (implname));
+  ::libs::utility::checks::throw_exception (U3_FORMAT ("unknown impl name for process {} {}", issingle, implname));
 }
 
 

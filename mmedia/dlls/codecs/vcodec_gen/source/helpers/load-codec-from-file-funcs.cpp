@@ -29,7 +29,7 @@ load_codec_from_file (
 
   info.lib_.load (full_path.c_str (), boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders);
 
-#if (U3_BUILD_MODULES_AS_LIBS == 1)
+#if (U3_BUILD_AS_MONOLITH == 1)
   info.create_codec_   = ::libs::proxy::get_create_codec_func (file_name);
   info.free_codec_     = ::libs::proxy::get_free_codec_func (file_name);
   info.get_codec_info_ = ::libs::proxy::get_info_codec_func (file_name);
@@ -50,6 +50,6 @@ load_codec_from_file (
   ::libs::utility::checks::throw_ifn ((bool) info.create_codec_);
   ::libs::utility::checks::throw_ifn ((bool) info.free_codec_);
   ::libs::utility::checks::throw_ifn ((bool) info.get_codec_info_);
-  ::libs::utility::checks::throw_ifn (info.check (), "failed load codec" + TOLOG (file_name) + TOLOG (full_path));
+  ::libs::utility::checks::throw_ifn (info.check (), U3_FORMAT ("failed load codec {} {}", file_name, full_path));
 }
 }   // namespace dlls::codecs::vcodec_gen::helpers

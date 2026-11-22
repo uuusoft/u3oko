@@ -4,7 +4,7 @@
 \date       01.11.2016
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
-#include "../_make/libs-link-includes_int.hpp"
+#include "../libs-link-includes_int.hpp"
 #include "iapplication.hpp"
 
 namespace libs::link::appl
@@ -12,7 +12,6 @@ namespace libs::link::appl
 void
 IApplication::appl_init (const InitApplication& info)
 {
-  U3_CALL_TRACE_INFO_DBG (FTOLOG (info.service_name_) + TOLOG (info.company_name_) + TOLOG (info.appl_name_) + TOLOG (info.lib_name_));
   try
   {
     ::libs::utility::checks::throw_ifn (!init_);
@@ -31,8 +30,7 @@ IApplication::appl_init (const InitApplication& info)
   }
   catch (const std::exception& excpt)
   {
-    U3_XLOG_ERROR (excpt.what ());
-    // U3_LOG_APPL_EXCEPT (excpt.what ());
+    U3_XLOG_ERROR ("what:{}", excpt.what ());
   }
 }
 
@@ -46,7 +44,7 @@ IApplication::appl_work ()
   }
   catch (const std::exception& excpt)
   {
-    U3_XLOG_ERROR (excpt.what ());
+    U3_XLOG_ERROR ("what:{}", excpt.what ());
   }
 }
 
@@ -60,7 +58,7 @@ IApplication::appl_deinit () -> bool
   }
   catch (const std::exception& excpt)
   {
-    U3_XLOG_ERROR (excpt.what ());
+    U3_XLOG_ERROR ("what:{}", excpt.what ());
   }
   return false;
 }
@@ -75,7 +73,7 @@ IApplication::appl_force_stop ()
   }
   catch (const std::exception& excpt)
   {
-    U3_XLOG_ERROR (excpt.what ());
+    U3_XLOG_ERROR ("what:{}", excpt.what ());
   }
 }
 }   // namespace libs::link::appl

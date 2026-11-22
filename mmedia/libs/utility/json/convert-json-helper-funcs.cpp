@@ -32,7 +32,6 @@ to_json_string (const std::string& val) -> std::string
     [] (char ch) -> char {
       return ch == ' ' ? libs::utility::json::consts::special_symbol : ch;
     });
-  U3_XLOG_DBG ("to_json_string" + TOLOG (val) + TOLOG (temp));
   return temp;
 }
 
@@ -48,7 +47,6 @@ from_json_string (const std::string& val) -> std::string
     [] (char ch) -> char {
       return ch == libs::utility::json::consts::special_symbol ? ' ' : ch;
     });
-  U3_XLOG_DBG ("from_json_string" + TOLOG (val) + TOLOG (temp));
   return temp;
 }
 }   // namespace libs::utility::json::details
@@ -78,7 +76,7 @@ get_int32 (const ::boost::json::value& val) -> std::int32_t
   {
     return U3_CAST_INT32 (std::stoi (temp->c_str ()));
   }
-  U3_XLOG_WARN ("load int32 from json" + VTOLOG (U3_CAST_INT32_FORCE (val.kind ())));
+  U3_XLOG_WARN ("load int32 from json {}", U3_CAST_INT32_FORCE (val.kind ()));
   return 0;
 }
 
@@ -98,7 +96,7 @@ get_uint32 (const ::boost::json::value& val) -> std::uint32_t
   {
     return U3_CAST_UINT32 (std::stoi (temp->c_str ()));
   }
-  U3_XLOG_WARN ("load uint32 from json" + VTOLOG (U3_CAST_INT32_FORCE (val.kind ())));
+  U3_XLOG_WARN ("load uint32 from json {}", U3_CAST_INT32_FORCE (val.kind ()));
   return 0;
 }
 
@@ -118,7 +116,7 @@ get_int64 (const ::boost::json::value& val) -> std::int64_t
   {
     return U3_CAST_INT64 (std::stoi (temp->c_str ()));
   }
-  U3_XLOG_WARN ("load int64 from json" + VTOLOG (U3_CAST_INT32_FORCE (val.kind ())));
+  U3_XLOG_WARN ("load int64 from json {}", U3_CAST_INT32_FORCE (val.kind ()));
   return 0;
 }
 
@@ -138,7 +136,7 @@ get_uint64 (const ::boost::json::value& val) -> std::uint64_t
   {
     return U3_CAST_UINT64 (std::stoi (temp->c_str ()));
   }
-  U3_XLOG_WARN ("load uint64 from json" + VTOLOG (U3_CAST_INT32_FORCE (val.kind ())));
+  U3_XLOG_WARN ("load uint64 from json {}", U3_CAST_INT32_FORCE (val.kind ()));
   return 0;
 }
 

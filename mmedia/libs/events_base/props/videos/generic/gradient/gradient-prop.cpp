@@ -71,7 +71,7 @@ text2grad_type (const std::string& text) -> Gradients
     }
   }
 
-  U3_XLOG_ERROR ("unknown text for Gradients " + text);
+  U3_XLOG_ERROR ("unknown text for Gradients:{}", text);
   return Gradients::usual;
 }
 

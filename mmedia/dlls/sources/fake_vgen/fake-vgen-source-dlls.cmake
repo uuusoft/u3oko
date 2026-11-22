@@ -14,4 +14,5 @@ u3_add_target_dylib(
     gen_lib-lib
     dbufs-dll
     DEPEND_TARGETS
-    dbufs-dll)
+    dbufs-dll
+)

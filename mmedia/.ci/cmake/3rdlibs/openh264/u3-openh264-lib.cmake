@@ -1,0 +1,125 @@
+# author      Erashov Anton erashov2026@proton.me
+# date        08.09.2024
+# copyright   Erashov A.I.
+# file        u3-openh264-lib.cmake
+
+include("./.ci/cmake/3rdlibs/openh264/u3-openh264-lib-values.cmake")
+
+set(U3_3RDLIB_NAME_OPENH264_UTIL ${U3_3RDLIB_NAME_OPENH264}-util)
+
+u3_project_add(
+    PROJECT_NAME ${U3_3RDLIB_NAME_OPENH264_UTIL}
+    PROJECT_VERSION "${U3_3RDLIB_VER_OPENH264}"
+    BIN_URL ${U3_3RDLIB_ESRC_URL_OPENH264_BIN}
+    NAME_BIN_MD5 U3_3RDLIB_OPENH264${U3_3RDLIB_VER_OPENH264_CID}_MD5_${U3_GENV_3RDLIB_POSTFIX}
+    BIN_MD5 ${U3_3RDLIB_OPENH264${U3_3RDLIB_VER_OPENH264_CID}_MD5_${U3_GENV_3RDLIB_POSTFIX}}
+    SRC_URL ${U3_3RDLIB_OSRC_URL_OPENH264}
+    SRC_MD5 ${U3_3RDLIB_OPENH264_MD5}
+    ESRC_URL ${U3_3RDLIB_ESRC_URL_OPENH264_SRC}
+    ESRC_MD5 ${U3_3RDLIB_OPENH264_MD5}
+    PATCH_CMD ""
+    USE_HTTP_FOR_ESRC FALSE
+    BUILD_IN_SOURCE FALSE
+    IT_CMAKE_PROJECT FALSE
+    FORCE_COMPILE FALSE
+    EXT_CMAKE_ARGS ""
+)
+
+ExternalProject_Get_Property(${U3_3RDLIB_NAME_OPENH264_UTIL} install_dir)
+
+set(U3_INCLUDE_DIR_EXTLIB_OPENH264 "${install_dir}/src/openh264-util")
+set(U3_INSTALL_DIR_EXTLIB_OPENH264 "${install_dir}/src/openh264-util/${U3_PREFIX_LIB_NAME}openh264.${U3_SUFFIX_LIB_NAME}")
+
+if (NOT U3_GVXX_SOURCE_TYPE STREQUAL "U3_ADD_PROJECT_RESULT_BIN")
+
+  if (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_WINDOWS)
+
+    set(U3_3RDLIB_OPENH264_MAKE_CALL
+        AutoBuildForWindows.bat
+        ${U3_WINDOWS_ARCH_ID}-${U3_WINDOWS_BUILD_TYPE_ID}-ASM
+    )
+
+  elseif (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_LINUX)
+
+    set(U3_3RDLIB_OPENH264_MAKE_CALL
+        make clean &&
+        make libraries OS=linux ARCH=${U3_LINUX_ARCH_ID}
+    )
+
+  elseif (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_RASPBERRY)
+
+    set(U3_3RDLIB_OPENH264_MAKE_CALL
+        make clean &&
+        make libraries OS=linux CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER} ARCH=${U3_RASPBERRY_ARCH_ID}
+    )
+
+  elseif (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_ORANGE_PI)
+
+    #set(CMAKE_C_COMPILER clang)
+    #set(CMAKE_CXX_COMPILER clang++)
+    #set(CMAKE_ASM_COMPILER clang)
+    #set(U3_CXX_COMPILER_ARCH clang)
+    #set(U3_TRIPLE aarch64-linux-gnu)
+    #set(CMAKE_C_COMPILER_TARGET ${U3_TRIPLE})
+    #set(CMAKE_CXX_COMPILER_TARGET ${U3_TRIPLE})
+    #set(CMAKE_ASM_COMPILER_TARGET ${U3_TRIPLE})
+    #set(CMAKE_ASM_COMPILER=${U3_TRIPLE})
+
+    #export TARGET=aarch64-linux-gnu
+    #export SYSROOT=/path/to/your/aarch64-sysroot
+
+    #make OS=linux ARCH=arm64 \
+    #  CC="clang --target=$TARGET --sysroot=$SYSROOT -fuse-ld=lld" \
+    #  CXX="clang++ --target=$TARGET --sysroot=$SYSROOT -fuse-ld=lld" \
+    #  AR=llvm-ar \
+    #  CFLAGS="-O3" \
+    #  LDFLAGS="--target=$TARGET --sysroot=$SYSROOT -fuse-ld=lld"
+
+    set(U3_3RDLIB_OPENH264_MAKE_CALL
+        make clean &&
+        make libraries OS=linux CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER} ARCH=${U3_ORANGE_PI_ARCH_ID}
+        #make libraries OS=linux CC="${CMAKE_C_COMPILER} --target=${CMAKE_CXX_COMPILER_TARGET}" CXX="${CMAKE_CXX_COMPILER} --target=${CMAKE_CXX_COMPILER_TARGET}" ARCH=${U3_ORANGE_PI_ARCH_ID}
+    )
+
+  elseif (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_ANDROID)
+
+    set(U3_3RDLIB_OPENH264_MAKE_CALL
+        make clean &&
+        make libraries OS=android ARCH=arm64 NDKROOT=${ANDROID_NDK} TARGET=${U3_CMAKE_SYSTEM_VERSION}
+    )
+
+  elseif (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_DARWIN)
+
+    set(U3_3RDLIB_OPENH264_MAKE_CALL
+        make clean &&
+        make libraries OS=darwin CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER} ARCH=${U3_DARWIN_ARCH_ID}
+    )
+
+  else ()
+    message(FATAL_ERROR "unsupported OS ${U3_PLATFORM_NAME}")
+  endif ()
+
+  set(U3_BIN_TEMP_FOLDER_EXTLIB_OPENH264 "${install_dir}/~temp-openh264-util")
+
+  add_custom_command(
+      TARGET ${U3_3RDLIB_NAME_OPENH264_UTIL}
+      POST_BUILD
+      COMMAND cd ${install_dir}/src/openh264-util/ && ${U3_3RDLIB_OPENH264_MAKE_CALL}
+      COMMAND ${CMAKE_COMMAND} -E rm -Rf "${U3_BIN_TEMP_FOLDER_EXTLIB_OPENH264}"
+      COMMAND ${CMAKE_COMMAND} -E make_directory "${U3_BIN_TEMP_FOLDER_EXTLIB_OPENH264}"
+      COMMAND ${CMAKE_COMMAND} -E copy "${install_dir}/src/openh264-util/*.a" "${U3_BIN_TEMP_FOLDER_EXTLIB_OPENH264}"
+      COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different "${install_dir}/src/openh264-util/codec" "${U3_BIN_TEMP_FOLDER_EXTLIB_OPENH264}/codec"
+      COMMAND ${CMAKE_COMMAND} -E rm -f "${install_dir}/../${U3_3RDLIB_NAME_OPENH264_BIN}"
+      COMMAND ${CMAKE_COMMAND} -E chdir "${U3_BIN_TEMP_FOLDER_EXTLIB_OPENH264}" tar czvf "${install_dir}/../${U3_3RDLIB_NAME_OPENH264_BIN}" "./"
+  )
+
+endif ()
+
+u3_make_fake_file(FILE_NAME ${U3_INSTALL_DIR_EXTLIB_OPENH264} CONTENT "openh264")
+
+add_library(openh264-lib STATIC IMPORTED)
+add_dependencies(openh264-lib ${U3_3RDLIB_NAME_OPENH264_UTIL})
+set_target_properties(openh264-lib PROPERTIES IMPORTED_LOCATION ${U3_INSTALL_DIR_EXTLIB_OPENH264})
+
+#set( U3_SELECTED_3RDLIBS_LIST ${U3_SELECTED_3RDLIBS_LIST} openh264-lib )
+set(U3_DEPENDENCY_TARGETS_LIST ${U3_DEPENDENCY_TARGETS_LIST} ${U3_3RDLIB_NAME_OPENH264_UTIL})

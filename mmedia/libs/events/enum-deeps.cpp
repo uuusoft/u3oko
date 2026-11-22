@@ -20,7 +20,7 @@ to_string (const Deeps& val) -> const std::string&
   auto finger = valmap.find (val);
   if (valmap.end () == finger)
   {
-    U3_XLOG_WARN ("unknown type Deeps" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+    U3_XLOG_WARN ("unknown type Deeps:{}", U3_CAST_UINT32_FORCE (val));
     finger = valmap.find (Deeps::unknown);
   }
   return finger->second;

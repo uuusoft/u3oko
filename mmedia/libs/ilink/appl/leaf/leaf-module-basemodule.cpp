@@ -159,7 +159,6 @@ LeafModule::appl_work_int ()
             catch_funcs_.end () != ffinger ?
               ffinger->second :
               [] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
-            U3_XLOG_DBG ("LeafModule::appl_work_int::default catch" + TOLOG (msg->gen_get_mid ()));
             return syn::IEvent::ptr ();
           };
 
@@ -171,16 +170,13 @@ LeafModule::appl_work_int ()
           }
           catch (const std::exception& excpt)
           {
-            U3_XLOG_ERROR (excpt.what ());
-            // U3_LOG_APPL_EXCEPT (excpt.what());
+            U3_XLOG_ERROR ("what:{}", excpt.what ());
             msg = syn::IEvent::ptr ();
           }
 
           last_msg = msg ? msg : last_msg;
         }
 
-
-        U3_XLOG_DBG ("before catch_event");
         if (!catch_event (last_msg))
         {
         }
@@ -192,7 +188,6 @@ LeafModule::appl_work_int ()
         {
           // Если конечному модулю пришел ответ, ненадо пересылать его дальше. Ответа на ответ не существует.
           // Если это и не был запрос (а установка), опять же ничего пересылать не надо.
-          // U3_XLOG_DEV ("current_seq_.answer_=" << current_seq_.answer_ << " current_seq_.request_=" << current_seq_.request_);
           if (!current_seq_.answer_ && current_seq_.request_)
           {
             src->complite_msg (last_msg, current_seq_);
@@ -206,7 +201,7 @@ LeafModule::appl_work_int ()
         }
         catch (const std::exception& excpt)
         {
-          U3_XLOG_ERROR (excpt.what ());
+          U3_XLOG_ERROR ("what:{}", excpt.what ());
           // U3_LOG_APPL_EXCEPT (excpt.what());
         }
 
@@ -229,14 +224,13 @@ LeafModule::appl_work_int ()
 
       if (stop_module_)
       {
-        U3_XLOG_DEV ("LeafModule::appl_work_int: stop module recived" + TOLOG (module_id_));
+        U3_XLOG_DEV ("LeafModule::appl_work_int: stop module recived:{}", module_id_);
         break;
       }
     }
     catch (const std::exception& excpt)
     {
-      // U3_LOG_APPL_EXCEPT (excpt.what());
-      U3_XLOG_ERROR (excpt.what ());
+      U3_XLOG_ERROR ("what:{}", excpt.what ());
     }
   } while (true);
 

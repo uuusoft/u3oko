@@ -18,7 +18,7 @@ namespace utils::mems::details
 void
 u3free (void** pptr)
 {
-  ::libs::utility::checks::assert_soft (pptr, PTR_TOLOG (pptr));
+  ::libs::utility::checks::assert_soft (pptr);
   if (nullptr == pptr || nullptr == *pptr)
   {
     return;
@@ -29,12 +29,12 @@ u3free (void** pptr)
 
   if ((0 == offset) || (offset > consts::count_add_blocks * consts::size_align))
   {
-    U3_XLOG_ERROR ("FAILED GET MEMORY BLOCK FOR FREE" + VTOLOG (offset) + VTOLOG (consts::count_add_blocks * consts::size_align));
+    U3_XLOG_ERROR ("FAILED GET MEMORY BLOCK FOR FREE:{} {}", offset, consts::count_add_blocks * consts::size_align);
     free (*pptr);
   }
   else
   {
-    ::libs::utility::checks::assert_soft (vptr > offset, VTOLOG (vptr) + VTOLOG (offset));
+    ::libs::utility::checks::assert_soft (vptr > offset, U3_FORMAT ("{} {}", vptr, offset));
     auto* real_ptr = ::libs::utility::casts::reinterpret_cast_helper< void* > (vptr - offset);
     free (real_ptr);
   }
@@ -46,13 +46,13 @@ u3free (void** pptr)
 void
 u3alloc (void** pptr, const std::size_t size)
 {
-  ::libs::utility::checks::assert_soft (pptr && size > 0, PTR_TOLOG (pptr) + VTOLOG (size));
+  ::libs::utility::checks::assert_soft (pptr && size > 0, U3_FORMAT ("{} {}", U3_CAST_PTR2INT_FORCE (pptr), size));
   if (0 == size || nullptr == pptr)
   {
     return;
   }
 
-  ::libs::utility::checks::assert_soft (nullptr == *pptr, PTR_TOLOG (*pptr));
+  ::libs::utility::checks::assert_soft (nullptr == *pptr);
   *pptr = nullptr;
 
   const std::size_t real_size   = size + static_cast< std::size_t > (consts::count_add_blocks * consts::size_align);
@@ -62,7 +62,7 @@ u3alloc (void** pptr, const std::size_t size)
 
   if (nullptr == raw_ptr)
   {
-    ::libs::utility::checks::mark ("failed alloc memory" + VTOLOG (real_size) + VTOLOG (size));
+    ::libs::utility::checks::mark (U3_FORMAT ("failed alloc memory {} {}", real_size, size));
     return;
   }
 
@@ -71,7 +71,7 @@ u3alloc (void** pptr, const std::size_t size)
 
   if (offset < 1)
   {
-    ::libs::utility::checks::mark ("FAILED OFFSET ALLOCATED MEMORY" + VTOLOG (offset) + VTOLOG (real_size));
+    ::libs::utility::checks::mark (U3_FORMAT ("FAILED OFFSET ALLOCATED MEMORY {} {}", offset, real_size));
     free (raw_ptr);
     raw_ptr = nullptr;
     *pptr   = nullptr;
@@ -90,8 +90,8 @@ u3alloc (void** pptr, const std::size_t size)
 void
 u3realloc (void** pptr, const std::size_t size)
 {
-  ::libs::utility::checks::assert_soft (pptr, PTR_TOLOG (pptr));
-  ::libs::utility::checks::assert_soft (size > 0, VTOLOG (size));
+  ::libs::utility::checks::assert_soft (pptr, U3_FORMAT ("{}", U3_CAST_PTR2INT_FORCE (pptr)));
+  ::libs::utility::checks::assert_soft (size > 0, U3_FORMAT ("{}", size));
   if (nullptr == pptr)
   {
     return;
@@ -114,7 +114,7 @@ u3realloc (void** pptr, const std::size_t size)
 
   if (!new_ptr)
   {
-    ::libs::utility::checks::mark ("FAILED u3alloc FUNCT" + VTOLOG (size));
+    ::libs::utility::checks::mark (U3_FORMAT ("FAILED u3alloc {}", size));
     u3free (pptr);
     return;
   }

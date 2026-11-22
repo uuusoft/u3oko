@@ -33,7 +33,7 @@ SharedPropertyStorage::get (const syn::key_property_type key) -> syn::ISharedPro
   if (find == props_.end ())
   {
     // Допустимо - может быть такое при инициализации системы
-    U3_XLOG_WARN ("u3_helpers_lib::SharedPropertyStorage::get not found" + STOLOG (key));
+    U3_XLOG_WARN ("get not found:{}", key);
     return nullptr;
   }
   return find->second.get ();
@@ -52,15 +52,12 @@ SharedPropertyStorage::set_prop (const syn::key_property_type key, const syn::IS
       // перезапись допустима только для пустого значения.
       if (checkit->second)
       {
-        ::libs::utility::checks::test (
-          !checkit->second,
-          "skip, try change not empty property" + STOLOG (key) + PTR_TOLOG (checkit->second.get ()) + PTR_TOLOG (ptr.get ()));
+        ::libs::utility::checks::test (!checkit->second, U3_FORMAT ("skip, try change not empty property {}", key));
         return;
       }
     }
   }
 
-  U3_XLOG_DBG ("update prop" + STOLOG (key) + PTR_TOLOG (ptr.get ()));
   props_[key] = ptr;
 }
 
@@ -69,7 +66,6 @@ void
 SharedPropertyStorage::reset_prop (const syn::key_property_type key)
 {
   lock_type lock (mtx_);
-  U3_XLOG_DBG ("reset prop" + STOLOG (key));
   props_[key] = syn::ISharedProperty::ptr ();
 }
 }   // namespace libs::iproperties

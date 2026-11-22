@@ -37,7 +37,7 @@ to_string (const Paths& val) -> const std::string&
   auto finger = tts2ss.find (val);
   if (tts2ss.end () == finger)
   {
-    U3_XLOG_ERROR ("unknown val Paths" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+    U3_XLOG_ERROR ("unknown Paths:{}", U3_CAST_UINT32_FORCE (val));
     finger = tts2ss.find (Paths::unknown);
   }
   return finger->second;

@@ -28,7 +28,7 @@ void
 TestStorageImpl::prepare_write_seance (const seance_type& info)
 {
   auto full_path = ::libs::utility::files::make_path (root_path_, info);
-  U3_LOG_DATA_MARK ("prepare folder for write seance" + TOLOG (full_path));
+  U3_LOG_DATA_MARK ("prepare folder for write seance:{}", full_path);
   ::libs::utility::files::create_folder (full_path);
   ::libs::utility::checks::throw_ifn (seances2infos_.end () != seances2infos_.find (info));
   ::libs::utility::checks::throw_exception ("TestStorageImpl::prepare_write_seance: unimplementated");
@@ -40,7 +40,10 @@ TestStorageImpl::prepare_write_seance (const seance_type& info)
 
 
 auto
-TestStorageImpl::save_impl (const seance_type& info, const std::uint8_t* mem, const std::size_t size_mem) -> TestStorageImpl::id_chunk_type
+TestStorageImpl::save_impl (
+  const seance_type&  info,
+  const std::uint8_t* mem,
+  const std::size_t   size_mem) -> TestStorageImpl::id_chunk_type
 {
   auto& sinfo = get_seance_info (info);
   get_next_write_id_by_seance (info, sinfo);
@@ -78,7 +81,7 @@ TestStorageImpl::get_next_write_id_by_seance (const seance_type& info, info_sean
     }
 
     dfile.open (file_path, std::ios::trunc | std::ios::binary | std::ios::out);
-    ::libs::utility::checks::throw_ifn (dfile.is_open (), "open data file" + TOLOG (file_path));
+    ::libs::utility::checks::throw_ifn (dfile.is_open (), U3_FORMAT ("open data file {}", file_path));
     ::libs::utility::checks::throw_ifn (!dfile.bad (), "error state data file");
   }
 
@@ -109,7 +112,7 @@ TestStorageImpl::save_data (
 
   if (file.bad ())
   {
-    U3_LOG_DATA_ERROR ("write to data file" + VTOLOG (errno) + TOLOG (strerror (errno)));
+    U3_LOG_DATA_ERROR ("write to data file error:{} {}", errno, strerror (errno));
     --sinfo.index_state_.count_fragments_;
     sinfo.index_state_.off_fragments_.pop_back ();
     ::libs::utility::checks::throw_ifn (sinfo.index_state_.is_valid ());

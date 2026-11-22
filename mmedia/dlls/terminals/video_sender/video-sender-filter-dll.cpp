@@ -104,18 +104,16 @@ Filter::default_send_func (
 
   if (!send_buf || (*send_buf)[::utils::dbufs::MemVars::size_data] <= 0)
   {
-    U3_LOG_DATA_DBG ("skip send empty buf");
     return;
   }
 
   auto impl = senders_.find (id);
   if (impl == senders_.end ())
   {
-    U3_LOG_DATA_ERROR ("unknown type senders, skip send for" + STOLOG (id));
+    U3_LOG_DATA_ERROR ("unknown type senders, skip send for {}", id);
     return;
   }
 
-  U3_LOG_DATA_DBG ("send frame to client" + STOLOG (minfo->indx_buf_) + STOLOG (id));
   impl->second->send (finfo_, info, minfo, send_buf);
 }
 }   // namespace dlls::terminals::video_sender

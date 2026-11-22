@@ -31,7 +31,6 @@ InProcLoaderCode::load_int (
   const std::string&     name_proc,
   const std::string&     name_lib)
 {
-  U3_CALL_TRACE_INFO_DBG (FTOLOG (name_proc) + TOLOG (name_lib));
   info_ = info;
   if (is_load_int ())
   {
@@ -79,7 +78,6 @@ InProcLoaderCode::unload_int (bool force) -> bool
 void
 InProcLoaderCode::thread_func_impl (std::uint32_t indx_thread)
 {
-  U3_CALL_TRACE_INFO_DBG (FVTOLOG (indx_thread) + TOLOG (lib_name_));
   ::libs::utility::thread::set_thread_priority (std::this_thread::get_id (), ::libs::utility::thread::Priorities::high);
 
   boost::filesystem::path fullpath (::libs::iproperties::appl_paths::get_current_folder ());
@@ -88,7 +86,7 @@ InProcLoaderCode::thread_func_impl (std::uint32_t indx_thread)
   thread_appl_ = std::make_unique< ::libs::link::appl::IApplicationProxy > (sfullpath, lib_name_);
 
   auto impl = thread_appl_->impl ();
-  ::libs::utility::checks::throw_ifn ((bool) impl, "empty thread impl" + PTR_TOLOG (impl));
+  ::libs::utility::checks::throw_ifn ((bool) impl, "empty thread impl");
 
   ::libs::link::appl::InitApplication info;
 

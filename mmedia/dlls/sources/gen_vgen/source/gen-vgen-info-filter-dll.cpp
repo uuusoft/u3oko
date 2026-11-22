@@ -37,7 +37,7 @@ InfoFilter::~InfoFilter ()
         }
         else
         {
-          U3_LOG_DATA_ERROR ("force stop, failed acquired mutex" + VTOLOG (consts::ms_wait_capture_device.count ()) + "ms");
+          U3_LOG_DATA_ERROR ("force stop, failed acquired mutex {} ms", consts::ms_wait_capture_device.count ());
           stop_req_ = true;
         }
       }
@@ -50,11 +50,11 @@ InfoFilter::~InfoFilter ()
   }
   catch (boost::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (boost::diagnostic_information (excpt));
+    U3_LOG_DATA_EXCEPT ("{}", boost::diagnostic_information (excpt));
   }
   catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what ());
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
   }
   catch (...)
   {
@@ -66,7 +66,7 @@ InfoFilter::~InfoFilter ()
 void
 InfoFilter::sync_int (bool force)
 {
-  U3_CALL_TRACE_INFO (FVTOLOG (force) + VTOLOG (synced_));
+  U3_CALL_TRACE_INFO ("force{} synced:{}", force, synced_);
   if (synced_ && !force)
   {
     return;
@@ -92,7 +92,6 @@ InfoFilter::load_int (const ::pugi::xml_named_node_iterator& node) -> bool
   // U3-REFACT
   if (auto impl = capture_impl_.lock ())
   {
-    U3_LOG_DATA_DBG ("sync_int:update properties");
     impl->update_capture_property (capture_props_);
     impl->update_driver_property (rprops_);
     impl->update_system_specific_property (system_props_);

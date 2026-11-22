@@ -12,7 +12,7 @@ dump_buf2file (const ::utils::dbufs::video::IVideoBuf::raw_ptr out_buf, const st
 {
   if (!out_buf || out_buf->get_flag (::utils::dbufs::BufFlags::empty))
   {
-    U3_LOG_DATA_INFO ("skip dump empty data" + TOLOG (name_file));
+    U3_LOG_DATA_INFO ("skip dump empty data:{}", name_file);
     return;
   }
 
@@ -20,7 +20,7 @@ dump_buf2file (const ::utils::dbufs::video::IVideoBuf::raw_ptr out_buf, const st
   std::ofstream file (name_file.c_str (), std::ios_base::binary | std::ios_base::out | std::ios_base::trunc);
   if (!file.is_open ())
   {
-    U3_LOG_DATA_ERROR ("open file for dump jpeg" + TOLOG (name_file));
+    U3_LOG_DATA_ERROR ("open file for dump jpeg:{}", name_file);
     return;
   }
 
@@ -35,7 +35,7 @@ dump_buf2file (const ::utils::dbufs::video::IVideoBuf::raw_ptr out_buf, const st
 
   if (file.bad ())
   {
-    U3_LOG_DATA_ERROR ("dump jpeg in file" + TOLOG (name_file));
+    U3_LOG_DATA_ERROR ("dump jpeg in file:{}", name_file);
   }
 }
 }   // namespace dlls::codecs::codec_gen::helpers

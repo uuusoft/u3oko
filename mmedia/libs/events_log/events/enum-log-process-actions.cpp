@@ -21,8 +21,8 @@ to_string (const LogProcessActions& val) -> std::string
   case LogProcessActions::unknown:
     return "unknown";
   default:
-    U3_XLOG_ERROR ("unknown LogProcessActions" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
-    return std::string ("unknown LogProcessActions") + VTOLOG (U3_CAST_UINT32_FORCE (val));
+    U3_XLOG_ERROR ("unknown LogProcessActions:{}", U3_CAST_UINT32_FORCE (val));
+    return "unknown LogProcessActions";
   }
 }
 

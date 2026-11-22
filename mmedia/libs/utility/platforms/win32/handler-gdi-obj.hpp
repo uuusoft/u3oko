@@ -57,7 +57,7 @@ class HandlerWindowDC
     hdc_ = GetDC (hwnd_);
     if (nullptr == hdc_)
     {
-      U3_XLOG_ERROR ("GetDC for window" + PTR_TOLOG (hwnd_) + VTOLOG (GetLastError ()));
+      // U3_XLOG_ERROR ("GetDC for window" + PTR_TO-LOG (hwnd_) + VT-OLOG (GetLastError ()));
     }
   }
 
@@ -69,7 +69,7 @@ class HandlerWindowDC
     }
     if (1 != ReleaseDC (hwnd_, hdc_))
     {
-      U3_XLOG_ERROR ("ReleaseDC for window" + PTR_TOLOG (hwnd_) + VTOLOG (GetLastError ()));
+      // U3_XLOG_ERROR ("ReleaseDC for window" + PTR_TO-LOG (hwnd_) + VT-OLOG (GetLastError ()));
     }
   }
 

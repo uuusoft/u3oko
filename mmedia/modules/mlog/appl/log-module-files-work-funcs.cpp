@@ -43,10 +43,8 @@ LogModule::open_log_file ()
 void
 LogModule::delete_folders (const syn::list_folders_type& folders)
 {
-  U3_CALL_TRACE_INFO_DBG (FVTOLOG (folders.size ()) + TOLOG (active_session_folder_));
   for (const auto& folder : folders)
   {
-    U3_XLOG_DBG ("delete check" + TOLOG (folder.session_id_));
     if (folder.session_id_ == active_session_folder_)
     {
       // нельзя удалять директорию текущего сеанса логирования
@@ -56,16 +54,15 @@ LogModule::delete_folders (const syn::list_folders_type& folders)
     const std::string path2logs = ::libs::utility::files::make_path (path2sessions_, folder.session_id_);
     if (!::boost::filesystem::is_directory (path2logs) || !::boost::filesystem::exists (path2logs))
     {
-      U3_XLOG_WARN ("not exist or not folder" + TOLOG (path2logs));
+      U3_XLOG_WARN ("not exist or not folder {}", path2logs);
       continue;
     }
 
     ::boost::system::error_code error;
     U3_MARK_UNUSED const auto   count_removed_items = ::boost::filesystem::remove_all (path2logs, error);
-    U3_XLOG_DBG ("remove all status for " + path2logs + " msg:" + error.message () + VTOLOG (count_removed_items));
     if (error)
     {
-      U3_XLOG_ERROR ("error remove logs: " + path2logs + " error:" + error.message ());
+      U3_XLOG_ERROR ("error remove logs:{} error:{}", path2logs, error.message ());
     }
   }
 }

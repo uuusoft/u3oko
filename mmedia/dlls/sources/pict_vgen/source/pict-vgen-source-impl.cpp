@@ -81,7 +81,7 @@ SourceImpl::print_images2buf (utils::dbufs::video::IVideoBuf::ptr& genimage)
       auto resload = load_image2buf (image_file_name);
       if (!resload.data_)
       {
-        U3_LOG_DATA_ERROR ("failed load image" + TOLOG (image_file_name));
+        U3_LOG_DATA_ERROR ("failed load image:{}", image_file_name);
         ++indx_image_file_;
         break;
       }
@@ -94,7 +94,7 @@ SourceImpl::print_images2buf (utils::dbufs::video::IVideoBuf::ptr& genimage)
 
     if (loaded_images_.end () == curimage)
     {
-      U3_LOG_DATA_ERROR ("failed insert image" + TOLOG (image_file_name));
+      U3_LOG_DATA_ERROR ("failed insert image:{}", image_file_name);
       ++indx_image_file_;
       break;
     }
@@ -119,7 +119,7 @@ SourceImpl::print_images2buf (utils::dbufs::video::IVideoBuf::ptr& genimage)
 
     if (image_height != capheight)
     {
-      U3_LOG_DATA_ERROR ("error in implementation" + VTOLOG (capwidth) + VTOLOG (image_height));
+      U3_LOG_DATA_ERROR ("error in implementation capwidth:{} image_height:{}", capwidth, image_height);
       ++indx_image_file_;
       ++loc_image_indx;
       break;
@@ -129,7 +129,7 @@ SourceImpl::print_images2buf (utils::dbufs::video::IVideoBuf::ptr& genimage)
     {
       auto* srcline = image_info.data_->get () + static_cast< ptrdiff_t > (iy * srcstride) + static_cast< ptrdiff_t > (offfirst * image_info.bppx_);
       auto* dstline = dstbuf + cpwidth * 3 + static_cast< ptrdiff_t > (iy * capstride);
-      ::libs::utility::checks::throw_ifn (srcline, "get scan file rgb24 image" + VTOLOG (iy));
+      ::libs::utility::checks::throw_ifn (srcline, U3_FORMAT ("get scan file rgb24 image {}", iy));
       ::libs::utility::mem::mem_copy_raw (srcline, dstline, cpstride);
     }
 
@@ -173,7 +173,7 @@ SourceImpl::load_image2buf (const std::string& name) -> LoadedImage
   stb_image_type data (stbi_load (name.c_str (), &filewidth, &fileheight, &bbpx, 3));
   if (!data || fileheight <= 0 || filewidth <= 0 || bbpx != 3)
   {
-    U3_LOG_DATA_ERROR ("failed load image" + VTOLOG (fileheight) + VTOLOG (filewidth) + VTOLOG (bbpx) + TOLOG (name));
+    U3_LOG_DATA_ERROR ("failed load image fileheight:{} filewidth:{} bbpx:{} name:{}", fileheight, filewidth, bbpx, name);
     return {};
   }
 
@@ -215,7 +215,7 @@ SourceImpl::refresh_files ()
   syn::DefaultFileMask check_cond (loc_mask);
   const auto           picters_folder = ::libs::utility::files::update_home_folder (srcimpinfo_.props_->ext_vals_.at (std::string (consts::param_keys::picter_folder)));
 
-  U3_LOG_DATA_DEV ("updating image files" + TOLOG (picters_folder));
+  U3_LOG_DATA_DEV ("updating image files:{}", picters_folder);
   ::libs::utility::files::get_files (
     picters_folder,
     enum_files_,
@@ -239,7 +239,7 @@ SourceImpl::refresh_files ()
       0llu,
       U3_CAST_UINT64 (enum_files_.files_.size () - 1));
   }
-  U3_LOG_DATA_DEV ("refresh files in" + TOLOG (picters_folder) + VTOLOG (enum_files_.files_.size ()) + VTOLOG (indx_image_file_));
+  U3_LOG_DATA_DEV ("refresh files picters_folder:{} size:{} indx_image_file:{}", picters_folder, enum_files_.files_.size (), indx_image_file_);
 }
 
 

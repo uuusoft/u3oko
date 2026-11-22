@@ -38,5 +38,4 @@ class WebSharedState final
   sessions_holder_type     sessions_;       //<
   ssl_sessions_holder_type ssl_sessions_;   //<
 };
-
 }   // namespace modules::mhttp::appl

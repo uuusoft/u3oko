@@ -29,9 +29,9 @@ extern "C" BOOST_SYMBOL_EXPORT void
 delete_impl_appl_u3oko (::libs::link::appl::IApplication::raw_ptr appl)
 {
   std::scoped_lock (g_sinc);
-  ::libs::utility::checks::assert_soft (appl, PTR_TOLOG (appl));
-  ::libs::utility::checks::assert_soft (appl == g_appl, PTR_TOLOG (appl));
-  ::libs::utility::checks::assert_soft (g_appl, PTR_TOLOG (g_appl));
+  ::libs::utility::checks::assert_soft (appl);
+  ::libs::utility::checks::assert_soft (appl == g_appl);
+  ::libs::utility::checks::assert_soft (g_appl);
 
   if (counter_refs_ <= 1)
   {

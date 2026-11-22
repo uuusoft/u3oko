@@ -52,14 +52,15 @@ update_template_for_application (const std::string& path2folder, const std::stri
   };
 
   const auto counter_ops = ::libs::utility::files::replace_strings_in_files (path2folder, tmps2vals, std::size (tmps2vals));
-  ::libs::utility::checks::test (counter_ops > 0U, "failed, zero replace in templates" + VTOLOG (counter_ops) + TOLOG (path2folder));
+  ::libs::utility::checks::test (
+    counter_ops > 0U,
+    U3_FORMAT ("failed, zero replace in templates {} {}", counter_ops, path2folder));
 }
 
 
 void
 BaseModule::load_events_props ()
 {
-  U3_CALL_TRACE_INFO_DBG (FTOLOG (module_id_));
   const std::string                        name ("sign-ready-init-appl.xml");
   ::libs::iproperties::xml::InitLoaderInfo helper_info (paths_);
   ::libs::iproperties::xml::Loader         helper_xml (helper_info);
@@ -67,11 +68,16 @@ BaseModule::load_events_props ()
 
   if (!helper_xml.is_file_exist (name, ::libs::iproperties::appl_paths::Paths::active_appl_module))
   {
-    U3_XLOG_MARK ("file" + TOLOG (name) + " not found in" + TOLOG (active_paths) + " ---> create new application instance");
-    // U3_XLOG_MARK ("prepare assets, copy file" + TOLOG (name) + " to folder" + TOLOG (active_paths));
+    U3_XLOG_MARK ("file {} not found ---> create new application instance", name, active_paths);
     const auto templates_paths = paths_->get_path (libs::iproperties::appl_paths::Paths::templates_appl_module);
-    U3_XLOG_MARK ("prepare assets, copy folder" + TOLOG (templates_paths) + " to folder" + TOLOG (active_paths));
-    ::libs::iproperties::xml::helpers::copy_files (helper_xml, libs::iproperties::appl_paths::Paths::templates_appl_module, "", active_paths);
+    U3_XLOG_MARK ("prepare assets {} to folder {}", templates_paths, active_paths);
+
+    ::libs::iproperties::xml::helpers::copy_files (
+      helper_xml,
+      libs::iproperties::appl_paths::Paths::templates_appl_module,
+      "",
+      active_paths);
+
     U3_XLOG_MARK ("update templates for new application instance");
     update_template_for_application (active_paths, name);
   }
@@ -84,7 +90,7 @@ BaseModule::load_events_props ()
   }
   catch (const std::exception& excpt)
   {
-    U3_XLOG_ERROR (excpt.what ());
+    U3_XLOG_ERROR ("what:{}", excpt.what ());
   }
 
   {
@@ -97,7 +103,6 @@ BaseModule::load_events_props ()
 void
 BaseModule::update_events_props ()
 {
-  U3_CALL_TRACE_INFO_DBG (FTOLOG (module_id_));
   auto*                           orinfo = ::libs::iproperties::helpers::get_shared_prop_os ();
   syn::ISharedProperty::lock_type lock (orinfo->get_sync ());
   if (orinfo->get_appl_lockfree ())
@@ -105,7 +110,6 @@ BaseModule::update_events_props ()
     return;
   }
 
-  U3_XLOG_DBG ("BaseModule::update_events_props: real work" + TOLOG (module_id_));
   auto* main_appl = ::libs::iproperties::helpers::cast_event< syn::ApplicationProp > (appl_event_props_.main_appl_properties_);
   auto* log_appl  = ::libs::iproperties::helpers::cast_event< syn::PropertyLogModuleEvent > (appl_event_props_.module_log_);
   auto* info_cpu  = ::libs::iproperties::helpers::cast_event< syn::InfoCPUEvent > (appl_event_props_.info_cpu_);
@@ -117,7 +121,7 @@ BaseModule::update_events_props ()
 
   if (::libs::utility::sys::cpu::CpuExts::max == info_cpu->get_cpu_type ())
   {
-    U3_XLOG_MARK ("update cpu extension" + VTOLOG (U3_CAST_INT32_FORCE (cpu_informer_.get_max ())));
+    U3_XLOG_MARK ("update cpu extension {}", U3_CAST_INT32_FORCE (cpu_informer_.get_max ()));
     info_cpu->set_cpu_type (cpu_informer_.get_max ());
   }
 

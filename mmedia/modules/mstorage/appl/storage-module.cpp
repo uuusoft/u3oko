@@ -25,7 +25,7 @@ StorageModule::process_read_data (syn::ReadData::raw_ptr props)
   ::libs::utility::checks::throw_ifn ((bool) int_msg);
   if (!check_access_rights (stream_id, syn::StreamActions::read))
   {
-    U3_XLOG_WARN ("invalide access rights for read operation " + sstream_id);
+    U3_XLOG_WARN ("invalide access rights for read operation {}", sstream_id);
     return;
   }
 
@@ -60,7 +60,7 @@ StorageModule::process_write_data (syn::WriteData::raw_ptr props)
   ::libs::utility::checks::throw_ifn ((bool) int_msg);
   if (!check_access_rights (stream_id, syn::StreamActions::write))
   {
-    U3_LOG_STORAGE_WRN ("invalid access rights for write operation " + sstream_id);
+    U3_LOG_STORAGE_WRN ("invalid access rights for write operation sstream_id:{}", sstream_id);
     return;
   }
 
@@ -79,7 +79,7 @@ StorageModule::process_write_data (syn::WriteData::raw_ptr props)
   }
   else
   {
-    ::libs::utility::checks::throw_exception ("unknown type write data" + STOLOG (int_msg->get_mid ()));
+    ::libs::utility::checks::throw_exception (U3_FORMAT ("unknown type write data {}", int_msg->get_mid ()));
   }
 
   if (props->is_failed ())
@@ -131,7 +131,7 @@ StorageModule::process_update_stream (syn::UpdateStream::raw_ptr props)
     ::libs::utility::checks::throw_ifn (!props->stream_id_.empty ());
     break;
   default:
-    U3_XLOG_ERROR ("find action stream " + to_string (props->action_));
+    U3_XLOG_ERROR ("find action stream:{}", to_string (props->action_));
     break;
   }
 
@@ -151,7 +151,7 @@ StorageModule::process_update_stream (syn::UpdateStream::raw_ptr props)
     ::libs::utility::checks::throw_ifn (streams_rights_.end () != streams_rights_.find (props->stream_id_));
     break;
   default:
-    U3_XLOG_ERROR ("find action stream " + to_string (props->action_));
+    U3_XLOG_ERROR ("find action stream:{}", to_string (props->action_));
     break;
   }
 }

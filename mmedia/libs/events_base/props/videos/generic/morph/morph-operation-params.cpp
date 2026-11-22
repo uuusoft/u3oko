@@ -27,7 +27,7 @@ MorphOperationParams::self_test () const -> bool
 {
   if (size_spot_ > 11)
   {
-    U3_XLOG_ERROR ("invalid size spot" + VTOLOG (size_spot_));
+    U3_XLOG_ERROR ("invalid size spot:{}", size_spot_);
     return false;
   }
   return true;

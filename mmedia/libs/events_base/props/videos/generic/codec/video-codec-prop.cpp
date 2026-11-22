@@ -36,7 +36,7 @@ str2write_strategy (const std::string& str) -> Writes
   {
     return Writes::write_if_empty;
   }
-  U3_XLOG_WARN ("unknown write strategy codec" + TOLOG (str));
+  U3_XLOG_WARN ("unknown write strategy codec:{}", str);
   return Writes::allways_write;
 }
 

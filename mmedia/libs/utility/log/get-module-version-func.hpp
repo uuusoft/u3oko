@@ -7,13 +7,15 @@
 
 namespace libs::utility::log
 {
-inline std::string
-get_module_version ()
+inline auto
+get_module_version () -> std::string
 {
-  return std::to_string (::configure::project_ver_major) +
-         "." + std::to_string (::configure::project_ver_minor) +
-         "." + std::string (::configure::git_hash) +
-         " build time:" + std::string (::configure::start_build_time) +
-         " compilers-ids:" + std::string (::configure::compilers_info);
+  return std::format (
+    "{}.{}.{} build time:{} compilers-ids:{}",
+    ::configure::project_ver_major,
+    ::configure::project_ver_minor,
+    ::configure::git_hash,
+    ::configure::start_build_time,
+    ::configure::compilers_info);
 }
 }   // namespace libs::utility::log

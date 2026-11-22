@@ -33,7 +33,6 @@ Filter::transform_int (syn::TransformInfo& info)
 {
   prepare_transform (info);
 
-  U3_LOG_DATA_DATA ("Filter::transform_int" + PTR_TOLOG (info.frame_events_));
   if (info.frame_events_)
   {
     for (const auto& event : *info.frame_events_)
@@ -41,7 +40,7 @@ Filter::transform_int (syn::TransformInfo& info)
       auto* devent = ::libs::iproperties::helpers::cast_event< syn::InterfCorrectImageEvent > (event);
       if (devent)
       {
-        U3_LOG_DATA_MARK ("recive syn::InterfCorrectImageEvent -> update properties" + VTOLOG (devent->is_active ()));
+        U3_LOG_DATA_MARK ("recive syn::InterfCorrectImageEvent -> update properties:{}", devent->is_active ());
         const auto enable_hardware = devent->is_active () && finfo_.rprops_ && (::libs::events_base::SelectorImpls::software != finfo_.rprops_->hint_correct_impl_);
 
         finfo_.hardware_impl_ = devent->get_interface ();
@@ -58,7 +57,6 @@ Filter::transform_int (syn::TransformInfo& info)
 
   if (::libs::events::PropertyUsings::disabled == finfo_.ef_props_.front ()->get_using_state ())
   {
-    U3_LOG_DATA_DATA ("skip process correction")
     return;
   }
 

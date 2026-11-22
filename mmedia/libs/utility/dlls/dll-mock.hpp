@@ -42,7 +42,7 @@ struct DllMock final {
   std::string path_ = "DllMock::default_path";
 };
 
-#if (U3_BUILD_MODULES_AS_LIBS == 1)
+#if (U3_BUILD_AS_MONOLITH == 1)
 using dll_type = DllMock;
 #else
 using dll_type = boost::dll::shared_library;

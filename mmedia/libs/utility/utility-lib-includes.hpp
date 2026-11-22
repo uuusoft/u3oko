@@ -89,7 +89,7 @@
 #include "json/convert-json-helper-funcs.hpp"
 
 #include "log/log-source-place-func.hpp"
-#include "log/suppressor-verbose-log-msg.hpp"
+#include "log/suppressor-log-msgs.hpp"
 #include "log/get-module-version-func.hpp"
 #include "log/call-trace.hpp"
 

@@ -12,7 +12,7 @@ namespace libs::iproperties::xml::general
 auto
 is_special_folder_for_libs (const appl_paths::Paths& path_type) -> bool
 {
-#if (U3_BUILD_MODULES_AS_LIBS == 1)
+#if (U3_BUILD_AS_MONOLITH == 1)
   return appl_paths::Paths::bins == path_type || appl_paths::Paths::emulate_bins == path_type;
 #else
   return false;
@@ -31,7 +31,6 @@ LoaderFileImpl::get_enum_int (
   syn::NodeEnumFiles&      enum_files,
   const std::string&       mask)
 {
-  U3_XLOG_DBG ("LoaderFileImpl::get_enum_int" + VTOLOG (is_special_folder_for_libs (path_type)) + TOLOG (to_string (path_type)));
   enum_files.clear ();
 
   if (is_special_folder_for_libs (path_type))
@@ -60,7 +59,6 @@ LoaderFileImpl::is_exist_file_int (
   const std::string&       file_name,
   const appl_paths::Paths& path_type) const -> bool
 {
-  U3_XLOG_DEV ("LoaderFileImpl::is_exist_file_int" + VTOLOG (is_special_folder_for_libs (path_type)) + TOLOG (to_string (path_type)));
   if (is_special_folder_for_libs (path_type))
   {
     auto files = ::libs::proxy::get_list_dlls_as_libs ();
@@ -68,7 +66,6 @@ LoaderFileImpl::is_exist_file_int (
     {
       if (file.name_ == file_name)
       {
-        U3_XLOG_DBG ("LoaderFileImpl::is_exist_file_int file found" + TOLOG (file_name));
         return true;
       }
     }

@@ -23,7 +23,7 @@ to_string (const OpsStatus& val) -> const std::string&
   auto finger = vals.find (val);
   if (vals.end () == finger)
   {
-    U3_XLOG_ERROR ("unknown OpsStatus" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+    U3_XLOG_ERROR ("unknown OpsStatus:{}", U3_CAST_UINT32_FORCE (val));
     finger = vals.find (OpsStatus::unknown);
   }
   return finger->second;

@@ -4,43 +4,46 @@
 \date       01.01.2017
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
-#include "../module-http-includes_int.hpp"
-#include "http-module-syn.hpp"
+#include "-http-module-includes-int.hpp"
+#include "-http-module-syn.hpp"
 #include "web-shared-state.hpp"
 
 namespace modules::mhttp::appl
 {
-void
-WebSharedState::join (session_type* session)
+auto
+WebSharedState::join (session_type* session) -> void
 {
   std::scoped_lock lock (mutex_);
   sessions_.insert (session);
 }
 
-void
-WebSharedState::leave (session_type* session)
+
+auto
+WebSharedState::leave (session_type* session) -> void
 {
   std::scoped_lock lock (mutex_);
   sessions_.erase (session);
 }
 
-void
-WebSharedState::join (session_ssl_type* session)
+
+auto
+WebSharedState::join (session_ssl_type* session) -> void
 {
   std::scoped_lock lock (mutex_);
   ssl_sessions_.insert (session);
 }
 
-void
-WebSharedState::leave (session_ssl_type* session)
+
+auto
+WebSharedState::leave (session_ssl_type* session) -> void
 {
   std::scoped_lock lock (mutex_);
   ssl_sessions_.erase (session);
 }
 
 // Broadcast a message to all websocket client sessions
-void
-WebSharedState::broadcast_send (send_data_type&& message)
+auto
+WebSharedState::broadcast_send (send_data_type&& message) -> void
 {
   // Put the message in a shared pointer so we can re-use it for each client
   const auto holdmessage = std::make_shared< send_data_type > (std::move (message));
@@ -62,7 +65,6 @@ WebSharedState::broadcast_send (send_data_type&& message)
     }
   }
 
-  U3_XLOG_DBG ("WebSharedState::send:begin" + VTOLOG (ssl_weakss.size ()) + VTOLOG (weakss.size ()) + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)))
   for (auto const& weaks : ssl_weakss)
   {
     if (auto wsk = weaks.lock ())
@@ -78,7 +80,6 @@ WebSharedState::broadcast_send (send_data_type&& message)
       wsk->send (holdmessage);
     }
   }
-  U3_XLOG_DBG ("WebSharedState::send:end" + VTOLOG (weakss.size ()) + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)))
 }
 
 

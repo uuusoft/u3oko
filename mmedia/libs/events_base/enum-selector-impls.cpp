@@ -23,7 +23,7 @@ to_string (const SelectorImpls& val) -> std::string
   case SelectorImpls::unknown:
     return "unknown";
   default:
-    U3_XLOG_ERROR ("unknown SelectorImpls" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+    U3_XLOG_ERROR ("unknown SelectorImpls:{}", U3_CAST_UINT32_FORCE (val));
     return "unknown SelectorImpls";
   }
 }

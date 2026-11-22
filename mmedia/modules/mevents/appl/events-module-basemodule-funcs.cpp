@@ -137,7 +137,6 @@ EventsModule::update_catch_funcs_int ()
 
   catch_funcs_[syn::AddEvent2EventsMsg::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
-    U3_LOG_EVENTS_DBG ("received syn::AddEvent2EventsMsg:" + STOLOG (msg->get_mid ()));
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::AddEvent2EventsMsg > (msg);
@@ -150,7 +149,6 @@ EventsModule::update_catch_funcs_int ()
 
   catch_funcs_[syn::GetDataGraphsEventsMsg::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
-    U3_LOG_EVENTS_DEV ("received syn::GetDataGraphsEventsMsg:" + STOLOG (msg->get_mid ()));
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::GetDataGraphsEventsMsg > (msg);
@@ -163,7 +161,6 @@ EventsModule::update_catch_funcs_int ()
 
   catch_funcs_[syn::UpdateListenerEventsMsg::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
-    U3_LOG_EVENTS_DEV ("received syn::UpdateListenerEventsMsg:" + STOLOG (msg->get_mid ()));
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::UpdateListenerEventsMsg > (msg);
@@ -176,7 +173,6 @@ EventsModule::update_catch_funcs_int ()
 
   catch_funcs_[syn::GetEventsFromBase::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) -> syn::IEvent::ptr {
-    U3_LOG_EVENTS_DBG ("received syn::GetEventsFromBase:" + STOLOG (msg->get_mid ()));
     if (forward)
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::GetEventsFromBase > (msg);

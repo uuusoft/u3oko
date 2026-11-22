@@ -31,11 +31,10 @@ class websocket_session_ssl final : public std::enable_shared_from_this< websock
   template< class Body, class Allocator >
   void run (appl::syn::http::request< Body, appl::syn::http::basic_fields< Allocator > > req);
 
-  void on_run ();
-  void on_handshake (boost::beast::error_code ec);
-
-  void         send (const std::shared_ptr< const send_data_type >& ss);
-  std::int64_t get_size_pending_send () const;
+  auto on_run () -> void;
+  auto on_handshake (boost::beast::error_code) -> void;
+  auto send (const std::shared_ptr< const send_data_type >&) -> void;
+  auto get_size_pending_send () const -> std::int64_t;
 
   private:
   ws_stream_type              ws_;                  //<
@@ -45,11 +44,11 @@ class websocket_session_ssl final : public std::enable_shared_from_this< websock
   std::atomic< std::int64_t > size_pending_send_;   //<
   boost::asio::ssl::context&  ctx_;                 //<
 
-  void on_accept (boost::beast::error_code ec);
-  void do_read ();
-  void on_read (boost::beast::error_code ec, std::size_t bytes_transferred);
-  void on_write (boost::beast::error_code ec, std::size_t bytes_transferred);
-  void on_send (const std::shared_ptr< const send_data_type >& ss);
+  auto on_accept (boost::beast::error_code) -> void;
+  auto do_read () -> void;
+  auto on_read (boost::beast::error_code, std::size_t) -> void;
+  auto on_write (boost::beast::error_code, std::size_t) -> void;
+  auto on_send (const std::shared_ptr< const send_data_type >&) -> void;
 };
 
 
@@ -57,7 +56,6 @@ template< class Body, class Allocator >
 void
 websocket_session_ssl::run (appl::syn::http::request< Body, appl::syn::http::basic_fields< Allocator > > req)
 {
-  // U3_XLOG_DEV ("websocket_session_ssl::do_accept");
   //  Set suggested timeout settings for the websocket
   ws_.set_option (
     appl::syn::websocket::stream_base::timeout::suggested (
@@ -79,6 +77,7 @@ websocket_session_ssl::run (appl::syn::http::request< Body, appl::syn::http::bas
       &websocket_session_ssl::on_accept,
       shared_from_this ()));
 #endif
+
   // We need to be executing within a strand to perform async operations
   // on the I/O objects in this session. Although not strictly necessary
   // for single-threaded contexts, this example code is written to be
@@ -95,7 +94,7 @@ template< class Body, class Allocator >
 void
 websocket_session_ssl::do_accept (appl::syn::http::request< Body, appl::syn::http::basic_fields< Allocator > > req)
 {
-  // U3_XLOG_DEV ("websocket_session_ssl::do_accept");
+  U3_CALL_TRACE;
   //  Set suggested timeout settings for the websocket
   ws_.set_option (
     appl::syn::websocket::stream_base::timeout::suggested (

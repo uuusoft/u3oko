@@ -15,12 +15,14 @@ static_cast_helper (From&& val) noexcept (noexcept (static_cast< To > (std::forw
   return static_cast< To > (std::forward< From > (val));
 }
 
+
 template< typename T >
 inline constexpr std::remove_const_t< T >*
 const_cast_helper (T* val) noexcept
 {
   return const_cast< std::remove_const_t< T >* > (val);
 }
+
 
 template< typename T >
 inline constexpr std::remove_const_t< T >&
@@ -29,6 +31,7 @@ const_cast_helper (T& val) noexcept
   return const_cast< std::remove_const_t< T >& > (val);
 }
 
+
 template< typename T, typename U >
 inline constexpr T
 reinterpret_cast_helper (U* val)
@@ -36,6 +39,7 @@ reinterpret_cast_helper (U* val)
   // NOLINTNEXTLINE
   return reinterpret_cast< T > (val);
 }
+
 
 template< typename T, typename U >
 inline constexpr T

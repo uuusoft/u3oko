@@ -152,7 +152,7 @@ struct ProxyBuf final {
     // ::libs::utility::checks::test (stride_, "zero stride: " << info);
     // ::libs::utility::checks::test (width_, "zero width: " << info);
     // ::libs::utility::checks::test (height_, "zero height: " << info);
-    ::libs::utility::checks::throw_if (width_ > stride_, "stride less width: " + VTOLOG (width_) + ">" + VTOLOG (stride_) + " " + info);
+    ::libs::utility::checks::throw_if (width_ > stride_, U3_FORMAT ("stride less width {} {} {}", width_, stride_, info));
   }
 
   bool
@@ -207,7 +207,7 @@ struct ProxyBuf final {
   {
     ::libs::utility::checks::throw_ifn (!const_data_);
     ::libs::utility::checks::throw_ifn (buf_, "buf_");
-    ::libs::utility::checks::throw_if (indx >= height_, "indx < height_:" + VTOLOG (indx) + VTOLOG (height_));
+    ::libs::utility::checks::throw_if (indx >= height_, U3_FORMAT ("indx < height_ {} {}", indx, height_));
     return U3_CAST_CPROXY_BUFF< std::int16_t* > (ubuf () + stride_ * indx);
   }
 
@@ -215,16 +215,16 @@ struct ProxyBuf final {
   get_cline (std::uint32_t indx, bool unsafe = false) const
   {
     ::libs::utility::checks::throw_ifn (buf_, "buf_:");
-    ::libs::utility::checks::throw_if (indx >= height_, "indx < height_:" + VTOLOG (indx) + VTOLOG (height_));
+    ::libs::utility::checks::throw_if (indx >= height_, U3_FORMAT ("indx < height_ {} {}", indx, height_));
     return U3_CAST_CPROXY_BUFF< const std::int16_t* > (ubuf () + stride_ * indx);
   }
 
-  std::uint32_t width_  = 0;   //< Ширина данных в пикселях
-  std::uint32_t height_ = 0;   //< Высота данных в пикселях
-  std::uint32_t stride_ = 0;   //< Ширина строки в байтах
+  std::uint32_t width_ { 0 };    //< Ширина данных в пикселях
+  std::uint32_t height_ { 0 };   //< Высота данных в пикселях
+  std::uint32_t stride_ { 0 };   //< Ширина строки в байтах
 
   private:
-  std::int16_t* buf_        = nullptr;   //< Указатель на буфер с данными
-  bool          const_data_ = false;     //< Флаг константности данных REFACT
+  std::int16_t* buf_ { nullptr };        //< Указатель на буфер с данными
+  bool          const_data_ { false };   //< Флаг константности данных REFACT
 };
 }   // namespace libs::optim::io

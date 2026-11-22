@@ -54,7 +54,6 @@ SourceImpl::get_raw_data_int (
     revnt->set_active (true);
     events->push_back (evnt);
     send_interfaces_ = true;
-    U3_LOG_DATA_DATA ("send interfaces: InterfCorrectImageEvent (+) InterfCaptureImageEvent (+)");
   }
 
   if (icapture_->is_capture_property_update ())
@@ -99,7 +98,6 @@ SourceImpl::set_cpu_int (syn::CpuExts current_optim)
 void
 SourceImpl::update_source_info_int (const syn::SourceImplInfo& info)
 {
-  U3_CALL_TRACE_INFO_DBG (FVTOLOG (info.capture_props_->capi_.width_) + VTOLOG (info.capture_props_->capi_.height_));
   source_impl_info_ = info;
   sync_internal_structures ();
 }

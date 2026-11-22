@@ -40,11 +40,11 @@ class ResourceHolder final
     }
     catch (const std::exception& excpt)
     {
-      U3_LOG_DATA_EXCEPT (/*std::string (typeid (ResourceTType).name ()) +*/ excpt.what ());
+      U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
     }
     catch (...)
     {
-      U3_LOG_DATA_EXCEPT (/*typeid (ResourceTType).name ()*/ "...");
+      U3_LOG_DATA_EXCEPT ("...");
     }
 
     resource_ = nullptr;

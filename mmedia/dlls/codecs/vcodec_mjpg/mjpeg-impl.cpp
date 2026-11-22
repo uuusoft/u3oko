@@ -163,10 +163,10 @@ convert_jpeg2guid_px_format (const std::int32_t jpeg_px) -> ::libs::utility::uid
     break;
   case TJCS_CMYK:
   case TJCS_YCCK:
-    // U3_LOG_DATA_WRN ("unsupported color space jpeg" + VTOLOG (jpeg_px));
+    U3_LOG_DATA_WRN ("color space jpeg:{}", jpeg_px);
     break;
   default:
-    // U3_LOG_DATA_WRN ("unkown color space jpeg" + VTOLOG (jpeg_px));
+    U3_LOG_DATA_WRN ("color space jpeg:{}", jpeg_px);
     break;
   }
   return ret;
@@ -230,7 +230,7 @@ MjpegImpl::decomp_iframe (
   }
   catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (std::string (excpt.what ()) + ", " + tjGetErrorStr () + VTOLOG (codec_error));
+    U3_LOG_DATA_EXCEPT ("what:{} tjGetErrorStr:{} codec_error:{}", excpt.what (), tjGetErrorStr (), codec_error);
     return false;
   }
   return true;

@@ -45,14 +45,12 @@ Filter::Filter ()
     syn::ListDevicesDataEvent::src_names_type types;
 
     idata_source_impl_.get_types (types);
-    U3_LOG_DATA_DBG ("before clear" + VTOLOG (types.size ()));
-    // Чистим от расширений, чтобы передавать далее кроссплатформенный вид
+    //  Чистим от расширений, чтобы передавать далее кроссплатформенный вид
     for (auto& type : types)
     {
       type = type.substr (0, type.find (::libs::utility::dlls::get_dll_suffix ()));
     }
 
-    U3_LOG_DATA_DBG ("after clear" + VTOLOG (types.size ()));
     event->set_source_dll_names (std::move (types));
 
     auto source_dll_names = event->get_source_dll_names ();
@@ -60,7 +58,6 @@ Filter::Filter ()
     std::size_t indx = 0;
     for (const auto& source_dll_name : source_dll_names)
     {
-      U3_LOG_DATA_DBG (FVTOLOG (indx) + TOLOG (source_dll_name));
       syn::ListDevicesDataEvent::src_infos_type sources;
 
       idata_source_impl_.get_sources (source_dll_name, sources);
@@ -86,7 +83,6 @@ Filter::thread_func_impl (std::uint32_t indx_thread)
     if (!frame_loaded && now_delay.count ())
     {
       //  Если буфер не был сформирован - вставляем задержку, чтобы не загружать систему.
-      U3_LOG_DATA_TIMING ("gen vgen thread sleep" + VTOLOG (now_delay.count ()));
       std::this_thread::sleep_for (now_delay);
       now_delay = consts::ms_delay_skip_cycle;
     }
@@ -99,7 +95,7 @@ Filter::thread_func_impl (std::uint32_t indx_thread)
       std::unique_lock< InfoFilter::sync_type > lock (finfo_.wdmtx_, consts::ms_wait_capture_device);
       if (!lock.owns_lock ())
       {
-        U3_LOG_DATA_ERROR ("failed acquired mutex" + VTOLOG (consts::ms_wait_capture_device.count ()) + "ms");
+        U3_LOG_DATA_ERROR ("failed acquired mutex {} ms", consts::ms_wait_capture_device.count ());
         continue;
       }
 
@@ -115,7 +111,6 @@ Filter::thread_func_impl (std::uint32_t indx_thread)
         {
           // Графы обработки данных могут использоваться получения информации об окружении (например для получения списка устройства из dll),
           // а не только для получения данных. Поэтому данная ситуация допустима.
-          U3_LOG_DATA_DATA ("empty source impl or not started" + TOLOG (finfo_.rprops_->name_impl_dll_) + TOLOG (finfo_.rprops_->device_name_) + VTOLOG (finfo_.rprops_->device_indx_) + VTOLOG (srcstared));
           now_delay = consts::ms_delay_skip_cycle_before_start_device;
           continue;
         }
@@ -123,7 +118,7 @@ Filter::thread_func_impl (std::uint32_t indx_thread)
       // Пока еще драйвер не загружен
       if (!finfo_.links_props_.pdriver2buf_)
       {
-        U3_LOG_DATA_DEV ("empty driver driver2buf_" + TOLOG (finfo_.rprops_->name_impl_dll_));
+        U3_LOG_DATA_DEV ("empty driver driver2buf:{}", finfo_.rprops_->name_impl_dll_);
         now_delay = consts::ms_delay_skip_cycle_before_start_device;
         continue;
       }
@@ -167,7 +162,7 @@ Filter::thread_func_impl (std::uint32_t indx_thread)
         std::unique_lock< InfoFilter::sync_type > lock (finfo_.wdmtx_, consts::ms_wait_capture_device);
         if (!lock.owns_lock ())
         {
-          U3_LOG_DATA_ERROR ("failed acquired mutex" + VTOLOG (consts::ms_wait_capture_device.count ()) + "ms");
+          U3_LOG_DATA_ERROR ("failed acquired mutex {} ms", consts::ms_wait_capture_device.count ());
           continue;
         }
         if (frame_loaded)

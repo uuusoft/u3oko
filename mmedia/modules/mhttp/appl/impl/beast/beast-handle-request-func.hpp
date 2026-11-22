@@ -62,7 +62,7 @@ handle_request (
       req.method () != appl::syn::http::verb::get &&
       req.method () != appl::syn::http::verb::head)
   {
-    U3_XLOG_DEV ("Unknown HTTP-method:1" + TOLOG (std::string (to_string (req.method ()))));
+    U3_XLOG_DEV ("Unknown HTTP-method:1:{}", to_string (req.method ()));
     return bad_request ("Unknown HTTP-method:1");
   }
 
@@ -98,14 +98,14 @@ handle_request (
       std::make_tuple (std::get< 2 > (result), req.version ())
     };
 
-    U3_XLOG_DBG ("out (get/post)" + VTOLOG (size) + TOLOG (std::get< 1 > (result)) + VTOLOG (U3_CAST_UINT32_FORCE (std::get< 2 > (result))));
+    U3_XLOG_DBG ("out (get/post) :{} :{} :{}", size, std::get< 1 > (result), U3_CAST_UINT32_FORCE (std::get< 2 > (result)));
     res.set (appl::syn::http::field::server, BOOST_BEAST_VERSION_STRING);
     res.set (appl::syn::http::field::content_type, std::get< 1 > (result));
     res.content_length (size);
     res.keep_alive (req.keep_alive ());
     return res;
   }
-  U3_XLOG_DEV ("Unknown HTTP-method:2" + TOLOG (std::string (to_string (req.method ()))));
+  U3_XLOG_DEV ("Unknown HTTP-method:2:{}", to_string (req.method ()));
   return bad_request ("Unknown HTTP-method:2");
 }
 
@@ -113,6 +113,6 @@ handle_request (
 inline void
 u3beast_fail (boost::beast::error_code ec, char const* what)
 {
-  U3_XLOG_ERROR ("fail http server: " + ec.message ());
+  U3_XLOG_ERROR ("fail http server:{}", ec.message ());
 }
 }   // namespace modules::mhttp::impl::beast

@@ -24,7 +24,7 @@ get_pure_event_int (const ::libs::events::IEvent::hid_type& eid) -> ::libs::even
 {
   auto* impl = get_events_impl ();
   auto  res  = impl->get (eid);
-  ::libs::utility::checks::throw_ifn ((bool) res, "get_pure_event_int:" + STOLOG (eid));
+  ::libs::utility::checks::throw_ifn ((bool) res, U3_FORMAT ("get_pure_event_int {}", eid));
   return res;
 }
 
@@ -100,7 +100,7 @@ event2xml (::libs::events::IEvent::ptr& src) -> std::string
 
   auto*       impl = get_events_impl ();
   std::string xml;
-  ::libs::utility::checks::throw_ifn (impl->event2xml (src, xml), "event2xml - " + STOLOG (src->get_mid ()));
+  ::libs::utility::checks::throw_ifn (impl->event2xml (src, xml), U3_FORMAT ("event2xml {}", src->get_mid ()));
   return xml;
 }
 
@@ -125,7 +125,7 @@ void
 event2bin (::libs::events::IEvent::ptr& src, std::ostream& bin)
 {
   auto* impl = get_events_impl ();
-  ::libs::utility::checks::throw_ifn (impl->event2bin (src, bin), "event2bin - " + STOLOG (src->get_mid ()));
+  ::libs::utility::checks::throw_ifn (impl->event2bin (src, bin), U3_FORMAT ("event2bin {}", src->get_mid ()));
 }
 
 

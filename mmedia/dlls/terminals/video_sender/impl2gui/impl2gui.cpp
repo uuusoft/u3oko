@@ -20,7 +20,7 @@ Impl2Gui::send_int (
   ::libs::link::ILink::ptr helper = ::libs::iproperties::helpers::get_prop_links ()->get_links_lockfree ()[syn::mids::mdata2appl].lock ();
   if (!helper)
   {
-    U3_LOG_DATA_WRN ("skip send msg to gui" + VTOLOG (finfo.count_frames_) + VTOLOG (send_buf->get_dim_var (utils::dbufs::video::Dims::height)));
+    U3_LOG_DATA_WRN ("skip send msg to gui: {} {}", finfo.count_frames_, send_buf->get_dim_var (utils::dbufs::video::Dims::height));
     return;
   }
 
@@ -81,12 +81,12 @@ Impl2Gui::fill_frame (const syn::TransformInfo& info, void* pmem) -> bool
   }
   catch (boost::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (boost::diagnostic_information (excpt));
+    U3_LOG_DATA_EXCEPT ("{}", boost::diagnostic_information (excpt));
     ret = false;
   }
   catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what ());
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
     ret = false;
   }
   return ret;

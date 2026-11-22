@@ -44,7 +44,7 @@ MorphOperator::applay_operation2buf (
     erosion_buf (id_node, op, pbuf, pdst);
     break;
   default:
-    U3_LOG_DATA_ERROR ("unknown type MorphOps" + VTOLOG (U3_CAST_UINT32_FORCE (op.morph_type_)));
+    U3_LOG_DATA_ERROR ("unknown type MorphOps:{}", U3_CAST_UINT32_FORCE (op.morph_type_));
     break;
   }
 }
@@ -152,7 +152,6 @@ MorphOperator::erosion_buf (
     [] (std::size_t x, std::size_t y, std::int16_t val) {
       if (val > 1)
       {
-        U3_LOG_DATA_WRN ("check tbuf" + VTOLOG (x) + VTOLOG (y) + VTOLOG (val));
         return false;
       }
       return true;

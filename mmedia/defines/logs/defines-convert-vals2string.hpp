@@ -36,3 +36,7 @@
 #ifndef PTR_TOLOG
 #  define PTR_TOLOG(u3def_param) std::string (#u3def_param) + "=0x?" + std::to_string (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (u3def_param))
 #endif
+
+#ifndef U3_FORMAT
+#  define U3_FORMAT(u3def_format, ...) std::format (u3def_format __VA_OPT__ (, ) __VA_ARGS__)
+#endif

@@ -15,7 +15,7 @@ void
 get_shared_dir (std::string& shared_dir)
 {
   shared_dir = "storage/emulated/0/Android/data/com.uuusoft.u3oko/files";
-  U3_XLOG_DEV ("get_shared_dir::probably invalid shared directory! fix" + TOLOG (shared_dir));
+  U3_XLOG_DEV ("get_shared_dir::probably invalid shared directory! fix:{}", shared_dir);
 }
 #endif
 }   // namespace boost::interprocess::ipcdetail
@@ -32,14 +32,14 @@ make_short_path (const std::string& path) -> std::string
   const auto req_size = GetShortPathNameA (path.c_str (), nullptr, 0);
   if (0 == req_size || req_size >= 0xFFFFu)
   {
-    U3_XLOG_ERROR ("invalid buf size from GetShortPathNameA" + TOLOG (path) + VTOLOG (req_size));
+    // U3_XLOG_ERROR ("invalid buf size from GetShortPathNameA" + T-OLOG (path) + VT-OLOG (req_size));
     return path;
   }
 
   std::vector< char > temp (req_size + 1);
   if (!GetShortPathNameA (path.c_str (), &temp[0], U3_CAST_UINT32 (temp.size ())))
   {
-    U3_XLOG_ERROR ("call GetShortPathNameA, for path=" + path);
+    U3_XLOG_ERROR ("call GetShortPathNameA:{}", path);
     return path;
   }
   return std::string (&temp[0]);
@@ -81,7 +81,7 @@ create_folder (const std::string& path) -> bool
       std::filesystem::create_directory (check_path, error);
       if (error)
       {
-        U3_XLOG_WARN ("failed create a folder" + TOLOG (check_path.string ()) + " error=" + error.message ());
+        U3_XLOG_WARN ("create a folder {} {}", check_path.string (), error.message ());
         return false;
       }
     }

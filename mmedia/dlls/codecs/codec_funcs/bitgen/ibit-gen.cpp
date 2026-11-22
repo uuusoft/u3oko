@@ -45,7 +45,7 @@ auto
 IBitGen::get_granularity () const -> std::uint32_t
 {
   const std::uint32_t ret = get_granularity_int ();
-  ::libs::utility::checks::throw_if (ret <= 0, "ret less or equal 0" + VTOLOG (ret));
+  ::libs::utility::checks::throw_if (ret <= 0, U3_FORMAT ("ret less or equal 0 {}", ret));
   return ret;
 }
 
@@ -65,7 +65,7 @@ IBitGen::get_max_size (const std::uint32_t src_size) const -> std::uint32_t
 {
   ::libs::utility::checks::throw_if (src_size <= 0, "size src less or equal 0: src_size");
   std::uint32_t ret = get_max_size_int (src_size);
-  ::libs::utility::checks::throw_if (ret <= 0, "size less or equal 0" + VTOLOG (ret));
+  ::libs::utility::checks::throw_if (ret <= 0, U3_FORMAT ("size less or equal 0 {}", ret));
   return ret;
 }
 }   // namespace dlls::codecs::bitgen

@@ -90,4 +90,8 @@ namespace libs::utility::casts
 #ifndef U3_CAST_DOUBLE
 #  define U3_CAST_DOUBLE(u3def_val) ::boost::numeric_cast< double > (u3def_val)
 #endif
+
+#ifndef U3_CAST_PTR2INT_FORCE
+#  define U3_CAST_PTR2INT_FORCE(u3def_val) ::libs::utility::casts::reinterpret_cast_helper< std::size_t > (u3def_val)
+#endif
 }   // namespace libs::utility::casts

@@ -31,7 +31,7 @@ class IStorageImpl
   {
     if (!change_state_int (state))
     {
-      U3_XLOG_ERROR ("change state storage impl " + to_string (state));
+      U3_XLOG_ERROR ("change state storage impl:{}", to_string (state));
       return;
     }
     status_ = state;
@@ -110,7 +110,7 @@ class IStorageImpl
   void
   check_state_for_ops (const std::string& op) const
   {
-    ::libs::utility::checks::throw_ifn (ImplRuns::run == status_, "invalid status for operation" + TOLOG (op));
+    ::libs::utility::checks::throw_ifn (ImplRuns::run == status_, U3_FORMAT ("invalid status for operation {}", op));
   }
 
   private:

@@ -60,7 +60,7 @@ BaseIdProp::load_buf2module (const ::pugi::xml_named_node_iterator& node, Buff2M
 
   if (!nfps || !nindx_buf || !nmodule)
   {
-    U3_XLOG_WARN ("BaseIdProp::load_buf2module: skip load, empty attributes" + TOLOG (nfps.as_string ()) + TOLOG (nindx_buf.as_string ()) + TOLOG (nmodule.as_string ()));
+    U3_XLOG_WARN ("empty attributes :{} :{} :{}", nfps.as_string (), nindx_buf.as_string (), nmodule.as_string ());
     return;
   }
 

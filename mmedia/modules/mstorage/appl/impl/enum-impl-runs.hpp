@@ -27,7 +27,7 @@ to_string (const ImplRuns& val)
   case ImplRuns::unknown:
     return "unknown";
   }
-  U3_XLOG_WARN ("unknown type ImplRuns" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+  U3_XLOG_WARN ("unknown type ImplRuns:{}", U3_CAST_UINT32_FORCE (val));
   return "x81";
 }
 }   // namespace modules::mstorage::appl::impl

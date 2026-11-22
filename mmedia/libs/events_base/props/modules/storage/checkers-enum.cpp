@@ -22,7 +22,7 @@ str2checker_storage (const std::string& str) -> Checkers
   auto find = strs2checkers.find (str);
   if (strs2checkers.end () == find)
   {
-    U3_XLOG_WARN ("convert str2checker_storage " + str);
+    U3_XLOG_WARN ("convert str2checker_storage:{}", str);
     return Checkers::start_stop;
   }
   return find->second;

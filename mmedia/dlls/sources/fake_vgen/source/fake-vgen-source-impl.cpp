@@ -108,10 +108,10 @@ void
 SourceImpl::update_source_info_int (const syn::SourceImplInfo& info)
 {
   const auto& px_format = srcimpinfo_.capture_props_->capi_.px_format_;
-  U3_CALL_TRACE_INFO (::libs::utility::uids::helpers::get_readable_name (px_format));
+  U3_CALL_TRACE_INFO ("px_format:{}", ::libs::utility::uids::helpers::get_readable_name (px_format));
   if (!gen_funcs_[px_format])
   {
-    U3_LOG_DATA_WRN ("try use unsupported format fake camera: " + ::libs::utility::uids::helpers::get_readable_name (px_format));
+    U3_LOG_DATA_WRN ("try use unsupported format fake camera:{}", ::libs::utility::uids::helpers::get_readable_name (px_format));
     // srcimpinfo_.capture_props_->capi_.px_format_ = ::libs::utility::uids::minor::id_val::rgb24;
   }
 }

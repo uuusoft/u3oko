@@ -201,7 +201,6 @@ StorageModule::update_catch_funcs_int ()
     {
       auto* props = ::libs::iproperties::helpers::cast_event< syn::WriteData > (msg);
       ::libs::utility::checks::throw_ifn (props);
-      U3_LOG_STORAGE_DBG ("write data");
       // debug - stop write
       // process_write_data (props);
       return {};

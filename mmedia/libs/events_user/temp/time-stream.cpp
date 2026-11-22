@@ -73,7 +73,7 @@ operator< (const TimeStream& left, const TimeStream& right)
   {
     return false;
   }
-  U3_XLOG_ERROR ("compare time" + VTOLOG (U3_CAST_UINT32_FORCE (ltime)) + VTOLOG (U3_CAST_UINT32_FORCE (rtime)));
+  U3_XLOG_ERROR ("compare time:{} <> {}", U3_CAST_UINT32_FORCE (ltime), U3_CAST_UINT32_FORCE (rtime));
   return false;
 }
 

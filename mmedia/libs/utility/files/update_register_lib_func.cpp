@@ -22,7 +22,7 @@ update_register_lib (const std::string& path, bool need_reg)
   HMODULE module = LoadLibraryA (path.c_str ());
   if (!module)
   {
-    U3_XLOG_ERROR ("load lib" + TOLOG (path));
+    U3_XLOG_ERROR ("load lib:{}", path);
     return false;
   }
 
@@ -31,7 +31,7 @@ update_register_lib (const std::string& path, bool need_reg)
     reg_func_type reg_func = ::libs::utility::casts::reinterpret_cast_helper< reg_func_type > (GetProcAddress (module, "DllRegisterServer"));
     if (!reg_func || FAILED ((*reg_funct) ()))
     {
-      U3_XLOG_ERROR ("register lib" + TOLOG (path));
+      U3_XLOG_ERROR ("register lib:{}", path);
       return false;
     }
   }
@@ -41,7 +41,7 @@ update_register_lib (const std::string& path, bool need_reg)
     ::libs::utility::checks::throw_ifn (unreg_funct);
     if (!unreg_func || (FAILED ((*unreg_funct) ())))
     {
-      U3_XLOG_ERROR ("unregister lib" + TOLOG (path));
+      U3_XLOG_ERROR ("unregister lib:{}", path);
       return false;
     }
   }

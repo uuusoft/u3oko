@@ -84,7 +84,7 @@ get_create_module_func (const std::string& plib_id) -> syn::IApplicationProxy::c
     return create_impl_appl_u3oko;
   }
 
-  ::libs::utility::checks::throw_exception ("find create module funct" + TOLOG (lib_id));
+  ::libs::utility::checks::throw_exception (U3_FORMAT ("find create module funct {}", lib_id));
 }
 
 
@@ -131,6 +131,6 @@ get_delete_module_func (const std::string& plib_id) -> syn::IApplicationProxy::d
     return delete_impl_appl_u3oko;
   }
 
-  ::libs::utility::checks::throw_exception ("find delete module funct" + TOLOG (lib_id));
+  ::libs::utility::checks::throw_exception (U3_FORMAT ("find delete module funct {}", lib_id));
 }
 }   // namespace libs::proxy

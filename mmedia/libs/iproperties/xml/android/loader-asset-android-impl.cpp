@@ -45,7 +45,6 @@ LoaderAssetAndroidImpl::enum_items_struct (
   const std::string cur_root   = ::libs::utility::files::make_path (root, name);
   AAssetDir*        cur_folder = AAssetManager_openDir (asset_manager_, cur_root.c_str ());
 
-  U3_XLOG_MARK ("LoaderAssetAndroidImpl::enum_items_struct enum asset struct from" + TOLOG (cur_root))
   ::libs::utility::checks::throw_ifn (cur_folder, "open asset folder " + cur_root);
 
   AAssetDir_rewind (cur_folder);
@@ -68,9 +67,7 @@ LoaderAssetAndroidImpl::enum_items_struct (
       name_item.erase (name_item.length () - sign_folder.length (), std::string::npos);
     }
 
-
     const std::string path_item = ::libs::utility::files::make_path (cur_root, name_item);
-    U3_XLOG_MARK ("find item in asset struct" + TOLOG (raw_name_item) + TOLOG (name_item) + VTOLOG (it_folder) + TOLOG (path_item))
     ::libs::utility::checks::throw_ifn (!name_item.empty ());
 
     if (it_folder)
@@ -107,7 +104,6 @@ LoaderAssetAndroidImpl::get_enum_int (
   ::libs::utility::files::NodeEnumFiles& enum_files,
   const std::string&                     mask)
 {
-  U3_XLOG_MARK ("LoaderAssetAndroidImpl::get_enum_int" + TOLOG (to_string (path_type)) + VTOLOG (storage_not_in_asset (path_type)));
   if (storage_not_in_asset (path_type))
   {
     return common_impl_->get_enum (path_type, enum_files, mask);
@@ -123,7 +119,6 @@ LoaderAssetAndroidImpl::is_exist_file_int (
   const std::string&       file_name,
   const appl_paths::Paths& path_type) const
 {
-  U3_XLOG_MARK ("LoaderAssetAndroidImpl::is_exist_file_int" + TOLOG (to_string (path_type)) + TOLOG (file_name) + VTOLOG (storage_not_in_asset (path_type)));
   if (storage_not_in_asset (path_type))
   {
     return common_impl_->is_exist_file (file_name, path_type);
@@ -182,7 +177,7 @@ LoaderAssetAndroidImpl::get_int (
 {
   if (storage_not_in_asset (path_type))
   {
-    U3_XLOG_DEV ("load file, storage not in asset, common path" + TOLOG (file_name) + TOLOG (to_string (path_type)));
+    U3_XLOG_DEV ("load file, storage not in asset, common path:{} {}", file_name, to_string (path_type));
     return common_impl_->get (file_name, path_type, ret);
   }
 

@@ -20,7 +20,7 @@ val2str (const EventsVals& val) -> const std::string&
   auto finger = val2str.find (val);
   if (finger == val2str.end ())
   {
-    U3_XLOG_WARN ("convert EventsVals to string" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+    U3_XLOG_WARN ("EventsVals to string:{}", U3_CAST_UINT32_FORCE (val));
     finger = val2str.find (EventsVals::unknown);
   }
   return finger->second;
@@ -37,7 +37,7 @@ str2val (const std::string& str) -> EventsVals
   auto find = str2val.find (str);
   if (str2val.end () == find)
   {
-    U3_XLOG_WARN ("convert string to EventsVals " + TOLOG (str));
+    U3_XLOG_WARN ("string to EventsVals:{}", str);
     return EventsVals::no_val;
   }
   return find->second;

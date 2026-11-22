@@ -32,10 +32,10 @@ replace_strings_in_files (
   {
     const std::string                    full_path = make_path (path2folder, file.name_);
     ::libs::utility::mem::IBlockMem::ptr file_data;
-    // U3_XLOG_DBG ("change template" + TOLOG (file.name_));
+
     if (!load_file2mem (full_path, file_data))
     {
-      U3_XLOG_ERROR ("open template" + TOLOG (full_path));
+      U3_XLOG_ERROR ("open template:{}", full_path);
       continue;
     }
 
@@ -51,7 +51,7 @@ replace_strings_in_files (
 
       if (!save_mem2file (full_path, file_data))
       {
-        U3_XLOG_ERROR ("update file" + TOLOG (full_path));
+        U3_XLOG_ERROR ("update file:{}", full_path);
       }
     }
   }

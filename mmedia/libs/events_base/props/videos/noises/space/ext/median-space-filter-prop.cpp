@@ -49,7 +49,7 @@ str2sort (const std::string& str) -> Sortings
   auto finger = str2sort.find (str);
   if (str2sort.end () == finger)
   {
-    ::libs::utility::checks::mark ("failed find sorting type by name " + TOLOG (str));
+    ::libs::utility::checks::mark (U3_FORMAT ("failed find sorting type by name {}", str));
     finger = str2sort.find ("default");
   }
   return finger->second;

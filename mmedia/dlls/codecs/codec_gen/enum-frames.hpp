@@ -37,7 +37,7 @@ to_string (const Frames& val)
   case Frames::bframe:
     return "bframe";
   default:
-    return "unknown Frames " + VTOLOG (U3_CAST_INT32_FORCE (val));
+    return U3_FORMAT ("unknown Frames {}", U3_CAST_INT32_FORCE (val));
   }
 }
 }   // namespace dlls::codecs::codec_gen

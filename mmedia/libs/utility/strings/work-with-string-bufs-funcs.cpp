@@ -23,7 +23,7 @@ inplace_replace_substring (
       {
         if (val.first.length () < val.second.length ())
         {
-          U3_XLOG_ERROR ("replace" + TOLOG (val.first) + TOLOG (val.second) + VTOLOG (val.first.length ()) + VTOLOG (val.second.length ()));
+          U3_XLOG_ERROR ("replace :{} :{} :{} :{}", val.first, val.second, val.first.length (), val.second.length ());
           ret = false;
           break;
         }
@@ -51,7 +51,7 @@ replace_substring (
   {
     if (val.first.length () < val.second.length ())
     {
-      U3_XLOG_ERROR ("replace" + TOLOG (val.first) + TOLOG (val.second) + VTOLOG (val.first.length ()) + VTOLOG (val.second.length ()));
+      U3_XLOG_ERROR ("replace :{} :{} :{} :{}", val.first, val.second, val.first.length (), val.second.length ());
       ret = false;
       break;
     }

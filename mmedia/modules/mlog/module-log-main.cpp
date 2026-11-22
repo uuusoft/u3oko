@@ -29,7 +29,7 @@ delete_impl_mpl_mlog (::libs::link::appl::IApplication::raw_ptr appl)
 {
   std::scoped_lock lock (g_sinc);
 
-  ::libs::utility::checks::assert_soft (appl && appl == g_appl, PTR_TOLOG (appl) + PTR_TOLOG (g_appl));
+  ::libs::utility::checks::assert_soft (appl && appl == g_appl);
   if (counter_refs_ <= 1)
   {
     delete g_appl;

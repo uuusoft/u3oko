@@ -52,7 +52,6 @@ class IHardwareCapture final : public syn::ICaptureImage
   virtual void
   update_capture_property_int (const syn::VideoDriverCaptureProp::raw_ptr info) override
   {
-    U3_LOG_DATA_DBG ("update prop:" + STOLOG (syn::VideoDriverCaptureProp::gen_get_mid ()));
     capture_.copy (info);
     update_ = true;
   }
@@ -60,7 +59,6 @@ class IHardwareCapture final : public syn::ICaptureImage
   virtual void
   update_driver_property_int (const syn::VideoDriverProp::raw_ptr info) override
   {
-    U3_LOG_DATA_DBG ("update prop:" + STOLOG (syn::VideoDriverProp::gen_get_mid ()));
     vdriver_.copy (info);
     update_ = true;
   }
@@ -68,14 +66,13 @@ class IHardwareCapture final : public syn::ICaptureImage
   virtual void
   update_system_specific_property_int (const syn::SystemSpecificDriverProp::raw_ptr info) override
   {
-    U3_LOG_DATA_DBG ("update prop:" + STOLOG (syn::SystemSpecificDriverProp::gen_get_mid ()));
     system_specific_.copy (info);
     update_ = true;
   }
 
-  mutable bool                  update_ = false;    //<
-  syn::VideoDriverCaptureProp   capture_;           //<
-  syn::VideoDriverProp          vdriver_;           //<
-  syn::SystemSpecificDriverProp system_specific_;   //<
+  mutable bool                  update_ { false };   //<
+  syn::VideoDriverCaptureProp   capture_;            //<
+  syn::VideoDriverProp          vdriver_;            //<
+  syn::SystemSpecificDriverProp system_specific_;    //<
 };
 }   // namespace dlls::sources::gen_lib::interfs

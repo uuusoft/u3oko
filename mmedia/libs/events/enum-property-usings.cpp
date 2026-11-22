@@ -21,7 +21,7 @@ to_string (const PropertyUsings& val) -> const std::string&
   auto finger = valmap.find (val);
   if (valmap.end () == finger)
   {
-    U3_XLOG_WARN ("unknown type PropertyUsings" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+    U3_XLOG_WARN ("unknown type PropertyUsings:{}", U3_CAST_UINT32_FORCE (val));
     finger = valmap.find (PropertyUsings::unknown);
   }
   return finger->second;

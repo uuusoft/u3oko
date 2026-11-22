@@ -108,7 +108,7 @@ struct AllocParams {
   {
     if (this == &src)
     {
-      U3_XLOG_WARN (std::string ("selfswap AllocParams") + PTR_TOLOG (this));
+      U3_XLOG_WARN ("selfswap AllocParams");
       return;
     }
 

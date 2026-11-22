@@ -71,10 +71,8 @@ Event::clone_int (const ::libs::events::Deeps& deep) const -> ::libs::events::IE
 void
 Event::load_json_int (const ::boost::json::object& obj)
 {
-  U3_CALL_TRACE_INFO_DBG (FTOLOG (boost::json::serialize (obj)));
   if (!obj.try_at ("genextprop_json"))
   {
-    U3_XLOG_DBG ("skip load genextprop_json");
     return;
   }
   genextprop_json_ = ::libs::utility::json::get_string (obj.at ("genextprop_json"));
@@ -84,7 +82,6 @@ Event::load_json_int (const ::boost::json::object& obj)
 void
 Event::save_json_int (::boost::json::object& obj) const
 {
-  U3_CALL_TRACE_INFO_DBG (FTOLOG (boost::json::serialize (obj)));
   obj["genextprop_json"] = ::libs::utility::json::to_string (genextprop_json_);
 }
 

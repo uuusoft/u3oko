@@ -46,7 +46,7 @@ FpsController::set_fps (const float& fps)
 
   if (fps_ < 0.0F)
   {
-    U3_XLOG_WARN ("invalid fps number, correct");
+    U3_XLOG_WARN ("invalid fps number");
     fps_ = 0.0F;
   }
 

@@ -25,7 +25,7 @@ to_string (const StreamActions& val) -> std::string
   case StreamActions::unknown:
     return "unknown";
   }
-  U3_XLOG_WARN ("unknown StreamActions" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+  U3_XLOG_WARN ("unknown StreamActions:{}", U3_CAST_UINT32_FORCE (val));
   return "xxx";
 }
 }   // namespace libs::events_storage

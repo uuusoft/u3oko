@@ -47,7 +47,7 @@ update_home_folder (const std::string& path) -> std::string
   const auto home_folder = get_home_folder ();
   if (home_folder.empty ())
   {
-    U3_XLOG_WARN ("get null home folder from enviroment for" + TOLOG (path));
+    U3_XLOG_WARN ("get null home folder from enviroment for {}", path);
     return path;
   }
   return std::string (home_folder) + path.substr (1, std::string::npos);

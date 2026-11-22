@@ -36,7 +36,7 @@ load_file2mem (const std::string& file_path, TContainer& ret)
 
   if (!file.is_open ())
   {
-    U3_XLOG_ERROR ("load_file2mem: failed opening file => skip file load" + TOLOG (file_path));
+    U3_XLOG_ERROR ("open file:{}", file_path);
     return false;
   }
 

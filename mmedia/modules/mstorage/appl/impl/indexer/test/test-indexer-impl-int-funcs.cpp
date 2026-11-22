@@ -63,7 +63,7 @@ TestIndexerImpl::load_state ()
   }
   catch (std::exception& excpt)
   {
-    U3_LOG_STORAGE_EXCEPT (excpt.what ());
+    U3_LOG_STORAGE_EXCEPT ("what:{}", excpt.what ());
   }
 }
 
@@ -82,7 +82,7 @@ TestIndexerImpl::save_state ()
 
   if (!file.is_open ())
   {
-    U3_XLOG_ERROR ("open file for save state path=" + full_path);
+    U3_XLOG_ERROR ("open file for save state path:{}", full_path);
     return;
   }
 
@@ -97,7 +97,7 @@ TestIndexerImpl::save_state ()
   }
   catch (std::exception& excpt)
   {
-    U3_LOG_STORAGE_EXCEPT (excpt.what ());
+    U3_LOG_STORAGE_EXCEPT ("what:{}", excpt.what ());
     return;
   }
 

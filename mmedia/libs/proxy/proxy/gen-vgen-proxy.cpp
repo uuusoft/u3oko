@@ -119,7 +119,7 @@ get_create_source_func (const std::string& plib_id) -> ::dlls::sources::gen_lib:
   }
 #endif
 
-  ::libs::utility::checks::throw_exception ("failed function search" + TOLOG (lib_id));
+  ::libs::utility::checks::throw_exception (U3_FORMAT ("failed function search {}", lib_id));
 }
 
 
@@ -188,6 +188,6 @@ get_free_source_func (const std::string& plib_id) -> ::dlls::sources::gen_lib::b
   }
 #endif
 
-  ::libs::utility::checks::throw_exception ("failed function search" + TOLOG (lib_id));
+  ::libs::utility::checks::throw_exception (U3_FORMAT ("failed function search {}", lib_id));
 }
 }   // namespace libs::proxy

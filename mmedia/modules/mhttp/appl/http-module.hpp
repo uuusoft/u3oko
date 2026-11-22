@@ -75,7 +75,7 @@ class HttpModule final : public ::libs::ilink::appl::leaf::LeafModule
   sync_type                         mtx_;                //< Для синхронизации доступа к заделяемым ресурсам между внешними агентами и потоком обработки запросов от http интерфейса
   id_msg2func_type                  int_catch_funcs_;    //< Функции-обработчики запросов, используются для тех сообщений, которые мы можем обработать внутри http сервера
   std::shared_ptr< WebSharedState > shared_state_;       //<
-  SkipDataState                     skip_state_;         //<
+  helpers::SkipDataState            skip_state_;         //<
   syn::ISystemProperty::raw_ptr     isys_ { nullptr };   //<
 };
 }   // namespace modules::mhttp::appl

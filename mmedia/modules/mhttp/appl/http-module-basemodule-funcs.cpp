@@ -4,23 +4,23 @@
 \date       23.08.2018
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
-#include "../module-http-includes_int.hpp"
+#include "-http-module-includes-int.hpp"
 #include "mmedia/dlls/terminals/video_sender/consts/video-sender-const-vals.hpp"
-#include "http-module-syn.hpp"
+#include "-http-module-syn.hpp"
 #include "http-module.hpp"
 
 namespace modules::mhttp::appl
 {
-void
-HttpModule::appl_init_int (const syn::InitApplication& appinfo)
+auto
+HttpModule::appl_init_int (const syn::InitApplication& appinfo) -> void
 {
   super::appl_init_int (appinfo);
   check_process ();
 }
 
 
-void
-HttpModule::init_links_int (const syn::InitApplication& appinfo)
+auto
+HttpModule::init_links_int (const syn::InitApplication& appinfo) -> void
 {
   U3_CALL_TRACE_DBG;
   auto lproxy    = ::libs::ilink::LinkCreatorProxy::instance ();
@@ -58,8 +58,8 @@ HttpModule::init_links_int (const syn::InitApplication& appinfo)
 }
 
 
-void
-HttpModule::init_proxys_int ()
+auto
+HttpModule::init_proxys_int () -> void
 {
   super::init_proxys_int ();
   ::libs::utility::checks::throw_ifn (
@@ -97,8 +97,8 @@ HttpModule::appl_deinit_int () -> bool
 }
 
 
-void
-HttpModule::update_catch_funcs_int ()
+auto
+HttpModule::update_catch_funcs_int () -> void
 {
   super::update_catch_funcs_int ();
 
@@ -139,7 +139,6 @@ HttpModule::update_catch_funcs_int ()
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
       if (forward)
       {
-        U3_LOG_HTTP_DBG ("int received " + syn::RuntimeEvent::gen_get_mid ());
         auto* props = ::libs::iproperties::helpers::cast_event< syn::RuntimeEvent > (msg);
         ::libs::utility::checks::throw_ifn (props);
         process_runtime (props);
@@ -150,7 +149,6 @@ HttpModule::update_catch_funcs_int ()
 
   int_catch_funcs_[syn::MemResourceHttpEvent::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const syn::StateProcessEventExt& process_state) {
-      U3_LOG_HTTP_DBG ("int received " + syn::MemResourceHttpEvent::gen_get_mid ());
       auto* props = ::libs::iproperties::helpers::cast_event< syn::MemResourceHttpEvent > (msg);
       ::libs::utility::checks::throw_ifn (props);
       process_mem_resource (props);

@@ -35,15 +35,15 @@ struct IndexDataFileState final {
       return false;
     }
 
-    ::libs::utility::checks::throw_ifn (indx_data_file_ <= consts::max_count_session_data_files, VTOLOG (indx_data_file_));
-    ::libs::utility::checks::throw_ifn (count_fragments_ <= consts::max_count_fragments_session_data_file, VTOLOG (count_fragments_));
-    ::libs::utility::checks::throw_ifn (count_fragments_ <= off_fragments_.size (), VTOLOG (count_fragments_));
+    ::libs::utility::checks::throw_ifn (indx_data_file_ <= consts::max_count_session_data_files, U3_FORMAT ("{}", indx_data_file_));
+    ::libs::utility::checks::throw_ifn (count_fragments_ <= consts::max_count_fragments_session_data_file, U3_FORMAT ("{}", count_fragments_));
+    ::libs::utility::checks::throw_ifn (count_fragments_ <= off_fragments_.size (), U3_FORMAT ("{}", count_fragments_));
     return true;
   }
 
-  consts::consts_val_type indx_data_file_  = invalid_indx;   //< [0..max_count_session_data_files)
-  consts::consts_val_type count_fragments_ = 0;              //< [0..max_count_fragments_session_data_file)
-  fragments_element_type  off_fragments_;                    //<
+  consts::consts_val_type indx_data_file_ { invalid_indx };   //< [0..max_count_session_data_files)
+  consts::consts_val_type count_fragments_ { 0 };             //< [0..max_count_fragments_session_data_file)
+  fragments_element_type  off_fragments_;                     //<
 
   private:
   friend class boost::serialization::access;

@@ -21,10 +21,9 @@ void
 signal_stop_process (int signal)
 {
   static std::atomic< std::uint32_t > stop_counter = 0;
-  U3_CALL_TRACE_INFO_DBG (FVTOLOG (signal) + VTOLOG (stop_counter));
   if (::modules::mappl::g_module_appl && ::modules::mappl::g_module_appl->impl () && 0 == stop_counter)
   {
-    U3_XLOG_MARK ("start stoping process:" + VTOLOG (signal));
+    U3_XLOG_MARK ("start stoping process, signal:{}", signal);
     ::modules::mappl::g_module_appl->impl ()->appl_force_stop ();   // Без затей и блокировок, просто выставляем флаг.
   }
   if (stop_counter > 32)
@@ -39,14 +38,11 @@ void
 signal_abort_process (int signal)
 {
   static std::atomic< std::uint32_t > abort_counter = 0;
-  if (0 == abort_counter % 1024)
+  if (0 == abort_counter % 32)
   {
-    U3_XLOG_WARN ("signal_abort_process" + VTOLOG (signal) + VTOLOG (abort_counter));
-#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
-    std::abort ();   // debug
-#else
+    U3_XLOG_WARN ("signal_abort_process {} counter:{}", signal, abort_counter.load ());
+    // std::abort ();   // debug
     std::exit (signal);
-#endif
   }
   ++abort_counter;
 }
@@ -77,7 +73,6 @@ prepare_process ()
 #endif
 
 #if defined(U3_OS_WIN32_DESKTOP) || defined(U3_OS_GNU_LINUX) || defined(U3_OS_RASPBERRY) || defined(U3_OS_MACX_DESKTOP) || defined(U3_OS_ORANGE_PI)
-  U3_XLOG_DBG ("update ::libs::properties::consts::keys::shared_os_property");
   istorage->set_prop (::libs::properties::consts::keys::shared_os_property, std::make_shared< ::modules::mappl::syn::ISystemProperty > ());
   istorage->set_prop (::libs::properties::consts::keys::specific_os_property, std::make_shared< ::libs::iproperties::vers::system::SystemWin32Property > ());
 #elif defined(U3_OS_ANDROID)
@@ -91,7 +86,7 @@ void
 init_process (int argc, char* argv[])
 {
   const std::string curfolder = ::libs::iproperties::appl_paths::get_current_folder ();
-  U3_CALL_TRACE_INFO (FVTOLOG (argc) + TOLOG (curfolder));
+  U3_CALL_TRACE_INFO ("argc:{} curfolder{}", argc, curfolder);
   ::modules::mappl::up_links (curfolder, argc, argv);
   ::libs::utility::checks::throw_ifn (::modules::mappl::check_process (), "call check_process");
 
@@ -176,22 +171,22 @@ main_impl (int argc, char* argv[]) -> int
   }
   catch (boost::interprocess::interprocess_exception& excpt)
   {
-    U3_XLOG_ERROR ("exception interprocess: " + std::string (boost::diagnostic_information (excpt)));
+    U3_XLOG_ERROR ("exception interprocess:{}", std::string (boost::diagnostic_information (excpt)));
     ret = -1;
   }
   catch (boost::exception& excpt)
   {
-    U3_XLOG_ERROR ("exception boost: " + std::string (boost::diagnostic_information (excpt)));
+    U3_XLOG_ERROR ("exception boost:{}", std::string (boost::diagnostic_information (excpt)));
     ret = -2;
   }
   catch (std::exception& excpt)
   {
-    U3_XLOG_ERROR ("exception: " + std::string (excpt.what ()));
+    U3_XLOG_ERROR ("what:{}", excpt.what ());
     ret = -3;
   }
   catch (...)
   {
-    U3_XLOG_ERROR ("unknown exception");
+    U3_XLOG_ERROR ("what:...");
     ret = -4;
   }
 

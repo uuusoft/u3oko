@@ -18,7 +18,6 @@ tag_invoke (::boost::json::value_from_tag, ::boost::json::value& jvs, const Code
 auto
 tag_invoke (::boost::json::value_to_tag< CodecModes >, const ::boost::json::value& jvs) -> CodecModes
 {
-  U3_XLOG_DEV ("CodecModes::tag_invoke::load::begin");
   // const ::boost::json::object& obj = jvs.as_object ();
   return ::libs::utility::casts::static_cast_helper< CodecModes > (::libs::utility::json::get_uint32 (jvs.at ("codec_mode")));
 }

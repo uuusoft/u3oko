@@ -298,7 +298,7 @@ Filter::itransform ()
     convert_bufs_from_y16 ();
     break;
   default:
-    U3_LOG_DATA_ERROR ("unknown raw format - skip convert: " + ::libs::utility::uids::helpers::get_readable_name (format));
+    U3_LOG_DATA_ERROR ("unknown raw format - skip convert:{}", ::libs::utility::uids::helpers::get_readable_name (format));
     return;
   }
 

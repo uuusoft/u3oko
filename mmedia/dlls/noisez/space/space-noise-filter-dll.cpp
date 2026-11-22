@@ -53,7 +53,7 @@ Filter::update_impl ()
     return;
   }
 
-  U3_LOG_DATA_WRN ("unknown type filter impl" + TOLOG (name));
+  U3_LOG_DATA_WRN ("unknown type filter impl:{}", name);
   impl_ = std::make_unique< impl::rang::RangFilter > ();
 }
 

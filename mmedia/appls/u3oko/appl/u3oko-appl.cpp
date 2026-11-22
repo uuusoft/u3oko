@@ -45,7 +45,7 @@ U3OkoAppl::update_catch_funcs_int ()
     if (forward)
     {
       auto* rmsg = ::libs::iproperties::helpers::cast_event< syn::CommandCodeEvent > (msg);
-      U3_LOG_APPL_DEV ("catch ::libs::events_gui::events::CommandCodeEvent, " + rmsg->get_code ());
+      U3_LOG_APPL_DEV ("catch CommandCodeEvent code:{}", rmsg->get_code ());
       stop_module_ = true;
       return {};
     }

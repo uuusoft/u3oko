@@ -13,7 +13,7 @@ namespace libs::iproperties::appl_paths
 void
 AppPaths::load_paths (const ::libs::link::appl::InitApplication& appl_info)
 {
-  U3_XLOG_MARK ("update paths" + TOLOG (appl_info.appl_name_) + TOLOG (appl_info.company_name_) + TOLOG (appl_info.service_name_))
+  U3_XLOG_MARK ("update paths {} {} {}", appl_info.appl_name_, appl_info.company_name_, appl_info.service_name_);
   ::libs::utility::checks::throw_ifn (appl_info.check (), "failed appl_info.check");
 
   const auto appl_subfolder = ::libs::utility::files::make_path (appl_info.company_name_, appl_info.appl_name_);
@@ -48,7 +48,7 @@ AppPaths::load_paths (const ::libs::link::appl::InitApplication& appl_info)
 
   for (const auto& path : paths_)
   {
-    U3_XLOG_DBG ("create path" + TOLOG (path.second));
+    U3_XLOG_DBG ("create path: {}", path.second);
     ::libs::utility::files::create_folder (path.second);
   }
 }
@@ -118,7 +118,7 @@ AppPaths::get_path_suffix (const Paths& type) const -> std::string
     return "unknown";
   }
 
-  U3_XLOG_ERROR ("unknown get suffix for " + to_string (type));
+  U3_XLOG_ERROR ("unknown get suffix:{}", to_string (type));
   return {};
 }
 
@@ -155,7 +155,7 @@ AppPaths::get_path (const Paths& type) const -> std::string
     return {};
   }
 
-  U3_XLOG_ERROR ("get path for " + to_string (type));
+  U3_XLOG_ERROR ("get path for:{}", to_string (type));
   return {};
 }
 }   // namespace libs::iproperties::appl_paths

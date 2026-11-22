@@ -4,9 +4,9 @@
 \date       23.08.2018
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
-#include "../module-http-includes_int.hpp"
+#include "-http-module-includes-int.hpp"
 #include "mmedia/dlls/terminals/video_sender/consts/video-sender-const-vals.hpp"
-#include "http-module-syn.hpp"
+#include "-http-module-syn.hpp"
 #include "http-module.hpp"
 
 namespace modules::mhttp::appl

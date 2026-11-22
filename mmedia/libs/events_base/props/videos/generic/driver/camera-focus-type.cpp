@@ -33,7 +33,7 @@ str2focus (const std::string& str) -> Focus
   auto pval = vals.find (str);
   if (vals.end () == pval)
   {
-    U3_XLOG_WARN ("unknown FocusType str " + str);
+    U3_XLOG_WARN ("unknown FocusType:{}", str);
     return Focus::auto_generic;
   }
   return pval->second;

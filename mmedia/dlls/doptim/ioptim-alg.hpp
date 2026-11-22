@@ -38,7 +38,7 @@ class IOptimAlg
     }
     catch (const std::exception& excpt)
     {
-      U3_LOG_DATA_EXCEPT (excpt.what ());
+      U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
     }
   }
 

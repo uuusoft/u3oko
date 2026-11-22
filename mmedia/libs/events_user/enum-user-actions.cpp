@@ -26,7 +26,7 @@ to_string (const UserActions& val)
   case UserActions::unknown:
     return "unknown";
   }
-  U3_XLOG_WARN ("unknown UserActions" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+  U3_XLOG_WARN ("unknown UserActions:{}",U3_CAST_UINT32_FORCE (val));
   return "xxx";
 }
 #endif

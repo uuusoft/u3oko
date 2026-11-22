@@ -4,14 +4,16 @@
 \author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 */
+
 namespace libs::utility::mem::consts
 {
-inline constexpr std::size_t align_ptr2  = ~U3_CAST_SIZE_T_FORCE (0x1);
-inline constexpr std::size_t align_ptr8  = ~U3_CAST_SIZE_T_FORCE (0x7);
-inline constexpr std::size_t align_ptr16 = ~U3_CAST_SIZE_T_FORCE (0xF);
-inline constexpr std::size_t align_ptr32 = ~U3_CAST_SIZE_T_FORCE (0x1F);
-inline constexpr std::size_t align_ptr64 = ~U3_CAST_SIZE_T_FORCE (0x3F);
+inline constexpr std::size_t align_ptr2 { ~U3_CAST_SIZE_T_FORCE (0x1) };
+inline constexpr std::size_t align_ptr8 { ~U3_CAST_SIZE_T_FORCE (0x7) };
+inline constexpr std::size_t align_ptr16 { ~U3_CAST_SIZE_T_FORCE (0xF) };
+inline constexpr std::size_t align_ptr32 { ~U3_CAST_SIZE_T_FORCE (0x1F) };
+inline constexpr std::size_t align_ptr64 { ~U3_CAST_SIZE_T_FORCE (0x3F) };
 }   // namespace libs::utility::mem::consts
+
 
 namespace libs::utility::mem
 {
@@ -249,7 +251,7 @@ align_value (const TType& val, const TType& align, const bool expand = true)
     align64< TType > (ret, expand);
     break;
   default:
-    ::libs::utility::checks::throw_exception ("invalid align" + VTOLOG (align));
+    ::libs::utility::checks::throw_exception (U3_FORMAT ("invalid align {}", align));
     break;
   }
   return ret;

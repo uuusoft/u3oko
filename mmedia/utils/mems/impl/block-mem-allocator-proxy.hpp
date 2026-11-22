@@ -39,7 +39,7 @@ class BlockMemAllocatorProxy final
   private:
   BlockMemAllocatorProxy (const std::string& dll_path)
   {
-#if (U3_BUILD_MODULES_AS_LIBS == 1)
+#if (U3_BUILD_AS_MONOLITH == 1)
     U3_MARK_UNUSED_HERE (lib_);
     creator_ = create_mem_impl;
 #else

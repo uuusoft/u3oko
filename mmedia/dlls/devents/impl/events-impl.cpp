@@ -19,12 +19,11 @@ EventsImpl::EventsImpl ()
 auto
 EventsImpl::get (const hid_type& eid) -> syn::IEvent::ptr
 {
-  U3_CALL_TRACE_INFO_DBG (FSTOLOG (eid));
   lock_type lock (mtx_);
   auto      itf = gen_func_events_.find (id_event_type { eid });
   if (gen_func_events_.end () == itf)
   {
-    U3_XLOG_ERROR ("func for create event by id not found" + STOLOG (eid));
+    U3_XLOG_ERROR ("func for create event by id not found:{}", eid);
     return {};
   }
 
@@ -36,7 +35,7 @@ EventsImpl::get (const hid_type& eid) -> syn::IEvent::ptr
   // debug
   if (counter_create_events_[id] >= 1024 && 0 == counter_create_events_[id] % 1024)
   {
-    U3_XLOG_MARK ("dllevents" + STOLOG (id) + VTOLOG (counter_create_events_[id]));
+    U3_XLOG_MARK ("dllevents {} counter:{}", id, counter_create_events_[id]);
   }
 #endif
   return ret;
@@ -59,7 +58,7 @@ EventsImpl::dcast (syn::IEvent::raw_ptr src, const hid_type& eid)
   auto itf = cast_func_events_.find (id_event_type { eid });
   if (cast_func_events_.end () == itf)
   {
-    U3_LOG_DATA_ERROR ("func for cast id event not found" + STOLOG (eid) + PTR_TOLOG (this));
+    //U3_LOG_DATA_ERROR ("func for cast id event not found" + STO-=LOG (eid) + PTR_T=OLOG (this));
     return nullptr;
   }
 
@@ -77,7 +76,7 @@ EventsImpl::dcast (syn::IEvent::craw_ptr src, const hid_type& eid) -> const void
   auto itf = cast_func_events_.find (id_event_type { eid });
   if (cast_func_events_.end () == itf)
   {
-    U3_LOG_DATA_ERROR ("func for cast id event not found" + STOLOG (eid) + PTR_TOLOG (this));
+    U3_LOG_DATA_ERROR ("func for cast id event {} not found", eid);
     return nullptr;
   }
 
@@ -102,7 +101,7 @@ EventsImpl::event2xml (syn::IEvent::ptr& src, std::string& xml) -> bool
   }
   catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what () + STOLOG (src->get_mid ()));
+    U3_LOG_DATA_EXCEPT ("what:{} get_mid:{}", excpt.what (), src->get_mid ());
     return false;
   }
   return true;
@@ -123,7 +122,7 @@ EventsImpl::xml2event (const std::string& xml, syn::IEvent::ptr& dst) -> bool
   }
   catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what ());
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
     return false;
   }
   return true;
@@ -141,7 +140,7 @@ EventsImpl::event2bin (syn::IEvent::ptr& src, std::ostream& bin) -> bool
   }
   catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what () + STOLOG (src->get_mid ()));
+    U3_LOG_DATA_EXCEPT ("what:{} get_mid:{}", excpt.what (), src->get_mid ());
     return false;
   }
   return true;
@@ -160,7 +159,7 @@ EventsImpl::bin2event (std::istream& bin, syn::IEvent::ptr& dst) -> bool
   }
   catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what ());
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
     return false;
   }
   return true;
@@ -172,7 +171,7 @@ EventsImpl::dbg_state_dump () -> void
 {
   for (const auto& [eid, efunc] : cast_func_events_)
   {
-    U3_XLOG_DEV (FSTOLOG (eid));
+    U3_XLOG_DEV ("{}", eid);
   }
 }
 

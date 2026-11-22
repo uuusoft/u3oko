@@ -51,7 +51,7 @@ save_jpeg2file (
   }
   catch (const std::exception& excpt)
   {
-    U3_LOG_HTTP_EXCEPT (std::string ("write image, ") + excpt.what ());
+    U3_LOG_HTTP_EXCEPT ("what:{}", excpt.what ());
   }
 }
 }   // namespace modules::mhttp::appl::helpers

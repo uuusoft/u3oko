@@ -30,7 +30,7 @@ to_string (const SyncActions& val) -> std::string
   case SyncActions::unknown:
     return "unknown";
   default:
-    U3_XLOG_ERROR ("unknown SyncActions" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+    U3_XLOG_ERROR ("unknown SyncActions:{}", U3_CAST_UINT32_FORCE (val));
     return "unknown SyncActions";
   }
 }

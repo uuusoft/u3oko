@@ -45,7 +45,7 @@ is_valid_format (const syn::id_val& buf_format) -> bool
       syn::id_val::i420 != buf_format &&
       syn::id_val::rgb32 != buf_format)
   {
-    U3_LOG_DATA_ERROR ("only {rgb24, rgb32, yuy2, yuyv, ycb, nv21, i420} formats accepted");
+    U3_LOG_DATA_ERROR ("only rgb24, rgb32, yuy2, yuyv, ycb, nv21, i420 formats accepted");
     return false;
   }
   return true;
@@ -90,7 +90,7 @@ Filter::transform_int (::libs::icore::impl::base::obj::dll::TransformInfo& info)
   const auto buf_format = sbuf->get_format ();
   if (!is_valid_format (buf_format))
   {
-    U3_LOG_DATA_ERROR ("invalid format recive " + ::libs::utility::uids::helpers::get_readable_name (buf_format));
+    U3_LOG_DATA_ERROR ("invalid format recive:{}", ::libs::utility::uids::helpers::get_readable_name (buf_format));
     return;
   }
 

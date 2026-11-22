@@ -84,7 +84,7 @@ SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo > &sources)
   for (std::size_t idd = 0; idd < consts::max_check_device_count; ++idd)
   {
     props.device_name_ = "video" + std::to_string (idd);
-    U3_LOG_DATA_DEV ("check v4l2 device" + TOLOG (props.device_name_));
+    U3_LOG_DATA_DEV ("check v4l2 device:{}", props.device_name_);
     for (const auto &format : support_formats)
     {
       capture_props.capi_.px_format_ = format;
@@ -99,17 +99,17 @@ SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo > &sources)
             libs::events_media::events::DataSources::video,
             1,
             1);
-          U3_LOG_DATA_DEV ("add v4l2 device" + TOLOG (props.device_name_));
+          U3_LOG_DATA_DEV ("add v4l2 device:{}", props.device_name_);
           break;
         }
       }
       catch (boost::exception &excpt)
       {
-        U3_LOG_DATA_DBG (boost::diagnostic_information (excpt));
+        U3_LOG_DATA_DBG ("{}", boost::diagnostic_information (excpt));
       }
       catch (std::exception &excpt)
       {
-        U3_LOG_DATA_DBG (excpt.what ());
+        U3_LOG_DATA_DBG ("what:{}", excpt.what ());
       }
       catch (...)
       {
@@ -130,7 +130,7 @@ SourceImpl::get_raw_data_int (
     const auto now = std::chrono::high_resolution_clock::now ();
     if (icapture_->is_capture_property_update ())
     {
-      U3_CALL_TRACE_INFO (PTR_TOLOG (srcimpinfo_.capture_props_));
+      U3_CALL_TRACE_INFO ("capture_props:{}", U3_CAST_PTR2INT_FORCE (srcimpinfo_.capture_props_));
       srcimpinfo_.capture_props_ = icapture_->get_capture_property ();
       last_time_restart_         = now - consts::ms_timeout_recreate_device;
       camera_error_              = 0xFF;
@@ -144,7 +144,7 @@ SourceImpl::get_raw_data_int (
     {
       if (recreate_request_now)
       {
-        U3_LOG_DATA_MARK ("START recreate device" + VTOLOG (v4l2_init_) + VTOLOG (camera_error_) + VTOLOG (srcimpinfo_.capture_props_->capi_.fps_));
+        U3_LOG_DATA_MARK ("START recreate device {} error:{} fps:{}", v4l2_init_, camera_error_, srcimpinfo_.capture_props_->capi_.fps_);
         stop_int ();
 
         last_time_restart_ = now;
@@ -167,7 +167,7 @@ SourceImpl::get_raw_data_int (
 
   if (!send_interfaces_ && events)
   {
-    U3_LOG_DATA_DEV ("send interface" + VTOLOG (send_interfaces_));
+    U3_LOG_DATA_DEV ("send interface:{}", send_interfaces_);
     {
       auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::InterfCorrectImageEvent > ();
       revnt->set_interface (icorrection_);
@@ -181,7 +181,6 @@ SourceImpl::get_raw_data_int (
       events->push_back (evnt);
     }
     send_interfaces_ = true;
-    U3_LOG_DATA_DATA ("send InterfCorrectImageEvent, InterfCaptureImageEvent");
   }
 
   if (!v4l2_init_)
@@ -249,7 +248,7 @@ SourceImpl::init_device (const ::dlls::sources::gen_lib::SourceImplInfo &info) -
   }
   catch (const std::exception &excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what ());
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
     return false;
   }
   return v4l2_init_;

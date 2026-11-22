@@ -18,7 +18,7 @@ std::atomic< std::uint32_t > CallerImpl::impl_counter_ = 0;
 CallerImpl::CallerImpl ()
 {
   lock_type lock (mtx_);
-  ::libs::utility::checks::throw_ifn (impl_counter_ >= 0 && impl_counter_ <= 1, VTOLOG (impl_counter_));
+  ::libs::utility::checks::throw_ifn (impl_counter_ >= 0 && impl_counter_ <= 1, U3_FORMAT ("{}", impl_counter_.load ()));
   ++impl_counter_;
   max_threads_ = 1;
   create_threads ();
@@ -75,7 +75,13 @@ get_thread_per_height (
       }
 
       selected_src_height = src.height_;
-      ::libs::optim::mcalls::helpers::split_height (athreads, func.src_align_.ay_, selected_src_height, thread_per_height_src);
+
+      ::libs::optim::mcalls::helpers::split_height (
+        athreads,
+        func.src_align_.ay_,
+        selected_src_height,
+        thread_per_height_src);
+
       find_fulled_buf = true;
       break;
     }
@@ -198,7 +204,9 @@ CallerImpl::mthreads_call_int (
     call.params_ = info.params_;
   }
 
-  ::libs::utility::checks::throw_ifn (info.dsts_.size () || info.srcs_.size (), "useless call without data" + VTOLOG (info.dsts_.size ()) + VTOLOG (info.srcs_.size ()));
+  ::libs::utility::checks::throw_ifn (
+    info.dsts_.size () || info.srcs_.size (),
+    U3_FORMAT ("useless call without data {} {}", info.dsts_.size (), info.srcs_.size ()));
 
   std::uint32_t thread_per_height   = 0;
   std::uint32_t selected_src_height = 0;
@@ -343,11 +351,11 @@ CallerImpl::stop_and_wait_threads ()
   }
   catch (const std::exception& excpt)
   {
-    U3_XLOG_ERROR (excpt.what ());
+    U3_XLOG_ERROR ("what:{}", excpt.what ());
   }
   catch (...)
   {
-    U3_XLOG_ERROR ("...");
+    U3_XLOG_ERROR ("what:...");
   }
 
   max_threads_ = 0;
@@ -364,7 +372,6 @@ CallerImpl::create_threads ()
   threads_.clear ();
   threads_.reserve (max_threads_);
 
-  U3_XLOG_DBG ("CallerImpl::create_threads::" + VTOLOG (max_threads_));
   for (std::uint16_t thread_indx = 0; thread_indx < max_threads_; ++thread_indx)
   {
     threads_.emplace_back (
@@ -408,11 +415,11 @@ CallerImpl::thread_func_impl (const std::uint32_t thread_indx)
     }
     catch (boost::exception& excpt)
     {
-      U3_LOG_DATA_ERROR ("CallerImpl::thread_func_impl: exception " + std::string (boost::diagnostic_information_what (excpt)));
+      U3_LOG_DATA_ERROR ("CallerImpl::thread_func_impl: exception:{}", std::string (boost::diagnostic_information_what (excpt)));
     }
     catch (std::exception& excpt)
     {
-      U3_LOG_DATA_ERROR ("CallerImpl::thread_func_impl: exception " + std::string (excpt.what ()) + TOLOG (calls_[thread_indx].func_id_) + VTOLOG (thread_indx));
+      U3_LOG_DATA_ERROR ("CallerImpl::thread_func_impl: exception:{}", excpt.what ());
     }
     catch (...)
     {

@@ -33,10 +33,14 @@ hdc2buf_alu (Hdc2BmpCallInfo& info)
   // проверка полученных параметров
   const std::int32_t loc_width  = bitmap_info.bmWidth;
   const std::int32_t loc_height = bitmap_info.bmHeight;
-  ::libs::utility::platforms::win32::throw_ifn (loc_width > 0 && loc_height > 0, "source info" + VTOLOG (loc_width) + VTOLOG (loc_height));
+  ::libs::utility::platforms::win32::throw_ifn (
+    loc_width > 0 && loc_height > 0,
+    U3_FORMAT ("source info {} {}", loc_width, loc_height));
 
   const std::int32_t loc_support_hdc = GetDeviceCaps (info.source_hdc_, RASTERCAPS);
-  ::libs::utility::platforms::win32::throw_ifn (loc_support_hdc & (RC_BITBLT | RC_DI_BITMAP), "raster caps RC_BITBLT | RC_DI_BITMAP not support");
+  ::libs::utility::platforms::win32::throw_ifn (
+    loc_support_hdc & (RC_BITBLT | RC_DI_BITMAP),
+    "raster caps RC_BITBLT | RC_DI_BITMAP not support");
 
   // create temporarely hdc for system convert to RGB24
   ::libs::utility::platforms::win32::HandlerGdiObj< HBITMAP > temp_hbitmap;   // должен быть до temp_hdc

@@ -26,7 +26,7 @@ save_obj (const ObjType& obj, const std::string& path2file)
 
   if (!file.is_open ())
   {
-    U3_XLOG_ERROR ("open file for " + std::string (typeid (ObjType).name ()) + "save path=" + path2file);
+    U3_XLOG_ERROR ("open file for {} {}", typeid (ObjType).name (), path2file);
     return false;
   }
 
@@ -41,7 +41,7 @@ save_obj (const ObjType& obj, const std::string& path2file)
   }
   catch (std::exception& excpt)
   {
-    U3_LOG_STORAGE_EXCEPT (std::string (typeid (ObjType).name ()) + ", " + excpt.what () + TOLOG (path2file));
+    U3_LOG_STORAGE_EXCEPT ("typeid:{} what:{} path2file:{}", typeid (ObjType).name (), excpt.what (), path2file);
     return false;
   }
   file.flush ();

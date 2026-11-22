@@ -34,12 +34,12 @@ struct BaseHeaderFrame final {
   {
     if (consts::id_frame != id_)
     {
-      U3_XLOG_WARN ("invalid id compress frame" + VTOLOG (id_) + "!=" + VTOLOG (consts::id_frame));
+      U3_XLOG_WARN ("invalid id compress frame:{} :{}", id_, consts::id_frame);
       return false;
     }
     if (size_ < sizeof (BaseHeaderFrame))
     {
-      U3_XLOG_WARN ("invalid size (too small) compress frame" + VTOLOG (size_) + "!=" + VTOLOG (sizeof (BaseHeaderFrame)));
+      U3_XLOG_WARN ("invalid size (too small) compress frame:{} :{}", size_, sizeof (BaseHeaderFrame));
       return false;
     }
     if (!sinfo_.check ())
@@ -50,12 +50,12 @@ struct BaseHeaderFrame final {
     return true;
   }
 
-  std::uint64_t                      id_            = consts::id_frame;                              //< Идентификатор структуры, в принципе избыточен, константа. Добавлен для восстановления битых архивов
-  Frames                             style_         = Frames::unknown;                               //< Тип сжатого кадра (I/P/B/etc), лежит в узком диапазоне значений
-  std::uint32_t                      size_          = 0;                                             //< Общий размер заголовка сжатого кадра, лежит в узком диапазоне значений
-  std::uint32_t                      size_compress_ = 0;                                             //< Размер сжатых данных, которые идут после данного заголовка
-  libs::utility::uids::minor::id_val guid_          = libs::utility::uids::minor::id_val::unknown;   //< Идентификатор кодека, переменный. Идет последним, чтобы точнее разбирать битые архивы
-  FrameDims                          sinfo_;                                                         //< Геометрические размеры кадра, лежит в узком диапазоне значений
+  std::uint64_t                      id_ { consts::id_frame };                                //< Идентификатор структуры, в принципе избыточен, константа. Добавлен для восстановления битых архивов
+  Frames                             style_ { Frames::unknown };                              //< Тип сжатого кадра (I/P/B/etc), лежит в узком диапазоне значений
+  std::uint32_t                      size_ { 0 };                                             //< Общий размер заголовка сжатого кадра, лежит в узком диапазоне значений
+  std::uint32_t                      size_compress_ { 0 };                                    //< Размер сжатых данных, которые идут после данного заголовка
+  libs::utility::uids::minor::id_val guid_ { libs::utility::uids::minor::id_val::unknown };   //< Идентификатор кодека, переменный. Идет последним, чтобы точнее разбирать битые архивы
+  FrameDims                          sinfo_;                                                  //< Геометрические размеры кадра, лежит в узком диапазоне значений
 };
 
 inline void

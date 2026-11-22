@@ -36,7 +36,7 @@ TestStorageImpl::change_state_int (const ImplRuns& state) -> bool
     break;
   }
   default:
-    U3_LOG_DATA_ERROR ("unknown type ImplRuns " + to_string (state));
+    U3_LOG_DATA_ERROR ("unknown type ImplRuns:{}", to_string (state));
     return false;
   }
   return true;

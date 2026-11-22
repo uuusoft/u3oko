@@ -6,7 +6,7 @@
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
 #include "mmedia/libs/events/includes.hpp"
-#include "mmedia/libs/link/_make/libs-link-includes.hpp"
+#include "mmedia/libs/link/libs-link-includes.hpp"
 #include "mmedia/libs/core/libs-cores-core-includes.hpp"
 #include "mmedia/libs/icore/libs-icore-includes.hpp"
 #include "icore-proxy.hpp"
@@ -186,6 +186,6 @@ get_create_data_path_module_func (const std::string& plib_id) -> std::function< 
     return create_impl_vgd_vgen_motion;
   }
 
-  ::libs::utility::checks::throw_exception ("find create module funct" + TOLOG (lib_id) + TOLOG (plib_id));
+  ::libs::utility::checks::throw_exception (U3_FORMAT ("find create module funct {} {}", lib_id, plib_id));
 }
 }   // namespace libs::proxy

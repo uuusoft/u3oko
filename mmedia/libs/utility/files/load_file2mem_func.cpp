@@ -23,12 +23,12 @@ load_file2mem (
 
   if (!mem_allocator)
   {
-    U3_XLOG_ERROR ("load_file2mem: empty mem allocator, skip path=" + file_path);
+    U3_XLOG_ERROR ("empty allocator:{}", file_path);
     return false;
   }
   if (!file.is_open ())
   {
-    U3_XLOG_ERROR ("load_file2mem: open file for load, skip path=" + file_path);
+    U3_XLOG_ERROR ("open file:{}", file_path);
     return false;
   }
 
@@ -61,7 +61,7 @@ save_mem2file (
 
   if (!file.is_open ())
   {
-    U3_XLOG_ERROR ("save_mem2file: open file for save path=" + file_path);
+    U3_XLOG_ERROR ("open file:{}", file_path);
     return false;
   }
 
@@ -87,7 +87,7 @@ get_file_size (const std::string& path2file) -> std::size_t
 
   if (!file.is_open ())
   {
-    U3_XLOG_WARN ("load_file2mem: to open file, skip path" + path2file);
+    U3_XLOG_WARN ("open file, skip path {}", path2file);
     return 0;
   }
   return file.tellg ();

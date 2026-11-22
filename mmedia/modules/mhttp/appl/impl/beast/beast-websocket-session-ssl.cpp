@@ -1,13 +1,13 @@
 /**
-\file       beast-websocket-session.cpp
+\file       beast-websocket-session-ssl.cpp
 \author     Erashov Anton erashov2026@proton.me
 \date       31.03.2026
 \original   https://github.com/boostorg/beast/blob/develop/example/http/server/async/http_server_async.cpp
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
-#include "../../../module-http-includes_int.hpp"
+#include "../../-http-module-includes-int.hpp"
 #include "mmedia/dlls/terminals/video_sender/consts/video-sender-const-vals.hpp"
-#include "../../http-module-syn.hpp"
+#include "../../-http-module-syn.hpp"
 
 namespace modules::mhttp::impl::beast
 {
@@ -15,19 +15,20 @@ websocket_session_ssl::websocket_session_ssl (
   stream_type&&              socket,
   boost::asio::ssl::context& ctx,
   shared_state_ptr_type      shared_state) :
+
   ws_ (std::move (socket)),
   ctx_ (ctx),
   shared_state_ (std::move (shared_state)),
   size_pending_send_ (0)
 {
-  U3_XLOG_DEV ("websocket_session_ssl::on_create" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)));
+  U3_CALL_TRACE;
 }
 
 
 websocket_session_ssl::~websocket_session_ssl ()
 {
-  U3_XLOG_DEV ("websocket_session_ssl::o_destroy" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)));
-  // Remove this session from the list of active sessions
+  U3_CALL_TRACE;
+  //  Remove this session from the list of active sessions
   shared_state_->leave (this);
 }
 
@@ -98,7 +99,7 @@ websocket_session_ssl::on_handshake (boost::beast::error_code ec)
 void
 websocket_session_ssl::on_accept (boost::beast::error_code ec)
 {
-  U3_XLOG_DEV ("websocket_session_ssl::on_accept" + VTOLOG (::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (this)));
+  U3_CALL_TRACE;
   if (ec)
   {
     return u3beast_fail (ec, "websocket_session_ssl::accept");
@@ -127,9 +128,10 @@ websocket_session_ssl::do_read ()
 
 
 void
-websocket_session_ssl::on_read (boost::beast::error_code ec, std::size_t bytes_transferred)
+websocket_session_ssl::on_read (
+  boost::beast::error_code ec,
+  std::size_t              bytes_transferred)
 {
-  // U3_XLOG_DEV ("websocket_session_ssl::on_read" + VTOLOG (bytes_transferred));
   boost::ignore_unused (bytes_transferred);
   // This indicates that the websocket_session_ssl was closed
   if (ec == appl::syn::websocket::error::closed)
@@ -199,7 +201,6 @@ websocket_session_ssl::on_write (
   boost::beast::error_code ec,
   std::size_t              bytes_transferred)
 {
-  // U3_XLOG_DEV ("websocket_session_ssl::on_write" + VTOLOG (bytes_transferred));
   //  boost::ignore_unused (bytes_transferred);
   if (ec)
   {
@@ -210,7 +211,11 @@ websocket_session_ssl::on_write (
   if (!send_queue_.empty ())
   {
     size_pending_send_ -= U3_CAST_INT64 (send_queue_.front ()->size ());
-    ::libs::utility::checks::throw_ifn (size_pending_send_ >= 0, "invalid pending data size" + VTOLOG (size_pending_send_) + VTOLOG (bytes_transferred));
+
+    ::libs::utility::checks::throw_ifn (
+      size_pending_send_ >= 0,
+      U3_FORMAT ("invalid pending data size {} {}", size_pending_send_.load (), bytes_transferred));
+
     send_queue_.erase (send_queue_.begin ());
   }
 

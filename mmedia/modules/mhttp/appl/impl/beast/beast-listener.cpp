@@ -5,9 +5,9 @@
 \original   https://github.com/boostorg/beast/blob/develop/example/http/server/async/http_server_async.cpp
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
-#include "../../../module-http-includes_int.hpp"
+#include "../../-http-module-includes-int.hpp"
 #include "mmedia/dlls/terminals/video_sender/consts/video-sender-const-vals.hpp"
-#include "../../http-module-syn.hpp"
+#include "../../-http-module-syn.hpp"
 
 namespace modules::mhttp::impl::beast
 {
@@ -17,6 +17,7 @@ listener::listener (
   const boost::asio::ip::tcp::endpoint& endpoint,
   handler_func_type                     http_handler,
   shared_state_ptr_type                 shared_state) :
+
   ioc_ (ioc),
   ctx_ (ctx),
   acceptor_ (boost::asio::make_strand (ioc)),
@@ -24,7 +25,7 @@ listener::listener (
   shared_state_ (std::move (shared_state)),
   ssl_enable_ (endpoint.port () == appl::consts::ssl_port)
 {
-  U3_XLOG_DBG ("listener::listener");
+  U3_CALL_TRACE;
   boost::beast::error_code ec;
   if (acceptor_.open (endpoint.protocol (), ec), ec)
   {
@@ -79,13 +80,13 @@ listener::on_accept (
   boost::beast::error_code     ec,
   boost::asio::ip::tcp::socket socket)
 {
+  U3_CALL_TRACE;
   if (ec)
   {
     u3beast_fail (ec, "listener::on_acceptaccept");
     return;   // To avoid infinite loop
   }
 
-  U3_XLOG_DEV ("listener::on_accept" + PTR_TOLOG (this) + VTOLOG (ssl_enable_));
   // Create the session and run it
   if (ssl_enable_)
   {

@@ -42,14 +42,18 @@ IMemBuf::set_mem_var_int (const MemVars& type, mem_var_type val)
     if (val > 0)
     {
       ::libs::utility::checks::throw_ifn (val || raw_block_, "try set size_data to empty raw_block_");
-      ::libs::utility::checks::throw_ifn (val <= raw_block_->get_capacity (), VTOLOG (val) + VTOLOG (raw_block_->get_capacity ()));
+      ::libs::utility::checks::throw_ifn (
+        val <= raw_block_->get_capacity (),
+        U3_FORMAT ("{} {}", val, raw_block_->get_capacity ()));
     }
     break;
   case MemVars::offset_data:
-    ::libs::utility::checks::throw_ifn (val < (*this)[MemVars::size_buf] || 0 == val, "offset large size" + VTOLOG (val) + VTOLOG ((*this)[MemVars::size_buf]));
+    ::libs::utility::checks::throw_ifn (
+      val < (*this)[MemVars::size_buf] || 0 == val,
+      U3_FORMAT ("offset large size {} {}", val, (*this)[MemVars::size_buf]));
     break;
   case MemVars::size_buf:
-    U3_XLOG_ERROR ("try set size_buf" + VTOLOG (val));
+    U3_XLOG_ERROR ("try set size_buf:{}", val);
     return;
   default:
     break;
@@ -96,7 +100,7 @@ IMemBuf::clone_int (IBuf::craw_ptr isrc, float percent)
   ::libs::utility::checks::throw_ifn (src);
   if (this == src)
   {
-    U3_XLOG_WARN ("try clone itself" + PTR_TOLOG (this));
+    U3_XLOG_WARN ("try clone itself");
     return;
   }
 
@@ -114,7 +118,7 @@ IMemBuf::clone_int (IBuf::craw_ptr isrc, float percent)
 
   if (!src->raw_block_)
   {
-    U3_XLOG_WARN ("try empty clone" + PTR_TOLOG (this));
+    U3_XLOG_WARN ("try empty clone");
     return;
   }
 
@@ -129,7 +133,7 @@ IMemBuf::swap_int (IBuf& isrc)
   auto& src = dynamic_cast< IMemBuf& > (isrc);
   if (this == &src)
   {
-    U3_XLOG_WARN ("try swap itself" + PTR_TOLOG (this));
+    U3_XLOG_WARN ("try swap itself");
     return;
   }
 

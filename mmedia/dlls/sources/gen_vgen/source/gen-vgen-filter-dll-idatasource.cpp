@@ -23,13 +23,12 @@ Filter::fill_buf (
   std::unique_lock< InfoFilter::sync_type > lock (finfo->wdmtx_, consts::ms_wait_capture_device);
   if (!lock.owns_lock ())
   {
-    U3_LOG_DATA_ERROR ("failed acquired mutex" + VTOLOG (consts::ms_wait_capture_device.count ()) + "ms");
+    U3_LOG_DATA_ERROR ("failed acquired mutex {} ms", consts::ms_wait_capture_device.count ());
     return;
   }
 
   if (!finfo->impl_frames_.empty ())
   {
-    U3_LOG_DATA_DBG ("copy from finfo->impl_frames_ to graph" + VTOLOG (finfo->impl_frames_.size ()));
     {
       bool  set_raw_as_base = false;
       auto& framefront      = *finfo->impl_frames_.front ();
@@ -43,8 +42,7 @@ Filter::fill_buf (
         {
           continue;
         }
-        U3_LOG_DATA_DBG ("get full buf from source" + VTOLOG (set_raw_as_base) + STOLOG (keybuf.first));
-        //  Сырой (не пустой) буфер имеет приоритет.
+        //   Сырой (не пустой) буфер имеет приоритет.
         if (!set_raw_as_base)
         {
           bufs->set_base_index (keybuf.first);
@@ -70,7 +68,7 @@ Filter::fill_buf (
       auto* devent = ::libs::iproperties::helpers::cast_event< syn::InterfCaptureImageEvent > (event);
       if (devent)
       {
-        U3_LOG_DATA_MARK ("recive InterfCaptureImageEvent -> update properties" + VTOLOG (devent->is_active ()));
+        U3_LOG_DATA_MARK ("recive InterfCaptureImageEvent -> update properties:{}", devent->is_active ());
         finfo_.capture_impl_ = devent->is_active () ? devent->get_interface () : finfo->null_impl_;
         ::libs::utility::checks::throw_ifn (!finfo_.capture_impl_.expired ());
         if (auto impl = finfo_.capture_impl_.lock ())

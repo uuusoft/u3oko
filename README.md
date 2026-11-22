@@ -65,10 +65,10 @@ sudo apt install -y libstdc++-10-dev:armhf
 
 ### Сборка:
 
-Параметры конфигурации сборки в файле ```mmedia/build/cmake/vals/env-command-line-vals.cmake```
+Параметры конфигурации сборки в файле ```mmedia/.ci/cmake/vals/env-command-line-vals.cmake```
 ```
 git clone https://github.com/uuusoft/u3oko.git
-cd u3oko/mmedia/build/cmds
+cd u3oko/mmedia/.ci/cmds
 ./u3oko-linux-rel-lib-none-clang-ninja.sh
 ./u3oko-linux-dbg-lib-none-clang-ninja.sh
 ./u3oko-orangepi-rel-lib-none-clang.sh

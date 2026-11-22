@@ -161,7 +161,7 @@ MjpegImpl::decode_int (
 
   if (compsize < sizeof (syn::HeaderIFrame) || !head->check ())
   {
-    U3_XLOG_ERROR ("data less header" + VTOLOG (compsize) + VTOLOG (sizeof (syn::HeaderIFrame)));
+    U3_XLOG_ERROR ("data less header:{} {}", compsize, sizeof (syn::HeaderIFrame));
     U3_XLOG_ERROR ("invalid header compress frame");
     return false;
   }
@@ -169,7 +169,7 @@ MjpegImpl::decode_int (
   auto* const dbuf = (*dst)[props_.bufs_.indx_dbuf_];
   if (!dbuf)
   {
-    // U3_LOG_DATA_WRN ("receive invalid destination buf, skip" + STOLOG (props_.bufs_.indx_dbuf_));
+    // U3_LOG_DATA_WRN ("receive invalid destination buf, skip" + STOL-OG (props_.bufs_.indx_dbuf_));
     return false;
   }
 

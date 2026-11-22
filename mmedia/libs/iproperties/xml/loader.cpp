@@ -61,7 +61,7 @@ Loader::load (
   }
   catch (const std::exception& excpt)
   {
-    U3_XLOG_ERROR (std::string ("exception Loader::load:") + excpt.what ());
+    U3_XLOG_ERROR ("what:{}", excpt.what ());
   }
 }
 
@@ -72,7 +72,6 @@ Loader::get_enum (
   syn::NodeEnumFiles&      fenum,
   const std::string&       mask)
 {
-  U3_XLOG_DBG ("Loader::get_enum" + TOLOG (to_string (path_type)) + VTOLOG (iinfo_.disable_change_search_rule_));
   impl_->get_enum (path_type, fenum, mask);
   if (iinfo_.disable_change_search_rule_)
   {

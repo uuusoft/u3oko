@@ -22,7 +22,7 @@ str2using_path (const std::string& str) -> PathUsings
   auto find = strs2paths.find (str);
   if (strs2paths.end () == find)
   {
-    U3_XLOG_WARN ("convert str2using_path " + str);
+    U3_XLOG_WARN ("convert str2using_path:{}", str);
     return PathUsings::disabled;
   }
   return find->second;

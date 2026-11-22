@@ -96,7 +96,7 @@ struct LinksApplication final {
       module_links_[key] = val;
       if (debug)
       {
-        U3_XLOG_DEV ("copy link" + TOLOG (to_string (key)) + PTR_TOLOG (module_links_[key].lock ().get ()) + PTR_TOLOG (this));
+        U3_XLOG_DEV ("copy link:{}", to_string (key));
       }
     }
   }
@@ -119,7 +119,7 @@ struct LinksApplication final {
   {
     std::scoped_lock lock (threadsan_mtx_);
     auto             finger = module_links_.find (key);
-    ::libs::utility::checks::test (finger != module_links_.end (), "failed get link to module" + TOLOG (to_string (key)) + PTR_TOLOG (this));
+    ::libs::utility::checks::test (finger != module_links_.end (), U3_FORMAT ("failed get link to module {}", to_string (key)));
     return finger != module_links_.end () ? finger->second : TTLinkPtr ();
   }
 
@@ -135,7 +135,7 @@ struct LinksApplication final {
   {
     std::scoped_lock lock (threadsan_mtx_);
     auto             finger = module_links_.find (key);
-    ::libs::utility::checks::test (finger != module_links_.end (), "failed get link to module" + TOLOG (to_string (key)) + PTR_TOLOG (this));
+    ::libs::utility::checks::test (finger != module_links_.end (), U3_FORMAT ("failed get link to module {}", to_string (key)));
     if (finger != module_links_.end ())
     {
       finger->second.reset ();

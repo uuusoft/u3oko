@@ -35,7 +35,7 @@ get_sort_by_time_folders (const std::string& path2sessions) -> std::vector< std:
     // const std::size_t           time = ::boost::filesystem::last_write_time (path, error);
 
     ::libs::utility::checks::assert_soft (!error, error.to_string ());
-    ::libs::utility::checks::assert_soft (time, VTOLOG (time));
+    ::libs::utility::checks::assert_soft (time, U3_FORMAT ("{}", time));
 
     sort_files.insert ({ time, file.name_ });
   }

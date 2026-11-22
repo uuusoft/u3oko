@@ -40,7 +40,7 @@ safe_delete_gdi_object (TTGraphObj& x)
 
   if (!DeleteObject (x))
   {
-    U3_XLOG_ERROR ("DeleteObject" + VTOLOG (GetLastError ()));
+    U3_XLOG_ERROR ("DeleteObject:{}", GetLastError ());
     return false;
   }
 

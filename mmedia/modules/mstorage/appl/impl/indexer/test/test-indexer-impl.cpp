@@ -26,7 +26,7 @@ TestIndexerImpl::change_state_int (const ImplRuns& state) -> bool
     save_state ();
     break;
   default:
-    U3_XLOG_WARN ("unknown change state" + VTOLOG (U3_CAST_UINT32_FORCE (state)));
+    U3_XLOG_WARN ("unknown change state:{}", U3_CAST_UINT32_FORCE (state));
     return false;
   }
   return true;

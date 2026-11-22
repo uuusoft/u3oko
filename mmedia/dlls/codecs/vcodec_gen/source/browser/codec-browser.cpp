@@ -23,7 +23,7 @@ CodecBrowser::get_codec (const syn::minor::id_val& id) -> std::string
   const auto find = format2file_.find (id);
   if (format2file_.end () == find)
   {
-    U3_LOG_DATA_WRN ("not find codec for format=" + ::libs::utility::uids::helpers::get_readable_name (id));
+    U3_LOG_DATA_WRN ("not find codec for format:{}", ::libs::utility::uids::helpers::get_readable_name (id));
     return "";
   }
   return find->second;
@@ -33,7 +33,7 @@ CodecBrowser::get_codec (const syn::minor::id_val& id) -> std::string
 void
 CodecBrowser::refresh_list_codecs ()
 {
-  U3_CALL_TRACE_INFO (FVTOLOG (refreshed_));
+  U3_CALL_TRACE_INFO ("refreshed:{}", refreshed_);
   if (refreshed_)
   {
     return;
@@ -45,7 +45,7 @@ CodecBrowser::refresh_list_codecs ()
   const std::string                     libs_path = ::libs::iproperties::appl_paths::get_current_lib_folder ();
   ::libs::utility::files::NodeEnumFiles files;
 
-#if (U3_BUILD_MODULES_AS_LIBS == 1)
+#if (U3_BUILD_AS_MONOLITH == 1)
   files.files_ = ::libs::proxy::get_list_dlls_as_libs ();
 #else
   ::libs::utility::files::get_files (
@@ -66,7 +66,7 @@ CodecBrowser::refresh_list_codecs ()
 
   for (const auto& file : files.files_)
   {
-    U3_LOG_DATA_DEV ("CodecBrowser::refresh_list_codecs: get info from codec" + TOLOG (file.name_));
+    U3_LOG_DATA_DEV ("refresh_list_codecs: get info from codec:{}", file.name_);
     CodecImplInfo impl;
 
     helpers::load_codec_from_file (false, file.name_, impl);
@@ -78,7 +78,7 @@ CodecBrowser::refresh_list_codecs ()
       if (format != syn::minor::id_val::unknown)
       {
         format2file_.insert (format2file_type::value_type (format, file.name_));
-        U3_LOG_DATA_DEV ("found codec format: " + ::libs::utility::uids::helpers::get_readable_name (format) + TOLOG (file.name_));
+        U3_LOG_DATA_DEV ("found codec format:{} file:{}", ::libs::utility::uids::helpers::get_readable_name (format), file.name_);
       }
     }
   }

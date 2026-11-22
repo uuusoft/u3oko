@@ -50,7 +50,7 @@ to_string (const Scalers& val) -> std::string
     }
   }
 
-  U3_XLOG_ERROR ("unknown Scalers" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+  U3_XLOG_ERROR ("unknown Scalers:{}", U3_CAST_UINT32_FORCE (val));
   return "unknown Scalers";
 }
 

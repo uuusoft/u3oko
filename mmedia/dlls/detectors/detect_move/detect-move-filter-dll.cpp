@@ -109,7 +109,7 @@ Filter::itransform (syn::TransformInfo& info)
 
   if (!pdst || pdst->get_flag (::utils::dbufs::BufFlags::empty))
   {
-    U3_LOG_DATA_WRN ("empty diff" + STOLOG (finfo_.rprops_->bufs_.indx_dbuf_));
+    U3_LOG_DATA_WRN ("empty diff:{}", finfo_.rprops_->bufs_.indx_dbuf_);
     return;
   }
 
@@ -120,7 +120,7 @@ Filter::itransform (syn::TransformInfo& info)
   {
     if (0 == count_detects_)
     {
-      U3_LOG_DATA_DEV ("signal video detect start" + VTOLOG (sum_vals));
+      U3_LOG_DATA_DEV ("signal video detect start sum_vals:{}", sum_vals);
       time_first_detect_ = boost::posix_time::microsec_clock::universal_time ();
 
       auto [evnt, revnt]       = ::libs::iproperties::helpers::create_event< syn::AddEvent2EventsMsg > (libs::utility::utils::cuuid (), "???????");

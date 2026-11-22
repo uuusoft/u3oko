@@ -23,7 +23,7 @@ create_video_component (DriverState* state)
   if (!video->input_num || !video->output_num)
   {
     status = MMAL_ENOSYS;
-    U3_XLOG_WARN ("video doesn't have input/output ports" + VTOLOG (status));
+    // U3_XLOG_WARN ("video doesn't have input/output ports" + VTO-LOG (status));
     return status;
   }
 
@@ -48,7 +48,7 @@ create_video_component (DriverState* state)
     video_output->buf_size = 256 << 10;
     break;
   default:
-    U3_XLOG_WARN ("unknown encoding" + VTOLOG (state->encoding_));
+    // U3_XLOG_WARN ("unknown encoding" + VT-OLOG (state->encoding_));
     break;
   }
 
@@ -133,7 +133,7 @@ create_video_component (DriverState* state)
   MMAL_POOL_T* pool = mmal_port_pool_create (video_output, video_output->buf_num, video_output->buf_size);
   if (!pool)
   {
-    U3_XLOG_WARN ("Failed to create buf header pool for video output port name=" + std::string (video_output->name));
+    // U3_XLOG_WARN ("Failed to create buf header pool for video output port name=" + std::string (video_output->name));
   }
 
   state->video_pool_ = pool;

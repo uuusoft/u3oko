@@ -60,8 +60,8 @@ void
 dump (const BITMAPINFOHEADER& info)
 {
   U3_XLOG_WARN ("dump BITMAPINFOHEADER:");
-  U3_XLOG_WARN (FVTOLOG (info.biBitCount) + to_str_bi_compression (info.biCompression) + VTOLOG (info.biWidth) + VTOLOG (info.biHeight) + VTOLOG (info.biPlanes));
-  U3_XLOG_WARN (FVTOLOG (info.biClrImportant) + VTOLOG (info.biClrUsed) + VTOLOG (info.biSize) + VTOLOG (info.biXPelsPerMeter) + VTOLOG (info.biYPelsPerMeter));
+  // U3_XLOG_WARN (FVT-OLOG (info.biBitCount) + to_str_bi_compression (info.biCompression) + VTO-LOG (info.biWidth) + VTO-LOG (info.biHeight) + VTO-LOG (info.biPlanes));
+  // U3_XLOG_WARN (FVT-OLOG (info.biClrImportant) + VTO-LOG (info.biClrUsed) + VTO-LOG (info.biSize) + VTO-LOG (info.biXPelsPerMeter) + VTO-LOG (info.biYPelsPerMeter));
 }
 
 
@@ -69,8 +69,8 @@ void
 dump (const VIDEOINFOHEADER& info)
 {
   U3_XLOG_WARN ("dump VIDEOINFOHEADER:");
-  U3_XLOG_WARN (FVTOLOG (info.AvgTimePerFrame) + VTOLOG (info.dwBitErrorRate) + VTOLOG (info.dwBitRate));
-  U3_XLOG_WARN ("source rect=" + to_str_rect (info.rcSource) + " target rect=" + to_str_rect (info.rcTarget));
+  // U3_XLOG_WARN (FVTO-LOG (info.AvgTimePerFrame) + VTO-LOG (info.dwBitErrorRate) + VT-OLOG (info.dwBitRate));
+  // U3_XLOG_WARN ("source rect=" + to_str_rect (info.rcSource) + " target rect=" + to_str_rect (info.rcTarget));
   dump (info.bmiHeader);
 }
 
@@ -87,8 +87,8 @@ void
 dump (const AM_MEDIA_TYPE* minfo)
 {
   U3_XLOG_WARN ("dump AM_MEDIA_TYPE:");
-  U3_XLOG_WARN (::libs::utility::utils::to_string (utils::cuuid (minfo->formattype)) + " majortype=" + ::libs::utility::utils::to_string (utils::cuuid (minfo->majortype)) + " subtype=" + ::libs::utility::utils::to_string (utils::cuuid (minfo->subtype)));
-  U3_XLOG_WARN (FVTOLOG (minfo->lSampleSize) + VTOLOG (minfo->bFixedSizeSamples) + VTOLOG (minfo->bTemporalCompression));
+  // U3_XLOG_WARN (::libs::utility::utils::to_string (utils::cuuid (minfo->formattype)) + " majortype=" + ::libs::utility::utils::to_string (utils::cuuid (minfo->majortype)) + " subtype=" + ::libs::utility::utils::to_string (utils::cuuid (minfo->subtype)));
+  // U3_XLOG_WARN (FVTO-LOG (minfo->lSampleSize) + VTO-LOG (minfo->bFixedSizeSamples) + VTO-LOG (minfo->bTemporalCompression));
 
   if (FORMAT_VideoInfo == minfo->formattype)
   {
@@ -158,7 +158,7 @@ dump (const IPinPtr& ipin)
 
     if (FAILED (hr))
     {
-      U3_XLOG_ERROR ("get caps, indx=" << indx << ", 0x" << std::hex << hr);
+      U3_XLOG_ERROR ("get caps, indx:{} :{}", indx, hr);
       continue;
     }
 

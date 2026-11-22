@@ -4,7 +4,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \brief      Константы для конструирования ключей к различным частям реализации подсистемы сообщений
 */
-#include "../_make/libs-link-includes_int.hpp"
+#include "../libs-link-includes_int.hpp"
 #include "libs-link-text-vals.hpp"
 
 namespace libs::link::consts::text

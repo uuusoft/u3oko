@@ -4,7 +4,7 @@
 \date       01.11.2016
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
-#include "../_make/libs-link-includes_int.hpp"
+#include "../libs-link-includes_int.hpp"
 #include "mmedia/libs/proxy/proxy/link-proxy.hpp"
 #include "iapplication-proxy.hpp"
 
@@ -30,7 +30,6 @@ IApplicationProxy::IApplicationProxy (
   const std::string& dll_path,
   const std::string& name_lib)
 {
-  U3_CALL_TRACE_INFO_DBG (FTOLOG (dll_path) + TOLOG (name_lib));
   ::libs::utility::checks::throw_ifn (!dll_path.empty ());
   ::libs::utility::checks::throw_ifn (!name_lib.empty ());
 
@@ -42,7 +41,7 @@ IApplicationProxy::IApplicationProxy (
 
   cpath /= ::libs::utility::dlls::decorate_dll_name (name_lib);
 
-#if (U3_BUILD_MODULES_AS_LIBS == 1)
+#if (U3_BUILD_AS_MONOLITH == 1)
   U3_MARK_UNUSED_HERE (lib_);
   creator_ = ::libs::proxy::get_create_module_func (name_lib);
   erasor_  = ::libs::proxy::get_delete_module_func (name_lib);
@@ -52,11 +51,10 @@ IApplicationProxy::IApplicationProxy (
   lib_.load (cpath, boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders, load_error);
   if (!lib_.is_loaded ())
   {
-    U3_XLOG_ERROR ("failed load dll" + TOLOG (name_lib) + TOLOG (cpath.string ()));
+    U3_XLOG_ERROR ("failed load dll:{} {}", name_lib, cpath.string ());
     std::terminate ();
   }
 
-  U3_XLOG_DBG ("IApplicationProxy::IApplicationProxy:: prepare frozen dll" + TOLOG (dll_path) + TOLOG (name_lib));
   frozen_dlls_.add (cpath.string (), lib_);
 
   creator_ = ::boost::dll::import_symbol< create_obj_type > (

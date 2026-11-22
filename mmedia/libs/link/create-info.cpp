@@ -4,7 +4,7 @@
 \date       01.01.2017
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
-#include "_make/libs-link-includes_int.hpp"
+#include "libs-link-includes_int.hpp"
 #include "create-info.hpp"
 
 namespace libs::link::helpers
@@ -54,7 +54,6 @@ CreateInfo::CreateInfo (const vals_type& vals) :
                    { consts::text::id_code_runs, details::CodeRuns::usual },
                    { consts::text::id_server_side, false } } }
 {
-  U3_CALL_TRACE_DBG (FVTOLOG (link_params_.size ()) + VTOLOG (vals.size ()));
   link_params_.reserve (link_params_.size () + vals.size ());
   for (const auto& [key, val] : vals)
   {

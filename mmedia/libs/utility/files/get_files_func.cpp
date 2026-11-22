@@ -22,7 +22,7 @@ get_files_int (
 
   if (!boost::filesystem::exists (path) || !boost::filesystem::is_directory (path))
   {
-    U3_XLOG_WARN ("path not exist or not directory" + TOLOG (path) + VTOLOG (boost::filesystem::exists (path)) + VTOLOG (boost::filesystem::is_directory (path)));
+    U3_XLOG_WARN ("path not exist or not directory {} {} {}", path, boost::filesystem::exists (path), boost::filesystem::is_directory (path));
     return;
   }
 

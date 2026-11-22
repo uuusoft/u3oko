@@ -25,7 +25,7 @@ str2sort (const std::string& val) -> Sortings
   auto finger = val2val.find (val);
   if (val2val.end () == finger)
   {
-    ::libs::utility::checks::mark ("failed find sorting type by name" + TOLOG (val));
+    ::libs::utility::checks::mark (U3_FORMAT ("failed find sorting type by name {}", val));
     finger = val2val.find ("default");
   }
   return finger->second;
@@ -63,7 +63,6 @@ MedianTimeFilterProp::self_correct_int ()
 void
 MedianTimeFilterProp::load_json_int (const ::boost::json::object& obj)
 {
-  U3_XLOG_DBG (FTOLOG (::boost::json::serialize (obj)));
   super::load_json_int (obj);
 
   count_bufs_    = ::libs::utility::json::get_uint32 (obj.at ("count_bufs"));

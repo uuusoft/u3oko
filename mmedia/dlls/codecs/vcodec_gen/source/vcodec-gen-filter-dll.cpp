@@ -67,11 +67,11 @@ Filter::transform_int (syn::TransformInfo& info)
   }
   catch (U3_MARK_UNUSED boost::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (boost::diagnostic_information (excpt));
+    U3_LOG_DATA_EXCEPT ("{}", boost::diagnostic_information (excpt));
   }
   catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what ());
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
   }
 }
 
@@ -163,7 +163,7 @@ Filter::prepare_process_frame (syn::TransformInfo& info) -> bool
   //  Недействительный буфер назначения не допустим в любом случае.
   if (!dbuf)
   {
-    U3_LOG_DATA_WRN ("null dest buf, skip" + STOLOG (finfo_.rprops_->bufs_.indx_dbuf_));
+    U3_LOG_DATA_WRN ("null dest buf, skip");
     return false;
   }
 
@@ -188,7 +188,7 @@ Filter::prepare_process_frame (syn::TransformInfo& info) -> bool
     break;
   }
   default: {
-    U3_LOG_DATA_WRN ("unknown write strategy" + VTOLOG (U3_CAST_UINT32_FORCE (finfo_.rprops_->write_codec_strategy_)));
+    U3_LOG_DATA_WRN ("unknown write strategy:{}", U3_CAST_UINT32_FORCE (finfo_.rprops_->write_codec_strategy_));
     break;
   }
   }
@@ -256,7 +256,7 @@ Filter::process_frame (syn::TransformInfo& info)
     const auto out_buf   = (*pbuf_)[indx_buf];
     const auto file_name = std::string ("u3_vcodec_test") + (decode ? "d_" : "c_") + std::to_string (finfo_.frame_counter_) + ".jpg";
 
-    U3_LOG_DATA_DEV ("dump codec output" + TOLOG (file_name));
+    U3_LOG_DATA_DEV ("dump codec output:{}", file_name);
     codec_gen::helpers::dump_buf2file (out_buf, file_name);
   }
 
@@ -330,7 +330,7 @@ Filter::update_int ()
     return;
   }
 
-  U3_LOG_DATA_DEV ("load codec" + TOLOG (finfo_.rprops_->preferred_impl_));
+  U3_LOG_DATA_DEV ("load codec:{}", finfo_.rprops_->preferred_impl_);
   helpers::load_codec_from_file (
     syn::CodecModes::coder == finfo_.rprops_->plane_.type_,
     finfo_.rprops_->preferred_impl_,
@@ -384,7 +384,7 @@ Filter::log_statistic ()
     txt += "\n";
   }
 
-  U3_LOG_DATA_INFO (txt);
+  U3_LOG_DATA_INFO ("{}", txt);
   finfo_.dll_codec_->reset_statistic_info ();
 }
 

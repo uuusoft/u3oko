@@ -68,9 +68,7 @@ VideoMorphologyProp::clone_int (const ::libs::events::Deeps& deep) const -> ::li
 void
 VideoMorphologyProp::load_json_int (const ::boost::json::object& obj)
 {
-  // U3_XLOG_DEV ("VideoMorphologyProp::load_json_int");
   super::load_json_int (obj);
-
   diffs_ = ::boost::json::value_to< VideoMorphologyProp::morph_buf_infos_type > (obj.at ("diffs"));
 }
 

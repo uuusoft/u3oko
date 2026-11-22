@@ -17,7 +17,7 @@ namespace dlls::sources::desk_vgen::impls::linux::x11
 static std::int32_t
 error_handler (Display* d, XErrorEvent* e)
 {
-  U3_XLOG_ERROR ("failed xwindow funtion " + VTOLOG (e->error_code));
+  U3_XLOG_ERROR ("failed xwindow funtion:{}", e->error_code);
   return e->error_code;
 }
 
@@ -38,10 +38,8 @@ CaptureDeskImplLinux::get_buf_int (
   XWindowAttributes attrs;   // = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
   memset (&attrs, 0, sizeof (attrs));
   ::libs::utility::checks::throw_ifn (XGetWindowAttributes (*display, root, &attrs), "XGetWindowAttributes");
-  U3_LOG_DATA_DBG (FVTOLOG (attrs.width) + VTOLOG (attrs.height) + VTOLOG (attrs.border_width) + VTOLOG (attrs.x) + VTOLOG (attrs.y) + VTOLOG (attrs.depth));
-  U3_LOG_DATA_DBG (PTR_TOLOG (attrs.visual) + VTOLOG (attrs.c_class) + VTOLOG (attrs.bit_gravity) + VTOLOG (attrs.win_gravity) + VTOLOG (attrs.backing_store) + VTOLOG (attrs.map_state));
-  // InputOnly
-  // IsUnmapped
+  //  InputOnly
+  //  IsUnmapped
 #  ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
   int     x, y;          /* location of window */
   int     width, height; /* width and height of window */
@@ -69,7 +67,10 @@ CaptureDeskImplLinux::get_buf_int (
   Bool          override_redirect;     /* boolean value for override-redirect */
   Screen*       screen;                /* back pointer to correct screen */
 #  endif
-  ::libs::utility::checks::throw_ifn (attrs.width >= 0 && attrs.height >= 0 && attrs.border_width >= 0, VTOLOG (attrs.width) + VTOLOG (attrs.height) + VTOLOG (attrs.border_width));
+  ::libs::utility::checks::throw_ifn (
+    attrs.width >= 0 && attrs.height >= 0 && attrs.border_width >= 0,
+    U3_FORMAT ("{} {} {}", attrs.width, attrs.height, attrs.border_width));
+
   // xlib_image_type img (XGetImage (*display, root, 0, 0, attrs.width, attrs.height, AllPlanes, XYPixmap));
   // xlib_image_type img (XGetImage (*display, root, 0, 0, attrs.width, attrs.height, AllPlanes, ZPixmap));
   xlib_image_type img (XGetImage (*display, root, 0, 0, attrs.width, attrs.height, attrs.depth, XYPixmap));
@@ -87,7 +88,6 @@ CaptureDeskImplLinux::get_buf_int (
 
   info.rgb_buf_->resize (info.size_dest_data_);
 
-  // U3_LOG_DATA_DEV (FVTOLOG (attrs.x) + VTOLOG (attrs.y) + VTOLOG (attrs.depth) + VTOLOG (attrs.width) + VTOLOG (attrs.height));
   auto rgb_buf = info.rgb_buf_->get ();
   for (std::int32_t y = 0; y < attrs.height; ++y)
   {

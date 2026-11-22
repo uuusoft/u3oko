@@ -31,7 +31,6 @@ check_process () -> bool
 void
 process_cmd_line (std::int32_t argc, char* argv[])
 {
-  U3_XLOG_TIME ("process_cmd_line::" + VTOLOG (argc));
   boost::program_options::options_description options ("allowed options");
 
   options.add_options () (::libs::link::consts::text::id_lib_name, boost::program_options::value< std::string > ());
@@ -60,7 +59,7 @@ process_cmd_line (std::int32_t argc, char* argv[])
     const auto         sdelay = mapvars.find (::libs::link::consts::text::id_delay_ms)->second.as< std::string > ();
     const std::int32_t rdelay = std::stoi (sdelay);
     const auto         delay  = ::libs::utility::utils::ret_check_bound< std::int32_t > (rdelay, 0, 60 * 1000);
-    U3_XLOG_WARN ("debug delay before start" + VTOLOG (delay) + "ms")
+    U3_XLOG_WARN ("debug delay before start {} ms", delay)
     std::this_thread::sleep_for (std::chrono::milliseconds (delay));
   }
 
@@ -73,7 +72,7 @@ process_cmd_line (std::int32_t argc, char* argv[])
 
   for (const auto& cmd_val : cmd_vals)
   {
-    U3_XLOG_MARK ("process_cmd_line:: check option" + TOLOG (cmd_val.first) + TOLOG (cmd_val.second));
+    U3_XLOG_MARK ("process_cmd_line:: check option {} {}", cmd_val.first, cmd_val.second);
     if (mapvars.count (cmd_val.first) < 1)
     {
       continue;
@@ -94,7 +93,7 @@ find_default_appl_lib (const std::string& fullpath) -> std::string
   std::string             ret = "module-appl-lib-not-found";
 
   // EAI-REFACT
-#if (U3_BUILD_MODULES_AS_LIBS == 1)
+#if (U3_BUILD_AS_MONOLITH == 1)
   ret = "appl_u3oko";
 #else
 #  ifdef U3_OS_ANDROID

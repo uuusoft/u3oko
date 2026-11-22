@@ -20,17 +20,17 @@ class http_session : public std::enable_shared_from_this< http_session >
     const handler_func_type&       http_handler,
     shared_state_ptr_type          shared_state);
 
-  void run ();
+  auto run () -> void;
 
   private:
-  void do_read ();
-  void on_read (boost::beast::error_code ec, std::size_t bytes_transferred);
-  void queue_write (appl::syn::http::message_generator response);
+  auto do_read () -> void;
+  auto on_read (boost::beast::error_code, std::size_t) -> void;
+  auto queue_write (appl::syn::http::message_generator) -> void;
   // Called to start/continue the write-loop. Should not be called when
   // write_loop is already active.
-  void do_write ();
-  void on_write (bool keep_alive, boost::beast::error_code ec, std::size_t bytes_transferred);
-  void do_close ();
+  auto do_write () -> void;
+  auto on_write (bool keep_alive, boost::beast::error_code, std::size_t) -> void;
+  auto do_close () -> void;
 
   private:
   boost::beast::tcp_stream  stream_;           //<

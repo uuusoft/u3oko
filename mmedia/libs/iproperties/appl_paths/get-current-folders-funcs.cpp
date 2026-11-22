@@ -13,15 +13,10 @@ namespace libs::iproperties::appl_paths
 auto
 get_current_folder () -> std::string
 {
-  // U3_XLOG_DEV ("get_current_folder:0");
-  auto* orinfo = iproperties::helpers::get_shared_prop_os ();
-  // U3_XLOG_DEV ("get_current_folder:1");
+  auto*                           orinfo = iproperties::helpers::get_shared_prop_os ();
   syn::ISharedProperty::lock_type lock (orinfo->get_sync ());
-  // U3_XLOG_DEV ("get_current_folder:2");
-  const std::string ret = orinfo->get_appl_path_lockfree ();
-  // U3_XLOG_DEV ("get_current_folder:3" + TOLOG (ret));
+  const std::string               ret = orinfo->get_appl_path_lockfree ();
   ::libs::utility::checks::throw_ifn (!ret.empty ());
-  // U3_XLOG_DEV ("get_current_folder:4");
   return ret;
 }
 

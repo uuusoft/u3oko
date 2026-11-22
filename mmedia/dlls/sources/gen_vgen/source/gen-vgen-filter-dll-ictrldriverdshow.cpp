@@ -14,11 +14,11 @@ namespace dlls::sources::gen_vgen
 void
 Filter::update_source_driver_exactly (InfoFilter* finfo, const std::string& impl_name)
 {
-  U3_CALL_TRACE_INFO (FTOLOG (impl_name));
+  U3_CALL_TRACE_INFO ("imp_name:{}", impl_name);
   ::libs::utility::checks::throw_ifn (!impl_name.empty ());
 
   std::unique_lock< InfoFilter::sync_type > lock (finfo->wdmtx_, consts::ms_wait_capture_device);
-  ::libs::utility::checks::throw_ifn (lock.owns_lock (), "update source driver" + TOLOG (impl_name));
+  ::libs::utility::checks::throw_ifn (lock.owns_lock (), U3_FORMAT ("update source driver {}", impl_name));
 
   finfo->proxy2hardware_.init (impl_name);
 
@@ -57,7 +57,7 @@ Filter::update_source_driver (InfoFilter* finfo)
   }
   catch (std::exception& excpt)
   {
-    U3_LOG_DATA_EXCEPT (excpt.what ());
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
   }
 
   // у фальшивого драйвера все всегда должно быть нормально

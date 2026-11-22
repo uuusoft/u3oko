@@ -124,7 +124,7 @@ Filter::itransform (syn::TransformInfo& info)
   for (std::size_t i = 0; i < faces.size (); ++i)
   {
     const auto& face = faces[i];
-    U3_LOG_DATA_DEV ("Face index" + VTOLOG (i) + " from" + VTOLOG (faces.size ()) + VTOLOG (face.left ()) + VTOLOG (face.top ()) + VTOLOG (face.width ()) + VTOLOG (face.height ()));
+    U3_LOG_DATA_DEV ("Face index:{} from {} left:{} top:{} width:{} height:{}", i, faces.size (), face.left (), face.top (), face.width (), face.height ());
   }
 
   auto [evnt, revnt]       = ::libs::iproperties::helpers::create_event< syn::AddEvent2EventsMsg > (libs::utility::utils::cuuid (), "???<<<>>>???");

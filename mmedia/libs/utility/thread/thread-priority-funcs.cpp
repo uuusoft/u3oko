@@ -33,7 +33,7 @@ to_string (const Priorities& val) -> std::string
   case Priorities::unknown:
     return "unknown";
   default:
-    U3_XLOG_ERROR ("unknown Priorities" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+    U3_XLOG_ERROR ("unknown Priorities:{}", U3_CAST_UINT32_FORCE (val));
     return "unknown Priorities";
   }
 }
@@ -42,7 +42,6 @@ to_string (const Priorities& val) -> std::string
 auto
 set_thread_priority (const std::thread::id& thread, const Priorities& val) -> void
 {
-  U3_XLOG_DBG ("change priority thread " << thread << " to " + to_string (val));
 #ifdef U3_OS_WIN32_DESKTOP
 #elif defined(U3_OS_ANDROID)
 #elif defined(U3_OS_MACX_DESKTOP)

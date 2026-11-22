@@ -155,7 +155,7 @@ class FinderNthElementByCount final
       for (int indxy = 0; indxy < size_core; ++indxy)
       {
         auto val = del_val[0];
-        ::libs::utility::checks::assert_soft (get_counter (val) > 0, VTOLOG (val));
+        ::libs::utility::checks::assert_soft (get_counter (val) > 0, U3_FORMAT ("{}", val));
         --update_counter (val);
         del_val = ::libs::utility::mem::move_cptr (del_val, sstride);
       }
@@ -236,7 +236,7 @@ class FinderNthElementByCount final
 #ifdef DEBUG_ALG_SORT_FUND_RANG_ELEMENT
         if (val < min_ || val > max_)
         {
-          U3_XLOG_ERROR ("(val < min_ || val > max_) val=" << val << " min=" << min_ << " max=" << max_);
+          U3_XLOG_ERROR ("(val < min_ || val > max_) val:{} min:{} max:{}", val, min_, max_);
           throw std::runtime_error ("");
         }
 #endif

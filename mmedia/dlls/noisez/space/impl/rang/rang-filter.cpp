@@ -53,7 +53,10 @@ ext_mcall (::libs::optim::io::MCallInfo& info)
   get_params (info, icall_info, impl_info, &pimpls);
   auto& algs = (*pimpls)[impl_info->sort_type_];
   // проверяем на рассинхронизацию, если пользователь изменил параметры рабочих потоков
-  ::libs::utility::checks::throw_ifn (info.thread_indx_ < algs.size (), "skip rang filter, parameters changed:" + VTOLOG (info.thread_indx_) + VTOLOG (algs.size ()) + TOLOG (to_string (impl_info->sort_type_)));
+  ::libs::utility::checks::throw_ifn (
+    info.thread_indx_ < algs.size (),
+    U3_FORMAT ("skip, parameters changed: {} {} {}", info.thread_indx_, algs.size (), to_string (impl_info->sort_type_)));
+
   algs.at (info.thread_indx_)->process (icall_info);
 }
 
@@ -95,7 +98,7 @@ RangFilter::transform_int (
     }
     if (!syn::offs::is_valid (bufs.indx_sbuf_))
     {
-      U3_LOG_DATA_ERROR ("unvalid dest" + STOLOG (bufs.indx_sbuf_));
+      U3_LOG_DATA_ERROR ("unvalid dest:{}", bufs.indx_sbuf_);
       continue;
     }
     auto src = (*pbuf)[bufs.indx_sbuf_];
@@ -200,7 +203,7 @@ RangFilter::make_rang_impl (InfoFilter& finfo, syn::MedianSpaceFilterProp::raw_p
     return std::make_shared< vars::SkipSortImpl > ();
   }
 
-  U3_LOG_DATA_WRN ("unknown type sort impl" + VTOLOG (U3_CAST_UINT32_FORCE (impl_info->sort_type_)));
+  U3_LOG_DATA_WRN ("unknown type sort impl:{}", U3_CAST_UINT32_FORCE (impl_info->sort_type_));
   return std::make_shared< vars::SkipSortImpl > ();
 }
 }   // namespace dlls::noisez::space::impl::rang

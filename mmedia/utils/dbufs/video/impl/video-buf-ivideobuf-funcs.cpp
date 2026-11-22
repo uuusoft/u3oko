@@ -11,10 +11,10 @@ namespace utils::dbufs::video::impl
 void
 check_dims (const VideoBuf::dim_type width, const VideoBuf::dim_type height)
 {
-  ::libs::utility::checks::throw_if (width < consts::min_width, "width less consts::min_width" + VTOLOG (width) + VTOLOG (consts::min_width));
-  ::libs::utility::checks::throw_if (width > consts::max_width, "width large consts::max_width" + VTOLOG (width) + VTOLOG (consts::max_width));
-  ::libs::utility::checks::throw_if (height < consts::min_height, "height less consts::min_height" + VTOLOG (height) + VTOLOG (consts::min_height));
-  ::libs::utility::checks::throw_if (height > consts::max_height, "height large consts::max_height" + VTOLOG (height) + VTOLOG (consts::max_height));
+  ::libs::utility::checks::throw_if (width < consts::min_width, U3_FORMAT ("width less {} {}", width, consts::min_width));
+  ::libs::utility::checks::throw_if (width > consts::max_width, U3_FORMAT ("width large {} {}", width, consts::max_width));
+  ::libs::utility::checks::throw_if (height < consts::min_height, U3_FORMAT ("height less {} {}", height, consts::min_height));
+  ::libs::utility::checks::throw_if (height > consts::max_height, U3_FORMAT ("height large {} {}", height, consts::max_height));
 }
 
 
@@ -210,8 +210,8 @@ VideoBuf::buf_alloc_int (const AllocParams& info)
   // дополнительно всегда выделяем снизу несколько строк, чтобы гарантировать нормальную работу деления буфера на рабочие потоки
   alloc_size += stride * ::libs::optim::s16bit::conv::consts::bufs::max_align_block_by_y_for_algs;
 
-  ::libs::utility::checks::throw_ifn (alloc_size > 0, "received invalid size for alloc" + VTOLOG (alloc_size));
-  ::libs::utility::checks::throw_ifn (info.geom_dims_[Dims::stride] <= stride, "calculated stride too small" + VTOLOG (info.geom_dims_[Dims::stride]) + VTOLOG (stride) + VTOLOG (conv_support));
+  ::libs::utility::checks::throw_ifn (alloc_size > 0, U3_FORMAT ("invalid size {}", alloc_size));
+  ::libs::utility::checks::throw_ifn (info.geom_dims_[Dims::stride] <= stride, U3_FORMAT ("stride too small {} {} {}", info.geom_dims_[Dims::stride], stride, conv_support));
 
   resize (alloc_size);
   set_mem_var_int (MemVars::size_data, size_data);
@@ -231,7 +231,7 @@ VideoBuf::clone_int (IBuf::craw_ptr isrc, float percent)
   ::libs::utility::checks::throw_ifn (src);
   if (this == src)
   {
-    U3_XLOG_WARN ("try clone itself" + PTR_TOLOG (this));
+    U3_XLOG_WARN ("try clone itself");
     return;
   }
 
@@ -253,7 +253,7 @@ VideoBuf::swap_int (IBuf& isrc)
   auto& src = dynamic_cast< VideoBuf& > (isrc);
   if (this == &src)
   {
-    U3_XLOG_WARN ("try swap itself" + PTR_TOLOG (this));
+    U3_XLOG_WARN ("try swap itself");
     return;
   }
 

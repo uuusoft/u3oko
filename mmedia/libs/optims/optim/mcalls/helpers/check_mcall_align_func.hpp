@@ -15,7 +15,7 @@ check_mcall_align (const std::uint32_t align)
 {
   if (1 != align && 2 != align && 8 != align && 16 != align && 32 != align && 64 != align)
   {
-    U3_XLOG_ERROR ("align value: " + VTOLOG (align));
+    U3_XLOG_ERROR ("align value:{}", align);
     return false;
   }
   return true;

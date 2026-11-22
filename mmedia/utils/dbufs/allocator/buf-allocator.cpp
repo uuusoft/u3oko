@@ -61,7 +61,6 @@ BufAllocator::create (IBufAllocator::size_buf_type size) -> utils::dbufs::video:
     {
       buf->set_flag (::utils::dbufs::BufFlags::empty, true);
       ++counter_reuse_bufs_;
-      U3_XLOG_DBG ("return reuse buf" + VTOLOG (counter_reuse_bufs_) + VTOLOG (bufs_.size ()) + PTR_TOLOG (buf.get ()));
       return buf;
     }
   }
@@ -70,7 +69,6 @@ BufAllocator::create (IBufAllocator::size_buf_type size) -> utils::dbufs::video:
   utils::dbufs::video::IVideoBuf::ptr newbuf (new utils::dbufs::video::impl::VideoBuf ());
   bufs_.emplace_back (newbuf);
   ++counter_alloc_bufs_;
-  U3_XLOG_DBG ("return new buf" + VTOLOG (counter_alloc_bufs_) + VTOLOG (bufs_.size ()) + PTR_TOLOG (newbuf.get ()));
   return newbuf;
 }
 
@@ -79,12 +77,12 @@ void
 BufAllocator::clear ()
 {
   lock_type lock (mtx_);
-  U3_CALL_TRACE_INFO (FVTOLOG (bufs_.size ()));
-  U3_XLOG_DEV (FTOLOG (dump_state_int ()));
+  U3_CALL_TRACE_INFO ("size:{}", bufs_.size ());
+  U3_XLOG_DEV ("{}", dump_state_int ());
 
   for (utils::dbufs::video::IVideoBuf::ptr& buf : bufs_)
   {
-    ::libs::utility::checks::test (buf.use_count () <= 1, PTR_TOLOG (buf.get ()) + VTOLOG (buf.use_count ()));
+    ::libs::utility::checks::test (buf.use_count () <= 1, U3_FORMAT ("{} {}", U3_CAST_PTR2INT_FORCE (buf.get ()), buf.use_count ()));
     buf->set_flag (::utils::dbufs::BufFlags::empty, true);
     buf.reset ();
   }

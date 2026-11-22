@@ -62,7 +62,7 @@ get_create_codec_func (const std::string& plib_id) -> syn::funcs::func_get_codec
     return create_codec_vvd_vcodec_va;
   }
 #endif
-  ::libs::utility::checks::throw_exception ("find create codec funct" + TOLOG (lib_id));
+  ::libs::utility::checks::throw_exception (U3_FORMAT ("find create codec funct {}", lib_id));
 }
 
 
@@ -96,7 +96,7 @@ get_free_codec_func (const std::string& plib_id) -> syn::funcs::func_free_codec_
   }
 #endif
 
-  ::libs::utility::checks::throw_exception ("find free codec funct" + TOLOG (lib_id));
+  ::libs::utility::checks::throw_exception (U3_FORMAT ("find free codec funct {}", lib_id));
 }
 
 
@@ -130,6 +130,6 @@ get_info_codec_func (const std::string& plib_id) -> syn::funcs::func_codec_info_
   }
 #endif
 
-  ::libs::utility::checks::throw_exception ("find get info codec funct" + TOLOG (lib_id));
+  ::libs::utility::checks::throw_exception (U3_FORMAT ("find get info codec funct {}", lib_id));
 }
 }   // namespace libs::proxy

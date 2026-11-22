@@ -13,4 +13,5 @@ u3_add_target_dylib(
     EXTENDED_LIBS
     dbufs-dll
     DEPEND_TARGETS
-    dbufs-dll)
+    dbufs-dll
+)

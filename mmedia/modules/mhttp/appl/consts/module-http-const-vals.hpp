@@ -15,8 +15,7 @@ inline constexpr std::int32_t         body_limit { 5 * 1024 * 1024 };           
 inline constexpr std::int64_t         max_size_sending_data { 10 * 1024 * 1024 };                 //< 10 MB
 inline constexpr std::size_t          requests_queue_limit { 8 };                                 //<
 inline constexpr std::chrono::seconds skip_data_timeout_info { std::chrono::seconds (5 * 60) };   //< 5 min
-
-inline constexpr std::string_view index_html_id { "index.html" };   //<
-inline constexpr std::string_view module_name { "u3m_http" };       //<
-inline constexpr std::string_view temp_folder_name { "http_rw" };   //<
+inline constexpr std::string_view     index_html_id { "index.html" };                             //<
+inline constexpr std::string_view     module_name { "u3m_http" };                                 //<
+inline constexpr std::string_view     temp_folder_name { "http_rw" };                             //<
 }   // namespace modules::mhttp::appl::consts

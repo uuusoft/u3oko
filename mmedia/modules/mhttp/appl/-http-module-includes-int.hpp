@@ -1,0 +1,24 @@
+#pragma once
+/**
+\file       -http-module-includes-int.hpp
+\date       01.05.2017
+\author     Erashov Anton erashov2026@proton.me
+*/
+#include "mmedia/includes/control-defines-includes.hpp"
+// EAI-REFACT
+#include <regex>
+#include <queue>
+
+#include "mmedia/includes/includes.hpp"
+#include "../../modules-includes_int.hpp"
+#include "mmedia/dlls/terminals/video_sender/consts/video-sender-const-vals.hpp"
+#include "mmedia/libs/icore/impl/base/libs-icore-impl-base-includes.hpp"
+
+#include "mmedia/dlls/codecs/codec_funcs/codec-funcs-includes.hpp"
+#include "mmedia/dlls/codecs/codec_funcs/bitgen/codec-funcs-bitgen-includes.hpp"
+#include "mmedia/dlls/codecs/codec_gen/codec-gen-includes.hpp"
+
+#include "-http-module-includes.hpp"
+
+#undef U3_FILE_LOG_TAG
+#define U3_FILE_LOG_TAG ::libs::ilink::consts::id_http_log

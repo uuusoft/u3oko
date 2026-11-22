@@ -25,7 +25,6 @@ ISystemProperty::get_appl_lockfree () -> syn::ApplicationProp::craw_ptr const
 void
 ISystemProperty::set_appl_lockfree (syn::ApplicationProp::raw_ptr ptr)
 {
-  U3_XLOG_DBG (FTOLOG (ptr->get_messenger_impl ()) + PTR_TOLOG (ptr));
   main_appl_properties_ = ptr;
 }
 

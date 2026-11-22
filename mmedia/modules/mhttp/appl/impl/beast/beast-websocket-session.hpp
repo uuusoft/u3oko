@@ -16,28 +16,28 @@ class websocket_session final : public std::enable_shared_from_this< websocket_s
   using storage_send_data_type = std::vector< std::shared_ptr< const send_data_type > >;
 
   // Take ownership of the socket
-  explicit websocket_session (boost::asio::ip::tcp::socket&& socket, shared_state_ptr_type shared_state);
+  explicit websocket_session (boost::asio::ip::tcp::socket&&, shared_state_ptr_type);
   ~websocket_session ();
 
   // Start the asynchronous accept operation
   template< class Body, class Allocator >
   void do_accept (appl::syn::http::request< Body, appl::syn::http::basic_fields< Allocator > >);
 
-  auto send (const std::shared_ptr< const send_data_type >& ss) -> void;
+  auto send (const std::shared_ptr< const send_data_type >&) -> void;
   auto get_size_pending_send () const -> std::int64_t;
 
   private:
-  ws_stream_type              ws_;                      //<
-  boost::beast::flat_buffer   buf_;                     //<
-  shared_state_ptr_type       shared_state_;            //<
-  storage_send_data_type      send_queue_;              //<
-  std::atomic< std::int64_t > size_pending_send_ = 0;   //<
+  ws_stream_type              ws_;                        //<
+  boost::beast::flat_buffer   buf_;                       //<
+  shared_state_ptr_type       shared_state_;              //<
+  storage_send_data_type      send_queue_;                //<
+  std::atomic< std::int64_t > size_pending_send_ { 0 };   //<
 
-  void on_accept (boost::beast::error_code ec);
-  void do_read ();
-  void on_read (boost::beast::error_code ec, std::size_t bytes_transferred);
-  void on_write (boost::beast::error_code ec, std::size_t bytes_transferred);
-  void on_send (const std::shared_ptr< const send_data_type >& ss);
+  auto on_accept (boost::beast::error_code) -> void;
+  auto do_read () -> void;
+  auto on_read (boost::beast::error_code, std::size_t) -> void;
+  auto on_write (boost::beast::error_code, std::size_t) -> void;
+  auto on_send (const std::shared_ptr< const send_data_type >&) -> void;
 };
 
 
@@ -46,8 +46,6 @@ template< class Body, class Allocator >
 void
 websocket_session::do_accept (appl::syn::http::request< Body, appl::syn::http::basic_fields< Allocator > > req)
 {
-  // U3_XLOG_DEV ("websocket_session::do_accept");
-  //  Set suggested timeout settings for the websocket
   ws_.set_option (
     appl::syn::websocket::stream_base::timeout::suggested (
       boost::beast::role_type::server));

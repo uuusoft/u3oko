@@ -20,7 +20,7 @@ to_string (const SyncTimes& val) -> std::string
   case SyncTimes::unknown:
     return "unknown";
   default:
-    U3_XLOG_ERROR ("unknown SyncTimes" + VTOLOG (U3_CAST_UINT32_FORCE (val)));
+    U3_XLOG_ERROR ("unknown SyncTimes:{}", U3_CAST_UINT32_FORCE (val));
     return "unknown SyncTimes";
   }
 }

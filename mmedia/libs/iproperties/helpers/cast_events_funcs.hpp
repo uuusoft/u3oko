@@ -80,7 +80,7 @@ auto
 cast_event (const ::libs::events::IEvent::ptr& event) -> T*
 {
   constexpr const auto id = T::gen_get_mid ();
-  ::libs::utility::checks::assert_soft ((bool) event, "try cast null event to" + STOLOG (id));
+  ::libs::utility::checks::assert_soft ((bool) event, U3_FORMAT ("try cast null event to {}", id));
   return ::libs::utility::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id));
 }
 
@@ -90,7 +90,7 @@ auto
 cast_event (const ::libs::events::IEvent::cptr& event) -> const T*
 {
   constexpr const auto id = T::gen_get_mid ();
-  ::libs::utility::checks::assert_soft ((bool) event, "try cast null event to" + STOLOG (id));
+  ::libs::utility::checks::assert_soft ((bool) event, U3_FORMAT ("try cast null event to {}", id));
   return ::libs::utility::casts::reinterpret_cast_helper< const T* > (cast_event_int (event, id));
 }
 
@@ -100,7 +100,7 @@ auto
 cast_event (const ::libs::events::IEvent::raw_ptr event) -> T*
 {
   constexpr const auto id = T::gen_get_mid ();
-  ::libs::utility::checks::assert_soft ((bool) event, "try cast null event to" + STOLOG (id));
+  ::libs::utility::checks::assert_soft ((bool) event, U3_FORMAT ("try cast null event to {}", id));
   return ::libs::utility::casts::reinterpret_cast_helper< T* > (cast_event_int (event, id));
 }
 
@@ -110,7 +110,7 @@ auto
 cast_event (const ::libs::events::IEvent::craw_ptr event) -> const T*
 {
   constexpr const auto eid = T::gen_get_mid ();
-  ::libs::utility::checks::assert_soft ((bool) event, "try cast null event to" + STOLOG (eid));
+  ::libs::utility::checks::assert_soft ((bool) event, U3_FORMAT ("try cast null event to {}", eid));
   return ::libs::utility::casts::reinterpret_cast_helper< const T* > (cast_event_int (event, eid));
 }
 
@@ -128,7 +128,7 @@ auto
 dbg_check_copy_event (const ::libs::events::IEvent::craw_ptr src) -> const TTEvent*
 {
   auto* res = ::libs::iproperties::helpers::cast_event< TTEvent > (src);
-  ::libs::utility::checks::throw_ifn (res, std::string ("invalid event type") + PTR_TOLOG (src) + " empty " + PTR_TOLOG (res));
+  ::libs::utility::checks::throw_ifn (res, U3_FORMAT ("invalid event type"));
   return res;
 }
 }   // namespace libs::iproperties::helpers

@@ -6,19 +6,16 @@
 \brief      Файл интерфейса для выделения выровненных блоков памяти
 */
 
-namespace libs::utility::mem
+namespace libs::utility::mem::consts
 {
-/// Пространство имен констант функционала для работы с памятью
-namespace consts
-{
-inline constexpr std::uint8_t  filling        = 0;                    //< Значение для заполнения памяти по умолчанию
-inline constexpr std::uint64_t max_block_size = 1024 * 1024 * 1024;   //< эвристика
-}   // namespace consts
-}   // namespace libs::utility::mem
+inline constexpr std::uint8_t  filling { 0 };                           //< Значение для заполнения памяти по умолчанию
+inline constexpr std::uint64_t max_block_size { 1024 * 1024 * 1024 };   //< эвристика
+}   // namespace libs::utility::mem::consts
+
 
 namespace libs::utility::mem
 {
-/// нтерфейс управления блоком памяти
+/// Интерфейс управления блоком памяти
 class IBlockMem
 {
   public:
@@ -48,7 +45,7 @@ class IBlockMem
   get_capacity () const
   {
     auto ret = get_capacity_int ();
-    ::libs::utility::checks::test (ret <= consts::max_block_size, "unusual memory block size" + VTOLOG (ret) + VTOLOG (consts::max_block_size));
+    ::libs::utility::checks::test (ret <= consts::max_block_size, U3_FORMAT ("unusual block size {} {}", ret, consts::max_block_size));
     return ret;
   }
 
@@ -56,14 +53,14 @@ class IBlockMem
   get_size () const
   {
     const auto ret = get_size_int ();
-    ::libs::utility::checks::throw_ifn (ret <= get_capacity_int (), "invalid state memory" + VTOLOG (get_capacity_int ()) + VTOLOG (ret));
+    ::libs::utility::checks::throw_ifn (ret <= get_capacity_int (), U3_FORMAT ("invalid state memory {} {}", get_capacity_int (), ret));
     return ret;
   }
 
   void
   set_size (const size_type& size)
   {
-    ::libs::utility::checks::throw_ifn (size <= get_capacity_int (), "capacity too small" + VTOLOG (get_capacity_int ()) + VTOLOG (size));
+    ::libs::utility::checks::throw_ifn (size <= get_capacity_int (), U3_FORMAT ("capacity too small {} {}", get_capacity_int (), size));
     set_size_int (size);
   }
 
