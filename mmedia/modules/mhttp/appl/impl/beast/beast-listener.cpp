@@ -6,7 +6,7 @@
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
 #include "../../-http-module-includes-int.hpp"
-#include "mmedia/dlls/terminals/video_sender/consts/video-sender-const-vals.hpp"
+#include "mmedia/dnodes/terminals/video_sender/consts/video-sender-const-vals.hpp"
 #include "../../-http-module-syn.hpp"
 
 namespace modules::mhttp::impl::beast

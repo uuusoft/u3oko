@@ -7,6 +7,8 @@
 #include "../libs-link-includes_int.hpp"
 #include "libs-link-text-vals.hpp"
 
+// EAI-REFACT remove old shit
+#if 0
 namespace libs::link::consts::text
 {
 const char* id_service_name    = "libs.link.consts.text.name_service";              //< имя сервиса используется как часть пути к файлам настроек и данных для данного сервиса
@@ -32,3 +34,4 @@ const char* company_name = "uuusoft";     //<
 const char* appl_name    = "u3oko";       //<
 const char* service_name = "service#0";   //<
 }   // namespace libs::link::consts::text::defaults
+#endif

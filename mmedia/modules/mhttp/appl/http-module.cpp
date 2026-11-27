@@ -182,11 +182,11 @@ HttpModule::process_request_event_debug (
   const std::string& content,
   const std::string& id_data) -> bool
 {
+  return true;
   if ("libs/events_http/events/mem-resource-http-event" == id_event)
   {
     return false;
   }
-  // if (::libs::events_media::events::ListDevicesDataEvent::gen_get_mid () == id_event)
   if (::libs::events_msg::events::GetEventsFromBase::gen_get_mid () == id_event)
   {
     // return true;
@@ -200,6 +200,7 @@ HttpModule::process_request_event (
   const std::string&,
   const std::string& body) -> HttpModule::process_res_type
 {
+  U3_CALL_TRACE_INFO ("{}", body);
   syn::http::status bstatus = syn::http::status::ok;
 
   std::string mime = "text/plain";
@@ -223,19 +224,14 @@ HttpModule::process_request_event (
     const auto request       = ::libs::link::details::to_request (request_txt);
     const auto xml_type_data = "xml" == id_data ? true : false;
 
-    ::libs::utility::checks::throw_ifn (
-      helpers::url_decode (url_id_event, id_event),
-      U3_FORMAT ("{}", url_id_event));
-
-    ::libs::utility::checks::throw_ifn (
-      helpers::url_decode (url_xml_event, event_data),
-      U3_FORMAT ("{}", url_xml_event));
+    ::libs::utility::checks::throw_ifn (helpers::url_decode (url_id_event, id_event), U3_FORMAT ("{}", url_id_event));
+    ::libs::utility::checks::throw_ifn (helpers::url_decode (url_xml_event, event_data), U3_FORMAT ("{}", url_xml_event));
 
     const auto dbg_enable = process_request_event_debug (id_event, content, id_data);
     if (dbg_enable)
     {
-      U3_LOG_HTTP_DEV ("post request:{} url_id_event:{} id_event:{}", ::libs::link::details::to_string (request), url_id_event, id_event);
-      U3_LOG_HTTP_DEV ("post event_data:{} xml_type_data:{}", event_data, xml_type_data);
+      U3_LOG_HTTP_DEV ("request:{} url_id_event:{} id_event:{}", ::libs::link::details::to_string (request), url_id_event, id_event);
+      U3_LOG_HTTP_DEV ("event_data:{} xml_type_data:{}", event_data, xml_type_data);
     }
 
     auto idemons     = ::libs::iproperties::helpers::cast_prop_demons ();
@@ -268,10 +264,7 @@ HttpModule::process_request_event (
           recv_event->load_json (event_data);
         }
 #else
-        ::libs::utility::checks::assert_soft (
-          !xml_type_data,
-          U3_FORMAT ("boost serialization forbiden {} {}", url_id_event, event_data));
-
+        ::libs::utility::checks::assert_soft (!xml_type_data, U3_FORMAT ("boost serialization forbiden {} {}", url_id_event, event_data));
         recv_event->load_json (event_data);
 #endif
       }
@@ -283,9 +276,9 @@ HttpModule::process_request_event (
       {
         send_event = ffinger->second (recv_event, true, current_seq_);
       }
-      // Иначе пересылаем сообщение в основной модуль системы, запросы всегда синхронные
       if (!send_event)
       {
+        // Иначе пересылаем сообщение в основной модуль системы при этом запросы всегда синхронные
         const auto sync = (request == syn::Calls::request) ? syn::CallSyncs::sync : syn::CallSyncs::async;
         send_event      = links_[syn::mids::http2appl]->send_msg (recv_event, { .sync_ = sync, .req_ = request });
       }
@@ -398,7 +391,14 @@ HttpModule::start_http_server ()
         {
           impl_state_.work_threads_.emplace_back (
             [this] -> void {
-              impl_state_.ioc_.run ();
+              try
+              {
+                impl_state_.ioc_.run ();
+              }
+              catch (const std::exception& excpt)
+              {
+                U3_LOG_HTTP_EXCEPT ("what:{}", excpt.what ());
+              }
             });
         }
 
@@ -436,7 +436,14 @@ HttpModule::start_http_server ()
         {
           impl_ssl_state_.work_threads_.emplace_back (
             [this] {
-              impl_ssl_state_.ioc_.run ();
+              try
+              {
+                impl_ssl_state_.ioc_.run ();
+              }
+              catch (const std::exception& excpt)
+              {
+                U3_LOG_HTTP_EXCEPT ("what:{}", excpt.what ());
+              }
             });
         }
 

@@ -37,6 +37,7 @@ register_events_for_module ()
   ::libs::events_media::events::register_events_in_archives ();
   ::libs::events_http::events::register_events_in_archives ();
   ::libs::events_storage::events::register_events_in_archives ();
+  ::libs::events_user::events::register_events_in_archives ();
 }
 
 
@@ -68,7 +69,7 @@ BaseModule::load_events_props ()
 
   if (!helper_xml.is_file_exist (name, ::libs::iproperties::appl_paths::Paths::active_appl_module))
   {
-    U3_XLOG_MARK ("file {} not found ---> create new application instance", name, active_paths);
+    U3_XLOG_MARK ("file {} not found -> create new application instance", name, active_paths);
     const auto templates_paths = paths_->get_path (libs::iproperties::appl_paths::Paths::templates_appl_module);
     U3_XLOG_MARK ("prepare assets {} to folder {}", templates_paths, active_paths);
 

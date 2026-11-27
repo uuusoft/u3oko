@@ -10,7 +10,9 @@
 namespace libs::ilink
 {
 LinkCreatorProxy::LinkCreatorProxy () :
-  ::libs::utility::proxy::MemProxyBase (::libs::link::consts::text::id_shared_mem_base, sizeof (::libs::link::ILinkCreator::ptr))
+  ::libs::utility::proxy::MemProxyBase (
+    std::string (::libs::link::consts::text::id_shared_mem_base),
+    sizeof (::libs::link::ILinkCreator::ptr))
 
 {
   pimpl_ = pshm_->find_or_construct< ::libs::link::ILinkCreator::ptr > (obj_id_.c_str ()) ();

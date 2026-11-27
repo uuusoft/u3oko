@@ -1,0 +1,26 @@
+/**
+\file       vgen-mops-info-filter-dll.cpp
+\author     Erashov Anton erashov2026@proton.me
+\date       26.07.2017
+\brief      Реализация загружаемых свойств фильтра МО
+*/
+#include "vgen-mops-includes_int.hpp"
+#include "vgen-mops-info-filter-dll.hpp"
+#include "vgen-mops-filter-dll.hpp"
+
+namespace dnodes::gens::vgen_mops
+{
+InfoFilter::InfoFilter ()
+{
+  init ();
+}
+
+
+void
+InfoFilter::init ()
+{
+  rprops_ = ::libs::iproperties::helpers::create_event_in_list< syn::VideoMorphologyProp > (ef_props_);
+  // str2props_.insert ({ ef_props_.front ()->get_mid (), rprops_ });
+  str2props_[ef_props_.front ()->get_mid ()] = rprops_;
+}
+}   // namespace dnodes::gens::vgen_mops

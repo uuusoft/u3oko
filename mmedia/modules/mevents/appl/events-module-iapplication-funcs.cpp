@@ -3,7 +3,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 */
-#include "../module-events-includes_int.hpp"
+#include "../-module-events-includes-int.hpp"
 // #include "consts/module-events-const-vals.hpp"
 #include "events-module-syn.hpp"
 #include "events-module.hpp"

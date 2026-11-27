@@ -3,7 +3,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \date       07.09.2018
 */
-#include "../../../../module-storage-includes_int.hpp"
+#include "../../../../-module-storage-includes-int.hpp"
 #include "test-storage-impl.hpp"
 
 namespace modules::mstorage::appl::impl::storage::test

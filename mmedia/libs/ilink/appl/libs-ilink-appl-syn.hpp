@@ -15,6 +15,7 @@ using PropertyStorageModuleEvent = ::libs::events_base::props::modules::storage:
 using ChangeStateProcessEvent    = ::libs::events_base::runtime::state::ChangeStateProcessEvent;
 using ChangeStateSubSysLogEvent  = ::libs::events_log::events::ChangeStateSubSysLogEvent;
 using WrapperEventsEvent         = ::libs::events_msg::events::WrapperEventsEvent;
+using WrapperUserEvent           = ::libs::events_user::events::WrapperUserEvent;
 using ExpandTimesEvent           = ::libs::events_base::runtime::state::ExpandTimesEvent;
 using TextExtCpu                 = ::libs::utility::sys::cpu::TextExtCpu;
 using LogVals                    = ::libs::events_base::props::modules::log::LogVals;
@@ -24,7 +25,7 @@ using IAppPaths                  = ::libs::iproperties::appl_paths::IAppPaths;
 using Paths                      = ::libs::iproperties::appl_paths::Paths;
 using BlockMemAllocatorProxy     = ::utils::mems::impl::BlockMemAllocatorProxy;
 using BufAllocatorProxy          = ::utils::dbufs::allocator::BufAllocatorProxy;
-using id_link_type               = ::libs::events_base::props::base_id::id_link_type;
+using persisent_id_link_type     = ::libs::events_base::props::base_id::persisent_id_link_type;
 using ILinksProperty             = ::libs::properties::vers::links::ILinksProperty;
 
 namespace mids = ::libs::properties::vers::links::mids;

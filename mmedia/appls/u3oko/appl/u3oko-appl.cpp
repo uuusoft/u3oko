@@ -4,7 +4,7 @@
 \date       01.05.2017
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
-#include "../appls-u3oko-includes_int.hpp"
+#include "../-appls-u3oko-includes-int.hpp"
 #include "u3oko-appl.hpp"
 
 namespace appls::u3oko::appl
@@ -84,7 +84,8 @@ U3OkoAppl::get_recv_link_int () -> ::libs::ilink::appl::base::BaseModule::recv_l
     links_[syn::mids::appl2http],
     links_[syn::mids::appl2log],
     links_[syn::mids::appl2events],
-    links_[syn::mids::appl2storage]
+    links_[syn::mids::appl2storage],
+    links_[syn::mids::appl2users]
   };
 }
 }   // namespace appls::u3oko::appl

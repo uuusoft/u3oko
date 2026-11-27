@@ -1,0 +1,76 @@
+# author      Erashov Anton erashov2026@proton.me
+# date        01.01.2017
+# copyright   Erashov A.I.
+# file        -modules-appl.cmake
+
+file(TO_CMAKE_PATH "${U3_PATH_ROOT}/modules/mappl" graph-module-mappl)
+file(GLOB_RECURSE files-module-mappl "${graph-module-mappl}" "${graph-module-mappl}/*.cpp" "${graph-module-mappl}/*.c")
+
+set(U3_BUILD_LOCAL_MODULE_APPL_AS_LIB 0)
+
+if (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_ANDROID)
+  if (U3_BUILD_AS_MONOLITH)
+    add_library(module-mappl STATIC ${files-module-mappl})
+    set(U3_BUILD_LOCAL_MODULE_APPL_AS_LIB 1)
+  else ()
+    add_library(module-mappl SHARED ${files-module-mappl})
+  endif ()
+else ()
+  add_executable(module-mappl ${files-module-mappl})
+endif ()
+
+set_target_properties(module-mappl PROPERTIES OUTPUT_NAME "mpl_mappl")
+target_compile_definitions(module-mappl PUBLIC ${U3_SHARED_COMPILE_DEF_CPP})
+target_compile_options(module-mappl PUBLIC ${U3_SHARED_COMPILE_OPTIONS_CPP} $<$<COMPILE_LANGUAGE:CXX>:${shared_cpp_compile_options}>)
+add_dependencies(module-mappl ${U3_DEPENDENCY_TARGETS_LIST} ${U3_SELECTED_3RDLIBS_LIST})
+
+if (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_WINDOWS)
+  set_property(TARGET module-mappl PROPERTY MSVC_RUNTIME_LIBRARY ${U3_TARGET_PROPERTY_MSVC_RUNTIME_LIBRARY})
+endif ()
+
+if (NOT U3_BUILD_LOCAL_MODULE_APPL_AS_LIB EQUAL 1)
+  if (U3_PLATFORM_NAME STREQUAL U3_PLATFORM_NAME_ANDROID)
+    target_link_libraries(module-mappl ${log-lib})
+  endif ()
+
+  set(U3_LOCAL_MODULE_APPL_EXTLIBS)
+
+  if (U3_BUILD_AS_MONOLITH)
+    set(U3_LOCAL_MODULE_APPL_EXTLIBS
+        ${U3_LOCAL_MODULE_APPL_EXTLIBS}
+        optim_scale-lib
+        codec_gen-lib
+        codec_funcs-lib
+        ${U3_SELECTED_LIBS_VARIABLE_LIST}
+        ${U3_SELECTED_LIBS_LIST}
+        turbo_jpeg-lib
+        ${U3_SELECTED_3RDLIBS_LIST})
+  endif ()
+
+  # ulimit env ARG_MAX
+  #list( REMOVE_DUPLICATES U3_LOCAL_MODULE_APPL_EXTLIBS )
+
+  u3_link_libs_to_target(
+      PAR_TARGET
+      module-mappl
+      PAR_GROUP_LIBS
+      ${U3_LOCAL_MODULE_APPL_EXTLIBS}
+      ${U3_LINK_IBASE_LIBS}
+      ${U3_LINK_BASE_LIBS}
+      devents-dll
+      doptim-dll
+      #${all-ievent-libs}
+      ${U3_LINK_EVENTS_LIBS}
+      optim_gen_convert-lib
+      ${U3_LIBS_SYSTEM_STATIC_LIST}
+      PAR_LIBS
+      ${U3_SELECTED_3RDLIBS_LIST}
+      ${U3_SHARED_LINK_OPTIONS_CPP}
+      proxy-lib
+      ${U3_LOCAL_MODULE_APPL_EXTLIBS}
+      utility-lib
+      proxy-lib
+      ${U3_LOCAL_MODULE_APPL_EXTLIBS}
+  )
+
+endif ()

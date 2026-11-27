@@ -9,7 +9,7 @@ namespace libs::link::appl
 {
 class IApplication;
 
-/// Прокси для создания объекта "подсистема" из разделяемого кода (dll/so)
+/// Прокси для создания объекта "подсистема" из разделяемого кода (dll/so/lib)
 class IApplicationProxy final
 {
   public:
@@ -32,7 +32,7 @@ class IApplicationProxy final
   using frozen_dlls_type = ::libs::utility::dlls::FreezerDlls;
 
   ::libs::utility::dlls::dll_type lib_;                //< Держим в памяти dll принудительно вечно, до завершения работы всего процесса
-  create_func_type                creator_;            //< Указатель на функтор в dll, который собственно и создает приложение
+  create_func_type                creator_;            //< Указатель на функтор в dll для создания приложения
   delete_func_type                erasor_;             //< Указатель на функтор в dll, который уменьшает ссылку на созданное приложение и при необходимости удаляет его
   IApplication*                   impl_ { nullptr };   //< Созданное приложение
 

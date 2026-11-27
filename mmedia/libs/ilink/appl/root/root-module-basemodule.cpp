@@ -283,10 +283,20 @@ RootModule::appl_deinit_int () -> bool
     change_module_state (links_[syn::mids::appl2http], appl_info_.appl_name_, false);
     change_module_state (links_[syn::mids::appl2mdata], appl_info_.appl_name_, false);
     change_module_state (links_[syn::mids::appl2gui], appl_info_.appl_name_, false);
+    change_module_state (links_[syn::mids::appl2users], appl_info_.appl_name_, false);
 
     // std::this_thread::sleep_for (std::chrono::milliseconds (10 * 1000)); // debug
-    deinit_stage_         = DeInitStages::wait_stop_data_module;
+    deinit_stage_         = DeInitStages::wait_stop_users_module;
     deinit_stage_counter_ = 0;
+    break;
+  }
+  case DeInitStages::wait_stop_users_module: {
+    if (!links_[syn::mids::appl2users] || !links_[syn::mids::appl2users]->is_connected ())
+    {
+      links_.reset_link (syn::mids::appl2users);
+      deinit_stage_         = DeInitStages::wait_stop_data_module;
+      deinit_stage_counter_ = 0;
+    }
     break;
   }
   case DeInitStages::wait_stop_data_module: {
@@ -509,6 +519,19 @@ RootModule::update_catch_funcs_int ()
     return msg;
   };
 
+  catch_funcs_[syn::WrapperUserEvent::gen_get_mid ()] =
+    [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
+    if (forward)
+    {
+      if (!process_state.answer_)
+      {
+        links_[syn::mids::appl2users]->send_msg (msg);
+      }
+      return {};
+    }
+    return msg;
+  };
+
   catch_funcs_[syn::ExpandTimesEvent::gen_get_mid ()] =
     [this] (syn::IEvent::ptr& msg, bool forward, const StateProcessEventExt& process_state) -> syn::IEvent::ptr {
     if (forward)
@@ -555,14 +578,43 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
   auto       ipstorage = ::libs::iproperties::helpers::get_storage ();
 
   const std::tuple< std::string, std::string, ::libs::link::details::ModuleLinks, std::uint64_t, syn::mids::key_storage_type > create_vals[] = {
-    { "mpl_mlog", "subsys_appl2log", ::libs::link::details::ModuleLinks::log, ::libs::link::consts::sizes::buf_all2log, syn::mids::appl2log },
-    { "mpl_mevents", "subsys_events", ::libs::link::details::ModuleLinks::events, ::libs::link::consts::sizes::buf_all2events, syn::mids::appl2events },
-    { "mpl_mstorage", "subsys_storage", ::libs::link::details::ModuleLinks::storage, ::libs::link::consts::sizes::buf_appl2storage, syn::mids::appl2storage },
-    { "mpl_mdata", "subsys_data", ::libs::link::details::ModuleLinks::mdata, ::libs::link::consts::sizes::buf_appl2data, syn::mids::appl2mdata },
-    { "mpl_mhttp", "subsys_http", ::libs::link::details::ModuleLinks::http, ::libs::link::consts::sizes::buf_appl2http, syn::mids::appl2http }
+    { std::string (libs::ilink::consts::id_module_dll_mlog),
+      "subsys_appl2log",
+      ::libs::link::details::ModuleLinks::log,
+      ::libs::link::consts::sizes::buf_all2log,
+      syn::mids::appl2log },
+    { std::string (libs::ilink::consts::id_module_dll_mevents),
+      "subsys_events",
+      ::libs::link::details::ModuleLinks::events,
+      ::libs::link::consts::sizes::buf_all2events,
+      syn::mids::appl2events },
+    { std::string (libs::ilink::consts::id_module_dll_mstorage),
+      "subsys_storage",
+      ::libs::link::details::ModuleLinks::storage,
+      ::libs::link::consts::sizes::buf_appl2storage,
+      syn::mids::appl2storage },
+    { std::string (libs::ilink::consts::id_module_dll_mdata),
+      "subsys_data",
+      ::libs::link::details::ModuleLinks::mdata,
+      ::libs::link::consts::sizes::buf_appl2data,
+      syn::mids::appl2mdata },
+    { std::string (libs::ilink::consts::id_module_dll_mhttp),
+      "subsys_http",
+      ::libs::link::details::ModuleLinks::http,
+      ::libs::link::consts::sizes::buf_appl2http,
+      syn::mids::appl2http },
+    { std::string (libs::ilink::consts::id_module_dll_musers),
+      "subsys_user",
+      ::libs::link::details::ModuleLinks::users,
+      ::libs::link::consts::sizes::buf_all2users,
+      syn::mids::appl2users }
 #if (U3_MODULES_ENABLE_GUI == 1)
     ,
-    { "mpl_mgui", "subsys_gui", ::libs::link::details::ModuleLinks::gui, ::libs::link::consts::sizes::buf_appl2gul, syn::mids::appl2gui }
+    { std::string (libs::ilink::consts::id_module_dll_mgui),
+      "subsys_gui",
+      ::libs::link::details::ModuleLinks::gui,
+      ::libs::link::consts::sizes::buf_appl2gul,
+      syn::mids::appl2gui }
 #endif
   };
 
@@ -579,12 +631,12 @@ RootModule::init_links_int (const ::libs::link::appl::InitApplication& info)
     // std::this_thread::sleep_for (dbg_delay_process);
     auto temp_link = iproxy->get_connect (
       ::libs::link::CreateInfo (
-        { { ::libs::link::consts::text::id_appl_name, appl_info_.appl_name_ },
-          { ::libs::link::consts::text::id_lib_name, dll_name },
-          { ::libs::link::consts::text::id_lib_name, dll_name },
-          { ::libs::link::consts::text::id_size_shared_mem, buf_size },
-          { ::libs::link::consts::text::id_module_links, subsys_id },
-          { ::libs::link::consts::text::id_code_runs, type_run } }));
+        { { std::string (::libs::link::consts::text::id_appl_name), appl_info_.appl_name_ },
+          { std::string (::libs::link::consts::text::id_lib_name), dll_name },
+          { std::string (::libs::link::consts::text::id_lib_name), dll_name },
+          { std::string (::libs::link::consts::text::id_size_shared_mem), buf_size },
+          { std::string (::libs::link::consts::text::id_module_links), subsys_id },
+          { std::string (::libs::link::consts::text::id_code_runs), type_run } }));
 
     U3_XLOG_DEV ("prepare set link:{} {}", create_counter, dll_name);
     links_.set (link_id, temp_link);

@@ -69,21 +69,21 @@ include("./.ci/cmake/specific-module/u3-shared-3rd-libs-list.cmake")
 include("./libs/libs-list.cmake")
 include("./utils/utils-list.cmake")
 # for debug test compile
-include("./modules/mtest/module-test.cmake")
+include("./modules/mtest/-module-test.cmake")
 
-# EAI-REFACT move to dlls
+# EAI-REFACT move to dnodes
 if (U3_COMMERCIAL_PART EQUAL 1)
-  include("./dshow_helpers/dshow-helpers-list.cmake")
+  include("./utils/dshow_helpers/dshow-helpers-list.cmake")
 endif ()
 
-# internal dlls targets, depends from internal libs
-include("./dlls/dlls-list.cmake")
-# lib-proxy depends from internal dlls
+# internal dnodes targets, depends from internal libs
+include("./dnodes/dnodes-list.cmake")
+# lib-proxy depends from internal dnodes
 include("./libs/proxy/libs-proxy.cmake")
 # list applicaions
 include("./appls/appls-list.cmake")
 # list modules, depends from applications
-include("./modules/modules-list.cmake")
+include("./modules/-modules-list.cmake")
 # test
 if (U3_COMMERCIAL_PART EQUAL 1)
   include("./.ci/cmake/tests/u3-googletests.cmake")

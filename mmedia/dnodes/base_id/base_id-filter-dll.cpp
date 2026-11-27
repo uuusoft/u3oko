@@ -1,0 +1,76 @@
+/**
+\file       base_id-filter-dll.cpp
+\author     Erashov Anton erashov2026@proton.me
+\date       16.07.2018
+*/
+#include "base_id-includes_int.hpp"
+#include "base_id-filter-dll.hpp"
+
+namespace dnodes::base_id
+{
+void
+Filter::load_int (syn::FilterInfo* info, const ::pugi::xml_named_node_iterator& node)
+{
+  init_pts (&info->pts_);
+  finfo_.load (node);
+  base_interf_->update_property (finfo_.ef_props_.front ().get ());
+}
+
+
+void
+Filter::call_int (syn::CallInterfInfo& info)
+{
+  super::prepare_call (info);
+  super::call_gen (info);
+  base_interf_->update_property (finfo_.ef_props_.front ().get ());
+}
+
+
+void
+Filter::run_int ()
+{
+  send_base_interf_ = false;
+}
+
+
+void
+Filter::stop_int ()
+{
+  send_base_interf_ = false;
+}
+
+
+void
+Filter::init_pts (syn::ConnectInfo* info)
+{
+  info->count_ins_ = 1;
+  info->ins_[0].set_info (::libs::icore::impl::base::obj::PointState::enabled, ::libs::icore::impl::base::obj::Points::input);
+  info->count_outs_ = 1;
+  info->outs_[0].set_info (::libs::icore::impl::base::obj::PointState::enabled);
+}
+
+
+void
+Filter::transform_int (syn::TransformInfo& info)
+{
+  prepare_transform (info);
+
+  auto events = info.frame_events_;
+  ::libs::utility::checks::throw_ifn ((bool) events);
+
+  if (!send_base_interf_)
+  {
+    auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::InterfBaseIdEvent > ();
+    revnt->set_interface (base_interf_);
+    revnt->set_active (true);
+    events->push_back (evnt);
+    send_base_interf_ = true;
+  }
+
+  if (::libs::events::PropertyUsings::disabled == finfo_.ef_props_.front ()->get_using_state ())
+  {
+    return;
+  }
+  ++frame_counter_;
+}
+}   // namespace dnodes::base_id

@@ -1,5 +1,5 @@
 /**
-\file       freezer-dlls.cpp
+\file       freezer-dnodes.cpp
 \author     Erashov Anton erashov2026@proton.me
 \date       01.01.2017
 */
@@ -20,7 +20,7 @@ FreezerDlls::add (const std::string& name, const dll_type& lib)
   ::libs::utility::checks::throw_ifn (!name.empty ());
   ::libs::utility::checks::throw_ifn (lib.is_loaded ());
   lock_type lock (mtx_);
-  dlls_.insert (dlls_type::value_type (name, lib));
+  dnodes_.insert (dnodes_type::value_type (name, lib));
 #endif
 }
 }   // namespace libs::utility::dlls

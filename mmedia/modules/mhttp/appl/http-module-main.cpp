@@ -51,8 +51,8 @@ create_impl_mpl_mhttp () -> ::modules::mhttp::appl::syn::IApplication::raw_ptr
   return ::modules::mhttp::appl::factory_impl_mhttp (nullptr, true);
 }
 
-extern "C" BOOST_SYMBOL_EXPORT void
-delete_impl_mpl_mhttp (::modules::mhttp::appl::syn::IApplication::raw_ptr impl)
+extern "C" BOOST_SYMBOL_EXPORT auto
+delete_impl_mpl_mhttp (::modules::mhttp::appl::syn::IApplication::raw_ptr impl) -> void
 {
   modules::mhttp::appl::factory_impl_mhttp (impl, false);
 }

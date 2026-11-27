@@ -1,0 +1,27 @@
+#pragma once
+/**
+\file       detect-move-info-filter-dll.hpp
+\author     Erashov Anton erashov2026@proton.me
+\date       01.01.2017
+*/
+
+namespace dnodes::detectors::detect_move
+{
+struct InfoFilter final : public ::libs::icore::impl::base::obj::dll::BaseInfoFilter {
+  InfoFilter ();
+  virtual ~InfoFilter () = default;
+
+  syn::VideoDetectProp::raw_ptr rprops_ { nullptr };   //< Настроенный указатель на свойства (для удобства)
+  syn::DiffImpl                 diff_impl_;            //< Реализация вычисления разности между двумя кадрами
+  syn::VideoDiffProp            diff_props_;           //< Свойства вычисления разности
+  syn::MopsImpl                 mops_impl_;            //< Реализация фильтрации (морфологической) разности
+  syn::VideoMorphologyProp      mops_props_;           //< Свойства фильтрации (морфологической) разности
+  bool                          synced_ { false };     //< Флаг требования синхронизации
+
+  private:
+  auto init () -> void;
+
+  // overrides ::libs::icore::impl::base::obj::dll::BaseInfoFilter
+  virtual auto sync_int (bool force) -> void override;
+};
+}   // namespace dnodes::detectors::detect_move

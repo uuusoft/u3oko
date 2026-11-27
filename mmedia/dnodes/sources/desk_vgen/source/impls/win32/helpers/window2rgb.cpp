@@ -1,0 +1,77 @@
+/**
+\file       window2rgb.cpp
+\author     Erashov Anton erashov2026@proton.me
+\date       26.07.2016
+*/
+#include "../../../desk-vgen-includes_int.hpp"
+#include "hdc2rgb24_func.hpp"
+#include "window2rgb.hpp"
+
+#ifdef U3_OS_WIN32_DESKTOP
+
+namespace dnodes::sources::desk_vgen::impls::win32::helpers
+{
+void
+hdc2rgb (
+  const HDC&                            whdc,
+  ::libs::utility::mem::IBlockMem::ptr& rgb_buf,
+  const std::int32_t                    offset_x,
+  const std::int32_t                    offset_y,
+  std::uint32_t&                        active_dest_buf,
+  std::uint32_t&                        width_dest,
+  std::uint32_t&                        height_dest,
+  std::uint32_t&                        stride_dest,
+  const std::uint32_t                   dest_bits)
+{
+  ::libs::utility::platforms::win32::HandlerCompatibleDC      thdc (whdc);
+  ::libs::utility::platforms::win32::HandlerGdiObj< HBITMAP > hbmp (CreateCompatibleBitmap (whdc, width_dest, height_dest));
+  ::libs::utility::platforms::win32::throw_ifn (
+    thdc && hbmp,
+    U3_FORMAT ("create compatible dc {} {}", width_dest, height_dest));
+
+  thdc.select_object (*hbmp);
+
+  ::libs::utility::platforms::win32::throw_ifn (
+    BitBlt (*thdc, 0, 0, width_dest, height_dest, whdc, offset_x, offset_y, SRCCOPY),
+    U3_FORMAT ("BitBlt {} {}", width_dest, height_dest));
+
+  // конвертируем образ окна в формат RGB32
+  ::dnodes::sources::desk_vgen::impls::win32::helpers::Hdc2BmpCallInfo call_info (
+    *thdc, rgb_buf, dest_bits, &active_dest_buf, &width_dest, &height_dest, &stride_dest, false);
+
+  ::dnodes::sources::desk_vgen::impls::win32::helpers::hdc2buf_alu (call_info);
+  ::libs::utility::platforms::win32::throw_ifn (rgb_buf->get (), "convert to rgb32");
+}
+
+
+void
+window2rgb (
+  HWND                                  hwnd,
+  ::libs::utility::mem::IBlockMem::ptr& rgb_buf,
+  const std::int32_t                    offset_x,
+  const std::int32_t                    offset_y,
+  std::uint32_t&                        active_dest_buf,
+  std::uint32_t&                        width_dest,
+  std::uint32_t&                        height_dest,
+  std::uint32_t&                        stride_dest,
+  const std::uint32_t                   dest_bits)
+{
+  if ((::libs::utility::consts::iinvalid == width_dest) || (::libs::utility::consts::iinvalid == height_dest))
+  {
+    RECT trect1;
+    GetClientRect (hwnd, &trect1);
+
+    width_dest  = trect1.right - trect1.left;
+    height_dest = trect1.bottom - trect1.top;
+  }
+
+  ::libs::utility::platforms::win32::HandlerWindowDC whdc (hwnd);
+  ::libs::utility::platforms::win32::throw_ifn (
+    whdc,
+    U3_FORMAT ("get dc from window {}", ::libs::utility::casts::reinterpret_cast_helper< std::uint64_t > (hwnd)));
+
+  hdc2rgb (*whdc, rgb_buf, offset_x, offset_y, active_dest_buf, width_dest, height_dest, stride_dest, dest_bits);
+}
+}   // namespace dnodes::sources::desk_vgen::impls::win32::helpers
+
+#endif

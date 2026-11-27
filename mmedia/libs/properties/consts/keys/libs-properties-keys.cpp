@@ -7,6 +7,9 @@
 #include "../../libs-properties-includes_int.hpp"
 #include "libs-properties-keys.hpp"
 
+// EAI-REFACT remove old shit
+#if 0
 namespace libs::properties::consts::keys
 {
 }   // namespace libs::properties::consts::keys
+#endif

@@ -87,7 +87,7 @@ class ListDevicesDataEvent : public BaseDataEvent
   U3_ADD_SUPER_CLASS (::libs::events_media::events::BaseDataEvent)
 
   src_names_type    source_dll_names_;   //< Идентификаторы групп устройств. Системно зависимое значение. Для примера значений: directshow, direct etc
-  src_devinfos_type dlls_devices_;       //< Список устройств для каждой группы
+  src_devinfos_type dnodes_devices_;     //< Список устройств для каждой группы
 
   friend class boost::serialization::access;
 

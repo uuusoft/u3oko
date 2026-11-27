@@ -39,7 +39,7 @@ else ()
   set(U3_LINUX_ARCH_ID x86_x64)
 endif ()
 
-# mmedia/dlls/sources/desk_vgen/source/impls/linux/capture-desk-impl-linux.hpp
+# mmedia/dnodes/sources/desk_vgen/source/impls/linux/capture-desk-impl-linux.hpp
 # for Ubuntu
 # sudo apt update
 # sudo apt install libx11-dev

@@ -4,7 +4,7 @@
 \date       01.01.2017
 \brief      Модуль логирования
 */
-#include "module-log-includes_int.hpp"
+#include "-module-log-includes-int.hpp"
 
 static std::mutex                                g_sinc;
 static volatile std::int32_t                     counter_refs_ { 0 };
@@ -24,8 +24,8 @@ create_impl_mpl_mlog () -> ::libs::link::appl::IApplication::raw_ptr
   return g_appl;
 }
 
-extern "C" BOOST_SYMBOL_EXPORT void
-delete_impl_mpl_mlog (::libs::link::appl::IApplication::raw_ptr appl)
+extern "C" BOOST_SYMBOL_EXPORT auto
+delete_impl_mpl_mlog (::libs::link::appl::IApplication::raw_ptr appl) -> void
 {
   std::scoped_lock lock (g_sinc);
 

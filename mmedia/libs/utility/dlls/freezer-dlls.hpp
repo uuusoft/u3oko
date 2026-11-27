@@ -21,11 +21,11 @@ class FreezerDlls final
 
   private:
   //  internal typess
-  using dlls_type = boost::unordered_flat_map< std::string, dll_type, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
-  using sync_type = std::mutex;
-  using lock_type = std::scoped_lock< sync_type >;
+  using dnodes_type = boost::unordered_flat_map< std::string, dll_type, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
+  using sync_type   = std::mutex;
+  using lock_type   = std::scoped_lock< sync_type >;
 
-  std::mutex mtx_;    //< Синх. поле для доступу к объекту, т.к. он может (и должен) максимально быть разделимым в процессе
-  dlls_type  dlls_;   //< Все загруженные модули (имя зависит от платформы dylib dll so etc)
+  std::mutex  mtx_;      //< Синх. поле для доступу к объекту, т.к. он может (и должен) максимально быть разделимым в процессе
+  dnodes_type dnodes_;   //< Все загруженные модули (имя зависит от платформы dylib dll so etc)
 };
 }   // namespace libs::utility::dlls

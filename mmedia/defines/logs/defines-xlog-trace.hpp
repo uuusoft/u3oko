@@ -9,7 +9,7 @@
 #  ifdef U3_OS_ANDROID
 #    define U3_XLOG_IMPL(u3def_mark, u3def_param, ...) ::android::log::android_log_write_helper (ANDROID_LOG_INFO, U3_FILE_LOG_TAG, std::format (u3def_param __VA_OPT__ (, ) __VA_ARGS__).c_str ());
 #  else
-#    define U3_XLOG_IMPL(u3def_mark, u3def_param, ...) std::cout << u3def_mark << "." << U3_FILE_LOG_TAG << "| " << std::format (u3def_param __VA_OPT__ (, ) __VA_ARGS__) << std::endl;
+#    define U3_XLOG_IMPL(u3def_mark, u3def_param, ...) std::cout << u3def_mark << "." << U3_FILE_LOG_TAG << "|" << std::hash< std::thread::id > {}(std::this_thread::get_id ()) << "\t|" << std::format (u3def_param __VA_OPT__ (, ) __VA_ARGS__) << std::endl;
 #  endif
 #endif
 

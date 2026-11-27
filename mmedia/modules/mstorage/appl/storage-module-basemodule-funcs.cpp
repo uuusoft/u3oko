@@ -4,7 +4,7 @@
 \date       23.07.2018
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
-#include "../module-storage-includes_int.hpp"
+#include "../-module-storage-includes-int.hpp"
 #include "storage-module.hpp"
 
 namespace modules::mstorage::appl
@@ -40,11 +40,11 @@ StorageModule::init_links_int (const ::libs::link::appl::InitApplication& info)
 
   auto temp_link = lproxy->impl ()->get_listen (
     ::libs::link::CreateInfo (
-      { { ::libs::link::consts::text::id_appl_name, "mpl_mstorage" },
-        { ::libs::link::consts::text::id_lib_name, "mpl_mstorage" },
-        { ::libs::link::consts::text::id_size_shared_mem, ::libs::link::consts::sizes::buf_appl2storage },
-        { ::libs::link::consts::text::id_module_links, ::libs::link::details::ModuleLinks::storage },
-        { ::libs::link::consts::text::id_code_runs, ::libs::link::details::CodeRuns::appl } }));
+      { { std::string (::libs::link::consts::text::id_appl_name), std::string (libs::ilink::consts::id_module_dll_mstorage) },
+        { std::string (::libs::link::consts::text::id_lib_name), std::string (libs::ilink::consts::id_module_dll_mstorage) },
+        { std::string (::libs::link::consts::text::id_size_shared_mem), ::libs::link::consts::sizes::buf_appl2storage },
+        { std::string (::libs::link::consts::text::id_module_links), ::libs::link::details::ModuleLinks::storage },
+        { std::string (::libs::link::consts::text::id_code_runs), ::libs::link::details::CodeRuns::appl } }));
 
   links_.set (syn::mids::storage2appl, temp_link);
 

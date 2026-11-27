@@ -11,7 +11,7 @@ inline std::int32_t
 get_offset_iframe (const std::uint8_t* buf)
 {
   ::libs::utility::checks::throw_ifn (buf);
-  const auto* head = ::libs::utility::casts::reinterpret_cast_helper< const ::dlls::codecs::codec_gen::HeaderIFrame* > (buf);
+  const auto* head = ::libs::utility::casts::reinterpret_cast_helper< const ::dnodes::codecs::codec_gen::HeaderIFrame* > (buf);
   ::libs::utility::checks::throw_ifn (head->check ());
   return head->base_part_.size_;
 }
@@ -34,7 +34,7 @@ save_jpeg2file (
   auto        iappl       = osprops->get_paths_lockfree ();
   const auto  file_folder = root;
   const auto  file_path   = ::libs::utility::files::make_path (file_folder, name_file);
-  const auto* head        = ::libs::utility::casts::reinterpret_cast_helper< const ::dlls::codecs::codec_gen::HeaderIFrame* > (&image->get_zip ()[0]);
+  const auto* head        = ::libs::utility::casts::reinterpret_cast_helper< const ::dnodes::codecs::codec_gen::HeaderIFrame* > (&image->get_zip ()[0]);
 
   ::libs::utility::checks::throw_ifn (head->check ());
 

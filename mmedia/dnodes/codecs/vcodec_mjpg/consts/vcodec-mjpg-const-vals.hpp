@@ -1,0 +1,10 @@
+#pragma once
+/**
+\file       vcodec-mjpg-const-vals.hpp
+\date       01.05.2017
+\author     Erashov Anton erashov2026@proton.me
+*/
+
+namespace dnodes::codecs::vcodec_mjpg::consts
+{
+}

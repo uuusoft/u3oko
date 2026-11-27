@@ -1,0 +1,181 @@
+/**
+\file       v4l2-vgen-cam-impl.cpp
+\author     Erashov Anton erashov2026@proton.me
+\date       20.02.2026
+*/
+// #define U3_DBG_LOG_LEVEL_ENABLE
+#include "../v4l2-vgen-includes_int.hpp"
+// EAI-REFACT
+#include <cstddef>
+#include <string>
+#include <functional>
+#include <thread>
+#include <cstdlib>
+#include <dirent.h>
+#include <ctime>
+#include <cstring>
+
+namespace dnodes::sources::v4l2_vgen::camera
+{
+void
+CamImpl::sync_runtime_props (const syn::VideoDriverCaptureProp &capprops)
+{
+  const auto fourcc = ::libs::utility::uids::helpers::idval2fourcc (capprops.capi_.px_format_);
+
+  ::libs::utility::checks::throw_ifn (
+    (bool) v4l2capture_,
+    U3_FORMAT ("before sync runtime props {} {} {} {}", capprops.capi_.width_, capprops.capi_.height_, capprops.capi_.fps_, fourcc));
+
+  capparams_ = capprops.capi_;
+
+  const auto runtime_width         = v4l2capture_->getWidth ();
+  const auto runtime_height        = v4l2capture_->getHeight ();
+  const auto runtime_fourcc_format = v4l2capture_->getFormat ();
+  const auto runtime_format        = ::libs::utility::uids::helpers::fourcc2idval (runtime_fourcc_format);
+
+  if (capparams_.width_ != runtime_width ||
+      capparams_.height_ != runtime_height ||
+      capparams_.px_format_ != runtime_format)
+  {
+    U3_LOG_DATA_WRN ("failed set format to v4l2: runtime_width:{} runtime_height:{}", runtime_width, runtime_height);
+    U3_LOG_DATA_WRN ("failed set format to v4l2:{} {}", libs::utility::uids::helpers::get_readable_name (runtime_format), runtime_fourcc_format);
+    capparams_.width_     = runtime_width;
+    capparams_.height_    = runtime_height;
+    capparams_.px_format_ = runtime_format;
+  }
+}
+
+
+CamImpl::CamImpl (const gen_lib::SourceImplInfo &props_info) :
+  srcparams_ (props_info)
+{
+  const auto &capprops    = *srcparams_.capture_props_;
+  const auto  device_name = std::string (v4l2_vgen::consts::dev_path) + srcparams_.props_->device_name_;
+  const auto  fourcc      = libs::utility::uids::helpers::idval2fourcc (capprops.capi_.px_format_);
+
+  LogLevel = EMERG;   // FATAL;
+  // setLogLevel (0);
+
+  V4L2DeviceParameters param (
+    device_name.c_str (),
+    fourcc,
+    capprops.capi_.width_,
+    capprops.capi_.height_,
+    capprops.capi_.fps_,
+    IOTYPE_MMAP);
+
+  v4l2capture_.reset (V4l2Capture::create (param));
+  sync_runtime_props (capprops);
+}
+
+
+auto
+CamImpl::is_init () const -> bool
+{
+  return v4l2capture_ ? true : false;
+}
+
+
+auto
+CamImpl::get_buf () -> syn::IVideoBuf::ptr
+{
+  std::scoped_lock lock (sync_);
+
+  timeval       tv       = { .tv_sec = 0, .tv_usec = 100 };
+  const int32_t read_res = v4l2capture_ ? v4l2capture_->isReadable (&tv) : -1;
+  if (1 != read_res)
+  {
+    return {};
+  }
+
+  auto       ibuf         = ::libs::iproperties::helpers::cast_prop_demons ()->get_bufs_lockfree ()->impl ();
+  auto       new_buf      = ibuf->create (0);
+  const auto bpp          = ::libs::utility::uids::helpers::get_count_bytes_from_format (capparams_.px_format_);
+  const auto stride       = capparams_.width_ * bpp;
+  const auto align_stride = ::libs::utility::mem::align_value (stride, 64U, true);
+
+  new_buf->buf_alloc (
+    ::utils::dbufs::video::AllocParams (
+      capparams_.width_,
+      capparams_.height_,
+      capparams_.px_format_,
+      align_stride * capparams_.height_));
+
+  U3_MARK_UNUSED const auto req_buf_size  = v4l2capture_->getBufferSize ();
+  U3_MARK_UNUSED const auto temp_buf_size = (*new_buf)[utils::dbufs::MemVars::size_buf];
+
+  U3_MARK_UNUSED const auto size_res = v4l2capture_->read (
+    utils::dbufs::video::helpers::get_buf_as< char * > (new_buf.get ()),
+    temp_buf_size);
+
+  new_buf->set_mem_var (syn::MemVars::size_data, static_cast< const syn::mem_var_type > (stride * capparams_.height_));
+  new_buf->set_dim_var (syn::Dims::stride, stride);
+  return new_buf;
+}
+
+
+void
+CamImpl::sync_correct_props (syn::VideoCorrectProp::craw_ptr correctprops)
+{
+  if (::libs::events_base::SelectorImpls::software == correctprops->hint_correct_impl_)
+  {
+    return;
+  }
+
+  std::scoped_lock lock (sync_);
+  if (nullptr == v4l2capture_)
+  {
+    return;
+  }
+
+  auto convert = [] (const v4l2_queryctrl &queryctrl, float koeff) -> int32_t {
+    const auto diff = queryctrl.maximum - queryctrl.minimum;
+    if (koeff < 0.0F)
+    {
+      return queryctrl.minimum + diff * (koeff + 1.0F);
+    }
+    else if (koeff > 0.0F)
+    {
+      return queryctrl.maximum - diff * (1.0F - koeff);
+    }
+    return queryctrl.default_value;
+  };
+
+  const auto enable_correct = correctprops->get_using_state () != ::libs::events::PropertyUsings::disabled;
+
+  const std::pair< int32_t, float > cids2koeffs[] = {
+    { V4L2_CID_BRIGHTNESS, correctprops->bright_.first },
+    { V4L2_CID_CONTRAST, correctprops->contrast_.first },
+    { V4L2_CID_SATURATION, correctprops->saturation_.first },
+    { V4L2_CID_HUE, correctprops->hue_.first },
+    { V4L2_CID_GAMMA, correctprops->gamma_.first },
+    { V4L2_CID_GAIN, correctprops->gain_.first },
+    { V4L2_CID_EXPOSURE, correctprops->exposure_.first }
+  };
+
+  auto fd = v4l2capture_->getFd ();
+  for (const auto &cid2koeff : cids2koeffs)
+  {
+    v4l2_queryctrl queryctrl {};
+    memset (&queryctrl, 0, sizeof (queryctrl));
+    queryctrl.id = cid2koeff.first;
+
+    if (-1 == ioctl (fd, VIDIOC_QUERYCTRL, &queryctrl))
+    {
+      continue;
+    }
+    else if (queryctrl.flags & V4L2_CTRL_FLAG_DISABLED)
+    {
+      continue;
+    }
+
+    v4l2_control control {};
+    memset (&control, 0, sizeof (control));
+    control.id    = cid2koeff.first;
+    control.value = enable_correct ? U3_CAST_INT32 (convert (queryctrl, cid2koeff.second)) : queryctrl.default_value;
+    if (-1 == ioctl (fd, VIDIOC_S_CTRL, &control))
+    {
+    }
+  }
+}
+}   // namespace dnodes::sources::v4l2_vgen::camera

@@ -8,26 +8,26 @@
 #include "vcodec-gen-proxy.hpp"
 
 #if (U3_LIBS_ENABLE_VCODEC_MJPG_VVD == 1)
-extern "C" BOOST_SYMBOL_EXPORT void create_codec_vvd_vcodec_mjpg (::dlls::codecs::codec_gen::CodecGeneric** pobj);
-extern "C" BOOST_SYMBOL_EXPORT void delete_codec_vvd_vcodec_mjpg (::dlls::codecs::codec_gen::CodecGeneric* obj);
+extern "C" BOOST_SYMBOL_EXPORT void create_codec_vvd_vcodec_mjpg (::dnodes::codecs::codec_gen::CodecGeneric** pobj);
+extern "C" BOOST_SYMBOL_EXPORT void delete_codec_vvd_vcodec_mjpg (::dnodes::codecs::codec_gen::CodecGeneric* obj);
 extern "C" BOOST_SYMBOL_EXPORT void get_codec_info_vvd_vcodec_mjpg (libs::utility::uids::minor::id_val guids[4]);
 #endif
 
 #if (U3_LIBS_ENABLE_VCODEC_TEST_VVD == 1)
-extern "C" BOOST_SYMBOL_EXPORT void create_codec_vvd_vcodec_test (::dlls::codecs::codec_gen::CodecGeneric** pobj);
-extern "C" BOOST_SYMBOL_EXPORT void delete_codec_vvd_vcodec_test (::dlls::codecs::codec_gen::CodecGeneric* obj);
+extern "C" BOOST_SYMBOL_EXPORT void create_codec_vvd_vcodec_test (::dnodes::codecs::codec_gen::CodecGeneric** pobj);
+extern "C" BOOST_SYMBOL_EXPORT void delete_codec_vvd_vcodec_test (::dnodes::codecs::codec_gen::CodecGeneric* obj);
 extern "C" BOOST_SYMBOL_EXPORT void get_codec_info_vvd_vcodec_test (libs::utility::uids::minor::id_val guids[4]);
 #endif
 
 #if (U3_LIBS_ENABLE_VCODEC_X264_VVD == 1)
-extern "C" BOOST_SYMBOL_EXPORT void create_codec_vvd_vcodec_x264 (::dlls::codecs::codec_gen::CodecGeneric** pobj);
-extern "C" BOOST_SYMBOL_EXPORT void delete_codec_vvd_vcodec_x264 (::dlls::codecs::codec_gen::CodecGeneric* obj);
+extern "C" BOOST_SYMBOL_EXPORT void create_codec_vvd_vcodec_x264 (::dnodes::codecs::codec_gen::CodecGeneric** pobj);
+extern "C" BOOST_SYMBOL_EXPORT void delete_codec_vvd_vcodec_x264 (::dnodes::codecs::codec_gen::CodecGeneric* obj);
 extern "C" BOOST_SYMBOL_EXPORT void get_codec_info_vvd_vcodec_x264 (libs::utility::uids::minor::id_val guids[4]);
 #endif
 
 #if (U3_LIBS_ENABLE_VCODEC_VA_VVD1 == 1)
-extern "C" BOOST_SYMBOL_EXPORT void create_codec_vvd_vcodec_va (::dlls::codecs::codec_gen::CodecGeneric** pobj);
-extern "C" BOOST_SYMBOL_EXPORT void delete_codec_vvd_vcodec_va (::dlls::codecs::codec_gen::CodecGeneric* obj);
+extern "C" BOOST_SYMBOL_EXPORT void create_codec_vvd_vcodec_va (::dnodes::codecs::codec_gen::CodecGeneric** pobj);
+extern "C" BOOST_SYMBOL_EXPORT void delete_codec_vvd_vcodec_va (::dnodes::codecs::codec_gen::CodecGeneric* obj);
 extern "C" BOOST_SYMBOL_EXPORT void get_codec_info_vvd_vcodec_va (libs::utility::uids::minor::id_val guids[4]);
 #endif
 

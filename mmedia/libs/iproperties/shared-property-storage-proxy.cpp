@@ -10,8 +10,9 @@
 namespace libs::iproperties
 {
 SharedPropertyStorageProxy::SharedPropertyStorageProxy () :
-  ::libs::utility::proxy::MemProxyBase (std::string (::libs::properties::consts::id_proxy_shared_mem), sizeof (SharedPropertyStorage)),
-  pimpl_ (nullptr)
+  ::libs::utility::proxy::MemProxyBase (
+    std::string (::libs::properties::consts::id_proxy_shared_mem),
+    sizeof (SharedPropertyStorage))
 {
   // lock_type  lock(mtx_);
   pimpl_ = pshm_->find_or_construct< SharedPropertyStorage::ptr > (obj_id_.c_str ()) ();

@@ -122,22 +122,25 @@ cmake --build ${U3_BIN} -j 1 --config ${U3_BUILD}
 echo cp -r ./.assets/xmls/templates   ${U3_BIN}/${U3_OS}/${U3_BUILD}
 cp -r ./.assets/xmls/templates  ${U3_BIN}/${U3_OS}/${U3_BUILD}
 
+du -chx ${U3_BIN}/${U3_OS}/${U3_BUILD}/*.so
+
 # strip debug symbols from release
 if [[ ${U3_BUILD} != "Debug" ]]; then
     #du -ch ${U3_BIN}/${U3_OS}/${U3_BUILD}/*.so | tail -n 1
     du -chx ${U3_BIN}/${U3_OS}/${U3_BUILD}/*.so
-    #strip --strip-all ${U3_BIN}/${U3_OS}/${U3_BUILD}/mpl_mappl
+    strip --strip-all ${U3_BIN}/${U3_OS}/${U3_BUILD}/mpl_mappl
     #strip -g -S -d --strip-debug ${U3_BIN}/${U3_OS}/${U3_BUILD}/mpl_mappl
     
     if [[ ${U3_AS_LIBS} == "0" ]]; then
         for file in ${U3_BIN}/${U3_OS}/${U3_BUILD}/*.so; do
-            #[ -f "$file" ] &&  strip --strip-all "$file"
+            [ -f "$file" ] &&  strip --strip-all "$file"
             #[ -f "$file" ] &&  strip -g -S -d --strip-debug "$file"            
         done
     fi
 fi
 
 #du -ch ${U3_BIN}/${U3_OS}/${U3_BUILD}/*.so | tail -n 1
+# view size files
 du -chx ${U3_BIN}/${U3_OS}/${U3_BUILD}/*.so
 
 # run

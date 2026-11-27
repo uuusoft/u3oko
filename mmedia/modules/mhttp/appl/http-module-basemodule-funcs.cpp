@@ -5,7 +5,7 @@
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
 #include "-http-module-includes-int.hpp"
-#include "mmedia/dlls/terminals/video_sender/consts/video-sender-const-vals.hpp"
+#include "mmedia/dnodes/terminals/video_sender/consts/video-sender-const-vals.hpp"
 #include "-http-module-syn.hpp"
 #include "http-module.hpp"
 
@@ -26,11 +26,11 @@ HttpModule::init_links_int (const syn::InitApplication& appinfo) -> void
   auto lproxy    = ::libs::ilink::LinkCreatorProxy::instance ();
   auto temp_link = lproxy->impl ()->get_listen (
     ::libs::link::CreateInfo (
-      { { ::libs::link::consts::text::id_appl_name, "mpl_mhttp" },
-        { ::libs::link::consts::text::id_lib_name, "mpl_mhttp" },
-        { ::libs::link::consts::text::id_size_shared_mem, ::libs::link::consts::sizes::buf_appl2http },
-        { ::libs::link::consts::text::id_module_links, ::libs::link::details::ModuleLinks::http },
-        { ::libs::link::consts::text::id_code_runs, ::libs::link::details::CodeRuns::appl } }));
+      { { std::string (::libs::link::consts::text::id_appl_name), std::string (libs::ilink::consts::id_module_dll_mhttp) },
+        { std::string (::libs::link::consts::text::id_lib_name), std::string (libs::ilink::consts::id_module_dll_mhttp) },
+        { std::string (::libs::link::consts::text::id_size_shared_mem), ::libs::link::consts::sizes::buf_appl2http },
+        { std::string (::libs::link::consts::text::id_module_links), ::libs::link::details::ModuleLinks::http },
+        { std::string (::libs::link::consts::text::id_code_runs), ::libs::link::details::CodeRuns::appl } }));
 
   links_.set (syn::mids::http2appl, temp_link);
 

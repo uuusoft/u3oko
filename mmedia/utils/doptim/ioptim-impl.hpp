@@ -1,0 +1,41 @@
+#pragma once
+/**
+\file       ioptim-impl.hpp
+\author     Erashov Anton erashov2026@proton.me
+\date       01.01.2017
+*/
+
+namespace utils::doptim::impl
+{
+/// Реализация модуля по работе с различными оптимизированнами версиями алгоритмов обработки данных
+class IOptimImpl final : public ::libs::optim::io::IOptim
+{
+  public:
+  //  ext types
+  using str2funcs_type = boost::unordered_flat_map< std::string, IOptimAlg::ptr, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
+  using sync_type      = std::mutex;
+  using lock_type      = std::scoped_lock< sync_type >;
+
+  IOptimImpl ();
+  virtual ~IOptimImpl () = default;
+
+  //  ::libs::optim::io::IOptim overrides
+  virtual auto get (const ::libs::optim::io::qoptim& query) -> ::libs::optim::io::hioptim override;
+  virtual auto sync_impl (const ::libs::optim::io::TInit& iinfo) -> void override;
+
+  private:
+  void construct ();
+
+  template< typename TTAlg >
+  void
+  add_alg ()
+  {
+    const auto& key = TTAlg::val_key;
+    ::libs::utility::checks::throw_ifn (algs_.end () == algs_.find (key));
+    algs_.insert (str2funcs_type::value_type (key, std::make_shared< TTAlg > ()));
+  }
+
+  str2funcs_type algs_;   //< Массив для быстрого поиска алгоритма по строке
+  sync_type      mtx_;    //< Синхронизирующий примитив
+};
+}   // namespace utils::doptim::impl

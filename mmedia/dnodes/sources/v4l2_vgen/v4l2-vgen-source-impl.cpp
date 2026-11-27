@@ -1,0 +1,267 @@
+/**
+\file       v4l2-vgen-source-impl.cpp
+\author     Erashov Anton erashov2026@proton.me
+\date       20.02.2026
+*/
+// #define U3_DBG_LOG_LEVEL_ENABLE
+#include "v4l2-vgen-includes_int.hpp"
+#include "v4l2-vgen-source-impl.hpp"
+
+namespace dnodes::sources::v4l2_vgen
+{
+SourceImpl::~SourceImpl () noexcept
+{
+  free_device ();
+}
+
+
+void
+SourceImpl::init_int ()
+{
+}
+
+
+void
+SourceImpl::start_int ()
+{
+  frame_counter_ = 0;
+  ::libs::utility::checks::throw_ifn (v4l2_init_, "not init device, skip restart");
+  start_capture ();
+}
+
+
+void
+SourceImpl::start_capture ()
+{
+}
+
+
+void
+SourceImpl::stop_capture ()
+{
+}
+
+
+void
+SourceImpl::stop_int ()
+{
+  stop_capture ();
+  v4l2_impl_.reset ();
+}
+
+
+void
+SourceImpl::get_sources_int (std::vector< syn::DataSourceInfo > &sources)
+{
+  static const std::array< ::libs::utility::uids::minor::id_val, 10 > support_formats = {
+    ::libs::utility::uids::minor::id_val::rgb24,            // 0
+    ::libs::utility::uids::minor::id_val::rgb32,            // 1
+    ::libs::utility::uids::minor::id_val::yuy2,             // 2
+    ::libs::utility::uids::minor::id_val::yuyv,             // 3
+    ::libs::utility::uids::minor::id_val::uyvy,             // 4
+    ::libs::utility::uids::minor::id_val::i420,             // 5
+    ::libs::utility::uids::minor::id_val::nv21,             // 6
+    ::libs::utility::uids::minor::id_val::y16,              // 7
+    ::libs::utility::uids::minor::id_val::y8,               // 8
+    ::libs::utility::uids::minor::id_val::device_specific   // 9
+    //::libs::utility::uids::minor::id_val::ycb, // 10
+    //::libs::utility::uids::minor::id_val::iyuv, // 11
+    //::libs::utility::uids::minor::id_val::yv12, // 12
+    //::libs::utility::uids::minor::id_val::yvu9 //13
+  };
+
+  syn::VideoDriverProp        props;
+  syn::VideoDriverCaptureProp capture_props;
+  syn::LinksVideoDriverProp   links_props;
+
+  ::dnodes::sources::gen_lib::SourceImplInfo srcinfo {
+    &props,
+    &capture_props,
+    &links_props
+  };
+
+  sources.reserve (consts::max_check_device_count);
+  for (std::size_t idd = 0; idd < consts::max_check_device_count; ++idd)
+  {
+    props.device_name_ = "video" + std::to_string (idd);
+    U3_LOG_DATA_DEV ("check v4l2 device:{}", props.device_name_);
+    for (const auto &format : support_formats)
+    {
+      capture_props.capi_.px_format_ = format;
+
+      try
+      {
+        auto v4l2 = std::make_unique< camera::CamImpl > (srcinfo);
+        if (v4l2->is_init ())
+        {
+          sources.emplace_back (
+            props.device_name_,
+            libs::events_media::events::DataSources::video,
+            1,
+            1);
+          U3_LOG_DATA_DEV ("add v4l2 device:{}", props.device_name_);
+          break;
+        }
+      }
+      catch (boost::exception &excpt)
+      {
+        U3_LOG_DATA_DBG ("{}", boost::diagnostic_information (excpt));
+      }
+      catch (std::exception &excpt)
+      {
+        U3_LOG_DATA_DBG ("what:{}", excpt.what ());
+      }
+      catch (...)
+      {
+        U3_LOG_DATA_DBG ("unknown exception v4l2 device");
+      }
+    }
+  }
+}
+
+
+void
+SourceImpl::get_raw_data_int (
+  syn::pkeys2bufs_type &bufs,
+  syn::tevents_type    *events)
+{
+  ::libs::utility::checks::throw_ifn ((bool) events);
+  {
+    const auto now = std::chrono::high_resolution_clock::now ();
+    if (icapture_->is_capture_property_update ())
+    {
+      U3_CALL_TRACE_INFO ("capture_props:{}", U3_CAST_PTR2INT_FORCE (srcimpinfo_.capture_props_));
+      srcimpinfo_.capture_props_ = icapture_->get_capture_property ();
+      last_time_restart_         = now - consts::ms_timeout_recreate_device;
+      camera_error_              = 0xFF;
+    }
+
+    const bool recreate_request             = camera_error_ || !v4l2_init_ ? true : false;
+    const auto diff_time_after_last_restart = now - last_time_restart_;
+    const bool recreate_request_now         = recreate_request && diff_time_after_last_restart >= consts::ms_timeout_recreate_device;
+
+    if (recreate_request)
+    {
+      if (recreate_request_now)
+      {
+        U3_LOG_DATA_MARK ("START recreate device {} error:{} fps:{}", v4l2_init_, camera_error_, srcimpinfo_.capture_props_->capi_.fps_);
+        stop_int ();
+
+        last_time_restart_ = now;
+        camera_error_      = 0;
+
+        deinit_device ();
+        init_device (srcimpinfo_);
+        start_int ();
+      }
+    }
+    if (icorrection_->is_correction_property_update ())
+    {
+      if (v4l2_impl_)
+      {
+        syn::VideoCorrectProp::craw_ptr new_prop = icorrection_->get_correction_property ();
+        v4l2_impl_->sync_correct_props (new_prop);
+      }
+    }
+  }
+
+  if (!send_interfaces_ && events)
+  {
+    U3_LOG_DATA_DEV ("send interface:{}", send_interfaces_);
+    {
+      auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::InterfCorrectImageEvent > ();
+      revnt->set_interface (icorrection_);
+      revnt->set_active (true);
+      events->push_back (evnt);
+    }
+    {
+      auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< syn::InterfCaptureImageEvent > ();
+      revnt->set_interface (icapture_);
+      revnt->set_active (true);
+      events->push_back (evnt);
+    }
+    send_interfaces_ = true;
+  }
+
+  if (!v4l2_init_)
+  {
+    return;
+  }
+
+  auto &buf = (*bufs)[::utils::dbufs::video::consts::offs::raw];
+  ::libs::utility::checks::throw_ifn ((bool) buf);
+  buf->set_flag (::utils::dbufs::BufFlags::empty, true);
+
+  if (v4l2_impl_)
+  {
+    syn::IVideoBuf::ptr raw_buf = v4l2_impl_->get_buf ();
+    if (!raw_buf)
+    {
+      if (!is_source_started ())
+      {
+        return;
+      }
+      start_capture ();
+      return;
+    }
+
+    buf->clone (raw_buf.get (), 100.0F);
+    raw_buf->set_flag (::utils::dbufs::BufFlags::empty, true);
+    ++frame_counter_;
+  }
+}
+
+
+void
+SourceImpl::set_cpu_int (::libs::utility::sys::cpu::CpuExts simd)
+{
+}
+
+
+void
+SourceImpl::free_device () noexcept
+{
+  stop ();
+  v4l2_impl_.reset ();
+}
+
+void
+SourceImpl::update_source_info_int (const ::dnodes::sources::gen_lib::SourceImplInfo &info)
+{
+  deinit_device ();
+  init_device (info);
+}
+
+
+auto
+SourceImpl::init_device (const ::dnodes::sources::gen_lib::SourceImplInfo &info) -> bool
+{
+  if (v4l2_init_)
+  {
+    return true;
+  }
+
+  try
+  {
+    v4l2_impl_ = std::make_unique< camera::CamImpl > (srcimpinfo_);
+    v4l2_init_ = true;
+  }
+  catch (const std::exception &excpt)
+  {
+    U3_LOG_DATA_EXCEPT ("what:{}", excpt.what ());
+    return false;
+  }
+  return v4l2_init_;
+}
+
+
+void
+SourceImpl::deinit_device ()
+{
+  if (!v4l2_init_)
+  {
+    return;
+  }
+  v4l2_init_ = false;
+}
+}   // namespace dnodes::sources::v4l2_vgen

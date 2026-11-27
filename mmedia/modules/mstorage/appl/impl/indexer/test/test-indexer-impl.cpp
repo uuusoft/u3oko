@@ -3,7 +3,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \date       25.07.2018
 */
-#include "../../../../module-storage-includes_int.hpp"
+#include "../../../../-module-storage-includes-int.hpp"
 #include "test-indexer-impl.hpp"
 
 namespace modules::mstorage::appl::impl::indexer::test

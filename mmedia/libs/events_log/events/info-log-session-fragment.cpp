@@ -5,7 +5,7 @@
 */
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
-#include "../includes_int.hpp"
+#include "../-libs-events-log-includes-int.hpp"
 #include "info-log-session-fragment.hpp"
 
 namespace libs::events_log::events

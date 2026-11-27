@@ -10,7 +10,7 @@
 namespace libs::proxy
 {
 auto
-get_list_dlls_as_libs () -> std::vector< syn::FileNode >
+get_list_dnodes_as_libs () -> std::vector< syn::FileNode >
 {
   std::vector< syn::FileNode > ret;
   ret.reserve (128);

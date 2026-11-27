@@ -5,7 +5,7 @@
 */
 #include "mmedia/includes/control-defines-includes.hpp"
 #include "mmedia/includes/includes.hpp"
-#include "includes_int.hpp"
+#include "-libs-events-log-includes-int.hpp"
 #include "appll-part-log-info.hpp"
 
 namespace libs::events_log
@@ -14,6 +14,7 @@ AppllPartLogInfo::AppllPartLogInfo (
   const syn::LogLevels&       msg_state,
   const std::string_view      subsys,
   const std::string_view      version,
+  const std::string_view      thread_id,
   const std::source_location& place) :
 
   msg_state_ (msg_state),
@@ -21,6 +22,7 @@ AppllPartLogInfo::AppllPartLogInfo (
   version_ (version),
   func_ (place.function_name ()),
   file_ (place.file_name ()),
+  thread_id_ (thread_id),
   line_ (place.line ())
 {
   const std::string id_begin = "mmedia";
@@ -40,6 +42,7 @@ AppllPartLogInfo::serialize (Archive& arh, const std::uint32_t /* file_version *
   arh& BOOST_SERIALIZATION_NVP (msg_state_);
   arh& BOOST_SERIALIZATION_NVP (subsys_);
   arh& BOOST_SERIALIZATION_NVP (version_);
+  arh& BOOST_SERIALIZATION_NVP (thread_id_);
   arh& BOOST_SERIALIZATION_NVP (func_);
   arh& BOOST_SERIALIZATION_NVP (file_);
   arh& BOOST_SERIALIZATION_NVP (line_);

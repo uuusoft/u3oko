@@ -4,7 +4,7 @@
 \date       01.01.2017
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
-#include "../module-events-includes_int.hpp"
+#include "../-module-events-includes-int.hpp"
 // #include "consts/module-events-const-vals.hpp"
 #include "events-module-syn.hpp"
 #include "events-module.hpp"

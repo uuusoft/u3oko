@@ -48,7 +48,10 @@ IApplicationProxy::IApplicationProxy (
 #else
 
   std::error_code load_error;
-  lib_.load (cpath, boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders, load_error);
+  lib_.load (
+    cpath,
+    boost::dll::load_mode::rtld_now | boost::dll::load_mode::search_system_folders,
+    load_error);
   if (!lib_.is_loaded ())
   {
     U3_XLOG_ERROR ("failed load dll:{} {}", name_lib, cpath.string ());
@@ -67,16 +70,16 @@ IApplicationProxy::IApplicationProxy (
 
   ::libs::utility::checks::throw_ifn (
     (bool) creator_,
-    "find create_impl from lib, " + cpath.string () + ", " + ::libs::utility::dlls::make_func_name_lib (name_lib, "create_impl"));
+    U3_FORMAT ("find create_impl from lib:{} {}", cpath.string (), ::libs::utility::dlls::make_func_name_lib (name_lib, "create_impl")));
 
   ::libs::utility::checks::throw_ifn (
     (bool) erasor_,
-    "find delete_impl from lib, " + cpath.string () + ", " + ::libs::utility::dlls::make_func_name_lib (name_lib, "delete_impl"));
+    U3_FORMAT ("find delete_impl from lib:{} {}", cpath.string (), ::libs::utility::dlls::make_func_name_lib (name_lib, "delete_impl")));
 }
 
 IApplicationProxy::~IApplicationProxy ()
 {
-  ::libs::utility::checks::assert_soft ((bool) erasor_, "empty deleter function");
+  ::libs::utility::checks::assert_soft ((bool) erasor_, "empty delete function");
   if (erasor_)
   {
     erasor_ (impl_);

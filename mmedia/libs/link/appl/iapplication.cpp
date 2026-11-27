@@ -26,6 +26,7 @@ IApplication::appl_init (const InitApplication& info)
     init_links_int (info);
     update_catch_funcs_int ();
     init_done_int ();
+
     init_ = true;
   }
   catch (const std::exception& excpt)

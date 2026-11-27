@@ -4,7 +4,7 @@
 \date       01.01.2017
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
-#include "../module-log-includes_int.hpp"
+#include "../-module-log-includes-int.hpp"
 #include "log-module.hpp"
 
 namespace modules::mlog::appl
@@ -49,11 +49,11 @@ LogModule::init_links_int (const ::libs::link::appl::InitApplication& info)
 
   auto temp_link = ::libs::utility::checks::ptr (lproxy->impl ()->get_listen (
     ::libs::link::CreateInfo (
-      { { ::libs::link::consts::text::id_appl_name, "mpl_mlog" },
-        { ::libs::link::consts::text::id_lib_name, "mpl_mlog" },
-        { ::libs::link::consts::text::id_size_shared_mem, ::libs::link::consts::sizes::buf_all2log },
-        { ::libs::link::consts::text::id_module_links, ::libs::link::details::ModuleLinks::log },
-        { ::libs::link::consts::text::id_code_runs, ::libs::link::details::CodeRuns::appl } })));
+      { { std::string (::libs::link::consts::text::id_appl_name), std::string (libs::ilink::consts::id_module_dll_mlog) },
+        { std::string (::libs::link::consts::text::id_lib_name), std::string (libs::ilink::consts::id_module_dll_mlog) },
+        { std::string (::libs::link::consts::text::id_size_shared_mem), ::libs::link::consts::sizes::buf_all2log },
+        { std::string (::libs::link::consts::text::id_module_links), ::libs::link::details::ModuleLinks::log },
+        { std::string (::libs::link::consts::text::id_code_runs), ::libs::link::details::CodeRuns::appl } })));
 
   links_.set (syn::mids::log2appl, temp_link);
 

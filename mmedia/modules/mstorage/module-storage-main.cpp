@@ -4,7 +4,7 @@
 \date       23.07.2018
 \brief      Модуль хранения данных
 */
-#include "module-storage-includes_int.hpp"
+#include "-module-storage-includes-int.hpp"
 
 static std::mutex                                g_sinc;
 static volatile std::int32_t                     counter_refs_ = 0;
@@ -25,8 +25,8 @@ create_impl_mpl_mstorage () -> ::libs::link::appl::IApplication::raw_ptr
 }
 
 
-extern "C" BOOST_SYMBOL_EXPORT void
-delete_impl_mpl_mstorage (::libs::link::appl::IApplication::raw_ptr appl)
+extern "C" BOOST_SYMBOL_EXPORT auto
+delete_impl_mpl_mstorage (::libs::link::appl::IApplication::raw_ptr appl) -> void
 {
   std::scoped_lock lock (g_sinc);
 

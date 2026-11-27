@@ -13,23 +13,23 @@ using persistent_off_buf_type = ::utils::dbufs::video::consts::offs::persistent_
 
 namespace libs::events_base::props::base_id
 {
-using id_link_type     = ::libs::ilink::consts::id_link_type;
-using source_name_type = std::string;
+using persisent_id_link_type = ::libs::ilink::consts::persisent_id_link_type;
+using source_name_type       = std::string;
 
 struct Buff2ModuleInfo final {
   // ext types
   U3_ADD_POINTERS_TO_SELF (Buff2ModuleInfo)
 
   explicit Buff2ModuleInfo (
-    float             = 0.0F,
-    syn::off_buf_type = ::utils::dbufs::video::consts::offs::invalid,
-    id_link_type      = "");
+    float                  = 0.0F,
+    syn::off_buf_type      = ::utils::dbufs::video::consts::offs::invalid,
+    persisent_id_link_type = "");
 
   virtual ~Buff2ModuleInfo () = default;
 
   float                        fps_ { 0.0F };     //<
   syn::persistent_off_buf_type indx_buf_;         //<
-  id_link_type                 dest_module_id_;   //<
+  persisent_id_link_type       dest_module_id_;   //<
 
   private:
   friend class boost::serialization::access;

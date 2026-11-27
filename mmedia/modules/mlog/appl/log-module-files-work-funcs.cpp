@@ -4,7 +4,7 @@
 \author     Erashov Anton erashov2026@proton.me
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
-#include "../module-log-includes_int.hpp"
+#include "../-module-log-includes-int.hpp"
 #include "log-module.hpp"
 
 namespace modules::mlog::appl

@@ -13,7 +13,7 @@
 #include "mmedia/libs/properties/libs-properties-includes.hpp"
 
 #include "mmedia/libs/events_base/events-base-includes.hpp"
-#include "mmedia/libs/events_log/includes.hpp"
+#include "mmedia/libs/events_log/-libs-events-log-includes.hpp"
 
 #include "mmedia/libs/optims/optim/io/libs-optims-optim-io-includes.hpp"
 #include "mmedia/libs/optims/optim/mcalls/libs-optims-optim-mcalls-includes.hpp"
@@ -25,8 +25,9 @@
 #include "mmedia/libs/events_gui/includes.hpp"
 #include "mmedia/libs/events_http/includes.hpp"
 #include "mmedia/libs/events_storage/events-storage-includes.hpp"
+#include "mmedia/libs/events_user/events-user-includes.hpp"
 
-#include "mmedia/modules/mlog/module-log-includes.hpp"
+#include "mmedia/modules/mlog/-module-log-includes.hpp"
 
 #include "mmedia/libs/proxy/proxy/ioptim-proxy.hpp"
 #include "mmedia/libs/proxy/proxy/ievents-proxy.hpp"

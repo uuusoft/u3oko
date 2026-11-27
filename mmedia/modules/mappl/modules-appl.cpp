@@ -3,7 +3,7 @@
 \author     Erashov Anton erashov2026@proton.me
 \date       10.05.2016
 */
-#include "module-appl-includes_int.hpp"
+#include "-module-appl-includes-int.hpp"
 #include "modules-appl.hpp"
 
 namespace modules::mappl
@@ -33,11 +33,11 @@ process_cmd_line (std::int32_t argc, char* argv[])
 {
   boost::program_options::options_description options ("allowed options");
 
-  options.add_options () (::libs::link::consts::text::id_lib_name, boost::program_options::value< std::string > ());
-  options.add_options () (::libs::link::consts::text::id_company_name, boost::program_options::value< std::string > ());
-  options.add_options () (::libs::link::consts::text::id_appl_name, boost::program_options::value< std::string > ());
-  options.add_options () (::libs::link::consts::text::id_service_name, boost::program_options::value< std::string > ());
-  options.add_options () (::libs::link::consts::text::id_delay_ms, boost::program_options::value< std::string > ());
+  options.add_options () (std::string (::libs::link::consts::text::id_lib_name).c_str (), boost::program_options::value< std::string > ());
+  options.add_options () (std::string (::libs::link::consts::text::id_company_name).c_str (), boost::program_options::value< std::string > ());
+  options.add_options () (std::string (::libs::link::consts::text::id_appl_name).c_str (), boost::program_options::value< std::string > ());
+  options.add_options () (std::string (::libs::link::consts::text::id_service_name).c_str (), boost::program_options::value< std::string > ());
+  options.add_options () (std::string (::libs::link::consts::text::id_delay_ms).c_str (), boost::program_options::value< std::string > ());
 
   boost::program_options::variables_map mapvars;
   {
@@ -54,9 +54,9 @@ process_cmd_line (std::int32_t argc, char* argv[])
 #endif
   }
 
-  if (mapvars.count (::libs::link::consts::text::id_delay_ms) >= 1)
+  if (mapvars.count (std::string (::libs::link::consts::text::id_delay_ms)) >= 1)
   {
-    const auto         sdelay = mapvars.find (::libs::link::consts::text::id_delay_ms)->second.as< std::string > ();
+    const auto         sdelay = mapvars.find (std::string (::libs::link::consts::text::id_delay_ms))->second.as< std::string > ();
     const std::int32_t rdelay = std::stoi (sdelay);
     const auto         delay  = ::libs::utility::utils::ret_check_bound< std::int32_t > (rdelay, 0, 60 * 1000);
     U3_XLOG_WARN ("debug delay before start {} ms", delay)
@@ -64,10 +64,10 @@ process_cmd_line (std::int32_t argc, char* argv[])
   }
 
   const std::pair< const std::string, std::string& > cmd_vals[] = {
-    { ::libs::link::consts::text::id_lib_name, g_init_appl.lib_name_ },
-    { ::libs::link::consts::text::id_company_name, g_init_appl.company_name_ },
-    { ::libs::link::consts::text::id_appl_name, g_init_appl.appl_name_ },
-    { ::libs::link::consts::text::id_service_name, g_init_appl.service_name_ }
+    { std::string (::libs::link::consts::text::id_lib_name), g_init_appl.lib_name_ },
+    { std::string (::libs::link::consts::text::id_company_name), g_init_appl.company_name_ },
+    { std::string (::libs::link::consts::text::id_appl_name), g_init_appl.appl_name_ },
+    { std::string (::libs::link::consts::text::id_service_name), g_init_appl.service_name_ }
   };
 
   for (const auto& cmd_val : cmd_vals)

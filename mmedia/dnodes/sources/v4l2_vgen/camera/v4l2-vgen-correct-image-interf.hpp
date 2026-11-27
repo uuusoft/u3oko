@@ -1,0 +1,65 @@
+#pragma once
+/**
+\file       v4l2-vgen-correct-image-interf.hpp
+\author     Erashov Anton erashov2026@proton.me
+\date       20.02.2026
+*/
+
+// old shit
+#ifdef U3_DISABLE_AS_0_FOR_CLANG_TIDY
+namespace dnodes::sources::v4l2_vgen::camera
+{
+class CorrectImageInterf : public ::libs::events_base::runtime::interf::interfaces::ICorrectImage
+{
+  public:
+  //  ext types
+  U3_ADD_POINTERS_TO_SELF (CorrectImageInterf)
+
+  CorrectImageInterf ()          = default;
+  virtual ~CorrectImageInterf () = default;
+
+  bool
+  is_correction_property_update () const
+  {
+    return update_;
+  }
+
+  VideoCorrectProp::craw_ptr
+  get_correction_property () const
+  {
+    update_ = false;
+    return &prop_;
+  }
+
+
+  private:
+  virtual void
+  change_state_int (bool enable) override
+  {
+    //  Отключить нельзя, так как функционал напрямую связан с устройством захвата.
+    return;
+  }
+
+  virtual void
+  update_property_int (const VideoCorrectProp::raw_ptr info) override
+  {
+    prop_   = *info;
+    update_ = true;
+    return;
+  }
+
+  virtual bool
+  process_int (
+    syn::IVideoBuf::raw_ptr h16s,
+    syn::IVideoBuf::raw_ptr s16s,
+    syn::IVideoBuf::raw_ptr l16s) override
+  {
+    // Вся работа идет аппаратно.
+    return false;
+  }
+
+  mutable bool     update_ = false;   //<
+  VideoCorrectProp prop_;             //<
+};
+}   // namespace dnodes::sources::v4l2_vgen::camera
+#endif

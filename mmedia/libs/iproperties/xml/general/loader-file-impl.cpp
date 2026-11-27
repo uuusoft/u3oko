@@ -35,7 +35,7 @@ LoaderFileImpl::get_enum_int (
 
   if (is_special_folder_for_libs (path_type))
   {
-    enum_files.files_ = ::libs::proxy::get_list_dlls_as_libs ();
+    enum_files.files_ = ::libs::proxy::get_list_dnodes_as_libs ();
     return;
   }
 
@@ -61,7 +61,7 @@ LoaderFileImpl::is_exist_file_int (
 {
   if (is_special_folder_for_libs (path_type))
   {
-    auto files = ::libs::proxy::get_list_dlls_as_libs ();
+    auto files = ::libs::proxy::get_list_dnodes_as_libs ();
     for (const auto& file : files)
     {
       if (file.name_ == file_name)

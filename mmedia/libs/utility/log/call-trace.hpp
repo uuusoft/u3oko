@@ -13,23 +13,54 @@ class CallTrace final
   U3_ADD_DELETE_MOVE_COPY (CallTrace)
 
   explicit CallTrace (
-    const std::string_view      info  = "",
-    const std::source_location& place = std::source_location::current ()) :
+    const std::string_view      info      = "",
+    const std::thread::id&      thread_id = std::this_thread::get_id (),
+    const std::source_location& place     = std::source_location::current ()) :
 
     place_ (std::move (place)),
+    thread_id_ (thread_id),
     info_ (info)
   {
-    U3_XLOG_MARK ("{}:---->{}", clear_func_name (place_.function_name ()), info_);
+    U3_XLOG_MARK ("--->{}:{}", clear_func_name (place_.function_name ()), info_);
+    ++call_deep_;
   }
 
   ~CallTrace ()
   {
-    U3_XLOG_MARK ("{}:<----{}", clear_func_name (place_.function_name ()), info_);
+    --call_deep_;
+    U3_XLOG_MARK ("<---{}:{}", clear_func_name (place_.function_name ()), info_);
   }
 
   private:
-  const std::source_location place_;   //<
-  const std::string          info_;    //<
+  inline static std::array< std::string, 16 > deep2off = {
+    "",
+    "\t",
+    "\t\t",
+    "\t\t\t",
+    "\t\t\t\t",
+    "\t\t\t\t\t",
+    "\t\t\t\t\t\t",
+    "\t\t\t\t\t\t\t",
+    "\t\t\t\t\t\t\t\t",
+    "\t\t\t\t\t\t\t\t\t",
+    "\t\t\t\t\t\t\t\t\t\t",
+    "\t\t\t\t\t\t\t\t\t\t\t",
+    "\t\t\t\t\t\t\t\t\t\t\t\t",
+    "\t\t\t\t\t\t\t\t\t\t\t\t\t",
+    "\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+    "|\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  };
+
+  std::int32_t
+  get_deep (std::int32_t deep) const
+  {
+    return deep2off.size () > deep && deep > 0 ? deep : deep2off.size () - 1;
+  }
+
+  const std::source_location              place_;             //<
+  const std::thread::id                   thread_id_;         //<
+  const std::string                       info_;              //<
+  inline static thread_local std::int32_t call_deep_ { 0 };   //<
 };
 }   // namespace libs::utility::log
 

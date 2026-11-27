@@ -5,20 +5,23 @@
 \brief      Модуль сервера событий
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
-#include "module-events-includes_int.hpp"
+#include "-module-events-includes-int.hpp"
 #include "appl/events-module-syn.hpp"
 #include "appl/events-module.hpp"
 
 namespace modules::mevents::appl
 {
 auto
-factory_impl_mevents (::libs::link::appl::IApplication::raw_ptr impl, bool create) -> ::libs::link::appl::IApplication::raw_ptr
+factory_impl_mevents (
+  syn::IApplication::raw_ptr impl,
+  bool                       create) -> syn::IApplication::raw_ptr
 {
+  static std::mutex eventssinc;
+  std::scoped_lock  lock (eventssinc);
+
   static std::int64_t               count_eventsrefs = 0;
   static syn::IApplication::raw_ptr eventsappl       = nullptr;
-  static std::mutex                 eventssinc;
 
-  std::scoped_lock lock (eventssinc);
   if (create)
   {
     ::libs::utility::checks::assert_soft (nullptr == impl);
@@ -53,8 +56,8 @@ create_impl_mpl_mevents () -> ::libs::link::appl::IApplication::raw_ptr
   return modules::mevents::appl::factory_impl_mevents (nullptr, true);
 }
 
-extern "C" BOOST_SYMBOL_EXPORT void
-delete_impl_mpl_mevents (::libs::link::appl::IApplication::raw_ptr impl)
+extern "C" BOOST_SYMBOL_EXPORT auto
+delete_impl_mpl_mevents (::libs::link::appl::IApplication::raw_ptr impl) -> void
 {
   modules::mevents::appl::factory_impl_mevents (impl, false);
 }

@@ -20,19 +20,19 @@ class IApplication
 
   /// Функция конструирования объекта модуля
   /// По завершению вызова модуль считается готовым к работе
-  void appl_init (const InitApplication&);
+  auto appl_init (const InitApplication&) -> void;
 
   /// Функция рабочего цикла модуля
   /// Вызывается в отдельном потоке
-  void appl_work ();
+  auto appl_work () -> void;
 
   /// Функция удаления объекта модуля
   /// По завершению вызова модуль считается готовым к удалению из памяти
   /// true, если функция полностью удалила модуль, иначе требуется повторной вызов
-  bool appl_deinit ();
+  auto appl_deinit () -> bool;
 
   /// Функция принудительного завершение работы модуля в исключительных ситуациях, например по сигналу Ctlr+C
-  void appl_force_stop ();
+  auto appl_force_stop () -> void;
 
   protected:
   // IApplication interface
@@ -50,6 +50,6 @@ class IApplication
   ::libs::link::appl::InitApplication appl_info_;   //<
 
   private:
-  bool init_ = false;   //< Флаг инициализации объекта
+  bool init_ { false };   //< Флаг инициализации объекта
 };
 }   // namespace libs::link::appl

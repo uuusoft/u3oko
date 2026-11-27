@@ -6,6 +6,7 @@
 #include "../libs-ilink-includes_int.hpp"
 #include "libs-ilink-const-vals.hpp"
 
+#if 0
 namespace libs::ilink::consts
 {
 const char* id_any = "";
@@ -42,3 +43,4 @@ const char* id_users_log   = "u3m_users             ";
 const char* id_net_log     = "u3m_net               ";
 const char* id_u3oko_log   = "u3a_oko               ";
 }   // namespace libs::ilink::consts
+#endif

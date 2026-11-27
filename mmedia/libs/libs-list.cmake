@@ -15,7 +15,7 @@ include("${U3_PATH_ROOT}/libs/ilink/libs-links-ilink.cmake")
 
 include("${U3_PATH_ROOT}/libs/events/libs-events-events.cmake")
 include("${U3_PATH_ROOT}/libs/events_base/libs-events-base.cmake")
-include("${U3_PATH_ROOT}/libs/events_log/libs-events-log.cmake")
+include("${U3_PATH_ROOT}/libs/events_log/-libs-events-log.cmake")
 include("${U3_PATH_ROOT}/libs/events_media/libs-events-media.cmake")
 include("${U3_PATH_ROOT}/libs/events_msg/libs-events-msg.cmake")
 include("${U3_PATH_ROOT}/libs/events_gui/libs-events-gui.cmake")

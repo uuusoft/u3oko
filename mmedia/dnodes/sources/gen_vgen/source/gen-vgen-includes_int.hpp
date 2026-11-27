@@ -1,0 +1,23 @@
+#pragma once
+/**
+\file       gen-vgen-includes_int.hpp
+\date       01.05.2017
+\author     Erashov Anton erashov2026@proton.me
+*/
+#include "../../../dnodes-includes_int.hpp"
+
+#include "mmedia/libs/events_gui/includes.hpp"
+#include "mmedia/modules/mgui/io/includes.hpp"
+#include "mmedia/dnodes/sources/vgen_lib/gen-lib-includes.hpp"
+#include "mmedia/libs/icore/impl/base/-libs-icore-impl-base-includes.hpp"
+
+#include "obj-source-impl-proxy.hpp"
+#include "mmedia/modules/mlog/-module-log-includes.hpp"
+
+#include "gen-vgen-syn.hpp"
+#include "consts/gen-vgen-const-vals.hpp"
+#include "icapture-image-null-impl.hpp"
+#include "idata-source-impl.hpp"
+
+#undef U3_FILE_LOG_TAG
+#define U3_FILE_LOG_TAG "u3genvgen             "

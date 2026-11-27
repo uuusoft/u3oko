@@ -12,5 +12,5 @@ using FileNode = ::libs::utility::files::FileNode;
 
 namespace libs::proxy
 {
-auto get_list_dlls_as_libs () -> std::vector< syn::FileNode >;
+auto get_list_dnodes_as_libs () -> std::vector< syn::FileNode >;
 }   // namespace libs::proxy

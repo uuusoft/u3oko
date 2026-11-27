@@ -9,9 +9,9 @@
 namespace libs::events_base::props::base_id
 {
 Buff2ModuleInfo::Buff2ModuleInfo (
-  float             fps,
-  syn::off_buf_type indx_buf,
-  id_link_type      dest_module_id) :
+  float                  fps,
+  syn::off_buf_type      indx_buf,
+  persisent_id_link_type dest_module_id) :
   fps_ (fps),
   indx_buf_ (std::move (indx_buf)),
   dest_module_id_ (std::move (dest_module_id))

@@ -42,6 +42,10 @@ RootModule::get_dest_link (syn::IEvent::ptr& msg) -> ::libs::link::ILink::ptr
   {
     return links_[syn::mids::appl2http];
   }
+  if (::libs::iproperties::helpers::cast_event< ::libs::events_user::events::BaseUserEvent > (msg))
+  {
+    return links_[syn::mids::appl2users];
+  }
 #if (U3_MODULES_ENABLE_GUI == 1)
   if (::libs::iproperties::helpers::cast_event< ::libs::events_gui::events::BaseGUIEvent > (msg))
   {

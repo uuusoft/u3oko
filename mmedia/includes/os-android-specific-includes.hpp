@@ -17,6 +17,12 @@ android_log_write_helper (std::int32_t id, const std::string& tag, const char* i
 }
 
 inline void
+android_log_write_helper (std::int32_t id, const std::string_view tag, const char* info)
+{
+  __android_log_write (id, std::string (tag).c_str (), info);
+}
+
+inline void
 android_log_write_helper (std::int32_t id, const char* tag, const char* info)
 {
   __android_log_write (id, tag, info);

@@ -1,0 +1,39 @@
+#pragma once
+/**
+\file       statistic-info.hpp
+\author     Erashov Anton erashov2026@proton.me
+\date       01.01.2017
+*/
+
+namespace dnodes::codecs::codec_gen
+{
+struct StatisticInfo final {
+  public:
+  //  ext types
+  using stages_type = boost::unordered_flat_map< std::string, StatisticStage, ::libs::utility::utils::TransparentStringHash, std::equal_to<> >;
+
+  StatisticInfo ()  = default;
+  ~StatisticInfo () = default;
+
+  bool
+  self_test () const
+  {
+    ::libs::utility::checks::throw_ifn (!stages_.empty ());
+    return !stages_.empty ();
+  }
+
+  void
+  update (const std::string& id, std::size_t val)
+  {
+    stages_[id].update (val);
+  }
+
+  void
+  reset ()
+  {
+    stages_.clear ();
+  }
+
+  stages_type stages_;   //<
+};
+}   // namespace dnodes::codecs::codec_gen

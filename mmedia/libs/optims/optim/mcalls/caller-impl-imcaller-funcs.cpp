@@ -32,7 +32,7 @@ CallerImpl::mthreads_call (
   }
   catch (...)
   {
-    U3_LOG_DATA_EXCEPT ("...");
+    U3_LOG_DATA_EXCEPT ("what:...");
   }
 }
 

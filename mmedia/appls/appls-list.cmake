@@ -4,7 +4,7 @@
 # file        appl-list-cmake
 
 if (U3_APPL_NAME STREQUAL "u3oko")
-  include("${U3_PATH_ROOT}/appls/u3oko/appls-u3oko.cmake")
+  include("${U3_PATH_ROOT}/appls/u3oko/-appls-u3oko.cmake")
 else ()
 
   if (U3_COMMERCIAL_PART EQUAL 1)

@@ -5,11 +5,11 @@
 \author     Erashov Anton erashov2026@proton.me
 */
 // EAI-REFACT
-#include "mmedia/dlls/codecs/vcodec_gen/source/funcs/dll-generic-codec-funcs.hpp"
+#include "mmedia/dnodes/codecs/vcodec_gen/source/funcs/dll-generic-codec-funcs.hpp"
 
 namespace libs::proxy::syn
 {
-namespace funcs = ::dlls::codecs::vcodec_gen::funcs;
+namespace funcs = ::dnodes::codecs::vcodec_gen::funcs;
 }   // namespace libs::proxy::syn
 
 namespace libs::proxy

@@ -10,11 +10,11 @@
 #include "mmedia/libs/core/libs-cores-core-includes.hpp"
 #include "mmedia/libs/properties/libs-properties-includes.hpp"
 #include "mmedia/libs/events_base/events-base-includes.hpp"
-#include "mmedia/libs/events_log/includes.hpp"
+#include "mmedia/libs/events_log/-libs-events-log-includes.hpp"
 #include "libs-optims-optim-mcalls-includes.hpp"
 #include "helpers/buf_divide_funcs.hpp"
 #include "mmedia/libs/iproperties/libs-iproperties-includes.hpp"
-#include "mmedia/modules/mlog/module-log-includes.hpp"
+#include "mmedia/modules/mlog/-module-log-includes.hpp"
 
 #include "mmedia/libs/proxy/proxy/ioptim-proxy.hpp"
 #include "mmedia/libs/proxy/proxy/ievents-proxy.hpp"

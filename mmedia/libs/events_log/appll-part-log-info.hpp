@@ -17,6 +17,7 @@ struct AppllPartLogInfo final {
     const syn::LogLevels&       = syn::LogLevels::info,
     const std::string_view      = "xsybx",
     const std::string_view      = "xverx",
+    const std::string_view      = std::to_string (std::hash< std::thread::id > {}(std::this_thread::get_id ())),
     const std::source_location& = std::source_location::current ());
 
   virtual ~AppllPartLogInfo () = default;
@@ -24,6 +25,7 @@ struct AppllPartLogInfo final {
   syn::LogLevels msg_state_;   //< Тип сообщения
   std::string    subsys_;      //< Идентификатор подсистемы
   std::string    version_;     //< Версия
+  std::string    thread_id_;   //< Идентификатор потока исполнения
   std::string    func_;        //< Имя функции, которая генерирует сообщение
   std::string    file_;        //< Имя файла в котором находится функция
   std::uint32_t  line_;        //< Номер строки файла, в которой сгенерированно сообщение

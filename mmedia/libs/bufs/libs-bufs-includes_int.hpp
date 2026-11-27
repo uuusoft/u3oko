@@ -14,7 +14,7 @@
 #include "mmedia/libs/optims/optim/io/libs-optims-optim-io-includes.hpp"
 #include "mmedia/libs/optims/optim/mcalls/libs-optims-optim-mcalls-includes.hpp"
 #include "mmedia/libs/events_base/events-base-includes.hpp"
-#include "mmedia/libs/events_log/includes.hpp"
+#include "mmedia/libs/events_log/-libs-events-log-includes.hpp"
 #include "mmedia/libs/iproperties/libs-iproperties-includes.hpp"
 
 #undef U3_FILE_LOG_TAG

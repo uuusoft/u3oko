@@ -1,0 +1,97 @@
+/**
+\file       ioptim-impl.cpp
+\author     Erashov Anton erashov2026@proton.me
+\date       01.05.2017
+*/
+#include "-doptim-includes-int.hpp"
+#include "ioptim-alg.hpp"
+#include "ioptim-impl.hpp"
+#include "algs/all_algs.hpp"
+
+namespace utils::doptim::impl
+{
+IOptimImpl::IOptimImpl ()
+{
+  lock_type lock (mtx_);
+  construct ();
+}
+
+
+auto
+IOptimImpl::get (const ::libs::optim::io::qoptim& query) -> syn::hioptim
+{
+  lock_type lock (mtx_);
+  auto      find = algs_.find (query.id_);
+
+  if (algs_.end () == find)
+  {
+    ::libs::utility::checks::throw_ifn (query.id_.c_str () && 0);
+    return syn::hioptim (nullptr);
+  }
+
+  ::libs::utility::checks::throw_ifn ((bool) find->second);
+  syn::hioptim ret = find->second->get ();
+  ::libs::utility::checks::throw_ifn (ret.self_test ());
+  return ret;
+}
+
+
+void
+IOptimImpl::sync_impl (const ::libs::optim::io::TInit& iinfo)
+{
+  ::libs::utility::sys::cpu::TextExtCpu cpu_helper;
+  lock_type                             lock (mtx_);
+  for (str2funcs_type::value_type& val : algs_)
+  {
+    ::libs::utility::checks::throw_ifn ((bool) val.second);
+    val.second->sync_impl (iinfo);
+  }
+}
+
+
+void
+IOptimImpl::construct ()
+{
+  ::libs::utility::checks::throw_ifn (algs_.empty ());
+
+  add_alg< algs::CRgb2HSLAlg > ();
+  add_alg< algs::CRgb2LAlg > ();
+  add_alg< algs::CRgb2LAlg2 > ();
+  add_alg< algs::CSetConstAlg > ();
+  add_alg< algs::CScaleNearestAlg > ();
+  add_alg< algs::CScaleFixedDown2x2Alg > ();
+  add_alg< algs::CAddConstAlg > ();
+  add_alg< algs::CGraduent1Alg > ();
+  add_alg< algs::CSat2ByteAlg > ();
+  add_alg< algs::CCmpGTConstAlg > ();
+  add_alg< algs::CAbsDiffAlg > ();
+  add_alg< algs::CConvMod3x3Alg > ();
+  add_alg< algs::CConvMod5x5Alg > ();
+  add_alg< algs::CConvMod7x7Alg > ();
+  add_alg< algs::CConvMod9x9Alg > ();
+  add_alg< algs::CConvMod11x11Alg > ();
+  add_alg< algs::CRemoveAddNoise2Alg > ();
+  add_alg< algs::CRemoveAddNoise3Alg > ();
+  add_alg< algs::CHistogramAlg > ();
+  add_alg< algs::CConvModCond3x3Alg > ();
+  add_alg< algs::CFlipYAlg > ();
+  add_alg< algs::CMotionEst1Alg > ();
+  add_alg< algs::CVec2Image1Alg > ();
+  add_alg< algs::CHSL2RgbAlg > ();
+  add_alg< algs::CL2RgbAlg > ();
+  add_alg< algs::CYUY22RgbAlg > ();
+  add_alg< algs::CYUY22Y16Alg > ();
+  add_alg< algs::CUYVY2RgbAlg > ();
+  add_alg< algs::CUYVY2Y16Alg > ();
+  add_alg< algs::YCB2RgbAlg > ();
+  add_alg< algs::CNV212RgbAlg > ();
+  add_alg< algs::CNV212Y16Alg > ();
+  add_alg< algs::CFreqDCT8x8ForwardAlg > ();
+  add_alg< algs::CFreqDCT8x8BackwardAlg > ();
+  add_alg< algs::CCountIfGEAlg > ();
+  add_alg< algs::CX16_X8Alg > ();
+  add_alg< algs::CX8_X16Alg > ();
+  add_alg< algs::I420ToRgb24Alg > ();
+  add_alg< algs::CRGB32_RGB24Alg > ();
+}
+}   // namespace utils::doptim::impl

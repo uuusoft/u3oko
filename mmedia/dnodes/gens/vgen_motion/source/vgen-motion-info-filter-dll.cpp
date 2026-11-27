@@ -1,0 +1,25 @@
+/**
+\file       vgen-motion-info-filter-dll.cpp
+\author     Erashov Anton erashov2026@proton.me
+\date       20.05.2017
+*/
+#include "vgen-motion-includes_int.hpp"
+#include "vgen-motion-info-filter-dll.hpp"
+#include "vgen-motion-filter-dll.hpp"
+
+namespace dnodes::gens::vgen_motion
+{
+InfoFilter::InfoFilter ()
+{
+  init ();
+}
+
+
+void
+InfoFilter::init ()
+{
+  rprops_ = ::libs::iproperties::helpers::create_event_in_list< syn::VideoEstMotionProp > (ef_props_);
+  // str2props_.insert ({ ef_props_.front ()->get_mid (), rprops_ });
+  str2props_[ef_props_.front ()->get_mid ()] = rprops_;
+}
+}   // namespace dnodes::gens::vgen_motion

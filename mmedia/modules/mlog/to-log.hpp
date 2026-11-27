@@ -32,10 +32,13 @@ class ToLog final
   ToLog (
     const syn::key_storage_type key,
     const syn::LogLevels&       level,
-    const std::source_location& place = std::source_location::current ()) :
+    const std::thread::id&      thread_id = std::this_thread::get_id (),
+    const std::source_location& place     = std::source_location::current ()) :
+
     key_ (key),
-    place_ (place),
-    level_ (level)
+    level_ (level),
+    thread_id_ (thread_id),
+    place_ (place)
   {
   }
 
@@ -107,9 +110,16 @@ class ToLog final
       return;
     }
 
-    auto [evnt, revnt] = ::libs::iproperties::helpers::create_event< ::libs::events_log::events::InfoLogEvent > ();
+    // const auto thread_id = std::format ("{}\t|", std::hash< std::thread::id > {}(thread_id_));
+    const auto thread_id = std::format ("{}", std::hash< std::thread::id > {}(thread_id_));
+    auto [evnt, revnt]   = ::libs::iproperties::helpers::create_event< ::libs::events_log::events::InfoLogEvent > ();
     revnt->change_appl_info (
-      ::libs::events_log::AppllPartLogInfo (level_, to_string (key_.first), "wtfversion", place_),
+      ::libs::events_log::AppllPartLogInfo (
+        level_,
+        to_string (key_.first),
+        "wtfversion",
+        thread_id,
+        place_),
       buf);
 
     logger->send_msg (evnt);
@@ -134,7 +144,7 @@ class ToLog final
     }
 
     const auto place_info = ::libs::utility::log::get_text_source_place (place_);
-    const auto buf        = streambuf + "......" + place_info;
+    const auto buf        = streambuf + "  <...>  " + place_info;
 
     switch (level_)
     {
@@ -179,8 +189,9 @@ class ToLog final
     msg2stream (streambuf.str ());
   }
 
-  const syn::key_storage_type key_ { ::libs::properties::vers::links::mids::unknown };
-  const syn::LogLevels        level_ { syn::LogLevels::develop };
-  const std::source_location  place_ { std::source_location::current () };
+  const syn::key_storage_type key_ { ::libs::properties::vers::links::mids::unknown };   //<
+  const syn::LogLevels        level_ { syn::LogLevels::develop };                        //<
+  const std::thread::id       thread_id_;                                                //<
+  const std::source_location  place_ { std::source_location::current () };               //<
 };
 }   // namespace modules::mlog

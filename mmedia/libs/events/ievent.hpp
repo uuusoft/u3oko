@@ -5,11 +5,11 @@
 \date       01.01.2017
 */
 
-namespace dlls::devents::impl
+namespace utils::devents::impl
 {
 //  forward
 class EventsImpl;
-}   // namespace dlls::devents::impl
+}   // namespace utils::devents::impl
 
 
 namespace libs::events

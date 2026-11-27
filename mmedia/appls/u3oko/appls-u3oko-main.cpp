@@ -4,7 +4,7 @@
 \date       01.05.2017
 \brief      Центральный модуль системы видеонаблюдения u3oko
 */
-#include "appls-u3oko-includes_int.hpp"
+#include "-appls-u3oko-includes-int.hpp"
 #include "appl/u3oko-appl.hpp"
 
 static std::mutex                                g_sinc;
@@ -25,8 +25,8 @@ create_impl_appl_u3oko () -> ::libs::link::appl::IApplication::raw_ptr
   return g_appl;
 }
 
-extern "C" BOOST_SYMBOL_EXPORT void
-delete_impl_appl_u3oko (::libs::link::appl::IApplication::raw_ptr appl)
+extern "C" BOOST_SYMBOL_EXPORT auto
+delete_impl_appl_u3oko (::libs::link::appl::IApplication::raw_ptr appl) -> void
 {
   std::scoped_lock (g_sinc);
   ::libs::utility::checks::assert_soft (appl);

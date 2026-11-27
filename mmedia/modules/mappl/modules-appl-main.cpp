@@ -14,7 +14,7 @@
 #endif
 
 #include <regex>
-#include "module-appl-includes_int.hpp"
+#include "-module-appl-includes-int.hpp"
 #include "modules-appl.hpp"
 
 void

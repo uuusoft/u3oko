@@ -6,7 +6,7 @@
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
 #include "../../-http-module-includes-int.hpp"
-#include "mmedia/dlls/terminals/video_sender/consts/video-sender-const-vals.hpp"
+#include "mmedia/dnodes/terminals/video_sender/consts/video-sender-const-vals.hpp"
 #include "../../-http-module-syn.hpp"
 
 namespace modules::mhttp::impl::beast::adv
@@ -69,7 +69,7 @@ http_session::on_read (
   boost::beast::error_code ec,
   std::size_t              bytes_transferred)
 {
-  U3_CALL_TRACE;
+  U3_CALL_TRACE_DBG;
   boost::ignore_unused (bytes_transferred);
 
   // This means they closed the connection

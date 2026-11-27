@@ -4,7 +4,7 @@
 \date       01.01.2017
 */
 // #define U3_DBG_LOG_LEVEL_ENABLE
-#include "../module-events-includes_int.hpp"
+#include "../-module-events-includes-int.hpp"
 // #include "consts/module-events-const-vals.hpp"
 #include "events-module-syn.hpp"
 #include "events-module.hpp"
@@ -67,11 +67,11 @@ EventsModule::init_links_int (const ::libs::link::appl::InitApplication& info)
 
   auto temp_link = lproxy->impl ()->get_listen (
     ::libs::link::CreateInfo (
-      { { ::libs::link::consts::text::id_appl_name, "mpl_mevents" },
-        { ::libs::link::consts::text::id_lib_name, "mpl_mevents" },
-        { ::libs::link::consts::text::id_size_shared_mem, ::libs::link::consts::sizes::buf_all2events },
-        { ::libs::link::consts::text::id_module_links, ::libs::link::details::ModuleLinks::events },
-        { ::libs::link::consts::text::id_code_runs, ::libs::link::details::CodeRuns::appl } }));
+      { { std::string (::libs::link::consts::text::id_appl_name), std::string (libs::ilink::consts::id_module_dll_mevents) },
+        { std::string (::libs::link::consts::text::id_lib_name), std::string (libs::ilink::consts::id_module_dll_mevents) },
+        { std::string (::libs::link::consts::text::id_size_shared_mem), ::libs::link::consts::sizes::buf_all2events },
+        { std::string (::libs::link::consts::text::id_module_links), ::libs::link::details::ModuleLinks::events },
+        { std::string (::libs::link::consts::text::id_code_runs), ::libs::link::details::CodeRuns::appl } }));
 
   links_.set (syn::mids::events2appl, temp_link);
 

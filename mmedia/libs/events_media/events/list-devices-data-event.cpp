@@ -39,7 +39,7 @@ ListDevicesDataEvent::ListDevicesDataEvent (
   src_names_type    group,
   src_devinfos_type devices) :
   source_dll_names_ (std::move (group)),
-  dlls_devices_ (std::move (devices))
+  dnodes_devices_ (std::move (devices))
 {
 }
 
@@ -61,7 +61,7 @@ ListDevicesDataEvent::get_source_dll_names () const -> const ListDevicesDataEven
 auto
 ListDevicesDataEvent::get_devices_for_dll (std::size_t indx) const -> const ListDevicesDataEvent::src_infos_type&
 {
-  return dlls_devices_[indx];
+  return dnodes_devices_[indx];
 }
 
 
@@ -69,7 +69,7 @@ void
 ListDevicesDataEvent::set_source_dll_names (ListDevicesDataEvent::src_names_type&& src)
 {
   std::swap (source_dll_names_, src);
-  dlls_devices_.resize (source_dll_names_.size ());
+  dnodes_devices_.resize (source_dll_names_.size ());
 }
 
 
@@ -78,7 +78,7 @@ ListDevicesDataEvent::set_devices_for_dll (
   std::size_t                            indx,
   ListDevicesDataEvent::src_infos_type&& src)
 {
-  std::swap (dlls_devices_[indx], src);
+  std::swap (dnodes_devices_[indx], src);
 }
 
 
@@ -107,15 +107,15 @@ ListDevicesDataEvent::save_json_int (::boost::json::object& obj) const
     sources.push_back (::boost::json::value (source));
   }
 
-  auto& dlls_devices = obj["dlls_devices"].emplace_array ();
-  for (const auto& dll_devices : dlls_devices_)
+  auto& dnodes_devices = obj["dnodes_devices"].emplace_array ();
+  for (const auto& dll_devices : dnodes_devices_)
   {
     ::boost::json::array devices;
     for (const auto& dll_device : dll_devices)
     {
       devices.push_back (::boost::json::value (dll_device.name_));
     }
-    dlls_devices.push_back (devices);
+    dnodes_devices.push_back (devices);
   }
 }
 
@@ -127,7 +127,7 @@ ListDevicesDataEvent::copy_int (const IEvent::craw_ptr src)
   super::copy_int (src);
 
   source_dll_names_ = dsrc->source_dll_names_;
-  dlls_devices_     = dsrc->dlls_devices_;
+  dnodes_devices_   = dsrc->dnodes_devices_;
 }
 
 #if (U3_USE_BOOST_SERIALIZTION)
@@ -137,7 +137,7 @@ ListDevicesDataEvent::serialize (Archive& arh, const std::uint32_t /* file_versi
 {
   arh& U3_BOOST_SERIALIZE_MAKE_NVP ("olibsoevents_mediaoeventsoBaseDataEvent", super);
   arh& BOOST_SERIALIZATION_NVP (source_dll_names_);
-  arh& BOOST_SERIALIZATION_NVP (dlls_devices_);
+  arh& BOOST_SERIALIZATION_NVP (dnodes_devices_);
 
   self_correct ();
 }

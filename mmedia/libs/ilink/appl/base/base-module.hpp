@@ -54,7 +54,7 @@ class BaseModule : public ::libs::link::appl::IApplication
   syn::BufAllocatorProxy::raw_ptr         all2buf_ { nullptr };                                              //< Указатель на интерфейс по работе с буферами
   ::libs::proxy::IOptimProxy*             all2optim_ { nullptr };                                            //< Указатель на интерфейс-хранилище оптимизированных алгоритмов
   ::libs::proxy::IEventsProxy*            all2events_ { nullptr };                                           //< Указатель на интерфейс для создания различнх событий по текстовым идентификаторам
-  syn::id_link_type                       module_id_ { "u3-unkmodule" };                                     //< текстовый идентификатор модуля, например для использования в логировании
+  syn::persisent_id_link_type             module_id_ { "u3-unkmodule" };                                     //< текстовый идентификатор модуля, например для использования в логировании
   bool                                    stop_module_ { false };                                            //< Флаг завершения работы
   std::chrono::milliseconds               ms_time_sleep_ { ::libs::link::consts::ms_wait_delay_recv_msg };   //< Время засыпания рабочего потока при отсутствии сообщений
   std::atomic_bool                        dbg_event_cycle_ { false };                                        //< debug
